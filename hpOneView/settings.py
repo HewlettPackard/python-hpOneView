@@ -135,4 +135,17 @@ class settings(object):
         response = eval(self._con.post(uri['dev-read-community-str'], request))
         return response['communityString']
 
+    def get_licenses(self):
+        global uri
+        body = self._con.get(uri['licenses'])
+        return get_members(body)
+
+    def add_license(self, licenseKey):
+        global uri
+        request = {
+            'key': licenseKey,
+            'type': 'License'}
+        response = self._con.post(uri['licenses'], request)
+        return response
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
