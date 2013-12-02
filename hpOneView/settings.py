@@ -124,4 +124,15 @@ class settings(object):
         f.close()
         return
 
+    def get_dev_read_comm_string(self):
+        global uri
+        body = self._con.get(uri['dev-read-community-str'])
+        return body['communityString']
+
+    def set_dev_read_comm_string(self, communityString):
+        global uri
+        request = {'communityString': communityString}
+        response = eval(self._con.post(uri['dev-read-community-str'], request))
+        return response['communityString']
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

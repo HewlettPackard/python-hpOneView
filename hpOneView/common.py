@@ -53,6 +53,7 @@ uri = {
     'version': "/rest/version",
     'supportDump': "/rest/appliance/support-dumps",
     'backups': "/rest/backups",
+    'dev-read-community-str': "/rest/appliance/device-read-community-string",
     #------------------------------------
     # Security
     #------------------------------------
