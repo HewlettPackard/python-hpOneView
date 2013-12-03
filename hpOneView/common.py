@@ -513,6 +513,19 @@ def make_user_modify_dict(userName,
     return userDict
 
 
+def make_update_alert_dict(alertState=None,
+                            assignedToUser=None,
+                            eTag=None):
+    alertDict = {}
+    if alertState is not None:
+        alertDict['alertState'] = alertState
+    if assignedToUser is not None:
+        alertDict['assignedToUser'] = assignedToUser
+    if eTag is not None:
+        alertDict['eTag'] = eTag
+    return alertDict
+
+
 def make_add_server_dict(
                     hostname,
                     username,

@@ -151,10 +151,14 @@ def main():
     alerts = act.get_alerts('Active')
     startNumAlerts = len(alerts)
     print(("%d active alerts" % startNumAlerts))
-    # Delete active alerts so we start clean
+    # Clear (or Delete) active alerts so we start clean
     if startNumAlerts > 0:
         for alert in alerts:
-            act.delete_alert(alert)
+            alertMap = hpOneView.common.make_update_alert_dict(
+                                            alertState='Cleared',
+                                            assignedToUser='Administrator')
+            act.update_alert(alert, alertMap)
+            # or Delete it - act.delete_alert(alert)
     alerts = act.get_alerts('Active')
     startNumAlerts = len(alerts)
     print(("%d active alerts" % startNumAlerts))

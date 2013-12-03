@@ -163,6 +163,10 @@ class activity(object):
     def delete_alert(self, alert):
         self._con.delete(alert['uri'])
 
+    def update_alert(self, alert, alertMap):
+        moddedAlert = self._con.put(alert['uri'], alertMap)
+        return moddedAlert
+
     ###########################################################################
     # Audit Logs
     ###########################################################################
