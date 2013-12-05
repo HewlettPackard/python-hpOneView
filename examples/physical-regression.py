@@ -72,11 +72,36 @@ def main():
     try:
         credential = {'userName': applianceUser, 'password': 'admin'}
         con.login(credential)
-        con.change_initial_password('password')
-    except:
-        print('Initial login failed so assume password already changed')
+    except hpOneView.exceptions.HPOneViewException as ex:
+        if ex.errorCode == 'PASSWORD_CHANGE_REQUIRED':
+            con.change_initial_password('password')
+        elif ex.errorCode == 'AUTHN_AUTH_FAUL':
+            print('Initial login failed so assume password already changed')
     credential = {'userName': applianceUser, 'password': appliancePassword}
     con.login(credential)
+
+    # Get the appliance MAC address
+    data = con.get_appliance_network_interfaces()
+    macAddress = data['applianceNetworks'][0]['macAddress']
+    hostName = data['applianceNetworks'][0]['hostname']
+
+    interfaceConfig = hpOneView.common.make_appliance_network_config_dict(
+                                        hostName,
+                                        macAddress,
+                                        ipv4Type='DHCP',
+                                        ipv6Type='DHCP')
+    con.set_appliance_network_interface(interfaceConfig)
+    print("Network set")
+    print('Sleep for 30 seconds in case we changed the IP')
+    time.sleep(30)
+
+    try:
+        settings.add_license(licenseKey)
+    except hpOneView.exceptions.HPOneViewException as ex:
+        print('WARNING: License failed to add. Check message.')
+        print('Message: ' + ex.message)
+    licenses = settings.get_licenses()
+    print(str(len(licenses)) + ' licenses installed')
 
     if doRackConfiguration is True:
         # Rack based support
@@ -86,16 +111,10 @@ def main():
                                         password=rackiLOPassword,
                                         force=False,
                                         licensingIntent='OneView')
+        print('Adding rack server...')
         server = srv.add_server(serverdict)
+        print('Removing rack server...')
         srv.delete_server(server)
-
-    try:
-        settings.add_license(licenseKey)
-    except hpOneView.exceptions.HPOneViewException as ex:
-        print('WARNING: License failed to add. Check message.')
-        print('Message: ' + ex.message)
-    licenses = settings.get_licenses()
-    print(str(len(licenses)) + ' licenses installed')
 
     readCommunityString = insecure_random_string_generator()
     response = settings.set_dev_read_comm_string(readCommunityString)
@@ -179,20 +198,6 @@ def main():
         settings.delete_spp(spp)
     con.set_service_access('false')
 
-    # Get the appliance MAC address
-    data = con.get_appliance_network_interfaces()
-    macAddress = data['applianceNetworks'][0]['macAddress']
-    hostName = data['applianceNetworks'][0]['hostname']
-
-    interfaceConfig = hpOneView.common.make_appliance_network_config_dict(
-                                        hostName,
-                                        macAddress,
-                                        ipv4Type='DHCP',
-                                        ipv6Type='DHCP')
-    con.set_appliance_network_interface(interfaceConfig)
-    print("Network set")
-    print('Sleep for 30 seconds in case we changed the IP')
-    time.sleep(30)
     roles = sec.get_roles()
     print(str(len(roles)) + " user roles")
     users = sec.get_users()
