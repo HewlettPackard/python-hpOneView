@@ -96,6 +96,7 @@ class servers(object):
         task = self._con.post(uri['servers'], server)
         if blocking is True:
             self._activity.wait4task(task, tout=600, verbose=verbose)
+        task = self._con.get(task['uri'])
         serverResource = self._activity.get_task_assocaited_resource(task)
         if serverResource['resourceUri'] is not None:
             server = self._con.get(serverResource['resourceUri'])
