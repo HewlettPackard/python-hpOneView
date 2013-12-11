@@ -51,7 +51,8 @@ class connection(object):
         self._session = None
         self._host = applianceIp
         self._cred = None
-        self._headers = {'X-API-Version': '3',
+        self._apiVersion = 3
+        self._headers = {'X-API-Version': self._apiVersion,
                 'Accept': 'application/json, */*',
                 'Content-Type': 'application/json'
                }
@@ -64,6 +65,17 @@ class connection(object):
         self._prevPage = None
         self._numTotalRecords = 0
         self._numDisplayedRecords = 0
+        self._validateVersion()
+
+    def _validateVersion(self):
+        global uri
+        version = self.get(uri['version'])
+        if 'minimumVersion' in version:
+            if self._apiVersion < version['minimumVersion']:
+                raise HPOneViewException('Unsupported API Version')
+        if 'currentVersion' in version:
+            if self._apiVersion > version['currentVersion']:
+                raise HPOneViewException('Unsupported API Version')
 
     def set_proxy(self, proxyHost, proxyPort):
         self._proxyHost = proxyHost
