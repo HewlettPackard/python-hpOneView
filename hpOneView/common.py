@@ -104,6 +104,15 @@ uri = {
     'events': '/rest/events',
     'audit-logs': '/rest/audit-logs',
     #------------------------------------
+    #  Certificates
+    #------------------------------------
+    'certificates': '/rest/certificates',
+    'ca': '/rest/certificates/ca',
+    'crl': '/rest/certificates/ca/crl',
+    'rabbitmq-kp': '/rest/certificates/client/rabbitmq/keypair',
+    'rabbitmq': '/rest/certificates/client/rabbitmq',
+    'cert-https': '/rest/certificates/https',
+    #------------------------------------
     #  Searching and Indexing
     #------------------------------------
     'resource': '/rest/index/resources',

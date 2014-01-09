@@ -92,5 +92,47 @@ class security(object):
         global uri
         body = self._con.get(uri['roles'])
         return get_members(body)
+    
+    ###########################################################################
+    # Certificates
+    ###########################################################################
+    def get_certs(self):
+        global uri
+        body = self._con.get(uri['certificates'])
+        return body
+    
+    def get_cert_https(self):
+        global uri
+        body = self._con.get(uri['cert-https'])
+        return body
+
+    def get_cert_ca(self):
+        global uri
+        body = self._con.get(uri['ca'])
+        return body
+
+    def get_cert_ca_crl(self):
+        global uri
+        body = self._con.get(uri['crl'])
+        return body
+
+    def gen_rabbitmq_ca(self):
+        global uri
+        request = {}
+        request['type'] = 'RabbitMqClientCert'
+        request['commonName'] = 'default'
+        body = self._con.post(uri['rabbitmq'], request)
+        return body
+
+    def get_rabbitmq_kp(self, alias='default'):
+        global uri
+        body = self._con.get(uri['rabbitmq-kp'] + '/' + alias)
+        return body
+    
+    def get_rabbitmq_ca(self, alias='default'):
+        global uri
+        body = self._con.get(uri['rabbitmq'] + '/' + alias)
+        return body
+
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
