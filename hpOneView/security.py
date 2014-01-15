@@ -92,7 +92,7 @@ class security(object):
         global uri
         body = self._con.get(uri['roles'])
         return get_members(body)
-    
+
     ###########################################################################
     # Certificates
     ###########################################################################
@@ -100,7 +100,7 @@ class security(object):
         global uri
         body = self._con.get(uri['certificates'])
         return body
-    
+
     def get_cert_https(self):
         global uri
         body = self._con.get(uri['cert-https'])
@@ -128,7 +128,7 @@ class security(object):
         global uri
         body = self._con.get(uri['rabbitmq-kp'] + '/' + alias)
         return body
-    
+
     def get_rabbitmq_ca(self, alias='default'):
         global uri
         body = self._con.get(uri['rabbitmq'] + '/' + alias)
