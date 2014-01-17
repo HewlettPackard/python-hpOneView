@@ -426,19 +426,39 @@ def make_initial_password_change_dict(userName, oldPassword, newPassword):
 
 def make_appliance_network_config_dict(hostName,
                                         macAddress,
+                                        newApp1Ipv4Addr=None,
+                                        newIpv4Subnet=None,
+                                        newIpv4Gateway=None,
+                                        newSearchDomain1=None,
+                                        newSearchDomain2=None,
                                         ipv4Type='DHCP',
                                         ipv6Type='DHCP'):
     # Only DHCP enable for now. Need more attributes for static
-    return {
-        "applianceNetworks": [{
-            "confOneNode": True,
-            "hostname": hostName,
-            "macAddress": macAddress,
-            "ipv4Type": ipv4Type,
-            "ipv6Type": ipv6Type
-            }]
-        }
-
+    if ipv4Type == 'DHCP':
+        return {
+            "applianceNetworks": [{
+                "confOneNode": True,
+                "hostname": hostName,
+                "macAddress": macAddress,
+                "ipv4Type": ipv4Type,
+                "ipv6Type": ipv6Type
+                }]
+            }
+    if ipv4Type == 'STATIC':
+        return {
+            "applianceNetworks": [{
+                "confOneNode": True,
+                "hostname": hostName,
+                "macAddress": macAddress,
+                "ipv4Type": ipv4Type,
+                "ipv6Type": ipv6Type,
+                "app1Ipv4Addr": newApp1Ipv4Addr,
+                "ipv4Subnet": newIpv4Subnet,
+                "ipv4Gateway": newIpv4Gateway,
+#                "searchDomains": [newSearchDomain1, newSearchDomain2]
+                "searchDomains": []
+                }]
+            }
 
 def make_audit_log_dict(dateTimeStamp='',
                         componentId='',
