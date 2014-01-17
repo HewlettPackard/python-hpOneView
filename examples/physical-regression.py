@@ -60,27 +60,31 @@ firmwareBundlePath = config.get('Main', 'firmwareBundlePath', fallback='')
 aFirmwarePath = firmwareBundlePath.split(sep='\\')
 firmwareBundleFileName = aFirmwarePath[len(aFirmwarePath) - 1]
 
+newApp1Ipv4Addr = config.get('NewApplianceIP', 'newApp1Ipv4Addr')
+newDomainName = config.get('NewApplianceIP', 'newDomainName')
+newIpv4Subnet = config.get('NewApplianceIP', 'newIpv4Subnet')
+newIpv4Gateway = config.get('NewApplianceIP', 'newIpv4Gateway')
+newSearchDomain1 = config.get('NewApplianceIP', 'newSearchDomain1')
+newSearchDomain2 = config.get('NewApplianceIP', 'newSearchDomain2')
 
 def insecure_random_string_generator(size=8, chars=string.ascii_uppercase):
     return ''.join(random.choice(chars) for x in range(size))
 
-
-def main():
-    con = hpOneView.connection(applianceIP)
-    srv = hpOneView.servers(con)
-    net = hpOneView.networking(con)
-    sec = hpOneView.security(con)
-    settings = hpOneView.settings(con)
-    act = hpOneView.activity(con)
-    sear = hpOneView.search(con)
-
+def try_connect(ip):
+    con = hpOneView.connection(ip)
     if applianceProxy:
         con.set_proxy(applianceProxy.split(':')[0],
                         applianceProxy.split(':')[1])
     if applianceCerts:
         con.set_trusted_ssl_bundle(applianceCerts)
     # See if we need to accept the EULA before we try to log in
-    con.get_eula_status()
+    try:
+        con.get_eula_status()
+    except OSError as ex:
+        print ('ex:')
+        print (ex)
+        if ( "503" in ex ):
+            switchToDHCP()
     try:
         if con.get_eula_status() is True:
             print("EULA display needed")
@@ -101,21 +105,73 @@ def main():
             print('Initial login failed so assume password already changed')
     credential = {'userName': applianceUser, 'password': appliancePassword}
     con.login(credential)
+    return con
+
+
+def connect(ip_address):
+    working = 1
+    while working:
+        try:
+            con = try_connect(ip_address)
+            working = 0
+        except Exception as e:
+            working = 1
+            print('Connection failed for ip: ' + ip_address)
+            print('IP may have changed.  Will retry connection in 30 seconds')
+            time.sleep(30)
+    return con
+
+def main():
+#    con = connect(newApp1Ipv4Addr)    # just here for debugging...
+    con = connect(applianceIP)
 
     # Get the appliance MAC address
     data = con.get_appliance_network_interfaces()
     macAddress = data['applianceNetworks'][0]['macAddress']
     hostName = data['applianceNetworks'][0]['hostname']
 
+    # Try changing appliance to static ip...
+    if newApp1Ipv4Addr:
+        print("Setting ipv4...")
+        interfaceConfig = hpOneView.common.make_appliance_network_config_dict(
+                                            newDomainName,
+                                            macAddress,
+                                            newApp1Ipv4Addr,
+                                            newIpv4Subnet,
+                                            newIpv4Gateway,
+                                            newSearchDomain1,
+                                            newSearchDomain2,
+                                            ipv4Type='STATIC',
+                                            ipv6Type='UNCONFIGURE',
+                                            )
+        con.set_appliance_network_interface(interfaceConfig)
+        print("Network set to static ip: " + newApp1Ipv4Addr)
+
+        # Connect via the new IP...
+        con = connect(newApp1Ipv4Addr)
+
+        print('Sleep for 60 seconds before reverting back to DHCP...')
+        time.sleep(60)
+
+
+    # Change appliance to DHCP...
     interfaceConfig = hpOneView.common.make_appliance_network_config_dict(
                                         hostName,
                                         macAddress,
                                         ipv4Type='DHCP',
                                         ipv6Type='DHCP')
     con.set_appliance_network_interface(interfaceConfig)
-    print("Network set")
-    print('Sleep for 30 seconds in case we changed the IP')
-    time.sleep(30)
+    print("Network set to DHCP: "+ applianceIP)
+
+    con = connect(applianceIP)
+
+    # IP should not change anymore--set variables from con:
+    srv = hpOneView.servers(con)
+    net = hpOneView.networking(con)
+    sec = hpOneView.security(con)
+    settings = hpOneView.settings(con)
+    act = hpOneView.activity(con)
+    sear = hpOneView.search(con)
 
     try:
         settings.add_license(licenseKey)
@@ -124,6 +180,7 @@ def main():
         print('Message: ' + ex.message)
     licenses = settings.get_licenses()
     print(str(len(licenses)) + ' licenses installed')
+
 
     if doRackConfiguration is True:
         # Rack based support
