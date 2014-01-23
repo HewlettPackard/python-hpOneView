@@ -60,12 +60,12 @@ firmwareBundlePath = config.get('Main', 'firmwareBundlePath', fallback='')
 aFirmwarePath = firmwareBundlePath.split(sep='\\')
 firmwareBundleFileName = aFirmwarePath[len(aFirmwarePath) - 1]
 
-newApp1Ipv4Addr = config.get('NewApplianceIP', 'newApp1Ipv4Addr')
-newDomainName = config.get('NewApplianceIP', 'newDomainName')
-newIpv4Subnet = config.get('NewApplianceIP', 'newIpv4Subnet')
-newIpv4Gateway = config.get('NewApplianceIP', 'newIpv4Gateway')
-newSearchDomain1 = config.get('NewApplianceIP', 'newSearchDomain1')
-newSearchDomain2 = config.get('NewApplianceIP', 'newSearchDomain2')
+newApp1Ipv4Addr = config.get('NewApplianceIP', 'newApp1Ipv4Addr', fallback=None)
+newDomainName = config.get('NewApplianceIP', 'newDomainName', fallback=None)
+newIpv4Subnet = config.get('NewApplianceIP', 'newIpv4Subnet', fallback=None)
+newIpv4Gateway = config.get('NewApplianceIP', 'newIpv4Gateway', fallback=None)
+newSearchDomain1 = config.get('NewApplianceIP', 'newSearchDomain1', fallback=None)
+newSearchDomain2 = config.get('NewApplianceIP', 'newSearchDomain2', fallback=None)
 
 def insecure_random_string_generator(size=8, chars=string.ascii_uppercase):
     return ''.join(random.choice(chars) for x in range(size))
@@ -81,8 +81,7 @@ def try_connect(ip):
     try:
         con.get_eula_status()
     except OSError as ex:
-        print ('ex:')
-        print (ex)
+        print ('ex: %s' % ex)
         if ( "503" in ex ):
             switchToDHCP()
     try:
@@ -110,15 +109,21 @@ def try_connect(ip):
 
 def connect(ip_address):
     working = 1
-    while working:
+    more_attempts = 10
+    while True:
         try:
             con = try_connect(ip_address)
-            working = 0
+            break
         except Exception as e:
             working = 1
             print('Connection failed for ip: ' + ip_address)
             print('IP may have changed.  Will retry connection in 30 seconds')
+            print('Will retry up to '+str(more_attempts)+' more times...')
             time.sleep(30)
+            more_attempts -= 1
+            if more_attempts < 1:
+                print('Unable to connect--exiting...')
+                exit(2)
     return con
 
 def main():
@@ -132,6 +137,30 @@ def main():
 
     # Try changing appliance to static ip...
     if newApp1Ipv4Addr:
+        quit = False
+        if ( not newIpv4Subnet ):
+            print("newIpv4Subnet required if newApp1Ipv4Addr supplied.")
+            quit = True
+        if ( not newDomainName ):
+            print( "newDomainName required if newApp1Ipv4Addr supplied.")
+            quit = True
+        if ( not newDomainName ):
+            print("newDomainName required if newApp1Ipv4Addr supplied.")
+            quit = True
+        if ( not macAddress ):
+            print("macAddress required if newApp1Ipv4Addr supplied.")
+            quit = True
+        if ( not newIpv4Subnet ):
+            print("newIpv4Subnet required if newApp1Ipv4Addr supplied.")
+            quit = True
+        if ( not newIpv4Gateway ):
+            print("newIpv4Gateway required if newApp1Ipv4Addr supplied.")
+            quit = True
+        if ( not newSearchDomain1 ):
+            print("newSearchDomain1 required if newApp1Ipv4Addr supplied.")
+            quit = True
+        if ( quit ):
+            exit(2)
         print("Setting ipv4...")
         interfaceConfig = hpOneView.common.make_appliance_network_config_dict(
                                             newDomainName,
