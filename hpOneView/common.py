@@ -459,6 +459,7 @@ def make_appliance_network_config_dict(hostName,
                 "searchDomains": []
                 }]
             }
+    raise Exception("ipv4Type must be STATIC or DHCP.")
 
 def make_audit_log_dict(dateTimeStamp='',
                         componentId='',
