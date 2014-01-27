@@ -144,9 +144,6 @@ def main():
         if ( not newDomainName ):
             print( "newDomainName required if newApp1Ipv4Addr supplied.")
             quit = True
-        if ( not newDomainName ):
-            print("newDomainName required if newApp1Ipv4Addr supplied.")
-            quit = True
         if ( not macAddress ):
             print("macAddress required if newApp1Ipv4Addr supplied.")
             quit = True
@@ -155,9 +152,6 @@ def main():
             quit = True
         if ( not newIpv4Gateway ):
             print("newIpv4Gateway required if newApp1Ipv4Addr supplied.")
-            quit = True
-        if ( not newSearchDomain1 ):
-            print("newSearchDomain1 required if newApp1Ipv4Addr supplied.")
             quit = True
         if ( quit ):
             exit(2)
