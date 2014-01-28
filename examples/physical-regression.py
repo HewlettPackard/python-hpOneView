@@ -144,9 +144,6 @@ def main():
         if ( not newDomainName ):
             print( "newDomainName required if newApp1Ipv4Addr supplied.")
             quit = True
-        if ( not macAddress ):
-            print("macAddress required if newApp1Ipv4Addr supplied.")
-            quit = True
         if ( not newIpv4Subnet ):
             print("newIpv4Subnet required if newApp1Ipv4Addr supplied.")
             quit = True
@@ -172,6 +169,10 @@ def main():
 
         # Connect via the new IP...
         con = connect(newApp1Ipv4Addr)
+
+        print('Sleep for 60 seconds before reverting back to DHCP...')
+        time.sleep(60)
+
 
         print('Sleep for 60 seconds before reverting back to DHCP...')
         time.sleep(60)
