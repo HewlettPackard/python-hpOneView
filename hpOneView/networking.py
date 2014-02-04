@@ -200,4 +200,11 @@ class networking(object):
         global uri
         return get_members(self._con.get(uri['fcnet']))
 
+    ###########################################################################
+    # Interconnects
+    ###########################################################################
+    def get_interconnects(self):
+        global uri
+        return get_members(self._con.get(uri['ic']))
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
