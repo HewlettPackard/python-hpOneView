@@ -72,7 +72,7 @@ class networking(object):
 
     def update_lig(self, lig):
         global uri
-        return self._activity.make_task_entity_tuple(self._con.put(uri['lig'],
+        return self._activity.make_task_entity_tuple(self._con.put(lig['uri'],
                                                         lig))
 
     def delete_lig(self, lig, blocking=True, verbose=False):
@@ -86,9 +86,27 @@ class networking(object):
         global uri
         return get_members(self._con.get(uri['lig']))
 
+    def get_lig_by_name(self, ligname):
+        global uri
+        return self._con.get_entity_byfield(uri['lig'], "name", ligname)
+
+    def get_interconnect_types(self):
+        global uri
+        # get all the supported interconnect types
+        resp = get_members(self._con.get(uri['ictype']))
+        return resp
+
+    def get_lis(self):
+        global uri
+        return get_members(self._con.get(uri["li"]))
+
     ###########################################################################
     # Connection Templates
     ###########################################################################
+    def get_connection_templates(self):
+        global uri
+        return get_members(self._con.get(uri["ct"]))
+
     def update_net_ctvalues(self, xnet, bw={}):
         if not bw:
             return
@@ -132,12 +150,18 @@ class networking(object):
     ###########################################################################
     # Networks
     ###########################################################################
-    def create_enet_networks(self, prefix, vid_start, vid_count):
+    def create_enet_networks(self, prefix, vid_start, vid_count, bw={}):
         enet_list = []
         try:
             for vid in range(vid_start, vid_start + vid_count):
                 enet_name = "%s%s" % (prefix, vid)
-                enet_list.append(self.create_enet_network(enet_name, vid))
+                enet_list.append(
+                                 self.create_enet_network(
+                                                          enet_name,
+                                                          vid,
+                                                          bw=bw
+                                                          )
+                                 )
         except http.client.HTTPException:
             # All or nothing
             for enet in enet_list:
@@ -206,5 +230,13 @@ class networking(object):
     def get_interconnects(self):
         global uri
         return get_members(self._con.get(uri['ic']))
+
+    def get_enet_network_by_name(self, nwname):
+        global uri
+        return self._con.get_entity_byfield(uri['enet'], "name", nwname)
+
+    def get_fc_network_by_name(self, nwname):
+        global uri
+        return self._con.get_entity_byfield(uri['fcnet'], "name", nwname)
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

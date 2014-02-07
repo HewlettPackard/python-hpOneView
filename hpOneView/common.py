@@ -295,6 +295,15 @@ def set_iobay_occupancy(switchMap, bays, stype):
              in bays]:
             location['permittedInterconnectTypeUri'] = stype
 
+def get_iobay_entry(interconnectMap, bay):
+    if not interconnectMap:
+        return
+    for iobay_entry in interconnectMap['interconnectMapEntryTemplates']:
+        entries = iobay_entry['logicalLocation']['locationEntries']
+        for entry in entries:
+            if entry['type'] == 'Bay':
+                if bay == entry['relativeValue']:
+                    return iobay_entry
 
 def make_uplink_set_dict(name, networks=[], ntype='Ethernet'):
     return {'name': name,
