@@ -578,6 +578,13 @@ def make_add_server_dict(
         'force': force,
         'licensingIntent': licensingIntent}
 
+def make_alertMap_dict(notes, etag, state='Active', user='None', urgency='None'):
+    return { 'alertState': state,
+            'assignedToUser': user,
+            'alertUrgency': urgency,
+            'notes': notes,
+            'eTag': etag
+            }
 
 class pages(object):
 
