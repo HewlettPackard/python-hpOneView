@@ -8,11 +8,11 @@ This module implements Settings HP OneView REST API
 """
 
 __title__ = 'networking'
-__version__ = "0.0.1"
-__copyright__ = "(C) Copyright 2012-2013 Hewlett-Packard Development " \
-                " Company, L.P."
-__license__ = "MIT"
-__status__ = "Development"
+__version__ = '0.0.1'
+__copyright__ = '(C) Copyright 2012-2013 Hewlett-Packard Development ' \
+                ' Company, L.P.'
+__license__ = 'MIT'
+__status__ = 'Development'
 
 ###
 # (C) Copyright 2013 Hewlett-Packard Development Company, L.P.
@@ -88,7 +88,7 @@ class networking(object):
 
     def get_lig_by_name(self, ligname):
         global uri
-        return self._con.get_entity_byfield(uri['lig'], "name", ligname)
+        return self._con.get_entity_byfield(uri['lig'], 'name', ligname)
 
     def get_interconnect_types(self):
         global uri
@@ -98,14 +98,14 @@ class networking(object):
 
     def get_lis(self):
         global uri
-        return get_members(self._con.get(uri["li"]))
+        return get_members(self._con.get(uri['li']))
 
     ###########################################################################
     # Connection Templates
     ###########################################################################
     def get_connection_templates(self):
         global uri
-        return get_members(self._con.get(uri["ct"]))
+        return get_members(self._con.get(uri['ct']))
 
     def update_net_ctvalues(self, xnet, bw={}):
         if not bw:
@@ -154,7 +154,7 @@ class networking(object):
         enet_list = []
         try:
             for vid in range(vid_start, vid_start + vid_count):
-                enet_name = "%s%s" % (prefix, vid)
+                enet_name = '%s%s' % (prefix, vid)
                 enet_list.append(
                                  self.create_enet_network(
                                                           enet_name,
@@ -169,7 +169,7 @@ class networking(object):
                     self._con.delete(enet['uri'])
                 except http.client.HTTPException:
                     pass
-            raise HPOneViewException("Could not create one or more networks")
+            raise HPOneViewException('Could not create one or more networks')
         return enet_list
 
     def create_enet_network(self, name, vid,
@@ -185,7 +185,7 @@ class networking(object):
         return self.create_network(uri['enet'], xnet, bw, blocking=blocking,
                                     verbose=verbose)
 
-    def create_fc_network(self, name, attach="FabricAttach", bw={},
+    def create_fc_network(self, name, attach='FabricAttach', bw={},
                             blocking=True, verbose=False):
         global uri
         xnet = make_fc_dict(name, attach)
@@ -211,7 +211,7 @@ class networking(object):
                                                         xnet))
 
     def delete_network(self, xnet, blocking=True, verbose=False):
-        task = self._con.delete(xnet["uri"])
+        task = self._con.delete(xnet['uri'])
         if blocking is True:
             self._activity.wait4task(task, verbose=verbose)
         return
@@ -233,10 +233,10 @@ class networking(object):
 
     def get_enet_network_by_name(self, nwname):
         global uri
-        return self._con.get_entity_byfield(uri['enet'], "name", nwname)
+        return self._con.get_entity_byfield(uri['enet'], 'name', nwname)
 
     def get_fc_network_by_name(self, nwname):
         global uri
-        return self._con.get_entity_byfield(uri['fcnet'], "name", nwname)
+        return self._con.get_entity_byfield(uri['fcnet'], 'name', nwname)
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

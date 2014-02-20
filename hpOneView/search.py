@@ -8,11 +8,11 @@ This module implements search HP OneView REST API
 """
 
 __title__ = 'search'
-__version__ = "0.0.1"
-__copyright__ = "(C) Copyright 2012-2013 Hewlett-Packard Development " \
-                " Company, L.P."
-__license__ = "MIT"
-__status__ = "Development"
+__version__ = '0.0.1'
+__copyright__ = '(C) Copyright 2012-2013 Hewlett-Packard Development ' \
+                ' Company, L.P.'
+__license__ = 'MIT'
+__status__ = 'Development'
 
 ###
 # (C) Copyright 2013 Hewlett-Packard Development Company, L.P.
@@ -53,10 +53,10 @@ class search(object):
         if type(query) is dict:
             sQuery = ''
             for key in query:
-                sQuery = sQuery + key + "=" + query[key] + "&"
+                sQuery = sQuery + key + '=' + query[key] + '&'
         else:
             sQuery = query
-        body = self._con.get(uri['resource'] + "?" + sQuery)
+        body = self._con.get(uri['resource'] + '?' + sQuery)
         return get_members(body)
 
     def get_associations(self, query=''):
@@ -64,10 +64,10 @@ class search(object):
         if type(query) is dict:
             sQuery = ''
             for key in query:
-                sQuery = sQuery + key + "=" + query[key] + "&"
+                sQuery = sQuery + key + '=' + query[key] + '&'
         else:
             sQuery = query
-        body = self._con.get(uri['association'] + "?" + sQuery)
+        body = self._con.get(uri['association'] + '?' + sQuery)
         return get_members(body)
 
     def get_trees(self, query=''):
@@ -75,10 +75,10 @@ class search(object):
         if type(query) is dict:
             sQuery = ''
             for key in query:
-                sQuery = sQuery + key + "=" + query[key] + "&"
+                sQuery = sQuery + key + '=' + query[key] + '&'
         else:
             sQuery = query
-        body = self._con.get(uri['tree'] + "?" + sQuery)
+        body = self._con.get(uri['tree'] + '?' + sQuery)
         return get_members(body)
 
     def get_search_suggestions(self, query):
@@ -86,10 +86,10 @@ class search(object):
         if type(query) is dict:
             sQuery = ''
             for key in query:
-                sQuery = sQuery + key + "=" + query[key] + "&"
+                sQuery = sQuery + key + '=' + query[key] + '&'
         else:
             sQuery = query
-        body = self._con.get(uri['search-suggestion'] + "?userQuery=" + sQuery)
+        body = self._con.get(uri['search-suggestion'] + '?userQuery=' + sQuery)
         return body
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

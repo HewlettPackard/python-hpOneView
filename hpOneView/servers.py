@@ -8,11 +8,11 @@ This module implements servers HP OneView REST API
 """
 
 __title__ = 'servers'
-__version__ = "0.0.1"
-__copyright__ = "(C) Copyright 2012-2013 Hewlett-Packard Development " \
-                " Company, L.P."
-__license__ = "MIT"
-__status__ = "Development"
+__version__ = '0.0.1'
+__copyright__ = '(C) Copyright 2012-2013 Hewlett-Packard Development ' \
+                ' Company, L.P.'
+__license__ = 'MIT'
+__status__ = 'Development'
 
 ###
 # (C) Copyright 2013 Hewlett-Packard Development Company, L.P.
@@ -219,13 +219,13 @@ class servers(object):
 
     # TODO put pool
     def allocate_pool_ids(self, url, count):
-        allocatorUrl = "%s/allocator" % url
+        allocatorUrl = '%s/allocator' % url
         allocatorBody = {'count': count}
         body = self._con.put(allocatorUrl, allocatorBody)
         return body
 
     def release_pool_ids(self, url, idList):
-        collectorUrl = "%s/collector" % url
+        collectorUrl = '%s/collector' % url
         collectorBody = {'idList': idList}
         body = self._con.put(collectorUrl, collectorBody)
         return body

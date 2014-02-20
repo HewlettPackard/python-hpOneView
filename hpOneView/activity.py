@@ -8,11 +8,11 @@ This module implements the Activity HP OneView REST API
 """
 
 __title__ = 'activity'
-__version__ = "0.0.1"
-__copyright__ = "(C) Copyright 2012-2013 Hewlett-Packard Development " \
-                " Company, L.P."
-__license__ = "MIT"
-__status__ = "Development"
+__version__ = '0.0.1'
+__copyright__ = '(C) Copyright 2012-2013 Hewlett-Packard Development ' \
+                ' Company, L.P.'
+__license__ = 'MIT'
+__status__ = 'Development'
 
 ###
 # (C) Copyright 2013 Hewlett-Packard Development Company, L.P.
@@ -59,35 +59,35 @@ class activity(object):
     def get_task_assocaited_resource(self, task):
         if not task:
             return {}
-        if task['type'] == "TaskResource":
+        if task['type'] == 'TaskResource':
             obj = self._con.get(task['associatedResourceUri'])
             tmp = {'resourceName': obj['name'],
                    'associationType': None,
                    'resourceCategory': None,
                    'resourceUri': obj['uri']}
-        elif task['type'] == "TaskResourceV2":
+        elif task['type'] == 'TaskResourceV2':
             tmp = task['associatedResource']
         else:
-            raise HPOneViewInvalidResource("Task resource is not a recognized"
-                                    " version")
+            raise HPOneViewInvalidResource('Task resource is not a recognized'
+                                    ' version')
         return tmp
 
     def make_task_entity_tuple(self, obj):
         task = {}
         entity = {}
         if obj:
-            if obj['category'] == "tasks":
+            if obj['category'] == 'tasks':
                 # it is an error if type is not in obj, so let the except flow
                 uri = ''
-                if obj['type'] == "TaskResource":
+                if obj['type'] == 'TaskResource':
                     task = obj
                     uri = obj['associatedResourceUri']
-                elif obj['type'] == "TaskResourceV2":
+                elif obj['type'] == 'TaskResourceV2':
                     task = obj
                     uri = obj['associatedResource']['resourceUri']
                 else:
-                    raise HPOneViewInvalidResource("Task resource is not a"
-                                            " recognized version")
+                    raise HPOneViewInvalidResource('Task resource is not a'
+                                            ' recognized version')
                 if uri:
                     try:
                         entity = self._con.get(uri)
@@ -103,7 +103,7 @@ class activity(object):
         task = self._con.get(task_uri)
         return task['taskState']
         info = self.get_task_assocaited_resource(task)
-        progress_string = ("Resource = %s: Progress=%s%%: State=%s"
+        progress_string = ('Resource = %s: Progress=%s%%: State=%s'
                            % (info['resourceName'],
                               task['percentComplete'],
                               task['taskState']))
@@ -123,14 +123,14 @@ class activity(object):
         count = 0
         while self.is_task_running(task):
             if verbose:
-                    sys.stdout.write("Task still running after %d seconds   \r"
+                    sys.stdout.write('Task still running after %d seconds   \r'
                                      % (count))
                     sys.stdout.flush()
             time.sleep(1)
             count = count + 1
             if count > tout:
-                raise HPOneViewTimeout("Waited " + str(tout) +
-                            " seconds for task to complete, aborting")
+                raise HPOneViewTimeout('Waited ' + str(tout) +
+                            ' seconds for task to complete, aborting')
         if verbose is True:
             print()
 
@@ -139,14 +139,14 @@ class activity(object):
         count = 0
         while running:
             if verbose:
-                    print(("Tasks still running after %s seconds", count))
+                    print(('Tasks still running after %s seconds', count))
                     print(running)
             time.sleep(1)
             count = count + 1
             running = list(filter(self.is_task_running, running))
             if count > tout:
-                raise HPOneViewTimeout("Waited 60 seconds for task to complete"
-                                ", aborting")
+                raise HPOneViewTimeout('Waited 60 seconds for task to complete'
+                                ', aborting')
 
     ###########################################################################
     # Alerts
@@ -173,9 +173,9 @@ class activity(object):
     ###########################################################################
     # Audit Logs
     ###########################################################################
-    def get_audit_logs(self, query=""):
+    def get_audit_logs(self, query=''):
         global uri
-        body = self._con.get(uri['audit-logs'] + "?" + query)
+        body = self._con.get(uri['audit-logs'] + '?' + query)
         return(get_members(body))
 
     def create_audit_log(self, auditLogRecord):
@@ -186,9 +186,9 @@ class activity(object):
     ###########################################################################
     # Events
     ###########################################################################
-    def get_events(self, query=""):
+    def get_events(self, query=''):
         global uri
-        body = self._con.get(uri['events'] + "?" + query)
+        body = self._con.get(uri['events'] + '?' + query)
         return(get_members(body))
 
     def create_event(self, eventRecord):

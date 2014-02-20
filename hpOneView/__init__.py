@@ -7,11 +7,11 @@ hpOneView is a library for interfacing with HP OneView Management Appliance.
 """
 
 __title__ = 'hpOneView'
-__version__ = "0.0.1"
-__copyright__ = "(C) Copyright 2012-2013 Hewlett-Packard Development " \
-                " Company, L.P."
-__license__ = "MIT"
-__status__ = "Development"
+__version__ = '0.0.1'
+__copyright__ = '(C) Copyright 2012-2013 Hewlett-Packard Development ' \
+                ' Company, L.P.'
+__license__ = 'MIT'
+__status__ = 'Development'
 
 ###
 # (C) Copyright 2013 Hewlett-Packard Development Company, L.P.
@@ -37,7 +37,7 @@ __status__ = "Development"
 
 import sys
 if sys.version_info < (3, 2):
-    raise Exception("Must use Python 3.2 or later")
+    raise Exception('Must use Python 3.2 or later')
 
 from hpOneView.common import *
 from hpOneView.connection import *

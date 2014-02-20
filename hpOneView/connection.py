@@ -8,11 +8,11 @@ This module maintains communication with the appliance
 """
 
 __title__ = 'connection'
-__version__ = "0.0.1"
-__copyright__ = "(C) Copyright 2012-2013 Hewlett-Packard Development " \
-                " Company, L.P."
-__license__ = "MIT"
-__status__ = "Development"
+__version__ = '0.0.1'
+__copyright__ = '(C) Copyright 2012-2013 Hewlett-Packard Development ' \
+                ' Company, L.P.'
+__license__ = 'MIT'
+__status__ = 'Development'
 
 ###
 # (C) Copyright 2013 Hewlett-Packard Development Company, L.P.
@@ -161,17 +161,17 @@ class connection(object):
             print(('Encoding ' + filename + ' for upload...'))
         fin = open(filename, 'rb')
         fout = open(filename + '.b64', 'wb')
-        fout.write(bytearray('--' + BOUNDARY + CRLF, "utf-8"))
+        fout.write(bytearray('--' + BOUNDARY + CRLF, 'utf-8'))
         fout.write(bytearray('Content-Disposition: form-data'
                             '; name="file"; filename="' +
                             filename + '"' + CRLF, "utf-8"))
         fout.write(bytearray('Content-Type: application/octet-stream' + CRLF,
-                            "utf-8"))
-        fout.write(bytearray(CRLF, "utf-8"))
+                            'utf-8'))
+        fout.write(bytearray(CRLF, 'utf-8'))
         shutil.copyfileobj(fin, fout)
-        fout.write(bytearray(CRLF, "utf-8"))
-        fout.write(bytearray('--' + BOUNDARY + '--' + CRLF, "utf-8"))
-        fout.write(bytearray(CRLF, "utf-8"))
+        fout.write(bytearray(CRLF, 'utf-8'))
+        fout.write(bytearray('--' + BOUNDARY + '--' + CRLF, 'utf-8'))
+        fout.write(bytearray(CRLF, 'utf-8'))
         fout.close()
         fin.close()
         return content_type
@@ -203,7 +203,7 @@ class connection(object):
             readSize = 1048576
             conn.send(mappedfile.read(readSize))
             if verbose is True:
-                sys.stdout.write("%d bytes sent... \r" % mappedfile.tell())
+                sys.stdout.write('%d bytes sent... \r' % mappedfile.tell())
                 sys.stdout.flush()
         mappedfile.close()
         inputfile.close()
@@ -363,7 +363,7 @@ class connection(object):
         if resp is True:
             return
         else:
-            raise HPOneViewException("Could not change Service Access")
+            raise HPOneViewException('Could not change Service Access')
 
     ###########################################################################
     # Login/Logout to/from appliance

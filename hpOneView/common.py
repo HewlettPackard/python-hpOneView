@@ -8,11 +8,11 @@ This module implements the common and helper functions for the OneView REST API
 """
 
 __title__ = 'common'
-__version__ = "0.0.1"
-__copyright__ = "(C) Copyright 2012-2013 Hewlett-Packard Development " \
-                " Company, L.P."
-__license__ = "MIT"
-__status__ = "Development"
+__version__ = '0.0.1'
+__copyright__ = '(C) Copyright 2012-2013 Hewlett-Packard Development ' \
+                ' Company, L.P.'
+__license__ = 'MIT'
+__status__ = 'Development'
 
 ###
 # (C) Copyright 2013 Hewlett-Packard Development Company, L.P.
@@ -43,26 +43,26 @@ uri = {
     #------------------------------------
     # CI Controller
     #------------------------------------
-    'applNetConfig': "/rest/appliance/network-interfaces",
-    'applGlobalSettings': "/rest/global-settings",
-    'eulaStatus': "/rest/appliance/eula/status",
-    'eulaSave': "/rest/appliance/eula/save",
-    'serviceAccess': "/rest/appliance/settings/enableServiceAccess",
-    'applianceNetworkInterfaces': "/rest/appliance/network-interfaces",
-    'healthStatus': "/rest/appliance/health-status",
-    'version': "/rest/version",
-    'supportDump': "/rest/appliance/support-dumps",
-    'backups': "/rest/backups",
-    'dev-read-community-str': "/rest/appliance/device-read-community-string",
-    'licenses': "/rest/licenses",
+    'applNetConfig': '/rest/appliance/network-interfaces',
+    'applGlobalSettings': '/rest/global-settings',
+    'eulaStatus': '/rest/appliance/eula/status',
+    'eulaSave': '/rest/appliance/eula/save',
+    'serviceAccess': '/rest/appliance/settings/enableServiceAccess',
+    'applianceNetworkInterfaces': '/rest/appliance/network-interfaces',
+    'healthStatus': '/rest/appliance/health-status',
+    'version': '/rest/version',
+    'supportDump': '/rest/appliance/support-dumps',
+    'backups': '/rest/backups',
+    'dev-read-community-str': '/rest/appliance/device-read-community-string',
+    'licenses': '/rest/licenses',
     #------------------------------------
     # Security
     #------------------------------------
-    'loginSessions': "/rest/login-sessions",
-    'users': "/rest/users",
-    'userRole': "/rest/users/role",
-    'changePassword': "/rest/users/changePassword",
-    'roles': "/rest/roles",
+    'loginSessions': '/rest/login-sessions',
+    'users': '/rest/users',
+    'userRole': '/rest/users/role',
+    'changePassword': '/rest/users/changePassword',
+    'roles': '/rest/roles',
     #------------------------------------
     # Environment
     #------------------------------------
@@ -187,19 +187,19 @@ def get_member(mlist):
 ############################################################################
 def make_user_dict(name, password,
                     enabled=True,
-                    fullName="",
-                    emailAddress="",
-                    officePhone="",
-                    mobilePhone="",
+                    fullName='',
+                    emailAddress='',
+                    officePhone='',
+                    mobilePhone='',
                     roles=[]):
-    return {"userName": name,
-            "fullName": fullName,
-            "password": password,
-            "emailAddress": emailAddress,
-            "officePhone": officePhone,
-            "mobilePhone": mobilePhone,
-            "enabled": enabled,
-            "roles": roles
+    return {'userName': name,
+            'fullName': fullName,
+            'password': password,
+            'emailAddress': emailAddress,
+            'officePhone': officePhone,
+            'mobilePhone': mobilePhone,
+            'enabled': enabled,
+            'roles': roles
             }
 
 
@@ -445,30 +445,30 @@ def make_appliance_network_config_dict(hostName,
     # Only DHCP enable for now. Need more attributes for static
     if ipv4Type == 'DHCP':
         return {
-            "applianceNetworks": [{
-                "confOneNode": True,
-                "hostname": hostName,
-                "macAddress": macAddress,
-                "ipv4Type": ipv4Type,
-                "ipv6Type": ipv6Type
+            'applianceNetworks': [{
+                'confOneNode': True,
+                'hostname': hostName,
+                'macAddress': macAddress,
+                'ipv4Type': ipv4Type,
+                'ipv6Type': ipv6Type
                 }]
             }
     if ipv4Type == 'STATIC':
         return {
-            "applianceNetworks": [{
-                "confOneNode": True,
-                "hostname": hostName,
-                "macAddress": macAddress,
-                "ipv4Type": ipv4Type,
-                "ipv6Type": ipv6Type,
-                "app1Ipv4Addr": newApp1Ipv4Addr,
-                "ipv4Subnet": newIpv4Subnet,
-                "ipv4Gateway": newIpv4Gateway,
-#                "searchDomains": [newSearchDomain1, newSearchDomain2]
-                "searchDomains": []
+            'applianceNetworks': [{
+                'confOneNode': True,
+                'hostname': hostName,
+                'macAddress': macAddress,
+                'ipv4Type': ipv4Type,
+                'ipv6Type': ipv6Type,
+                'app1Ipv4Addr': newApp1Ipv4Addr,
+                'ipv4Subnet': newIpv4Subnet,
+                'ipv4Gateway': newIpv4Gateway,
+#                'searchDomains': [newSearchDomain1, newSearchDomain2]
+                'searchDomains': []
                 }]
             }
-    raise Exception("ipv4Type must be STATIC or DHCP.")
+    raise Exception('ipv4Type must be STATIC or DHCP.')
 
 def make_audit_log_dict(dateTimeStamp='',
                         componentId='',
