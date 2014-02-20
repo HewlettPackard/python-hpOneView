@@ -186,21 +186,21 @@ def get_member(mlist):
 # Create default Resource Instances
 ############################################################################
 def make_user_dict(name, password,
-                    enabled=True,
-                    fullName='',
-                    emailAddress='',
-                    officePhone='',
-                    mobilePhone='',
-                    roles=[]):
-    return {'userName': name,
-            'fullName': fullName,
-            'password': password,
-            'emailAddress': emailAddress,
-            'officePhone': officePhone,
-            'mobilePhone': mobilePhone,
-            'enabled': enabled,
-            'roles': roles
-            }
+                   enabled=True,
+                   fullName='',
+                   emailAddress='',
+                   officePhone='',
+                   mobilePhone='',
+                   roles=[]):
+    return {
+        'userName': name,
+        'fullName': fullName,
+        'password': password,
+        'emailAddress': emailAddress,
+        'officePhone': officePhone,
+        'mobilePhone': mobilePhone,
+        'enabled': enabled,
+        'roles': roles}
 
 
 def make_bw_dict(maxbw=10000, minbw=1000):
@@ -210,81 +210,83 @@ def make_bw_dict(maxbw=10000, minbw=1000):
 
 
 def make_netset_dict(name, networks=[]):
-    return {'name': name,
-            'type': 'network-set',
-            'nativeNetworkUri': None,
-            'networkUris': networks[:],
-            'connectionTemplateUri': None
-            }
+    return {
+        'name': name,
+        'type': 'network-set',
+        'nativeNetworkUri': None,
+        'networkUris': networks[:],
+        'connectionTemplateUri': None}
 
 
 def make_enet_dict(name, vlanid=0,
                    smartLink=True, privateNetwork=False):
-    return {'name': name,
-            'type': 'ethernet-network',
-            'purpose': 'General',
-            'connectionTemplateUri': None,
-            'vlanId': vlanid,
-            'smartLink': smartLink,
-            'privateNetwork': privateNetwork
-            }
+    return {
+        'name': name,
+        'type': 'ethernet-network',
+        'purpose': 'General',
+        'connectionTemplateUri': None,
+        'vlanId': vlanid,
+        'smartLink': smartLink,
+        'privateNetwork': privateNetwork}
 
 
 def make_fc_dict(name, fabricType='FabricAttach',
-                    uplinkBandwidth='Auto',
-                    autoLoginRedistribution=True,
-                    linkStabilityTime=30):
-    return {'name': name,
-            'type': 'fc-network',
-            'connectionTemplateUri': None,
-            'fabricType': fabricType,
-            'uplinkBandwidth': uplinkBandwidth,
-            'autoLoginRedistribution': autoLoginRedistribution,
-            'linkStabilityTime': linkStabilityTime
-            }
+                 uplinkBandwidth='Auto',
+                 autoLoginRedistribution=True,
+                 linkStabilityTime=30):
+    return {
+        'name': name,
+        'type': 'fc-network',
+        'connectionTemplateUri': None,
+        'fabricType': fabricType,
+        'uplinkBandwidth': uplinkBandwidth,
+        'autoLoginRedistribution': autoLoginRedistribution,
+        'linkStabilityTime': linkStabilityTime}
 
 
 def make_interconnect_map_template():
-    return {'interconnectMapEntryTemplates':
-                    [{'logicalLocation': {
-                        'locationEntries':
-                            [{'type': 'Bay', 'relativeValue': N},
-                             {'type': 'Enclosure', 'relativeValue': 1}]},
-                      'permittedInterconnectTypeUri': None,
-                      'logicalDownlinkUri': None
-                     } for N in range(1, 9)],
-                 }
+    return {
+        'interconnectMapEntryTemplates':
+        [{'logicalLocation': {
+            'locationEntries':
+            [{'type': 'Bay', 'relativeValue': N},
+             {'type': 'Enclosure', 'relativeValue': 1}]},
+            'permittedInterconnectTypeUri': None,
+            'logicalDownlinkUri': None
+          } for N in range(1, 9)], }
 
 
 def make_enet_settings(name,
-                        enableIgmpSnooping=False,
-                        igmpIdleTimeoutInterval=260,
-                        enableFastMacCacheFailover=True,
-                        macRefreshInterval=5,
-                        enableNetworkLoopProtection=True):
-    return {'type': 'EthernetInterconnectSettings',
-            'name': name,
-            'enableIgmpSnooping': enableIgmpSnooping,
-            'igmpIdleTimeoutInterval': igmpIdleTimeoutInterval,
-            'enableFastMacCacheFailover': enableFastMacCacheFailover,
-            'macRefreshInterval': macRefreshInterval,
-            'enableNetworkLoopProtection': enableNetworkLoopProtection,
-            'interconnectType': 'Ethernet'
-            # 'description': null,
-            }
+                       enableIgmpSnooping=False,
+                       igmpIdleTimeoutInterval=260,
+                       enableFastMacCacheFailover=True,
+                       macRefreshInterval=5,
+                       enableNetworkLoopProtection=True):
+    return {
+        'type': 'EthernetInterconnectSettings',
+        'name': name,
+        'enableIgmpSnooping': enableIgmpSnooping,
+        'igmpIdleTimeoutInterval': igmpIdleTimeoutInterval,
+        'enableFastMacCacheFailover': enableFastMacCacheFailover,
+        'macRefreshInterval': macRefreshInterval,
+        'enableNetworkLoopProtection': enableNetworkLoopProtection,
+        'interconnectType': 'Ethernet'
+        # 'description': null,
+        }
 
 
 def make_lig_dict(name):
-    return {'name': name,
-            'type': 'logical-interconnect-group',
-            'interconnectMapTemplate': make_interconnect_map_template(),
-            'uplinkSets': [],  # call make_uplink_template
-            'stackingMode': 'Enclosure',
-            # 'ethernetSettings': None,
-            'state': 'Active',
-            # 'telemetryConfiguration': None,
-            # 'snmpConfiguration' : None,
-            # 'description': None
+    return {
+        'name': name,
+        'type': 'logical-interconnect-group',
+        'interconnectMapTemplate': make_interconnect_map_template(),
+        'uplinkSets': [],  # call make_uplink_template
+        'stackingMode': 'Enclosure',
+        # 'ethernetSettings': None,
+        'state': 'Active',
+        # 'telemetryConfiguration': None,
+        # 'snmpConfiguration' : None,
+        # 'description': None
         }
 
 
@@ -292,8 +294,9 @@ def set_iobay_occupancy(switchMap, bays, stype):
     for location in switchMap['interconnectMapEntryTemplates']:
         entries = location['logicalLocation']['locationEntries']
         if [x for x in entries if x['type'] == 'Bay' and x['relativeValue']
-             in bays]:
+           in bays]:
             location['permittedInterconnectTypeUri'] = stype
+
 
 def get_iobay_entry(interconnectMap, bay):
     if not interconnectMap:
@@ -305,108 +308,99 @@ def get_iobay_entry(interconnectMap, bay):
                 if bay == entry['relativeValue']:
                     return iobay_entry
 
+
 def make_uplink_set_dict(name, networks=[], ntype='Ethernet'):
-    return {'name': name,
-            'mode': 'Auto',  # Auto or Failover
-            'networkUris': networks[:],
-            'networkType': ntype,  # Ethernet or FibreChannel
-            'primaryPort': None,
-            'logicalPortConfigInfos': [],  # Array of logicalLocations
-            'nativeNetworkUri': None
-            }
+    return {
+        'name': name,
+        'mode': 'Auto',  # Auto or Failover
+        'networkUris': networks[:],
+        'networkType': ntype,  # Ethernet or FibreChannel
+        'primaryPort': None,
+        'logicalPortConfigInfos': [],  # Array of logicalLocations
+        'nativeNetworkUri': None
+        }
 
 
 def make_port_config_info(enclosure, bay, port, speed='Auto'):
     return {'logicalLocation': {
-                'locationEntries':
-                    [{'type': 'Enclosure', 'relativeValue': enclosure},
-                     {'type': 'Bay', 'relativeValue': bay},
-                     {'type': 'Port', 'relativeValue': port}]
-                },
+            'locationEntries':
+            [{'type': 'Enclosure', 'relativeValue': enclosure},
+             {'type': 'Bay', 'relativeValue': bay},
+             {'type': 'Port', 'relativeValue': port}]
+            },
             'desiredSpeed': speed
             }
 
 
 def make_egroup_dict(name, lig):
     return {
-              'name': name,
-              'type': 'EnclosureGroup',
-              'stackingMode': 'Enclosure',
-              'interconnectBayMappings': [{
-                                        'interconnectBay': N,
-                                        'logicalInterconnectGroupUri': lig
-                                         } for N in range(1, 9)],
-              }
+        'name': name,
+        'type': 'EnclosureGroup',
+        'stackingMode': 'Enclosure',
+        'interconnectBayMappings': [{'interconnectBay': N,
+                                     'logicalInterconnectGroupUri': lig
+                                     } for N in range(1, 9)], }
 
 
 def make_add_enclosure_dict(host, user, passwd, egroup,
                             firmwareBaseLineUri=None, force=False):
     return {
-            'hostname': host,
-            'username': user,
-            'password': passwd,
-            'force': force,
-            'enclosureGroupUri': egroup,
-            'firmwareBaselineUri': firmwareBaseLineUri,
-            'updateFirmwareOn': 'EnclosureOnly',
-            'licensingIntent': 'OneView'
-        }
+        'hostname': host,
+        'username': user,
+        'password': passwd,
+        'force': force,
+        'enclosureGroupUri': egroup,
+        'firmwareBaselineUri': firmwareBaseLineUri,
+        'updateFirmwareOn': 'EnclosureOnly',
+        'licensingIntent': 'OneView'}
 
 
 def make_profile_connection_dict(network,
-                                    portId='Auto',
-                                    functionType='Ethernet',
-                                    boot=None):
+                                 portId='Auto',
+                                 functionType='Ethernet',
+                                 boot=None):
     return {
-            'networkUri': network['uri'],
-            'portId': portId,
-            'functionType': functionType,
-            'boot': boot
-            }
+        'networkUri': network['uri'],
+        'portId': portId,
+        'functionType': functionType,
+        'boot': boot}
 
 
 def make_profile_connection_boot_dict(priority='Primary',
-                                    arrayWwpn=None,
-                                    lun=None):
+                                      arrayWwpn=None,
+                                      lun=None):
     if arrayWwpn is None and lun is None:
         return {
-            'priority': priority
-            }
+            'priority': priority}
     else:
         return {
             'priority': priority,
-            'targets': make_profile_connection_boot_target_dict(
-                            arrayWwpn,
-                            lun)}
+            'targets': make_profile_connection_boot_target_dict(arrayWwpn,
+                                                                lun)}
 
 
 def make_profile_connection_boot_target_dict(arrayWwpn=None, lun=None):
-    return [{
-        'arrayWwpn': arrayWwpn,
-        'lun': lun
-        }]
+    return [{'arrayWwpn': arrayWwpn,
+             'lun': lun}]
 
 
 def make_add_profile_dict(profileName, server, firmwareBaseline=None,
-                            connections=[]):
+                          connections=[]):
     return {
-            'type': 'ServerProfileV1',
-            'name': profileName,
-            'wwnType': 'Virtual',
-            'serialNumberType': 'Virtual',
-            'macType': 'Virtual',
-            'serverHardwareUri': server['uri'],
-            'serverHardwareTypeUri': server['serverHardwareTypeUri'],
-            'firmware': firmwareBaseline,
-            'connections': connections
-            }
+        'type': 'ServerProfileV1',
+        'name': profileName,
+        'wwnType': 'Virtual',
+        'serialNumberType': 'Virtual',
+        'macType': 'Virtual',
+        'serverHardwareUri': server['uri'],
+        'serverHardwareTypeUri': server['serverHardwareTypeUri'],
+        'firmware': firmwareBaseline,
+        'connections': connections}
 
 
 def make_profile_firmware_baseline(firmwareUri, manageFirmware=True):
-    return {
-            'firmwareBaselineUri': firmwareUri,
-            'manageFirmware': manageFirmware
-            }
+    return {'firmwareBaselineUri': firmwareUri,
+            'manageFirmware': manageFirmware}
 
 
 def make_powerstate_dict(state, control):
@@ -434,24 +428,22 @@ def make_initial_password_change_dict(userName, oldPassword, newPassword):
 
 
 def make_appliance_network_config_dict(hostName,
-                                        macAddress,
-                                        newApp1Ipv4Addr=None,
-                                        newIpv4Subnet=None,
-                                        newIpv4Gateway=None,
-                                        newSearchDomain1=None,
-                                        newSearchDomain2=None,
-                                        ipv4Type='DHCP',
-                                        ipv6Type='DHCP'):
+                                       macAddress,
+                                       newApp1Ipv4Addr=None,
+                                       newIpv4Subnet=None,
+                                       newIpv4Gateway=None,
+                                       newSearchDomain1=None,
+                                       newSearchDomain2=None,
+                                       ipv4Type='DHCP',
+                                       ipv6Type='DHCP'):
     # Only DHCP enable for now. Need more attributes for static
     if ipv4Type == 'DHCP':
-        return {
-            'applianceNetworks': [{
-                'confOneNode': True,
-                'hostname': hostName,
-                'macAddress': macAddress,
-                'ipv4Type': ipv4Type,
-                'ipv6Type': ipv6Type
-                }]
+        return {'applianceNetworks': [{
+            'confOneNode': True,
+            'hostname': hostName,
+            'macAddress': macAddress,
+            'ipv4Type': ipv4Type,
+            'ipv6Type': ipv6Type}]
             }
     if ipv4Type == 'STATIC':
         return {
@@ -464,11 +456,12 @@ def make_appliance_network_config_dict(hostName,
                 'app1Ipv4Addr': newApp1Ipv4Addr,
                 'ipv4Subnet': newIpv4Subnet,
                 'ipv4Gateway': newIpv4Gateway,
-#                'searchDomains': [newSearchDomain1, newSearchDomain2]
+                # 'searchDomains': [newSearchDomain1, newSearchDomain2]
                 'searchDomains': []
                 }]
             }
     raise Exception('ipv4Type must be STATIC or DHCP.')
+
 
 def make_audit_log_dict(dateTimeStamp='',
                         componentId='',
@@ -499,11 +492,11 @@ def make_audit_log_dict(dateTimeStamp='',
 
 
 def make_event_dict(severity='Unknown',
-                        description='',
-                        eventTypeID='',
-                        eventDetails=None,
-                        healthCategory='None',
-                        urgency='None'):
+                    description='',
+                    eventTypeID='',
+                    eventDetails=None,
+                    healthCategory='None',
+                    urgency='None'):
     return {
         'severity': severity,
         'description': description,
@@ -515,22 +508,22 @@ def make_event_dict(severity='Unknown',
 
 
 def make_event_detail_dict(eventItemName='',
-                        eventItemValue=''):
+                           eventItemValue=''):
     return {
         'eventItemName': eventItemName,
         'eventItemValue': eventItemValue}
 
 
 def make_user_modify_dict(userName,
-                            password=None,
-                            currentPassword=None,
-                            replaceRoles=None,
-                            roles=None,
-                            emailAddress=None,
-                            officePhone=None,
-                            mobilePhone=None,
-                            enabled=None,
-                            fullName=None):
+                          password=None,
+                          currentPassword=None,
+                          replaceRoles=None,
+                          roles=None,
+                          emailAddress=None,
+                          officePhone=None,
+                          mobilePhone=None,
+                          enabled=None,
+                          fullName=None):
     userDict = {'userName': userName}
     if password is not None and currentPassword is not None:
         userDict['password'] = password
@@ -553,8 +546,8 @@ def make_user_modify_dict(userName,
 
 
 def make_update_alert_dict(alertState=None,
-                            assignedToUser=None,
-                            eTag=None):
+                           assignedToUser=None,
+                           eTag=None):
     alertDict = {}
     if alertState is not None:
         alertDict['alertState'] = alertState
@@ -565,12 +558,11 @@ def make_update_alert_dict(alertState=None,
     return alertDict
 
 
-def make_add_server_dict(
-                    hostname,
-                    username,
-                    password,
-                    force=False,
-                    licensingIntent='OneView'):
+def make_add_server_dict(hostname,
+                         username,
+                         password,
+                         force=False,
+                         licensingIntent='OneView'):
     return {
         'hostname': hostname,
         'username': username,
@@ -578,13 +570,16 @@ def make_add_server_dict(
         'force': force,
         'licensingIntent': licensingIntent}
 
+
 def make_alertMap_dict(notes, etag, state='Active', user='None', urgency='None'):
-    return { 'alertState': state,
-            'assignedToUser': user,
-            'alertUrgency': urgency,
-            'notes': notes,
-            'eTag': etag
-            }
+    return {
+        'alertState': state,
+        'assignedToUser': user,
+        'alertUrgency': urgency,
+        'notes': notes,
+        'eTag': etag
+        }
+
 
 class pages(object):
 

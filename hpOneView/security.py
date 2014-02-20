@@ -14,7 +14,6 @@ __copyright__ = '(C) Copyright 2012-2013 Hewlett-Packard Development ' \
 __license__ = 'MIT'
 __status__ = 'Development'
 
-
 ###
 # (C) Copyright 2013 Hewlett-Packard Development Company, L.P.
 #
@@ -44,6 +43,7 @@ from hpOneView.exceptions import *
 
 
 class security(object):
+
     def __init__(self, con):
         self._con = con
 
@@ -68,7 +68,7 @@ class security(object):
     def set_user_roles(self, user, roles):
         global uri
         body = self._con.put(uri['users'] + '/' + user +
-                    '/roles?multiResource=true', roles)
+                             '/roles?multiResource=true', roles)
         return body
 
     def create_user(self, user, roles=None):
@@ -92,7 +92,7 @@ class security(object):
         global uri
         body = self._con.get(uri['roles'])
         return get_members(body)
-    
+
     ###########################################################################
     # Certificates
     ###########################################################################
@@ -100,7 +100,7 @@ class security(object):
         global uri
         body = self._con.get(uri['certificates'])
         return body
-    
+
     def get_cert_https(self):
         global uri
         body = self._con.get(uri['cert-https'])
@@ -128,11 +128,10 @@ class security(object):
         global uri
         body = self._con.get(uri['rabbitmq-kp'] + '/' + alias)
         return body
-    
+
     def get_rabbitmq_ca(self, alias='default'):
         global uri
         body = self._con.get(uri['rabbitmq'] + '/' + alias)
         return body
-
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

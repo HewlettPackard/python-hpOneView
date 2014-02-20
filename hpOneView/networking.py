@@ -43,6 +43,7 @@ from hpOneView.exceptions import *
 
 
 class networking(object):
+
     def __init__(self, con):
         self._con = con
         self._activity = activity(con)
@@ -73,7 +74,7 @@ class networking(object):
     def update_lig(self, lig):
         global uri
         return self._activity.make_task_entity_tuple(self._con.put(lig['uri'],
-                                                        lig))
+                                                     lig))
 
     def delete_lig(self, lig, blocking=True, verbose=False):
         global uri
@@ -122,7 +123,7 @@ class networking(object):
     # NetworkSets
     ###########################################################################
     def create_networkset(self, name, nets=[], bw={},
-                                blocking=True, verbose=False):
+                          blocking=True, verbose=False):
         global uri
         nset = make_netset_dict(name, nets)
         body = self._con.conditional_post(uri['nset'], nset)
@@ -155,13 +156,10 @@ class networking(object):
         try:
             for vid in range(vid_start, vid_start + vid_count):
                 enet_name = '%s%s' % (prefix, vid)
-                enet_list.append(
-                                 self.create_enet_network(
-                                                          enet_name,
+                enet_list.append(self.create_enet_network(enet_name,
                                                           vid,
                                                           bw=bw
-                                                          )
-                                 )
+                                                          ))
         except http.client.HTTPException:
             # All or nothing
             for enet in enet_list:
@@ -183,14 +181,14 @@ class networking(object):
                               smartLink=smartLink,
                               privateNetwork=privateNetwork)
         return self.create_network(uri['enet'], xnet, bw, blocking=blocking,
-                                    verbose=verbose)
+                                   verbose=verbose)
 
     def create_fc_network(self, name, attach='FabricAttach', bw={},
-                            blocking=True, verbose=False):
+                          blocking=True, verbose=False):
         global uri
         xnet = make_fc_dict(name, attach)
         return self.create_network(uri['fcnet'], xnet, bw, blocking=blocking,
-                                    verbose=verbose)
+                                   verbose=verbose)
 
     def create_network(self, uri, xnet, bw={}, blocking=True, verbose=False):
         # throws an exception if there is an error
@@ -208,7 +206,7 @@ class networking(object):
 
     def update_network(self, xnet):
         return self._activity.make_task_entity_tuple(self._con.put(xnet['uri'],
-                                                        xnet))
+                                                     xnet))
 
     def delete_network(self, xnet, blocking=True, verbose=False):
         task = self._con.delete(xnet['uri'])

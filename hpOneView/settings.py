@@ -43,6 +43,7 @@ from hpOneView.exceptions import *
 
 
 class settings(object):
+
     def __init__(self, con):
         self._con = con
         self._activity = activity(con)
@@ -52,7 +53,7 @@ class settings(object):
     ###########################################################################
     def upload_spp(self, sppPath, sppName, verbose=False, blocking=True):
         response, body = self._con.post_multipart(uri['fwUpload'], '',
-                                            sppPath, sppName, verbose)
+                                                  sppPath, sppName, verbose)
         if response.status >= 400:
             raise HPOneViewException(body)
         if response.status == 202 and verbose is True:

@@ -42,6 +42,7 @@ from hpOneView.exceptions import *
 
 
 class search(object):
+
     def __init__(self, con):
         self._con = con
 

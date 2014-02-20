@@ -43,6 +43,7 @@ from hpOneView.exceptions import *
 
 
 class servers(object):
+
     def __init__(self, con):
         self._con = con
         self._activity = activity(con)

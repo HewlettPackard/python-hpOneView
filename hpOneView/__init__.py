@@ -53,16 +53,16 @@ from hpOneView.search import *
 def main():
     parser = argparse.ArgumentParser(add_help=True, description='Usage')
     parser.add_argument('-a', '--appliance', dest='host', required=True,
-            help='HP OneView Appliance hostname or IP')
+                        help='HP OneView Appliance hostname or IP')
     parser.add_argument('-u', '--user', dest='user', required=True,
-            help='HP OneView Username')
+                        help='HP OneView Username')
     parser.add_argument('-p', '--pass', dest='passwd', required=True,
-            help='HP OneView Password')
+                        help='HP OneView Password')
     parser.add_argument('-c', '--certificate', dest='cert', required=False,
-            help='Trusted SSL Certificate Bundle in PEM '
-                            '(Base64 Encoded DER) Format')
+                        help='Trusted SSL Certificate Bundle in PEM '
+                        '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
-            help='Proxy (host:port format')
+                        help='Proxy (host:port format')
     args = parser.parse_args()
     con = connection(args.host)
     if args.proxy:

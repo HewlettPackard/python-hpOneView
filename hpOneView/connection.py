@@ -47,15 +47,16 @@ from hpOneView.exceptions import *
 
 
 class connection(object):
+
     def __init__(self, applianceIp):
         self._session = None
         self._host = applianceIp
         self._cred = None
         self._apiVersion = 3
-        self._headers = {'X-API-Version': self._apiVersion,
-                'Accept': 'application/json, */*',
-                'Content-Type': 'application/json'
-               }
+        self._headers = {
+            'X-API-Version': self._apiVersion,
+            'Accept': 'application/json, */*',
+            'Content-Type': 'application/json'}
         self._proxyHost = None
         self._proxyPort = None
         self._doProxy = False
@@ -109,11 +110,11 @@ class connection(object):
                     context.load_verify_locations(self._sslTrustedBundle)
                     if self._doProxy is False:
                         conn = http.client.HTTPSConnection(self._host,
-                                                            context=context)
+                                                           context=context)
                     else:
                         conn = http.client.HTTPSConnection(self._proxyHost,
-                                                            self._proxyPort,
-                                                            context=context)
+                                                           self._proxyPort,
+                                                           context=context)
                         conn.set_tunnel(self._host, 443)
                     conn.request(method, path, body, self._headers)
                 else:
@@ -121,7 +122,7 @@ class connection(object):
                         conn = http.client.HTTPSConnection(self._host)
                     else:
                         conn = http.client.HTTPSConnection(self._proxyHost,
-                                                            self._proxyPort)
+                                                           self._proxyPort)
                         conn.set_tunnel(self._host, 443)
                     conn.request(method, path, body, self._headers)
                 resp = conn.getresponse()
@@ -163,10 +164,10 @@ class connection(object):
         fout = open(filename + '.b64', 'wb')
         fout.write(bytearray('--' + BOUNDARY + CRLF, 'utf-8'))
         fout.write(bytearray('Content-Disposition: form-data'
-                            '; name="file"; filename="' +
-                            filename + '"' + CRLF, "utf-8"))
+                             '; name="file"; filename="' +
+                             filename + '"' + CRLF, "utf-8"))
         fout.write(bytearray('Content-Type: application/octet-stream' + CRLF,
-                            'utf-8'))
+                             'utf-8'))
         fout.write(bytearray(CRLF, 'utf-8'))
         shutil.copyfileobj(fin, fout)
         fout.write(bytearray(CRLF, 'utf-8'))
@@ -273,14 +274,13 @@ class connection(object):
 
     def get_entities_byrange(self, uri, field, xmin, xmax):
         new_uri = uri + '?filter="\'' + field + '\'%20>%20\'' + xmin \
-                + '\'"&filter="\'' + field + '\'%20<%20\'' + xmax \
-                + '\'"&start=0&count=-1'
+            + '\'"&filter="\'' + field + '\'%20<%20\'' + xmax \
+            + '\'"&start=0&count=-1'
         body = self.get(new_uri)
         return get_members(body)
 
     def get_entities_byfield(self, uri, field, value):
-        new_uri = uri + '?filter="' + field + '%20EQ%20\'' + value \
-                + '\'"'
+        new_uri = uri + '?filter="' + field + '%20EQ%20\'' + value + '\'"'
         try:
             body = self.get(new_uri)
         except:
@@ -290,7 +290,7 @@ class connection(object):
 
     def get_entity_byfield(self, uri, field, value):
         new_uri = uri + '?filter="\'' + field + '\'%20=%20\'' + value \
-                + '\'"&start=0&count=-1'
+            + '\'"&start=0&count=-1'
         body = self.get(new_uri)
         return get_member(body)
 
@@ -352,8 +352,7 @@ class connection(object):
     def change_initial_password(self, newPassword):
         global uri
         password = make_initial_password_change_dict('Administrator',
-                                                 'admin',
-                                                 newPassword)
+                                                     'admin', newPassword)
         # This will throw an exception if the password is already changed
         self.post(uri['changePassword'], password)
 

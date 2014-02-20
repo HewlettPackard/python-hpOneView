@@ -49,6 +49,7 @@ TaskPendingStates = ['New', 'Starting', 'Running', 'Suspended', 'Stopping']
 
 
 class activity(object):
+
     def __init__(self, con):
         self._con = con
 
@@ -61,15 +62,16 @@ class activity(object):
             return {}
         if task['type'] == 'TaskResource':
             obj = self._con.get(task['associatedResourceUri'])
-            tmp = {'resourceName': obj['name'],
-                   'associationType': None,
-                   'resourceCategory': None,
-                   'resourceUri': obj['uri']}
+            tmp = {
+                'resourceName': obj['name'],
+                'associationType': None,
+                'resourceCategory': None,
+                'resourceUri': obj['uri']}
         elif task['type'] == 'TaskResourceV2':
             tmp = task['associatedResource']
         else:
             raise HPOneViewInvalidResource('Task resource is not a recognized'
-                                    ' version')
+                                           ' version')
         return tmp
 
     def make_task_entity_tuple(self, obj):
@@ -87,7 +89,7 @@ class activity(object):
                     uri = obj['associatedResource']['resourceUri']
                 else:
                     raise HPOneViewInvalidResource('Task resource is not a'
-                                            ' recognized version')
+                                                   ' recognized version')
                 if uri:
                     try:
                         entity = self._con.get(uri)
@@ -130,7 +132,7 @@ class activity(object):
             count = count + 1
             if count > tout:
                 raise HPOneViewTimeout('Waited ' + str(tout) +
-                            ' seconds for task to complete, aborting')
+                                       ' seconds for task to complete, aborting')
         if verbose is True:
             print()
 
@@ -146,7 +148,7 @@ class activity(object):
             running = list(filter(self.is_task_running, running))
             if count > tout:
                 raise HPOneViewTimeout('Waited 60 seconds for task to complete'
-                                ', aborting')
+                                       ', aborting')
 
     ###########################################################################
     # Alerts
@@ -157,8 +159,8 @@ class activity(object):
             return(get_members(self._con.get(uri['alerts'])))
         else:
             return(self._con.get_entities_byfield(uri['alerts'],
-                                        'alertState',
-                                        AlertState))
+                                                  'alertState',
+                                                  AlertState))
 
     def delete_alert(self, alert):
         self._con.delete(alert['uri'])
