@@ -1,0 +1,56 @@
+In HP OneView the State-Change Message Bus (SCMB) is an interface that uses
+asynchronous messaging to notify subscribers of changes to managed resources,
+both logical and physical. For example, you can program applications to receive
+notifications when new server hardware is added to the managed environment or
+when the health status of physical resources changes—without having to
+continuously poll the appliance for status using the REST APIs.
+
+HP OneView resources publish messages to the SCMB when they are created,
+updated, or deleted. The message content is sent in JSON (JavaScript Object
+Notation) format and includes the resource model. To view the list of HP OneView
+resources that publish messages, see the HP OneView REST API Reference.
+
+Two sample scripts are provided to demonstrate connectivity to the HP OneView
+SCMB. Both of the example scripts use the external AMQP library. The first
+script, scmb.py, receives all SCMB messages in the alerts "resource-category"
+and will output all new, active alerts with a critical severity to the console.
+The second script, ov_to_sm.py, is an extension of the first script. Once a new
+critical alert is received this script will connect to HP Service Manager and
+open a new ticket for the critical alert, it then takes the ticket number that
+was just created in HP Service Manager and updates the Alert Notes field in HP
+OneView with the ticket information.
+
+In order for either of the scripts to register and listen on the SCMB a couple
+of thing need to happen first.
+
+#1. The HP OneView appliance needs to generate a Rabbit MQ keypair. This does
+not happen by default and must be done ONE TIME for the running HP OneView
+appliance. If either of the example scripts is run with the “-g” argument it
+will request that the keypair is generated and exit. This only needs to be done
+1 time for each OneView appliance.
+
+#2. The script needs to download a copy of the SSL key and certificate. If
+either of the example scripts is run with the “-d” option it will download the
+required key and certificate. Again, this only needs to be done one time for the
+script.
+
+For Example: assuming, you have a brand new OneView appliance invocation would
+be similar to this:
+
+# Generate the RabbitMQ keypair on the appliance
+
+  ./scmb.py -a [OneView Appliance IP] -u Administrator -p MyPass -g
+
+# Download the SSL key and certificate
+
+  ./scmb.py -a [OneView Appliance IP] -u Administrator -p MyPass -d
+
+Once those two commands have run one time:
+
+The scmby.py scrip can be invoked by:
+
+  ./scmb.py -a [OneView Appliance IP] -u Administrator -p MyPass
+
+The ov_to_sm.py script can be invoked by:
+
+  ./ov_to_sm.py -a [OneView Appliance IP] -u Administrator -p MyPass -sm [SM IP] -x [SM Password]
