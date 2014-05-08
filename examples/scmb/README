@@ -1,3 +1,9 @@
+These sample scripts demonstrate the functionality of connecting HP OneView with
+external applications. Specifically, this example generate tickets in HP Service
+Manager based on critical alerts received from HP OneView's State-Change Message
+Bus and then annotates the alert in HP OneView with the new ticket information
+received from HP Service Manager.
+
 In HP OneView the State-Change Message Bus (SCMB) is an interface that uses
 asynchronous messaging to notify subscribers of changes to managed resources,
 both logical and physical. For example, you can program applications to receive
@@ -27,30 +33,30 @@ of thing need to happen first.
 not happen by default and must be done ONE TIME for the running HP OneView
 appliance. If either of the example scripts is run with the “-g” argument it
 will request that the keypair is generated and exit. This only needs to be done
-1 time for each OneView appliance.
+1 time for each HP OneView appliance.
 
 #2. The script needs to download a copy of the SSL key and certificate. If
 either of the example scripts is run with the “-d” option it will download the
 required key and certificate. Again, this only needs to be done one time for the
 script.
 
-For Example: assuming, you have a brand new OneView appliance invocation would
-be similar to this:
+For Example: assuming, you have a brand new HP OneView appliance invocation
+would be similar to this:
 
 # Generate the RabbitMQ keypair on the appliance
 
-  ./scmb.py -a [OneView Appliance IP] -u Administrator -p MyPass -g
+  ./scmb.py -a [HP OneView Appliance IP] -u Administrator -p MyPass -g
 
 # Download the SSL key and certificate
 
-  ./scmb.py -a [OneView Appliance IP] -u Administrator -p MyPass -d
+  ./scmb.py -a [HP OneView Appliance IP] -u Administrator -p MyPass -d
 
 Once those two commands have run one time:
 
 The scmby.py scrip can be invoked by:
 
-  ./scmb.py -a [OneView Appliance IP] -u Administrator -p MyPass
+  ./scmb.py -a [HP OneView Appliance IP] -u Administrator -p MyPass
 
 The ov_to_sm.py script can be invoked by:
 
-  ./ov_to_sm.py -a [OneView Appliance IP] -u Administrator -p MyPass -sm [SM IP] -x [SM Password]
+  ./ov_to_sm.py -a [HP OneView Appliance IP] -u Administrator -p MyPass -sm [SM IP] -x [SM Password]
