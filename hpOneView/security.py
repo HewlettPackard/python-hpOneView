@@ -67,15 +67,33 @@ class security(object):
 
     def set_user_roles(self, user, roles):
         global uri
+        request = []
+        for role in roles:
+            req = {}
+            req['type'] = 'RoleNameDtoV2'
+            req['roleName'] = role
+            request.append(req)
         body = self._con.put(uri['users'] + '/' + user +
-                             '/roles?multiResource=true', roles)
+                             '/roles?multiResource=true', request)
         return body
 
-    def create_user(self, user, roles=None):
+    def set_user_role(self, user, role):
         global uri
-        body = self._con.post(uri['users'], user)
-        if roles:
-            self.set_user_roles(user['userName'], roles)
+        request = {}
+        request['type'] = 'RoleNameDtoV2'
+        request['roleName'] = role
+        body = self._con.put(uri['users'] + '/' + user +
+                             '/roles?multiResource=true', [request])
+        return body
+
+    def create_user(self, name, password, enabled=True, fullName='',
+                    emailAddress='', officePhone='', mobilePhone='',
+                    roles=['Infrastructure administrator']):
+        global uri
+        usr = make_user_dict(name, password, enabled, fullName,
+                             emailAddress, officePhone, mobilePhone,
+                             roles)
+        body = self._con.post(uri['users'], usr)
         return body
 
     def delete_user(self, user):

@@ -133,8 +133,8 @@ class settings(object):
     def set_dev_read_comm_string(self, communityString):
         global uri
         request = {'communityString': communityString}
-        response = eval(self._con.post(uri['dev-read-community-str'], request))
-        return response['communityString']
+        body = self._con.put(uri['dev-read-community-str'], request)
+        return body
 
     def get_licenses(self):
         global uri
@@ -148,5 +148,11 @@ class settings(object):
             'type': 'License'}
         response = self._con.post(uri['licenses'], request)
         return response
+
+    def factory_reset(self, mode='PRESERVE_NETWORK'):
+        global uri
+        response = self._con.delete('/rest/appliance?mode=' + mode)
+        return response
+
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

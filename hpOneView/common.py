@@ -185,21 +185,17 @@ def get_member(mlist):
 ############################################################################
 # Create default Resource Instances
 ############################################################################
-def make_user_dict(name, password,
-                   enabled=True,
-                   fullName='',
-                   emailAddress='',
-                   officePhone='',
-                   mobilePhone='',
-                   roles=[]):
+def make_user_dict(name, password, enabled, fullName, emailAddress,
+                   officePhone, mobilePhone, roles=[]):
     return {
         'userName': name,
-        'fullName': fullName,
         'password': password,
+        'fullName': fullName,
         'emailAddress': emailAddress,
         'officePhone': officePhone,
         'mobilePhone': mobilePhone,
         'enabled': enabled,
+        'type': 'UserAndRoles',
         'roles': roles}
 
 
@@ -219,11 +215,16 @@ def make_netset_dict(name, networks=[]):
 
 
 def make_enet_dict(name, vlanid=0,
-                   smartLink=True, privateNetwork=False):
+                   purpose='General',
+                   smartLink=True,
+                   privateNetwork=False,
+                   bw={},
+                   blocking=True,
+                   verbose=False):
     return {
         'name': name,
-        'type': 'ethernet-network',
-        'purpose': 'General',
+        'type': 'ethernet-networkV2',
+        'purpose': purpose,
         'connectionTemplateUri': None,
         'vlanId': vlanid,
         'smartLink': smartLink,
@@ -231,15 +232,13 @@ def make_enet_dict(name, vlanid=0,
 
 
 def make_fc_dict(name, fabricType='FabricAttach',
-                 uplinkBandwidth='Auto',
                  autoLoginRedistribution=True,
                  linkStabilityTime=30):
     return {
         'name': name,
-        'type': 'fc-network',
+        'type': 'fc-networkV2',
         'connectionTemplateUri': None,
         'fabricType': fabricType,
-        'uplinkBandwidth': uplinkBandwidth,
         'autoLoginRedistribution': autoLoginRedistribution,
         'linkStabilityTime': linkStabilityTime}
 
@@ -272,13 +271,13 @@ def make_enet_settings(name,
         'enableNetworkLoopProtection': enableNetworkLoopProtection,
         'interconnectType': 'Ethernet'
         # 'description': null,
-        }
+    }
 
 
 def make_lig_dict(name):
     return {
         'name': name,
-        'type': 'logical-interconnect-group',
+        'type': 'logical-interconnect-groupV2',
         'interconnectMapTemplate': make_interconnect_map_template(),
         'uplinkSets': [],  # call make_uplink_template
         'stackingMode': 'Enclosure',
@@ -287,7 +286,7 @@ def make_lig_dict(name):
         # 'telemetryConfiguration': None,
         # 'snmpConfiguration' : None,
         # 'description': None
-        }
+    }
 
 
 def set_iobay_occupancy(switchMap, bays, stype):
@@ -310,15 +309,25 @@ def get_iobay_entry(interconnectMap, bay):
 
 
 def make_uplink_set_dict(name, networks=[], ntype='Ethernet'):
-    return {
-        'name': name,
-        'mode': 'Auto',  # Auto or Failover
-        'networkUris': networks[:],
-        'networkType': ntype,  # Ethernet or FibreChannel
-        'primaryPort': None,
-        'logicalPortConfigInfos': [],  # Array of logicalLocations
-        'nativeNetworkUri': None
-        }
+    if ntype == 'Ethernet':
+        return {'name': name,
+                'ethernetNetworkType': 'Tagged',
+                'networkUris': networks[:],
+                'networkType': 'Ethernet',   # Ethernet or FibreChannel
+                'mode': 'Auto',   # Auto or Failover
+                'primaryPort': None,
+                'logicalPortConfigInfos': [],  # Array of logicalLocations
+                'nativeNetworkUri': None
+                }
+    if ntype == 'FibreChannel':
+        return {'name': name,
+                'ethernetNetworkType': 'NotApplicable',
+                'networkUris': networks[:],
+                'logicalPortConfigInfos': [],  # Array of logicalLocations
+                'networkType': 'FibreChannel',  # Ethernet or FibreChannel
+                'mode': 'Auto',  # Auto or Failover
+                }
+    raise Exception('networkType must be Ethernet or FibreChannel.')
 
 
 def make_port_config_info(enclosure, bay, port, speed='Auto'):
@@ -332,11 +341,11 @@ def make_port_config_info(enclosure, bay, port, speed='Auto'):
             }
 
 
-def make_egroup_dict(name, lig):
+def make_egroup_dict(name, lig, smode='Enclosure'):
     return {
         'name': name,
-        'type': 'EnclosureGroup',
-        'stackingMode': 'Enclosure',
+        'type': 'EnclosureGroupV2',
+        'stackingMode': smode,
         'interconnectBayMappings': [{'interconnectBay': N,
                                      'logicalInterconnectGroupUri': lig
                                      } for N in range(1, 9)], }
@@ -387,7 +396,7 @@ def make_profile_connection_boot_target_dict(arrayWwpn=None, lun=None):
 def make_add_profile_dict(profileName, server, firmwareBaseline=None,
                           connections=[]):
     return {
-        'type': 'ServerProfileV1',
+        'type': 'ServerProfileV3',
         'name': profileName,
         'wwnType': 'Virtual',
         'serialNumberType': 'Virtual',
@@ -444,7 +453,7 @@ def make_appliance_network_config_dict(hostName,
             'macAddress': macAddress,
             'ipv4Type': ipv4Type,
             'ipv6Type': ipv6Type}]
-            }
+               }
     if ipv4Type == 'STATIC':
         return {
             'applianceNetworks': [{
@@ -571,7 +580,8 @@ def make_add_server_dict(hostname,
         'licensingIntent': licensingIntent}
 
 
-def make_alertMap_dict(notes, etag, state='Active', user='None', urgency='None'):
+def make_alertMap_dict(notes, etag, state='Active', user='None',
+                       urgency='None'):
     return {
         'alertState': state,
         'assignedToUser': user,

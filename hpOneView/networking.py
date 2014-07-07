@@ -171,15 +171,15 @@ class networking(object):
         return enet_list
 
     def create_enet_network(self, name, vid,
+                            purpose='General',
                             smartLink=True,
                             privateNetwork=False,
                             bw={},
                             blocking=True,
                             verbose=False):
         global uri
-        xnet = make_enet_dict(name, vid,
-                              smartLink=smartLink,
-                              privateNetwork=privateNetwork)
+        xnet = make_enet_dict(name, vid, smartLink=smartLink,
+                              privateNetwork=privateNetwork, purpose=purpose)
         return self.create_network(uri['enet'], xnet, bw, blocking=blocking,
                                    verbose=verbose)
 

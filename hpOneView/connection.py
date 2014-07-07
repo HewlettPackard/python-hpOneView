@@ -52,7 +52,7 @@ class connection(object):
         self._session = None
         self._host = applianceIp
         self._cred = None
-        self._apiVersion = 3
+        self._apiVersion = 101
         self._headers = {
             'X-API-Version': self._apiVersion,
             'Accept': 'application/json, */*',
