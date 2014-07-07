@@ -7,7 +7,7 @@ hpOneView is a library for interfacing with HP OneView Management Appliance.
 """
 
 __title__ = 'hpOneView'
-__version__ = '0.0.1'
+__version__ = '101.0.1'
 __copyright__ = '(C) Copyright 2012-2013 Hewlett-Packard Development ' \
                 ' Company, L.P.'
 __license__ = 'MIT'
