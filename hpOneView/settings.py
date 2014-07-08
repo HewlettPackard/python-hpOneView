@@ -170,5 +170,11 @@ class settings(object):
                                   None)
         return response
 
+    def get_trap_destinations(self):
+        global uri
+        body = self._con.get(uri['trap'])
+        return body
+
+
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

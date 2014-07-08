@@ -57,6 +57,7 @@ uri = {
     'nodestatus': '/rest/appliance/nodeinfo/status',
     'nodeversion': '/rest/appliance/nodeinfo/version',
     'shutdown': '/rest/appliance/shutdown',
+    'trap': '/rest/appliance/trap-destinations',
     #------------------------------------
     # Security
     #------------------------------------
