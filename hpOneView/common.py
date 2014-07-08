@@ -56,6 +56,7 @@ uri = {
     'licenses': '/rest/licenses',
     'nodestatus': '/rest/appliance/nodeinfo/status',
     'nodeversion': '/rest/appliance/nodeinfo/version',
+    'shutdown': '/rest/appliance/shutdown',
     #------------------------------------
     # Security
     #------------------------------------

@@ -164,5 +164,11 @@ class settings(object):
         body = self._con.get(uri['nodeversion'])
         return body
 
+    def shutdown(self, mode='HALT'):
+        global uri
+        response = self._con.post('/rest/appliance/shutdown?type=' + mode,
+                                  None)
+        return response
+
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
