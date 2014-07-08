@@ -41,9 +41,8 @@ __status__ = 'Development'
 # https://<appliance>/rest/switch-types?filter="partNumber = '455880-B21'"
 uri = {
     #------------------------------------
-    # CI Controller
+    # Settings
     #------------------------------------
-    'applNetConfig': '/rest/appliance/network-interfaces',
     'applGlobalSettings': '/rest/global-settings',
     'eulaStatus': '/rest/appliance/eula/status',
     'eulaSave': '/rest/appliance/eula/save',
@@ -55,6 +54,8 @@ uri = {
     'backups': '/rest/backups',
     'dev-read-community-str': '/rest/appliance/device-read-community-string',
     'licenses': '/rest/licenses',
+    'nodestatus': '/rest/appliance/nodeinfo/status',
+    'nodeversion': '/rest/appliance/nodeinfo/version',
     #------------------------------------
     # Security
     #------------------------------------

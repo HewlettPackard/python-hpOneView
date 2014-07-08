@@ -154,5 +154,15 @@ class settings(object):
         response = self._con.delete('/rest/appliance?mode=' + mode)
         return response
 
+    def get_node_status(self):
+        global uri
+        body = self._con.get(uri['nodestatus'])
+        return body
+
+    def get_node_version(self):
+        global uri
+        body = self._con.get(uri['nodeversion'])
+        return body
+
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
