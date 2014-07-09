@@ -125,6 +125,38 @@ class settings(object):
         f.close()
         return
 
+    def upload_backup(self, path, name, verbose=False, blocking=True):
+        response, body = self._con.post_multipart(uri['archive'], '',
+                                                  path, name, verbose)
+        if response.status >= 400:
+            raise HPOneViewException(body)
+        if response.status == 202 and verbose is True:
+            print('Upload complete. Waiting for processing.')
+        task, backup = self._activity.make_task_entity_tuple(body)
+        if blocking is True:
+            self._activity.wait4task(task, tout=600, verbose=verbose)
+        if verbose is True:
+            print('Processing complete.')
+        return backup
+
+    def restore_backup(self, backupUri):
+        global uri
+        request = {
+            'type': 'RESTORE',
+            'uriOfBackupToRestore': backupUri}
+        response = self._con.post(uri['restores'], request)
+        return response
+
+    def get_backups(self):
+        global uri
+        body = self._con.get(uri['backups'])
+        return body
+
+    def get_restores(self):
+        global uri
+        body = self._con.get(uri['restores'])
+        return body
+
     def get_dev_read_comm_string(self):
         global uri
         body = self._con.get(uri['dev-read-community-str'])
@@ -174,6 +206,7 @@ class settings(object):
         global uri
         body = self._con.get(uri['trap'])
         return body
+
 
 
 

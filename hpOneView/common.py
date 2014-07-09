@@ -52,12 +52,14 @@ uri = {
     'version': '/rest/version',
     'supportDump': '/rest/appliance/support-dumps',
     'backups': '/rest/backups',
+    'archive': '/rest/backups/archive',
     'dev-read-community-str': '/rest/appliance/device-read-community-string',
     'licenses': '/rest/licenses',
     'nodestatus': '/rest/appliance/nodeinfo/status',
     'nodeversion': '/rest/appliance/nodeinfo/version',
     'shutdown': '/rest/appliance/shutdown',
     'trap': '/rest/appliance/trap-destinations',
+    'restores': '/rest/restores',
     #------------------------------------
     # Security
     #------------------------------------

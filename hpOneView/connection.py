@@ -204,8 +204,7 @@ class connection(object):
             readSize = 1048576
             conn.send(mappedfile.read(readSize))
             if verbose is True:
-                sys.stdout.write('%d bytes sent... \r' % mappedfile.tell())
-                sys.stdout.flush()
+                print('%d bytes sent... \r' % mappedfile.tell())
         mappedfile.close()
         inputfile.close()
         os.remove(files + '.b64')
