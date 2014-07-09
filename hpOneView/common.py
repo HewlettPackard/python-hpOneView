@@ -47,6 +47,7 @@ uri = {
     'eulaStatus': '/rest/appliance/eula/status',
     'eulaSave': '/rest/appliance/eula/save',
     'serviceAccess': '/rest/appliance/settings/enableServiceAccess',
+    'service': '/rest/appliance/settings/serviceaccess',
     'applianceNetworkInterfaces': '/rest/appliance/network-interfaces',
     'healthStatus': '/rest/appliance/health-status',
     'version': '/rest/version',

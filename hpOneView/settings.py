@@ -207,7 +207,14 @@ class settings(object):
         body = self._con.get(uri['trap'])
         return body
 
+    def get_serviceaccess(self):
+        global uri
+        body = self._con.get(uri['service'])
+        return body
 
-
+    def set_service_access(self, serviceAccess):
+        global uri
+        response = self._con.put(uri['serviceAccess'], serviceAccess)
+        return response
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

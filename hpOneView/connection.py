@@ -355,14 +355,6 @@ class connection(object):
         # This will throw an exception if the password is already changed
         self.post(uri['changePassword'], password)
 
-    def set_service_access(self, serviceAccess):
-        global uri
-        resp = self.put(uri['serviceAccess'], serviceAccess)
-        if resp is True:
-            return
-        else:
-            raise HPOneViewException('Could not change Service Access')
-
     ###########################################################################
     # Login/Logout to/from appliance
     ###########################################################################
