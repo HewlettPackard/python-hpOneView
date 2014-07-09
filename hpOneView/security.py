@@ -152,4 +152,10 @@ class security(object):
         body = self._con.get(uri['rabbitmq'] + '/' + alias)
         return body
 
+    def get_active_user_sessions(self):
+        global uri
+        body = self._con.get(uri['activeSessions'])
+        return body
+
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

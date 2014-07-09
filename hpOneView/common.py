@@ -64,6 +64,7 @@ uri = {
     #------------------------------------
     # Security
     #------------------------------------
+    'activeSessions': '/rest/active-user-sessions',
     'loginSessions': '/rest/login-sessions',
     'users': '/rest/users',
     'userRole': '/rest/users/role',
