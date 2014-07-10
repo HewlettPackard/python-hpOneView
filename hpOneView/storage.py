@@ -48,11 +48,14 @@ class storage(object):
         self._con = con
         self._activity = activity(con)
 
-    def add_storage_system(self, host, user, passwd):
+    def add_storage_system(self, host, user, passwd, blocking=True,
+                           verbose=False):
         request = {'ip_hostname': host,
                    'username': user,
                    'password': passwd}
         task, body = self._con.post(uri['storage-systems'], request)
+        if blocking is True:
+            self._activity.wait4task(task, tout=600, verbose=verbose)
         return body
 
     def update_storage_system(self, StorageSystem):
