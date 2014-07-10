@@ -52,15 +52,15 @@ class storage(object):
         request = {'ip_hostname': host,
                    'username': user,
                    'password': passwd}
-        response = self._con.post(uri['storage-systems'], request)
-        return response
+        task, body = self._con.post(uri['storage-systems'], request)
+        return body
 
     def update_storage_system(self, StorageSystem):
-        response = self._con.put(StorageSystem['uri'], StorageSystem)
-        return response
+        task, body = self._con.put(StorageSystem['uri'], StorageSystem)
+        return body
 
     def remove_storage_system(self, system, blocking=True, verbose=False):
-        task = self._con.delete(system['uri'])
+        task, body = self._con.delete(system['uri'])
         if blocking is True:
             self._activity.wait4task(task, tout=600, verbose=verbose)
         return

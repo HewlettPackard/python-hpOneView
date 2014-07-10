@@ -83,18 +83,18 @@ class servers(object):
         return
 
     def delete_server(self, server, blocking=True, verbose=False):
-        task = self._con.delete(server['uri'])
+        task, body = self._con.delete(server['uri'])
         if blocking is True:
             self._activity.wait4task(task, tout=600, verbose=verbose)
         return
 
     def update_server(self, server):
-        body = self._con.put(server['uri'], server)
+        task, body = self._con.put(server['uri'], server)
         return body
 
     def add_server(self, server, blocking=True, verbose=False):
         global uri
-        task = self._con.post(uri['servers'], server)
+        task, body = self._con.post(uri['servers'], server)
         if blocking is True:
             self._activity.wait4task(task, tout=600, verbose=verbose)
         task = self._con.get(task['uri'])
@@ -110,7 +110,7 @@ class servers(object):
     ###########################################################################
     def create_server_profile(self, profile, blocking=True, verbose=False):
         # Creating a profile returns a task with no resource uri
-        task = self._con.post(uri['profiles'], profile)
+        task, body = self._con.post(uri['profiles'], profile)
         if blocking is True:
             try:
                 if profile['firmware']['firmwareBaselineUri'] is None:
@@ -127,7 +127,7 @@ class servers(object):
         return profile
 
     def remove_server_profile(self, profile, blocking=True, verbose=False):
-        task = self._con.delete(profile['uri'])
+        task, body = self._con.delete(profile['uri'])
         if blocking is True:
             self._activity.wait4task(task, tout=600, verbose=verbose)
         return
@@ -137,7 +137,7 @@ class servers(object):
         return get_members(body)
 
     def update_server_profile(self, profile, blocking=True, verbose=False):
-        task = self._con.put(profile['uri'], profile)
+        task, body = self._con.put(profile['uri'], profile)
         if blocking is True:
             try:
                 if profile['firmware']['firmwareBaselineUri'] is None:
@@ -161,7 +161,7 @@ class servers(object):
 #        return body
 
     def add_enclosure(self, enclosure, blocking=True, verbose=False):
-        task = self._con.post(uri['enclosures'], enclosure)
+        task, body = self._con.post(uri['enclosures'], enclosure)
         if blocking is True:
             try:
                 if enclosure['firmwareBaselineUri'] is None:
@@ -178,9 +178,9 @@ class servers(object):
     def remove_enclosure(self, enclosure, force=False, blocking=True,
                          verbose=False):
         if force:
-            task = self._con.delete(enclosure['uri'] + '?force=True')
+            task, body = self._con.delete(enclosure['uri'] + '?force=True')
         else:
-            task = self._con.delete(enclosure['uri'])
+            task, body = self._con.delete(enclosure['uri'])
         if blocking is True:
             self._activity.wait4task(task, tout=600, verbose=verbose)
         return
@@ -190,7 +190,7 @@ class servers(object):
     ###########################################################################
     def create_enclosure_group(self, egroup):
         # Creating an Enclosure Group returns the group, NOT a task
-        body = self._con.post(uri['enclosureGroups'], egroup)
+        task, body = self._con.post(uri['enclosureGroups'], egroup)
         return body
 
     def delete_enclosure_group(self, egroup):
@@ -200,7 +200,7 @@ class servers(object):
         return get_members(self._con.get(uri['enclosureGroups']))
 
     def update_enclosure_group(self, enclosuregroup):
-        body = self._con.put(enclosuregroup['uri'], enclosuregroup)
+        task, body = self._con.put(enclosuregroup['uri'], enclosuregroup)
         return body
 
     ###########################################################################
@@ -226,34 +226,34 @@ class servers(object):
     def allocate_pool_ids(self, url, count):
         allocatorUrl = '%s/allocator' % url
         allocatorBody = {'count': count}
-        body = self._con.put(allocatorUrl, allocatorBody)
+        task, body = self._con.put(allocatorUrl, allocatorBody)
         return body
 
     def release_pool_ids(self, url, idList):
         collectorUrl = '%s/collector' % url
         collectorBody = {'idList': idList}
-        body = self._con.put(collectorUrl, collectorBody)
+        task, body = self._con.put(collectorUrl, collectorBody)
         return body
 
     def allocate_range_ids(self, allocatorUrl, count):
-        body = self._con.put(allocatorUrl, {'count': count})
+        task, body = self._con.put(allocatorUrl, {'count': count})
         return body
 
     def release_range_ids(self, collectorUrl, idList):
-        body = self._con.put(collectorUrl, {'idList': idList})
+        task, body = self._con.put(collectorUrl, {'idList': idList})
         return body
 
     # TODO POST Range
     def enable_range(self, url):
         prange = self._con.get(url)
         prange['enabled'] = True
-        body = self._con.put(url, prange)
+        task, body = self._con.put(url, prange)
         return body
 
     def disable_range(self, url):
         prange = self._con.get(url)
         prange['enabled'] = False
-        body = self._con.put(url, prange)
+        task, body = self._con.put(url, prange)
         return body
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

@@ -263,13 +263,19 @@ class connection(object):
         resp, body = self.do_http('PUT', uri, json.dumps(body))
         if resp.status >= 400:
             raise HPOneViewException(body)
-        return body
+        elif resp.status == 202:
+            task = self.get(resp.getheader('Location'))
+            return task, body
+        return None, body
 
     def post(self, uri, body):
         resp, body = self.do_http('POST', uri, json.dumps(body))
         if resp.status >= 400:
             raise HPOneViewException(body)
-        return body
+        elif resp.status == 202:
+            task = self.get(resp.getheader('Location'))
+            return task, body
+        return None, body
 
     def get_entities_byrange(self, uri, field, xmin, xmax):
         new_uri = uri + '?filter="\'' + field + '\'%20>%20\'' + xmin \
@@ -295,7 +301,7 @@ class connection(object):
 
     def conditional_post(self, uri, body):
         try:
-            entity = self.post(uri, body)
+            task, entity = self.post(uri, body)
         except HPOneViewException as e:
             # this may have failed because the entity already exists,
             # unfortunately there is not a uniform way to report this,
@@ -318,7 +324,10 @@ class connection(object):
         resp, body = self.do_http('DELETE', uri, '')
         if resp.status >= 400 and resp.status != 404:
             raise HPOneViewException(body)
-        return body
+        elif resp.status == 202:
+            task = self.get(resp.getheader('Location'))
+            return task, body
+        return None, body
 
     ###########################################################################
     # EULA
@@ -362,7 +371,7 @@ class connection(object):
         global uri
         self._cred = cred
         try:
-            body = self.post(uri['loginSessions'], self._cred)
+            task, body = self.post(uri['loginSessions'], self._cred)
         except HPOneViewException:
             raise
         auth = body['sessionID']

@@ -66,7 +66,7 @@ class settings(object):
         return spp['resourceId']
 
     def delete_spp(self, sppName):
-        body = self._con.delete(uri['fwDrivers'] + '/' + sppName)
+        task, body = self._con.delete(uri['fwDrivers'] + '/' + sppName)
         return body
 
     def get_spps(self):
@@ -90,10 +90,10 @@ class settings(object):
         if logicalInterconnect is None:
             request['encrypt'] = encrypt
             request['errorCode'] = 'CI'
-            body = self._con.post(uri['supportDump'], request)
+            task, body = self._con.post(uri['supportDump'], request)
         else:
             request['errorCode'] = 'LI'
-            body = self._con.post(
+            task, body = self._con.post(
                 logicalInterconnect['uri'] + '/support-dumps',
                 request)
         return body
@@ -144,8 +144,8 @@ class settings(object):
         request = {
             'type': 'RESTORE',
             'uriOfBackupToRestore': backupUri}
-        response = self._con.post(uri['restores'], request)
-        return response
+        task, body = self._con.post(uri['restores'], request)
+        return body
 
     def get_backups(self):
         global uri
@@ -165,7 +165,7 @@ class settings(object):
     def set_dev_read_comm_string(self, communityString):
         global uri
         request = {'communityString': communityString}
-        body = self._con.put(uri['dev-read-community-str'], request)
+        task, body = self._con.put(uri['dev-read-community-str'], request)
         return body
 
     def get_licenses(self):
@@ -178,8 +178,8 @@ class settings(object):
         request = {
             'key': licenseKey,
             'type': 'License'}
-        response = self._con.post(uri['licenses'], request)
-        return response
+        task, body = self._con.post(uri['licenses'], request)
+        return body
 
     def factory_reset(self, mode='PRESERVE_NETWORK'):
         global uri
@@ -198,9 +198,9 @@ class settings(object):
 
     def shutdown(self, mode='HALT'):
         global uri
-        response = self._con.post('/rest/appliance/shutdown?type=' + mode,
-                                  None)
-        return response
+        task, body = self._con.post('/rest/appliance/shutdown?type=' + mode,
+                                    None)
+        return body
 
     def get_trap_destinations(self):
         global uri
@@ -214,7 +214,7 @@ class settings(object):
 
     def set_service_access(self, serviceAccess):
         global uri
-        response = self._con.put(uri['serviceAccess'], serviceAccess)
-        return response
+        task, body = self._con.put(uri['serviceAccess'], serviceAccess)
+        return body
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

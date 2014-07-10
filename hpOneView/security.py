@@ -73,7 +73,7 @@ class security(object):
             req['type'] = 'RoleNameDtoV2'
             req['roleName'] = role
             request.append(req)
-        body = self._con.put(uri['users'] + '/' + user +
+        task, body = self._con.put(uri['users'] + '/' + user +
                              '/roles?multiResource=true', request)
         return body
 
@@ -82,7 +82,7 @@ class security(object):
         request = {}
         request['type'] = 'RoleNameDtoV2'
         request['roleName'] = role
-        body = self._con.put(uri['users'] + '/' + user +
+        task, body = self._con.put(uri['users'] + '/' + user +
                              '/roles?multiResource=true', [request])
         return body
 
@@ -93,17 +93,17 @@ class security(object):
         usr = make_user_dict(name, password, enabled, fullName,
                              emailAddress, officePhone, mobilePhone,
                              roles)
-        body = self._con.post(uri['users'], usr)
+        task, body = self._con.post(uri['users'], usr)
         return body
 
     def delete_user(self, user):
         global uri
-        body = self._con.delete(uri['users'] + '/' + user)
+        task, body = self._con.delete(uri['users'] + '/' + user)
         return body
 
     def update_user(self, updateUser):
         global uri
-        body = self._con.put(uri['users'], updateUser)
+        task, body = self._con.put(uri['users'], updateUser)
         return body
 
     def get_roles(self):
@@ -139,7 +139,7 @@ class security(object):
         request = {}
         request['type'] = 'RabbitMqClientCert'
         request['commonName'] = 'default'
-        body = self._con.post(uri['rabbitmq'], request)
+        task, body = self._con.post(uri['rabbitmq'], request)
         return body
 
     def get_rabbitmq_kp(self, alias='default'):

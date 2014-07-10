@@ -65,20 +65,20 @@ class networking(object):
 
     def create_lig(self, lig, blocking=True, verbose=False):
         global uri
-        body = self._con.post(uri['lig'], lig)
-        task, entity = self._activity.make_task_entity_tuple(body)
+        task, body = self._con.post(uri['lig'], lig)
+        task, entity = self._activity.make_task_entity_tuple(task)
         if blocking is True:
             self._activity.wait4task(task, verbose=verbose)
         return entity
 
     def update_lig(self, lig):
         global uri
-        return self._activity.make_task_entity_tuple(self._con.put(lig['uri'],
-                                                     lig))
+        task, body = self._con.put(lig['uri'], lig)
+        return self._activity.make_task_entity_tuple(task)
 
     def delete_lig(self, lig, blocking=True, verbose=False):
         global uri
-        task = self._con.delete(lig['uri'])
+        task, body = self._con.delete(lig['uri'])
         if blocking is True:
             self._activity.wait4task(task, verbose=verbose)
         return
@@ -116,8 +116,8 @@ class networking(object):
         defaultCT = self._con.get(xnet['connectionTemplateUri'])
         defaultCT['bandwidth']['maximumBandwidth'] = bw['maximumBandwidth']
         defaultCT['bandwidth']['typicalBandwidth'] = bw['typicalBandwidth']
-        body = self._con.put(defaultCT['uri'], defaultCT)
-        return self._activity.make_task_entity_tuple(body)
+        task, body = self._con.put(defaultCT['uri'], defaultCT)
+        return self._activity.make_task_entity_tuple(task)
 
     ###########################################################################
     # NetworkSets
@@ -139,7 +139,7 @@ class networking(object):
             return entity
 
     def delete_networkset(self, networkset, blocking=True, verbose=False):
-        task = self._con.delete(networkset['uri'])
+        task, body = self._con.delete(networkset['uri'])
         if blocking is True:
             self._activity.wait4task(task, verbose=verbose)
         return
@@ -205,11 +205,11 @@ class networking(object):
             return entity
 
     def update_network(self, xnet):
-        return self._activity.make_task_entity_tuple(self._con.put(xnet['uri'],
-                                                     xnet))
+        task, body = self._con.put(xnet['uri'], xnet)
+        return self._activity.make_task_entity_tuple(task)
 
     def delete_network(self, xnet, blocking=True, verbose=False):
-        task = self._con.delete(xnet['uri'])
+        task, body = self._con.delete(xnet['uri'])
         if blocking is True:
             self._activity.wait4task(task, verbose=verbose)
         return
