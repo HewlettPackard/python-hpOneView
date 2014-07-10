@@ -175,8 +175,12 @@ class servers(object):
         enclosure = self._con.get(entity['resourceUri'])
         return enclosure
 
-    def remove_enclosure(self, enclosure, blocking=True, verbose=False):
-        task = self._con.delete(enclosure['uri'])
+    def remove_enclosure(self, enclosure, force=False, blocking=True,
+                         verbose=False):
+        if force:
+            task = self._con.delete(enclosure['uri'] + '?force=True')
+        else:
+            task = self._con.delete(enclosure['uri'])
         if blocking is True:
             self._activity.wait4task(task, tout=600, verbose=verbose)
         return
