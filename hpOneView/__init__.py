@@ -48,6 +48,7 @@ from hpOneView.security import *
 from hpOneView.settings import *
 from hpOneView.exceptions import *
 from hpOneView.search import *
+from hpOneView.storage import *
 
 
 def main():

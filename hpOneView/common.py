@@ -137,6 +137,13 @@ uri = {
     #  Logging and Tracking
     #------------------------------------
     'task': '/rest/tasks',
+    #------------------------------------
+    # Storage
+    #------------------------------------
+    'storage-pools': '/rest/storage-pools',
+    'storage-systems': '/rest/storage-systems',
+    'storage-volumes': '/rest/storage-volumes',
+    'vol-templates': '/rest/storage-volume-templates',
 }
 
 
@@ -369,6 +376,16 @@ def make_add_enclosure_dict(host, user, passwd, egroup,
         'firmwareBaselineUri': firmwareBaseLineUri,
         'updateFirmwareOn': 'EnclosureOnly',
         'licensingIntent': 'OneView'}
+
+
+def make_storage_system_dict(mdom, udom, mports, uports):
+    return {
+        'type': 'StorageSystem',
+        'managedDomain': mdom,
+        'unmanagedDomains': udom[:],
+        'managedPorts': mports[:],
+        'unmanagedPorts': uports[:],
+        }
 
 
 def make_profile_connection_dict(network,
