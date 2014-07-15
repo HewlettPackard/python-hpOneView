@@ -144,6 +144,12 @@ uri = {
     'storage-systems': '/rest/storage-systems',
     'storage-volumes': '/rest/storage-volumes',
     'vol-templates': '/rest/storage-volume-templates',
+    #------------------------------------
+    # FC-SANS
+    #------------------------------------
+    'device-managers': '/rest/fc-sans/device-managers',
+    'managed-sans': '/rest/fc-sans/managed-sans',
+    'providers': '/rest/fc-sans/providers',
 }
 
 
