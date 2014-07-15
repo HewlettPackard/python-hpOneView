@@ -288,6 +288,42 @@ def make_enet_settings(name,
     }
 
 
+def make_storage_vol_template(name,
+                              capacity,
+                              shareable,
+                              storagePoolUri,
+                              description='',
+                              provisionType='Thin'):
+    return {
+        'provisioning': {
+            'shareable': shareable,
+            'provisionType': provisionType,
+            'capacity': capacity,
+            'storagePoolUri': storagePoolUri},
+        'name': name,
+        'description': description,
+        'type': 'StorageVolumeTemplate'
+    }
+
+
+def make_storage_volume(name,
+                        capacity,
+                        shareable,
+                        storagePoolUri,
+                        description='',
+                        provisionType='Thin'):
+    return {
+        'name': name,
+        'description': description,
+        'provisioningParameters': {
+            'shareable': shareable,
+            'provisionType': provisionType,
+            'requestedCapacity': capacity,
+            'storagePoolUri': storagePoolUri},
+        'type': 'StorageVolumeTemplate'
+    }
+
+
 def make_lig_dict(name):
     return {
         'name': name,

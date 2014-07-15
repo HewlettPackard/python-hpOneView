@@ -40,6 +40,7 @@ from hpOneView.common import *
 from hpOneView.connection import *
 from hpOneView.activity import *
 from hpOneView.exceptions import *
+from pprint import pprint
 
 
 class storage(object):
@@ -70,12 +71,56 @@ class storage(object):
 
     def get_storage_systems(self):
         global uri
-        resonse = get_members(self._con.get(uri['storage-systems']))
-        return resonse
+        body = get_members(self._con.get(uri['storage-systems']))
+        return body
 
     def get_storage_pools(self):
         global uri
-        response = self._con.get(uri['storage-pools'])
-        return response
+        body = self._con.get(uri['storage-pools'])
+        return body
+
+    def add_storage_pool(self, name, storageSystemUri):
+        request = [{'storageSystemUri': storageSystemUri,
+                   'poolName': name}]
+        task, body = self._con.post(uri['storage-pools'] +
+                                    '?multiResource=true', request)
+        return body
+
+    # TODO - this method seems to causes an UNEXPECTED_EXCEPTOIN
+    def add_storage_volume_template(self, volTemplate):
+        pprint(volTemplate)
+        task, body = self._con.post(uri['vol-templates'], volTemplate)
+        return body
+
+    def remove_storage_volume_template(self, volTemplate, blocking=True,
+                                       verbose=False):
+        task, body = self._con.delete(volTemplate['uri'])
+        if blocking is True:
+            self._activity.wait4task(task, tout=600, verbose=verbose)
+        return
+
+    def get_storage_volume_templates(self):
+        global uri
+        body = self._con.get(uri['vol-templates'])
+        return body
+
+    def add_storage_volume(self, volume, blocking=True,
+                           verbose=False):
+        task, body = self._con.post(uri['storage-volumes'], volume)
+        if blocking is True:
+            self._activity.wait4task(task, tout=600, verbose=verbose)
+        return body
+
+    def remove_storage_volume(self, volume, blocking=True,
+                              verbose=False):
+        task, body = self._con.delete(volume['uri'])
+        if blocking is True:
+            self._activity.wait4task(task, tout=600, verbose=verbose)
+        return
+
+    def get_storage_volumes(self):
+        global uri
+        body = self._con.get(uri['storage-volumes'])
+        return body
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
