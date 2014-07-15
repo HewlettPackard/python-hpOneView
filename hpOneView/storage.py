@@ -40,7 +40,6 @@ from hpOneView.common import *
 from hpOneView.connection import *
 from hpOneView.activity import *
 from hpOneView.exceptions import *
-from pprint import pprint
 
 
 class storage(object):
@@ -88,7 +87,6 @@ class storage(object):
 
     # TODO - this method seems to causes an UNEXPECTED_EXCEPTOIN
     def add_storage_volume_template(self, volTemplate):
-        pprint(volTemplate)
         task, body = self._con.post(uri['vol-templates'], volTemplate)
         return body
 
