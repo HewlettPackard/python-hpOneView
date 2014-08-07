@@ -66,8 +66,8 @@ class fcsans(object):
     def remove_device_manager(self, manager, blocking=True, verbose=False):
         task, body = self._con.delete(manager['uri'])
         if blocking is True:
-            self._activity.wait4task(task, tout=600, verbose=verbose)
-        return
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
+        return task
 
     # TODO Add Device Manager POST
 

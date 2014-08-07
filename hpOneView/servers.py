@@ -70,7 +70,8 @@ class servers(object):
     def get_servers(self):
         return get_members(self._con.get(uri['servers']))
 
-    def set_server_powerstate(self, server, state, force=False):
+    def set_server_powerstate(self, server, state, force=False, blocking=True,
+                              verbose=False):
         if state == 'Off' and force is True:
             powerRequest = make_powerstate_dict('Off', 'PressAndHold')
         elif state == 'Off' and force is False:
@@ -79,25 +80,25 @@ class servers(object):
             powerRequest = make_powerstate_dict('On', 'MomentaryPress')
         elif state == 'Reset':
             powerRequest = make_powerstate_dict('On', 'Reset')
-        self._con.put(server['uri'] + '/powerState', powerRequest)
-        return
+        task, body = self._con.put(server['uri'] + '/powerState', powerRequest)
+        if blocking is True:
+            task = self._activity.wait4task(task, tout=60, verbose=verbose)
+        return task
 
     def delete_server(self, server, blocking=True, verbose=False):
         task, body = self._con.delete(server['uri'])
         if blocking is True:
-            self._activity.wait4task(task, tout=600, verbose=verbose)
-        return
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
+        return task
 
     def update_server(self, server):
         task, body = self._con.put(server['uri'], server)
         return body
 
-    def add_server(self, server, blocking=True, verbose=False):
+    def add_server(self, server, verbose=False):
         global uri
         task, body = self._con.post(uri['servers'], server)
-        if blocking is True:
-            self._activity.wait4task(task, tout=600, verbose=verbose)
-        task = self._con.get(task['uri'])
+        task = self._activity.wait4task(task, tout=600, verbose=verbose)
         serverResource = self._activity.get_task_assocaited_resource(task)
         if serverResource['resourceUri'] is not None:
             server = self._con.get(serverResource['resourceUri'])
@@ -119,9 +120,8 @@ class servers(object):
                     tout = 3600
             except Exception:
                 tout = 600
-            self._activity.wait4task(task, tout=tout, verbose=verbose)
             # Update the task to get the associated resource uri
-            task = self._con.get(task['uri'])
+            task = self._activity.wait4task(task, tout=tout, verbose=verbose)
         profileResource = self._activity.get_task_assocaited_resource(task)
         profile = self._con.get(profileResource['resourceUri'])
         return profile
@@ -129,8 +129,8 @@ class servers(object):
     def remove_server_profile(self, profile, blocking=True, verbose=False):
         task, body = self._con.delete(profile['uri'])
         if blocking is True:
-            self._activity.wait4task(task, tout=600, verbose=verbose)
-        return
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
+        return task
 
     def get_server_profiles(self):
         body = self._con.get(uri['profiles'])
@@ -138,17 +138,16 @@ class servers(object):
 
     def update_server_profile(self, profile, blocking=True, verbose=False):
         task, body = self._con.put(profile['uri'], profile)
-        if blocking is True:
-            try:
-                if profile['firmware']['firmwareBaselineUri'] is None:
-                    tout = 600
-                else:
-                    tout = 3600
-            except Exception:
+        try:
+            if profile['firmware']['firmwareBaselineUri'] is None:
                 tout = 600
-            self._activity.wait4task(task, tout=tout, verbose=verbose)
-            # Update the task to get the associated resource uri
-            task = self._con.get(task['uri'])
+            else:
+                tout = 3600
+        except Exception:
+            tout = 600
+        # Update the task to get the associated resource uri
+        if blocking is True:
+            task = self._activity.wait4task(task, tout=tout, verbose=verbose)
         profileResource = self._activity.get_task_assocaited_resource(task)
         profile = self._con.get(profileResource['resourceUri'])
         return profile
@@ -165,12 +164,11 @@ class servers(object):
         if blocking is True:
             try:
                 if enclosure['firmwareBaselineUri'] is None:
-                    self._activity.wait4task(task, tout=600, verbose=verbose)
+                    task = self._activity.wait4task(task, tout=600, verbose=verbose)
                 else:
-                    self._activity.wait4task(task, tout=3600, verbose=verbose)
+                    task = self._activity.wait4task(task, tout=3600, verbose=verbose)
             except:
-                self._activity.wait4task(task, tout=600, verbose=verbose)
-        task = self._con.get(task['uri'])
+                task = self._activity.wait4task(task, tout=600, verbose=verbose)
         entity = self._activity.get_task_assocaited_resource(task)
         enclosure = self._con.get(entity['resourceUri'])
         return enclosure
@@ -182,8 +180,8 @@ class servers(object):
         else:
             task, body = self._con.delete(enclosure['uri'])
         if blocking is True:
-            self._activity.wait4task(task, tout=600, verbose=verbose)
-        return
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
+        return task
 
     ###########################################################################
     # Enclosure Groups

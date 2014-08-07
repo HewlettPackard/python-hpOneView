@@ -68,7 +68,7 @@ class networking(object):
         task, body = self._con.post(uri['lig'], lig)
         task, entity = self._activity.make_task_entity_tuple(task)
         if blocking is True:
-            self._activity.wait4task(task, verbose=verbose)
+            task = self._activity.wait4task(task, verbose=verbose)
         return entity
 
     def update_lig(self, lig):
@@ -80,8 +80,8 @@ class networking(object):
         global uri
         task, body = self._con.delete(lig['uri'])
         if blocking is True:
-            self._activity.wait4task(task, verbose=verbose)
-        return
+            task = self._activity.wait4task(task, verbose=verbose)
+        return task
 
     def get_ligs(self):
         global uri
@@ -135,14 +135,14 @@ class networking(object):
             # assume we can update CT even if network create task is not cmpelt
             self.update_net_ctvalues(entity, bw)
             if blocking is True:
-                self._activity.wait4task(task, tout=60, verbose=verbose)
+                task = self._activity.wait4task(task, tout=60, verbose=verbose)
             return entity
 
     def delete_networkset(self, networkset, blocking=True, verbose=False):
         task, body = self._con.delete(networkset['uri'])
         if blocking is True:
-            self._activity.wait4task(task, verbose=verbose)
-        return
+            task = self._activity.wait4task(task, verbose=verbose)
+        return task
 
     def get_networksets(self):
         global uri
@@ -180,29 +180,31 @@ class networking(object):
         global uri
         xnet = make_enet_dict(name, vid, smartLink=smartLink,
                               privateNetwork=privateNetwork, purpose=purpose)
-        return self.create_network(uri['enet'], xnet, bw, blocking=blocking,
-                                   verbose=verbose)
+        task, entity = self.create_network(uri['enet'], xnet, bw, verbose)
+        if blocking is True:
+            task = self._activity.wait4task(task, tout=60, verbose=verbose)
+        return entity
 
     def create_fc_network(self, name, attach='FabricAttach', bw={},
                           blocking=True, verbose=False):
         global uri
         xnet = make_fc_dict(name, attach)
-        return self.create_network(uri['fcnet'], xnet, bw, blocking=blocking,
-                                   verbose=verbose)
+        task, entity = self.create_network(uri['fcnet'], xnet, bw, verbose)
+        if blocking is True:
+            task = self._activity.wait4task(task, tout=60, verbose=verbose)
+        return entity
 
-    def create_network(self, uri, xnet, bw={}, blocking=True, verbose=False):
+    def create_network(self, uri, xnet, bw={}, verbose=False):
         # throws an exception if there is an error
         body = self._con.conditional_post(uri, xnet)
         task, entity = self._activity.make_task_entity_tuple(body)
         if not task and not entity:
             # contitional_post returned an already existing resource
-            return body
+            return None, body
         else:
             # assume we can update CT even if network create task is not cmpelt
             self.update_net_ctvalues(entity, bw)
-            if blocking is True:
-                self._activity.wait4task(task, tout=60, verbose=verbose)
-            return entity
+            return task, entity
 
     def update_network(self, xnet):
         task, body = self._con.put(xnet['uri'], xnet)
@@ -211,8 +213,8 @@ class networking(object):
     def delete_network(self, xnet, blocking=True, verbose=False):
         task, body = self._con.delete(xnet['uri'])
         if blocking is True:
-            self._activity.wait4task(task, verbose=verbose)
-        return
+            task = self._activity.wait4task(task, verbose=verbose)
+        return task
 
     def get_enet_networks(self):
         global uri

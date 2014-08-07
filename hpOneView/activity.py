@@ -44,6 +44,7 @@ import time  # For sleep
 import sys  # For verbose
 
 
+TaskErrorStates = ['Error', 'Warning', 'Terminated', 'Killed']
 TaskCompletedStates = ['Error', 'Warning', 'Completed', 'Terminated', 'Killed']
 TaskPendingStates = ['New', 'Starting', 'Running', 'Suspended', 'Stopping']
 
@@ -99,27 +100,10 @@ class activity(object):
                     entity = obj
         return task, entity
 
-    def get_task_state(self, task_uri):
-        if not task_uri:
-            return False
-        task = self._con.get(task_uri)
-        return task['taskState']
-        info = self.get_task_assocaited_resource(task)
-        progress_string = ('Resource = %s: Progress=%s%%: State=%s'
-                           % (info['resourceName'],
-                              task['percentComplete'],
-                              task['taskState']))
-        return progress_string
-
     def is_task_running(self, task):
         global TaskPendingStates
-        if not task:
-            return False
-        if isinstance(task, dict):
-            task_uri = task['uri']
-        else:
-            task_uri = task
-        return self.get_task_state(task_uri) in TaskPendingStates
+        task = self._con.get(task['uri'])
+        return task['taskState'] in TaskPendingStates
 
     def wait4task(self, task, tout=60, verbose=False):
         count = 0
@@ -133,8 +117,12 @@ class activity(object):
             if count > tout:
                 raise HPOneViewTimeout('Waited ' + str(tout) +
                                        ' seconds for task to complete, aborting')
-        if verbose is True:
-            print()
+        task = self._con.get(task['uri'])
+        if task['taskState'] in TaskErrorStates:
+                err = task['taskErrors'][0]
+                msg = err['message']
+                raise HPOneViewTaskError(task['taskStatus'] + '\n' + msg)
+        return task
 
     def wait4tasks(self, tasks, tout=60, verbose=False):
         running = list(filter(self.is_task_running, tasks[:]))

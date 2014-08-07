@@ -55,7 +55,7 @@ class storage(object):
                    'password': passwd}
         task, body = self._con.post(uri['storage-systems'], request)
         if blocking is True:
-            self._activity.wait4task(task, tout=600, verbose=verbose)
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
         return body
 
     def update_storage_system(self, StorageSystem):
@@ -65,8 +65,8 @@ class storage(object):
     def remove_storage_system(self, system, blocking=True, verbose=False):
         task, body = self._con.delete(system['uri'])
         if blocking is True:
-            self._activity.wait4task(task, tout=600, verbose=verbose)
-        return
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
+        return task
 
     def get_storage_systems(self):
         global uri
@@ -94,8 +94,8 @@ class storage(object):
                                        verbose=False):
         task, body = self._con.delete(volTemplate['uri'])
         if blocking is True:
-            self._activity.wait4task(task, tout=600, verbose=verbose)
-        return
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
+        return task
 
     def get_storage_volume_templates(self):
         global uri
@@ -106,15 +106,15 @@ class storage(object):
                            verbose=False):
         task, body = self._con.post(uri['storage-volumes'], volume)
         if blocking is True:
-            self._activity.wait4task(task, tout=600, verbose=verbose)
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
         return body
 
     def remove_storage_volume(self, volume, blocking=True,
                               verbose=False):
         task, body = self._con.delete(volume['uri'])
         if blocking is True:
-            self._activity.wait4task(task, tout=600, verbose=verbose)
-        return
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
+        return task
 
     def get_storage_volumes(self):
         global uri

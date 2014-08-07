@@ -60,7 +60,7 @@ class settings(object):
             print('Upload complete. Waiting for processing.')
         task, spp = self._activity.make_task_entity_tuple(body)
         if blocking is True:
-            self._activity.wait4task(task, tout=600, verbose=verbose)
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
         if verbose is True:
             print('Processing complete.')
         return spp['resourceId']
@@ -113,7 +113,7 @@ class settings(object):
         taskuri = resp.getheader('Location')
         task = self._con.get(taskuri)
         if blocking is True:
-            self._activity.wait4task(task, tout=600, verbose=verbose)
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
         backupResource = self._activity.get_task_assocaited_resource(task)
         backup = self._con.get(backupResource['resourceUri'])
         return backup
@@ -134,7 +134,7 @@ class settings(object):
             print('Upload complete. Waiting for processing.')
         task, backup = self._activity.make_task_entity_tuple(body)
         if blocking is True:
-            self._activity.wait4task(task, tout=600, verbose=verbose)
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
         if verbose is True:
             print('Processing complete.')
         return backup

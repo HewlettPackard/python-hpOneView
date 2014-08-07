@@ -39,16 +39,16 @@ __status__ = 'Development'
 
 class HPOneViewException(Exception):
 
-    def __init__(self, value):
-        if type(value) is dict:
-            self.message = value['message']
-            self.details = value['details']
-            self.errorCode = value['errorCode']
-        else:
-            raise Exception(value)
+    def __init__(self, msg):
+        self.msg = msg
+        Exception.__init__(self, msg)
 
 
 class HPOneViewInvalidResource(HPOneViewException):
+    pass
+
+
+class HPOneViewTaskError(HPOneViewException):
     pass
 
 
