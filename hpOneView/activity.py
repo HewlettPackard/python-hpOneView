@@ -79,7 +79,7 @@ class activity(object):
         task = {}
         entity = {}
         if obj:
-            if obj['category'] == 'tasks':
+            if obj['category'] == 'tasks' or obj['category'] == 'backups':
                 # it is an error if type is not in obj, so let the except flow
                 uri = ''
                 if obj['type'] == 'TaskResource':
@@ -88,6 +88,9 @@ class activity(object):
                 elif obj['type'] == 'TaskResourceV2':
                     task = obj
                     uri = obj['associatedResource']['resourceUri']
+                elif obj['type'] == 'BACKUP':
+                    task = self._con.get(obj['taskUri'])
+                    uri = obj['uri']
                 else:
                     raise HPOneViewInvalidResource('Task resource is not a'
                                                    ' recognized version')
