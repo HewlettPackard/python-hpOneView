@@ -52,5 +52,9 @@ class HPOneViewTaskError(HPOneViewException):
     pass
 
 
+class HPOneViewUnknownType(HPOneViewException):
+    pass
+
+
 class HPOneViewTimeout(HPOneViewException):
     pass

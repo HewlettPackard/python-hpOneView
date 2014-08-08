@@ -101,6 +101,9 @@ class activity(object):
                         raise
                 else:
                     entity = obj
+            else:
+                raise HPOneViewUnknownType('Unknown object type')
+
         return task, entity
 
     def is_task_running(self, task):
