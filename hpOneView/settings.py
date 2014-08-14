@@ -217,6 +217,26 @@ class settings(object):
         task, body = self._con.put(uri['serviceAccess'], serviceAccess)
         return body
 
+    def get_domains(self):
+        global uri
+        body = self._con.get(uri['domains'])
+        return body
+
+    def get_schema(self):
+        global uri
+        body = self._con.get(uri['schema'])
+        return body
+
+    def get_global_settings(self):
+        global uri
+        body = self._con.get(uri['globalSettings'])
+        return body
+
+    def get_startup_progress(self):
+        global uri
+        body = self._con.get(uri['progress'])
+        return body
+
     ###########################################################################
     # Appliance Network Interfaces
     ###########################################################################

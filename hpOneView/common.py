@@ -43,7 +43,7 @@ uri = {
     #------------------------------------
     # Settings
     #------------------------------------
-    'applGlobalSettings': '/rest/global-settings',
+    'globalSettings': '/rest/global-settings',
     'eulaStatus': '/rest/appliance/eula/status',
     'eulaSave': '/rest/appliance/eula/save',
     'serviceAccess': '/rest/appliance/settings/enableServiceAccess',
@@ -61,6 +61,9 @@ uri = {
     'shutdown': '/rest/appliance/shutdown',
     'trap': '/rest/appliance/trap-destinations',
     'restores': '/rest/restores',
+    'domains': '/rest/domains',
+    'schema': '/rest/domains/schema',
+    'progress': '/rest/appliance/progress',
     #------------------------------------
     # Security
     #------------------------------------
