@@ -343,18 +343,6 @@ class connection(object):
         return
 
     ###########################################################################
-    # Appliance Network Interfaces
-    ###########################################################################
-    def get_appliance_network_interfaces(self):
-        global uri
-        return(self.get(uri['applianceNetworkInterfaces']))
-
-    def set_appliance_network_interface(self, interfaceConfig):
-        global uri
-        self.post(uri['applianceNetworkInterfaces'], interfaceConfig)
-        return
-
-    ###########################################################################
     # Initial Setup
     ###########################################################################
     def change_initial_password(self, newPassword):

@@ -217,4 +217,16 @@ class settings(object):
         task, body = self._con.put(uri['serviceAccess'], serviceAccess)
         return body
 
+    ###########################################################################
+    # Appliance Network Interfaces
+    ###########################################################################
+    def get_appliance_network_interfaces(self):
+        global uri
+        return(self._con.get(uri['applianceNetworkInterfaces']))
+
+    def set_appliance_network_interface(self, interfaceConfig):
+        global uri
+        self._con.post(uri['applianceNetworkInterfaces'], interfaceConfig)
+        return
+
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
