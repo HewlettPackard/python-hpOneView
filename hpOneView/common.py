@@ -73,6 +73,9 @@ uri = {
     'userRole': '/rest/users/role',
     'changePassword': '/rest/users/changePassword',
     'roles': '/rest/roles',
+    'category-actions': '/rest/authz/category-actions',
+    'role-category-actions': '/rest/authz/role-category-actions',
+    'validator': '/rest/authz/validator',
     #------------------------------------
     # Environment
     #------------------------------------

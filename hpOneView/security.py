@@ -157,5 +157,16 @@ class security(object):
         body = self._con.get(uri['activeSessions'])
         return body
 
+    def get_category_actions(self):
+        global uri
+        body = self._con.get(uri['category-actions'])
+        return body
+
+    def get_role_category_actions(self):
+        global uri
+        body = self._con.get(uri['role-category-actions'])
+        return body
+
+
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
