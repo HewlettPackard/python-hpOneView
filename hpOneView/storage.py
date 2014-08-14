@@ -9,7 +9,7 @@ This module implements settings HP OneView REST API
 
 __title__ = 'storage'
 __version__ = '0.0.1'
-__copyright__ = '(C) Copyright 2012-2013 Hewlett-Packard Development ' \
+__copyright__ = '(C) Copyright 2012-2014 Hewlett-Packard Development ' \
                 ' Company, L.P.'
 __license__ = 'MIT'
 __status__ = 'Development'
