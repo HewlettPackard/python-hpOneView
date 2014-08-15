@@ -179,6 +179,13 @@ class activity(object):
         self._con.post(uri['audit-logs'], auditLogRecord)
         return
 
+    def download_audit_logs(self, filename):
+        body = self._con.get(uri['audit-logs-download'])
+        f = open(filename, 'wb')
+        f.write(body)
+        f.close()
+        return
+
     ###########################################################################
     # Events
     ###########################################################################

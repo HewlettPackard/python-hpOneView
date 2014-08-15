@@ -116,6 +116,7 @@ uri = {
     'alerts': '/rest/alerts',
     'events': '/rest/events',
     'audit-logs': '/rest/audit-logs',
+    'audit-logs-download': '/rest/audit-logs/download',
     #------------------------------------
     #  Certificates
     #------------------------------------
