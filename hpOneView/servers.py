@@ -48,10 +48,6 @@ class servers(object):
         self._con = con
         self._activity = activity(con)
 
-    def get_enclosures(self):
-        body = self._con.get(uri['enclosures'])
-        return get_members(body)
-
     ###########################################################################
     # Server Hardware
     ###########################################################################
@@ -155,9 +151,9 @@ class servers(object):
     ###########################################################################
     # Enclosures
     ###########################################################################
-#    def get_enclosures(self):
-#        body = get_members(self._con.get(uri['enclosures']))
-#        return body
+    def get_enclosures(self):
+        body = self._con.get(uri['enclosures'])
+        return get_members(body)
 
     def add_enclosure(self, enclosure, blocking=True, verbose=False):
         task, body = self._con.post(uri['enclosures'], enclosure)
