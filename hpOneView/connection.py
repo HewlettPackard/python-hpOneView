@@ -271,7 +271,7 @@ class connection(object):
     def post(self, uri, body):
         resp, body = self.do_http('POST', uri, json.dumps(body))
         if resp.status >= 400:
-            raise HPOneViewException(body)
+            raise HPOneViewException('response: %s\n%s' % (resp.status, body))
         elif resp.status == 202:
             task = self.get(resp.getheader('Location'))
             return task, body

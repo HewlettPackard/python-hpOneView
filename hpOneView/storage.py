@@ -40,6 +40,7 @@ from hpOneView.common import *
 from hpOneView.connection import *
 from hpOneView.activity import *
 from hpOneView.exceptions import *
+from pprint import pprint
 
 
 class storage(object):
@@ -85,10 +86,22 @@ class storage(object):
                                     '?multiResource=true', request)
         return body
 
-    # TODO - this method seems to causes an UNEXPECTED_EXCEPTOIN
-    def add_storage_volume_template(self, volTemplate):
-        task, body = self._con.post(uri['vol-templates'], volTemplate)
-        return body
+    # TODO - this method seems to causes an UNEXPECTED_EXCEPTION
+    # Even taking the payload directly from a working capture
+    # and useing it directly.
+    def add_storage_volume_template(self, volTemplate, blocking=True):
+        request = {'name': 'Prod Volumes',
+                   'description': 'Production Volumes',
+                   'type': 'StorageVolumeTemplate',
+                   'provisioning': { 'storagePoolUri': '/rest/storage-pools/88CCD985-FECB-4B63-8CE0-D22391449FF5/',
+                                      'capacity': '10737418240',
+                                      'provisionType': 'Thin',
+                                      'shareable': False}
+                  }
+        task, body = self._con.post(uri['vol-templates'], request)
+        if blocking is True:
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
+        return task
 
     def remove_storage_volume_template(self, volTemplate, blocking=True,
                                        verbose=False):
