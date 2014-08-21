@@ -20,14 +20,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 ###
-
 import sys
 if sys.version_info < (3, 2):
     raise Exception('Must use Python 3.2 or later')
 
 import hpOneView as hpov
 from pprint import pprint
-
 
 def acceptEULA(con):
     # See if we need to accept the EULA before we try to log in
@@ -50,25 +48,29 @@ def login(con, credential):
 
 
 def getsto(sto):
-    ret = sto.get_storage_pools()
-    pprint(ret)
+    templates = sto.get_storage_volume_templates()
+    pprint(templates)
 
 
 def delsto(sto):
+    templates = sto.get_storage_volume_templates()
+    for template in templates['members']:
+        print('Removing Storage Volume Template: ', template['name'])
+        sto.remove_storage_volume_template(template)
+
+
+def addsto(sto, name):
     pools = sto.get_storage_pools()
     for pool in pools['members']:
-        print('Removing Storage Pool: ', pool['name'])
-        sto.remove_storage_system(pool)
-
-
-def addsto(sto, name, storageSystemUri):
-    if storageSystemUri == 'auto':
-        systems = sto.get_storage_systems()
-        for sys in systems:
-            storageSystemUri = sys['uri']
-            if storageSystemUri is not 'auto':
-                break
-    ret = sto.add_storage_pool(name, storageSystemUri)
+        storagePoolUri = pool['uri']
+        if storagePoolUri:
+            break
+    template = hpov.common.make_storage_vol_template(name,
+                                                268435456000,
+                                                False,
+                                                storagePoolUri,
+                                                'Example Vol Template')
+    ret = sto.add_storage_volume_template(template)
     pprint(ret)
 
 
@@ -85,15 +87,14 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    parser.add_argument('-x', '--uri', dest='uri', required=False,
-                        default='auto', help='Storage System URI')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-n', dest='name',
-                       help='Name of the storage pool to add')
+                       help='Name of the volume template to add')
     group.add_argument('-d', dest='delete',
-                       action='store_true', help='Remove ALL storage pools and exit')
+                       action='store_true', help='Remove ALL storage volume'
+                       ' teamplates and exit')
     group.add_argument('-g', dest='get',
-                       action='store_true', help='Get ALL storage pools and exit')
+                       action='store_true', help='Get storage systems and exit')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -117,7 +118,7 @@ def main():
         delsto(sto)
         sys.exit()
 
-    addsto(sto, args.name, args.uri)
+    addsto(sto, args.name)
 
 if __name__ == '__main__':
     import sys

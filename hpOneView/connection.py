@@ -55,7 +55,7 @@ class connection(object):
         self._apiVersion = 101
         self._headers = {
             'X-API-Version': self._apiVersion,
-            'Accept': 'application/json, */*',
+            'Accept': 'application/json',
             'Content-Type': 'application/json'}
         self._proxyHost = None
         self._proxyPort = None

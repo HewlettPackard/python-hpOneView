@@ -113,6 +113,8 @@ class activity(object):
 
     def wait4task(self, task, tout=60, verbose=False):
         count = 0
+        if task is None:
+            return None
         while self.is_task_running(task):
             if verbose:
                     sys.stdout.write('Task still running after %d seconds   \r'

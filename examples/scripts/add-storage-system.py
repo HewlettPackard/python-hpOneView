@@ -25,6 +25,7 @@ if sys.version_info < (3, 2):
     raise Exception('Must use Python 3.2 or later')
 
 import hpOneView as hpov
+from ast import literal_eval
 from pprint import pprint
 
 

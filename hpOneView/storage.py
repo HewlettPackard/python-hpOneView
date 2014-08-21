@@ -40,7 +40,6 @@ from hpOneView.common import *
 from hpOneView.connection import *
 from hpOneView.activity import *
 from hpOneView.exceptions import *
-from pprint import pprint
 
 
 class storage(object):
@@ -59,9 +58,13 @@ class storage(object):
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
         return body
 
-    def update_storage_system(self, StorageSystem):
+    def update_storage_system(self, StorageSystem, blocking=True,
+                              verbose=False):
         task, body = self._con.put(StorageSystem['uri'], StorageSystem)
-        return body
+        if blocking is True:
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
+            return body
+        return task
 
     def remove_storage_system(self, system, blocking=True, verbose=False):
         task, body = self._con.delete(system['uri'])
@@ -79,35 +82,41 @@ class storage(object):
         body = self._con.get(uri['storage-pools'])
         return body
 
-    def add_storage_pool(self, name, storageSystemUri):
+    def add_storage_pool(self, name, storageSystemUri, blocking=True,
+                         verbose=False):
         request = [{'storageSystemUri': storageSystemUri,
                    'poolName': name}]
         task, body = self._con.post(uri['storage-pools'] +
                                     '?multiResource=true', request)
         return body
 
-    # TODO - this method seems to causes an UNEXPECTED_EXCEPTION
-    # Even taking the payload directly from a working capture
-    # and useing it directly.
-    def add_storage_volume_template(self, volTemplate, blocking=True):
-        request = {'name': 'Prod Volumes',
-                   'description': 'Production Volumes',
-                   'type': 'StorageVolumeTemplate',
-                   'provisioning': { 'storagePoolUri': '/rest/storage-pools/88CCD985-FECB-4B63-8CE0-D22391449FF5/',
-                                      'capacity': '10737418240',
-                                      'provisionType': 'Thin',
-                                      'shareable': False}
-                  }
-        task, body = self._con.post(uri['vol-templates'], request)
+    # Temporarly modify the headers passed for POST and DELTE on storage volume
+    # templates in order to work around a bug. Without these headers the call
+    # cause a NullPointerException on the appliance and a 400 gets returned.
+    def add_storage_volume_template(self, volTemplate, blocking=True,
+                                    verbose=False):
+        ori_headers = self._con._headers
+        self._con._headers.update({'Accept-Language': 'en'})
+        self._con._headers.update({'Accept-Encoding': 'deflate'})
+        task, body = self._con.post(uri['vol-templates'], volTemplate)
+        self._con._headers = ori_headers
         if blocking is True:
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
+            return body
         return task
 
+    # Temporarly modify the headers passed for POST and DELTE on storage volume
+    # templates in order to work around a bug. Without these headers the call
+    # cause a NullPointerException on the appliance and a 400 gets returned.
     def remove_storage_volume_template(self, volTemplate, blocking=True,
                                        verbose=False):
+        ori_headers = self._con._headers
+        self._con._headers.update({'Accept-Language': 'en'})
         task, body = self._con.delete(volTemplate['uri'])
+        self._con._headers = ori_headers
         if blocking is True:
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
+            return body
         return task
 
     def get_storage_volume_templates(self):
