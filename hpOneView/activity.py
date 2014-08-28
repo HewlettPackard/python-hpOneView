@@ -58,7 +58,7 @@ class activity(object):
     # Tasks
     ###########################################################################
     #
-    def get_task_assocaited_resource(self, task):
+    def get_task_associated_resource(self, task):
         if not task:
             return {}
         if task['type'] == 'TaskResource':
