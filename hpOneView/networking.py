@@ -185,10 +185,13 @@ class networking(object):
             task = self._activity.wait4task(task, tout=60, verbose=verbose)
         return entity
 
-    def create_fc_network(self, name, attach='FabricAttach', bw={},
+    def create_fc_network(self, name, attach='FabricAttach',
+                          autodist=True,
+                          linktime=30,
+                          bw={},
                           blocking=True, verbose=False):
         global uri
-        xnet = make_fc_dict(name, attach)
+        xnet = make_fc_dict(name, attach, autodist, linktime)
         task, entity = self.create_network(uri['fcnet'], xnet, bw, verbose)
         if blocking is True:
             task = self._activity.wait4task(task, tout=60, verbose=verbose)
