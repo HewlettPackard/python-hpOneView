@@ -71,10 +71,12 @@ class networking(object):
             task = self._activity.wait4task(task, verbose=verbose)
         return entity
 
-    def update_lig(self, lig):
+    def update_lig(self, lig, blocking=True, verbose=False):
         global uri
         task, body = self._con.put(lig['uri'], lig)
-        return self._activity.make_task_entity_tuple(task)
+        if blocking is True:
+            task = self._activity.wait4task(task, verbose=verbose)
+        return task
 
     def delete_lig(self, lig, blocking=True, verbose=False):
         global uri
