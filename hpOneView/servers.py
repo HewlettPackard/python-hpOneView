@@ -95,7 +95,7 @@ class servers(object):
         global uri
         task, body = self._con.post(uri['servers'], server)
         task = self._activity.wait4task(task, tout=600, verbose=verbose)
-        serverResource = self._activity.get_task_assocaited_resource(task)
+        serverResource = self._activity.get_task_associated_resource(task)
         if serverResource['resourceUri'] is not None:
             server = self._con.get(serverResource['resourceUri'])
             return server
@@ -118,7 +118,7 @@ class servers(object):
                 tout = 600
             # Update the task to get the associated resource uri
             task = self._activity.wait4task(task, tout=tout, verbose=verbose)
-        profileResource = self._activity.get_task_assocaited_resource(task)
+        profileResource = self._activity.get_task_associated_resource(task)
         profile = self._con.get(profileResource['resourceUri'])
         return profile
 
@@ -144,7 +144,7 @@ class servers(object):
         # Update the task to get the associated resource uri
         if blocking is True:
             task = self._activity.wait4task(task, tout=tout, verbose=verbose)
-        profileResource = self._activity.get_task_assocaited_resource(task)
+        profileResource = self._activity.get_task_associated_resource(task)
         profile = self._con.get(profileResource['resourceUri'])
         return profile
 
@@ -165,7 +165,7 @@ class servers(object):
                     task = self._activity.wait4task(task, tout=3600, verbose=verbose)
             except:
                 task = self._activity.wait4task(task, tout=600, verbose=verbose)
-        entity = self._activity.get_task_assocaited_resource(task)
+        entity = self._activity.get_task_associated_resource(task)
         enclosure = self._con.get(entity['resourceUri'])
         return enclosure
 
