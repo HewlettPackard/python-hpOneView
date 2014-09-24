@@ -118,8 +118,8 @@ def update_alert(uri, smid):
         if alert['uri'] == uri:
             amap = common.make_alertMap_dict(notes, alert['eTag'])
             act.update_alert(alert, amap)
-            return(True)
-    return(False)
+            return True
+    return False
 
 
 def get_incidents():

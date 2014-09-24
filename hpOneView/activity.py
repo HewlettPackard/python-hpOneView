@@ -118,10 +118,10 @@ class activity(object):
         while self.is_task_running(task):
             if verbose:
                     sys.stdout.write('Task still running after %d seconds   \r'
-                                     % (count))
+                                     % count)
                     sys.stdout.flush()
             time.sleep(1)
-            count = count + 1
+            count += 1
             if count > tout:
                 raise HPOneViewTimeout('Waited ' + str(tout) +
                                        ' seconds for task to complete, aborting')
@@ -140,7 +140,7 @@ class activity(object):
                     print(('Tasks still running after %s seconds', count))
                     print(running)
             time.sleep(1)
-            count = count + 1
+            count += 1
             running = list(filter(self.is_task_running, running))
             if count > tout:
                 raise HPOneViewTimeout('Waited 60 seconds for task to complete'
@@ -152,7 +152,7 @@ class activity(object):
     def get_alerts(self, AlertState='All'):
         global uri
         if AlertState == 'All':
-            return(get_members(self._con.get(uri['alerts'])))
+            return get_members(self._con.get(uri['alerts']))
         else:
             return(self._con.get_entities_byfield(uri['alerts'],
                                                   'alertState',
@@ -174,7 +174,7 @@ class activity(object):
     def get_audit_logs(self, query=''):
         global uri
         body = self._con.get(uri['audit-logs'] + '?' + query)
-        return(get_members(body))
+        return get_members(body)
 
     def create_audit_log(self, auditLogRecord):
         global uri
@@ -194,7 +194,7 @@ class activity(object):
     def get_events(self, query=''):
         global uri
         body = self._con.get(uri['events'] + '?' + query)
-        return(get_members(body))
+        return get_members(body)
 
     def create_event(self, eventRecord):
         global uri

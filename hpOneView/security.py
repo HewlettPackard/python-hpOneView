@@ -69,9 +69,7 @@ class security(object):
         global uri
         request = []
         for role in roles:
-            req = {}
-            req['type'] = 'RoleNameDtoV2'
-            req['roleName'] = role
+            req = {'type': 'RoleNameDtoV2', 'roleName': role}
             request.append(req)
         task, body = self._con.put(uri['users'] + '/' + user +
                              '/roles?multiResource=true', request)
@@ -79,9 +77,7 @@ class security(object):
 
     def set_user_role(self, user, role):
         global uri
-        request = {}
-        request['type'] = 'RoleNameDtoV2'
-        request['roleName'] = role
+        request = {'type': 'RoleNameDtoV2', 'roleName': role}
         task, body = self._con.put(uri['users'] + '/' + user +
                              '/roles?multiResource=true', [request])
         return body
@@ -136,9 +132,7 @@ class security(object):
 
     def gen_rabbitmq_ca(self):
         global uri
-        request = {}
-        request['type'] = 'RabbitMqClientCert'
-        request['commonName'] = 'default'
+        request = {'type': 'RabbitMqClientCert', 'commonName': 'default'}
         task, body = self._con.post(uri['rabbitmq'], request)
         return body
 

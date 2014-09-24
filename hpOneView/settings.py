@@ -242,7 +242,7 @@ class settings(object):
     ###########################################################################
     def get_appliance_network_interfaces(self):
         global uri
-        return(self._con.get(uri['applianceNetworkInterfaces']))
+        return self._con.get(uri['applianceNetworkInterfaces'])
 
     def set_appliance_network_interface(self, interfaceConfig):
         global uri

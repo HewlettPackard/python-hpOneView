@@ -218,8 +218,6 @@ class connection(object):
         conn.close()
         return response, body
 
-    def get_content_type(filename):
-        return 'application/octet-stream'
 
     ###########################################################################
     # Utility functions for making requests - the HTTP verbs
@@ -334,7 +332,7 @@ class connection(object):
     ###########################################################################
     def get_eula_status(self):
         global uri
-        return(self.get(uri['eulaStatus']))
+        return self.get(uri['eulaStatus'])
 
     def set_eula(self, supportAccess='yes'):
         global uri
