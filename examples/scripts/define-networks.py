@@ -78,6 +78,7 @@ def defnetwork(net):
                                    20,
                                    smartLink=True,
                                    privateNetwork=False,
+                                   ethernetNetworkType='Tagged',
                                    bw=bandDict)
     nseta.append(enet['uri'])
     print('{0:<15}\t{1:<15}\t{2:<15}'.format(enet['name'], enet['vlanId'], enet['state']))
@@ -86,6 +87,7 @@ def defnetwork(net):
                                    30,
                                    smartLink=True,
                                    privateNetwork=False,
+                                   ethernetNetworkType='Tagged',
                                    bw=bandDict)
     nseta.append(enet['uri'])
     print('{0:<15}\t{1:<15}\t{2:<15}'.format(enet['name'], enet['vlanId'], enet['state']))
@@ -94,6 +96,7 @@ def defnetwork(net):
                                    40,
                                    smartLink=True,
                                    privateNetwork=False,
+                                   ethernetNetworkType='Tagged',
                                    bw=bandDict)
     nseta.append(enet['uri'])
     print('{0:<15}\t{1:<15}\t{2:<15}'.format(enet['name'], enet['vlanId'], enet['state']))
@@ -102,6 +105,7 @@ def defnetwork(net):
                                    50,
                                    smartLink=True,
                                    privateNetwork=False,
+                                   ethernetNetworkType='Tagged',
                                    bw=bandDict)
     nseta.append(enet['uri'])
     print('{0:<15}\t{1:<15}\t{2:<15}'.format(enet['name'], enet['vlanId'], enet['state']))
@@ -126,6 +130,7 @@ def defnetwork(net):
                                    20,
                                    smartLink=True,
                                    privateNetwork=False,
+                                   ethernetNetworkType='Tagged',
                                    bw=bandDict)
     nsetb.append(enet['uri'])
     print('{0:<15}\t{1:<15}\t{2:<15}'.format(enet['name'], enet['vlanId'], enet['state']))
@@ -134,6 +139,7 @@ def defnetwork(net):
                                    30,
                                    smartLink=True,
                                    privateNetwork=False,
+                                   ethernetNetworkType='Tagged',
                                    bw=bandDict)
     nsetb.append(enet['uri'])
     print('{0:<15}\t{1:<15}\t{2:<15}'.format(enet['name'], enet['vlanId'], enet['state']))
@@ -142,6 +148,7 @@ def defnetwork(net):
                                    40,
                                    smartLink=True,
                                    privateNetwork=False,
+                                   ethernetNetworkType='Tagged',
                                    bw=bandDict)
     nsetb.append(enet['uri'])
     print('{0:<15}\t{1:<15}\t{2:<15}'.format(enet['name'], enet['vlanId'], enet['state']))
@@ -150,6 +157,7 @@ def defnetwork(net):
                                    50,
                                    smartLink=True,
                                    privateNetwork=False,
+                                   ethernetNetworkType='Tagged',
                                    bw=bandDict)
     nsetb.append(enet['uri'])
     print('{0:<15}\t{1:<15}\t{2:<15}'.format(enet['name'], enet['vlanId'], enet['state']))

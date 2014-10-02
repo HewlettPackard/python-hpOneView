@@ -245,6 +245,7 @@ def make_enet_dict(name, vlanid=0,
                    purpose='General',
                    smartLink=True,
                    privateNetwork=False,
+                   ethernetNetworkType='Tagged',
                    bw={},
                    blocking=True,
                    verbose=False):
@@ -255,6 +256,7 @@ def make_enet_dict(name, vlanid=0,
         'connectionTemplateUri': None,
         'vlanId': vlanid,
         'smartLink': smartLink,
+        'ethernetNetworkType': ethernetNetworkType,
         'privateNetwork': privateNetwork}
 
 

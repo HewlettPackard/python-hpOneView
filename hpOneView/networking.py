@@ -176,12 +176,14 @@ class networking(object):
                             purpose='General',
                             smartLink=True,
                             privateNetwork=False,
+                            ethernetNetworkType='Tagged',
                             bw={},
                             blocking=True,
                             verbose=False):
         global uri
         xnet = make_enet_dict(name, vid, smartLink=smartLink,
-                              privateNetwork=privateNetwork, purpose=purpose)
+                              privateNetwork=privateNetwork, purpose=purpose,
+                              ethernetNetworkType=ethernetNetworkType)
         task, entity = self.create_network(uri['enet'], xnet, bw, verbose)
         if blocking is True:
             task = self._activity.wait4task(task, tout=60, verbose=verbose)
