@@ -92,7 +92,8 @@ def defprofile(srv, sts, net):
         if enet is None:
             print('Error, can not find network: %s' % name)
             return
-        connections.append(hpov.common.make_profile_connection_dict(enet))
+        connections.append(hpov.common.make_profile_connection_dict(enet,
+            requestedMbps=1500))
 
     fcnets = net.get_fc_networks()
     for fcnet in fcnets:

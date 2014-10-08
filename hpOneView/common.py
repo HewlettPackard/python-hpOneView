@@ -442,11 +442,23 @@ def make_storage_system_dict(mdom, udom, mports, uports):
 def make_profile_connection_dict(network,
                                  portId='Auto',
                                  functionType='Ethernet',
+                                 mac=None,
+                                 macType='Virtual',
+                                 requestedMbps=None,
+                                 wwnn=None,
+                                 wwpn=None,
+                                 wwpnType='Virtual',
                                  boot=None):
     return {
         'networkUri': network['uri'],
         'portId': portId,
         'functionType': functionType,
+        'mac': mac,
+        'macType': macType,
+        'wwnn': wwnn,
+        'wwpn': wwpn,
+        'wwpnType': 'Virtual',
+        'requestedMbps': requestedMbps,
         'boot': boot}
 
 
