@@ -114,7 +114,7 @@ class settings(object):
         task = self._con.get(taskuri)
         if blocking is True:
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
-        backupResource = self._activity.get_task_assocaited_resource(task)
+        backupResource = self._activity.get_task_associated_resource(task)
         backup = self._con.get(backupResource['resourceUri'])
         return backup
 
