@@ -25,6 +25,7 @@ if sys.version_info < (3, 2):
     raise Exception('Must use Python 3.2 or later')
 
 import hpOneView as hpov
+from pprint import pprint
 
 
 def acceptEULA(con):
@@ -49,10 +50,11 @@ def login(con, credential):
 
 def getict(net):
     interconnects = net.get_interconnects()
-    for ic in interconnects:
-        print('{0:25} {1:45} {2:15} {3:15}'.format(ic['name'],
-              ic['model'], ic['partNumber'], ic['firmwareVersion']))
-    print('')
+    pprint(interconnects)
+#    for ic in interconnects:
+#        print('{0:25} {1:45} {2:15} {3:15}'.format(ic['name'],
+#              ic['model'], ic['partNumber'], ic['firmwareVersion']))
+#    print('')
 
 
 def main():
