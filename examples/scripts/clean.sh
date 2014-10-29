@@ -1,15 +1,15 @@
 # OneView Appliance hostname or IP address
-HOST=oneview
+HOST=${HOST:=oneview}
 # OneView Appliance username
-USER=Administrator
+USER=${USER:=Administrator}
 # OneView Appliance password
-PASS=PASSWORD
+PASS=${PASS:=PASSWORD}
 # Enclosure OA hostname or IP address
-ENC_ADDR=172.18.1.11
+ENC_ADDR=${ENC_ADDR:=172.18.1.11}
 # Enclosure OA username
-ENC_USR=Administrator
+ENC_USR=${ENC_USR:=Administrator}
 # Enclosure OA password
-ENC_PASS=PASSWORD
+ENC_PASS=${ENC_PASS:=PASSWORD}
 
 echo  -- Removing profiles
 ./define-profile.py -a $HOST -u $USER -p $PASS -d
