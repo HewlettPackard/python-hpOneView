@@ -81,8 +81,6 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    parser.add_argument('-d', dest='delete', required=False,
-                        action='store_true', help='Delete all LIGs and exit')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-f', dest='file', help='SPP file to upload')
     group.add_argument('-g', dest='getspp', action='store_true',
