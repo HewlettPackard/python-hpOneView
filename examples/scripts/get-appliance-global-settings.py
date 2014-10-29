@@ -52,7 +52,7 @@ def getglobal(sts):
     ret = sts.get_global_settings()
     members = ret['members']
     for member in members:
-        pprint(member['name'])
+        pprint(member)
 
 
 def main():
