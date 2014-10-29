@@ -21,8 +21,9 @@
 # THE SOFTWARE.
 ###
 import sys
+import re
 if sys.version_info < (3, 2):
-    raise Exception("Must use Python 3.2 or later")
+    raise Exception('Must use Python 3.2 or later')
 
 import hpOneView as hpov
 from pprint import pprint
@@ -33,7 +34,7 @@ def acceptEULA(con):
     con.get_eula_status()
     try:
         if con.get_eula_status() is True:
-            print("EULA display needed")
+            print('EULA display needed')
             con.set_eula('no')
     except Exception as e:
         print('EXCEPTION:')
@@ -48,9 +49,9 @@ def login(con, credential):
         print('Login failed')
 
 
-def getmanagedsans(fcs):
-    ret = fcs.get_managed_sans()
-    pprint(ret)
+def getsans(fcs):
+    sans = fcs.get_managed_sans()
+    pprint(sans)
 
 
 def main():
@@ -81,8 +82,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    getmanagedsans(fcs)
-
+    getsans(fcs)
 
 if __name__ == '__main__':
     import sys
