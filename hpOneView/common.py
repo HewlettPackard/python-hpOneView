@@ -160,6 +160,10 @@ uri = {
     'device-managers': '/rest/fc-sans/device-managers',
     'managed-sans': '/rest/fc-sans/managed-sans',
     'providers': '/rest/fc-sans/providers',
+    #------------------------------------
+    # Uncategorized
+    #------------------------------------
+    'unmanaged-devices': '/rest/unmanaged-devices',
 }
 
 
