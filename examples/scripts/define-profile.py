@@ -92,8 +92,7 @@ def defprofile(srv, sts, net):
         if enet is None:
             print('Error, can not find network: %s' % name)
             return
-        connections.append(hpov.common.make_profile_connection_dict(enet,
-            requestedMbps=1500))
+        connections.append(hpov.common.make_profile_connection_dict(enet, requestedMbps=1500))
 
     fcnets = net.get_fc_networks()
     for fcnet in fcnets:
@@ -108,8 +107,8 @@ def defprofile(srv, sts, net):
     connections.append(hpov.common.make_profile_connection_dict(fcnetb,
                        functionType='FibreChannel',
                        boot=hpov.common.make_profile_connection_boot_dict(priority='Secondary')))
-    profile = hpov.common.make_add_profile_dict('Profile-' + ser['serialNumber'],
-                                           ser, connections=connections)
+    profile = hpov.common.make_profile_dict('Profile-' + ser['serialNumber'],
+                                            ser, connections=connections)
     profile = srv.create_server_profile(profile)
     pprint(profile)
 

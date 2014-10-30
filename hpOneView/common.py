@@ -425,8 +425,9 @@ def make_egroup_dict(name, lig, smode='Enclosure'):
                                      } for N in range(1, 9)], }
 
 
-def make_add_enclosure_dict(host, user, passwd, egroup,
-                            firmwareBaseLineUri=None, force=False):
+def make_enclosure_dict(host, user, passwd, egroup,
+                        licenseIntent='OneView',
+                        firmwareBaseLineUri=None, force=False):
     return {
         'hostname': host,
         'username': user,
@@ -435,7 +436,7 @@ def make_add_enclosure_dict(host, user, passwd, egroup,
         'enclosureGroupUri': egroup,
         'firmwareBaselineUri': firmwareBaseLineUri,
         'updateFirmwareOn': 'EnclosureOnly',
-        'licensingIntent': 'OneView'}
+        'licensingIntent': licenseIntent}
 
 
 def make_storage_system_dict(mdom, udom, mports, uports):
@@ -489,8 +490,8 @@ def make_profile_connection_boot_target_dict(arrayWwpn=None, lun=None):
              'lun': lun}]
 
 
-def make_add_profile_dict(profileName, server, firmwareBaseline=None,
-                          connections=[]):
+def make_profile_dict(profileName, server, firmwareBaseline=None,
+                      connections=[]):
     return {
         'type': 'ServerProfileV3',
         'name': profileName,
@@ -663,11 +664,11 @@ def make_update_alert_dict(alertState=None,
     return alertDict
 
 
-def make_add_server_dict(hostname,
-                         username,
-                         password,
-                         force=False,
-                         licensingIntent='OneView'):
+def make_server_dict(hostname,
+                     username,
+                     password,
+                     force=False,
+                     licensingIntent='OneView'):
     return {
         'hostname': hostname,
         'username': username,

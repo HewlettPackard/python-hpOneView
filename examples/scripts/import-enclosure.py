@@ -55,7 +55,7 @@ def delenc(srv):
         srv.remove_enclosure(enclosure, force=True)
 
 
-def impenc(srv, sts, eg, ip, usr, pas):
+def impenc(srv, sts, eg, ip, usr, pas, lic, baseline):
     # Locate the enclosure group
     egroups = srv.get_enclosure_groups()
     for group in egroups:
@@ -65,12 +65,32 @@ def impenc(srv, sts, eg, ip, usr, pas):
             print('ERROR: Importing Enclosure')
             print('Enclosure Group: "%s" has not been defined' % eg)
             print('')
+            sys.exit()
 
     print('Adding Enclosure')
     # Find the first Firmware Baseline
-    spp = sts.get_spps()[0]
-    add_enclosure = hpov.common.make_add_enclosure_dict(ip, usr, pas, egroup['uri'],
-                                                   firmwareBaseLineUri=spp['uri'])
+    uri = ''
+    if baseline:
+        spps = sts.get_spps()
+        for spp in spps:
+            if spp['isoFileName'] == baseline:
+                uri = spp['uri']
+        if not uri:
+            print('ERROR: Locating Firmeware Baseline SPP')
+            print('Baseline: "%s" can not be located' % baseline)
+            print('')
+            sys.exit()
+
+    if not uri:
+        add_enclosure = hpov.common.make_enclosure_dict(ip, usr, pas,
+                                                        egroup['uri'],
+                                                        licenseIntent=lic)
+    else:
+        add_enclosure = hpov.common.make_enclosure_dict(ip, usr, pas,
+                                                        egroup['uri'],
+                                                        licenseIntent=lic,
+                                                        firmwareBaseLineUri=uri)
+
     enclosure = srv.add_enclosure(add_enclosure)
     pprint(enclosure)
 
@@ -95,6 +115,12 @@ def main():
     parser.add_argument('-n', '--name', dest='egroup', required=False,
                         default='Prod VC FlexFabric Group 1',
                         help='Enclosure Group to add the enclosure to')
+    parser.add_argument('-s', '--spp', dest='spp', required=False,
+                        help='SPP file name to use as the firmware baseline')
+    parser.add_argument('-l', '--license', dest='license', required=False,
+                        help='Apply OneView or OneView w/o iLO license to '
+                        'servers in the enclosure specify either OneView or '
+                        'OneViewNoiLO')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-e', dest='enc',
                        help='IP address of the c7000 to import into HP OneView')
@@ -119,7 +145,8 @@ def main():
         delenc(srv)
         sys.exit()
 
-    impenc(srv, sts, args.egroup, args.enc, args.encusr, args.encpass)
+    impenc(srv, sts, args.egroup, args.enc, args.encusr, args.encpass,
+           args.license, args.spp)
 
 if __name__ == '__main__':
     import sys
