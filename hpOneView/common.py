@@ -44,6 +44,7 @@ uri = {
     # Settings
     #------------------------------------
     'globalSettings': '/rest/global-settings',
+    'vol-tmplate-policy': '/rest/global-settings/StorageVolumeTemplateRequired',
     'eulaStatus': '/rest/appliance/eula/status',
     'eulaSave': '/rest/appliance/eula/save',
     'serviceAccess': '/rest/appliance/settings/enableServiceAccess',

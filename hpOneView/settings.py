@@ -232,6 +232,11 @@ class settings(object):
         body = self._con.get(uri['globalSettings'])
         return body
 
+    def get_storage_vol_template_policy(self):
+        global uri
+        body = self._con.get(uri['vol-tmplate-policy'])
+        return body
+
     def get_startup_progress(self):
         global uri
         body = self._con.get(uri['progress'])
