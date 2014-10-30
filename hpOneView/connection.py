@@ -148,7 +148,7 @@ class connection(object):
                 continue
         return resp, body
 
-    def encode_multipart_formdata(self, fields, filename, verbose=False):
+    def encode_multipart_formdata(self, fields, files, baseName, verbose=False):
         """
         fields is a sequence of (name, value) elements for regular form fields.
         files is a sequence of (name, filename, value) elements for data
@@ -159,13 +159,13 @@ class connection(object):
         CRLF = '\r\n'
         content_type = 'multipart/form-data; boundary=%s' % BOUNDARY
         if verbose is True:
-            print(('Encoding ' + filename + ' for upload...'))
-        fin = open(filename, 'rb')
-        fout = open(filename + '.b64', 'wb')
+            print(('Encoding ' + baseName + ' for upload...'))
+        fin = open(files, 'rb')
+        fout = open(files + '.b64', 'wb')
         fout.write(bytearray('--' + BOUNDARY + CRLF, 'utf-8'))
         fout.write(bytearray('Content-Disposition: form-data'
                              '; name="file"; filename="' +
-                             filename + '"' + CRLF, "utf-8"))
+                             baseName + '"' + CRLF, "utf-8"))
         fout.write(bytearray('Content-Type: application/octet-stream' + CRLF,
                              'utf-8'))
         fout.write(bytearray(CRLF, 'utf-8'))
@@ -177,8 +177,9 @@ class connection(object):
         fin.close()
         return content_type
 
-    def post_multipart(self, path, fields, files, fileName, verbose=False):
-        content_type = self.encode_multipart_formdata(fields, files, verbose)
+    def post_multipart(self, uri, fields, files, baseName, verbose=False):
+        content_type = self.encode_multipart_formdata(fields, files, baseName,
+                                                      verbose)
         inputfile = open(files + '.b64', 'rb')
         mappedfile = mmap.mmap(inputfile.fileno(), 0, access=mmap.ACCESS_READ)
         if verbose is True:
@@ -186,12 +187,13 @@ class connection(object):
         if self._doProxy is False:
             conn = http.client.HTTPSConnection(self._host)
         else:
-            conn = http.client.HTTPSConnection(self._proxyHost, self._proxyPort)
+            conn = http.client.HTTPSConnection(self._proxyHost,
+                                               self._proxyPort)
             conn.set_tunnel(self._host, 443)
         #conn.set_debuglevel(1)
         conn.connect()
-        conn.putrequest('POST', path)
-        conn.putheader('uploadfilename', fileName)
+        conn.putrequest('POST', uri)
+        conn.putheader('uploadfilename', baseName)
         conn.putheader('auth', self._headers['auth'])
         conn.putheader('Content-Type', content_type)
         totalSize = os.path.getsize(files + '.b64')
@@ -217,7 +219,6 @@ class connection(object):
                 body = response.read().decode('utf-8')
         conn.close()
         return response, body
-
 
     ###########################################################################
     # Utility functions for making requests - the HTTP verbs

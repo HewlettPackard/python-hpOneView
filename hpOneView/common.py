@@ -65,6 +65,8 @@ uri = {
     'domains': '/rest/domains',
     'schema': '/rest/domains/schema',
     'progress': '/rest/appliance/progress',
+    'appliance-firmware': '/rest/appliance/firmware/image',
+    'fw-pending': '/rest/appliance/firmware/pending',
     #------------------------------------
     # Security
     #------------------------------------

@@ -49,6 +49,30 @@ class settings(object):
         self._activity = activity(con)
 
     ###########################################################################
+    # Appliance Firmware
+    ###########################################################################
+    def upload_fw(self, path, name, verbose=False):
+        response, body = self._con.post_multipart(uri['appliance-firmware'],
+                                                  '', path, name, verbose)
+        if response.status >= 400:
+            raise HPOneViewException(body)
+        return body
+
+    def get_pending_fw(self):
+        global uri
+        body = self._con.get(uri['fw-pending'])
+        return body
+
+    def upgrade_appliance_fw(self, filename):
+        global uri
+        task, body = self._con.put(uri['fw-pending'] + '?file=' + filename, '')
+        return body
+
+    def delete_appliance_fw(self):
+        task, body = self._con.delete(uri['fw-pending'])
+        return body
+
+    ###########################################################################
     # SPP Upload
     ###########################################################################
     def upload_spp(self, sppPath, sppName, verbose=False, blocking=True):
