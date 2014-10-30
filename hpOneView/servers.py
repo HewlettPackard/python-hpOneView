@@ -66,6 +66,10 @@ class servers(object):
     def get_servers(self):
         return get_members(self._con.get(uri['servers']))
 
+    def get_server_hardware_types(self):
+        body = self._con.get(uri['server-hardware-types'])
+        return get_members(body)
+
     def set_server_powerstate(self, server, state, force=False, blocking=True,
                               verbose=False):
         if state == 'Off' and force is True:

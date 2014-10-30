@@ -83,6 +83,7 @@ uri = {
     # Systems
     #------------------------------------
     'servers': '/rest/server-hardware',
+    'server-hardware-types': '/rest/server-hardware-types',
     'enclosures': '/rest/enclosures',
     'enclosureGroups': '/rest/enclosure-groups',
     'enclosurePreview': '/rest/enclosure-preview',
