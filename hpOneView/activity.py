@@ -146,6 +146,10 @@ class activity(object):
                 raise HPOneViewTimeout('Waited 60 seconds for task to complete'
                                        ', aborting')
 
+    def get_tasks(self):
+        global uri
+        return get_members(self._con.get(uri['task']))
+
     ###########################################################################
     # Alerts
     ###########################################################################
