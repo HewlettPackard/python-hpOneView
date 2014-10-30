@@ -28,7 +28,7 @@ echo  -- Import Enclosures
 echo  -- Add Storage System
 ./add-storage-system.py -a $HOST -u $USER -p $PASS -s $STO_ADDR -su $STO_USR -sp $STO_PASS
 echo  -- Defining Storage Pools
-./add-storage-pools.py -a $HOST -u $USER -p $PASS -n SND_CPG1
+./add-storage-pool.py -a $HOST -u $USER -p $PASS -n SND_CPG1
 echo  -- Defining Volume Templates
 ./add-volume-template.py -a $HOST -u $USER -p $PASS -n "ESX Boot"
 echo  -- Defining volumes
