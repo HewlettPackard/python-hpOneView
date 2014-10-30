@@ -124,6 +124,11 @@ class storage(object):
         body = self._con.get(uri['vol-templates'])
         return body
 
+    def get_connectable_storage_volume_templates(self):
+        global uri
+        body = self._con.get(uri['connectable-vol'])
+        return body
+
     def add_storage_volume(self, volume, blocking=True,
                            verbose=False):
         task, body = self._con.post(uri['storage-volumes'], volume)

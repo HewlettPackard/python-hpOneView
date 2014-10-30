@@ -152,6 +152,7 @@ uri = {
     'storage-systems': '/rest/storage-systems',
     'storage-volumes': '/rest/storage-volumes',
     'vol-templates': '/rest/storage-volume-templates',
+    'connectable-vol': '/rest/storage-volume-templates/connectable-volume-templates',
     #------------------------------------
     # FC-SANS
     #------------------------------------
