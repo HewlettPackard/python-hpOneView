@@ -232,6 +232,13 @@ class networking(object):
         return get_members(self._con.get(uri['fcnet']))
 
     ###########################################################################
+    # Uplink Sets
+    ###########################################################################
+    def get_uplink_sets(self):
+        global uri
+        return get_members(self._con.get(uri['uplink-sets']))
+
+    ###########################################################################
     # Interconnects
     ###########################################################################
     def get_interconnects(self):

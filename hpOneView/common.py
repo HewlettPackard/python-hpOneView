@@ -102,7 +102,7 @@ uri = {
     'lig': '/rest/logical-interconnect-groups',
     'ic': '/rest/interconnects',
     'ictype': '/rest/interconnect-types',
-    'us': '/rest/uplink-sets',
+    'uplink-sets': '/rest/uplink-sets',
     'ld': '/rest/logical-downlinks',
     'idpool': '/rest/id-pools',
     'vmac-pool': '/rest/id-pools/vmac',
