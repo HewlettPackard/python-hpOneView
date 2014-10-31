@@ -55,12 +55,12 @@ def deleg(srv):
         srv.delete_enclosure_group(egroup)
 
 
-def defeg(net, srv, lname):
+def defeg(net, srv, name, lname):
     ligs = net.get_ligs()
     for lig in ligs:
         if lig['name'] == lname:
             print('Creating Enclosure Group')
-            egroup = hpov.common.make_egroup_dict('Prod VC FlexFabric Group 1', lig['uri'])
+            egroup = hpov.common.make_egroup_dict(name, lig['uri'])
             egroup = srv.create_enclosure_group(egroup)
             pprint(egroup)
         else:
@@ -82,10 +82,13 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    parser.add_argument('-d', dest='delete', required=False,
-                        action='store_true', help='Delete all Enclosure Groups and exit')
-    parser.add_argument('-n', '--name', dest='lname', required=False,
-                        default='VC FlexFabric Production', help='LIG to assign to enclosure group')
+    parser.add_argument('-l', dest='lname', required=False,
+                        help='LIG to assign to enclosure group')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-n',  dest='name', help='Enclosure Group name')
+    group.add_argument('-d', dest='delete',
+                       action='store_true', help='Delete ALL Enclosure '
+                       'Groups and exit')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -99,13 +102,18 @@ def main():
     if args.cert:
         con.set_trusted_ssl_bundle(args.cert)
 
+    if args.name:
+        if not args.lname:
+            print('Error, the Logical Interconnect Group must be specified')
+            sys.exit()
+
     login(con, credential)
     acceptEULA(con)
     if args.delete:
         deleg(srv)
         sys.exit()
 
-    defeg(net, srv, args.lname)
+    defeg(net, srv, args.name, args.lname)
 
 if __name__ == '__main__':
     import sys

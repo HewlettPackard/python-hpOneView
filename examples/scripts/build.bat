@@ -26,7 +26,7 @@ python define-networks.py -a %HOST% -u %USER% -p %PASS%
 echo  -- Defining Logical Interconnect Groups
 python define-lig.py -a %HOST% -u %USER% -p %PASS%
 echo  -- Defining Enclosure Groups
-python define-eg.py -a %HOST% -u %USER% -p %PASS%
+python define-enclosure-group.py -a %HOST% -u %USER% -p %PASS% -n "Prod VC FlexFabric Group 1" -l "VC  FlexFabric Production"
 echo  -- Import Enclosures
 python import-enclosure.py -a %HOST% -u %USER% -p %PASS% -eu %ENC_USR% -ep %ENC_PASS% -e %ENC_ADDR%
 echo  -- Add Storage System

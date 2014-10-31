@@ -22,7 +22,7 @@ echo  -- Defining Logical Networks
 echo  -- Defining Logical Interconnect Groups
 ./define-lig.py -a $HOST -u $USER -p $PASS
 echo  -- Defining Enclosure Groups
-./define-eg.py -a $HOST -u $USER -p $PASS
+./define-enclosure-group.py -a $HOST -u $USER -p $PASS -n "Prod VC FlexFabric Group 1" -l "VC FlexFabric Production"
 echo  -- Import Enclosures
 ./import-enclosure.py -a $HOST -u $USER -p $PASS -eu $ENC_USR -ep $ENC_PASS -e $ENC_ADDR
 echo  -- Add Storage System
