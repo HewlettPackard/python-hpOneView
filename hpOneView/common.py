@@ -271,14 +271,16 @@ def make_enet_dict(name, vlanid=0,
 
 def make_fc_dict(name, fabricType='FabricAttach',
                  autoLoginRedistribution=True,
-                 linkStabilityTime=30):
+                 linkStabilityTime=30,
+                 managedSanUri=None):
     return {
         'name': name,
         'type': 'fc-networkV2',
         'connectionTemplateUri': None,
         'fabricType': fabricType,
         'autoLoginRedistribution': autoLoginRedistribution,
-        'linkStabilityTime': linkStabilityTime}
+        'linkStabilityTime': linkStabilityTime,
+        'managedSanUri': managedSanUri}
 
 
 def make_interconnect_map_template():

@@ -190,12 +190,10 @@ class networking(object):
         return entity
 
     def create_fc_network(self, name, attach='FabricAttach',
-                          autodist=True,
-                          linktime=30,
-                          bw={},
-                          blocking=True, verbose=False):
+                          autodist=True, linktime=30, bw={},
+                          managedSanUri=None, blocking=True, verbose=False):
         global uri
-        xnet = make_fc_dict(name, attach, autodist, linktime)
+        xnet = make_fc_dict(name, attach, autodist, linktime, managedSanUri)
         task, entity = self.create_network(uri['fcnet'], xnet, bw, verbose)
         if blocking is True:
             task = self._activity.wait4task(task, tout=60, verbose=verbose)
