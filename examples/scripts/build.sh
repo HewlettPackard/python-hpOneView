@@ -20,7 +20,7 @@ STO_PASS=${STO_PASS:=PASSWORD}
 echo  -- Defining Logical Networks
 ./define-networks.py -a $HOST -u $USER -p $PASS
 echo  -- Defining Logical Interconnect Groups
-./define-lig.py -a $HOST -u $USER -p $PASS
+./define-logical-interconnect-group.py -a $HOST -u $USER -p $PASS
 echo  -- Defining Enclosure Groups
 ./define-enclosure-group.py -a $HOST -u $USER -p $PASS -n "Prod VC FlexFabric Group 1" -l "VC FlexFabric Production"
 echo  -- Import Enclosures
