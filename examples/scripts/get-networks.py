@@ -49,11 +49,18 @@ def login(con, credential):
         print('Login failed')
 
 
-def getnet(net):
-    enet = net.get_enet_networks()
-    pprint(enet)
-    fc = net.get_fc_networks()
-    pprint(fc)
+def getnet(net, name):
+
+    if name:
+        enets = net.get_enet_networks()
+        for enet in enets:
+            if enet['name'] == name:
+                pprint(enet)
+    else:
+        enets = net.get_enet_networks()
+        pprint(enets)
+        fc = net.get_fc_networks()
+        pprint(fc)
 
 
 def main():
@@ -69,6 +76,8 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
+    parser.add_argument('-n', dest='name', required=False,
+                        help='Network name')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -84,7 +93,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    getnet(net)
+    getnet(net, args.name)
 
 if __name__ == '__main__':
     import sys
