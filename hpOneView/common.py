@@ -384,24 +384,32 @@ def get_iobay_entry(interconnectMap, bay):
                     return iobay_entry
 
 
-def make_uplink_set_dict(name, networks=[], ntype='Ethernet'):
-    if ntype == 'Ethernet':
+def make_uplink_set_group_dict(name,
+                               ethernetNetworkType='Tagged',
+                               lacpTimer='Long',
+                               logicalPortConfigInfos=[],
+                               mode='Auto',
+                               nativeNetworkUri=None,
+                               networkType='Ethernet',
+                               networkUris=[]):
+    if networkType == 'Ethernet':
         return {'name': name,
-                'ethernetNetworkType': 'Tagged',
-                'networkUris': networks[:],
-                'networkType': 'Ethernet',   # Ethernet or FibreChannel
-                'mode': 'Auto',   # Auto or Failover
+                'ethernetNetworkType': ethernetNetworkType,
+                'lacpTimer': lacpTimer,
+                'networkUris': networkUris,
+                'networkType': networkType,
+                'mode': mode,
                 'primaryPort': None,
-                'logicalPortConfigInfos': [],  # Array of logicalLocations
-                'nativeNetworkUri': None
+                'logicalPortConfigInfos': logicalPortConfigInfos,
+                'nativeNetworkUri': nativeNetworkUri,
                 }
-    if ntype == 'FibreChannel':
+    if networkType == 'FibreChannel':
         return {'name': name,
                 'ethernetNetworkType': 'NotApplicable',
-                'networkUris': networks[:],
-                'logicalPortConfigInfos': [],  # Array of logicalLocations
+                'networkUris': networkUris,
+                'logicalPortConfigInfos': logicalPortConfigInfos,
                 'networkType': 'FibreChannel',  # Ethernet or FibreChannel
-                'mode': 'Auto',  # Auto or Failover
+                'mode': mode,
                 }
     raise Exception('networkType must be Ethernet or FibreChannel.')
 
