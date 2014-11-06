@@ -96,6 +96,9 @@ class connection(object):
     def get_host(self):
         return self._host
 
+    def get_by_uri(self, xuri):
+        return self.get(xuri)
+
     def make_url(self, path):
         return 'https://%s%s' % (self._host, path)
 
