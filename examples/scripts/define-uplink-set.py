@@ -162,10 +162,9 @@ def main():
     parser.add_argument('-l', dest='list_of_networks', required=False,
                         nargs='+', help='List of network names to add to the '
                         'uplink set, encapsulated with quotes and seperated '
-                        'by spaces. I.E. -t "Net One" "Net Two" "Net Three"')
+                        'by spaces. I.E. -l "Net One" "Net Two" "Net Three"')
     parser.add_argument('-t', dest='uplink_type', choices=['Ethernet',
-                        'FibreChannel'], required=False,
-                        default='Ethernet', help='Uplink Type')
+                        'FibreChannel'], required=True, help='Uplink Type')
     parser.add_argument('-e', dest='ethernet_type', choices=['Tagged',
                         'Tunnel', 'Untagged'], required=False,
                         default='Tagged', help='Ethernet Type')
