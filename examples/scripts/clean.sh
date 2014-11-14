@@ -28,4 +28,4 @@ echo  -- Removing Enclosure Groups
 echo  -- Removing Logical Interconnect Groups
 ./del-logical-interconnect-groups.py -a $HOST -u $USER -p $PASS -d
 echo  -- Removing Logical Networks
-./define-networks.py -a $HOST -u $USER -p $PASS -d
+./del-network.py -a $HOST -u $USER -p $PASS -d
