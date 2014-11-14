@@ -31,7 +31,7 @@ python define-uplink-set.py -a %HOST% -u %USER% -p %PASS% -n "3PAR SAN B" -i "VC
 python define-uplink-set.py -a %HOST% -u %USER% -p %PASS% -n "Uplink Set 1-A" -i "VC FlexFabric Production" -t Ethernet  -l VLAN-  10-A VLAN-20-A VLAN-30-A VLAN-40-A VLAN-50-A VLAN-60-A -o 1:7 1:8
 python define-uplink-set.py -a %HOST% -u %USER% -p %PASS% -n "Uplink Set 1-B" -i "VC FlexFabric Production" -t Ethernet  -l VLAN-  10-B VLAN-20-B VLAN-30-B VLAN-40-B VLAN-50-B VLAN-60-B -o 2:7 2:8
 echo  -- Defining Enclosure Groups
-python define-enclosure-group.py -a %HOST% -u %USER% -p %PASS% -n "Prod VC FlexFabric Group 1" -l "VC  FlexFabric Production"
+python define-enclosure-group.py -a %HOST% -u %USER% -p %PASS% -n "Prod VC FlexFabric Group 1" -l "VC FlexFabric Production"
 echo  -- Import Enclosures
 python import-enclosure.py -a %HOST% -u %USER% -p %PASS% -eu %ENC_USR% -ep %ENC_PASS% -e %ENC_ADDR%
 echo  -- Add Storage System
