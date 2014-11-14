@@ -106,7 +106,7 @@ def main():
     parser.add_argument('-z', dest='vlan_type', choices=['Tagged', 'Untagged',
                         'Tunnel'], required=False, default='Tagged',
                         help='VLAN Type')
-    parser.add_argument('-u', dest='purpose', choices=['FaultTolerance',
+    parser.add_argument('-o', dest='purpose', choices=['FaultTolerance',
                         'General', 'Management', 'VMMigration'],
                         required=False, default='General',  help='A '
                         'description to attach to a network to help '

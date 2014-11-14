@@ -22,7 +22,7 @@ set STO_PASS=PASSWORD
 
 
 echo  -- Defining Logical Networks
-python define-networks.py -a %HOST% -u %USER% -p %PASS%
+FOR %%A IN (A B) DO FOR %%V IN (10 20 30 40 50 60) DO python define-ethernet-network.py -a %HOST% -u %USER% -p %PASS% -n VLAN-%%V-%%A -v %%V
 echo  -- Defining Logical Interconnect Groups
 python define-logical-interconnect-group.py -a %HOST% -u %USER% -p %PASS% -n "VC FlexFabric Production" -i 1:Flex2040f8 2:Flex2040f8
 echo  -- Defining Uplink Set Groups in Logical Interconnect Group
