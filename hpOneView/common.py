@@ -350,18 +350,76 @@ def make_storage_volume(name,
     }
 
 
-def make_lig_dict(name):
+def make_lig_dict(name,
+                  ethernetSettings=[]):
     return {
         'name': name,
         'type': 'logical-interconnect-groupV2',
         'interconnectMapTemplate': make_interconnect_map_template(),
         'uplinkSets': [],  # call make_uplink_template
         'stackingMode': 'Enclosure',
-        # 'ethernetSettings': None,
-        'state': 'Active',
+        'ethernetSettings': ethernetSettings,
         # 'telemetryConfiguration': None,
         # 'snmpConfiguration' : None,
         # 'description': None
+    }
+
+
+def make_ethernetsettings_dict(enableFastMacCacheFailover=True,
+                               enableIgmpSnooping=False,
+                               enableNetworkLoopProtection=True,
+                               enablePauseFloodProtection=True,
+                               igmpIdleTimeoutInterval=260,
+                               macRefreshInterval=5):
+    return{
+        'enableFastMacCacheFailover': enableFastMacCacheFailover,
+        'enableIgmpSnooping': enableIgmpSnooping,
+        'enableNetworkLoopProtection': enableNetworkLoopProtection,
+        'enablePauseFloodProtection': enablePauseFloodProtection,
+        'igmpIdleTimeoutInterval': igmpIdleTimeoutInterval,
+        'macRefreshInterval': macRefreshInterval,
+        'type': 'EthernetInterconnectSettingsV2'
+    }
+
+
+def make_trapdestinations_dict(trapDestination,
+                               communityString='public',
+                               enetTrapCategories=['Other',
+                                                   'PortStatus',
+                                                   'PortThresholds'],
+                               fcTrapCategories=['Other', 'PortStatus'],
+                               trapFormat='SNMPv1',
+                               trapSeverities=['Critical',
+                                               'Info',
+                                               'Major',
+                                               'Minor',
+                                               'Normal',
+                                               'Unknown',
+                                               'Warning'],
+                               vcmTrapCategories=['Legacy']):
+    return{
+        'trapDestination': trapDestination,
+        'communityString': communityString,
+        'enetTrapCategories': enetTrapCategories,
+        'fcTrapCategories': fcTrapCategories,
+        'trapFormat': trapFormat,
+        'trapSeverities': trapSeverities,
+        'vcmTrapCategories': vcmTrapCategories
+    }
+
+
+
+def make_snmpconfiguration_dict(enabled=False,
+                                readCommunity='public',
+                                snmpAccess=[],
+                                systemContact=None,
+                                trapDestinations=[]):
+    return{
+        'enabled': enabled,
+        'readCommunity': readCommunity,
+        'snmpAccess': snmpAccess,
+        'systemContact': systemContact,
+        'trapDestinations': trapDestinations,
     }
 
 

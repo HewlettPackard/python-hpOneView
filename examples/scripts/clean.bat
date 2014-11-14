@@ -29,6 +29,6 @@ python import-enclosure.py -a %HOST% -u %USER% -p %PASS% -eu %ENC_USR% -ep %ENC_
 echo  -- Removing Enclosure Groups
 python define-enclosure-group.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Logical Interconnect Groups
-python define-logical-interconnect-group.py -a %HOST% -u %USER% -p %PASS% -d
+python del-logical-interconnect-groups.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Logical Networks
 python define-networks.py -a %HOST% -u %USER% -p %PASS% -d
