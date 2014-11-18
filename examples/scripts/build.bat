@@ -21,8 +21,11 @@ rem Enclosure OA password
 set STO_PASS=PASSWORD
 
 
-echo  -- Defining Logical Networks
+echo  -- Defining Ehternet Logical Networks
 FOR %%A IN (A B) DO FOR %%V IN (10 20 30 40 50 60) DO python define-ethernet-network.py -a %HOST% -u %USER% -p %PASS% -n VLAN-%%V-%%A -v %%V
+echo  -- Defining Fibre Channel Logical Networks
+python define-fibrechannel-network.py -a %HOST% -u %USER% -p %PASS% -n "3PAR SAN A" -e
+python define-fibrechannel-network.py -a %HOST% -u %USER% -p %PASS% -n "3PAR SAN B" -e
 echo  -- Defining Logical Interconnect Groups
 python define-logical-interconnect-group.py -a %HOST% -u %USER% -p %PASS% -n "VC FlexFabric Production" -i 1:Flex2040f8 2:Flex2040f8
 echo  -- Defining Uplink Set Groups in Logical Interconnect Group

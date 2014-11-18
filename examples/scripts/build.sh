@@ -17,7 +17,7 @@ STO_USR=${STO_USR:=Administrator}
 # Enclosure OA password
 STO_PASS=${STO_PASS:=PASSWORD}
 
-echo  -- Defining Logical Networks
+echo  -- Defining Ethernet Logical Networks
 for AA in A B
 do
   for vlan in 10 20 30 40 50 60
@@ -26,6 +26,9 @@ do
   done
 done
 
+echo  -- Defining Fibre Channel  Logical Networks
+./define-fibrechannel-network.py -a $HOST -u $USER -p $PASS -n "3PAR SAN A" -e
+./define-fibrechannel-network.py -a $HOST -u $USER -p $PASS -n "3PAR SAN B" -e
 echo  -- Defining Logical Interconnect Groups
 ./define-logical-interconnect-group.py -a $HOST -u $USER -p $PASS -n "VC FlexFabric Production" -i 1:Flex2040f8 2:Flex2040f8
 echo  -- Defining Uplink Set Groups in Logical Interconnect Group
