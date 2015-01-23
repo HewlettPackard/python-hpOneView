@@ -51,8 +51,6 @@ def login(con, credential):
 def addnetset(net, name, networks, minbw, maxbw):
 
     nset = []
-    pprint(networks)
-    sys.exit()
 
     maxbw = int(maxbw * 1000)
     minbw = int(minbw * 1000)
