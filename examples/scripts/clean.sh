@@ -24,7 +24,7 @@ echo  -- Removing Storage Systems
 echo  -- Removing Enclosures
 ./import-enclosure.py -a $HOST -u $USER -p $PASS -eu $ENC_USR -ep $ENC_PASS -d
 echo  -- Removing Enclosure Groups
-./define-enclosure-group.py -a $HOST -u $USER -p $PASS -d
+./del-enclosure-group.py -a $HOST -u $USER -p $PASS -d
 echo  -- Removing Logical Interconnect Groups
 ./del-logical-interconnect-groups.py -a $HOST -u $USER -p $PASS -d
 echo  -- Removing Network Sets

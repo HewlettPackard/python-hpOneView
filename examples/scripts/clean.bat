@@ -27,7 +27,7 @@ python add-storage-system.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Enclosures
 python import-enclosure.py -a %HOST% -u %USER% -p %PASS% -eu %ENC_USR% -ep %ENC_PASS% -d
 echo  -- Removing Enclosure Groups
-python define-enclosure-group.py -a %HOST% -u %USER% -p %PASS% -d
+python del-enclosure-group.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Logical Interconnect Groups
 python del-logical-interconnect-groups.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Network Sets

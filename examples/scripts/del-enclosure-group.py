@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-
-###
+#
 # (C) Copyright 2015 Hewlett-Packard Development Company, L.P.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,13 +19,14 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-###
+#
 import sys
+import argparse
+
 if sys.version_info < (3, 2):
     raise Exception('Must use Python 3.2 or later')
 
 import hpOneView as hpov
-from pprint import pprint
 
 
 def acceptEULA(con):
@@ -49,63 +49,68 @@ def login(con, credential):
         print('Login failed')
 
 
-def defeg(net, srv, name, lname):
-    ligs = net.get_ligs()
-    for lig in ligs:
-        if lig['name'] == lname:
-            print('Creating Enclosure Group')
-            egroup = hpov.common.make_egroup_dict(name, lig['uri'])
-            egroup = srv.create_enclosure_group(egroup)
-            pprint(egroup)
-        else:
-            print('ERROR: Creating Enclosure Group')
-            print('LIG: "%s" has not been defined' % lname)
-            print('')
+def del_all_enclosure_groups(srv):
+    egroups = srv.get_enclosure_groups()
+    for egroup in egroups:
+        srv.delete_enclosure_group(egroup)
+
+
+def del_enclosure_group_by_name(srv, name):
+    egroups = srv.get_enclosure_groups()
+    for egroup in egroups:
+        if egroup['name'] == name:
+            srv.delete_enclosure_group(egroup)
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=False,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
-    parser.add_argument('-r', '--proxy', dest='proxy', required=False,
-                        help='Proxy (host:port format')
-    parser.add_argument('-l', dest='lname', required=False,
-                        help='LIG to assign to enclosure group')
+
+    parser = argparse.ArgumentParser(add_help=True, description='Usage',
+                        formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=False,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
+    parser.add_argument('-r', dest='proxy', required=False,
+                        help='''
+    Proxy (host:port format''')
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-n',  dest='name', help='Enclosure Group name')
+    group.add_argument('-d', dest='delete_all', action='store_true',
+                       help='''
+    Delete ALL Enclosure Groups''')
+    group.add_argument('-n', dest='name',
+                       help='''
+    Name of the Enclosure Group to delete''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
     srv = hpov.servers(con)
-    net = hpov.networking(con)
 
     if args.proxy:
         con.set_proxy(args.proxy.split(':')[0], args.proxy.split(':')[1])
     if args.cert:
         con.set_trusted_ssl_bundle(args.cert)
 
-    if args.name:
-        if not args.lname:
-            print('Error, the Logical Interconnect Group must be specified')
-            sys.exit()
-
     login(con, credential)
     acceptEULA(con)
 
-    defeg(net, srv, args.name, args.lname)
+    if args.delete_all:
+        del_all_enclosure_groups(srv)
+        sys.exit()
+
+    del_enclosure_group_by_name(srv, args.name)
 
 if __name__ == '__main__':
-    import sys
-    import argparse
     sys.exit(main())
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
