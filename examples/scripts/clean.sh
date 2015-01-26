@@ -22,7 +22,7 @@ echo  -- Removing Storage Pools
 echo  -- Removing Storage Systems
 ./add-storage-system.py -a $HOST -u $USER -p $PASS -d
 echo  -- Removing Enclosures
-./import-enclosure.py -a $HOST -u $USER -p $PASS -eu $ENC_USR -ep $ENC_PASS -d
+./del-enclosure.py -a $HOST -u $USER -p $PASS -d
 echo  -- Removing Enclosure Groups
 ./del-enclosure-group.py -a $HOST -u $USER -p $PASS -d
 echo  -- Removing Logical Interconnect Groups

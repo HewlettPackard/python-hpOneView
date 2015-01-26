@@ -25,7 +25,7 @@ python add-storage-pool.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Storage Systems
 python add-storage-system.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Enclosures
-python import-enclosure.py -a %HOST% -u %USER% -p %PASS% -eu %ENC_USR% -ep %ENC_PASS% -d
+python del-enclosure.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Enclosure Groups
 python del-enclosure-group.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Logical Interconnect Groups

@@ -48,44 +48,27 @@ def login(con, credential):
         print('Login failed')
 
 
-def impenc(srv, sts, eg, ip, usr, pas, lic, baseline):
-    # Locate the enclosure group
-    egroups = srv.get_enclosure_groups()
-    for group in egroups:
-        if group['name'] == eg:
-            egroup = group
-        else:
-            print('ERROR: Importing Enclosure')
-            print('Enclosure Group: "%s" has not been defined' % eg)
-            print('')
-            sys.exit()
+def del_all_enclosures(srv):
+    enclosures = srv.get_enclosures()
+    for enclosure in enclosures:
+        print(('Removing Enclosure %s' % enclosure['serialNumber']))
+        srv.remove_enclosure(enclosure, force=True)
 
-    print('Adding Enclosure')
-    # Find the first Firmware Baseline
-    uri = ''
-    if baseline:
-        spps = sts.get_spps()
-        for spp in spps:
-            if spp['isoFileName'] == baseline:
-                uri = spp['uri']
-        if not uri:
-            print('ERROR: Locating Firmeware Baseline SPP')
-            print('Baseline: "%s" can not be located' % baseline)
-            print('')
-            sys.exit()
 
-    if not uri:
-        add_enclosure = hpov.common.make_enclosure_dict(ip, usr, pas,
-                                                        egroup['uri'],
-                                                        licenseIntent=lic)
-    else:
-        add_enclosure = hpov.common.make_enclosure_dict(ip, usr, pas,
-                                                        egroup['uri'],
-                                                        licenseIntent=lic,
-                                                        firmwareBaseLineUri=uri)
+def del_enclosure_by_name(srv, name):
+    enclosures = srv.get_enclosures()
+    for enclosure in enclosures:
+        if enclosure['name'] == name:
+            print(('Removing Enclosure %s' % enclosure['name']))
+            srv.remove_enclosure(enclosure, force=True)
 
-    enclosure = srv.add_enclosure(add_enclosure)
-    pprint(enclosure)
+
+def del_enclosure_by_serial(srv, serialNumber):
+    enclosures = srv.get_enclosures()
+    for enclosure in enclosures:
+        if enclosure['serialNumber'] == serialNumber:
+            print(('Removing Enclosure %s' % enclosure['serialNumber']))
+            srv.remove_enclosure(enclosure, force=True)
 
 
 def main():
@@ -101,21 +84,13 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    parser.add_argument('-eu', '--enc_user', dest='encusr', required=False,
-                        help='Administrative username for the c7000 enclosure OA')
-    parser.add_argument('-ep', '--enc_pass', dest='encpass', required=False,
-                        help='Administrative password for the c7000 enclosure OA')
-    parser.add_argument('-e', dest='enc', required=True,
-                        help='IP address of the c7000 to import into HP OneView')
-    parser.add_argument('-n', '--name', dest='egroup', required=False,
-                        default='Prod VC FlexFabric Group 1',
-                        help='Enclosure Group to add the enclosure to')
-    parser.add_argument('-s', '--spp', dest='spp', required=False,
-                        help='SPP file name to use as the firmware baseline')
-    parser.add_argument('-l', '--license', dest='license', required=False,
-                        help='Apply OneView or OneView w/o iLO license to '
-                        'servers in the enclosure specify either OneView or '
-                        'OneViewNoiLO')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-d', dest='delete_all', action='store_true',
+                       help='Delete all Enclosures and exit')
+    group.add_argument('-en', '--enc_name', dest='ename',
+                       help='Name of enclosure to be deleted')
+    group.add_argument('-es', '--enc_serial', dest='serialNo',
+                       help='SerialNumber of enclosure to be deleted')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -131,9 +106,15 @@ def main():
 
     login(con, credential)
     acceptEULA(con)
+    if args.delete_all:
+        del_all_enclosures(srv)
+        sys.exit()
 
-    impenc(srv, sts, args.egroup, args.enc, args.encusr, args.encpass,
-           args.license, args.spp)
+    if args.serialNo:
+        del_enclosure_by_serial(srv, args.serialNo)
+        sys.exit()
+
+    del_enclosure_by_name(srv, args.ename)
 
 if __name__ == '__main__':
     import sys
