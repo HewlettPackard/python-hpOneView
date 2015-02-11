@@ -39,7 +39,7 @@ echo  -- Defining Uplink Set Groups in Logical Interconnect Group
 echo  -- Defining Enclosure Groups
 ./define-enclosure-group.py -a $HOST -u $USER -p $PASS -n "Prod VC FlexFabric Group 1" -l "VC FlexFabric Production"
 echo  -- Import Enclosures
-./import-enclosure.py -a $HOST -u $USER -p $PASS -eu $ENC_USR -ep $ENC_PASS -e $ENC_ADDR
+./import-enclosure.py -a $HOST -u $USER -p $PASS -eu $ENC_USR -ep $ENC_PASS -e $ENC_ADDR -n "Prod VC FlexFabric Group 1"
 echo  -- Add Storage System
 ./add-storage-system.py -a $HOST -u $USER -p $PASS -s $STO_ADDR -su $STO_USR -sp $STO_PASS
 echo  -- Defining Storage Pools

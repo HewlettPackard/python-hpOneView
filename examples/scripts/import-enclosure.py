@@ -101,14 +101,13 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    parser.add_argument('-eu', '--enc_user', dest='encusr', required=False,
+    parser.add_argument('-eu', '--enc_user', dest='encusr', required=True,
                         help='Administrative username for the c7000 enclosure OA')
-    parser.add_argument('-ep', '--enc_pass', dest='encpass', required=False,
+    parser.add_argument('-ep', '--enc_pass', dest='encpass', required=True,
                         help='Administrative password for the c7000 enclosure OA')
     parser.add_argument('-e', dest='enc', required=True,
                         help='IP address of the c7000 to import into HP OneView')
-    parser.add_argument('-n', '--name', dest='egroup', required=False,
-                        default='Prod VC FlexFabric Group 1',
+    parser.add_argument('-n', '--name', dest='egroup', required=True,
                         help='Enclosure Group to add the enclosure to')
     parser.add_argument('-s', '--spp', dest='spp', required=False,
                         help='SPP file name to use as the firmware baseline')
