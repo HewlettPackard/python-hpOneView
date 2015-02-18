@@ -72,11 +72,8 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-f', dest='file', help='HP OneView license file '
-                       '1 key per license file')
-    group.add_argument('-g', dest='getlic', action='store_true',
-                       help='Display the currently installed licenses and exit')
+    parser.add_argument('-f', dest='file', help='HP OneView license file '
+                       '1 key per license file', required=True)
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
