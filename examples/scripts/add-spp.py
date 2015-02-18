@@ -71,7 +71,7 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    group.add_argument('-f', dest='file', help='SPP file to upload',
+    parser.add_argument('-f', dest='file', help='SPP file to upload',
                        required=True)
 
     args = parser.parse_args()
