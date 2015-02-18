@@ -48,15 +48,9 @@ def login(con, credential):
         print('Login failed')
 
 
-def addlic(sts, licenseKey):
-    try:
-        sts.add_license(licenseKey)
-    except exceptions.HPOneViewException as ex:
-        print('WARNING: License failed to add. Check message.')
-        print('Message: ' + ex.message)
-        sys.exit()
+def getlic(sts):
     licenses = sts.get_licenses()
-    print(str(len(licenses)) + ' licenses installed')
+    pprint(licenses)
 
 
 def main():
@@ -72,11 +66,6 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-f', dest='file', help='HP OneView license file '
-                       '1 key per license file')
-    group.add_argument('-g', dest='getlic', action='store_true',
-                       help='Display the currently installed licenses and exit')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -92,15 +81,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    try:
-        f = open(args.file, 'r')
-        lic = f.read()
-        f.close()
-    except IOError:
-        print('Error reading license file')
-        sys.exit()
-
-    addlic(sts, lic.rstrip('\n'))
+    getlic(sts)
 
 if __name__ == '__main__':
     import sys
