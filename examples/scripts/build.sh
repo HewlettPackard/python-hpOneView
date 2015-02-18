@@ -9,13 +9,13 @@ ENC_ADDR=${ENC_ADDR:=172.18.1.11}
 # Enclosure OA username
 ENC_USR=${ENC_USR:=Administrator}
 # Enclosure OA password
-ENC_OV_PASS=${ENC_OV_PASS:=OV_PASSWORD}
+ENC_PASS=${ENC_PASS:=OV_PASSWORD}
 # 3PAR hostname or IP Address
 STO_ADDR=${STO_ADDR:=172.18.11.11}
 # Enclosure OA username
 STO_USR=${STO_USR:=Administrator}
 # Enclosure OA password
-STO_OV_PASS=${STO_OV_PASS:=OV_PASSWORD}
+STO_PASS=${STO_PASS:=OV_PASSWORD}
 
 echo  -- Defining Ethernet Logical Networks
 for AA in A B
@@ -39,9 +39,9 @@ echo  -- Defining Uplink Set Groups in Logical Interconnect Group
 echo  -- Defining Enclosure Groups
 ./define-enclosure-group.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Prod VC FlexFabric Group 1" -l "VC FlexFabric Production"
 echo  -- Import Enclosures
-./import-enclosure.py -a $OV_HOST -u $OV_USER -p $OV_PASS -eu $ENC_USR -ep $ENC_OV_PASS -e $ENC_ADDR -n "Prod VC FlexFabric Group 1"
+./import-enclosure.py -a $OV_HOST -u $OV_USER -p $OV_PASS -eu $ENC_USR -ep $ENC_PASS -e $ENC_ADDR -n "Prod VC FlexFabric Group 1"
 echo  -- Add Storage System
-./add-storage-system.py -a $OV_HOST -u $OV_USER -p $OV_PASS -s $STO_ADDR -su $STO_USR -sp $STO_OV_PASS
+./add-storage-system.py -a $OV_HOST -u $OV_USER -p $OV_PASS -s $STO_ADDR -su $STO_USR -sp $STO_PASS
 echo  -- Defining Storage Pools
 ./add-storage-pool.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n SND_CPG1
 echo  -- Defining Volume Templates

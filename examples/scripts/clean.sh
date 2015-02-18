@@ -9,7 +9,7 @@ ENC_ADDR=${ENC_ADDR:=172.18.1.11}
 # Enclosure OA username
 ENC_USR=${ENC_USR:=Administrator}
 # Enclosure OA password
-ENC_OV_PASS=${ENC_OV_PASS:=OV_PASSWORD}
+ENC_PASS=${ENC_PASS:=OV_PASSWORD}
 
 echo  -- Removing profiles
 ./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
