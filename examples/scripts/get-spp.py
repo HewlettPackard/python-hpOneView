@@ -51,11 +51,14 @@ def login(con, credential):
         print('Login failed')
 
 
-def upload(sts, path, name):
-    f, e = os.path.splitext(name)
-    print('Uploading SPP: ', name)
-    ret = sts.upload_spp(path, name)
-    pprint(ret)
+def getspp(sts):
+    spps = sts.get_spps()
+    for spp in spps:
+        print('')
+        for k, v in spp.items():
+            if k != 'fwComponents':
+                print('{0:25} : {1}'.format(k, v))
+        print('')
 
 
 def main():
@@ -71,9 +74,6 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    group.add_argument('-f', dest='file', help='SPP file to upload',
-                       required=True)
-
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
@@ -88,9 +88,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    (path, name) = os.path.split(args.file)
-    upload(sts, args.file, name)
-
+    getspp(sts)
 
 if __name__ == '__main__':
     import sys
