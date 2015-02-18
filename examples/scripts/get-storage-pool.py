@@ -49,14 +49,8 @@ def login(con, credential):
         print('Login failed')
 
 
-def addsto(sto, name, storageSystemUri):
-    if storageSystemUri == 'auto':
-        systems = sto.get_storage_systems()
-        for sys in systems:
-            storageSystemUri = sys['uri']
-            if storageSystemUri is not 'auto':
-                break
-    ret = sto.add_storage_pool(name, storageSystemUri)
+def getsto(sto):
+    ret = sto.get_storage_pools()
     pprint(ret)
 
 
@@ -75,9 +69,6 @@ def main():
                         help='Proxy (host:port format')
     parser.add_argument('-x', '--uri', dest='uri', required=False,
                         default='auto', help='Storage System URI')
-    parser.add_argument('-n', dest='name', required=True,
-                       help='Name of the storage pool to add')
-
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
@@ -92,7 +83,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    addsto(sto, args.name, args.uri)
+    getsto(sto)
 
 if __name__ == '__main__':
     import sys

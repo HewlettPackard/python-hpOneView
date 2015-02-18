@@ -49,15 +49,18 @@ def login(con, credential):
         print('Login failed')
 
 
-def addsto(sto, name, storageSystemUri):
-    if storageSystemUri == 'auto':
-        systems = sto.get_storage_systems()
-        for sys in systems:
-            storageSystemUri = sys['uri']
-            if storageSystemUri is not 'auto':
-                break
-    ret = sto.add_storage_pool(name, storageSystemUri)
-    pprint(ret)
+def del_all_storage_pools(sto):
+    pools = sto.get_storage_pools()
+    for pool in pools['members']:
+        print('Removing Storage Pool: ', pool['name'])
+        sto.remove_storage_system(pool)
+
+
+def del_pool_by_name(sto, name):
+    pools = sto.get_storage_pools()
+    for pool in pools['members']:
+        if pool['name'] == name:
+            sto.remove_storage_system(pool)
 
 
 def main():
@@ -75,9 +78,12 @@ def main():
                         help='Proxy (host:port format')
     parser.add_argument('-x', '--uri', dest='uri', required=False,
                         default='auto', help='Storage System URI')
-    parser.add_argument('-n', dest='name', required=True,
-                       help='Name of the storage pool to add')
-
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-n', dest='name',
+                       help='Name of the storage pool to delete')
+    group.add_argument('-d', dest='delete_all',
+                       action='store_true',
+                       help='Remove ALL storage pools and exit')
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
@@ -92,7 +98,11 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    addsto(sto, args.name, args.uri)
+    if args.delete_all:
+        del_all_storage_pools(sto)
+        sys.exit()
+
+    del_pool_by_name(sto, args.name)
 
 if __name__ == '__main__':
     import sys
