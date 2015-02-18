@@ -1,33 +1,33 @@
 # OneView Appliance hostname or IP address
-HOST=${HOST:=oneview}
+OV_HOST=${OV_HOST:=oneview}
 # OneView Appliance username
-USER=${USER:=Administrator}
+OV_USER=${OV_USER:=Administrator}
 # OneView Appliance password
-PASS=${PASS:=PASSWORD}
+OV_PASS=${OV_PASS:=OV_PASSWORD}
 # Enclosure OA hostname or IP address
 ENC_ADDR=${ENC_ADDR:=172.18.1.11}
 # Enclosure OA username
 ENC_USR=${ENC_USR:=Administrator}
 # Enclosure OA password
-ENC_PASS=${ENC_PASS:=PASSWORD}
+ENC_OV_PASS=${ENC_OV_PASS:=OV_PASSWORD}
 
 echo  -- Removing profiles
-./define-profile.py -a $HOST -u $USER -p $PASS -d
+./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing volumes
-./add-volume.py -a $HOST -u $USER -p $PASS -d
+./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing Volume Templates
-./add-volume-template.py -a $HOST -u $USER -p $PASS -d
+./add-volume-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing Storage Pools
-./add-storage-pool.py -a $HOST -u $USER -p $PASS -d
+./add-storage-pool.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing Storage Systems
-./del-storage-system.py -a $HOST -u $USER -p $PASS -d
+./del-storage-system.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing Enclosures
-./del-enclosure.py -a $HOST -u $USER -p $PASS -d
+./del-enclosure.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing Enclosure Groups
-./del-enclosure-group.py -a $HOST -u $USER -p $PASS -d
+./del-enclosure-group.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing Logical Interconnect Groups
-./del-logical-interconnect-groups.py -a $HOST -u $USER -p $PASS -d
+./del-logical-interconnect-groups.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing Network Sets
-./del-network-set.py -a $HOST -u $USER -p $PASS -d
+./del-network-set.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing Logical Networks
-./del-network.py -a $HOST -u $USER -p $PASS -d
+./del-network.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
