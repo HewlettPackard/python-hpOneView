@@ -23,7 +23,7 @@ python add-volume-template.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Storage Pools
 python add-storage-pool.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Storage Systems
-python add-storage-system.py -a %HOST% -u %USER% -p %PASS% -d
+python del-storage-system.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Enclosures
 python del-enclosure.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Enclosure Groups

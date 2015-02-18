@@ -49,67 +49,31 @@ def login(con, credential):
         print('Login failed')
 
 
-def addsto(sto, ip, usr, pas, domain):
-    TB = 1000 * 1000 * 1000 * 1000
-    ret = sto.add_storage_system(ip, usr, pas)
-    retdict = literal_eval(ret)
-    print('Adding Storage System: ', retdict['ip_hostname'])
-    found = False
+def del_storage_system_by_name(sto, name):
     systems = sto.get_storage_systems()
-    uri = ''
-    conSys = None
     for sys in systems:
-        if sys['credentials']['ip_hostname'] == ip:
-            conSys = sys
+        if sys['name'] == name:
+            print('Removing Storage System: ', sys['name'])
+            sto.remove_storage_system(sys)
+            return
+    print('Storage System: ', name, ' not found')
 
-    if not conSys:
-        print('Unable to locale a connected system')
-        sys.exit()
 
-    for port in reversed(conSys['unmanagedPorts']):
-        if port['actualNetworkUri'] != 'unknown':
-            conSys['managedPorts'].append(port)
-            conSys['unmanagedPorts'].remove(port)
-    for port in conSys['managedPorts']:
-        port['expectedNetworkUri'] = port['actualNetworkUri']
-        port['groupName'] = 'Auto'
-    for dom in reversed(conSys['unmanagedDomains']):
-        if dom == domain:
-            conSys['managedDomain'] = dom
-            conSys['unmanagedDomains'].remove(dom)
-            found = True
-    if not found:
-        print('Storage Domain ', domain, ' not found. Verify the domain '
-              'exsits on the storage system')
-        sys.exit()
-    found = False
-    for pool in reversed(conSys['unmanagedPools']):
-        if pool['domain'] == domain:
-            conSys['managedPools'].append(pool)
-            conSys['unmanagedPools'].remove(pool)
-            found = True
-    if not found:
-        print('Could not locate storage pool for domain:"', domain, '" Verify'
-              ' the pool exsits on the storage system')
-        sys.exit()
+def del_storage_system_by_serial(sto, serialNo):
+    systems = sto.get_storage_systems()
+    for sys in systems:
+        if sys['serialNumber'] == serialNo:
+            print('Removing Storage System: ', sys['serialNumber'])
+            sto.remove_storage_system(sys)
+            return
+    print('Storage System: ', serialNo, ' not found')
 
-    ret = sto.update_storage_system(conSys)
-    print()
-    print('Status:        ', conSys['status'])
-    print('Name:          ', conSys['name'])
-    print('Serial Number: ', conSys['serialNumber'])
-    print('Model:         ', conSys['model'])
-    print('WWN:           ', conSys['wwn'])
-    print('Firmware:      ', conSys['firmware'])
-    print()
-    print('Total:         ', format(int(conSys['totalCapacity']) / TB, '.0f'),
-          'TB')
-    print('Allocated:     ', format(int(conSys['allocatedCapacity']) / TB,
-                                    '.0f'), 'TB')
-    print('Free:          ', format(int(conSys['freeCapacity']) / TB, '.0f'),
-          'TB')
-    print()
-    print('uri: ', conSys['uri'])
+
+def del_all_storage_systems(sto):
+    systems = sto.get_storage_systems()
+    for sys in systems:
+        print('Removing Storage System: ', sys['serialNumber'])
+        sto.remove_storage_system(sys)
 
 
 def main():
@@ -125,15 +89,13 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    parser.add_argument('-su', '--sto_user', dest='stousr', required=False,
-                        help='Administrative username for the storage system')
-    parser.add_argument('-sp', '--sto_pass', dest='stopass', required=False,
-                        help='Administrative password for the storage system')
-    parser.add_argument('-sd', '--sto_dom', dest='stodom', required=False,
-                        default='NewDomain',
-                        help='Storage Domain on the storage system')
-    parser.add_argument('-s', dest='storage', required=True,
-                        help='IP address of the storage system to add')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-n', dest='name',
+                       help='Name of storage system to delete')
+    group.add_argument('-s', dest='serialNo',
+                       help='Serial number of storage system to delete')
+    group.add_argument('-d', dest='delete', action='store_true',
+                       help='Remove ALL storage systems and exit')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -149,7 +111,16 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    addsto(sto, args.storage, args.stousr, args.stopass, args.stodom)
+    if args.name:
+        del_storage_system_by_name(sto, args.name)
+        sys.exit()
+
+    if args.serialNo:
+        del_storage_system_by_serial(sto, args.serialNo)
+        sys.exit()
+
+    if args.delete:
+        del_all_storage_systems(sto)
 
 if __name__ == '__main__':
     import sys

@@ -20,7 +20,7 @@ echo  -- Removing Volume Templates
 echo  -- Removing Storage Pools
 ./add-storage-pool.py -a $HOST -u $USER -p $PASS -d
 echo  -- Removing Storage Systems
-./add-storage-system.py -a $HOST -u $USER -p $PASS -d
+./del-storage-system.py -a $HOST -u $USER -p $PASS -d
 echo  -- Removing Enclosures
 ./del-enclosure.py -a $HOST -u $USER -p $PASS -d
 echo  -- Removing Enclosure Groups
