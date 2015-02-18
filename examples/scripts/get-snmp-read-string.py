@@ -48,10 +48,9 @@ def login(con, credential):
         print('Login failed')
 
 
-def defstring(sts, string):
-    print('Set Community Read String: ', end=' ')
-    ret = sts.set_dev_read_comm_string(string)
-    pprint(ret)
+def getstring(sts):
+    string = sts.get_dev_read_comm_string()
+    pprint(string)
 
 
 def main():
@@ -67,8 +66,6 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    parser.add_argument('-s', dest='string', help='Community Read String',
-                        required=True)
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -87,7 +84,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    defstring(sts, args.string)
+    getstring(sts)
 
 if __name__ == '__main__':
     import sys
