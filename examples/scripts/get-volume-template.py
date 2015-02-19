@@ -47,19 +47,9 @@ def login(con, credential):
         print('Login failed')
 
 
-def addsto(sto, name):
-    pools = sto.get_storage_pools()
-    for pool in pools['members']:
-        storagePoolUri = pool['uri']
-        if storagePoolUri:
-            break
-    template = hpov.common.make_storage_vol_template(name,
-                                                268435456000,
-                                                False,
-                                                storagePoolUri,
-                                                'Example Vol Template')
-    ret = sto.add_storage_volume_template(template)
-    pprint(ret)
+def get_vol_template(sto):
+    templates = sto.get_storage_volume_templates()
+    pprint(templates)
 
 
 def main():
@@ -75,8 +65,6 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    parser.add_argument('-n', dest='name', required=True,
-                       help='Name of the volume template to add')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -92,7 +80,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    addsto(sto, args.name)
+    get_vol_template(sto)
 
 if __name__ == '__main__':
     import sys

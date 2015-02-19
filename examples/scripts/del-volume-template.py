@@ -47,19 +47,18 @@ def login(con, credential):
         print('Login failed')
 
 
-def addsto(sto, name):
-    pools = sto.get_storage_pools()
-    for pool in pools['members']:
-        storagePoolUri = pool['uri']
-        if storagePoolUri:
-            break
-    template = hpov.common.make_storage_vol_template(name,
-                                                268435456000,
-                                                False,
-                                                storagePoolUri,
-                                                'Example Vol Template')
-    ret = sto.add_storage_volume_template(template)
-    pprint(ret)
+def del_all_vol_templates(sto):
+    templates = sto.get_storage_volume_templates()
+    for template in templates['members']:
+        print('Removing Storage Volume Template: ', template['name'])
+        sto.remove_storage_volume_template(template)
+
+
+def del_vol_template_by_name(sto, name):
+    templates = sto.get_storage_volume_templates()
+    for template in templates['members']:
+        print('Removing Storage Volume Template: ', template['name'])
+        sto.remove_storage_volume_template(template)
 
 
 def main():
@@ -75,8 +74,12 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    parser.add_argument('-n', dest='name', required=True,
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-n', dest='name',
                        help='Name of the volume template to add')
+    group.add_argument('-d', dest='delete_all',
+                       action='store_true', help='Remove ALL storage volume'
+                       ' teamplates and exit')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -92,7 +95,11 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    addsto(sto, args.name)
+    if args.delete_all:
+        del_all_vol_templates(sto)
+        sys.exit()
+
+    del_vol_template_by_name(sto, args.name)
 
 if __name__ == '__main__':
     import sys

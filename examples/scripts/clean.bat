@@ -17,11 +17,11 @@ set ENC_PASS=PASSWORD
 echo  -- Removing profiles
 python define-profile.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing volumes
-python add-volume.py -a %HOST% -u %USER% -p %PASS% -d
+python del-volume.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Volume Templates
-python add-volume-template.py -a %HOST% -u %USER% -p %PASS% -d
+python del-volume-template.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Storage Pools
-python add-storage-pool.py -a %HOST% -u %USER% -p %PASS% -d
+python del-storage-pool.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Storage Systems
 python del-storage-system.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Enclosures

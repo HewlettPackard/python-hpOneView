@@ -48,18 +48,6 @@ def login(con, credential):
         print('Login failed')
 
 
-def getsto(sto):
-    templates = sto.get_storage_volumes()
-    pprint(templates)
-
-
-def delsto(sto):
-    volumes = sto.get_storage_volumes()
-    for volume in volumes['members']:
-        print('Removing Storage Volume: ', volume['name'])
-        sto.remove_storage_volume(volume)
-
-
 def addsto(sto, name):
     pools = sto.get_storage_pools()
     for pool in pools['members']:
@@ -94,13 +82,8 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-n', dest='name',
+    parser.add_argument('-n', dest='name', required=True,
                        help='Name of the storage volume to add')
-    group.add_argument('-d', dest='delete',
-                       action='store_true', help='Remove ALL storage volumes and exit')
-    group.add_argument('-g', dest='get',
-                       action='store_true', help='Get storage volumes and exit')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -115,14 +98,6 @@ def main():
 
     login(con, credential)
     acceptEULA(con)
-
-    if args.get:
-        getsto(sto)
-        sys.exit()
-
-    if args.delete:
-        delsto(sto)
-        sys.exit()
 
     addsto(sto, args.name)
 

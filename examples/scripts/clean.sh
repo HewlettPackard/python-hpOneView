@@ -14,11 +14,11 @@ ENC_PASS=${ENC_PASS:=OV_PASSWORD}
 echo  -- Removing profiles
 ./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing volumes
-./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
+./del-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing Volume Templates
-./add-volume-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
+./del-volume-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing Storage Pools
-./add-storage-pool.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
+./del-storage-pool.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing Storage Systems
 ./del-storage-system.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing Enclosures
