@@ -48,40 +48,117 @@ def login(con, credential):
         print('Login failed')
 
 
-def getuser(sec):
-    users = sec.get_users()
-    pprint(users)
+def add_user(sec, name, pswd, roles, fname, email, ophone, mphone, enable):
+    # Invert the enable boolean value
+    enable = not enable
+    roleArray = []
 
+    if len(roles) == 1:
+        if roles[0] == 'Full':
+            roleArray.append('Infrastructure administrator')
+        elif roles[0] == 'RO':
+            roleArray.append('Read only')
+        else:
+            print('Error, invalid role type specified: ', roles[0])
+            sys.exit()
 
-def defuser(sec, name, upass):
-    print(('Adding User ' + name))
-    sec.create_user(name, upass)
+    elif len(roles) > 1:
+        for role in roles:
+            if role == 'Backup':
+                roleArray.append('Backup administrator')
+            elif role == 'Network':
+                roleArray.append('Network administrator')
+            elif role == 'Server':
+                roleArray.append('Server administrator')
+            elif role == 'Storage':
+                roleArray.append('Storage administrator')
+            else:
+                print('Error, invalid role specified: ', role)
+                sys.exit()
+    else:
+        print('Error, invalid role specified: ', roles)
+        sys.exit()
+
+    ret = sec.create_user(name, pswd, enable, fname, email, ophone, mphone,
+                          roleArray)
+    pprint(ret)
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=False,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
-    parser.add_argument('-r', '--proxy', dest='proxy', required=False,
-                        help='Proxy (host:port format')
-    parser.add_argument('-x', dest='upass', required=False,
-                        help='New user password')
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-g', dest='getuser', action='store_true',
-                       help='Display the users and exit')
-    group.add_argument('-n', dest='name', help='Username to add')
+    parser = argparse.ArgumentParser(add_help=True, description='Usage',
+                        formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=False,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
+    parser.add_argument('-r', dest='proxy', required=False,
+                        help='''
+    Proxy (host:port format''')
+    parser.add_argument('-n', dest='name',
+                        required=True,
+                        help='''
+    The name of the new user account to be created''')
+    parser.add_argument('-x', dest='user_pass',
+                        required=True,
+                        help='''
+    The initial password to be assigned to the new user.
+
+    Passwords must be at least 8 characters and not contain any of these
+    characters:
+              < > ; , \" ' & \\/ | + : = and space ''')
+    parser.add_argument('-o', dest='roles',
+                        required=True, nargs='+',
+                        help='''
+    A list of roles to assign the user to. Allowed values are:
+
+        * Full = Full Infrastructure Administrator
+        * RO = Read Only
+        * Specialized (select one or more roles):
+            - Backup = Backup Administrator
+            - Network = Network Administrator
+            - Server = Server Administrator
+            - Storage = Storage Administrator
+
+    For example the user can be assigned as the Infrastructure Administrator
+    with full access OR as a user with Read Only access OR as a Specialized
+    user with one for more of the specialized roles listed above, encapsulated
+    with quotes and seperated by spaces. For example to assign the user to
+    the Storage and Network administrator roles it would be specified as:
+
+        -o "Network" "Storage"
+
+    To assign the user to the Infrastructure Administrator role it would be
+    specified as:
+
+        -o "Full"''')
+    parser.add_argument('-l', dest='full_name', required=False,
+                        help='''
+    Full name for the user''')
+    parser.add_argument('-e', dest='email', required=False,
+                        help='''
+    Email address of the user''')
+    parser.add_argument('-z', dest='ophone', required=False,
+                        help='''
+    Office phone number''')
+    parser.add_argument('-m', dest='mphone', required=False,
+                        help='''
+    Mobile phone number''')
+    parser.add_argument('-y', dest='disable', required=False,
+                        action='store_true',
+                        help='''
+    Disable the account, preventing the user from logging into the
+    appliance''')
 
     args = parser.parse_args()
-    if args.name and not args.upass:
-        print("Error, user password is required with the -x option")
-        sys.exit()
     credential = {'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
@@ -95,11 +172,8 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    if args.getuser:
-        getuser(sec)
-        sys.exit()
-
-    defuser(sec, args.name, args.upass)
+    add_user(sec, args.name, args.user_pass, args.roles, args.full_name,
+             args.email, args.ophone, args.mphone, args.disable)
 
 if __name__ == '__main__':
     import sys
