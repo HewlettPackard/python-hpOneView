@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 ###
-# (C) Copyright 2014 Hewlett-Packard Development Company, L.P.
+# (C) Copyright 2015 Hewlett-Packard Development Company, L.P.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -49,18 +49,28 @@ def login(con, credential):
         print('Login failed')
 
 
-def del_all_storage_pools(sto):
+def del_pool_by_name(sto, stosys_name, pool_name):
+    systems = sto.get_storage_systems()
+    for sys in systems:
+        if sys['name'] == stosys_name:
+            # search managed pools in matching storage system
+            pools = sys['managedPools']
+            for pool in pools:
+                if pool['name'] == pool_name:
+                    print('Removing Storage Pool: ', pool['name'], ' in',
+                          stosys_name)
+                    sto.remove_storage_system(pool)
+                    return
+            print('Pool: ', pool_name, ' not found')
+            return
+    print('Storage System: ', stosys_name, ' not found')
+
+
+def del_all_pools(sto):
     pools = sto.get_storage_pools()
     for pool in pools['members']:
         print('Removing Storage Pool: ', pool['name'])
         sto.remove_storage_system(pool)
-
-
-def del_pool_by_name(sto, name):
-    pools = sto.get_storage_pools()
-    for pool in pools['members']:
-        if pool['name'] == name:
-            sto.remove_storage_system(pool)
 
 
 def main():
@@ -76,14 +86,16 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    parser.add_argument('-x', '--uri', dest='uri', required=False,
-                        default='auto', help='Storage System URI')
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-n', dest='name',
-                       help='Name of the storage pool to delete')
+    group.add_argument('-s', '--sto_name', dest='sto_name',
+                       help='Name of storage system. This option requires'
+                       ' the pool name option "-n" to be specified')
     group.add_argument('-d', dest='delete_all',
                        action='store_true',
                        help='Remove ALL storage pools and exit')
+    parser.add_argument('-n', '--pool_name', dest='pool_name', required=False,
+                        help='Storage pool name')
+
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
@@ -98,11 +110,15 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    if args.delete_all:
-        del_all_storage_pools(sto)
+    if args.sto_name:
+        if args.pool_name:
+            del_pool_by_name(sto, args.sto_name, args.pool_name)
+        else:
+            print ('Storage system MUST be accompanied by storage pool name')
         sys.exit()
 
-    del_pool_by_name(sto, args.name)
+    if args.delete_all:
+        del_all_pools(sto)
 
 if __name__ == '__main__':
     import sys
