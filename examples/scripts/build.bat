@@ -40,7 +40,7 @@ python import-enclosure.py -a %HOST% -u %USER% -p %PASS% -eu %ENC_USR% -ep %ENC_
 echo  -- Add Storage System
 python add-storage-system.py -a %HOST% -u %USER% -p %PASS% -s %STO_ADDR% -su %STO_USR% -sp %STO_PASS%
 echo  -- Defining Storage Pools
-python add-storage-pool.py -a %HOST% -u %USER% -p %PASS% -n SND_CPG1
+python add-storage-pool.py -a %HOST% -u %USER% -p %PASS% -s ThreePAR7200-4446S -n SND_CPG1
 echo  -- Defining Volume Templates
 python add-volume-template.py -a %HOST% -u %USER% -p %PASS% -n "ESX BOOT"
 echo  -- Defining volumes

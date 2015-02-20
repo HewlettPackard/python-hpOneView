@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 ###
-# (C) Copyright 2014 Hewlett-Packard Development Company, L.P.
+# (C) Copyright 2015 Hewlett-Packard Development Company, L.P.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -49,15 +49,15 @@ def login(con, credential):
         print('Login failed')
 
 
-def addsto(sto, name, storageSystemUri):
-    if storageSystemUri == 'auto':
-        systems = sto.get_storage_systems()
-        for sys in systems:
+def addsto(sto, poolName, storageSystemName):
+    systems = sto.get_storage_systems()
+    for sys in systems:
+        if sys['name'] == storageSystemName:
             storageSystemUri = sys['uri']
-            if storageSystemUri is not 'auto':
-                break
-    ret = sto.add_storage_pool(name, storageSystemUri)
-    pprint(ret)
+            ret = sto.add_storage_pool(poolName, storageSystemUri)
+            pprint(ret)
+            return
+    print('Storage System: ', storageSystemName, ' not found')
 
 
 def main():
@@ -73,10 +73,10 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    parser.add_argument('-x', '--uri', dest='uri', required=False,
-                        default='auto', help='Storage System URI')
-    parser.add_argument('-n', dest='name', required=True,
-                       help='Name of the storage pool to add')
+    parser.add_argument('-s', '--sto_name', dest='sto_name', required=True,
+                        help='Storage System Name')
+    parser.add_argument('-n', '--pool_name', dest='pool_name', required=True,
+                        help='Name of the storage pool to add')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -92,7 +92,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    addsto(sto, args.name, args.uri)
+    addsto(sto, args.pool_name, args.sto_name)
 
 if __name__ == '__main__':
     import sys

@@ -43,7 +43,7 @@ echo  -- Import Enclosures
 echo  -- Add Storage System
 ./add-storage-system.py -a $OV_HOST -u $OV_USER -p $OV_PASS -s $STO_ADDR -su $STO_USR -sp $STO_PASS
 echo  -- Defining Storage Pools
-./add-storage-pool.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n SND_CPG1
+./add-storage-pool.py -a $OV_HOST -u $OV_USER -p $OV_PAS -s ThreePAR7200-4446S -n SND_CPG1
 echo  -- Defining Volume Templates
 ./add-volume-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "ESX Boot"
 echo  -- Defining volumes
