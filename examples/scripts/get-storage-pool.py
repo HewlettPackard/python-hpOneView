@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 ###
-# (C) Copyright 2014 Hewlett-Packard Development Company, L.P.
+# (C) Copyright 2015 Hewlett-Packard Development Company, L.P.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -49,9 +49,29 @@ def login(con, credential):
         print('Login failed')
 
 
-def getsto(sto):
-    ret = sto.get_storage_pools()
-    pprint(ret)
+def get_pool_by_name(sto, stosys_name, pool_name):
+    systems = sto.get_storage_systems()
+    for sys in systems:
+        if sys['name'] == stosys_name:
+            # search managed pools in matching storage system
+            pools = sys['managedPools']
+            for pool in pools:
+                if pool['name'] == pool_name:
+                    print('Getting Storage Pool: ', pool['name'], ' in',
+                          stosys_name)
+                    pprint(pool)
+                    return
+            print('Pool: ', pool_name, ' not found')
+            return
+    print('Storage System: ', stosys_name, ' not found')
+
+
+def get_all_pools(sto):
+    pools = sto.get_storage_pools()
+    for pool in pools['members']:
+        print('Getting Storage Pool: ', pool['name'])
+        pprint(pool)
+        print()
 
 
 def main():
@@ -67,8 +87,16 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
-    parser.add_argument('-x', '--uri', dest='uri', required=False,
-                        default='auto', help='Storage System URI')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-s', '--sto_name', dest='sto_name',
+                       help='Name of storage system. This option requires'
+                       ' the pool name option "-n" to be specified')
+    group.add_argument('-g', dest='get_all',
+                       action='store_true',
+                       help='Get ALL storage pools and exit')
+    parser.add_argument('-n', '--pool_name', dest='pool_name', required=False,
+                        help='Storage pool name')
+
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
@@ -83,7 +111,15 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    getsto(sto)
+    if args.sto_name:
+        if args.pool_name:
+            get_pool_by_name(sto, args.sto_name, args.pool_name)
+        else:
+            print ('Storage system MUST be accompanied by storage pool name')
+        sys.exit()
+
+    if args.get_all:
+        get_all_pools(sto)
 
 if __name__ == '__main__':
     import sys
