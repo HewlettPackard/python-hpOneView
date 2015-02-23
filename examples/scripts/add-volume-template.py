@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 ###
-# (C) Copyright 2014 Hewlett-Packard Development Company, L.P.
+# (C) Copyright 2015 Hewlett-Packard Development Company, L.P.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ if sys.version_info < (3, 2):
 import hpOneView as hpov
 from pprint import pprint
 
+
 def acceptEULA(con):
     # See if we need to accept the EULA before we try to log in
     con.get_eula_status()
@@ -47,18 +48,30 @@ def login(con, credential):
         print('Login failed')
 
 
-def addsto(sto, name):
-    pools = sto.get_storage_pools()
-    for pool in pools['members']:
-        storagePoolUri = pool['uri']
-        if storagePoolUri:
-            break
-    template = hpov.common.make_storage_vol_template(name,
-                                                268435456000,
-                                                False,
+def add_vol_template(sto, name, sto_sys, pool_name, size,
+                     shareable=False, description='Example Vol Template',
+                     provisionType='Thin'):
+    systems = sto.get_storage_systems()
+    for sys in systems:
+        if sys['name'] == sto_sys:
+            # search managed pools in matching storage system
+            pools = sys['managedPools']
+            for pool in pools:
+                if pool['name'] == pool_name:
+                    storagePoolUri = pool['uri']
+                    print('Adding Volume Template: ', name)
+                    template = hpov.common.make_storage_vol_template(name,
+                                                int(size)*1024*1024*1024,
+                                                shareable,
                                                 storagePoolUri,
-                                                'Example Vol Template')
-    ret = sto.add_storage_volume_template(template)
+                                                description,
+                                                provisionType)
+                    ret = sto.add_storage_volume_template(template)
+                    pprint(ret)
+                    return
+            print('Pool: ', pool_name, ' not found')
+            return
+    print('Storage System: ', stosys_name, ' not found')
     pprint(ret)
 
 
@@ -76,7 +89,22 @@ def main():
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
     parser.add_argument('-n', dest='name', required=True,
-                       help='Name of the volume template to add')
+                        help='Name of the volume template to add')
+    parser.add_argument('-ss', dest='sto_sys', required=True,
+                        help='Name of the storage system to add template to')
+    parser.add_argument('-sp', dest='sto_pool', required=True,
+                        help='Name of the storage pool to add template to')
+    parser.add_argument('-cap', '--capacity', dest='size', required=True,
+                        help='Size of volume template in GiB')
+    parser.add_argument('-sh', '--shareable', dest='shareable', required=False,
+                        default=False, action='store_true',
+                        help='sets template to shareable, omit for private')
+    parser.add_argument('-pt', '--prov_type', dest='provType', required=False,
+                        default='Thin',
+                        help='Thin or Full provisioning')
+    parser.add_argument('-des', '--description', dest='desc', required=False,
+                        default='Example Volume Template',
+                        help='Description of template')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -92,7 +120,8 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    addsto(sto, args.name)
+    add_vol_template(sto, args.name, args.sto_sys, args.sto_pool, args.size,
+                     args.shareable, args.desc, args.provType)
 
 if __name__ == '__main__':
     import sys

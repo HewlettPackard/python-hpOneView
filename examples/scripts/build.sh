@@ -45,7 +45,7 @@ echo  -- Add Storage System
 echo  -- Defining Storage Pools
 ./add-storage-pool.py -a $OV_HOST -u $OV_USER -p $OV_PAS -s ThreePAR7200-4446S -n SND_CPG1
 echo  -- Defining Volume Templates
-./add-volume-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "ESX Boot"
+./add-volume-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "ESX Boot" -ss ThreePAR7200-4446 -sp SND_CPG1 -cap 50
 echo  -- Defining volumes
 ./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n vol1
 echo  -- Defining profiles
