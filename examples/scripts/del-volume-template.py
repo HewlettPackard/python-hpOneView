@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 ###
-# (C) Copyright 2014 Hewlett-Packard Development Company, L.P.
+# (C) Copyright 2015 Hewlett-Packard Development Company, L.P.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -57,8 +57,11 @@ def del_all_vol_templates(sto):
 def del_vol_template_by_name(sto, name):
     templates = sto.get_storage_volume_templates()
     for template in templates['members']:
-        print('Removing Storage Volume Template: ', template['name'])
-        sto.remove_storage_volume_template(template)
+        if template['name'] == name:
+            print('Removing Storage Volume Template: ', template['name'])
+            sto.remove_storage_volume_template(template)
+            return
+    print('Volume Template: ', name, ' not found')
 
 
 def main():
@@ -76,7 +79,7 @@ def main():
                         help='Proxy (host:port format')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-n', dest='name',
-                       help='Name of the volume template to add')
+                       help='Name of the volume template to delete')
     group.add_argument('-d', dest='delete_all',
                        action='store_true', help='Remove ALL storage volume'
                        ' teamplates and exit')
