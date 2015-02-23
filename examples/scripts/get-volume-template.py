@@ -27,6 +27,7 @@ if sys.version_info < (3, 2):
 import hpOneView as hpov
 from pprint import pprint
 
+
 def acceptEULA(con):
     # See if we need to accept the EULA before we try to log in
     con.get_eula_status()
@@ -47,9 +48,22 @@ def login(con, credential):
         print('Login failed')
 
 
-def get_vol_template(sto):
+def get_vol_template_by_name(sto, name):
     templates = sto.get_storage_volume_templates()
-    pprint(templates)
+    for template in templates['members']:
+        if template['name'] == name:
+            print('Getting Storage Volume Template: ', template['name'])
+            pprint(template)
+            return
+    print('Volume Template: ', name, ' not found')
+
+
+def get_all_vol_templates(sto):
+    templates = sto.get_storage_volume_templates()
+    for template in templates['members']:
+        print('Getting Storage Volume Template: ', template['name'])
+        pprint(template)
+        print()
 
 
 def main():
@@ -65,6 +79,11 @@ def main():
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-n', dest='name',
+                       help='Name of the volume template to get')
+    group.add_argument('-g', dest='get_all', action='store_true',
+                       help='Get ALL volume templates and exit')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -80,7 +99,11 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    get_vol_template(sto)
+    if args.get_all:
+        get_all_vol_templates(sto)
+        sys.exit()
+
+    get_vol_template_by_name(sto, args.name)
 
 if __name__ == '__main__':
     import sys
