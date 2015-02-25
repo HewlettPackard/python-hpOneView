@@ -129,7 +129,10 @@ class activity(object):
         if task['taskState'] in TaskErrorStates:
                 err = task['taskErrors'][0]
                 msg = err['message']
-                raise HPOneViewTaskError(task['taskStatus'] + '\n' + msg)
+                if msg is not None:
+                    raise HPOneViewTaskError(task['taskStatus'] + '\n' + msg)
+                else:
+                    raise HPOneViewTaskError(task['taskStatus'])
         return task
 
     def wait4tasks(self, tasks, tout=60, verbose=False):
