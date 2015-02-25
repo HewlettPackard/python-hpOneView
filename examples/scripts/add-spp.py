@@ -51,28 +51,35 @@ def login(con, credential):
         print('Login failed')
 
 
-def upload(sts, path, name):
-    f, e = os.path.splitext(name)
+def upload_spp(sts, filename):
+    (path, name) = os.path.split(filename)
     print('Uploading SPP: ', name)
-    ret = sts.upload_spp(path, name)
+    ret = sts.upload_spp(filename, name)
     pprint(ret)
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=False,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
-    parser.add_argument('-r', '--proxy', dest='proxy', required=False,
-                        help='Proxy (host:port format')
-    parser.add_argument('-f', dest='file', help='SPP file to upload',
-                       required=True)
+    parser = argparse.ArgumentParser(add_help=True, description='Usage',
+                        formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=False,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
+    parser.add_argument('-r', dest='proxy', required=False,
+                        help='''
+    Proxy (host:port format''')
+    parser.add_argument('-f', dest='filename', required=True,
+                        help='''
+    The full path and file name of the SPP file to upload. ''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -88,8 +95,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    (path, name) = os.path.split(args.file)
-    upload(sts, args.file, name)
+    upload_spp(sts, args.filename)
 
 
 if __name__ == '__main__':
