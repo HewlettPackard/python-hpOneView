@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 ###
-# (C) Copyright 2014 Hewlett-Packard Development Company, L.P.
+# (C) Copyright 2015 Hewlett-Packard Development Company, L.P.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -48,42 +48,71 @@ def login(con, credential):
         print('Login failed')
 
 
-def addsto(sto, name):
+def add_volume(sto, name, pool_name, size, shareable=False,
+               description='Example Volume', provisionType='Thin'):
     pools = sto.get_storage_pools()
     for pool in pools['members']:
-        storagePoolUri = pool['uri']
-        if storagePoolUri:
-            break
-
-    if not storagePoolUri:
-        print('Error, could not locate storage pool')
-        sys.exit()
-
-    volume = hpov.common.make_storage_volume(name,
-                                             '10737418240',
-                                             False,
+        if pool['name'] == pool_name:
+            storagePoolUri = pool['uri']
+            print('Adding Volume: ', name)
+            volume = hpov.common.make_storage_volume(name,
+                                             int(size)*1024*1024*1024,
+                                             shareable,
                                              storagePoolUri,
-                                             'Example Vol')
-    pprint(volume)
-    ret = sto.add_storage_volume(volume)
-    pprint(ret)
+                                             description, provisionType)
+            ret = sto.add_storage_volume(volume)
+            pprint(ret)
+            return
+    print('Pool: ', pool_name, ' not found')
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=False,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
-    parser.add_argument('-r', '--proxy', dest='proxy', required=False,
-                        help='Proxy (host:port format')
-    parser.add_argument('-n', dest='name', required=True,
-                       help='Name of the storage volume to add')
+    parser = argparse.ArgumentParser(add_help=True, description='Usage',
+                        formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=False,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
+    parser.add_argument('-r', dest='proxy', required=False,
+                        help='''
+    Proxy (host:port format''')
+    parser.add_argument('-n', dest='name',
+                        required=True,
+                        help='''
+    Name of the storage volume to add''')
+    parser.add_argument('-sp', dest='sto_pool',
+                        required=True,
+                        help='''
+    Name of the storage pool to use''')
+    parser.add_argument('-cap', '--capacity', dest='size',
+                        required=True,
+                        help='''
+    Size of volume in GiB''')
+    parser.add_argument('-sh', '--shareable', dest='shareable',
+                        required=False,
+                        default=False,
+                        action='store_true',
+                        help='''
+    sets volume to shareable, omit for private''')
+    parser.add_argument('-pt', '--prov_type', dest='provType',
+                        required=False,
+                        default='Thin',
+                        help='''
+    Thin or Full provisioning''')
+    parser.add_argument('-des', '--description', dest='desc',
+                        required=False,
+                        default='Example Volume',
+                        help='''
+    Description of volume''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -99,7 +128,8 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    addsto(sto, args.name)
+    add_volume(sto, args.name, args.sto_pool, args.size, args.shareable,
+               args.desc, args.provType)
 
 if __name__ == '__main__':
     import sys

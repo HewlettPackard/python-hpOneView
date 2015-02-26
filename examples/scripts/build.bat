@@ -44,6 +44,6 @@ python add-storage-pool.py -a %HOST% -u %USER% -p %PASS% -s ThreePAR7200-4446S -
 echo  -- Defining Volume Templates
 python add-volume-template.py -a %HOST% -u %USER% -p %PASS% -n "ESX BOOT" -ss ThreePAR7200-4446 -sp SND_CPG1 -cap 50
 echo  -- Defining volumes
-python add-volume.py -a %HOST% -u %USER% -p %PASS% -n vol1
+python add-volume.py -a %HOST% -u %USER% -p %PASS% -n vol1 -sp SND_CPG1 -cap 50
 echo  -- Defining profiles
 python define-profile.py -a %HOST% -u %USER% -p %PASS%
