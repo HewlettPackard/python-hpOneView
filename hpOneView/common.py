@@ -495,7 +495,7 @@ def make_egroup_dict(name, lig, smode='Enclosure'):
 
 def make_enclosure_dict(host, user, passwd, egroup,
                         licenseIntent='OneView',
-                        firmwareBaseLineUri=None, force=False):
+                        firmwareBaseLineUri=None, force=False, forcefw=False):
     return {
         'hostname': host,
         'username': user,
@@ -504,6 +504,7 @@ def make_enclosure_dict(host, user, passwd, egroup,
         'enclosureGroupUri': egroup,
         'firmwareBaselineUri': firmwareBaseLineUri,
         'updateFirmwareOn': 'EnclosureOnly',
+        'forceInstallFirmware': forcefw,
         'licensingIntent': licenseIntent}
 
 

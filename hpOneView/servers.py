@@ -162,13 +162,10 @@ class servers(object):
     def add_enclosure(self, enclosure, blocking=True, verbose=False):
         task, body = self._con.post(uri['enclosures'], enclosure)
         if blocking is True:
-            try:
-                if enclosure['firmwareBaselineUri'] is None:
-                    task = self._activity.wait4task(task, tout=600, verbose=verbose)
-                else:
-                    task = self._activity.wait4task(task, tout=3600, verbose=verbose)
-            except:
-                task = self._activity.wait4task(task, tout=600, verbose=verbose)
+            if enclosure['firmwareBaselineUri'] is None:
+                 task = self._activity.wait4task(task, tout=600, verbose=verbose)
+            else:
+                task = self._activity.wait4task(task, tout=3600, verbose=verbose)
         entity = self._activity.get_task_associated_resource(task)
         enclosure = self._con.get(entity['resourceUri'])
         return enclosure

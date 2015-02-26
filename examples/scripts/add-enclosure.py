@@ -48,7 +48,8 @@ def login(con, credential):
         print('Login failed')
 
 
-def impenc(srv, sts, eg, ip, usr, pas, lic, baseline):
+def import_enclosure(srv, sts, eg, ip, usr, pas, lic, baseline, force, forcefw):
+    print('force is: ', force)
     # Locate the enclosure group
     egroups = srv.get_enclosure_groups()
     for group in egroups:
@@ -77,45 +78,78 @@ def impenc(srv, sts, eg, ip, usr, pas, lic, baseline):
     if not uri:
         add_enclosure = hpov.common.make_enclosure_dict(ip, usr, pas,
                                                         egroup['uri'],
-                                                        licenseIntent=lic)
+                                                        licenseIntent=lic,
+                                                        force=force,
+                                                        forcefw=forcefw)
     else:
         add_enclosure = hpov.common.make_enclosure_dict(ip, usr, pas,
                                                         egroup['uri'],
                                                         licenseIntent=lic,
-                                                        firmwareBaseLineUri=uri)
+                                                        firmwareBaseLineUri=uri,
+                                                        force=force,
+                                                        forcefw=forcefw)
 
     enclosure = srv.add_enclosure(add_enclosure)
     pprint(enclosure)
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=False,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
-    parser.add_argument('-r', '--proxy', dest='proxy', required=False,
-                        help='Proxy (host:port format')
-    parser.add_argument('-eu', '--enc_user', dest='encusr', required=True,
-                        help='Administrative username for the c7000 enclosure OA')
-    parser.add_argument('-ep', '--enc_pass', dest='encpass', required=True,
-                        help='Administrative password for the c7000 enclosure OA')
-    parser.add_argument('-e', dest='enc', required=True,
-                        help='IP address of the c7000 to import into HP OneView')
-    parser.add_argument('-n', '--name', dest='egroup', required=True,
-                        help='Enclosure Group to add the enclosure to')
-    parser.add_argument('-s', '--spp', dest='spp', required=False,
-                        help='SPP file name to use as the firmware baseline')
-    parser.add_argument('-l', '--license', dest='license', required=False,
-                        help='Apply OneView or OneView w/o iLO license to '
-                        'servers in the enclosure specify either OneView or '
-                        'OneViewNoiLO')
+    parser = argparse.ArgumentParser(add_help=True, description='Usage',
+                                     formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=False,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
+    parser.add_argument('-r', dest='proxy', required=False,
+                        help='''
+    Proxy (host:port format''')
+    parser.add_argument('-eu', dest='encusr', required=True,
+                        help='''
+    Administrative username for the c7000 enclosure OA''')
+    parser.add_argument('-ep',  dest='encpass', required=True,
+                        help='''
+    Administrative password for the c7000 enclosure OA''')
+    parser.add_argument('-oa', dest='enc', required=True,
+                        help='''
+    IP address of the c7000 to import into HP OneView''')
+    parser.add_argument('-eg', dest='egroup', required=True,
+                        help='''
+    Enclosure Group to add the enclosure to''')
+    parser.add_argument('-s', dest='spp', required=False,
+                        help='''
+    SPP Baseline file name. e.g. SPP2013090_2013_0830_30.iso''')
+    parser.add_argument('-l', dest='license', required=False,
+                        choices=['OneView', 'OneViewNoiLO'],
+                        default='OneView',
+                        help='''
+    Specifies whether the intent is to apply either OneView or
+    OneView w/o iLO licenses to the servers in the enclosure
+    being imported.
 
+    Accepted values are:
+
+        - OneView
+        - OneViewNoiLO ''')
+    parser.add_argument('-f', dest='force', action='store_true', required=False,
+                        help='''
+    When attempting to add an Enclosure to the appliance, the appliance will
+    validate the target Enclosure is not already claimed.  If it is, this
+    parameter is used when the Enclosure has been claimed by another appliance
+    to bypass the confirmation prompt, and force add the import of the
+    Enclosure ''')
+    parser.add_argument('-fw', dest='forcefw', action='store_true',
+                        required=False,
+                        help='''
+    Force the installation of the provided Firmware Baseline. ''')
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
@@ -131,8 +165,8 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    impenc(srv, sts, args.egroup, args.enc, args.encusr, args.encpass,
-           args.license, args.spp)
+    import_enclosure(srv, sts, args.egroup, args.enc, args.encusr, args.encpass,
+           args.license, args.spp, args.force, args.forcefw)
 
 if __name__ == '__main__':
     import sys

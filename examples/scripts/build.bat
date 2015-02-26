@@ -36,7 +36,7 @@ python define-uplink-set.py -a %HOST% -u %USER% -p %PASS% -n "Uplink Set 1-B" -i
 echo  -- Defining Enclosure Groups
 python define-enclosure-group.py -a %HOST% -u %USER% -p %PASS% -n "Prod VC FlexFabric Group 1" -l "VC FlexFabric Production"
 echo  -- Import Enclosures
-python import-enclosure.py -a %HOST% -u %USER% -p %PASS% -eu %ENC_USR% -ep %ENC_PASS% -e %ENC_ADDR% -n "Prod VC FlexFabric Group 1"
+python add-enclosure.py -a %HOST% -u %USER% -p %PASS% -eu %ENC_USR% -ep %ENC_PASS% -oa %ENC_ADDR% -eg "Prod VC FlexFabric Group 1"
 echo  -- Add Storage System
 python add-storage-system.py -a %HOST% -u %USER% -p %PASS% -s %STO_ADDR% -su %STO_USR% -sp %STO_PASS%
 echo  -- Defining Storage Pools
