@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 ###
-# (C) Copyright 2014 Hewlett-Packard Development Company, L.P.
+# (C) Copyright 2015 Hewlett-Packard Development Company, L.P.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -48,24 +48,51 @@ def login(con, credential):
         print('Login failed')
 
 
-def getsto(sto):
-    templates = sto.get_storage_volumes()
-    pprint(templates)
+def get_all_volumes(sto):
+    volumes = sto.get_storage_volumes()
+    for volume in volumes['members']:
+        print('Getting Storage Volume: ', volume['name'])
+        pprint(volume)
+        print()
+
+
+def get_volume_by_name(sto, name):
+    volumes = sto.get_storage_volumes()
+    for volume in volumes['members']:
+        if volume['name'] == name:
+            print('Getting Storage Volume: ', volume['name'])
+            pprint(volume)
+            return
+    print('Volume: ', name, ' not found')
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=False,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
-    parser.add_argument('-r', '--proxy', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+    parser = argparse.ArgumentParser(add_help=True, description='Usage',
+                        formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=False,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
+    parser.add_argument('-r', dest='proxy', required=False,
+                        help='''
+    Proxy (host:port format''')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-n', dest='name',
+                       help='''
+    Name of the storage volume to get''')
+    group.add_argument('-g', dest='get_all',
+                       action='store_true',
+                       help='''
+                       Get ALL storage volumes and exit''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -81,7 +108,11 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    getsto(sto)
+    if args.get_all:
+        get_all_volumes(sto)
+        sys.exit()
+
+    get_volume_by_name(sto, args.name)
 
 if __name__ == '__main__':
     import sys
