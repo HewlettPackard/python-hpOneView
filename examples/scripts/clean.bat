@@ -15,7 +15,7 @@ rem Enclosure OA password
 set ENC_PASS=PASSWORD
 
 echo  -- Removing profiles
-python define-profile.py -a %HOST% -u %USER% -p %PASS% -d
+python del-profile.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing volumes
 python del-volume.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Volume Templates
