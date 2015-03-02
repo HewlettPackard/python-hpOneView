@@ -48,24 +48,30 @@ def login(con, credential):
         print('Login failed')
 
 
-def getinterfaces(sts):
+def get_network_interfaces(sts):
     ret = sts.get_appliance_network_interfaces()
     pprint(ret)
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=False,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
-    parser.add_argument('-r', '--proxy', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+    parser = argparse.ArgumentParser(add_help=True, description='Usage',
+                        formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=False,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
+    parser.add_argument('-r', dest='proxy', required=False,
+                        help='''
+    Proxy (host:port format''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -83,7 +89,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    getinterfaces(sts)
+    get_network_interfaces(sts)
 
 if __name__ == '__main__':
     import sys
