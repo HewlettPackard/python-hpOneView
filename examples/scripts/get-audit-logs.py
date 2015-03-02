@@ -48,34 +48,46 @@ def login(con, credential):
         print('Login failed')
 
 
-def getauditlogs(act):
+def get_audit_logs(act):
     ret = act.get_audit_logs()
     pprint(ret)
 
 
-def downloadauditlogs(act, filename):
+def download_audit_logs(act, filename):
     print('Downloading audit logs to: %s' % filename)
     act.download_audit_logs(filename)
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=False,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
-    parser.add_argument('-r', '--proxy', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+    parser = argparse.ArgumentParser(add_help=True, description='Usage',
+                        formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=False,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
+    parser.add_argument('-r', dest='proxy', required=False,
+                        help='''
+    Proxy (host:port format''')
+
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-f', dest='filename', help='Filename to save audit '
-                       ' logs as')
+    group.add_argument('-f', dest='filename',
+                       help='''
+    Filename to save audit log zip archive as, for example:
+
+           -f audit_logs.zip
+                       ''')
     group.add_argument('-g', dest='getlogs', action='store_true',
-                       help='Display the autit logs and exit')
+                       help='''
+    Display the audit logs and exit''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -92,10 +104,10 @@ def main():
     acceptEULA(con)
 
     if args.getlogs:
-        getauditlogs(act)
+        get_audit_logs(act)
         sys.exit()
 
-    downloadauditlogs(act, args.filename)
+    download_audit_logs(act, args.filename)
 
 
 if __name__ == '__main__':
