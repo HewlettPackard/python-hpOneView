@@ -100,7 +100,7 @@ def main():
     parser.add_argument('-c', dest='cert', required=False,
                         help='''
     Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
-    parser.add_argument('-r', dest='proxy', required=False,
+    parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
     parser.add_argument('-n', dest='name',
@@ -152,7 +152,7 @@ def main():
     parser.add_argument('-m', dest='mphone', required=False,
                         help='''
     Mobile phone number''')
-    parser.add_argument('-y', dest='disable', required=False,
+    parser.add_argument('-d', dest='disable', required=False,
                         action='store_true',
                         help='''
     Disable the account, preventing the user from logging into the

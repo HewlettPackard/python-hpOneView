@@ -114,7 +114,7 @@ def main():
     parser.add_argument('-c', dest='cert', required=False,
                         help='''
     Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
-    parser.add_argument('-r', dest='proxy', required=False,
+    parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
 

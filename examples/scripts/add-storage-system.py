@@ -123,7 +123,7 @@ def main():
     parser.add_argument('-c', '--certificate', dest='cert', required=False,
                         help='Trusted SSL Certificate Bundle in PEM '
                         '(Base64 Encoded DER) Format')
-    parser.add_argument('-r', '--proxy', dest='proxy', required=False,
+    parser.add_argument('-y', dest='proxy', required=False,
                         help='Proxy (host:port format')
     parser.add_argument('-su', '--sto_user', dest='stousr', required=False,
                         help='Administrative username for the storage system')
