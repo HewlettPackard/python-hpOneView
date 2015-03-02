@@ -48,26 +48,53 @@ def login(con, credential):
         print('Login failed')
 
 
-def getglobal(sts):
+def get_global_settings(sts, name):
     ret = sts.get_global_settings()
+
+    print('{0:<40}\t{1:<15}\t{2:<25}\t{3:<15}'.format('NAME',
+                                                      'VALUE',
+                                                      'DESCRIPTION',
+                                                      'URI'))
+    print('{0:<40}\t{1:<15}\t{2:<25}\t{3:<15}'.format('-----',
+                                                      '------',
+                                                      '------------',
+                                                      '---'))
     members = ret['members']
     for member in members:
-        pprint(member)
+        if member['description'] is None:
+            desc = ''
+        else:
+            desc = member['description']
+        if name is None or name == member['name']:
+            print('{0:<40}\t{1:<15}\t{2:<25}\t{3:<15}'.format(member['name'],
+                                                              member['value'],
+                                                              desc,
+                                                              member['uri']))
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=False,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
-    parser.add_argument('-r', '--proxy', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+    parser = argparse.ArgumentParser(add_help=True, description='Usage',
+                        formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=False,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
+    parser.add_argument('-r', dest='proxy', required=False,
+                        help='''
+    Proxy (host:port format''')
+    parser.add_argument('-n', dest='name',
+                        required=False,
+                        help='''
+    The name of the global setting to be retrieved''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -85,7 +112,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    getglobal(sts)
+    get_global_settings(sts, args.name)
 
 if __name__ == '__main__':
     import sys
