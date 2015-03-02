@@ -24,6 +24,7 @@ import sys
 if sys.version_info < (3, 2):
     raise Exception('Must use Python 3.2 or later')
 
+from pprint import pprint
 import hpOneView as hpov
 
 
@@ -47,67 +48,94 @@ def login(con, credential):
         print('Login failed')
 
 
-def getenc(srv, net):
+def get_enclosures(srv, net, name, report):
     enclosures = srv.get_enclosures()
     for enc in enclosures:
-        print('\n{0:15} {1:13} {2:15}\t\t\t{3:9} {4:10} {5:13}'.format(
-            'Enclosure Name', 'Serial Number', 'Enclosure Model',
-            'Rack Name', 'FW Managed', 'Baseline Name'))
-        print('\n{0:15} {1:13} {2:15}\t\t\t{3:9} {4:10} {5:13}'.format(
-            '--------------', '-------------', '---------------',
-            '---------', '----------', '-------------'))
-        print('\n{0:15} {1:13} {2:15}\t{3:9} {4:10} {5:13}'.format(
-            enc['name'], enc['serialNumber'], enc['enclosureType'],
-            enc['rackName'], enc['isFwManaged'], enc['fwBaselineName']))
-        print('\n\n')
-        print('{0:7}  {1:13} {2:15} {3:9}'.format(
-            'OA Bay', 'Role', 'IP Address', 'Firmware Version'))
-        print('{0:7}  {1:13} {2:15} {3:9}'.format(
-            '------', '----', '----------', '----------------'))
-        for oa in enc['oa']:
-            print('{0:7}  {1:13} {2:15} {3:9}'.format(
-                oa['bayNumber'], oa['role'], oa['ipAddress'],
-                oa['fwVersion']))
-        print('\n\n')
-        print('\n{0:15} {1:13} {2:15} {3:20} {4:25} {5:20} {6:10}'.format(
-            'Server Name', 'Serial Num', 'Model', 'Systerm ROM',
-            'iLO Firmware Verision', 'State', 'Licensing'))
-        print('{0:15} {1:13} {2:15} {3:20} {4:25} {5:20} {6:10}\n'.format(
-            '-----------', '----------', '-----------', '-----------',
-            '----------------------', '-------', '----------'))
-        servers = srv.get_servers()
-        for ser in servers:
-            print('{0:15} {1:13} {2:15} {3:20} {4:25} {5:20} {6:10}'.format(
-                ser['name'], ser['serialNumber'],
-                ser['shortModel'], ser['romVersion'],
-                ser['mpFirmwareVersion'], ser['state'], ser['licensingIntent']))
-        print('\n\n')
-        print('\n{0:25} {1:45} {2:15} {3:15}'.format('Interconnect Name',
-              'Module', 'Serial Number', 'FW Version'))
-        print('{0:25} {1:45} {2:15} {3:15}\n'.format('-----------------',
-              '------', '-------------', '----------'))
-        interconnects = net.get_interconnects()
-        for ic in interconnects:
-            print('{0:25} {1:45} {2:15} {3:15}'.format(ic['name'],
-                  ic['model'], ic['serialNumber'], ic['firmwareVersion']))
-    print('')
+        if name is None or name == enc['name']:
+            if report:
+                print('\n{0:15} {1:13} {2:15}\t\t\t{3:9} {4:10} {5:13}'.format(
+                      'Enclosure Name', 'Serial Number', 'Enclosure Model',
+                      'Rack Name', 'FW Managed', 'Baseline Name'))
+                print('\n{0:15} {1:13} {2:15}\t\t\t{3:9} {4:10} {5:13}'.format(
+                      '--------------', '-------------', '---------------',
+                      '---------', '----------', '-------------'))
+                print('\n{0:15} {1:13} {2:15}\t{3:9} {4:10} {5:13}'.format(
+                      enc['name'], enc['serialNumber'], enc['enclosureType'],
+                      enc['rackName'], enc['isFwManaged'], enc['fwBaselineName']))
+                print('\n\n')
+                print('{0:7}  {1:13} {2:15} {3:9}'.format(
+                      'OA Bay', 'Role', 'IP Address', 'Firmware Version'))
+                print('{0:7}  {1:13} {2:15} {3:9}'.format(
+                      '------', '----', '----------', '----------------'))
+                for oa in enc['oa']:
+                    print('{0:7}  {1:13} {2:15} {3:9}'.format(
+                        oa['bayNumber'], oa['role'], oa['ipAddress'],
+                        oa['fwVersion']))
+                print('\n\n')
+                print('\n{0:15} {1:13} {2:15} {3:20} {4:25} {5:20} {6:10}'.format(
+                      'Server Name', 'Serial Num', 'Model', 'Systerm ROM',
+                      'iLO Firmware Verision', 'State', 'Licensing'))
+                print('{0:15} {1:13} {2:15} {3:20} {4:25} {5:20} {6:10}\n'.format(
+                      '-----------', '----------', '-----------',
+                      '-----------', '----------------------', '-------',
+                      '----------'))
+                servers = srv.get_servers()
+                for ser in servers:
+                    print('{0:15} {1:13} {2:15} {3:20} {4:25} {5:20} {6:10}'.format(
+                          ser['name'], ser['serialNumber'],
+                          ser['shortModel'], ser['romVersion'],
+                          ser['mpFirmwareVersion'], ser['state'],
+                          ser['licensingIntent']))
+                print('\n\n')
+                print('\n{0:25} {1:45} {2:15} {3:15}'.format('Interconnect Name',
+                      'Module', 'Serial Number', 'FW Version'))
+                print('{0:25} {1:45} {2:15} {3:15}\n'.format('-----------------',
+                      '------', '-------------', '----------'))
+                interconnects = net.get_interconnects()
+                for ic in interconnects:
+                    print('{0:25} {1:45} {2:15} {3:15}'.format(ic['name'],
+                          ic['model'], ic['serialNumber'], ic['firmwareVersion']))
+                print('')
+            else:
+                pprint(enc)
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=False,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Display the collection of enclosure hardware resources.
+
+    Usage: ''')
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=False,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+                        help='''
+    Proxy (host:port format''')
+    parser.add_argument('-n', dest='name',
+                        required=False,
+                        help='''
+    The name of the enclosure hardware resource to be returned.
+    All enclosure hardware resources will be returned if omitted.''')
+    parser.add_argument('-r', dest='report',
+                        required=False, action='store_true',
+                        help='''
+    Generate report of enclosure, including device bays, interconnect bays,
+    and reported firmware for components. ''')
 
     args = parser.parse_args()
+
     credential = {'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
@@ -122,7 +150,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    getenc(srv, net)
+    get_enclosures(srv, net, args.name, args.report)
 
 if __name__ == '__main__':
     import sys
