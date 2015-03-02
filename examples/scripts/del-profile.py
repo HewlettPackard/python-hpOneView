@@ -77,6 +77,7 @@ def del_profile_by_name(srv, name):
             print(('Removing Profile %s' % profile['name']))
             ret = srv.remove_server_profile(profile)
             pprint(ret)
+            return
     print('Profile: ', name, ' not found')
 
 
@@ -102,7 +103,7 @@ def main():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-n', dest='name',
                        help='''
-    Name of the storage volume to delete''')
+    Name of the server profile to delete''')
     group.add_argument('-d', dest='delete_all',
                        action='store_true',
                        help='''
