@@ -48,28 +48,86 @@ def login(con, credential):
         print('Login failed')
 
 
-def getict(net):
+def get_interconnects(net, name, report):
     interconnects = net.get_interconnects()
-    pprint(interconnects)
-#    for ic in interconnects:
-#        print('{0:25} {1:45} {2:15} {3:15}'.format(ic['name'],
-#              ic['model'], ic['partNumber'], ic['firmwareVersion']))
-#    print('')
+    for ic in interconnects:
+        if name is None or name == ic['name']:
+            if report:
+                print('\n{0:25} {1:35} {2:15} {3:9} {4:10} {5:13}'.format(
+                      'Name', 'Model', 'Serial Number', 'IPv4 Addres',
+                      'Status', 'FW Version'))
+                print('{0:25} {1:35} {2:15} {3:9} {4:10} {5:13}'.format(
+                      '----', '-----', '-------------', '-----------',
+                      '------', '----------'))
+                print('{0:25} {1:35} {2:15} {3:9} {4:10} {5:13}'.format(
+                      ic['name'],
+                      ic['model'],
+                      ic['serialNumber'],
+                      ic['interconnectIP'],
+                      ic['status'],
+                      ic['firmwareVersion']))
+
+                print('\n{0:15} {1:25} {2:25} {3:40}'.format(
+                      'SNMP Enabled', 'Read Community String', 'SNMP Access',
+                      'TRAP Destinations'))
+                print('\n{0:15} {1:25} {2:25} {3:40}'.format(
+                      '------------', '---------------------', '-----------',
+                      '-----------------'))
+                if ic['snmpConfiguration']['enabled']:
+                    snmp_enabled = 'True'
+                else:
+                    snmp_enabled = 'False'
+                if ic['snmpConfiguration']['readCommunity'] is not None:
+                    read_string = str(ic['snmpConfiguration']['readCommunity'])
+                else:
+                    read_string = ''
+                if ic['snmpConfiguration']['snmpAccess'] is not None:
+                    snmp_access = str(ic['snmpConfiguration']['snmpAccess'])
+                else:
+                    snmp_access = ''
+                if ic['snmpConfiguration']['trapDestinations'] is not None:
+                    dest = str(ic['snmpConfiguration']['trapDestinations'])
+                else:
+                    dest = ''
+                print('\n{0:15} {1:25} {2:25} {3:40}'.format(
+                      snmp_enabled, read_string, snmp_access, dest))
+            else:
+                pprint(ic)
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=False,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Display the collection of enclosure hardware resources.
+
+    Usage: ''')
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=False,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+                        help='''
+    Proxy (host:port format''')
+    parser.add_argument('-n', dest='name',
+                        required=False,
+                        help='''
+    The name of the enclosure hardware resource to be returned.
+    All enclosure hardware resources will be returned if omitted.''')
+    parser.add_argument('-r', dest='report',
+                        required=False, action='store_true',
+                        help='''
+    Generate report of enclosure, including device bays, interconnect bays,
+    and reported firmware for components. ''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -86,7 +144,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    getict(net)
+    get_interconnects(net, args.name, args.report)
 
 if __name__ == '__main__':
     import sys
