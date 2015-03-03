@@ -69,6 +69,9 @@ class fcsans(object):
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
         return task
 
-    # TODO Add Device Manager POST
+    def add_device_manager(self, providerUri, connInfo,  blocking=True,
+                           verbose=False):
+        task, body = self._con.post(providerUri, connInfo)
+        return body
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

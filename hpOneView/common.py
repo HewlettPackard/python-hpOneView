@@ -350,8 +350,22 @@ def make_storage_volume(name,
     }
 
 
-def make_lig_dict(name,
-                  ethernetSettings=[]):
+def make_connectionInfo_dict(hostname, port, user, passwd, ssl=True):
+
+    return {'connectionInfo': [
+        {'name': 'Host',
+         'value': hostname},
+        {'name': 'Port',
+         'value': port},
+        {'name': 'Username',
+         'value': user},
+        {'name': 'Password',
+         'value': passwd},
+        {'name': 'UseSsl',
+         'value': ssl}]
+    }
+
+def make_lig_dict(name, ethernetSettings=[]):
     return {
         'name': name,
         'type': 'logical-interconnect-groupV2',
