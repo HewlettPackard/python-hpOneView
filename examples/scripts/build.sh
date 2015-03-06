@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # OneView Appliance hostname or IP address
 OV_HOST=${OV_HOST:=oneview}
 # OneView Appliance username
@@ -48,5 +50,14 @@ echo  -- Defining Volume Templates
 ./add-volume-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "ESX Boot" -ss ThreePAR7200-4446 -sp SND_CPG1 -cap 50
 echo  -- Defining volumes
 ./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n vol1 -sp SND_CPG1 -cap 50
+echo  -- Building connection list
+# File to construct connection list
+CONN_LIST=/tmp/clist.json
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "VLAN-10-A" -func Ethernet -gbps 1.5 -cl $CONN_LIST
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "VLAN-10-B" -func Ethernet -gbps 1.5 -cl $CONN_LIST -app
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "VLAN-20-A" -func Ethernet -gbps 1.5 -cl $CONN_LIST -app
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "VLAN-20-B" -func Ethernet -gbps 1.5 -cl $CONN_LIST -app
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "3PAR SAN A" -func FibreChannel -bp "Primary" -cl $CONN_LIST -app
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "3PAR SAN B" -func FibreChannel -bp "Secondary" -cl $CONN_LIST -app
 echo  -- Defining profiles
-./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS
+./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay1" -s "Encl1, bay 1" -cl $CONN_LIST

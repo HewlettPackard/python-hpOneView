@@ -45,5 +45,14 @@ echo  -- Defining Volume Templates
 python add-volume-template.py -a %HOST% -u %USER% -p %PASS% -n "ESX BOOT" -ss ThreePAR7200-4446 -sp SND_CPG1 -cap 50
 echo  -- Defining volumes
 python add-volume.py -a %HOST% -u %USER% -p %PASS% -n vol1 -sp SND_CPG1 -cap 50
+echo  -- Building connection list
+rem File to construct connection list
+set CONN_LIST=clist.json
+./define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "VLAN-10-A" -func Ethernet -gbps 1.5 -cl %CONN_LIST%
+./define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "VLAN-10-B" -func Ethernet -gbps 1.5 -cl %CONN_LIST% -app
+./define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "VLAN-20-A" -func Ethernet -gbps 1.5 -cl %CONN_LIST% -app
+./define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "VLAN-20-B" -func Ethernet -gbps 1.5 -cl %CONN_LIST% -app
+./define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "3PAR SAN A" -func FibreChannel -bp "Primary" -cl %CONN_LIST% -app
+./define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "3PAR SAN B" -func FibreChannel -bp "Secondary" -cl %CONN_LIST% -app
 echo  -- Defining profiles
-python define-profile.py -a %HOST% -u %USER% -p %PASS%
+python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay1" -s "Encl1, bay 1" -cl %CONN_LIST%
