@@ -48,7 +48,7 @@ def login(con, credential):
         print('Login failed')
 
 
-def del_all_profiles(srv):
+def del_all_profiles(srv, force):
     srvrs = srv.get_servers()
     for server in srvrs:
         if server['powerState'] == 'On':
@@ -59,11 +59,11 @@ def del_all_profiles(srv):
     profiles = srv.get_server_profiles()
     for profile in profiles:
         print(('Removing Profile %s' % profile['name']))
-        ret = srv.remove_server_profile(profile)
+        ret = srv.remove_server_profile(profile, force)
         pprint(ret)
 
 
-def del_profile_by_name(srv, name):
+def del_profile_by_name(srv, name, force):
     srvrs = srv.get_servers()
     for server in srvrs:
         if server['powerState'] == 'On':
@@ -75,7 +75,7 @@ def del_profile_by_name(srv, name):
     for profile in profiles:
         if profile['name'] == name:
             print(('Removing Profile %s' % profile['name']))
-            ret = srv.remove_server_profile(profile)
+            ret = srv.remove_server_profile(profile, force)
             pprint(ret)
             return
     print('Profile: ', name, ' not found')
@@ -100,6 +100,10 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
+    parser.add_argument('-f', dest='force', required=False,
+                        action='store_true',
+                        help='''
+    Force the removal of the server profile''')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-n', dest='name',
                        help='''
@@ -126,10 +130,10 @@ def main():
     acceptEULA(con)
 
     if args.delete_all:
-        del_all_profiles(srv)
+        del_all_profiles(srv, args.force)
         sys.exit()
 
-    del_profile_by_name(srv, args.name)
+    del_profile_by_name(srv, args.name, args.force)
 
 if __name__ == '__main__':
     import sys

@@ -126,8 +126,11 @@ class servers(object):
         profile = self._con.get(profileResource['resourceUri'])
         return profile
 
-    def remove_server_profile(self, profile, blocking=True, verbose=False):
-        task, body = self._con.delete(profile['uri'])
+    def remove_server_profile(self, profile, force=False, blocking=True, verbose=False):
+        if force:
+            task, body = self._con.delete(profile['uri'] + '?force=True')
+        else:
+            task, body = self._con.delete(profile['uri'])
         if blocking is True:
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
         return task
