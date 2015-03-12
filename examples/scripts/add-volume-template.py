@@ -48,16 +48,15 @@ def login(con, credential):
         print('Login failed')
 
 
-def add_vol_template(sto, name, sto_sys, pool_name, size,
-                     shareable=False, description='Example Vol Template',
-                     provisionType='Thin'):
+def add_vol_template(sto, name, sto_sys, sto_pool, size,
+                     shareable, description, provisionType, first_avaliable):
     systems = sto.get_storage_systems()
     for sys in systems:
-        if sys['name'] == sto_sys:
+        if sys['name'] == sto_sys or first_avaliable:
             # search managed pools in matching storage system
             pools = sys['managedPools']
             for pool in pools:
-                if pool['name'] == pool_name:
+                if pool['name'] == sto_pool:
                     storagePoolUri = pool['uri']
                     print('Adding Volume Template: ', name)
                     template = hpov.common.make_storage_vol_template(name,
@@ -69,42 +68,64 @@ def add_vol_template(sto, name, sto_sys, pool_name, size,
                     ret = sto.add_storage_volume_template(template)
                     pprint(ret)
                     return
-            print('Pool: ', pool_name, ' not found')
+            print('Pool: ', sto_pool, ' not found')
             return
     print('Storage System: ', stosys_name, ' not found')
     pprint(ret)
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=False,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Add/Create a new storage pool resource
+
+    Usage: ''')
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=False,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+                        help='''
+    Proxy (host:port format''')
     parser.add_argument('-n', dest='name', required=True,
-                        help='Name of the volume template to add')
-    parser.add_argument('-ss', dest='sto_sys', required=True,
-                        help='Name of the storage system to add template to')
+                        help='''
+    Name of the volume template to add''')
     parser.add_argument('-sp', dest='sto_pool', required=True,
-                        help='Name of the storage pool to add template to')
-    parser.add_argument('-cap', '--capacity', dest='size', required=True,
-                        help='Size of volume template in GiB')
-    parser.add_argument('-sh', '--shareable', dest='shareable', required=False,
+                        help='''
+    Name of the storage pool to add template to''')
+    parser.add_argument('-cap',  dest='size', required=True,
+                        help='''
+    Size of volume template in GiB''')
+    parser.add_argument('-sh',  dest='shareable', required=False,
                         default=False, action='store_true',
-                        help='sets template to shareable, omit for private')
-    parser.add_argument('-pt', '--prov_type', dest='provType', required=False,
+                        help='''
+    sets template to shareable, omit for private''')
+    parser.add_argument('-pt',  dest='provType', required=False,
                         default='Thin',
-                        help='Thin or Full provisioning')
-    parser.add_argument('-des', '--description', dest='desc', required=False,
+                        help='''
+    Thin or Full provisioning''')
+    parser.add_argument('-des',  dest='desc', required=False,
                         default='Example Volume Template',
-                        help='Description of template')
+                        help='''
+    Description of template''')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-ss', dest='sto_sys',
+                        help='''
+    Name of the Storage System to use''')
+    group.add_argument('-f', dest='first_avaliable',
+                        action='store_true',
+                        help='''
+    Use the first avaliable storage system''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -121,7 +142,7 @@ def main():
     acceptEULA(con)
 
     add_vol_template(sto, args.name, args.sto_sys, args.sto_pool, args.size,
-                     args.shareable, args.desc, args.provType)
+                     args.shareable, args.desc, args.provType, args.first_avaliable)
 
 if __name__ == '__main__':
     import sys

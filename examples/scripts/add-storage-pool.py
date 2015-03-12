@@ -49,34 +49,51 @@ def login(con, credential):
         print('Login failed')
 
 
-def addsto(sto, poolName, storageSystemName):
+def add_storage_pool(sto, poolName, storageSystemName, first_avaliable):
     systems = sto.get_storage_systems()
     for sys in systems:
-        if sys['name'] == storageSystemName:
+        if sys['name'] == storageSystemName or first_avaliable:
             storageSystemUri = sys['uri']
             ret = sto.add_storage_pool(poolName, storageSystemUri)
             pprint(ret)
             return
-    print('Storage System: ', storageSystemName, ' not found')
+    print('Storage System not found')
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=False,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Add/Create a new storage pool resource
+
+    Usage: ''')
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=False,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
-    parser.add_argument('-s', '--sto_name', dest='sto_name', required=True,
-                        help='Storage System Name')
-    parser.add_argument('-n', '--pool_name', dest='pool_name', required=True,
-                        help='Name of the storage pool to add')
+                        help='''
+    Proxy (host:port format''')
+    parser.add_argument('-sp', dest='pool_name', required=True,
+                        help='''
+    Storage Pool Name''')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-ss', dest='sto_name',
+                        help='''
+    Name of the Storage System to use''')
+    group.add_argument('-f', dest='first_avaliable',
+                        action='store_true',
+                        help='''
+    Use the first avaliable storage system''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -92,7 +109,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    addsto(sto, args.pool_name, args.sto_name)
+    add_storage_pool(sto, args.pool_name, args.sto_name, args.first_avaliable)
 
 if __name__ == '__main__':
     import sys
