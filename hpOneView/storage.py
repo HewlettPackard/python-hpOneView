@@ -139,7 +139,11 @@ class storage(object):
         task, body = self._con.post(uri['storage-volumes'], volume)
         if blocking is True:
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
-        return body
+            if 'type' in task and task['type'].startswith('Task'):
+                entity = self._activity.get_task_associated_resource(task)
+                volume = self._con.get(entity['resourceUri'])
+                return volume
+        return task
 
     def remove_storage_volume(self, volume, blocking=True,
                               verbose=False):

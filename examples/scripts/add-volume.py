@@ -61,7 +61,16 @@ def add_volume(sto, name, pool_name, size, shareable=False,
                                              storagePoolUri,
                                              description, provisionType)
             ret = sto.add_storage_volume(volume)
-            pprint(ret)
+            if 'deviceVolumeName' in ret:
+                print('Name:                ', ret['name'])
+                print('Type:                ', ret['type'])
+                print('State:               ', ret['state'])
+                print('Description:         ', ret['description'])
+                print('Volume Name:         ', ret['deviceVolumeName'])
+                print('Allocated Capacity : ', ret['allocatedCapacity'])
+                print('Provisioned Capacity:', ret['provisionedCapacity'])
+            else:
+                pprint(ret)
             return
     print('Pool: ', pool_name, ' not found')
 
