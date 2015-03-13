@@ -49,7 +49,7 @@ def login(con, credential):
         print('Login failed')
 
 
-def addsto(sto, ip, usr, pas, domain):
+def add_storage_system(sto, ip, usr, pas, domain, import_pools):
     TB = 1000 * 1000 * 1000 * 1000
     ret = sto.add_storage_system(ip, usr, pas)
     retdict = literal_eval(ret)
@@ -82,20 +82,20 @@ def addsto(sto, ip, usr, pas, domain):
         print('Storage Domain ', domain, ' not found. Verify the domain '
               'exsits on the storage system')
         sys.exit()
-    found = False
-    for pool in reversed(conSys['unmanagedPools']):
-        if pool['domain'] == domain:
-            conSys['managedPools'].append(pool)
-            conSys['unmanagedPools'].remove(pool)
-            found = True
-    if not found:
-        print('Could not locate storage pool for domain:"', domain, '" Verify'
-              ' the pool exsits on the storage system')
-        sys.exit()
+    if import_pools:
+        found = False
+        for pool in reversed(conSys['unmanagedPools']):
+            if pool['domain'] == domain:
+                conSys['managedPools'].append(pool)
+                conSys['unmanagedPools'].remove(pool)
+                found = True
+        if not found:
+            print('Could not locate storage pool for domain:"', domain, '" Verify'
+                  ' the pool exsits on the storage system')
+            sys.exit()
 
     ret = sto.update_storage_system(conSys)
     print()
-    print('Status:        ', conSys['status'])
     print('Name:          ', conSys['name'])
     print('Serial Number: ', conSys['serialNumber'])
     print('Model:         ', conSys['model'])
@@ -113,27 +113,45 @@ def addsto(sto, ip, usr, pas, domain):
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=False,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Add/Create a new storage pool resource
+
+    Usage: ''')
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=False,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
-    parser.add_argument('-su', '--sto_user', dest='stousr', required=False,
-                        help='Administrative username for the storage system')
-    parser.add_argument('-sp', '--sto_pass', dest='stopass', required=False,
-                        help='Administrative password for the storage system')
-    parser.add_argument('-sd', '--sto_dom', dest='stodom', required=False,
+                        help='''
+    Proxy (host:port format''')
+    parser.add_argument('-sh', dest='storage', required=True,
+                        help='''
+    IP address of the storage system to add''')
+    parser.add_argument('-su', dest='stousr', required=False,
+                        help='''
+    Administrative username for the storage system''')
+    parser.add_argument('-sp', dest='stopass', required=False,
+                        help='''
+    Administrative password for the storage system''')
+    parser.add_argument('-sd', dest='stodom', required=False,
                         default='NewDomain',
-                        help='Storage Domain on the storage system')
-    parser.add_argument('-s', dest='storage', required=True,
-                        help='IP address of the storage system to add')
+                        help='''
+    Storage Domain on the storage system''')
+    parser.add_argument('-ip',  dest='import_pools', required=False,
+                        default=False, action='store_true',
+                        help='''
+    Import all of the storage pools from the array''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -149,7 +167,8 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    addsto(sto, args.storage, args.stousr, args.stopass, args.stodom)
+    add_storage_system(sto, args.storage, args.stousr, args.stopass,
+                       args.stodom, args.import_pools)
 
 if __name__ == '__main__':
     import sys

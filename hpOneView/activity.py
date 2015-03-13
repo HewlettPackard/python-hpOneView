@@ -108,8 +108,11 @@ class activity(object):
 
     def is_task_running(self, task):
         global TaskPendingStates
-        task = self._con.get(task['uri'])
-        return task['taskState'] in TaskPendingStates
+        if 'uri' in task:
+            task = self._con.get(task['uri'])
+            if 'taskState' in task and task['taskState'] in TaskPendingStates:
+                return True
+        return False
 
     def wait4task(self, task, tout=60, verbose=False):
         count = 0

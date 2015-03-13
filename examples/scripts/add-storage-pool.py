@@ -55,7 +55,16 @@ def add_storage_pool(sto, poolName, storageSystemName, first_avaliable):
         if sys['name'] == storageSystemName or first_avaliable:
             storageSystemUri = sys['uri']
             ret = sto.add_storage_pool(poolName, storageSystemUri)
-            pprint(ret)
+            if 'capacityLimit' in ret:
+                print('Name:                ', ret['name'])
+                print('State:               ', ret['state'])
+                print('Description:         ', ret['description'])
+                print('RAID Type:           ', ret['supportedRAIDLevel'])
+                print('Allocated Capacity : ', ret['allocatedCapacity'])
+                print('Capacity Limit:      ', ret['capacityLimit'])
+                print('Total Capacity       ', ret['totalCapacity'])
+            else:
+                pprint(ret)
             return
     print('Storage System not found')
 

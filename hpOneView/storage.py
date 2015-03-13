@@ -86,24 +86,29 @@ class storage(object):
                          verbose=False):
         request = [{'storageSystemUri': storageSystemUri,
                    'poolName': name}]
-        task, body = self._con.post(uri['storage-pools'] +
+        html, task = self._con.post(uri['storage-pools'] +
                                     '?multiResource=true', request)
-        return body
+        if type(task) is list:
+            task = task[0]
+
+        if blocking is True:
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
+            if 'type' in task and task['type'].startswith('Task'):
+                entity = self._activity.get_task_associated_resource(task)
+                pool = self._con.get(entity['resourceUri'])
+                return pool
+        return task
 
     # Temporarly modify the headers passed for POST and DELTE on storage volume
     # templates in order to work around a bug. Without these headers the call
     # cause a NullPointerException on the appliance and a 400 gets returned.
-    def add_storage_volume_template(self, volTemplate, blocking=True,
-                                    verbose=False):
+    def add_storage_volume_template(self, volTemplate, verbose=False):
         ori_headers = self._con._headers
         self._con._headers.update({'Accept-Language': 'en'})
         self._con._headers.update({'Accept-Encoding': 'deflate'})
         task, body = self._con.post(uri['vol-templates'], volTemplate)
         self._con._headers = ori_headers
-        if blocking is True:
-            task = self._activity.wait4task(task, tout=600, verbose=verbose)
-            return body
-        return task
+        return body
 
     # Temporarly modify the headers passed for POST and DELTE on storage volume
     # templates in order to work around a bug. Without these headers the call

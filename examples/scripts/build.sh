@@ -84,7 +84,7 @@ echo
 echo ================================================================
 echo "                     Add Storage System                       "
 echo ================================================================
-./add-storage-system.py -a $OV_HOST -u $OV_USER -p $OV_PASS -s $STO_ADDR -su $STO_USR -sp $STO_PASS
+./add-storage-system.py -a $OV_HOST -u $OV_USER -p $OV_PASS -sh $STO_ADDR -su $STO_USR -sp $STO_PASS
 
 echo
 echo ================================================================

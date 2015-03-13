@@ -56,7 +56,11 @@ def defeg(net, srv, name, lname):
             print('Creating Enclosure Group')
             egroup = hpov.common.make_egroup_dict(name, lig['uri'])
             egroup = srv.create_enclosure_group(egroup)
-            pprint(egroup)
+            if 'name' in egroup:
+                print('Name:          ', egroup['name'])
+            else:
+                pprint(egroup)
+
         else:
             print('ERROR: Creating Enclosure Group')
             print('LIG: "%s" has not been defined' % lname)

@@ -49,7 +49,6 @@ def login(con, credential):
 
 
 def import_enclosure(srv, sts, eg, ip, usr, pas, lic, baseline, force, forcefw):
-    print('force is: ', force)
     # Locate the enclosure group
     egroups = srv.get_enclosure_groups()
     for group in egroups:
@@ -90,7 +89,13 @@ def import_enclosure(srv, sts, eg, ip, usr, pas, lic, baseline, force, forcefw):
                                                         forcefw=forcefw)
 
     enclosure = srv.add_enclosure(add_enclosure)
-    pprint(enclosure)
+    if 'enclosureType' in enclosure:
+        print('Type:          ', enclosure['enclosureType'])
+        print('Name:          ', enclosure['name'])
+        print('Rack:          ', enclosure['rackName'])
+        print('Serial Number: ', enclosure['serialNumber'])
+    else:
+        pprint(enclosure)
 
 
 def main():

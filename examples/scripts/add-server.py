@@ -53,7 +53,18 @@ def add_server(srv, hostname, username, password, force, license):
             license)
 
     ret = srv.add_server(server)
-    pprint(ret)
+    if 'model' in ret:
+        print('Model:         ', ret['model'])
+        print('Serial Number: ', ret['serialNumber'])
+        print('ROM FW:        ', ret['romVersion'])
+        print('Proc Count     ', ret['processorCount'])
+        print('Proc Cores     ', ret['processorCoreCount'])
+        print('Proc Speed     ', ret['processorSpeedMhz'])
+        print('Proc Type      ', ret['processorType'])
+        print('iLO FW:        ', ret['mpFirmwareVersion'])
+        print('iLO Version:    ', ret['mpModel'])
+    else:
+        pprint(ret)
 
 
 def main():

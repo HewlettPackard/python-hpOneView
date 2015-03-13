@@ -71,7 +71,7 @@ echo
 echo ================================================================
 echo "                     Add Storage System                       "
 echo ================================================================
-python add-storage-system.py -a %HOST% -u %USER% -p %PASS% -s %STO_ADDR% -su %STO_USR% -sp %STO_PASS%
+python add-storage-system.py -a %HOST% -u %USER% -p %PASS% -sh %STO_ADDR% -su %STO_USR% -sp %STO_PASS%
 
 echo
 echo ================================================================

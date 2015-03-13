@@ -100,7 +100,11 @@ class servers(object):
         task, body = self._con.post(uri['servers'], server)
         if blocking is True:
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
-        return body
+            if 'type' in task and task['type'].startswith('Task'):
+                entity = self._activity.get_task_associated_resource(task)
+                server = self._con.get(entity['resourceUri'])
+                return server
+        return task
 
     ###########################################################################
     # Server Profiles
@@ -160,14 +164,18 @@ class servers(object):
 
     def add_enclosure(self, enclosure, blocking=True, verbose=False):
         task, body = self._con.post(uri['enclosures'], enclosure)
+        if enclosure['firmwareBaselineUri'] is None:
+            tout = 600
+        else:
+            tout = 3600
+
         if blocking is True:
-            if enclosure['firmwareBaselineUri'] is None:
-                 task = self._activity.wait4task(task, tout=600, verbose=verbose)
-            else:
-                task = self._activity.wait4task(task, tout=3600, verbose=verbose)
-        entity = self._activity.get_task_associated_resource(task)
-        enclosure = self._con.get(entity['resourceUri'])
-        return enclosure
+            task = self._activity.wait4task(task, tout, verbose=verbose)
+            if 'type' in task and task['type'].startswith('Task'):
+                entity = self._activity.get_task_associated_resource(task)
+                enclosure = self._con.get(entity['resourceUri'])
+                return enclosure
+        return task
 
     def remove_enclosure(self, enclosure, force=False, blocking=True,
                          verbose=False):

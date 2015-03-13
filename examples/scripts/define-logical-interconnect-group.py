@@ -123,7 +123,11 @@ def deflig(net, con, name, ics, ethernetSettings):
 
     lig = net.create_lig(lig)
     print('\nCreating Logical Interconnect Group\n')
-    pprint(lig)
+    if 'name' in lig:
+        print('Name:          ', lig['name'])
+        print('State:         ', lig['state'])
+    else:
+        pprint(lig)
 
 
 def main():
