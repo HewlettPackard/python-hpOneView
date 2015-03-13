@@ -23,6 +23,8 @@ echo  -- Removing Storage Systems
 ./del-storage-system.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing Enclosures
 ./del-enclosure.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
+echo  -- Removing Standalone Servers
+./del-server.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing Enclosure Groups
 ./del-enclosure-group.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
 echo  -- Removing Logical Interconnect Groups

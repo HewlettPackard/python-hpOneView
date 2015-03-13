@@ -26,6 +26,8 @@ echo  -- Removing Storage Systems
 python del-storage-system.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Enclosures
 python del-enclosure.py -a %HOST% -u %USER% -p %PASS% -d
+echo  -- Removing Standalone Servers
+python del-server.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Enclosure Groups
 python del-enclosure-group.py -a %HOST% -u %USER% -p %PASS% -d
 echo  -- Removing Logical Interconnect Groups

@@ -19,7 +19,14 @@ rem Enclosure OA username
 set STO_USR=Administrator
 rem Enclosure OA password
 set STO_PASS=PASSWORD
+rem Standalone server iLO hostname or IP Address
+set SRV_ADDR=172.18.6.15
+rem Enclosure OA username
+set SRV_USR=Administrator
+rem Enclosure OA password
+set SRV_PASS=PASSWORD
 
+set CONN_LIST=%TMP%\oneview_conn_list-%RANDOM%-%TIME:~6,5%.tmp
 
 echo  -- Defining Ehternet Logical Networks
 FOR %%A IN (A B) DO FOR %%V IN (10 20 30 40 50 60) DO python define-ethernet-network.py -a %HOST% -u %USER% -p %PASS% -n VLAN-%%V-%%A -v %%V
@@ -39,6 +46,8 @@ echo  -- Import Enclosures
 python add-enclosure.py -a %HOST% -u %USER% -p %PASS% -eu %ENC_USR% -ep %ENC_PASS% -oa %ENC_ADDR% -eg "Prod VC FlexFabric Group 1"
 echo  -- Add Storage System
 python add-storage-system.py -a %HOST% -u %USER% -p %PASS% -s %STO_ADDR% -su %STO_USR% -sp %STO_PASS%
+echo  -- Add Standalone Server
+python add-server.py -a %OV_HOST% -u %OV_USER% -p %OV_PASS% -sh %SRV_ADDR% -su %SRV_USR% -sp %SRV_PASS%
 echo  -- Defining Storage Pools
 python add-storage-pool.py -a %HOST% -u %USER% -p %PASS% -f -sp SND_CPG1
 echo  -- Defining Volume Templates
@@ -46,8 +55,6 @@ python add-volume-template.py -a %HOST% -u %USER% -p %PASS% -n "ESX Boot" -f -sp
 echo  -- Defining volumes
 python add-volume.py -a %HOST% -u %USER% -p %PASS% -n vol1 -sp SND_CPG1 -cap 50
 echo  -- Building connection list
-rem File to construct connection list
-set CONN_LIST=clist.json
 ./define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "VLAN-10-A" -func Ethernet -gbps 1.5 -cl %CONN_LIST%
 ./define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "VLAN-10-B" -func Ethernet -gbps 1.5 -cl %CONN_LIST% -app
 ./define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "VLAN-20-A" -func Ethernet -gbps 1.5 -cl %CONN_LIST% -app

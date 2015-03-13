@@ -95,16 +95,12 @@ class servers(object):
         task, body = self._con.put(server['uri'], server)
         return body
 
-    def add_server(self, server, verbose=False):
+    def add_server(self, server, blocking=True, verbose=False):
         global uri
         task, body = self._con.post(uri['servers'], server)
-        task = self._activity.wait4task(task, tout=600, verbose=verbose)
-        serverResource = self._activity.get_task_associated_resource(task)
-        if serverResource['resourceUri'] is not None:
-            server = self._con.get(serverResource['resourceUri'])
-            return server
-        else:
-            raise HPOneViewException('Server not added')
+        if blocking is True:
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
+        return body
 
     ###########################################################################
     # Server Profiles
