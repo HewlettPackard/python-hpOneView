@@ -126,13 +126,13 @@ class activity(object):
                 raise HPOneViewTimeout('Waited ' + str(tout) +
                                        ' seconds for task to complete, aborting')
         task = self._con.get(task['uri'])
-        if task['taskState'] in TaskErrorStates:
+        if task['taskState'] in TaskErrorStates and task['taskState'] != 'Warning':
                 err = task['taskErrors'][0]
                 msg = err['message']
-                if task['taskStatus'] is not None:
+                if msg is not None:
+                    raise HPOneViewTaskError(msg)
+                elif task['taskStatus'] is not None:
                     raise HPOneViewTaskError(task['taskStatus'])
-                elif msg is not None:
-                        raise HPOneViewTaskError(msg)
                 else:
                     raise HPOneViewTaskError('Unknown Exception')
         return task
