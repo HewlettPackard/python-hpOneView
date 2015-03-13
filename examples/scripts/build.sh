@@ -35,7 +35,9 @@ OV_TMP=$OV_TMP/con.$RANDOM.$RANDOM.$RANDOM.$$
 
 CONN_LIST=$OV_TMP/$RANDOM.$RANDOM.$$
 
-echo  -- Defining Ethernet Logical Networks
+echo ================================================================
+echo "            Defining Ethernet Logical Networks                "
+echo ================================================================
 for AA in A B
 do
   for vlan in 10 20 30 40 50 60
@@ -44,31 +46,74 @@ do
   done
 done
 
-echo  -- Defining Fibre Channel  Logical Networks
+echo
+echo ================================================================
+echo "         Defining Fibre Channel  Logical Networks             "
+echo ================================================================
 ./define-fibrechannel-network.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "3PAR SAN A" -e
 ./define-fibrechannel-network.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "3PAR SAN B" -e
-echo  -- Defining Logical Interconnect Groups
+
+echo
+echo ================================================================
+echo "            Defining Logical Interconnect Groups              "
+echo ================================================================
 ./define-logical-interconnect-group.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "VC FlexFabric Production" -i 1:Flex2040f8 2:Flex2040f8
-echo  -- Defining Uplink Set Groups in Logical Interconnect Group
+
+echo
+echo ================================================================
+echo "   Defining Uplink Set Groups in Logical Interconnect Group   "
+echo ================================================================
 ./define-uplink-set.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "3PAR SAN A" -i "VC FlexFabric Production" -t FibreChannel -l "3PAR SAN A"  -o 1:3 1:4
 ./define-uplink-set.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "3PAR SAN B" -i "VC FlexFabric Production" -t FibreChannel -l "3PAR SAN B"  -o 2:3 2:4
 ./define-uplink-set.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Uplink Set 1-A" -i "VC FlexFabric Production" -t Ethernet  -l VLAN-10-A VLAN-20-A VLAN-30-A VLAN-40-A VLAN-50-A VLAN-60-A -o 1:7 1:8
 ./define-uplink-set.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Uplink Set 1-B" -i "VC FlexFabric Production" -t Ethernet  -l VLAN-10-B VLAN-20-B VLAN-30-B VLAN-40-B VLAN-50-B VLAN-60-B -o 2:7 2:8
-echo  -- Defining Enclosure Groups
+
+echo
+echo ================================================================
+echo "                 Defining Enclosure Groups                    "
+echo ================================================================
 ./define-enclosure-group.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Prod VC FlexFabric Group 1" -l "VC FlexFabric Production"
-echo  -- Import Enclosures
+
+echo
+echo ================================================================
+echo "                      Add Enclosures                          "
+echo ================================================================
 ./add-enclosure.py -a $OV_HOST -u $OV_USER -p $OV_PASS -eu $ENC_USR -ep $ENC_PASS -oa $ENC_ADDR -eg "Prod VC FlexFabric Group 1"
-echo  -- Add Storage System
+
+echo
+echo ================================================================
+echo "                     Add Storage System                       "
+echo ================================================================
 ./add-storage-system.py -a $OV_HOST -u $OV_USER -p $OV_PASS -s $STO_ADDR -su $STO_USR -sp $STO_PASS
-echo  -- Add Standalone Server
+
+echo
+echo ================================================================
+echo "                    Add Standalone Server                     "
+echo ================================================================
 ./add-server.py -a $OV_HOST -u $OV_USER -p $OV_PASS -sh $SRV_ADDR -su $SRV_USR -sp $SRV_PASS
-echo  -- Defining Storage Pools
+
+echo
+echo ================================================================
+echo "                     Add Storage Pools                        "
+echo ================================================================
 ./add-storage-pool.py -a $OV_HOST -u $OV_USER -p $OV_PASS -f -sp SND_CPG1
-echo  -- Defining Volume Templates
+
+echo
+echo ================================================================
+echo "                     Add Volume Templates                     "
+echo ================================================================
 ./add-volume-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "ESX Boot" -f -sp SND_CPG1 -cap 50
-echo  -- Defining volumes
+
+echo
+echo ================================================================
+echo "                        Add  Volumes                          "
+echo ================================================================
 ./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n vol1 -sp SND_CPG1 -cap 50
-echo  -- Building connection list
+
+echo
+echo ================================================================
+echo "                   Defining Connection List                   "
+echo ================================================================
 # File to construct connection list
 ./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "VLAN-10-A" -func Ethernet -gbps 1.5 -cl $CONN_LIST
 ./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "VLAN-10-B" -func Ethernet -gbps 1.5 -cl $CONN_LIST -app
@@ -76,5 +121,9 @@ echo  -- Building connection list
 ./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "VLAN-20-B" -func Ethernet -gbps 1.5 -cl $CONN_LIST -app
 ./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "3PAR SAN A" -func FibreChannel -bp "Primary" -cl $CONN_LIST -app
 ./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "3PAR SAN B" -func FibreChannel -bp "Secondary" -cl $CONN_LIST -app
-echo  -- Defining profiles
+
+echo
+echo ================================================================
+echo "                     Defining profiles                        "
+echo ================================================================
 ./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay1" -s "Encl1, bay 1" -cl $CONN_LIST

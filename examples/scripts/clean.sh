@@ -4,32 +4,68 @@ OV_HOST=${OV_HOST:=oneview}
 OV_USER=${OV_USER:=Administrator}
 # OneView Appliance password
 OV_PASS=${OV_PASS:=OV_PASSWORD}
-# Enclosure OA hostname or IP address
-ENC_ADDR=${ENC_ADDR:=172.18.1.11}
-# Enclosure OA username
-ENC_USR=${ENC_USR:=Administrator}
-# Enclosure OA password
-ENC_PASS=${ENC_PASS:=OV_PASSWORD}
 
-echo  -- Removing profiles
+echo ================================================================
+echo "                    Removing Profiles                         "
+echo ================================================================
 ./del-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d -f
-echo  -- Removing volumes
+
+echo
+echo ================================================================
+echo "                    Removing Volumes                          "
+echo ================================================================
 ./del-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
-echo  -- Removing Volume Templates
+
+echo
+echo ================================================================
+echo "                 Removing Volume Templates                    "
+echo ================================================================
 ./del-volume-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
-echo  -- Removing Storage Pools
+
+echo
+echo ================================================================
+echo "                 Removing Storage Pools                       "
+echo ================================================================
 ./del-storage-pool.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
-echo  -- Removing Storage Systems
+
+echo
+echo ================================================================
+echo "                 Removing Storage Systems                     "
+echo ================================================================
 ./del-storage-system.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
-echo  -- Removing Enclosures
+
+echo
+echo ================================================================
+echo "                    Removing Enclosure                        "
+echo ================================================================
 ./del-enclosure.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
-echo  -- Removing Standalone Servers
+
+echo
+echo ================================================================
+echo "                 Removing Standalone Servers                  "
+echo ================================================================
 ./del-server.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
-echo  -- Removing Enclosure Groups
+
+echo
+echo ================================================================
+echo "                 Removing Enclosure Groups                    "
+echo ================================================================
 ./del-enclosure-group.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
-echo  -- Removing Logical Interconnect Groups
+
+echo
+echo ================================================================
+echo "             Removing Logical Interconnect Groups             "
+echo ================================================================
 ./del-logical-interconnect-groups.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
-echo  -- Removing Network Sets
+
+echo
+echo ================================================================
+echo "                    Removing Network Sets                     "
+echo ================================================================
 ./del-network-set.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
-echo  -- Removing Logical Networks
+
+echo
+echo ================================================================
+echo "                    Removing Networks                         "
+echo ================================================================
 ./del-network.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
