@@ -108,7 +108,7 @@ def main():
         del_all_servers(srv)
         sys.exit()
 
-    del_server(srv, args.name)
+    del_server_by_name(srv, args.name)
 
 if __name__ == '__main__':
     import sys
