@@ -49,6 +49,57 @@ def login(con, credential):
         print('Login failed')
 
 
+def define_connection_list(net, name, conn_list, append, portId, func, mac,
+                           macType, reqGbps, wwnn, wwpn, wwpnType,
+                           boot_priority, boot):
+
+    reqMbps = None
+    if func == 'Ethernet':
+        nets = net.get_enet_networks()
+        if reqGbps:
+            reqGbps = reqGbps
+            if (reqGbps < .1 or reqGbps > 20):
+                print('Error: preferred bandwidth must be between .1 and 20 Gbps')
+                sys.exit(1)
+            reqMbps = int(reqGbps * 1000)
+    elif func == 'FibreChannel':
+        nets = net.get_fc_networks()
+
+    netw = None
+    for network in nets:
+        if network['name'] == name:
+            netw = network
+            break
+    if netw is None:
+        print(func, 'network: ', name, ' not found')
+        sys.exit(1)
+    if boot_priority:
+        boot = hpov.common.make_profile_connection_boot_dict(priority=boot_priority)
+    else:
+        boot = None
+
+    conn = hpov.common.make_profile_connection_dict(netw,
+                                                    portId,
+                                                    func,
+                                                    mac,
+                                                    macType,
+                                                    reqMbps,
+                                                    wwnn,
+                                                    wwpn,
+                                                    wwpnType,
+                                                    boot)
+    if append:
+        # read in the json data from the connection list file
+        data = json.loads(open(conn_list).read())
+        data.append(conn)
+    else:
+        data = [conn]
+    f = open(conn_list, 'w')
+    out = json.dumps(data, indent=4)
+    f.write(out)
+    f.close()
+
+
 def main():
     parser = argparse.ArgumentParser(add_help=True, description='Usage',
                         formatter_class=argparse.RawTextHelpFormatter)
@@ -72,21 +123,21 @@ def main():
                         required=True,
                         help='''
     Name of the network''')
-    parser.add_argument('-cl', '--conn_list', dest='conn_list',
+    parser.add_argument('-cl', dest='conn_list',
                         required=True,
                         help='''
     Name of file for connection list''')
-    parser.add_argument('-app', '--append',  dest='append',
+    parser.add_argument('-app', dest='append',
                         required=False,
                         action='store_true',
                         help='''
     Causes connection list to be appended to the file''')
-    parser.add_argument('-port', '--portId', dest='portId',
+    parser.add_argument('-port', dest='portId',
                         required=False,
                         default='Auto',
                         help='''
     FlexNIC to use''')
-    parser.add_argument('-func', '--functionType', dest='func',
+    parser.add_argument('-func', dest='func',
                         required=False,
                         choices=('Ethernet', 'FibreChannel'),
                         default='Ethernet',
@@ -97,13 +148,13 @@ def main():
                         default=None,
                         help='''
     MAC address''')
-    parser.add_argument('-mt', '--macType', dest='macType',
+    parser.add_argument('-mt', dest='macType',
                         required=False,
                         choices=('Physical', 'UserDefined', 'Virtual'),
                         default='Virtual',
                         help='''
     MAC address type''')
-    parser.add_argument('-gbps', '--requestedGbps', dest='reqGbps',
+    parser.add_argument('-gbps', dest='reqGbps',
                         required=False,
                         type=float,
                         default=None,
@@ -120,7 +171,7 @@ def main():
                         default=None,
                         help='''
     Port WWN address on the FlexNIC''')
-    parser.add_argument('-wt', '--wwpnType', dest='wwpnType',
+    parser.add_argument('-wt', dest='wwpnType',
                         required=False,
                         choices=('Physical', 'UserDefined', 'Virtual'),
                         default='Virtual',
@@ -142,8 +193,6 @@ def main():
     credential = {'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
-    srv = hpov.servers(con)
-    sto = hpov.storage(con)
     net = hpov.networking(con)
 
     if args.proxy:
@@ -154,51 +203,11 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    reqMbps = None
-    if args.func == 'Ethernet':
-        nets = net.get_enet_networks()
-        if args.reqGbps:
-            reqGbps = args.reqGbps
-            if (reqGbps < .1 or reqGbps > 20):
-                print('Error: preferred bandwidth must be between .1 and 20 Gbps')
-                sys.exit(1)
-            reqMbps = int(reqGbps * 1000)
-    elif args.func == 'FibreChannel':
-        nets = net.get_fc_networks()
+    define_connection_list(net, args.name, args.conn_list, args.append,
+                           args.portId, args.func, args.mac, args.macType,
+                           args.reqGbps, args.wwnn, args.wwpn, args.wwpnType,
+                           args.boot_priority, args.boot)
 
-    netw = None
-    for network in nets:
-        if network['name'] == args.name:
-            netw = network
-            break
-    if netw is None:
-        print(args.func, 'network: ', args.name, ' not found')
-        sys.exit(1)
-    if args.boot_priority:
-        boot = hpov.common.make_profile_connection_boot_dict(priority=args.boot_priority)
-    else:
-        boot = None
-
-    conn = hpov.common.make_profile_connection_dict(netw,
-                                                    args.portId,
-                                                    args.func,
-                                                    args.mac,
-                                                    args.macType,
-                                                    reqMbps,
-                                                    args.wwnn,
-                                                    args.wwpn,
-                                                    args.wwpnType,
-                                                    boot)
-    if args.append:
-        # read in the json data from the connection list file
-        data = json.loads(open(args.conn_list).read())
-        data.append(conn)
-    else:
-        data = [conn]
-    f = open(args.conn_list, 'w')
-    out = json.dumps(data, indent=4)
-    f.write(out)
-    f.close()
 
 if __name__ == '__main__':
     import sys
