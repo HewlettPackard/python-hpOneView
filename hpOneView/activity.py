@@ -46,7 +46,7 @@ import sys  # For verbose
 
 TaskErrorStates = ['Error', 'Warning', 'Terminated', 'Killed']
 TaskCompletedStates = ['Error', 'Warning', 'Completed', 'Terminated', 'Killed']
-TaskPendingStates = ['New', 'Starting', 'Running', 'Suspended', 'Stopping']
+TaskPendingStates = ['New', 'Starting', 'Pending', 'Running', 'Suspended', 'Stopping']
 
 
 class activity(object):

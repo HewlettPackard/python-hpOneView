@@ -41,7 +41,6 @@ from hpOneView.connection import *
 from hpOneView.activity import *
 from hpOneView.exceptions import *
 
-
 class servers(object):
 
     def __init__(self, con):
@@ -112,19 +111,17 @@ class servers(object):
     def create_server_profile(self, profile, blocking=True, verbose=False):
         # Creating a profile returns a task with no resource uri
         task, body = self._con.post(uri['profiles'], profile)
+        if profile['firmware'] is None:
+            tout = 600
+        else:
+            tout = 3600
         if blocking is True:
-            try:
-                if profile['firmware']['firmwareBaselineUri'] is None:
-                    tout = 600
-                else:
-                    tout = 3600
-            except Exception:
-                tout = 600
-            # Update the task to get the associated resource uri
-            task = self._activity.wait4task(task, tout=tout, verbose=verbose)
-        profileResource = self._activity.get_task_associated_resource(task)
-        profile = self._con.get(profileResource['resourceUri'])
-        return profile
+            task = self._activity.wait4task(task, tout, verbose=verbose)
+            if 'type' in task and task['type'].startswith('Task'):
+                entity = self._activity.get_task_associated_resource(task)
+                profile = self._con.get(entity['resourceUri'])
+                return profile
+        return task
 
     def remove_server_profile(self, profile, force=False, blocking=True, verbose=False):
         if force:
