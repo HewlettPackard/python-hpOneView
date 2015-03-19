@@ -586,10 +586,21 @@ def make_profile_dict(profileName, server, firmwareBaseline=None,
         'firmware': firmwareBaseline,
         'connections': connections}
 
+def make_conectionless_profile_dict(profileName, server, firmwareBaseline=None):
+    return {
+        'type': 'ServerProfileV3',
+        'name': profileName,
+        'serverHardwareUri': server['uri'],
+        'serverHardwareTypeUri': server['serverHardwareTypeUri'],
+        'firmware': firmwareBaseline}
 
-def make_profile_firmware_baseline(firmwareUri, manageFirmware=True):
+
+def make_profile_firmware_baseline(firmwareUri, manageFirmware=True,
+                                   forceInstallFirmware=False):
     return {'firmwareBaselineUri': firmwareUri,
-            'manageFirmware': manageFirmware}
+            'manageFirmware': manageFirmware,
+            'forceInstallFirmware': forceInstallFirmware
+            }
 
 
 def make_powerstate_dict(state, control):
