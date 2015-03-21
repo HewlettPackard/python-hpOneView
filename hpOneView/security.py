@@ -132,7 +132,7 @@ class security(object):
 
     def gen_rabbitmq_ca(self):
         global uri
-        request = {'type': 'RabbitMqClientCert', 'commonName': 'default'}
+        request = {'type': 'RabbitMqClientCertV2', 'commonName': 'default'}
         task, body = self._con.post(uri['rabbitmq'], request)
         return body
 
