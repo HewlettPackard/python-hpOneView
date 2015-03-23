@@ -23,8 +23,8 @@
 import sys
 import hpOneView as hpov
 
-if sys.version_info < (3, 2):
-    raise Exception('Must use Python 3.2 or later')
+if sys.version_info < (3, 4):
+    raise Exception('Must use Python 3.4 or later')
 
 print('hpOneView version: ', hpov.__version__)
 

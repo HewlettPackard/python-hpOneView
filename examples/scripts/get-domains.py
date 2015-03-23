@@ -21,8 +21,8 @@
 # THE SOFTWARE.
 ###
 import sys
-if sys.version_info < (3, 2):
-    raise Exception('Must use Python 3.2 or later')
+if sys.version_info < (3, 4):
+    raise Exception('Must use Python 3.4 or later')
 
 from pprint import pprint
 import hpOneView as hpov

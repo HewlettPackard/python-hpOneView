@@ -23,8 +23,8 @@
 ###
 
 import sys
-if sys.version_info < (3, 2):
-    raise Exception('Must use Python 3.2 or later')
+if sys.version_info < (3, 4):
+    raise Exception('Must use Python 3.4 or later')
 
 from hpOneView import *
 from functools import partial
@@ -97,6 +97,7 @@ def recv(host, route):
                     'certfile': 'client.pem',
                     'keyfile': 'key.pem',
                     'cert_reqs': ssl.CERT_REQUIRED,
+                    'ssl_version' : ssl.PROTOCOL_TLSv1_1,
                     'server_side': False})
 
     # Connect to RabbitMQ

@@ -23,8 +23,8 @@
 import sys
 import argparse
 from collections import defaultdict
-if sys.version_info < (3, 2):
-    raise Exception('Must use Python 3.2 or later')
+if sys.version_info < (3, 4):
+    raise Exception('Must use Python 3.4 or later')
 
 import hpOneView as hpov
 from pprint import pprint

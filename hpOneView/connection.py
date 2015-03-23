@@ -108,7 +108,7 @@ class connection(object):
             try:
                 if self._sslTrustAll is False:
                     import ssl
-                    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+                    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
                     context.verify_mode = ssl.CERT_REQUIRED
                     context.load_verify_locations(self._sslTrustedBundle)
                     if self._doProxy is False:
@@ -121,11 +121,16 @@ class connection(object):
                         conn.set_tunnel(self._host, 443)
                     conn.request(method, path, body, self._headers)
                 else:
+                    import ssl
+                    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+                    context.verify_mode = ssl.CERT_NONE
                     if self._doProxy is False:
-                        conn = http.client.HTTPSConnection(self._host)
+                        conn = http.client.HTTPSConnection(self._host,
+                                                           context=context)
                     else:
                         conn = http.client.HTTPSConnection(self._proxyHost,
-                                                           self._proxyPort)
+                                                           self._proxyPort,
+                                                           context=context)
                         conn.set_tunnel(self._host, 443)
                     conn.request(method, path, body, self._headers)
                 resp = conn.getresponse()
