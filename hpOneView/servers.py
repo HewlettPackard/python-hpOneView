@@ -84,8 +84,11 @@ class servers(object):
             task = self._activity.wait4task(task, tout=60, verbose=verbose)
         return task
 
-    def delete_server(self, server, blocking=True, verbose=False):
-        task, body = self._con.delete(server['uri'])
+    def delete_server(self, server, force=False, blocking=True, verbose=False):
+        if force:
+            task, body = self._con.delete(server['uri'] + '?force=True')
+        else:
+            task, body = self._con.delete(server['uri'])
         if blocking is True:
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
         return task

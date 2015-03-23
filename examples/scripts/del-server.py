@@ -48,19 +48,19 @@ def login(con, credential):
         print('Login failed')
 
 
-def del_all_servers(srv):
+def del_all_servers(srv, force):
     servers = srv.get_servers()
     for server in servers:
         if server['shortModel'].startswith('DL'):
             print('Deleting Server ' + server['name'])
-            srv.delete_server(server)
+            srv.delete_server(server, force=force)
 
-def del_server_by_name(srv, name):
+def del_server_by_name(srv, name, force):
     servers = srv.get_servers()
     for server in servers:
         if server['name'] == name:
             print('Deleting Server ' + server['name'])
-            srv.delete_server(server)
+            srv.delete_server(server, force=force)
 
 
 def main():
@@ -82,6 +82,10 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
+    parser.add_argument('-f', dest='force', action='store_true',
+                        required=False,
+                        help='''
+    Force server deletion''')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-d', dest='delete_all', action='store_true',
                         help='''
@@ -105,10 +109,10 @@ def main():
     acceptEULA(con)
 
     if args.delete_all:
-        del_all_servers(srv)
+        del_all_servers(srv, args.force)
         sys.exit()
 
-    del_server_by_name(srv, args.name)
+    del_server_by_name(srv, args.name, args.force)
 
 if __name__ == '__main__':
     import sys
