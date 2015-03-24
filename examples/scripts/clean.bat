@@ -9,66 +9,66 @@ rem OneView Appliance password
 set PASS=PASSWORD
 
 echo ================================================================
-echo "                     Removing Profiles                        "
+echo                       Removing Profiles
 echo ================================================================
 python del-profile.py -a %HOST% -u %USER% -p %PASS% -d -f
 
-echo
+echo.
 echo ================================================================
-echo "                     Removing Volumes                         "
+echo                       Removing Volumes
 echo ================================================================
 python del-volume.py -a %HOST% -u %USER% -p %PASS% -d
 
-echo
+echo.
 echo ================================================================
-echo "                  Removing Volume Templates                   "
+echo                    Removing Volume Templates
 echo ================================================================
 python del-volume-template.py -a %HOST% -u %USER% -p %PASS% -d
 
-echo
+echo.
 echo ================================================================
-echo "                  Removing Storage Pools                      "
+echo                    Removing Storage Pools
 echo ================================================================
 python del-storage-pool.py -a %HOST% -u %USER% -p %PASS% -d
 
-echo
+echo.
 echo ================================================================
-echo "                  Removing Storage Systems                    "
+echo                    Removing Storage Systems
 echo ================================================================
 python del-storage-system.py -a %HOST% -u %USER% -p %PASS% -d
 
-echo
+echo.
 echo ================================================================
-echo "                     Removing Enclosure                       "
+echo                       Removing Enclosure
 echo ================================================================
 python del-enclosure.py -a %HOST% -u %USER% -p %PASS% -d
 
-echo
+echo.
 echo ================================================================
-echo "                  Removing Standalone Servers                 "
+echo                    Removing Standalone Servers
 echo ================================================================
 python del-server.py -a %HOST% -u %USER% -p %PASS% -d
 
-echo
+echo.
 echo ================================================================
-echo "                  Removing Enclosure Groups                   "
+echo                    Removing Enclosure Groups
 echo ================================================================
 python del-enclosure-group.py -a %HOST% -u %USER% -p %PASS% -d
 
-echo
+echo.
 echo ================================================================
-echo "              Removing Logical Interconnect Groups            "
+echo                Removing Logical Interconnect Groups
 echo ================================================================
 python del-logical-interconnect-groups.py -a %HOST% -u %USER% -p %PASS% -d
 
-echo
+echo.
 echo ================================================================
-echo "                     Removing Network Sets                    "
+echo                       Removing Network Sets
 echo ================================================================
 python del-network-set.py -a %HOST% -u %USER% -p %PASS% -d
 
-echo
+echo.
 echo ================================================================
-echo "                     Removing Networks                        "
+echo                       Removing Networks
 echo ================================================================
 python del-network.py -a %HOST% -u %USER% -p %PASS% -d
