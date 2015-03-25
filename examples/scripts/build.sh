@@ -27,7 +27,7 @@ SRV_PASS=${SRV_PASS:=PASSWORD}
 
 # Securly create a temporary directory and temporary connection listfile
 OV_TMP=${TMPDIR-/tmp}
-OV_TMP=$OV_TMP/con.$RANDOM.$RANDOM.$RANDOM.$$
+OV_TMP=$OV_TMP/hpOneView_temporary_files.$RANDOM.$RANDOM.$RANDOM.$$
 (umask 077 && mkdir $OV_TMP) || {
 	echo "Could not create temporary directory! Exiting." 1>&2
 	exit 1
@@ -127,3 +127,8 @@ echo ================================================================
 echo "                     Defining profiles                        "
 echo ================================================================
 ./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay4" -s "Encl1, bay 4" -cl $CONN_LIST
+
+# Clean up temporary files
+if [ -d $OV_TMP ]; then
+  rm -Rf $OV_TMP
+fi
