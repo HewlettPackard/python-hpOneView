@@ -55,23 +55,35 @@ def shutdown(sts, mode):
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=False,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Shutdown or Reboot the HP OneView Appliance
+
+    Usage: ''')
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=False,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+                        help='''
+    Proxy (host:port format''')
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-b', dest='reboot', action='store_true',
-                       help='Shutdown and reboot the appliance')
+    group.add_argument('-r', dest='reboot', action='store_true',
+                       help='''
+    Shutdown and restart/reboot the appliance''')
     group.add_argument('-s', dest='halt', action='store_true',
-                       help='Shutdown and hatl the appliance')
+                       help='''
+    Shutdown and halt the appliance''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
