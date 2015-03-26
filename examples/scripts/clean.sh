@@ -69,3 +69,9 @@ echo ================================================================
 echo "                    Removing Networks                         "
 echo ================================================================
 ./del-network.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
+
+echo
+echo ================================================================
+echo "                Removing Power Devices                        "
+echo ================================================================
+./del-powerdevices.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d

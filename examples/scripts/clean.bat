@@ -72,3 +72,9 @@ echo ================================================================
 echo                       Removing Networks
 echo ================================================================
 python del-network.py -a %HOST% -u %USER% -p %PASS% -d
+
+echo.
+echo ================================================================
+echo                    Removing Power Devices
+echo ================================================================
+python del-powerdevices.py -a %HOST% -u %USER% -p %PASS% -d
