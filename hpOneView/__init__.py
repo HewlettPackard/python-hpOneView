@@ -50,6 +50,7 @@ from hpOneView.exceptions import *
 from hpOneView.search import *
 from hpOneView.storage import *
 from hpOneView.fcsans import *
+from hpOneView.facilities import *
 from hpOneView.uncategorized import *
 
 

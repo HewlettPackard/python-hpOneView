@@ -80,8 +80,12 @@ uri = {
     'role-category-actions': '/rest/authz/role-category-actions',
     'validator': '/rest/authz/validator',
     #------------------------------------
-    # Environment
+    # Facilities
     #------------------------------------
+    'datacenters': '/rest/datacenters',
+    'powerDevices': '/rest/power-devices',
+    'powerDevicesDiscover': '/rest/power-devices/discover',
+    'racks': '/rest/racks',
     #------------------------------------
     # Systems
     #------------------------------------
@@ -769,6 +773,49 @@ def make_server_dict(hostname,
         'password': password,
         'force': force,
         'licensingIntent': licensingIntent}
+
+
+def make_rack_dict(name, sn, thermal, height, depth, width, uheight):
+    return {
+        'name': name,
+        'serialNumber': sn,
+        'thermalLimit': thermal,
+        'height': height,
+        'depth': depth,
+        'width': width,
+        'uHeight': uheight}
+
+
+def make_datacenter_dict(name, coolingCapacity, coolingMultiplier, currency,
+                         costPerKilowattHour, defaultPowerLineVoltage,
+                         width, depth, deratingType, deratingPercentage):
+    return {
+        'name': name,
+        'coolingCapacity': coolingCapacity,
+        'coolingMultiplier': coolingMultiplier,
+        'currency': currency,
+        'costPerKilowattHour': costPerKilowattHour,
+        'defaultPowerLineVoltage': defaultPowerLineVoltage,
+        'depth': depth,
+        'width': width,
+        'deratingType': deratingType,
+        'deratingPercentage': deratingPercentage,
+        'contents': []}
+
+
+def make_powerdevice_dict(name, deviceType, feedIdentifier, lineVoltage,
+                           model, partNumber, phaseType, ratedCapacity,
+                           serialNumber):
+    return {
+        'name': name,
+        'deviceType': deviceType,
+        'feedIdentifier': feedIdentifier,
+        'lineVoltage': lineVoltage,
+        'model': model,
+        'partNumber': partNumber,
+        'phaseType': phaseType,
+        'ratedCapacity': ratedCapacity,
+        'serialNumber': serialNumber}
 
 
 def make_alertMap_dict(notes, etag, state='Active', user='None',
