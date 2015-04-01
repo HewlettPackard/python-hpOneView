@@ -64,7 +64,7 @@ def main():
                         help='HP OneView Appliance hostname or IP')
     parser.add_argument('-u', '--user', dest='user', required=False,
                         default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=False,
+    parser.add_argument('-p', '--pass', dest='passwd', required=True,
                         help='HP OneView Password')
     parser.add_argument('-c', '--certificate', dest='cert', required=False,
                         help='Trusted SSL Certificate Bundle in PEM '

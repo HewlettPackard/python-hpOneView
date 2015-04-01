@@ -85,7 +85,7 @@ def main():
                         default='Administrator',
                         help='''
                         HP OneView Username''')
-    parser.add_argument('-p', dest='passwd', required=False,
+    parser.add_argument('-p', dest='passwd', required=True,
                         help='''
                         HP OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
