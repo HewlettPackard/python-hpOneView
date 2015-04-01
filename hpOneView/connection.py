@@ -284,15 +284,18 @@ class connection(object):
             return task, body
         return None, body
 
-    def get_entities_byrange(self, uri, field, xmin, xmax):
+
+    def get_entities_byrange(self, uri, field, xmin, xmax, count=-1):
         new_uri = uri + '?filter="\'' + field + '\'%20>%20\'' + xmin \
             + '\'"&filter="\'' + field + '\'%20<%20\'' + xmax \
-            + '\'"&start=0&count=-1'
+            + '\'"&start=0&count=' + str(count)
         body = self.get(new_uri)
         return get_members(body)
 
-    def get_entities_byfield(self, uri, field, value):
-        new_uri = uri + '?filter="' + field + '%20EQ%20\'' + value + '\'"'
+
+    def get_entities_byfield(self, uri, field, value, count=-1):
+        new_uri = uri + '?start=0&count=' + str(count) \
+            + '&filter=' + field + '=\'' + value + '\''
         try:
             body = self.get(new_uri)
         except:
@@ -300,10 +303,16 @@ class connection(object):
             raise
         return get_members(body)
 
-    def get_entity_byfield(self, uri, field, value):
+
+    def get_entity_byfield(self, uri, field, value, count=-1):
         new_uri = uri + '?filter="\'' + field + '\'%20=%20\'' + value \
-            + '\'"&start=0&count=-1'
-        body = self.get(new_uri)
+            + '\'"&start=0&count=' + str(count)
+
+        try:
+            body = self.get(new_uri)
+        except:
+            print(new_uri)
+            raise
         return get_member(body)
 
     def conditional_post(self, uri, body):

@@ -164,11 +164,15 @@ class activity(object):
     def get_alerts(self, AlertState='All'):
         global uri
         if AlertState == 'All':
-            return get_members(self._con.get(uri['alerts']))
+        # TODO remove the evil use/hack of the large count default. The OneView
+        # API documents that count=-1 should return everything but it is not
+        # universally honored, where the extremely large count number is.
+            return get_members(self._con.get(uri['alerts'] +
+                                             '?start=0&count=9999999'))
         else:
             return(self._con.get_entities_byfield(uri['alerts'],
                                                   'alertState',
-                                                  AlertState))
+                                                  AlertState, count=9999999))
 
     def delete_alert(self, alert):
         self._con.delete(alert['uri'])

@@ -21,8 +21,9 @@
 # THE SOFTWARE.
 ###
 import sys
+import re
 if sys.version_info < (3, 4):
-    raise Exception("Must use Python 3.4 or later")
+    raise Exception('Must use Python 3.4 or later')
 
 import hpOneView as hpov
 from pprint import pprint
@@ -33,7 +34,7 @@ def acceptEULA(con):
     con.get_eula_status()
     try:
         if con.get_eula_status() is True:
-            print("EULA display needed")
+            print('EULA display needed')
             con.set_eula('no')
     except Exception as e:
         print('EXCEPTION:')
@@ -48,21 +49,20 @@ def login(con, credential):
         print('Login failed')
 
 
-def get_alerts(act, status):
-    if status:
-        alerts = act.get_alerts(status)
-        for alert in alerts:
-            pprint(alert)
-    else:
-        alerts = act.get_alerts()
-        pprint(alerts)
+def clear_all_alerts(act):
+    alerts = act.get_alerts('Active')
+    for alert in alerts:
+        print('Clearing alert: ', alert['description'])
+        alertMap = hpov.common.make_alertMap_dict('', alert['eTag'],
+                                                  state='Cleared')
+        act.update_alert(alert, alertMap)
 
 
 def main():
     parser = argparse.ArgumentParser(add_help=True,
                         formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
-    Get All Alerts
+    Display the datacenter resources
 
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
@@ -72,7 +72,7 @@ def main():
                         default='Administrator',
                         help='''
     HP OneView Username''')
-    parser.add_argument('-p', dest='passwd', required=True,
+    parser.add_argument('-p', dest='passwd', required=False,
                         help='''
     HP OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
@@ -81,16 +81,12 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
-    parser.add_argument('-s', dest='status', required=False,
-                        choices=['Active', 'Cleared'],
-                        help='''
-    alertStatus filter either Active or Cleared''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
-    act = hpov.activity(con)
+    act= hpov.activity(con)
 
     if args.proxy:
         con.set_proxy(args.proxy.split(':')[0], args.proxy.split(':')[1])
@@ -100,8 +96,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    get_alerts(act, args.status)
-
+    clear_all_alerts(act)
 
 if __name__ == '__main__':
     import sys
