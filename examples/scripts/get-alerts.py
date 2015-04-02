@@ -48,21 +48,32 @@ def login(con, credential):
         print('Login failed')
 
 
-def get_alerts(act, status):
+def get_alerts(act, status, severity, category):
     if status:
         alerts = act.get_alerts(status)
-        for alert in alerts:
-            pprint(alert)
     else:
         alerts = act.get_alerts()
-        pprint(alerts)
+
+    for alert in alerts:
+        if not severity and not category:
+                pprint(alert)
+        elif not severity and category:
+            if alert['healthCategory'] == category:
+                pprint(alert)
+        elif not category and severity:
+            if alert['severity'] == severity:
+                pprint(alert)
+        elif category and severity:
+            if alert['healthCategory'] == category and \
+               alert['severity'] == severity:
+                pprint(alert)
 
 
 def main():
     parser = argparse.ArgumentParser(add_help=True,
                         formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
-    Get All Alerts
+    Display alerts
 
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
@@ -84,7 +95,26 @@ def main():
     parser.add_argument('-s', dest='status', required=False,
                         choices=['Active', 'Cleared'],
                         help='''
-    alertStatus filter either Active or Cleared''')
+    Alerts with given alert state will be returned.  State values include
+    Active and Cleared''')
+    parser.add_argument('-v', dest='severity', required=False,
+                        choices=['Unknown', 'OK', 'Disabled', 'Warning',
+                                 'Critical'],
+                        help='''
+    Alerts with given severity will be returned.''')
+    parser.add_argument('-t', dest='category', required=False,
+                        choices=['Appliance', 'ConnectionInstance',
+                                 'DeviceBay', 'Enclosure', 'Fan',
+                                 'fc-device-managers', 'Firmware', 'Host',
+                                 'Instance', 'interconnect', 'InterconnectBay',
+                                 'licenses', 'logical-interconnect',
+                                 'LogicalSwitch', 'Logs',
+                                 'ManagementProcessor', 'Memory', 'Network',
+                                 'None', 'Operational', 'Power', 'Processor',
+                                 'RemoteSupport', 'Storage', 'Thermal',
+                                 'Unknown'],
+                        help='''
+    Alerts with given health category will be returned.''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -100,7 +130,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    get_alerts(act, args.status)
+    get_alerts(act, args.status, args.severity, args.category)
 
 
 if __name__ == '__main__':
