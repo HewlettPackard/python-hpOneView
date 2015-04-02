@@ -59,7 +59,8 @@ def main():
     parser = argparse.ArgumentParser(add_help=True,
                         formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
-    Display the collection of enclosure hardware resources.
+    Obtain a collection of Enclosure Group resources, or a single Enclosure
+    Group with the specified name.
 
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
