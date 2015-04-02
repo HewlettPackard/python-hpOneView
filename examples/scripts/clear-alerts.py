@@ -62,7 +62,7 @@ def main():
     parser = argparse.ArgumentParser(add_help=True,
                         formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
-    Display the datacenter resources
+    Clear all Active alerts
 
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
