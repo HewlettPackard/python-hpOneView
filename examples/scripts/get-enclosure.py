@@ -48,7 +48,7 @@ def login(con, credential):
         print('Login failed')
 
 
-def get_enclosures(srv, net, name, report):
+def get_enclosures(con, srv, net, name, report):
     enclosures = srv.get_enclosures()
     for enc in enclosures:
         if name is None or name == enc['name']:
@@ -79,22 +79,29 @@ def get_enclosures(srv, net, name, report):
                       '-----------', '----------', '-----------',
                       '-----------', '----------------------', '-------',
                       '----------'))
-                servers = srv.get_servers()
-                for ser in servers:
-                    print('{0:15} {1:13} {2:15} {3:20} {4:25} {5:20} {6:10}'.format(
-                          ser['name'], ser['serialNumber'],
-                          ser['shortModel'], ser['romVersion'],
-                          ser['mpFirmwareVersion'], ser['state'],
-                          ser['licensingIntent']))
+                for dev in enc['deviceBays']:
+                    if 'devicePresence' in dev and \
+                        dev['devicePresence'] == 'present' and \
+                        'deviceUri' in dev:
+                        ser = con.get(dev['deviceUri'])
+                        print('{0:15} {1:13} {2:15} {3:20} {4:25} {5:20} {6:10}'.format(
+                            ser['name'], ser['serialNumber'],
+                            ser['shortModel'], ser['romVersion'],
+                            ser['mpFirmwareVersion'], ser['state'],
+                            ser['licensingIntent']))
                 print('\n\n')
                 print('\n{0:25} {1:45} {2:15} {3:15}'.format('Interconnect Name',
                       'Module', 'Serial Number', 'FW Version'))
                 print('{0:25} {1:45} {2:15} {3:15}\n'.format('-----------------',
                       '------', '-------------', '----------'))
-                interconnects = net.get_interconnects()
-                for ic in interconnects:
-                    print('{0:25} {1:45} {2:15} {3:15}'.format(ic['name'],
-                          ic['model'], ic['serialNumber'], ic['firmwareVersion']))
+                for ics in enc['interconnectBays']:
+                    if 'interconnectUri' in ics and \
+                            ics['interconnectUri'] is not None:
+                        ic = con.get(ics['interconnectUri'])
+                        print('{0:25} {1:45} {2:15} {3:15}'.format(ic['name'],
+                                                                   ic['model'],
+                                                                   ic['serialNumber'],
+                                                                   ic['firmwareVersion']))
                 print('')
             else:
                 pprint(enc)
@@ -150,7 +157,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    get_enclosures(srv, net, args.name, args.report)
+    get_enclosures(con, srv, net, args.name, args.report)
 
 if __name__ == '__main__':
     import sys
