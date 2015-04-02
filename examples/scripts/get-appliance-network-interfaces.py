@@ -54,8 +54,13 @@ def get_network_interfaces(sts):
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage',
-                        formatter_class=argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Retrieves the configuration parameters of the primary network interface
+    on the appliance
+
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
     HP OneView Appliance hostname or IP address''')
