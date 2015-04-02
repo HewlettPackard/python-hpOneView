@@ -99,8 +99,15 @@ def import_enclosure(srv, sts, eg, ip, usr, pas, lic, baseline, force, forcefw):
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage',
-                                     formatter_class=argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(add_help=True,
+                                     formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    This example script will import an enclosure into HP OneView as a
+    managed device.  The Onboard Administrator needs to have IP Address
+    configured for each module, and a valid Administrator account with a
+    password.
+
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
     HP OneView Appliance hostname or IP address''')
@@ -144,7 +151,8 @@ def main():
 
         - OneView
         - OneViewNoiLO ''')
-    parser.add_argument('-f', dest='force', action='store_true', required=False,
+    parser.add_argument('-f', dest='force', action='store_true',
+                        required=False,
                         help='''
     When attempting to add an Enclosure to the appliance, the appliance will
     validate the target Enclosure is not already claimed.  If it is, this
@@ -170,8 +178,9 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    import_enclosure(srv, sts, args.egroup, args.enc, args.encusr, args.encpass,
-           args.license, args.spp, args.force, args.forcefw)
+    import_enclosure(srv, sts, args.egroup, args.enc, args.encusr,
+                     args.encpass, args.license, args.spp, args.force,
+                     args.forcefw)
 
 if __name__ == '__main__':
     import sys
