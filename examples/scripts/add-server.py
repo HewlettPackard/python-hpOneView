@@ -71,7 +71,11 @@ def main():
     parser = argparse.ArgumentParser(add_help=True,
                         formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
-    Add new server
+    Import a physical stand-alone rackmount server.
+
+    This exmaple script IS NOT USED to add a Blade Server to the appliance.
+    A BL server will automatically be discovered once it inserted into an
+    enclosure being managed by the appliance.
 
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
@@ -114,7 +118,8 @@ def main():
     parser.add_argument('-f', dest='force',
                         action='store_true',
                         help='''
-    Force adding the server''')
+    Force adding the server when currently managed by another OneView
+    appliance.''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
