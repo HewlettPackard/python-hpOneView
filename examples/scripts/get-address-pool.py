@@ -48,35 +48,77 @@ def login(con, credential):
         print('Login failed')
 
 
-def getidpools(srv):
-    ret = srv.get_pool('vmac')
-    print()
-    for key in sorted(ret):
-        print('{0:16} : {1:}'.format(key, ret[key]))
-    ret = srv.get_pool('vwwn')
-    print()
-    for key in sorted(ret):
-        print('{0:16} : {1:}'.format(key, ret[key]))
-    ret = srv.get_pool('vsn')
-    print()
-    for key in sorted(ret):
-        print('{0:16} : {1:}'.format(key, ret[key]))
-    print()
+def get_address_pools(con, srv, types):
+    if types == 'ALL' or types == 'VMAC':
+        vmac = srv.get_vmac_pool()
+        print()
+        for key in sorted(vmac):
+            print('{0:16} : {1:}'.format(key, vmac[key]))
+        if 'rangeUris' in vmac:
+            for uri in vmac['rangeUris']:
+                ranges = con.get(uri)
+                print('startAddress     :', ranges['startAddress'])
+                print('endAddress       :', ranges['endAddress'])
+                print('totalCount       :', ranges['totalCount'])
+    if types == 'ALL' or types == 'VWWN':
+        vwwn = srv.get_vwwn_pool()
+        print()
+        for key in sorted(vwwn):
+            print('{0:16} : {1:}'.format(key, vwwn[key]))
+        if 'rangeUris' in vwwn:
+            for uri in vwwn['rangeUris']:
+                ranges = con.get(uri)
+                print('startAddress     :', ranges['startAddress'])
+                print('endAddress       :', ranges['endAddress'])
+                print('totalCount       :', ranges['totalCount'])
+    if types == 'ALL' or types == 'VSN':
+        vsn = srv.get_vsn_pool()
+        print()
+        for key in sorted(vsn):
+            print('{0:16} : {1:}'.format(key, vsn[key]))
+        if 'rangeUris' in vsn:
+            for uri in vsn['rangeUris']:
+                ranges = con.get(uri)
+                print('startAddress     :', ranges['startAddress'])
+                print('endAddress       :', ranges['endAddress'])
+                print('totalCount       :', ranges['totalCount'])
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=True,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Display the avilable and configured Address Pools, and their associated
+    Ranges from the appliance.  Currently, the appliance supports the
+    following Address Pools:
+
+        - VMAC
+        - VWWN
+        - VSN
+
+    You can specify one or all of the Pool types.
+
+    Usage: ''')
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=True,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+                        help='''
+    Proxy (host:port format''')
+    parser.add_argument('-t', dest='types', required=False,
+                        choices=['VMAC', 'VWWN', 'VSN', 'ALL'], default='ALL',
+                        help='''
+    Address Pool type.  Accepted values are VMAC, VWWN, VSN, or All''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -92,7 +134,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    getidpools(srv)
+    get_address_pools(con, srv, args.types)
 
 
 if __name__ == '__main__':
