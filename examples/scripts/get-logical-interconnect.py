@@ -49,25 +49,70 @@ def login(con, credential):
         print('Login failed')
 
 
-def getlis(net):
+def get_logical_interconnects(con, net, report):
     lis = net.get_lis()
     for li in lis:
-        pprint(li)
+        if report:
+            if 'logicalInterconnectGroupUri' in li and \
+                    li['logicalInterconnectGroupUri'] is not None:
+                lig = con.get(li['logicalInterconnectGroupUri'])
+            else:
+                lig = ''
+            print('\n{0:12}    {1:6}    {2:15}   {3:25}   {4:12}'.format(
+                'Name', 'Status', 'Stacking Health', 'LIG',
+                'Consistency State'))
+            print('{0:12}    {1:6}    {2:15}   {3:25}   {4:12}'.format(
+                '----', '------', '---------------', '---',
+                '-----------------'))
+            print('{0:12}    {1:6}    {2:15}   {3:25}   {4:12}'.format(li['name'],
+                                                                         li['status'],
+                                                                         li['stackingHealth'],
+                                                                         lig['name'],
+                                                                         li['consistencyStatus']))
+            print('\n\n{0:20}   {1:33}   {2:13}   {3:16}'.format(
+                'Interconnect Name', 'Module', 'Serial Number',
+                'FW Version'))
+            print('{0:20}   {1:33}   {2:13}   {3:16}'.format(
+                '-----------------', '------', '-------------',
+                '----------'))
+            for ics in li['interconnects']:
+                ic = con.get(ics)
+                print('{0:20}  {1:33}   {2:13}   {3:16}'.format(
+                    ic['name'], ic['model'], ic['serialNumber'],
+                    ic['firmwareVersion']))
+
+        else:
+            pprint(li)
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=True,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+
+    Retrieves a list of all Logical Interconnects
+
+    Usage: ''')
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=True,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+                        help='''
+    Proxy (host:port format''')
+    parser.add_argument('-r', dest='report',
+                        required=False, action='store_true',
+                        help='''
+    Format the output using a human readable report format''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -83,7 +128,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    getlis(net)
+    get_logical_interconnects(con, net, args.report)
 
 if __name__ == '__main__':
     import sys
