@@ -26,6 +26,7 @@ if sys.version_info < (3, 4):
 
 import hpOneView as hpov
 from pprint import pprint
+from datetime import timedelta, datetime
 
 
 def acceptEULA(con):
@@ -48,24 +49,83 @@ def login(con, credential):
         print('Login failed')
 
 
-def getlic(sts):
+def get_license_info(con, sts, report):
+    rfc3339_fmt = '%Y-%m-%dT%H:%M:%S.%fZ'
     licenses = sts.get_licenses()
-    pprint(licenses)
+    for lic in licenses:
+        if report:
+            print('\n{0:12}    {1:9}     {2:5}'.format(
+                'License Name', 'Available', 'Total'))
+            print('{0:12}    {1:9}     {2:5}'.format(
+                '------------', '---------', '-----'))
+            print('{0:12}    {1:9}     {2:5}'.format(lic['product'],
+                                                     lic['availableCapacity'],
+                                                     lic['totalCapacity']))
+            print()
+            if lic['licenseType'] == 'Evaluation' or \
+                    lic['licenseType'] == 'Unlicensed':
+                print('\n{0:25}    {1:12}     {2:12}   {3:10}'.format(
+                    'Device', 'License Type', 'Applied Date',
+                    'Experation Date'))
+                print('\n{0:25}    {1:12}     {2:12}   {3:10}'.format(
+                    '------', '------------', '------------',
+                    '---------------'))
+            else:
+                print('\n{0:25}    {1:12}     {2:12}'.format(
+                    'Device', 'License Type', 'Applied Date',
+                    'Experation Date'))
+                print('\n{0:25}    {1:12}     {2:12}'.format(
+                    '------', '------------', '------------'))
+            for node in lic['nodes']:
+                dt = datetime.strptime(node['appliedDate'], rfc3339_fmt)
+                if lic['licenseType'] == 'Evaluation' or \
+                        lic['licenseType'] == 'Unlicensed':
+                    lic_exp = dt + timedelta(days=60)
+                    print('{0:25}    {1:12}     {2:12}   {3:10}'.format(node['nodeName'],
+                                                                        lic['licenseType'],
+                                                                        dt.strftime('%m/%d/%Y'),
+                                                                        lic_exp.strftime('%m/%d/%Y')
+                                                                        ))
+                else:
+                    print('{0:25}    {1:12}     {2:12}'.format(node['nodeName'],
+                                                               lic['licenseType'],
+                                                               dt.strftime('%m/%d/%Y')
+                                                               ))
+            print()
+        else:
+            pprint(lic)
+
+
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=True,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+    parser = argparse.ArgumentParser(add_help=True,
+                                     formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Retrieve licenses installed on the appliance. You can use this to get an
+    inventory of what's installed and what licenses are consumed.
+
+                                     Usage: ''')
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=True,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+                        help='''
+    Proxy (host:port format''')
+    parser.add_argument('-r', dest='report',
+                        required=False, action='store_true',
+                        help='''
+    Format the output using a human readable report format''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -75,13 +135,13 @@ def main():
 
     if args.proxy:
         con.set_proxy(args.proxy.split(':')[0], args.proxy.split(':')[1])
-    if args.cert:
-        con.set_trusted_ssl_bundle(args.cert)
+        if args.cert:
+            con.set_trusted_ssl_bundle(args.cert)
 
     login(con, credential)
     acceptEULA(con)
 
-    getlic(sts)
+    get_license_info(con, sts, args.report)
 
 if __name__ == '__main__':
     import sys
