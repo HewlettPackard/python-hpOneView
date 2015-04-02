@@ -73,7 +73,9 @@ def main():
     parser = argparse.ArgumentParser(add_help=True,
                         formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
-    Add/Create a new storage pool resource
+    Add new Storage Pools (i.e. HP 3PAR Common Provisioning Group [CPG]) for
+    volumes to be provisioned from.  The Storage System must be imported
+    prior to adding Storage Pools.
 
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
