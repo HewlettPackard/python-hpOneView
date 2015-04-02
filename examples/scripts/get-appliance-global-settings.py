@@ -73,8 +73,12 @@ def get_global_settings(sts, name):
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage',
-                        formatter_class=argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Displays the list of global settings or a specific global setting
+
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
     HP OneView Appliance hostname or IP address''')
@@ -100,8 +104,6 @@ def main():
     credential = {'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
-    srv = hpov.servers(con)
-    net = hpov.networking(con)
     sts = hpov.settings(con)
 
     if args.proxy:
