@@ -56,11 +56,10 @@ def add_storage_system(sto, ip, usr, pas, domain, import_pools):
     print('Adding Storage System: ', retdict['ip_hostname'])
     found = False
     systems = sto.get_storage_systems()
-    uri = ''
     conSys = None
-    for sys in systems:
-        if sys['credentials']['ip_hostname'] == ip:
-            conSys = sys
+    for system in systems:
+        if system['credentials']['ip_hostname'] == ip:
+            conSys = system
 
     if not conSys:
         print('Unable to locale a connected system')
@@ -116,7 +115,13 @@ def main():
     parser = argparse.ArgumentParser(add_help=True,
                         formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
-    Add/Create a new storage pool resource
+    Import a supported Storage System. In order for the Storage Ports to be
+    mapped to Expected Networks, either a Supported SAN Manager will need to
+    be configured, or 3PAR Direct Attach networks will have to exist.
+
+    When adding supported HP 3PAR storage systems, please make sure
+    "startwsapi" has been executed from the HP 3PAR CLI, which enables the
+    HP 3PAR REST API that is required by HP OneView.
 
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
