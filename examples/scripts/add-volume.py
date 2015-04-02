@@ -49,7 +49,7 @@ def login(con, credential):
 
 
 def add_volume(sto, name, pool_name, size, shareable=False,
-               description='Example Volume', provisionType='Thin'):
+               description, provisionType):
     pools = sto.get_storage_pools()
     for pool in pools['members']:
         if pool['name'] == pool_name:
@@ -76,8 +76,12 @@ def add_volume(sto, name, pool_name, size, shareable=False,
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage',
-                        formatter_class=argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Provision a new storage volume from the managed Storage System.
+
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
     HP OneView Appliance hostname or IP address''')
