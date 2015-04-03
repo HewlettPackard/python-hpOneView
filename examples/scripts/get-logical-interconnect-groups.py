@@ -49,7 +49,7 @@ def login(con, credential):
         print('Login failed')
 
 
-def getlig(net, name):
+def get_lig(net, name):
     ligs = net.get_ligs()
     for lig in ligs:
         if name:
@@ -59,22 +59,32 @@ def getlig(net, name):
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=True,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Retrieves a list of Logical Interconnect Groups
+
+    Usage: ''')
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=True,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+                        help='''
+    Proxy (host:port format''')
     parser.add_argument('-n', dest='name', required=False,
                         action='store_true',
-                        help='Output only the names of the Logical '
-                        'Interconnect Groups')
+                        help='''
+    Output only the names of the Logical Interconnect Groups''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -90,7 +100,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    getlig(net, args.name)
+    get_lig(net, args.name)
 
 if __name__ == '__main__':
     import sys
