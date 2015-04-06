@@ -127,7 +127,7 @@ echo ================================================================
 echo "                     Defining profiles                        "
 echo ================================================================
 ./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay4" -s "Encl1, bay 4" -cl $CONN_LIST
-
+./define-connectionless-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Standalone-1" -si $SRV_ADDR -s bp-hp-service-pack-for-proliant-oneview-2014-11-30-05.iso
 # Clean up temporary files
 if [ -d $OV_TMP ]; then
   rm -Rf $OV_TMP

@@ -596,7 +596,12 @@ def make_connectionless_profile_dict(profileName, server, firmwareBaseline=None)
         'name': profileName,
         'serverHardwareUri': server['uri'],
         'serverHardwareTypeUri': server['serverHardwareTypeUri'],
-        'firmware': firmwareBaseline}
+        'firmware': firmwareBaseline,
+        'bios': {'manageBios': False},
+        'boot': {'manageBoot': False},
+        'macType': 'Physical',
+        'wwnType': 'Physical',
+        'serialNumberType': 'Physical'}
 
 
 def make_profile_firmware_baseline(firmwareUri, manageFirmware=True,
