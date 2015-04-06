@@ -590,7 +590,7 @@ def make_profile_dict(profileName, server, firmwareBaseline=None,
         'firmware': firmwareBaseline,
         'connections': connections}
 
-def make_conectionless_profile_dict(profileName, server, firmwareBaseline=None):
+def make_connectionless_profile_dict(profileName, server, firmwareBaseline=None):
     return {
         'type': 'ServerProfileV3',
         'name': profileName,

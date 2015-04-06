@@ -87,11 +87,11 @@ def define_profile(srv, sts, profileName, serverHWName, serverIP,
         sys.exit(1)
 
     if not uri:
-        profileDict = hpov.common.make_conectionless_profile_dict(profileName,
+        profileDict = hpov.common.make_connectionless_profile_dict(profileName,
                                                     ser)
     else:
         fwBaseline = hpov.common.make_profile_firmware_baseline(uri)
-        profileDict = hpov.common.make_conectionless_profile_dict(profileName,
+        profileDict = hpov.common.make_connectionless_profile_dict(profileName,
                                                     ser, fwBaseline)
 
     profile = srv.create_server_profile(profileDict)
