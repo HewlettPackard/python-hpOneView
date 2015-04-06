@@ -63,17 +63,16 @@ def del_all_profiles(srv, force):
         pprint(ret)
 
 
-def del_profile_by_name(srv, name, force):
-    srvrs = srv.get_servers()
-    for server in srvrs:
-        if server['powerState'] == 'On':
-            print(('Powering Off Server:  %s' % server['name']))
-            ret = srv.set_server_powerstate(server, 'Off', force=True)
-            pprint(ret)
+def del_profile_by_name(con, srv, name, force):
 
     profiles = srv.get_server_profiles()
     for profile in profiles:
         if profile['name'] == name:
+            server = con.get(profile['serverHardwareUri'])
+            if server['powerState'] == 'On':
+                print(('Powering Off Server:  %s' % server['name']))
+                ret = srv.set_server_powerstate(server, 'Off', force=True)
+                pprint(ret)
             print(('Removing Profile %s' % profile['name']))
             ret = srv.remove_server_profile(profile, force)
             pprint(ret)
@@ -82,8 +81,12 @@ def del_profile_by_name(srv, name, force):
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage',
-                        formatter_class=argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Delete server profile
+
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
     HP OneView Appliance hostname or IP address''')
@@ -111,15 +114,13 @@ def main():
     group.add_argument('-d', dest='delete_all',
                        action='store_true',
                        help='''
-                       Remove ALL server profiles and exit''')
+    Remove ALL server profiles and exit''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
     srv = hpov.servers(con)
-    net = hpov.networking(con)
-    sts = hpov.settings(con)
 
     if args.proxy:
         con.set_proxy(args.proxy.split(':')[0], args.proxy.split(':')[1])
@@ -133,7 +134,7 @@ def main():
         del_all_profiles(srv, args.force)
         sys.exit()
 
-    del_profile_by_name(srv, args.name, args.force)
+    del_profile_by_name(con, srv, args.name, args.force)
 
 if __name__ == '__main__':
     import sys
