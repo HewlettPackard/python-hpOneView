@@ -24,6 +24,8 @@ SRV_ADDR=${SRV_ADDR:=172.18.6.15}
 SRV_USR=${SRV_USR:=Administrator}
 # Enclosure OA password
 SRV_PASS=${SRV_PASS:=PASSWORD}
+# Firmware Baseline
+FW_BASE=${FW_BASE:=bp-hp-service-pack-for-proliant-oneview-2014-11-30-05.iso}
 
 # Securly create a temporary directory and temporary connection listfile
 OV_TMP=${TMPDIR-/tmp}
@@ -127,7 +129,7 @@ echo ================================================================
 echo "                     Defining profiles                        "
 echo ================================================================
 ./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay4" -s "Encl1, bay 4" -cl $CONN_LIST
-./define-connectionless-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Standalone-1" -si $SRV_ADDR -s bp-hp-service-pack-for-proliant-oneview-2014-11-30-05.iso
+./define-connectionless-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-1" -si $SRV_ADDR -s $FW_BASE
 # Clean up temporary files
 if [ -d $OV_TMP ]; then
   rm -Rf $OV_TMP

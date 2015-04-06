@@ -25,6 +25,9 @@ rem Enclosure OA username
 set SRV_USR=Administrator
 rem Enclosure OA password
 set SRV_PASS=PASSWORD
+rem Firmware Baseline
+sed FW_BASE=bp-hp-service-pack-for-proliant-oneview-2014-11-30-05.iso
+
 
 set CONN_LIST=%TMP%\oneview_conn_list-%RANDOM%-%TIME:~6,5%.tmp
 
@@ -113,3 +116,4 @@ echo ================================================================
 echo                       Defining profiles
 echo ================================================================
 python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -s "Encl1, bay 4" -cl %CONN_LIST%
+python define-connectionless-profile.py -a %OV_HOST% -u %OV_USER% -p %OV_PASS% -n "Profile-1" -si %SRV_ADDR% -s %FW_BASE%
