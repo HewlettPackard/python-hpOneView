@@ -49,35 +49,130 @@ def login(con, credential):
         print('Login failed')
 
 
-def getnet(net, name):
+def get_networks(net, ntype, name, report):
 
-    if name:
-        enets = net.get_enet_networks()
-        for enet in enets:
-            if enet['name'] == name:
-                pprint(enet)
+    if report:
+        if name:
+            if not ntype or ntype == 'Ethernet':
+                enets = net.get_enet_networks()
+                print('\nEthernet Networks')
+                print('-----------------')
+                print('\n{0:20}  {1:7}  {2:7}  {3:9}  {4:7}  {5:6}'.format(
+                    'Name', 'VLAN ID', 'Purpose', 'Smartlink', 'Private',
+                    'Status'))
+                print('{0:20}  {1:7}  {2:7}  {3:9}  {4:7}  {5:6}'.format(
+                    '----', '-------', '-------', '---------', '-------',
+                    '------'))
+                for enet in enets:
+                    if enet['name'] == name:
+                        print('{0:20}  {1:7}  {2:7}  {3:9}  {4:7}  {5:6}'.format(
+                            enet['name'], enet['vlanId'], enet['purpose'],
+                            str(enet['smartLink']),
+                            str(enet['privateNetwork']), enet['status']))
+            if not ntype or ntype == 'FC':
+                print('\nFC Networks')
+                print('-----------')
+                print('\n{0:20}  {1:12}  {2:19}  {3:25}  {4:6}'.format(
+                    'Name', 'Fabric Type', 'Link Stability Time',
+                    'Auto Login Redistirbution', 'Status'))
+                print('{0:20}  {1:12}  {2:19}  {3:25}  {4:6}'.format(
+                    '----', '-----------', '-------------------',
+                    '-------------------------', '------'))
+                fnets = net.get_fc_networks()
+                for fnet in fnets:
+                    if fnet['name'] == name:
+                        print('{0:20}  {1:12}  {2:19}  {3:25}  {4:6}'.format(
+                            fnet['name'], fnet['fabricType'],
+                            fnet['linkStabilityTime'],
+                            str(fnet['autoLoginRedistribution']),
+                            fnet['status']))
+        else:
+            if not ntype or ntype == 'Ethernet':
+                print('\nEthernet Networks')
+                print('-----------------')
+                print('\n{0:20}  {1:7}  {2:7}  {3:9}  {4:7}  {5:6}'.format(
+                    'Name', 'VLAN ID', 'Purpose', 'Smartlink', 'Private',
+                    'Status'))
+                print('{0:20}  {1:7}  {2:7}  {3:9}  {4:7}  {5:6}'.format(
+                    '----', '-------', '-------', '---------', '-------',
+                    '------'))
+                enets = net.get_enet_networks()
+                for enet in enets:
+                    print('{0:20}  {1:7}  {2:7}  {3:9}  {4:7}  {5:6}'.format(
+                        enet['name'], enet['vlanId'], enet['purpose'],
+                        str(enet['smartLink']), enet['privateNetwork'],
+                        str(enet['privateNetwork']), enet['status']))
+            if not ntype or ntype == 'FC':
+                fnets = net.get_fc_networks()
+                print('\nFC Networks')
+                print('-----------')
+                print('\n{0:20}  {1:12}  {2:19}  {3:25}  {4:6}'.format(
+                    'Name', 'Fabric Type', 'Link Stability Time',
+                    'Auto Login Redistirbution', 'Status'))
+                print('{0:20}  {1:12}  {2:19}  {3:25}  {4:6}'.format(
+                    '----', '-----------', '-------------------',
+                    '-------------------------', '------'))
+                for fnet in fnets:
+                    print('{0:20}  {1:12}  {2:19}  {3:25}  {4:6}'.format(
+                        fnet['name'], fnet['fabricType'],
+                        fnet['linkStabilityTime'],
+                        str(fnet['autoLoginRedistribution']),
+                        fnet['status']))
     else:
-        enets = net.get_enet_networks()
-        pprint(enets)
-        fc = net.get_fc_networks()
-        pprint(fc)
+        if name:
+            if not ntype or ntype == 'Ethernet':
+                enets = net.get_enet_networks()
+                for enet in enets:
+                    if enet['name'] == name:
+                        pprint(enet)
+            if not ntype or ntype == 'FC':
+                fnets = net.get_fc_networks()
+                for fnet in fnets:
+                    if fnet['name'] == name:
+                        pprint(fnet)
+        else:
+            if not ntype or ntype == 'Ethernet':
+                enets = net.get_enet_networks()
+                pprint(enets)
+            if not ntype or ntype == 'FC':
+                fc = net.get_fc_networks()
+                pprint(fc)
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=True,
-                        help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Display the collection of network resources
+
+    Usage: ''')
+    parser.add_argument('-a', dest='host', required=True,
+                        help='''
+    HP OneView Appliance hostname or IP address''')
+    parser.add_argument('-u', dest='user', required=False,
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
+    parser.add_argument('-p', dest='passwd', required=True,
+                        help='''
+    HP OneView Password''')
+    parser.add_argument('-c', dest='cert', required=False,
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+                        help='''
+    Proxy (host:port format''')
+    parser.add_argument('-t', dest='ntype', required=False,
+                        choices=['Ethernet', 'FC'],
+                        help='''
+    The type of the network resource to be returned''')
     parser.add_argument('-n', dest='name', required=False,
-                        help='Network name')
+                        help='''
+    The name of the network resource to be returned''')
+    parser.add_argument('-r', dest='report',
+                        required=False, action='store_true',
+                        help='''
+    Format the output using a human readable report format''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -93,7 +188,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    getnet(net, args.name)
+    get_networks(net, args.ntype, args.name, args.report)
 
 if __name__ == '__main__':
     import sys
