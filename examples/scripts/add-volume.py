@@ -48,8 +48,8 @@ def login(con, credential):
         print('Login failed')
 
 
-def add_volume(sto, name, pool_name, size, shareable=False,
-               description, provisionType):
+def add_volume(sto, name, pool_name, size, shareable, description,
+               provisionType):
     pools = sto.get_storage_pools()
     for pool in pools['members']:
         if pool['name'] == pool_name:
