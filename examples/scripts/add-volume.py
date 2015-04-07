@@ -106,22 +106,22 @@ def main():
                         required=True,
                         help='''
     Name of the storage pool to use''')
-    parser.add_argument('-cap', '--capacity', dest='size',
+    parser.add_argument('-cap', dest='size',
                         required=True,
                         help='''
     Size of volume in GiB''')
-    parser.add_argument('-sh', '--shareable', dest='shareable',
+    parser.add_argument('-sh', dest='shareable',
                         required=False,
                         default=False,
                         action='store_true',
                         help='''
     sets volume to shareable, omit for private''')
-    parser.add_argument('-pt', '--prov_type', dest='provType',
+    parser.add_argument('-pt', dest='provType',
                         required=False,
                         default='Thin',
                         help='''
     Thin or Full provisioning''')
-    parser.add_argument('-des', '--description', dest='desc',
+    parser.add_argument('-des', dest='desc',
                         required=False,
                         default='Example Volume',
                         help='''

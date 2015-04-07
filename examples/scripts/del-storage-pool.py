@@ -75,25 +75,25 @@ def del_all_pools(sto):
 
 def main():
     parser = argparse.ArgumentParser(add_help=True, description='Usage')
-    parser.add_argument('-a', '--appliance', dest='host', required=True,
+    parser.add_argument('-a', dest='host', required=True,
                         help='HP OneView Appliance hostname or IP')
-    parser.add_argument('-u', '--user', dest='user', required=False,
+    parser.add_argument('-u', dest='user', required=False,
                         default='Administrator', help='HP OneView Username')
-    parser.add_argument('-p', '--pass', dest='passwd', required=True,
+    parser.add_argument('-p', dest='passwd', required=True,
                         help='HP OneView Password')
-    parser.add_argument('-c', '--certificate', dest='cert', required=False,
+    parser.add_argument('-c', dest='cert', required=False,
                         help='Trusted SSL Certificate Bundle in PEM '
                         '(Base64 Encoded DER) Format')
     parser.add_argument('-y', dest='proxy', required=False,
                         help='Proxy (host:port format')
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-s', '--sto_name', dest='sto_name',
+    group.add_argument('-s', dest='sto_name',
                        help='Name of storage system. This option requires'
                        ' the pool name option "-n" to be specified')
     group.add_argument('-d', dest='delete_all',
                        action='store_true',
                        help='Remove ALL storage pools and exit')
-    parser.add_argument('-n', '--pool_name', dest='pool_name', required=False,
+    parser.add_argument('-n', dest='pool_name', required=False,
                         help='Storage pool name')
 
     args = parser.parse_args()
