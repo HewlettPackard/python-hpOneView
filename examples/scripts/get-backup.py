@@ -25,6 +25,7 @@ if sys.version_info < (3, 4):
     raise Exception("Must use Python 3.4 or later")
 
 import hpOneView as hpov
+import os.path
 from pprint import pprint
 
 
@@ -48,7 +49,7 @@ def login(con, credential):
         print('Login failed')
 
 
-def getbackup(sts):
+def get_backup(sts):
     print('Generating appliance backup')
     backup = sts.generate_backup()
     print('Downloading appliance backup')
@@ -56,18 +57,28 @@ def getbackup(sts):
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Generate a OneView Backup
+
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
+                        help='''
+    HP OneView Appliance hostname or IP address''')
     parser.add_argument('-u', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
     parser.add_argument('-p', dest='passwd', required=True,
-                        help='HP OneView Password')
+                        help='''
+    HP OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+                        help='''
+    Proxy (host:port format''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -83,7 +94,8 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    getbackup(sts)
+    get_backup(sts)
+    sys.exit()
 
 
 if __name__ == '__main__':

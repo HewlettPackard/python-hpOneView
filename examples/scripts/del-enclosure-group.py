@@ -63,9 +63,12 @@ def del_enclosure_group_by_name(srv, name):
 
 
 def main():
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Delete individual or ALL Enclosure Groups
 
-    parser = argparse.ArgumentParser(add_help=True, description='Usage',
-                        formatter_class=argparse.RawTextHelpFormatter)
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
     HP OneView Appliance hostname or IP address''')

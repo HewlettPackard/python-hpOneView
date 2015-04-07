@@ -59,25 +59,38 @@ def setsa(sts, access):
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Set the service access state
+
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
+                        help='''
+    HP OneView Appliance hostname or IP address''')
     parser.add_argument('-u', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
     parser.add_argument('-p', dest='passwd', required=True,
-                        help='HP OneView Password')
+                        help='''
+    HP OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+                        help='''
+    Proxy (host:port format''')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-e', dest='ena', action='store_true',
-                       help='Enable service access')
+                       help='''
+    Enable service access''')
     group.add_argument('-d', dest='dis', action='store_true',
-                       help='Disable service access')
+                       help='''
+    Disable service access''')
     group.add_argument('-g', dest='gets', action='store_true',
-                       help='Get current service access state')
+                       help='''
+    Get current service access state''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}

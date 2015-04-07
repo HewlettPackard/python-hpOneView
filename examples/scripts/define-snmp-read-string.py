@@ -48,27 +48,38 @@ def login(con, credential):
         print('Login failed')
 
 
-def defstring(sts, string):
+def define_string(sts, string):
     print('Set Community Read String: ', end=' ')
     ret = sts.set_dev_read_comm_string(string)
     pprint(ret)
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Set the SNMP read community string
+
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
+                        help='''
+    HP OneView Appliance hostname or IP address''')
     parser.add_argument('-u', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
     parser.add_argument('-p', dest='passwd', required=True,
-                        help='HP OneView Password')
+                        help='''
+    HP OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
-    parser.add_argument('-s', dest='string', help='Community Read String',
-                        required=True)
+                        help='''
+    Proxy (host:port format''')
+    parser.add_argument('-s', dest='string', required=True,
+                        help='''
+    Community Read String''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -87,7 +98,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    defstring(sts, args.string)
+    define_string(sts, args.string)
 
 if __name__ == '__main__':
     import sys

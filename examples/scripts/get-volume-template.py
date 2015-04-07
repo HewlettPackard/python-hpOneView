@@ -67,23 +67,28 @@ def get_all_vol_templates(sto):
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Display Volume Templates
+
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
+                        help='''
+    HP OneView Appliance hostname or IP address''')
     parser.add_argument('-u', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
     parser.add_argument('-p', dest='passwd', required=True,
-                        help='HP OneView Password')
+                        help='''
+    HP OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-n', dest='name',
-                       help='Name of the volume template to get')
-    group.add_argument('-g', dest='get_all', action='store_true',
-                       help='Get ALL volume templates and exit')
+                        help='''
+    Proxy (host:port format''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}

@@ -66,8 +66,12 @@ def get_profile_by_name(srv, name):
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage',
-                        formatter_class=argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Display Server Profiles
+
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
     HP OneView Appliance hostname or IP address''')
@@ -91,7 +95,7 @@ def main():
     group.add_argument('-g', dest='get_all',
                        action='store_true',
                        help='''
-                       Get ALL server profiles and exit''')
+    Get ALL server profiles and exit''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}

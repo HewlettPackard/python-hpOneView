@@ -85,8 +85,12 @@ def add_user(sec, name, pswd, roles, fname, email, ophone, mphone, enable):
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage',
-                        formatter_class=argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Add new user
+
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
     HP OneView Appliance hostname or IP address''')

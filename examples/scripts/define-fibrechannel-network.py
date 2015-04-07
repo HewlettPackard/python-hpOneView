@@ -48,7 +48,7 @@ def login(con, credential):
         print('Login failed')
 
 
-def addnetwork(net, name, minbw, maxbw, san, link, dist, direct, fabric):
+def add_network(net, name, minbw, maxbw, san, link, dist, direct, fabric):
     # Invert the auto redistribution boolean value
     dist = not dist
 
@@ -86,38 +86,56 @@ def addnetwork(net, name, minbw, maxbw, san, link, dist, direct, fabric):
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Add Fibre Channel network
+
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
+                        help='''
+    HP OneView Appliance hostname or IP address''')
     parser.add_argument('-u', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
     parser.add_argument('-p', dest='passwd', required=True,
-                        help='HP OneView Password')
+                        help='''
+    HP OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+                        help='''
+    Proxy (host:port format''')
     parser.add_argument('-n', dest='network_name', required=True,
-                        help='Name of the network')
+                        help='''
+    Name of the network''')
     parser.add_argument('-b', dest='prefered_bandwidth', type=float,
-                        required=False, default=2.5, help='Typical '
-                        'bandwidth between .1  and 20 Gb/s')
+                        required=False, default=2.5,
+                        help='''
+    Typical bandwidth between .1  and 20 Gb/s''')
     parser.add_argument('-m', dest='max_bandwidth', type=float, required=False,
-                        default=10, help='Maximum bandwidth between .1 and '
-                        '20 Gb/s')
+                        default=10,
+                        help='''
+    Maximum bandwidth between .1 and 20 Gb/s''')
     parser.add_argument('-s', dest='managed_san', required=False,
-                        help='URI of the associated managed SAN')
+                        help='''
+    URI of the associated managed SAN''')
     parser.add_argument('-l', dest='link_stability', type=int, required=False,
-                        default=30, help='Link Stability Interval between 1 '
-                        ' and 1800 seconds')
+                        default=30,
+                        help='''
+    Link Stability Interval between 1 and 1800 seconds''')
     parser.add_argument('-x', dest='dist', required=False, action='store_true',
-                        help='Disable AUTO loging redistribution')
+                        help='''
+    Disable AUTO loging redistribution''')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-e', dest='direct', action='store_true',
-                       help='DirectAttach Fabric Type')
+                       help='''
+    DirectAttach Fabric Type''')
     group.add_argument('-f', dest='fabric', action='store_true',
-                       help='FabricAttach Fabric Type')
+                       help='''
+    FabricAttach Fabric Type''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -147,9 +165,9 @@ def main():
         print('Error, prefered bandwidth must be between .1 and 20 Gb/s')
         sys.exit()
 
-    addnetwork(net, args.network_name, args.prefered_bandwidth,
-               args.max_bandwidth, args.managed_san, args.link_stability,
-               args.dist, args.direct, args.fabric)
+    add_network(net, args.network_name, args.prefered_bandwidth,
+                args.max_bandwidth, args.managed_san, args.link_stability,
+                args.dist, args.direct, args.fabric)
 
 if __name__ == '__main__':
     import sys

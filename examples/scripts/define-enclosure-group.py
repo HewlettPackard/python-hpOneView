@@ -49,7 +49,7 @@ def login(con, credential):
         print('Login failed')
 
 
-def defeg(net, srv, name, lname):
+def define_enclosure_group(net, srv, name, lname):
     ligs = net.get_ligs()
     for lig in ligs:
         if lig['name'] == lname:
@@ -68,22 +68,34 @@ def defeg(net, srv, name, lname):
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Define a new enclosure group
+
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
+                        help='''
+    HP OneView Appliance hostname or IP address''')
     parser.add_argument('-u', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
     parser.add_argument('-p', dest='passwd', required=True,
-                        help='HP OneView Password')
+                        help='''
+    HP OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+                        help='''
+    Proxy (host:port format''')
     parser.add_argument('-l', dest='lname', required=False,
-                        help='LIG to assign to enclosure group')
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-n',  dest='name', help='Enclosure Group name')
+                        help='''
+    LIG to assign to enclosure group''')
+    parser.add_argument('-n',  dest='name', required=True,
+                        help='''
+    Enclosure Group name''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -105,7 +117,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    defeg(net, srv, args.name, args.lname)
+    define_enclosure_group(net, srv, args.name, args.lname)
 
 if __name__ == '__main__':
     import sys

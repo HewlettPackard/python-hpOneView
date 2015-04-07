@@ -64,8 +64,12 @@ def add_san_manager(fcs, sanmgr, port, user, passwd, ssl):
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage',
-                                     formatter_class=argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Add a new SAN Manager
+
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
     HP OneView Appliance hostname or IP address''')

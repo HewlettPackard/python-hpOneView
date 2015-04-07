@@ -48,7 +48,7 @@ def login(con, credential):
         print('Login failed')
 
 
-def addnetset(net, name, networks, minbw, maxbw):
+def add_network_set(net, name, networks, minbw, maxbw):
 
     nset = []
 
@@ -69,30 +69,45 @@ def addnetset(net, name, networks, minbw, maxbw):
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Define new Network Set
+
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
+                        help='''
+    HP OneView Appliance hostname or IP address''')
     parser.add_argument('-u', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
     parser.add_argument('-p', dest='passwd', required=True,
-                        help='HP OneView Password')
+                        help='''
+    HP OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+                        help='''
+    Proxy (host:port format''')
     parser.add_argument('-n', dest='network_set_name', required=True,
-                        help='Name of the network set')
+                        help='''
+    Name of the network set''')
     parser.add_argument('-t', dest='list_of_networks', required=False,
-                        nargs='+', help='List of network names to add to the '
-                        'network set, seperated by spaces. I.E. -t "Net One" '
-                        '"Net Two" "Net Three"')
+                        nargs='+',
+                        help='''
+    List of network names to add to the network set, seperated by spaces.
+    For example:
+            -t "Net One" "Net Two" "Net Three"''')
     parser.add_argument('-b', dest='prefered_bandwidth', type=float,
-                        required=False, default=2.5, help='Typical '
-                        'bandwidth between .1  and 20 Gb/s')
+                        required=False, default=2.5,
+                        help='''
+    Typical bandwidth between .1  and 20 Gb/s''')
     parser.add_argument('-m', dest='max_bandwidth', type=float, required=False,
-                        default=10, help='Maximum bandwidth between .1 and '
-                        '20 Gb/s')
+                        default=10,
+                        help='''
+    Maximum bandwidth between .1 and 20 Gb/s''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -119,8 +134,8 @@ def main():
               'to the maximum bandwidth')
         sys.exit()
 
-    addnetset(net, args.network_set_name, args.list_of_networks,
-              args.prefered_bandwidth, args.max_bandwidth)
+    add_network_set(net, args.network_set_name, args.list_of_networks,
+                    args.prefered_bandwidth, args.max_bandwidth)
 
 if __name__ == '__main__':
     import sys

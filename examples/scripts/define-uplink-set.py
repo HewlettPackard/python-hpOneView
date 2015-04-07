@@ -142,45 +142,69 @@ def adduplinkset(con, net, name, ligname, networks, utype, etype,
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage')
+    parser = argparse.ArgumentParser(add_help=True,
+                        formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Define new Uplink Set
+
+    Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
+                        help='''
+    HP OneView Appliance hostname or IP address''')
     parser.add_argument('-u', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
+                        default='Administrator',
+                        help='''
+    HP OneView Username''')
     parser.add_argument('-p', dest='passwd', required=True,
-                        help='HP OneView Password')
+                        help='''
+    HP OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
-                        help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+                        help='''
+    Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
     parser.add_argument('-y', dest='proxy', required=False,
-                        help='Proxy (host:port format')
+                        help='''
+    Proxy (host:port format''')
     parser.add_argument('-n', dest='uplink_set_name', required=True,
-                        help='Name of the uplink  set')
+                        help='''
+    Name of the uplink  set''')
     parser.add_argument('-i', dest='logical_interconnect_group_name',
-                        required=True, help='Name of the associated Logical '
-                        'Interconnect Group')
+                        required=True,
+                        help='''
+    Name of the associated Logical Interconnect Group''')
     parser.add_argument('-l', dest='list_of_networks', required=False,
-                        nargs='+', help='List of network names to add to the '
-                        'uplink set, encapsulated with quotes and seperated '
-                        'by spaces. I.E. -l "Net One" "Net Two" "Net Three"')
+                        nargs='+',
+                        help='''
+    List of network names to add to the uplink set, encapsulated with quotes
+    and seperated by spaces. For example:
+
+                -l "Net One" "Net Two" "Net Three"''')
     parser.add_argument('-t', dest='uplink_type', choices=['Ethernet',
-                        'FibreChannel'], required=True, help='Uplink Type')
+                        'FibreChannel'], required=True,
+                        help='''
+    Uplink Type''')
     parser.add_argument('-e', dest='ethernet_type', choices=['Tagged',
                         'Tunnel', 'Untagged'], required=False,
-                        default='Tagged', help='Ethernet Type')
+                        default='Tagged',
+                        help='''
+    Ethernet Type''')
     parser.add_argument('-x', dest='native_network', required=False,
-                        help='Name of the network to be marked as native')
+                        help='''
+    Name of the network to be marked as native''')
     parser.add_argument('-o', dest='uplink_ports', required=False,
-                        nargs='+', help='List of uplink ports connected to '
-                        'the uplink sets specified as BAY:PORT and seperated '
-                        'by spaces. For example BAY 1 PORT X2 and BAY 1 PORT '
-                        'X3 would be specified as: -o 1:2 1:3')
+                        nargs='+',
+                        help='''
+    List of uplink ports connected to the uplink sets specified as BAY:PORT
+    and seperated by spaces. For example BAY 1 PORT X2 and BAY 1 PORT X3
+    would be specified as:
+                        -o 1:2 1:3''')
     parser.add_argument('-m', dest='lacp_mode', required=False,
                         choices=['Long', 'Short'], default='Long',
-                        help='LACP mode on ETHERNET uplink ports')
+                        help='''
+    LACP mode on ETHERNET uplink ports''')
     parser.add_argument('-g', dest='connection_mode', choices=['Auto',
                         'FailOver'], required=False, default='Auto',
-                        help='Ethernet connection mode')
+                        help='''
+    Ethernet connection mode''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
