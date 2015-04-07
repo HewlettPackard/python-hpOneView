@@ -40,6 +40,7 @@ from hpOneView.common import *
 from hpOneView.connection import *
 from hpOneView.activity import *
 from hpOneView.exceptions import *
+from pprint import pprint
 
 
 class storage(object):
@@ -84,19 +85,15 @@ class storage(object):
 
     def add_storage_pool(self, name, storageSystemUri, blocking=True,
                          verbose=False):
-        request = [{'storageSystemUri': storageSystemUri,
-                   'poolName': name}]
-        html, task = self._con.post(uri['storage-pools'] +
-                                    '?multiResource=true', request)
-        if type(task) is list:
-            task = task[0]
-
+        request = {'storageSystemUri': storageSystemUri,
+                   'poolName': name}
+        task, body = self._con.post(uri['storage-pools'], request)
         if blocking is True:
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
             if 'type' in task and task['type'].startswith('Task'):
                 entity = self._activity.get_task_associated_resource(task)
-                pool = self._con.get(entity['resourceUri'])
-                return pool
+                server = self._con.get(entity['resourceUri'])
+                return server
         return task
 
     # Temporarly modify the headers passed for POST and DELTE on storage volume

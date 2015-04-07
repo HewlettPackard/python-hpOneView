@@ -115,5 +115,5 @@ echo.
 echo ================================================================
 echo                       Defining profiles
 echo ================================================================
-python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -s "Encl1, bay 4" -cl %CONN_LIST%
-python define-connectionless-profile.py -a %OV_HOST% -u %OV_USER% -p %OV_PASS% -n "Profile-1" -si %SRV_ADDR% -s %FW_BASE%
+python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -sn "Encl1, bay 4" -cl %CONN_LIST%
+python define-profile.py -a %OV_HOST% -u %OV_USER% -p %OV_PASS% -n "Profile-1" -si %SRV_ADDR% -s %FW_BASE%

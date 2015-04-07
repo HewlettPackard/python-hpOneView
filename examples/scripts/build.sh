@@ -128,8 +128,8 @@ echo
 echo ================================================================
 echo "                     Defining profiles                        "
 echo ================================================================
-./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay4" -s "Encl1, bay 4" -cl $CONN_LIST
-./define-connectionless-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-1" -si $SRV_ADDR -s $FW_BASE
+./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay4" -sn "Encl1, bay 4" -cl $CONN_LIST
+./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-1" -si $SRV_ADDR -s $FW_BASE
 # Clean up temporary files
 if [ -d $OV_TMP ]; then
   rm -Rf $OV_TMP

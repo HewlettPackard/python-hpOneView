@@ -577,38 +577,63 @@ def make_profile_connection_boot_target_dict(arrayWwpn=None, lun=None):
              'lun': lun}]
 
 
-def make_profile_dict(profileName, server, firmwareBaseline=None,
-                      connections=[]):
-    return {
-        'type': 'ServerProfileV3',
-        'name': profileName,
-        'wwnType': 'Virtual',
-        'serialNumberType': 'Virtual',
-        'macType': 'Virtual',
-        'serverHardwareUri': server['uri'],
-        'serverHardwareTypeUri': server['serverHardwareTypeUri'],
-        'firmware': firmwareBaseline,
-        'connections': connections}
+def make_profile_dict(profileName, server, desc,
+                      firmwareBaseline, boot, connections):
+    if not connections:
+        return {
+            'type': 'ServerProfileV4',
+            'name': profileName,
+            'description': desc,
+            'serverHardwareUri': server['uri'],
+            'serverHardwareTypeUri': server['serverHardwareTypeUri'],
+            'firmware': firmwareBaseline,
+            'boot': boot,
+            'bios': {'manageBios': False},
+            'macType': 'Physical',
+            'wwnType': 'Physical',
+            'serialNumberType': 'Physical'}
+    else:
+        return {
+            'type': 'ServerProfileV4',
+            'name': profileName,
+            'description': desc,
+            'serverHardwareUri': server['uri'],
+            'serverHardwareTypeUri': server['serverHardwareTypeUri'],
+            'firmware': firmwareBaseline,
+            'boot': boot,
+            'bios': {'manageBios': False},
+            'wwnType': 'Virtual',
+            'macType': 'Virtual',
+            'serialNumberType': 'Virtual',
+            'connections': connections}
 
-def make_connectionless_profile_dict(profileName, server, firmwareBaseline=None):
-    return {
-        'type': 'ServerProfileV3',
-        'name': profileName,
-        'serverHardwareUri': server['uri'],
-        'serverHardwareTypeUri': server['serverHardwareTypeUri'],
-        'firmware': firmwareBaseline,
-        'bios': {'manageBios': False},
-        'boot': {'manageBoot': False},
-        'macType': 'Physical',
-        'wwnType': 'Physical',
-        'serialNumberType': 'Physical'}
 
-
-def make_profile_firmware_baseline(firmwareUri, manageFirmware=True,
-                                   forceInstallFirmware=False):
+def make_firmware_settings_dict(firmwareUri, manageFirmware=True,
+                                forceInstallFirmware=False):
     return {'firmwareBaselineUri': firmwareUri,
             'manageFirmware': manageFirmware,
             'forceInstallFirmware': forceInstallFirmware
+            }
+
+
+def make_bios_settings_dict(manageBios=True,
+                            overriddenSettings=[]):
+    return {'manageBios': manageBios,
+            'overriddenSettings': overriddenSettings
+            }
+
+
+def make_boot_settings_dict(order, manageBoot=False):
+    return {'manageBoot': manageBoot,
+            'order': []
+#            'order': ['CD', 'Floppy', 'USB', 'HardDisk', 'PXE']
+            }
+
+
+def make_bootmode_settings_dict(manageMode, mode, pxeBootPolicy):
+    return {'manageMode': False,
+            'mode': None,
+            'pxeBootPolicy': None
             }
 
 

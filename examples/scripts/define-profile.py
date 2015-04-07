@@ -49,44 +49,91 @@ def login(con, credential):
         print('Login failed')
 
 
-def define_profile(srv, sts, net, profileName, serverHWName, clist,
-                   forcePowerOff=False):
+def define_profile(srv, sts, profileName, desc, server_name, server_ip,
+                   baseline, forcePowerOff, boot_order, conn_list):
+
+    if server_name:
+        serverID = server_name
+    else:
+        serverID = server_ip
+    # Find the first Firmware Baseline
+    uri = ''
+    if baseline:
+        spps = sts.get_spps()
+        for spp in spps:
+            if spp['isoFileName'] == baseline:
+                uri = spp['uri']
+        if not uri:
+            print('ERROR: Locating Firmeware Baseline SPP')
+            print('Baseline: "%s" can not be located' % baseline)
+            print('')
+            sys.exit()
+
     # Get handle for named server and power off in necessary
     servers = srv.get_servers()
     ser = None
     for server in servers:
-        if server['name'] == serverHWName:
+        if server['name'] == server_name or server_ip == server['mpIpAddress']:
             ser = server
             if server['state'] != 'NoProfileApplied':
-                print('Server ', serverHWName, '  may already have a profile')
+                print('\nError: server', serverID, 'already has a profile '
+                      'defined\n')
                 sys.exit(1)
             if server['powerState'] == 'On':
                 if forcePowerOff:
                     srv.set_server_powerstate(server, 'Off', force=True)
                 else:
-                    print('Error: Server', serverHWName,
+                    print('Error: Server', serverID,
                           ' needs to be powered off')
                     sys.exit(1)
             break
     if not ser:
-        print('Server ', serverHWName, ' not found')
+        print('Server ', serverID, ' not found')
         sys.exit(1)
 
-    # read connection list from file
-    connList = json.loads(open(clist).read())
+    if boot_order:
+        boot = hpov.common.make_boot_settings_dict(boot_order)
+    else:
+        boot = None
 
-    print('Creating profile for %s' % (ser['name']))
-    spp = sts.get_spps()[0]  # not used?
-    profileDict = hpov.common.make_profile_dict(profileName,
-                                                ser,
-                                                connections=connList)
+    if uri:
+        fw = hpov.common.make_firmware_settings_dict(uri)
+    else:
+        fw = None
+
+    if conn_list:
+        # read connection list from file
+        conn = json.loads(open(conn_list).read())
+    else:
+        conn = []
+
+    profileDict = hpov.common.make_profile_dict(profileName, ser, desc, fw,
+                                                boot, conn)
+
     profile = srv.create_server_profile(profileDict)
-    pprint(profile)
+    if 'serialNumberType' in profile:
+        print('\n\nName:                ', profile['name'])
+        print('Description:         ', profile['description'])
+        print('Firmware:            ', profile['firmware'])
+        print('Type:                ', profile['type'])
+        print('wwnType:             ', profile['wwnType'])
+        print('macType:             ', profile['macType'])
+        print('serialNumberType:    ', profile['serialNumberType'])
+        print('Bios:')
+        print('  manageBios:         ', profile['bios']['manageBios'])
+        print('  overriddenSettings: ', profile['bios']['overriddenSettings'])
+        print('Boot:')
+        print('  manageBoot:         ', profile['boot']['manageBoot'])
+        print('  order:              ', profile['boot']['order'], '\n')
+    else:
+        pprint(profileDict)
 
 
 def main():
-    parser = argparse.ArgumentParser(add_help=True, description='Usage',
-                        formatter_class=argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(add_help=True,
+                                     formatter_class=argparse.RawTextHelpFormatter,
+                                     description='''
+    Define a server profile''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
     HP OneView Appliance hostname or IP address''')
@@ -107,29 +154,73 @@ def main():
                         required=True,
                         help='''
     Name of the profile''')
-    parser.add_argument('-s', dest='serverHW',
-                        required=True,
+    parser.add_argument('-d', dest='desc',
+                        required=False,
                         help='''
-    Name of the server hardware which this profile is for''')
-    parser.add_argument('-cl', '--conn_list', dest='conn_list',
-                        required=True,
-                        help='''
-    File with list of connections for this profile in
-    JSON format. Normally created by several calls to
-    define-connection-list.py''')
-    parser.add_argument('-f', '--forcePowerOff', dest='forcePowerOff',
+    Description for the server profile''')
+    parser.add_argument('-f', dest='forcePowerOff',
                         required=False,
                         action='store_true',
                         help='''
     When set, forces power off of target server.
     Avoids error exit if server is up''')
+    parser.add_argument('-s', dest='baseline', required=False,
+                        help='''
+    SPP Baseline file name. e.g. SPP2013090_2013_0830_30.iso''')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-sn', dest='server_name',
+                        help='''
+    Name of the standalone server hardware which this profile is for''')
+    group.add_argument('-si', dest='server_ip',
+                        help='''
+    IP address of the standalone server iLO''')
+    parser.add_argument('-bo', dest='boot_order', required=False,
+                        nargs='+',
+                        help='''
+    Server boot order defined as a list seperatedby spaces. All five of the
+    following values:
 
+            - CD
+            - Floppy
+            - USB
+            - HardDisk
+            - PXE
+
+    must be included in the list. For example:
+
+            -bo CD Floppy USB HardDisk PXE''')
+    parser.add_argument('-cl', dest='conn_list',
+                        required=False,
+                        help='''
+    File with list of connections for this profile in JSON format. This file
+    can be created with multiple calls to define-connection-list.py''')
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
+    if args.boot_order and len(args.boot_order) != 5:
+        print('\nError, the boot order requires all five values be ')
+        print('specified in the desired order seperated by spaces. I.E:')
+        print('-bo CD Floppy USB HardDisk PXE\n')
+        sys.exit()
+
+    if args.boot_order and 'CD' not in args.boot_order:
+        print('\nError, CD must be defined in the boot order')
+        sys.exit()
+    if args.boot_order and 'Floppy' not in args.boot_order:
+        print('\nError, Floppy must be defined in the boot order')
+        sys.exit()
+    if args.boot_order and 'USB' not in args.boot_order:
+        print('\nError, USB must be defined in the boot order')
+        sys.exit()
+    if args.boot_order and 'HardDisk' not in args.boot_order:
+        print('\nError, HardDisk must be defined in the boot order')
+        sys.exit()
+    if args.boot_order and 'PXE' not in args.boot_order:
+        print('\nError, PXE must be defined in the boot order')
+        sys.exit()
+
     con = hpov.connection(args.host)
     srv = hpov.servers(con)
-    net = hpov.networking(con)
     sts = hpov.settings(con)
 
     if args.proxy:
@@ -140,8 +231,9 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    define_profile(srv, sts, net, args.name, args.serverHW, args.conn_list,
-                   args.forcePowerOff)
+    define_profile(srv, sts, args.name, args.desc, args.server_name,
+                   args.server_ip, args.baseline, args.forcePowerOff,
+                   args.boot_order, args.conn_list)
 
 if __name__ == '__main__':
     import sys

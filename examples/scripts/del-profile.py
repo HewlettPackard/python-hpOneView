@@ -48,6 +48,12 @@ def login(con, credential):
         print('Login failed')
 
 
+def output_progress(progress):
+    for status in progress:
+        if 'statusUpdate' in status:
+            print('    ', status['statusUpdate'])
+
+
 def del_all_profiles(srv, force):
     srvrs = srv.get_servers()
     for server in srvrs:
@@ -60,7 +66,7 @@ def del_all_profiles(srv, force):
     for profile in profiles:
         print(('Removing Profile %s' % profile['name']))
         ret = srv.remove_server_profile(profile, force)
-        pprint(ret)
+        output_progress(ret['progressUpdates'])
 
 
 def del_profile_by_name(con, srv, name, force):
@@ -75,7 +81,7 @@ def del_profile_by_name(con, srv, name, force):
                 pprint(ret)
             print(('Removing Profile %s' % profile['name']))
             ret = srv.remove_server_profile(profile, force)
-            pprint(ret)
+            output_progress(ret['progressUpdates'])
             return
     print('Profile: ', name, ' not found')
 
