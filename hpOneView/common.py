@@ -625,8 +625,7 @@ def make_bios_settings_dict(manageBios=True,
 
 def make_boot_settings_dict(order, manageBoot=False):
     return {'manageBoot': manageBoot,
-            'order': []
-#            'order': ['CD', 'Floppy', 'USB', 'HardDisk', 'PXE']
+            'order': order
             }
 
 

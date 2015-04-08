@@ -26,8 +26,13 @@ SRV_USR=${SRV_USR:=Administrator}
 SRV_PASS=${SRV_PASS:=PASSWORD}
 # Firmware Baseline
 FW_BASE=${FW_BASE:=bp-hp-service-pack-for-proliant-oneview-2014-11-30-05.iso}
+# Server boot order (dependent on server hardware type)
+BOOT_G78=${BOOT_G78:="HardDisk PXE USB CD Floppy"}
+BOOT_G9_LEGACY=${BOOT_G9_LEGACY:="HardDisk PXE USB CD"}
+BOOT_G9_UEFI=${BOOT_G9_UEFI:="HardDisk"}
 
-# Securly create a temporary directory and temporary connection listfile
+
+# Securely create a temporary directory and temporary connection listfile
 OV_TMP=${TMPDIR-/tmp}
 OV_TMP=$OV_TMP/hpOneView_temporary_files.$RANDOM.$RANDOM.$RANDOM.$$
 (umask 077 && mkdir $OV_TMP) || {
@@ -129,7 +134,8 @@ echo ================================================================
 echo "                     Defining profiles                        "
 echo ================================================================
 ./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay4" -sn "Encl1, bay 4" -cl $CONN_LIST
-./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-1" -si $SRV_ADDR -s $FW_BASE
+# Define profile with firmware base line and managed boot order using Gen 7 & 8 ordering
+./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-1" -si $SRV_ADDR -s $FW_BASE -mb -bo $BOOT_G78
 # Clean up temporary files
 if [ -d $OV_TMP ]; then
   rm -Rf $OV_TMP

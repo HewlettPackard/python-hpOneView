@@ -49,13 +49,38 @@ def login(con, credential):
         print('Login failed')
 
 
-def define_profile(srv, sts, profileName, desc, server_name, server_ip,
-                   baseline, forcePowerOff, boot_order, conn_list):
-
+def get_server(srv, server_name, server_ip, forcePowerOff):
     if server_name:
-        serverID = server_name
+        server_id = server_name
     else:
-        serverID = server_ip
+        server_id = server_ip
+
+    # Get handle for named server and power off in necessary
+    servers = srv.get_servers()
+    located_server = None
+    for server in servers:
+        if server['name'] == server_name or server_ip == server['mpIpAddress']:
+            located_server = server
+            if server['state'] != 'NoProfileApplied':
+                print('\nError: server', server_id, 'already has a profile '
+                      'defined\n')
+                sys.exit(1)
+            if server['powerState'] == 'On':
+                if forcePowerOff:
+                    srv.set_server_powerstate(server, 'Off', force=True)
+                else:
+                    print('Error: Server', server_id,
+                          ' needs to be powered off')
+                    sys.exit(1)
+            break
+    if not located_server:
+        print('Server ', server_id, ' not found')
+        sys.exit(1)
+
+    return located_server
+
+
+def get_fw_settings(sts, baseline):
     # Find the first Firmware Baseline
     uri = ''
     if baseline:
@@ -69,37 +94,66 @@ def define_profile(srv, sts, profileName, desc, server_name, server_ip,
             print('')
             sys.exit()
 
-    # Get handle for named server and power off in necessary
-    servers = srv.get_servers()
-    ser = None
-    for server in servers:
-        if server['name'] == server_name or server_ip == server['mpIpAddress']:
-            ser = server
-            if server['state'] != 'NoProfileApplied':
-                print('\nError: server', serverID, 'already has a profile '
-                      'defined\n')
-                sys.exit(1)
-            if server['powerState'] == 'On':
-                if forcePowerOff:
-                    srv.set_server_powerstate(server, 'Off', force=True)
-                else:
-                    print('Error: Server', serverID,
-                          ' needs to be powered off')
-                    sys.exit(1)
-            break
-    if not ser:
-        print('Server ', serverID, ' not found')
-        sys.exit(1)
+    if uri:
+        fw_settings = hpov.common.make_firmware_settings_dict(uri)
+    else:
+        fw_settings = None
+
+    return fw_settings
+
+
+def validate_boot_settings(con, srv, server, manage_boot, boot_order):
+
+    # Get the bootCapabilites from the Server Hardwer Type
+    sht = con.get(server['serverHardwareTypeUri'])
+    if 'capabilities' in sht and 'bootCapabilities' in sht:
+        if 'ManageBootOrder' not in sht['capabilities']:
+            print('Error, server does not support managed  boot order')
+            sys.exit()
+        allowed_boot = sht['bootCapabilities']
+    else:
+        print('Error, can not retreive server boot capabilities')
+        sys.exit()
 
     if boot_order:
-        boot = hpov.common.make_boot_settings_dict(boot_order)
+        # The FibreChannelHba boot option is not exposed to the user
+        if 'FibreChannelHba' in allowed_boot:
+            allowed_boot.remove('FibreChannelHba')
+
+        if len(boot_order) != len(allowed_boot):
+            print('Error: All supported boot options are required')
+            print('The supported options are:')
+            print('\t-bo', end=' ')
+            for item in allowed_boot:
+                print(item, end=' ')
+            print()
+            sys.exit()
+
+        # Error if the users submitted and boot option that is
+        # not supported by the server hardware type
+        diff = set(boot_order).difference(set(allowed_boot))
+        if diff:
+            print('Error:"', diff, '"are not supported boot options for this'
+                  'server hardware type')
+            print('The supported options are:')
+            print('\t-bo', end=' ')
+            for item in allowed_boot:
+                print(item, end=' ')
+            print()
+            sys.exit()
+
+        boot = hpov.common.make_boot_settings_dict(boot_order, manageBoot=True)
+
+    elif manage_boot:
+        boot = hpov.common.make_boot_settings_dict([], manageBoot=True)
+
     else:
         boot = None
 
-    if uri:
-        fw = hpov.common.make_firmware_settings_dict(uri)
-    else:
-        fw = None
+    return boot
+
+
+def define_profile(con, srv, profileName, desc, server, boot, fw, conn_list):
 
     if conn_list:
         # read connection list from file
@@ -107,18 +161,21 @@ def define_profile(srv, sts, profileName, desc, server_name, server_ip,
     else:
         conn = []
 
-    profileDict = hpov.common.make_profile_dict(profileName, ser, desc, fw,
+    profile_dict = hpov.common.make_profile_dict(profileName, server, desc, fw,
                                                 boot, conn)
 
-    profile = srv.create_server_profile(profileDict)
+    profile = srv.create_server_profile(profile_dict)
     if 'serialNumberType' in profile:
         print('\n\nName:                ', profile['name'])
         print('Description:         ', profile['description'])
-        print('Firmware:            ', profile['firmware'])
         print('Type:                ', profile['type'])
         print('wwnType:             ', profile['wwnType'])
         print('macType:             ', profile['macType'])
         print('serialNumberType:    ', profile['serialNumberType'])
+        print('Firmware:')
+        print('  manageFirmware:       ', profile['firmware']['manageFirmware'])
+        print('  forceInstallFirmware: ', profile['firmware']['forceInstallFirmware'])
+        print('  firmwareBaselineUri:  ', profile['firmware']['firmwareBaselineUri'])
         print('Bios:')
         print('  manageBios:         ', profile['bios']['manageBios'])
         print('  overriddenSettings: ', profile['bios']['overriddenSettings'])
@@ -126,7 +183,7 @@ def define_profile(srv, sts, profileName, desc, server_name, server_ip,
         print('  manageBoot:         ', profile['boot']['manageBoot'])
         print('  order:              ', profile['boot']['order'], '\n')
     else:
-        pprint(profileDict)
+        pprint(profile_dict)
 
 
 def main():
@@ -167,57 +224,51 @@ def main():
     parser.add_argument('-s', dest='baseline', required=False,
                         help='''
     SPP Baseline file name. e.g. SPP2013090_2013_0830_30.iso''')
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-sn', dest='server_name',
-                        help='''
-    Name of the standalone server hardware which this profile is for''')
-    group.add_argument('-si', dest='server_ip',
-                        help='''
-    IP address of the standalone server iLO''')
+    parser.add_argument('-mb', dest='manage_boot',
+                       action='store_true',
+                       help='''
+    Enable Boot Order Management. Required for Connection boot
+    enablement.  If this optoin is disabled, then  PXE and FC BfS settings
+    are disabled within the entire Server Profile.''')
     parser.add_argument('-bo', dest='boot_order', required=False,
                         nargs='+',
                         help='''
-    Server boot order defined as a list seperatedby spaces. All five of the
-    following values:
+    Defines the order in which boot will be attempted on the available
+    devices. Please NOTE the supported boot order is server hardware type
+    specific. For Gen7 and Gen8 server hardware the possible values are 'CD',
+    'Floppy', 'USB', 'HardDisk', and 'PXE'. For Gen9 BL server hardware in
+    Legacy BIOS boot mode, the possible values are 'CD', 'USB', 'HardDisk',
+    and 'PXE'. For Gen9 BL server hardware in UEFI or UEFI Optimized boot
+    mode, only one value is allowed and must be either 'HardDisk' or 'PXE'.
+    For Gen9 DL server hardware in Legacy BIOS boot mode, the possible
+    values are 'CD', 'USB', 'HardDisk', and 'PXE'. For Gen9 DL server
+    hardware in UEFI or UEFI Optimized boot mode, boot order configuration
+    is not supported.
 
-            - CD
-            - Floppy
-            - USB
-            - HardDisk
-            - PXE
+    Server boot order defined as a list seperatedby spaces. For example:
 
-    must be included in the list. For example:
-
-            -bo CD Floppy USB HardDisk PXE''')
+    Gen7/8 BIOS Default Boot Order:
+                            -bo CD Floppy USB HardDisk PXE
+    Gen9 Legacy BIOS Boot Order:
+                            -bo CD USB HardDisk PXE
+    Gen9 UEFI Default Boot Order:
+                            -bo HardDisk
+    ''')
     parser.add_argument('-cl', dest='conn_list',
                         required=False,
                         help='''
     File with list of connections for this profile in JSON format. This file
     can be created with multiple calls to define-connection-list.py''')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-sn', dest='server_name',
+                       help='''
+    Name of the standalone server hardware which this profile is for''')
+    group.add_argument('-si', dest='server_ip',
+                       help='''
+    IP address of the standalone server iLO''')
+
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
-
-    if args.boot_order and len(args.boot_order) != 5:
-        print('\nError, the boot order requires all five values be ')
-        print('specified in the desired order seperated by spaces. I.E:')
-        print('-bo CD Floppy USB HardDisk PXE\n')
-        sys.exit()
-
-    if args.boot_order and 'CD' not in args.boot_order:
-        print('\nError, CD must be defined in the boot order')
-        sys.exit()
-    if args.boot_order and 'Floppy' not in args.boot_order:
-        print('\nError, Floppy must be defined in the boot order')
-        sys.exit()
-    if args.boot_order and 'USB' not in args.boot_order:
-        print('\nError, USB must be defined in the boot order')
-        sys.exit()
-    if args.boot_order and 'HardDisk' not in args.boot_order:
-        print('\nError, HardDisk must be defined in the boot order')
-        sys.exit()
-    if args.boot_order and 'PXE' not in args.boot_order:
-        print('\nError, PXE must be defined in the boot order')
-        sys.exit()
 
     con = hpov.connection(args.host)
     srv = hpov.servers(con)
@@ -231,9 +282,17 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    define_profile(srv, sts, args.name, args.desc, args.server_name,
-                   args.server_ip, args.baseline, args.forcePowerOff,
-                   args.boot_order, args.conn_list)
+    if args.boot_order and not args.manage_boot:
+        print('Error: Managed Boot must be enabled to define a boot order')
+        sys.exit()
+
+    server = get_server(srv, args.server_name, args.server_ip,
+                        args.forcePowerOff)
+    boot = validate_boot_settings(con, srv, server, args.manage_boot,
+                                  args.boot_order)
+    fw_settings = get_fw_settings(sts, args.baseline)
+    define_profile(con, srv, args.name, args.desc, server, boot, fw_settings,
+                   args.conn_list)
 
 if __name__ == '__main__':
     import sys

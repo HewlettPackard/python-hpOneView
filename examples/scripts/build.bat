@@ -26,7 +26,11 @@ set SRV_USR=Administrator
 rem Enclosure OA password
 set SRV_PASS=PASSWORD
 rem Firmware Baseline
-sed FW_BASE=bp-hp-service-pack-for-proliant-oneview-2014-11-30-05.iso
+set FW_BASE=bp-hp-service-pack-for-proliant-oneview-2014-11-30-05.iso
+rem Server boot order (dependent on server hardware type)
+set BOOT_G78="HardDisk PXE USB CD Floppy"
+set BOOT_G9_LEGACY="HardDisk PXE USB CD"
+set BOOT_G9_UEFI="HardDisk"
 
 
 set CONN_LIST=%TMP%\oneview_conn_list-%RANDOM%-%TIME:~6,5%.tmp
@@ -116,4 +120,6 @@ echo ================================================================
 echo                       Defining profiles
 echo ================================================================
 python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -sn "Encl1, bay 4" -cl %CONN_LIST%
-python define-profile.py -a %OV_HOST% -u %OV_USER% -p %OV_PASS% -n "Profile-1" -si %SRV_ADDR% -s %FW_BASE%
+rem Define profile with firmware base line and managed boot order using Gen 7 &
+rem 8 ordering
+python define-profile.py -a %OV_HOST% -u %OV_USER% -p %OV_PASS% -n "Profile-1" -si %SRV_ADDR% -s %FW_BASE% -mb -bo %BOOT_G78%
