@@ -89,6 +89,14 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-n', dest='name',
+                       help='''
+    Name of the storage volume template''')
+    group.add_argument('-g', dest='get_all',
+                       action='store_true',
+                       help='''
+    Get all storage volume templates''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
