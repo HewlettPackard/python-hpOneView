@@ -578,7 +578,7 @@ def make_profile_connection_boot_target_dict(arrayWwpn=None, lun=None):
 
 
 def make_profile_dict(profileName, server, desc,
-                      firmwareBaseline, boot, connections):
+                      firmwareBaseline, boot, bootmode, connections):
     if not connections:
         return {
             'type': 'ServerProfileV4',
@@ -588,6 +588,7 @@ def make_profile_dict(profileName, server, desc,
             'serverHardwareTypeUri': server['serverHardwareTypeUri'],
             'firmware': firmwareBaseline,
             'boot': boot,
+            'bootMode': bootmode,
             'bios': {'manageBios': False},
             'macType': 'Physical',
             'wwnType': 'Physical',
@@ -601,6 +602,7 @@ def make_profile_dict(profileName, server, desc,
             'serverHardwareTypeUri': server['serverHardwareTypeUri'],
             'firmware': firmwareBaseline,
             'boot': boot,
+            'bootMode': bootmode,
             'bios': {'manageBios': False},
             'wwnType': 'Virtual',
             'macType': 'Virtual',
@@ -630,9 +632,9 @@ def make_boot_settings_dict(order, manageBoot=False):
 
 
 def make_bootmode_settings_dict(manageMode, mode, pxeBootPolicy):
-    return {'manageMode': False,
-            'mode': None,
-            'pxeBootPolicy': None
+    return {'manageMode': manageMode,
+            'mode': mode,
+            'pxeBootPolicy': pxeBootPolicy
             }
 
 

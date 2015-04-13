@@ -26,6 +26,7 @@ if sys.version_info < (3, 4):
 
 import hpOneView as hpov
 from pprint import pprint
+import re
 import json
 
 
@@ -102,8 +103,10 @@ def get_fw_settings(sts, baseline):
     return fw_settings
 
 
-def validate_boot_settings(con, srv, server, manage_boot, boot_order):
+def boot_settings(con, srv, server, disable_manage_boot, boot_order, boot_mode, pxe,
+                  conn_list):
 
+    gen9 = False
     # Get the bootCapabilites from the Server Hardwer Type
     sht = con.get(server['serverHardwareTypeUri'])
     if 'capabilities' in sht and 'bootCapabilities' in sht:
@@ -115,6 +118,19 @@ def validate_boot_settings(con, srv, server, manage_boot, boot_order):
         print('Error, can not retreive server boot capabilities')
         sys.exit()
 
+    if 'model' in sht:
+        model = sht['model']
+    else:
+        print('Error: Can not identify server hardware type model')
+        sys.exit()
+
+    regx = re.compile('.*Gen9.*', re.IGNORECASE)
+    gen_match = regx.match(model)
+
+    if gen_match:
+        gen9 = True
+
+    # Managed Boot Enable with Boot Options specified
     if boot_order:
         # The FibreChannelHba boot option is not exposed to the user
         if 'FibreChannelHba' in allowed_boot:
@@ -142,18 +158,63 @@ def validate_boot_settings(con, srv, server, manage_boot, boot_order):
             print()
             sys.exit()
 
+        if gen9:
+            if boot_mode == 'BIOS':
+                bootmode = hpov.common.make_bootmode_settings_dict(True,
+                                                                   boot_mode,
+                                                                   None)
+            else:
+                bootmode = hpov.common.make_bootmode_settings_dict(True,
+                                                                   boot_mode,
+                                                                   pxe)
+        else:  # bootmode can not be set for Gen 7 & 8
+            bootmode = None
+
         boot = hpov.common.make_boot_settings_dict(boot_order, manageBoot=True)
 
-    elif manage_boot:
-        boot = hpov.common.make_boot_settings_dict([], manageBoot=True)
+    # Managed Boot Default value WITHOUT Boot Options specified
+    # Setting boot to None uses the default from the appliance which is
+    # boot.manageBoot = True.
+    elif not disable_manage_boot:
+        if gen9:
+            if boot_mode == 'BIOS':
+                bootmode = hpov.common.make_bootmode_settings_dict(True,
+                                                                   boot_mode,
+                                                                   None)
+            else:
+                bootmode = hpov.common.make_bootmode_settings_dict(True,
+                                                                   boot_mode,
+                                                                   pxe)
 
-    else:
+        else:  # bootmode can not be set for Gen 7 & 8
+            bootmode = None
+
         boot = None
 
-    return boot
+    # Managed Boot explicity disabled
+    elif disable_manage_boot:
+        # For a Gen 9 BL server hardware "boot.manageBoot" cannot be set to
+        # true unless "bootMode" is specified and "bootMode.manageMode" is set
+        # to 'true'.
+        p = re.compile('.*BL\d.*', re.IGNORECASE)
+        match = p.match(model)
+        if match:
+            print('Error: bootMode cannot be disabled on BL servers')
+            sys.exit()
+        else:  # bootmode can not be set for Gen 7 & 8
+            bootmode = None
+
+        boot = hpov.common.make_boot_settings_dict([], manageBoot=False)
+
+    else:
+        print('Error: Unknown boot mode case')
+        sys.exit()
+
+    return boot, bootmode
 
 
-def define_profile(con, srv, profileName, desc, server, boot, fw, conn_list):
+def define_profile(con, srv, profileName, desc, server, boot, bootmode, fw,
+                   conn_list):
 
     if conn_list:
         # read connection list from file
@@ -162,7 +223,7 @@ def define_profile(con, srv, profileName, desc, server, boot, fw, conn_list):
         conn = []
 
     profile_dict = hpov.common.make_profile_dict(profileName, server, desc, fw,
-                                                boot, conn)
+                                                boot, bootmode, conn)
 
     profile = srv.create_server_profile(profile_dict)
     if 'serialNumberType' in profile:
@@ -224,12 +285,13 @@ def main():
     parser.add_argument('-s', dest='baseline', required=False,
                         help='''
     SPP Baseline file name. e.g. SPP2013090_2013_0830_30.iso''')
-    parser.add_argument('-mb', dest='manage_boot',
-                       action='store_true',
-                       help='''
-    Enable Boot Order Management. Required for Connection boot
-    enablement.  If this optoin is disabled, then  PXE and FC BfS settings
-    are disabled within the entire Server Profile.''')
+    parser.add_argument('-mb', dest='disable_manage_boot',
+                        action='store_true',
+                        help='''
+    Explicitly DISABLE Boot Order Management. This value is enabled by
+    default and required for Connection boot enablement. If this optoin is
+    disabled, then  PXE and FC BfS settings are disabled within the entire
+    Server Profile.''')
     parser.add_argument('-bo', dest='boot_order', required=False,
                         nargs='+',
                         help='''
@@ -259,6 +321,54 @@ def main():
                         help='''
     File with list of connections for this profile in JSON format. This file
     can be created with multiple calls to define-connection-list.py''')
+    parser.add_argument('-bm', dest='boot_mode', required=False,
+                        choices=['UEFI', 'UEFIOptimized', 'BIOS'],
+                        default='BIOS',
+                        help='''
+    Specify the Gen9 Boot Envrionment.
+
+    Sets the boot mode as one of the following:
+
+        . UEFI
+        . UEFIOptimized
+        . BIOS
+
+    If you select UEFI or UEFI optimized for an HP ProLiant DL Gen9 rack
+    mount server, the remaining boot setting available is the PXE boot policy.
+
+    For the UEFI or UEFI optimized boot mode options, the boot mode choice
+    should be based on the expected OS and required boot features for the
+    server hardware. UEFI optimized boot mode reduces the time the system
+    spends in POST(Video driver initialization). In order to select the
+    appropriate boot mode, consider the following:
+
+        . If a secure boot is required, the boot mode must be set to UEFI
+          or UEFI optimized .
+        . For operating systems that do not support UEFI (such as DOS, or
+          older versions of Windows and Linux), the boot mode must be set
+          to BIOS.
+        . When booting in UEFI mode, Windows 7, Server 2008, or 2008 R2
+          should not be set to UEFIOptimized.''')
+    parser.add_argument('-px', dest='pxe', required=False,
+                        choices=['Auto', 'IPv4', 'IPv6',
+                                 'IPv4ThenIPv6', 'IPv6ThenIPv4'],
+                        default='IPv4',
+                        help='''
+    Controls the ordering of the network modes available to the Flexible
+    LOM (FLB); for example, IPv4 and IPv6.
+
+    Select from the following policies:
+
+        . Auto
+        . IPv4 only
+        . IPv6 only
+        . IPv4 then IPv6
+        . IPv6 then IPv4
+
+    Setting the policy to Auto means the order of the existing network boot
+    targets in the UEFI Boot Order list will not be modified, and any new
+    network boot targets will be added to the end of the list using the
+    System ROM's default policy.''')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-sn', dest='server_name',
                        help='''
@@ -282,17 +392,18 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    if args.boot_order and not args.manage_boot:
+    if args.boot_order and args.disable_manage_boot:
         print('Error: Managed Boot must be enabled to define a boot order')
         sys.exit()
 
     server = get_server(srv, args.server_name, args.server_ip,
                         args.forcePowerOff)
-    boot = validate_boot_settings(con, srv, server, args.manage_boot,
-                                  args.boot_order)
+    boot, bootmode = boot_settings(con, srv, server, args.disable_manage_boot,
+                                   args.boot_order, args.boot_mode, args.pxe,
+                                   args.conn_list)
     fw_settings = get_fw_settings(sts, args.baseline)
-    define_profile(con, srv, args.name, args.desc, server, boot, fw_settings,
-                   args.conn_list)
+    define_profile(con, srv, args.name, args.desc, server, boot, bootmode,
+                   fw_settings, args.conn_list)
 
 if __name__ == '__main__':
     import sys
