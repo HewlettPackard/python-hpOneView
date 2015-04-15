@@ -66,13 +66,6 @@ def main():
     parser.add_argument('-a', dest='host', required=True,
                         help='''
     HP OneView Appliance hostname or IP address''')
-    parser.add_argument('-u', dest='user', required=False,
-                        default='Administrator',
-                        help='''
-    HP OneView Username''')
-    parser.add_argument('-p', dest='passwd', required=True,
-                        help='''
-    HP OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
                         help='''
     Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
@@ -81,20 +74,14 @@ def main():
     Proxy (host:port format''')
 
     args = parser.parse_args()
-    credential = {'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
-    srv = hpov.servers(con)
-    net = hpov.networking(con)
     sts = hpov.settings(con)
 
     if args.proxy:
         con.set_proxy(args.proxy.split(':')[0], args.proxy.split(':')[1])
     if args.cert:
         con.set_trusted_ssl_bundle(args.cert)
-
-    login(con, credential)
-    acceptEULA(con)
 
     getprogress(sts)
 
