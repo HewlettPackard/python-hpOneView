@@ -56,16 +56,26 @@ def add_network_set(net, name, networks, minbw, maxbw):
     minbw = int(minbw * 1000)
     bandDict = hpov.common.make_bw_dict(maxbw, minbw)
 
-    print('Creating Network Set: ', name)
     if networks:
         enets = net.get_enet_networks()
         for enet in enets:
             if enet['name'] in networks:
-                print('  Adding Network: ', enet['name'])
                 nset.append(enet['uri'])
 
     nset = net.create_networkset(name, nets=nset, bw=bandDict)
-    pprint(nset)
+    if 'connectionTemplateUri' in nset:
+        print('\n\nName:           ', nset['name'])
+        print('Type:           ', nset['type'])
+        print('Description:    ', nset['description'])
+        print('State:          ', nset['state'])
+        print('Status:         ', nset['status'])
+        print('Created:        ', nset['created'])
+        print('Uri:            ', nset['uri'])
+        print('networkUris:    ')
+        for net in nset['networkUris']:
+            print('\t\t', net)
+    else:
+        pprint(nset)
 
 
 def main():
@@ -94,7 +104,7 @@ def main():
     parser.add_argument('-n', dest='network_set_name', required=True,
                         help='''
     Name of the network set''')
-    parser.add_argument('-t', dest='list_of_networks', required=False,
+    parser.add_argument('-l', dest='list_of_networks', required=False,
                         nargs='+',
                         help='''
     List of network names to add to the network set, seperated by spaces.

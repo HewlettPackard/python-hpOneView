@@ -130,7 +130,7 @@ def main():
                         help='''
     Disable AUTO loging redistribution''')
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-e', dest='direct', action='store_true',
+    group.add_argument('-d', dest='direct', action='store_true',
                        help='''
     DirectAttach Fabric Type''')
     group.add_argument('-f', dest='fabric', action='store_true',

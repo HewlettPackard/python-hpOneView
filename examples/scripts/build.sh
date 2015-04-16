@@ -40,7 +40,10 @@ OV_TMP=$OV_TMP/hpOneView_temporary_files.$RANDOM.$RANDOM.$RANDOM.$$
 	exit 1
 }
 
-CONN_LIST=$OV_TMP/$RANDOM.$RANDOM.$$
+CONN_LIST=$OV_TMP/CONN-$RANDOM.$RANDOM.$$
+CONN_LIST_BFS=$OV_TMP/CONN-BFS-$RANDOM.$RANDOM.$$
+SAN_LIST1=$OV_TMP/SAN-1-$RANDOM.$RANDOM.$$
+SAN_LIST2=$OV_TMP/SAN-2-$RANDOM.$RANDOM.$$
 
 echo ================================================================
 echo "            Defining Ethernet Logical Networks                "
@@ -53,12 +56,21 @@ do
   done
 done
 
+echo ================================================================
+echo "                 Defining Network Sets                        "
+echo ================================================================
+./define-network-set.py -a $OV_HOST -u $OV_USER -p $OV_PASS \
+  -n "Production-A" -l VLAN-20-A VLAN-30-A VLAN-40-A VLAN-50-A
+./define-network-set.py -a $OV_HOST -u $OV_USER -p $OV_PASS \
+  -n "Production-B" -l VLAN-20-B VLAN-30-B VLAN-40-B VLAN-50-B
+
+
 echo
 echo ================================================================
 echo "         Defining Fibre Channel  Logical Networks             "
 echo ================================================================
-./define-fibrechannel-network.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "3PAR SAN A" -e
-./define-fibrechannel-network.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "3PAR SAN B" -e
+./define-fibrechannel-network.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "3PAR SAN A" -d
+./define-fibrechannel-network.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "3PAR SAN B" -d
 
 echo
 echo ================================================================
@@ -115,27 +127,70 @@ echo
 echo ================================================================
 echo "                        Add  Volumes                          "
 echo ================================================================
-./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n vol1 -sp SND_CPG1 -cap 50
+./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n boot1 -sp SND_CPG1 -cap 10
+./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n boot2 -sp SND_CPG1 -cap 10
+./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n boot3 -sp SND_CPG1 -cap 10
+./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n datastore1 -sp SND_CPG1 -cap 500 -sh
 
 echo
 echo ================================================================
 echo "                   Defining Connection List                   "
 echo ================================================================
-# File to construct connection list
-./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "VLAN-10-A" -func Ethernet -gbps 1.5 -cl $CONN_LIST
-./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "VLAN-10-B" -func Ethernet -gbps 1.5 -cl $CONN_LIST -app
-./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "VLAN-20-A" -func Ethernet -gbps 1.5 -cl $CONN_LIST -app
-./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "VLAN-20-B" -func Ethernet -gbps 1.5 -cl $CONN_LIST -app
-./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "3PAR SAN A" -func FibreChannel -bp "Primary" -cl $CONN_LIST -app
-./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "3PAR SAN B" -func FibreChannel -bp "Secondary" -cl $CONN_LIST -app
+# Define a BFS connection list using single networks for Mgmt and network
+# sets for production
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Mgmt-A" \
+  -net "VLAN-10-A" -func Ethernet -gbps 1 -cl $CONN_LIST_BFS -i 1
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Mgmt-B" \
+  -net "VLAN-10-B" -func Ethernet -gbps 1 -cl $CONN_LIST_BFS -i 2 -app
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Prod-A" \
+  -net "Production-A" -func Ethernet -gbps 2.5 -cl $CONN_LIST_BFS -i 3 -ns -app
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Prod-B" \
+  -net "Production-B" -func Ethernet -gbps 2.5 -cl $CONN_LIST_BFS -i 4 -ns -app
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "FC-A" \
+  -net "3PAR SAN A" -func FibreChannel -bp "Primary" -cl $CONN_LIST_BFS -i 5 -app
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "FC-B" \
+  -net "3PAR SAN B" -func FibreChannel -bp "Secondary" -cl $CONN_LIST_BFS -i 6 -app
+# Define a local boot connection list with no FC connections
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Mgmt-A" \
+  -net "VLAN-10-A" -func Ethernet -gbps 1 -cl $CONN_LIST -i 1
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Mgmt-B" \
+  -net "VLAN-10-B" -func Ethernet -gbps 1 -cl $CONN_LIST -i 2 -app
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Prod-A" \
+  -net "Production-A" -func Ethernet -gbps 2.5 -cl $CONN_LIST -i 3 -ns -app
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Prod-B" \
+  -net "Production-B" -func Ethernet -gbps 2.5 -cl $CONN_LIST -i 4 -ns -app
+
+echo
+echo ================================================================
+echo "                   Defining SAN Storage List                  "
+echo ================================================================
+# Create a SAN connection list using the private volume "boot1" and the
+# shared volume "datastore"
+./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o RHEL \
+    -n boot1 -sl $SAN_LIST1 -cl $CONN_LIST_BFS
+./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o RHEL \
+    -n datastore1 -sl $SAN_LIST1 -cl $CONN_LIST_BFS -app
+# Create a SAN connection list using the private volume "boot2" and the
+# shared volume "datastore"
+./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o RHEL \
+    -n boot2 -sl $SAN_LIST2 -cl $CONN_LIST_BFS
+./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o RHEL \
+    -n datastore1 -sl $SAN_LIST2 -cl $CONN_LIST_BFS -app
 
 echo
 echo ================================================================
 echo "                     Defining profiles                        "
 echo ================================================================
-./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay4" -sn "Encl1, bay 4" -cl $CONN_LIST
+# Define profiles with network and SAN storage connections
+./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay1" \
+  -sn "Encl1, bay 1" -cl $CONN_LIST_BFS -sl $SAN_LIST1
+./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay2" \
+  -sn "Encl1, bay 2" -cl $CONN_LIST_BFS -sl $SAN_LIST2
+# Define profile with network and local storage
+./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay4" \
+  -sn "Encl1, bay 4" -cl $CONN_LIST -rl RAID1 -is
 # Define profile with firmware base line and managed boot order using Gen 7 & 8 ordering
-./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-1" -si $SRV_ADDR -s $FW_BASE -mb -bo $BOOT_G78
+./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-1" -si $SRV_ADDR -s $FW_BASE -bo $BOOT_G78
 # Clean up temporary files
 if [ -d $OV_TMP ]; then
   rm -Rf $OV_TMP

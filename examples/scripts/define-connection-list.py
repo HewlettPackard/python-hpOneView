@@ -49,45 +49,67 @@ def login(con, credential):
         print('Login failed')
 
 
-def define_connection_list(net, name, conn_list, append, portId, func, mac,
-                           macType, reqGbps, wwnn, wwpn, wwpnType,
-                           boot_priority, boot):
+def define_boot_list(function_type, boot_priority, boot_target, boot_lun):
+
+    if boot_priority == 'Primary' or boot_priority == 'Secondary':
+        if function_type == 'Ethernet':
+            if boot_target or boot_lun:
+                print('Boot target and LUN can only be specified for '
+                      'FibreChannel networks')
+                sys.exit(2)
+            boot = hpov.common.make_profile_connection_boot_dict(boot_priority,
+                                                                 None, None)
+        else:
+            if boot_target and boot_lun is None:
+                print('Boot LUN is required when defining a boot target')
+                sys.exit(3)
+            boot = hpov.common.make_profile_connection_boot_dict(boot_priority,
+                                                                 boot_target,
+                                                                 boot_lun)
+    else:
+        boot = None
+
+    return boot
+
+def define_connection_list(net, name, cid, net_name, conn_list, append, portId,
+                           function_type, mac, macType, net_set, reqGbps, wwnn,
+                           wwpn, wwpnType, boot):
 
     reqMbps = None
-    if func == 'Ethernet':
-        nets = net.get_enet_networks()
+    if function_type == 'Ethernet' and not net_set:
+        networks = net.get_enet_networks()
         if reqGbps:
             reqGbps = reqGbps
             if (reqGbps < .1 or reqGbps > 20):
                 print('Error: preferred bandwidth must be between .1 and 20 Gbps')
                 sys.exit(1)
             reqMbps = int(reqGbps * 1000)
-    elif func == 'FibreChannel':
-        nets = net.get_fc_networks()
+    elif function_type == 'Ethernet' and net_set:
+        networks = net.get_networksets()
+        if reqGbps:
+            reqGbps = reqGbps
+            if (reqGbps < .1 or reqGbps > 20):
+                print('Error: preferred bandwidth must be between .1 and 20 Gbps')
+                sys.exit(1)
+            reqMbps = int(reqGbps * 1000)
+    elif function_type == 'FibreChannel':
+        networks = net.get_fc_networks()
 
     netw = None
-    for network in nets:
-        if network['name'] == name:
+    for network in networks:
+        if network['name'] == net_name:
             netw = network
             break
     if netw is None:
-        print(func, 'network: ', name, ' not found')
+        print(function_type, 'network: ', net, ' not found')
         sys.exit(1)
-    if boot_priority:
-        boot = hpov.common.make_profile_connection_boot_dict(priority=boot_priority)
-    else:
-        boot = None
 
-    conn = hpov.common.make_profile_connection_dict(netw,
-                                                    portId,
-                                                    func,
-                                                    mac,
-                                                    macType,
-                                                    reqMbps,
-                                                    wwnn,
-                                                    wwpn,
-                                                    wwpnType,
-                                                    boot)
+    print('Defining connection', name)
+    conn = hpov.common.make_profile_connection_dict(cid, name, network['uri'],
+                                                    boot, function_type, mac,
+                                                    macType, portId, reqMbps,
+                                                    wwnn, wwpn, wwpnType)
+
     if append:
         # read in the json data from the connection list file
         data = json.loads(open(conn_list).read())
@@ -127,7 +149,16 @@ def main():
     parser.add_argument('-n', dest='name',
                         required=True,
                         help='''
-    Name of the network''')
+    Name of the network connection''')
+    parser.add_argument('-i', dest='cid',
+                        required=True,
+                        help='''
+    Unique ID for the network connection''')
+    parser.add_argument('-net', dest='network',
+                        required=True,
+                        help='''
+    The name of the Ethernet network, network set, or Fibre Channel network to
+    use for this connection.''')
     parser.add_argument('-cl', dest='conn_list',
                         required=True,
                         help='''
@@ -137,62 +168,83 @@ def main():
                         action='store_true',
                         help='''
     Causes connection list to be appended to the file''')
+    parser.add_argument('-ns', dest='net_set',
+                        required=False,
+                        action='store_true',
+                        help='''
+    Required to mark the connection type as a Network Set''')
     parser.add_argument('-port', dest='portId',
                         required=False,
                         default='Auto',
                         help='''
-    FlexNIC to use''')
+    Identifies the port (FlexNIC) used for this connection, for example
+    'Flb 1:1-a'. The port can be automatically selected by specifying 'Auto',
+    'None', or a physical port when creating or editing the connection.
+    If 'Auto' is specified, a port that provides access to the selected
+    network (networkUri) will be selected. A physical port (e.g. 'Flb 1:2')
+    can be specified if the choice of a specific FlexNIC on the physical
+    port is not important. If 'None' is specified, the connection will not
+    be configured on the server hardware.''')
     parser.add_argument('-func', dest='func',
                         required=False,
-                        choices=('Ethernet', 'FibreChannel'),
+                        choices=['Ethernet', 'FibreChannel'],
                         default='Ethernet',
                         help='''
     Ethernet or FibreChannel''')
     parser.add_argument('-mac', dest='mac',
                         required=False,
-                        default=None,
                         help='''
-    MAC address''')
+    The MAC address that is currently programmed on the FlexNic. The value can
+    be virtual, user defined or physical MAC address read from the device.''')
     parser.add_argument('-mt', dest='macType',
                         required=False,
-                        choices=('Physical', 'UserDefined', 'Virtual'),
+                        choices=['Physical', 'UserDefined', 'Virtual'],
                         default='Virtual',
                         help='''
-    MAC address type''')
+    Specifies the type of MAC address to be programmed into the IO Devices.''')
     parser.add_argument('-gbps', dest='reqGbps',
                         required=False,
                         type=float,
-                        default=None,
                         help='''
-    Transmit thorougput for this connection in Gbps
-    Must be between .1 and 20 Gbps''')
+    Transmit thorougput for this connection in Gbps Must be between .1 and
+    20 Gbps''')
     parser.add_argument('-wwnn', dest='wwnn',
                         required=False,
-                        default=None,
                         help='''
-    Node WWN address on the FlexNIC''')
+    The node WWN address that is currently programmed on the FlexNic. The
+    value can be a virtual WWNN, user defined WWNN or physical WWNN read from
+    the device.''')
     parser.add_argument('-wwpn', dest='wwpn',
                         required=False,
-                        default=None,
                         help='''
-    Port WWN address on the FlexNIC''')
+    The port WWN address that is currently programmed on the FlexNIC. The
+    value can be a virtual WWPN, user defined WWPN or the physical WWPN read
+    from the device.''')
     parser.add_argument('-wt', dest='wwpnType',
                         required=False,
-                        choices=('Physical', 'UserDefined', 'Virtual'),
+                        choices=['Physical', 'UserDefined', 'Virtual'],
                         default='Virtual',
                         help='''
-    WWPN address type''')
+    Specifies the type of WWN address to be porgrammed on the FlexNIC. The
+    value can be 'Virtual', 'Physical' or 'UserDefined'.''')
     parser.add_argument('-bp', dest='boot_priority',
                         required=False,
-                        choices=('Primary', 'Secondary', 'NotBootable'),
+                        choices=['Primary', 'Secondary', 'NotBootable'],
                         default='NotBootable',
                         help='''
     Primary or Secondary or NotBootable''')
-    parser.add_argument('-boot', dest='boot',
+    parser.add_argument('-t', dest='boot_target',
                         required=False,
-                        default=None,
                         help='''
-    Boot connection (Not yet implemented)''')
+    The wwpn of the target device that provides access to the Boot Volume.
+    This value must contain 16 HEX digits''')
+    parser.add_argument('-l', dest='boot_lun',
+                        required=False,
+                        type=int,
+                        help='''
+    The LUN of the Boot Volume presented by the target device. This value can
+    bein the range 0 to 255.''')
+
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -208,10 +260,25 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    define_connection_list(net, args.name, args.conn_list, args.append,
-                           args.portId, args.func, args.mac, args.macType,
+    if args.boot_lun:
+        if args.boot_lun < 0 or args.boot_lun > 255:
+            print('Error: boot lun value must be between 0 and 255')
+            sys.exit(1)
+
+    if args.cid:
+        if int(args.cid) <1 or int(args.cid) > 999:
+            print('Error: connection ID value must be between 1 and 999')
+            sys.exit(2)
+
+
+    boot = define_boot_list(args.func, args.boot_priority, args.boot_target,
+                            args.boot_lun)
+
+    define_connection_list(net, args.name, args.cid, args.network,
+                           args.conn_list, args.append, args.portId, args.func,
+                           args.mac, args.macType, args.net_set,
                            args.reqGbps, args.wwnn, args.wwpn, args.wwpnType,
-                           args.boot_priority, args.boot)
+                           boot)
 
 
 if __name__ == '__main__':

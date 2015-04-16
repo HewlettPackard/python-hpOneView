@@ -81,6 +81,30 @@ def get_server(srv, server_name, server_ip, forcePowerOff):
     return located_server
 
 
+def local_storage_settings(con, server, raidlevel, logicalboot, init_storage):
+    sht = con.get(server['serverHardwareTypeUri'])
+    if 'model' in sht:
+        model = sht['model']
+    else:
+        print('Error, can not retreive server model')
+        sys.exit()
+
+    if raidlevel or init_storage:
+        p = re.compile('.*DL\d.*', re.IGNORECASE)
+        match = p.match(model)
+        if match:
+            print('Local storage management is not supported on DL servers')
+            sys.exit()
+
+        drives = []
+        drives.append(hpov.common.make_logicaldrives_dict(raidlevel,
+                                                          logicalboot))
+        local_storage = hpov.common.make_localstorage_dict(True, init_storage,
+                                                           drives)
+        return local_storage
+    return None
+
+
 def get_fw_settings(sts, baseline):
     # Find the first Firmware Baseline
     uri = ''
@@ -103,8 +127,8 @@ def get_fw_settings(sts, baseline):
     return fw_settings
 
 
-def boot_settings(con, srv, server, disable_manage_boot, boot_order, boot_mode, pxe,
-                  conn_list):
+def boot_settings(con, srv, server, disable_manage_boot, boot_order, boot_mode,
+                  pxe):
 
     gen9 = False
     # Get the bootCapabilites from the Server Hardwer Type
@@ -213,8 +237,8 @@ def boot_settings(con, srv, server, disable_manage_boot, boot_order, boot_mode, 
     return boot, bootmode
 
 
-def define_profile(con, srv, profileName, desc, server, boot, bootmode, fw,
-                   conn_list):
+def define_profile(con, srv, affinity, name, desc, server, boot, bootmode, fw,
+                   hide_flexnics, local_storage, conn_list, san_list):
 
     if conn_list:
         # read connection list from file
@@ -222,8 +246,16 @@ def define_profile(con, srv, profileName, desc, server, boot, bootmode, fw,
     else:
         conn = []
 
-    profile_dict = hpov.common.make_profile_dict(profileName, server, desc, fw,
-                                                boot, bootmode, conn)
+    if san_list:
+        # read connection list from file
+        san = json.loads(open(san_list).read())
+    else:
+        san = None
+
+    profile_dict = hpov.common.make_profile_dict(affinity, conn, boot,
+                                                 bootmode, desc, fw,
+                                                 hide_flexnics, local_storage,
+                                                 name, san, server)
 
     profile = srv.create_server_profile(profile_dict)
     if 'serialNumberType' in profile:
@@ -276,6 +308,18 @@ def main():
                         required=False,
                         help='''
     Description for the server profile''')
+    parser.add_argument('-af', dest='affinity',
+                        required=False, choices=['Bay', 'BayAndServer'],
+                        default='Bay',
+                        help='''
+    This identifies the behavior of the server profile when the server
+    hardware is removed or replaced.
+
+        . Bay:  This profile remains with the device bay when the server
+                hardware is removed or replaced.
+
+        . BayAndServer This profile is pinned to both the device bay and
+          specific server hardware.''')
     parser.add_argument('-f', dest='forcePowerOff',
                         required=False,
                         action='store_true',
@@ -321,6 +365,12 @@ def main():
                         help='''
     File with list of connections for this profile in JSON format. This file
     can be created with multiple calls to define-connection-list.py''')
+    parser.add_argument('-sl', dest='san_list',
+                        required=False,
+                        help='''
+    File with list of SAN Storage connections for this profile in JSON format.
+    This file can be created with multiple calls to
+    define-san-storage-list.py''')
     parser.add_argument('-bm', dest='boot_mode', required=False,
                         choices=['UEFI', 'UEFIOptimized', 'BIOS'],
                         default='BIOS',
@@ -369,6 +419,48 @@ def main():
     targets in the UEFI Boot Order list will not be modified, and any new
     network boot targets will be added to the end of the list using the
     System ROM's default policy.''')
+    parser.add_argument('-rl', dest='raidlevel', required=False,
+                        choices=['NONE', 'RAID0', 'RAID1'],
+                        help='''
+    Enable local storage to be managed via the server profile by defining the
+    RAID level for the logical drive.''')
+    parser.add_argument('-lb', dest='logicalboot', required=False,
+                        action='store_true',
+                        help='''
+    Mark the logical drive as NOT bootable''')
+    parser.add_argument('-is', dest='init_storage', required=False,
+                        action='store_true',
+                        help='''
+    Indicates whether the local storage controller should be reset to factory
+    defaults before applying the local storage settings from the server
+    profile.
+
+                  ***************** WARNING *****************
+
+                Setting this will overwrite an existing logical
+                 disk if present, and without further warning.
+
+                  ***************** WARNING *****************''')
+    parser.add_argument('-hn', dest='hide_flexnics', required=False,
+                        action='store_false',
+                        help='''
+    This setting controls the enumeration of physical functions that do not
+    correspond to connections in a profile. Using this flag will SHOW unused
+    FlexNICs to the Operating System. Changing this setting may alter the order
+    of network interfaces in the Operating System. This option sets the 'Hide
+    Unused FlexNICs' to disabled, eight FlexNICs will be enumerated in the
+    Operating System as network interfaces for each Flex-10 or FlexFabric
+    adapter.  Configuring Fibre Channel connections on a FlexFabric adapter may
+    enumerate two storage interfaces, reducing the number of network interfaces
+    to six. The default (this option is not selected) enables 'Hide Unused
+    FlexNICs' and may suppress enumeration of FlexNICs that do not correspond
+    to profile connections. FlexNICs are hidden in pairs, starting with the 4th
+    pair. For instance, if the 4th FlexNIC on either physical port corresponds
+    to a profile connection, all eight physical functions are enumerated. If a
+    profile connection corresponds to the 2nd FlexNIC on either physical port,
+    but no connection corresponds to the 3rd or 4th FlexNIC on either physical
+    port, only the 1st and 2nd physical functions are enumerated in the
+    Operating System.''')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-sn', dest='server_name',
                        help='''
@@ -392,6 +484,9 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
+    # Invert the boolean value
+    args.logicalboot = not args.logicalboot
+
     if args.boot_order and args.disable_manage_boot:
         print('Error: Managed Boot must be enabled to define a boot order')
         sys.exit()
@@ -399,11 +494,14 @@ def main():
     server = get_server(srv, args.server_name, args.server_ip,
                         args.forcePowerOff)
     boot, bootmode = boot_settings(con, srv, server, args.disable_manage_boot,
-                                   args.boot_order, args.boot_mode, args.pxe,
-                                   args.conn_list)
+                                   args.boot_order, args.boot_mode, args.pxe)
+    local_storage = local_storage_settings(con, server, args.raidlevel,
+                                           args.logicalboot,
+                                           args.init_storage)
     fw_settings = get_fw_settings(sts, args.baseline)
-    define_profile(con, srv, args.name, args.desc, server, boot, bootmode,
-                   fw_settings, args.conn_list)
+    define_profile(con, srv, args.affinity, args.name, args.desc, server,
+                   boot, bootmode, fw_settings, args.hide_flexnics,
+                   local_storage, args.conn_list, args.san_list)
 
 if __name__ == '__main__':
     import sys

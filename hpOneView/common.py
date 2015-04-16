@@ -118,6 +118,17 @@ uri = {
     #  Server Profiles
     #------------------------------------
     'profiles': '/rest/server-profiles',
+    'profile-networks': '/rest/server-profiles/available-networks',
+    'profile-networks-schema': '/rest/server-profiles/available-networks/schema',
+    'profile-available-servers': '/rest/server-profiles/available-servers',
+    'profile-available-servers-scema': '/rest/server-profiles/available-servers/schema',
+    'profile-available-storage-system': '/rest/server-profiles/available-storage-system',
+    'profile-available-storage-systems': '/rest/server-profiles/available-storage-systems',
+    'profile-available-targets': '/rest/server-profiles/available-targets',
+    'profile-messages-schema': '/rest/server-profiles/messages/schema',
+    'profile-ports': '/rest/server-profiles/profile-ports',
+    'profile-ports-schema': '/rest/server-profiles/profile-ports/schema',
+    'profile-schema': '/rest/server-profiles/schema',
     #------------------------------------
     #  Health
     #------------------------------------
@@ -160,6 +171,7 @@ uri = {
     'storage-volumes': '/rest/storage-volumes',
     'vol-templates': '/rest/storage-volume-templates',
     'connectable-vol': '/rest/storage-volume-templates/connectable-volume-templates',
+    'attachable-volumes': '/rest/storage-volumes/attachable-volumes',
     #------------------------------------
     # FC-SANS
     #------------------------------------
@@ -536,27 +548,25 @@ def make_storage_system_dict(mdom, udom, mports, uports):
         }
 
 
-def make_profile_connection_dict(network,
-                                 portId='Auto',
-                                 functionType='Ethernet',
-                                 mac=None,
-                                 macType='Virtual',
-                                 requestedMbps=None,
-                                 wwnn=None,
-                                 wwpn=None,
-                                 wwpnType='Virtual',
-                                 boot=None):
+def make_profile_connection_dict(cid, name, networkUri, boot=None,
+                                 functionType='Ethernet', mac=None,
+                                 macType='Virtual', portId='Auto',
+                                 requestedMbps=None, wwnn=None, wwpn=None,
+                                 wwpnType='Virtual'):
     return {
-        'networkUri': network['uri'],
-        'portId': portId,
+        'id': cid,
+        'name': name,
+        'boot': boot,
         'functionType': functionType,
         'mac': mac,
         'macType': macType,
+        'networkUri': networkUri,
+        'portId': portId,
+        'requestedMbps': requestedMbps,
         'wwnn': wwnn,
         'wwpn': wwpn,
-        'wwpnType': 'Virtual',
-        'requestedMbps': requestedMbps,
-        'boot': boot}
+        'wwpnType': wwpnType,
+    }
 
 
 def make_profile_connection_boot_dict(priority='Primary',
@@ -577,37 +587,33 @@ def make_profile_connection_boot_target_dict(arrayWwpn=None, lun=None):
              'lun': lun}]
 
 
-def make_profile_dict(profileName, server, desc,
-                      firmwareBaseline, boot, bootmode, connections):
-    if not connections:
-        return {
-            'type': 'ServerProfileV4',
-            'name': profileName,
-            'description': desc,
-            'serverHardwareUri': server['uri'],
-            'serverHardwareTypeUri': server['serverHardwareTypeUri'],
-            'firmware': firmwareBaseline,
-            'boot': boot,
-            'bootMode': bootmode,
-            'bios': {'manageBios': False},
-            'macType': 'Physical',
-            'wwnType': 'Physical',
-            'serialNumberType': 'Physical'}
+def make_profile_dict(affinity, connections, boot, bootmode, desc,
+                      firmwareBaseline, hideUnusedFlexNics, localStorage,
+                      profileName, sanStorage, server):
+    if connections:
+        ptype = 'Virtual'
     else:
-        return {
-            'type': 'ServerProfileV4',
-            'name': profileName,
-            'description': desc,
-            'serverHardwareUri': server['uri'],
-            'serverHardwareTypeUri': server['serverHardwareTypeUri'],
-            'firmware': firmwareBaseline,
-            'boot': boot,
-            'bootMode': bootmode,
-            'bios': {'manageBios': False},
-            'wwnType': 'Virtual',
-            'macType': 'Virtual',
-            'serialNumberType': 'Virtual',
-            'connections': connections}
+        ptype = 'Physical'
+
+    return {
+        'affinity': affinity,
+        'bios': {'manageBios': False},
+        'boot': boot,
+        'bootMode': bootmode,
+        'connections': connections,
+        'description': desc,
+        'firmware': firmwareBaseline,
+        'hideUnusedFlexNics': hideUnusedFlexNics,
+        'localStorage': localStorage,
+        'macType': ptype,
+        'name': profileName,
+        'sanStorage': sanStorage,
+        'serialNumberType': ptype,
+        'serverHardwareTypeUri': server['serverHardwareTypeUri'],
+        'serverHardwareUri': server['uri'],
+        'type': 'ServerProfileV4',
+        'wwnType': ptype
+    }
 
 
 def make_firmware_settings_dict(firmwareUri, manageFirmware=True,
@@ -635,6 +641,69 @@ def make_bootmode_settings_dict(manageMode, mode, pxeBootPolicy):
     return {'manageMode': manageMode,
             'mode': mode,
             'pxeBootPolicy': pxeBootPolicy
+            }
+
+
+def make_localstorage_dict(manageLocalStorage, initialize, logicalDrives):
+    return {'manageLocalStorage': manageLocalStorage,
+            'initialize': initialize,
+            'logicalDrives': logicalDrives
+            }
+
+
+def make_logicaldrives_dict(raidLevel, bootable):
+    return {'raidLevel': raidLevel,
+            'bootable': bootable
+            }
+
+
+def make_sanstorage_dict(hostOSType, manageSanStorage, volumeAttachments):
+    return {'hostOSType': hostOSType,
+            'manageSanStorage': manageSanStorage,
+            'volumeAttachments': [volumeAttachments],
+            }
+
+
+def make_volumeAttachments_dict(lun, lunType, volumeUri, volumeStoragePoolUri,
+                                volumeStorageSystemUri, storagePaths):
+    if lunType == 'Manual':
+        return {'id': None,
+                'lun': lun,
+                'lunType': lunType,
+                'volumeUri': volumeUri,
+                'volumeStoragePoolUri': volumeStoragePoolUri,
+                'volumeStorageSystemUri': volumeStorageSystemUri,
+                'storagePaths': storagePaths,
+                }
+    else:
+        return {'id': None,
+                'lunType': lunType,
+                'volumeUri': volumeUri,
+                'volumeStoragePoolUri': volumeStoragePoolUri,
+                'volumeStorageSystemUri': volumeStorageSystemUri,
+                'storagePaths': storagePaths,
+                }
+
+
+def make_ephemeral_volume_dict(lun, lunType, volumeUri, volumeStoragePoolUri,
+                               volumeStorageSystemUri, storagePaths,
+                               permanent=True, volumeId=None):
+    return {'id': volumeId,
+            'lun': lun,
+            'lunType': lunType,
+            'volumeUri': volumeUri,
+            'volumeStoragePoolUri': volumeStoragePoolUri,
+            'volumeStorageSystemUri': volumeStorageSystemUri,
+            'storagePaths': storagePaths,
+            }
+
+
+def make_storagePaths_dict(storageTargetType='Auto', storageTargets=[],
+                           connectionId=None, isEnabled=True):
+    return {'storageTargetType': storageTargetType,
+            'storageTargets': storageTargets,
+            'connectionId': connectionId,
+            'isEnabled': isEnabled
             }
 
 

@@ -224,6 +224,22 @@ class servers(object):
         body = self._con.get(uri['vsn-pool'])
         return body
 
+    def get_profile_networks(self):
+        body = self._con.get(uri['profile-networks'])
+        return body
+
+    def get_profile_available_servers(self):
+        body = self._con.get(uri['profile-available-servers'])
+        return body
+
+    def get_profile_available_storage_systems(self):
+        body = self._con.get(uri['profile-available-storage-systems'])
+        return body
+
+    def get_profile_ports(self):
+        body = self._con.get(uri['profile-ports'])
+        return body
+
     # TODO put pool
     def allocate_pool_ids(self, url, count):
         allocatorUrl = '%s/allocator' % url

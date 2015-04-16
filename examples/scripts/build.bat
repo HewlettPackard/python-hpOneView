@@ -33,19 +33,28 @@ set BOOT_G9_LEGACY="HardDisk PXE USB CD"
 set BOOT_G9_UEFI="HardDisk"
 
 
+set CONN_LIST_BFS=%TMP%\oneview_conn_list_bfs-%RANDOM%-%TIME:~6,5%.tmp
 set CONN_LIST=%TMP%\oneview_conn_list-%RANDOM%-%TIME:~6,5%.tmp
+set SAN_LIST1=%TMP%\oneview_san_list1-%RANDOM%-%TIME:~6,5%.tmp
+set SAN_LIST2=%TMP%\oneview_san_list2-%RANDOM%-%TIME:~6,5%.tmp
 
 echo ================================================================
 echo              Defining Ethernet Logical Networks
 echo ================================================================
 FOR %%A IN (A B) DO FOR %%V IN (10 20 30 40 50 60) DO python define-ethernet-network.py -a %HOST% -u %USER% -p %PASS% -n VLAN-%%V-%%A -v %%V
 
+echo ================================================================
+echo                    Defining Network Sets
+echo ================================================================
+python define-network-set.py -a %HOST% -u %USER% -p %PASS% -n "Production-A" -l VLAN-20-A VLAN-30-A VLAN-40-A VLAN-50-A
+python define-network-set.py -a %HOST% -u %USER% -p %PASS% -n "Production-B" -l VLAN-20-B VLAN-30-B VLAN-40-A VLAN-50-B
+
 echo.
 echo ================================================================
 echo           Defining Fibre Channel  Logical Networks
 echo ================================================================
-python define-fibrechannel-network.py -a %HOST% -u %USER% -p %PASS% -n "3PAR SAN A" -e
-python define-fibrechannel-network.py -a %HOST% -u %USER% -p %PASS% -n "3PAR SAN B" -e
+python define-fibrechannel-network.py -a %HOST% -u %USER% -p %PASS% -n "3PAR SAN A" -d
+python define-fibrechannel-network.py -a %HOST% -u %USER% -p %PASS% -n "3PAR SAN B" -d
 
 echo.
 echo ================================================================
@@ -57,10 +66,10 @@ echo.
 echo ================================================================
 echo     Defining Uplink Set Groups in Logical Interconnect Group
 echo ================================================================
-python define-uplink-set.py -a %HOST% -u %USER% -p %PASS% -n "3PAR SAN A" -i "VC FlexFabric Production" -t FibreChannel -l "3PAR   SAN A"  -o 1:3 1:4
-python define-uplink-set.py -a %HOST% -u %USER% -p %PASS% -n "3PAR SAN B" -i "VC FlexFabric Production" -t FibreChannel -l "3PAR   SAN B"  -o 2:3 2:4
-python define-uplink-set.py -a %HOST% -u %USER% -p %PASS% -n "Uplink Set 1-A" -i "VC FlexFabric Production" -t Ethernet  -l VLAN-  10-A VLAN-20-A VLAN-30-A VLAN-40-A VLAN-50-A VLAN-60-A -o 1:7 1:8
-python define-uplink-set.py -a %HOST% -u %USER% -p %PASS% -n "Uplink Set 1-B" -i "VC FlexFabric Production" -t Ethernet  -l VLAN-  10-B VLAN-20-B VLAN-30-B VLAN-40-B VLAN-50-B VLAN-60-B -o 2:7 2:8
+python define-uplink-set.py -a %HOST% -u %USER% -p %PASS% -n "3PAR SAN A" -i "VC FlexFabric Production" -t FibreChannel -l "3PAR SAN A" -o 1:3 1:4
+python define-uplink-set.py -a %HOST% -u %USER% -p %PASS% -n "3PAR SAN B" -i "VC FlexFabric Production" -t FibreChannel -l "3PAR SAN B" -o 2:3 2:4
+python define-uplink-set.py -a %HOST% -u %USER% -p %PASS% -n "Uplink Set 1-A" -i "VC FlexFabric Production" -t Ethernet -l VLAN-10-A VLAN-20-A VLAN-30-A VLAN-40-A VLAN-50-A VLAN-60-A -o 1:7 1:8
+python define-uplink-set.py -a %HOST% -u %USER% -p %PASS% -n "Uplink Set 1-B" -i "VC FlexFabric Production" -t Ethernet -l VLAN-10-B VLAN-20-B VLAN-30-B VLAN-40-B VLAN-50-B VLAN-60-B -o 2:7 2:8
 
 echo.
 echo ================================================================
@@ -102,24 +111,51 @@ echo.
 echo ================================================================
 echo                          Add  Volumes
 echo ================================================================
-python add-volume.py -a %HOST% -u %USER% -p %PASS% -n vol1 -sp SND_CPG1 -cap 50
+python add-volume.py -a %HOST% -u %USER% -p %PASS% -n boot1 -sp SND_CPG1 -cap 10
+python add-volume.py -a %HOST% -u %USER% -p %PASS% -n boot2 -sp SND_CPG1 -cap 10
+python add-volume.py -a %HOST% -u %USER% -p %PASS% -n boot3 -sp SND_CPG1 -cap 10
+python add-volume.py -a %HOST% -u %USER% -p %PASS% -n datastore1 -sp SND_CPG1 -cap 500 -sh
 
 echo.
 echo ================================================================
 echo                     Defining Connection List
 echo ================================================================
-python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "VLAN-10-A" -func Ethernet -gbps 1.5 -cl %CONN_LIST%
-python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "VLAN-10-B" -func Ethernet -gbps 1.5 -cl %CONN_LIST% -app
-python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "VLAN-20-A" -func Ethernet -gbps 1.5 -cl %CONN_LIST% -app
-python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "VLAN-20-B" -func Ethernet -gbps 1.5 -cl %CONN_LIST% -app
-python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "3PAR SAN A" -func FibreChannel -bp "Primary" -cl %CONN_LIST% -app
-python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "3PAR SAN B" -func FibreChannel -bp "Secondary" -cl %CONN_LIST% -app
+rem Define a BFS connection list using single networks for Mgmt and network sets
+rem for production
+python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "Mgmt-A" -net "VLAN-10-A" -func Ethernet -gbps 1 -cl %CONN_LIST_BFS% -i 1
+python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "Mgmt-B" -net "VLAN-10-B" -func Ethernet -gbps 1 -cl %CONN_LIST_BFS% -i 2 -app
+python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "Prod-A" -net "Production-A" -func Ethernet -gbps 2.5 -cl %CONN_LIST_BFS% -i 3 -ns -app
+python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "Prod-B" -net "Production-B" -func Ethernet -gbps 2.5 -cl %CONN_LIST_BFS% -i 4 -ns -app
+python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "FC-A" -net "3PAR SAN A" -func FibreChannel -bp "Primary" -cl %CONN_LIST_BFS% -i 5 -app
+python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "FC-B" -net "3PAR SAN B" -func FibreChannel -bp "Secondary" -cl %CONN_LIST_BFS% -i 6 -app
+rem Define a local boot connection list with no FC connections
+python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "Mgmt-A" -net "VLAN-10-A" -func Ethernet -gbps 1 -cl %CONN_LIST% -i 1
+python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "Mgmt-B" -net "VLAN-10-B" -func Ethernet -gbps 1 -cl %CONN_LIST% -i 2 -app
+python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "Prod-A" -net "Production-A" -func Ethernet -gbps 2.5 -cl %CONN_LIST% -i 3 -ns -app
+python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "Prod-B" -net "Production-B" -func Ethernet -gbps 2.5 -cl %CONN_LIST% -i 4 -ns -app
+
+echo.
+echo ================================================================
+echo                     Defining SAN Storage List
+echo ================================================================
+rem Create a SAN connection list using the private volume "boot1" and the
+rem shared volume "datastore"
+python define-san-storage-list.py -a %HOST% -u %USER% -p %PASS% -o RHEL -n boot1 -sl %SAN_LIST1% -cl %CONN_LIST_BFS%
+python define-san-storage-list.py -a %HOST% -u %USER% -p %PASS% -o RHEL -n datastore1 -sl %SAN_LIST1% -cl %CONN_LIST_BFS% -app
+rem Create a SAN connection list using the private volume "boot2" and the
+rem shared volume "datastore"
+python define-san-storage-list.py -a %HOST% -u %USER% -p %PASS% -o RHEL -n boot2 -sl %SAN_LIST2% -cl %CONN_LIST_BFS%
+python define-san-storage-list.py -a %HOST% -u %USER% -p %PASS% -o RHEL -n datastore1 -sl %SAN_LIST2% -cl %CONN_LIST_BFS% -app
 
 echo.
 echo ================================================================
 echo                       Defining profiles
 echo ================================================================
-python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -sn "Encl1, bay 4" -cl %CONN_LIST%
+rem Define profiles with network and SAN storage connections
+python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay1" -sn "Encl1, bay 1" -cl %CONN_LIST_BFS% -sl %SAN_LIST1%
+python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay2" -sn "Encl1, bay 2" -cl %CONN_LIST_BFS% -sl %SAN_LIST2%
+rem Define profile with network and local storage
+python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -sn "Encl1, bay 4" -cl %CONN_LIST% -rl RAID1 -is
 rem Define profile with firmware base line and managed boot order using Gen 7 &
 rem 8 ordering
-python define-profile.py -a %OV_HOST% -u %OV_USER% -p %OV_PASS% -n "Profile-1" -si %SRV_ADDR% -s %FW_BASE% -mb -bo %BOOT_G78%
+python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-1" -si %SRV_ADDR% -s %FW_BASE% -bo %BOOT_G78%

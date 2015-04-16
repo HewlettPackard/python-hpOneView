@@ -52,14 +52,23 @@ def login(con, credential):
 def del_all_network_sets(net):
     netsets = net.get_networksets()
     for netset in netsets:
+        print('Deleting Network Set:', netset['name'])
         net.delete_networkset(netset)
 
 
 def del_network_set_by_name(net, name):
+    found = False
     netsets = net.get_networksets()
     for netset in netsets:
+        print(netset['name'],'==', name)
         if netset['name'] == name:
+            found = True
+            print('Deleting Network Set:', name)
             net.delete_networkset(netset)
+
+    if not found:
+        print('Error, could not locate Network Set:', name)
+        sys.exit()
 
 
 def main():

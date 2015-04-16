@@ -121,6 +121,11 @@ class storage(object):
             return body
         return task
 
+    def get_attachable_volumes(self):
+        global uri
+        body = self._con.get(uri['attachable-volumes'])
+        return body
+
     def get_storage_volume_templates(self):
         global uri
         body = self._con.get(uri['vol-templates'])
