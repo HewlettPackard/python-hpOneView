@@ -20,9 +20,9 @@ STO_USR=${STO_USR:=Administrator}
 STO_PASS=${STO_PASS:=PASSWORD}
 # Standalone Server iLO hostname or IP address
 SRV_ADDR=${SRV_ADDR:=172.18.6.15}
-# Enclosure OA username
+# Standalone Server iLO username
 SRV_USR=${SRV_USR:=Administrator}
-# Enclosure OA password
+# Standalone Server iLO password
 SRV_PASS=${SRV_PASS:=PASSWORD}
 # Firmware Baseline
 FW_BASE=${FW_BASE:=bp-hp-service-pack-for-proliant-oneview-2014-11-30-05.iso}

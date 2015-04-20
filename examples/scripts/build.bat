@@ -21,9 +21,9 @@ rem Enclosure OA password
 set STO_PASS=PASSWORD
 rem Standalone server iLO hostname or IP Address
 set SRV_ADDR=172.18.6.15
-rem Enclosure OA username
+rem Standalone Server iLO username
 set SRV_USR=Administrator
-rem Enclosure OA password
+rem Standalone Server iLO password
 set SRV_PASS=PASSWORD
 rem Firmware Baseline
 set FW_BASE=bp-hp-service-pack-for-proliant-oneview-2014-11-30-05.iso
