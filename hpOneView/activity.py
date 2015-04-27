@@ -155,14 +155,12 @@ class activity(object):
                                        ', aborting')
 
     def get_tasks(self):
-        global uri
         return get_members(self._con.get(uri['task']))
 
     ###########################################################################
     # Alerts
     ###########################################################################
     def get_alerts(self, AlertState='All'):
-        global uri
         if AlertState == 'All':
         # TODO remove the evil use/hack of the large count default. The OneView
         # API documents that count=-1 should return everything but it is not
@@ -188,12 +186,10 @@ class activity(object):
     # Audit Logs
     ###########################################################################
     def get_audit_logs(self, query=''):
-        global uri
         body = self._con.get(uri['audit-logs'] + '?' + query)
         return get_members(body)
 
     def create_audit_log(self, auditLogRecord):
-        global uri
         self._con.post(uri['audit-logs'], auditLogRecord)
         return
 
@@ -208,11 +204,9 @@ class activity(object):
     # Events
     ###########################################################################
     def get_events(self, query=''):
-        global uri
         body = self._con.get(uri['events'] + '?' + query)
         return get_members(body)
 
     def create_event(self, eventRecord):
-        global uri
         self._con.post(uri['events'], eventRecord)
         return

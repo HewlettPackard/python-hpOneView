@@ -51,22 +51,18 @@ class security(object):
     # User management and Roles
     ###########################################################################
     def get_users(self):
-        global uri
         body = self._con.get(uri['users'])
         return get_members(body)
 
     def get_user(self, user):
-        global uri
         body = self._con.get(uri['users'] + '/' + user)
         return body
 
     def get_user_roles(self, user):
-        global uri
         body = self._con.get(uri['userRole'] + '/' + user)
         return get_members(body)
 
     def set_user_roles(self, user, roles):
-        global uri
         request = []
         for role in roles:
             req = {'type': 'RoleNameDtoV2', 'roleName': role}
@@ -76,7 +72,6 @@ class security(object):
         return body
 
     def set_user_role(self, user, role):
-        global uri
         request = {'type': 'RoleNameDtoV2', 'roleName': role}
         task, body = self._con.put(uri['users'] + '/' + user +
                              '/roles?multiResource=true', [request])
@@ -85,7 +80,6 @@ class security(object):
     def create_user(self, name, password, enabled=True, fullName='',
                     emailAddress='', officePhone='', mobilePhone='',
                     roles=['Infrastructure administrator']):
-        global uri
         usr = make_user_dict(name, password, enabled, fullName,
                              emailAddress, officePhone, mobilePhone,
                              roles)
@@ -93,17 +87,14 @@ class security(object):
         return body
 
     def delete_user(self, user):
-        global uri
         task, body = self._con.delete(uri['users'] + '/' + user)
         return body
 
     def update_user(self, updateUser):
-        global uri
         task, body = self._con.put(uri['users'], updateUser)
         return body
 
     def get_roles(self):
-        global uri
         body = self._con.get(uri['roles'])
         return get_members(body)
 
@@ -111,60 +102,49 @@ class security(object):
     # Certificates
     ###########################################################################
     def get_certs(self):
-        global uri
         body = self._con.get(uri['certificates'])
         return body
 
     def get_cert_https(self):
-        global uri
         body = self._con.get(uri['cert-https'])
         return body
 
     def get_cert_ca(self):
-        global uri
         body = self._con.get(uri['ca'])
         return body
 
     def get_cert_ca_crl(self):
-        global uri
         body = self._con.get(uri['crl'])
         return body
 
     def gen_rabbitmq_internal_signed_ca(self):
-        global uri
         request = {'type': 'RabbitMqClientCertV2', 'commonName': 'default'}
         task, body = self._con.post(uri['rabbitmq'], request)
         return body
 
     def gen_rabbitmq_self_signed_ca(self):
-        global uri
         request = {'type': 'RabbitMqClientCertV2', 'commonName': 'any',
                    'signedCert': False}
         task, body = self._con.post(uri['rabbitmq'], request)
         return body
 
     def get_rabbitmq_kp(self, alias='default'):
-        global uri
         body = self._con.get(uri['rabbitmq-kp'] + '/' + alias)
         return body
 
     def get_rabbitmq_ca(self, alias='default'):
-        global uri
         body = self._con.get(uri['rabbitmq'] + '/' + alias)
         return body
 
     def get_active_user_sessions(self):
-        global uri
         body = self._con.get(uri['activeSessions'])
         return body
 
     def get_category_actions(self):
-        global uri
         body = self._con.get(uri['category-actions'])
         return body
 
     def get_role_category_actions(self):
-        global uri
         body = self._con.get(uri['role-category-actions'])
         return body
 

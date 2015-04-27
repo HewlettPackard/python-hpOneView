@@ -52,7 +52,6 @@ class networking(object):
     # Logical Interconnect Group
     ###########################################################################
     def update_settings_from_default(self, settings={}):
-        global uri
         if not settings:
             settings = make_enet_settings('__NoName__')
         default = self._con.get('%s/defaultSettings')
@@ -64,7 +63,6 @@ class networking(object):
         return settings
 
     def create_lig(self, lig, blocking=True, verbose=False):
-        global uri
         task, body = self._con.post(uri['lig'], lig)
         task, entity = self._activity.make_task_entity_tuple(task)
         if blocking is True:
@@ -72,42 +70,35 @@ class networking(object):
         return entity
 
     def update_lig(self, lig, blocking=True, verbose=False):
-        global uri
         task, body = self._con.put(lig['uri'], lig)
         if blocking is True:
             task = self._activity.wait4task(task, verbose=verbose)
         return task
 
     def delete_lig(self, lig, blocking=True, verbose=False):
-        global uri
         task, body = self._con.delete(lig['uri'])
         if blocking is True:
             task = self._activity.wait4task(task, verbose=verbose)
         return task
 
     def get_ligs(self):
-        global uri
         return get_members(self._con.get(uri['lig']))
 
     def get_lig_by_name(self, ligname):
-        global uri
         return self._con.get_entity_byfield(uri['lig'], 'name', ligname)
 
     def get_interconnect_types(self):
-        global uri
         # get all the supported interconnect types
         resp = get_members(self._con.get(uri['ictype']))
         return resp
 
     def get_lis(self):
-        global uri
         return get_members(self._con.get(uri['li']))
 
     ###########################################################################
     # Connection Templates
     ###########################################################################
     def get_connection_templates(self):
-        global uri
         return get_members(self._con.get(uri['ct']))
 
     def update_net_ctvalues(self, xnet, bw={}):
@@ -126,7 +117,6 @@ class networking(object):
     ###########################################################################
     def create_networkset(self, name, nets=[], bw={},
                           blocking=True, verbose=False):
-        global uri
         nset = make_netset_dict(name, nets)
         body = self._con.conditional_post(uri['nset'], nset)
         task, entity = self._activity.make_task_entity_tuple(body)
@@ -147,7 +137,6 @@ class networking(object):
         return task
 
     def get_networksets(self):
-        global uri
         return get_members(self._con.get(uri['nset']))
 
     ###########################################################################
@@ -180,7 +169,6 @@ class networking(object):
                             bw={},
                             blocking=True,
                             verbose=False):
-        global uri
         xnet = make_enet_dict(name, vid, smartLink=smartLink,
                               privateNetwork=privateNetwork, purpose=purpose,
                               ethernetNetworkType=ethernetNetworkType)
@@ -192,7 +180,6 @@ class networking(object):
     def create_fc_network(self, name, attach='FabricAttach',
                           autodist=True, linktime=30, bw={},
                           managedSanUri=None, blocking=True, verbose=False):
-        global uri
         xnet = make_fc_dict(name, attach, autodist, linktime, managedSanUri)
         task, entity = self.create_network(uri['fcnet'], xnet, bw, verbose)
         if blocking is True:
@@ -222,33 +209,27 @@ class networking(object):
         return task
 
     def get_enet_networks(self):
-        global uri
         return get_members(self._con.get(uri['enet']))
 
     def get_fc_networks(self):
-        global uri
         return get_members(self._con.get(uri['fcnet']))
 
     ###########################################################################
     # Uplink Sets
     ###########################################################################
     def get_uplink_sets(self):
-        global uri
         return get_members(self._con.get(uri['uplink-sets']))
 
     ###########################################################################
     # Interconnects
     ###########################################################################
     def get_interconnects(self):
-        global uri
         return get_members(self._con.get(uri['ic']))
 
     def get_enet_network_by_name(self, nwname):
-        global uri
         return self._con.get_entity_byfield(uri['enet'], 'name', nwname)
 
     def get_fc_network_by_name(self, nwname):
-        global uri
         return self._con.get_entity_byfield(uri['fcnet'], 'name', nwname)
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

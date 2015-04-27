@@ -74,12 +74,10 @@ class storage(object):
         return task
 
     def get_storage_systems(self):
-        global uri
         body = get_members(self._con.get(uri['storage-systems']))
         return body
 
     def get_storage_pools(self):
-        global uri
         body = self._con.get(uri['storage-pools'])
         return body
 
@@ -122,17 +120,14 @@ class storage(object):
         return task
 
     def get_attachable_volumes(self):
-        global uri
         body = self._con.get(uri['attachable-volumes'])
         return body
 
     def get_storage_volume_templates(self):
-        global uri
         body = self._con.get(uri['vol-templates'])
         return body
 
     def get_connectable_storage_volume_templates(self):
-        global uri
         body = self._con.get(uri['connectable-vol'])
         return body
 
@@ -155,7 +150,6 @@ class storage(object):
         return task
 
     def get_storage_volumes(self):
-        global uri
         body = self._con.get(uri['storage-volumes'])
         return body
 

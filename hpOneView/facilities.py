@@ -49,17 +49,14 @@ class facilities(object):
         self._activity = activity(con)
 
     def get_datacenters(self):
-        global uri
         body = self._con.get(uri['datacenters'])
         return body
 
     def get_powerdevices(self):
-        global uri
         body = self._con.get(uri['powerDevices'])
         return body
 
     def get_racks(self):
-        global uri
         body = self._con.get(uri['racks'])
         return body
 
@@ -94,7 +91,6 @@ class facilities(object):
         return task
 
     def add_datacenter(self, datacenter, blocking=True, verbose=False):
-        global uri
         task, body = self._con.post(uri['datacenters'], datacenter)
         if blocking is True:
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
@@ -107,7 +103,6 @@ class facilities(object):
         return task
 
     def add_rack(self, rack, blocking=True, verbose=False):
-        global uri
         task, body = self._con.post(uri['racks'], rack)
         if blocking is True:
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
@@ -120,7 +115,6 @@ class facilities(object):
         return task
 
     def add_powerdevice(self, powerdevice, blocking=True, verbose=False):
-        global uri
         task, body = self._con.post(uri['powerDevices'], powerdevice)
         if blocking is True:
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
@@ -134,7 +128,6 @@ class facilities(object):
 
 
     def add_iPDU(self, host, user, passwd, blocking=True, verbose=False):
-        global uri
         request = {'hostname': host,
                    'username': user,
                    'password': passwd}

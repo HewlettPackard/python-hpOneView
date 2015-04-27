@@ -59,12 +59,10 @@ class settings(object):
         return body
 
     def get_pending_fw(self):
-        global uri
         body = self._con.get(uri['fw-pending'])
         return body
 
     def upgrade_appliance_fw(self, filename):
-        global uri
         task, body = self._con.put(uri['fw-pending'] + '?file=' + filename, '')
         return body
 
@@ -94,22 +92,18 @@ class settings(object):
         return body
 
     def get_spps(self):
-        global uri
         body = self._con.get(uri['fwDrivers'])
         return get_members(body)
 
     def get_health_status(self):
-        global uri
         body = self._con.get(uri['healthStatus'])
         return get_members(body)
 
     def get_version(self):
-        global uri
         body = self._con.get(uri['version'])
         return body
 
     def generate_support_dump(self, encrypt=True, logicalInterconnect=None):
-        global uri
         request = {}
         if logicalInterconnect is None:
             request['encrypt'] = encrypt
@@ -130,7 +124,6 @@ class settings(object):
         return
 
     def generate_backup(self, blocking=True, verbose=False):
-        global uri
         resp, body = self._con.do_http('POST', uri['backups'], None)
         if resp.status >= 400:
             raise HPOneViewException(body)
@@ -164,7 +157,6 @@ class settings(object):
         return backup
 
     def restore_backup(self, backupUri):
-        global uri
         request = {
             'type': 'RESTORE',
             'uriOfBackupToRestore': backupUri}
@@ -172,33 +164,27 @@ class settings(object):
         return body
 
     def get_backups(self):
-        global uri
         body = self._con.get(uri['backups'])
         return body
 
     def get_restores(self):
-        global uri
         body = self._con.get(uri['restores'])
         return body
 
     def get_dev_read_comm_string(self):
-        global uri
         body = self._con.get(uri['dev-read-community-str'])
         return body['communityString']
 
     def set_dev_read_comm_string(self, communityString):
-        global uri
         request = {'communityString': communityString}
         task, body = self._con.put(uri['dev-read-community-str'], request)
         return body
 
     def get_licenses(self):
-        global uri
         body = self._con.get(uri['licenses'])
         return get_members(body)
 
     def add_license(self, licenseKey):
-        global uri
         request = {
             'key': licenseKey,
             'type': 'License'}
@@ -206,63 +192,51 @@ class settings(object):
         return body
 
     def factory_reset(self, mode='PRESERVE_NETWORK'):
-        global uri
         response = self._con.delete('/rest/appliance?mode=' + mode)
         return response
 
     def get_node_status(self):
-        global uri
         body = self._con.get(uri['nodestatus'])
         return body
 
     def get_node_version(self):
-        global uri
         body = self._con.get(uri['nodeversion'])
         return body
 
     def shutdown(self, mode='HALT'):
-        global uri
         task, body = self._con.post('/rest/appliance/shutdown?type=' + mode,
                                     None)
         return body
 
     def get_trap_destinations(self):
-        global uri
         body = self._con.get(uri['trap'])
         return body
 
     def get_serviceaccess(self):
-        global uri
         body = self._con.get(uri['service'])
         return body
 
     def set_service_access(self, serviceAccess):
-        global uri
         task, body = self._con.put(uri['serviceAccess'], serviceAccess)
         return body
 
     def get_domains(self):
-        global uri
         body = self._con.get(uri['domains'])
         return body
 
     def get_schema(self):
-        global uri
         body = self._con.get(uri['schema'])
         return body
 
     def get_global_settings(self):
-        global uri
         body = self._con.get(uri['globalSettings'])
         return body
 
     def get_storage_vol_template_policy(self):
-        global uri
         body = self._con.get(uri['vol-tmplate-policy'])
         return body
 
     def get_startup_progress(self):
-        global uri
         body = self._con.get(uri['progress'])
         return body
 
@@ -270,11 +244,9 @@ class settings(object):
     # Appliance Network Interfaces
     ###########################################################################
     def get_appliance_network_interfaces(self):
-        global uri
         return self._con.get(uri['applianceNetworkInterfaces'])
 
     def set_appliance_network_interface(self, interfaceConfig):
-        global uri
         self._con.post(uri['applianceNetworkInterfaces'], interfaceConfig)
         return
 

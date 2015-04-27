@@ -69,7 +69,6 @@ class connection(object):
         self._validateVersion()
 
     def _validateVersion(self):
-        global uri
         version = self.get(uri['version'])
         if 'minimumVersion' in version:
             if self._apiVersion < version['minimumVersion']:
@@ -349,11 +348,9 @@ class connection(object):
     # EULA
     ###########################################################################
     def get_eula_status(self):
-        global uri
         return self.get(uri['eulaStatus'])
 
     def set_eula(self, supportAccess='yes'):
-        global uri
         eula = make_eula_dict(supportAccess)
         self.post(uri['eulaSave'], eula)
         return
@@ -362,7 +359,6 @@ class connection(object):
     # Initial Setup
     ###########################################################################
     def change_initial_password(self, newPassword):
-        global uri
         password = make_initial_password_change_dict('Administrator',
                                                      'admin', newPassword)
         # This will throw an exception if the password is already changed
@@ -372,7 +368,6 @@ class connection(object):
     # Login/Logout to/from appliance
     ###########################################################################
     def login(self, cred, verbose=False):
-        global uri
         self._cred = cred
         try:
             task, body = self.post(uri['loginSessions'], self._cred)
@@ -386,7 +381,6 @@ class connection(object):
             print(('Session Key: ' + auth))
 
     def logout(self, verbose=False):
-        global uri
         #resp, body = self.do_http(method, uri['loginSessions'] \
         #                        , body, self._headers)
         try:

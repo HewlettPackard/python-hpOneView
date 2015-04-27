@@ -49,7 +49,6 @@ class uncategorized(object):
         self._activity = activity(con)
 
     def get_unmanaged_devices(self):
-        global uri
         body = self._con.get(uri['unmanaged-devices'])
         return body
 

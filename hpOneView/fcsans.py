@@ -49,17 +49,14 @@ class fcsans(object):
         self._activity = activity(con)
 
     def get_device_managers(self):
-        global uri
         body = self._con.get(uri['device-managers'])
         return body
 
     def get_managed_sans(self):
-        global uri
         body = self._con.get(uri['managed-sans'])
         return body
 
     def get_providers(self):
-        global uri
         body = get_members(self._con.get(uri['providers']))
         return body
 

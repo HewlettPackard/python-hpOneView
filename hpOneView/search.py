@@ -50,7 +50,6 @@ class search(object):
     # Get Resources
     ###########################################################################
     def get_resources(self, query=''):
-        global uri
         if type(query) is dict:
             sQuery = ''
             for key in query:
@@ -61,7 +60,6 @@ class search(object):
         return get_members(body)
 
     def get_associations(self, query=''):
-        global uri
         if type(query) is dict:
             sQuery = ''
             for key in query:
@@ -72,7 +70,6 @@ class search(object):
         return get_members(body)
 
     def get_trees(self, query=''):
-        global uri
         if type(query) is dict:
             sQuery = ''
             for key in query:
@@ -83,7 +80,6 @@ class search(object):
         return get_members(body)
 
     def get_search_suggestions(self, query):
-        global uri
         if type(query) is dict:
             sQuery = ''
             for key in query:

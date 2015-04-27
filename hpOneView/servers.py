@@ -98,7 +98,6 @@ class servers(object):
         return body
 
     def add_server(self, server, blocking=True, verbose=False):
-        global uri
         task, body = self._con.post(uri['servers'], server)
         if blocking is True:
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
