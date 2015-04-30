@@ -50,17 +50,25 @@ def login(con, credential):
         print('Login failed')
 
 
-def get_server(srv, server_name, server_ip, forcePowerOff):
-    if server_name:
-        server_id = server_name
-    else:
-        server_id = server_ip
+def get_server(con, srv, server_id, server_hwt, forcePowerOff):
+
+    sht = None
+
+    if server_id.upper() == 'UNASSIGNED':
+        server_hw_types = srv.get_server_hardware_types()
+        for ht in server_hw_types:
+            if ht['name'] == server_hwt:
+                sht = con.get(ht['uri'])
+        if not sht:
+            print('Error, server hardware type not found')
+            sys.exit()
+        return None, sht
 
     # Get handle for named server and power off in necessary
     servers = srv.get_servers()
     located_server = None
     for server in servers:
-        if server['name'] == server_name or server_ip == server['mpIpAddress']:
+        if server_id == server['name'] or server_id == server['mpIpAddress']:
             located_server = server
             if server['state'] != 'NoProfileApplied':
                 print('\nError: server', server_id, 'already has a profile '
@@ -78,11 +86,15 @@ def get_server(srv, server_name, server_ip, forcePowerOff):
         print('Server ', server_id, ' not found')
         sys.exit(1)
 
-    return located_server
-
-
-def local_storage_settings(con, server, raidlevel, logicalboot, init_storage):
     sht = con.get(server['serverHardwareTypeUri'])
+    if not sht:
+        print('Error, server hardware type not found')
+        sys.exit()
+
+    return located_server, sht
+
+
+def local_storage_settings(sht, raidlevel, logicalboot, init_storage):
     if 'model' in sht:
         model = sht['model']
     else:
@@ -127,12 +139,10 @@ def get_fw_settings(sts, baseline):
     return fw_settings
 
 
-def boot_settings(con, srv, server, disable_manage_boot, boot_order, boot_mode,
-                  pxe):
+def boot_settings(srv, sht, disable_manage_boot, boot_order, boot_mode, pxe):
 
     gen9 = False
     # Get the bootCapabilites from the Server Hardwer Type
-    sht = con.get(server['serverHardwareTypeUri'])
     if 'capabilities' in sht and 'bootCapabilities' in sht:
         if 'ManageBootOrder' not in sht['capabilities']:
             print('Error, server does not support managed  boot order')
@@ -237,8 +247,8 @@ def boot_settings(con, srv, server, disable_manage_boot, boot_order, boot_mode,
     return boot, bootmode
 
 
-def define_profile(con, srv, affinity, name, desc, server, boot, bootmode, fw,
-                   hide_flexnics, local_storage, conn_list, san_list):
+def define_profile(con, srv, affinity, name, desc, server, sht, boot, bootmode,
+                   fw, hide_flexnics, local_storage, conn_list, san_list):
 
     if conn_list:
         # read connection list from file
@@ -252,10 +262,17 @@ def define_profile(con, srv, affinity, name, desc, server, boot, bootmode, fw,
     else:
         san = None
 
+    # Affinity is only supported on Blade Servers so set it to None if the
+    # server hardware type model does not match BL
+    p = re.compile('.*BL\d.*', re.IGNORECASE)
+    match = p.match(sht['model'])
+    if not match:
+        affinity = None
+
     profile_dict = hpov.common.make_profile_dict(affinity, conn, boot,
                                                  bootmode, desc, fw,
                                                  hide_flexnics, local_storage,
-                                                 name, san, server)
+                                                 name, san, server, sht)
 
     profile = srv.create_server_profile(profile_dict)
     if 'serialNumberType' in profile:
@@ -326,7 +343,7 @@ def main():
                         help='''
     When set, forces power off of target server.
     Avoids error exit if server is up''')
-    parser.add_argument('-s', dest='baseline', required=False,
+    parser.add_argument('-fw', dest='baseline', required=False,
                         help='''
     SPP Baseline file name. e.g. SPP2013090_2013_0830_30.iso''')
     parser.add_argument('-mb', dest='disable_manage_boot',
@@ -461,14 +478,23 @@ def main():
     but no connection corresponds to the 3rd or 4th FlexNIC on either physical
     port, only the 1st and 2nd physical functions are enumerated in the
     Operating System.''')
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-sn', dest='server_name',
-                       help='''
-    Name of the standalone server hardware which this profile is for''')
-    group.add_argument('-si', dest='server_ip',
-                       help='''
-    IP address of the standalone server iLO''')
+    parser.add_argument('-s', dest='server_id', required=True,
+                        help='''
+    Server identification. There are multiple ways to specify the server id:
 
+        . Hostname or IP address of the stand-alone server iLO
+        . Server Hardware name of a server than has already been imported
+          into HP OneView and is listed under Server Hardware
+        . "UNASSIGNED" for creating an unassigned Server Profile''')
+    parser.add_argument('-sh', dest='server_hwt', required=False,
+                        help='''
+    Server harware type is required for defining an unassigned profile. Note
+    the Server Hardware Type must be present in the HP OneView appliance
+    before it can be uesd. For example, a sngle server with the specific server
+    hardware type must have been added to OneView for that hardware type to
+    be used. The example script get-server-hardware-types.py with the -l
+    arguement can be used to get a list of server hardware types that have
+    been imported into the OneView appliance''')
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
@@ -491,15 +517,19 @@ def main():
         print('Error: Managed Boot must be enabled to define a boot order')
         sys.exit()
 
-    server = get_server(srv, args.server_name, args.server_ip,
-                        args.forcePowerOff)
-    boot, bootmode = boot_settings(con, srv, server, args.disable_manage_boot,
+    if args.server_id.upper() == 'UNASSIGNED' and not args.server_hwt:
+        print('Error: Server Hardware Type must be specified when defining an'
+              'unassigned server profile')
+        sys.exit()
+
+    server, sht = get_server(con, srv, args.server_id, args.server_hwt,
+                             args.forcePowerOff)
+    boot, bootmode = boot_settings(srv, sht, args.disable_manage_boot,
                                    args.boot_order, args.boot_mode, args.pxe)
-    local_storage = local_storage_settings(con, server, args.raidlevel,
-                                           args.logicalboot,
-                                           args.init_storage)
+    local_storage = local_storage_settings(sht, args.raidlevel,
+                                           args.logicalboot, args.init_storage)
     fw_settings = get_fw_settings(sts, args.baseline)
-    define_profile(con, srv, args.affinity, args.name, args.desc, server,
+    define_profile(con, srv, args.affinity, args.name, args.desc, server, sht,
                    boot, bootmode, fw_settings, args.hide_flexnics,
                    local_storage, args.conn_list, args.san_list)
 

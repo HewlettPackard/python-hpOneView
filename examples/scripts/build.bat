@@ -152,10 +152,12 @@ echo ================================================================
 echo                       Defining profiles
 echo ================================================================
 rem Define profiles with network and SAN storage connections
-python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay1" -sn "Encl1, bay 1" -cl %CONN_LIST_BFS% -sl %SAN_LIST1%
-python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay2" -sn "Encl1, bay 2" -cl %CONN_LIST_BFS% -sl %SAN_LIST2%
+python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay1" -s "Encl1, bay 1" -cl %CONN_LIST_BFS% -sl %SAN_LIST1%
+python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay2" -s "Encl1, bay 2" -cl %CONN_LIST_BFS% -sl %SAN_LIST2%
 rem Define profile with network and local storage
-python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -sn "Encl1, bay 4" -cl %CONN_LIST% -rl RAID1 -is
+python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -s "Encl1, bay 4" -cl %CONN_LIST% -rl RAID1 -is
 rem Define profile with firmware base line and managed boot order using Gen 7 &
 rem 8 ordering
-python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-1" -si %SRV_ADDR% -s %FW_BASE% -bo %BOOT_G78%
+python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-1" -s %SRV_ADDR% -fw %FW_BASE% -bo %BOOT_G78%
+rem Define n unassigned server profile
+python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Unassigned-1" -s UNASSIGNED -sh 'DL360p Gen8 1'-fw %FW_BASE% -bo %BOOT_G78%

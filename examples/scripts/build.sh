@@ -183,14 +183,18 @@ echo "                     Defining profiles                        "
 echo ================================================================
 # Define profiles with network and SAN storage connections
 ./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay1" \
-  -sn "Encl1, bay 1" -cl $CONN_LIST_BFS -sl $SAN_LIST1
+  -s "Encl1, bay 1" -cl $CONN_LIST_BFS -sl $SAN_LIST1
 ./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay2" \
-  -sn "Encl1, bay 2" -cl $CONN_LIST_BFS -sl $SAN_LIST2
+  -s "Encl1, bay 2" -cl $CONN_LIST_BFS -sl $SAN_LIST2
 # Define profile with network and local storage
 ./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay4" \
-  -sn "Encl1, bay 4" -cl $CONN_LIST -rl RAID1 -is
+  -s "Encl1, bay 4" -cl $CONN_LIST -rl RAID1 -is
 # Define profile with firmware base line and managed boot order using Gen 7 & 8 ordering
-./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-1" -si $SRV_ADDR -s $FW_BASE -bo $BOOT_G78
+./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-1" \
+  -s $SRV_ADDR -fw $FW_BASE -bo $BOOT_G78
+# Define an unassigned server profile
+./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Unassigned-1" \
+  -s UNASSIGNED -sh 'DL360p Gen8 1' -fw $FW_BASE -bo $BOOT_G78
 # Clean up temporary files
 if [ -d $OV_TMP ]; then
   rm -Rf $OV_TMP

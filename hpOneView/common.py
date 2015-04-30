@@ -589,11 +589,16 @@ def make_profile_connection_boot_target_dict(arrayWwpn=None, lun=None):
 
 def make_profile_dict(affinity, connections, boot, bootmode, desc,
                       firmwareBaseline, hideUnusedFlexNics, localStorage,
-                      profileName, sanStorage, server):
+                      profileName, sanStorage, server, sht):
     if connections:
         ptype = 'Virtual'
     else:
         ptype = 'Physical'
+
+    if server:
+        suri = server['uri']
+    else:
+        suri = None
 
     return {
         'affinity': affinity,
@@ -609,8 +614,8 @@ def make_profile_dict(affinity, connections, boot, bootmode, desc,
         'name': profileName,
         'sanStorage': sanStorage,
         'serialNumberType': ptype,
-        'serverHardwareTypeUri': server['serverHardwareTypeUri'],
-        'serverHardwareUri': server['uri'],
+        'serverHardwareTypeUri': sht['uri'],
+        'serverHardwareUri': suri,
         'type': 'ServerProfileV4',
         'wwnType': ptype
     }

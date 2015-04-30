@@ -48,9 +48,13 @@ def login(con, credential):
         print('Login failed')
 
 
-def gethwtypes(srv):
-    ret = srv.get_server_hardware_types()
-    pprint(ret)
+def get_hw_types(srv, lst):
+    server_hw_types = srv.get_server_hardware_types()
+    if lst:
+        for sht in server_hw_types:
+            print(sht['name'])
+    else:
+        pprint(server_hw_types)
 
 
 def main():
@@ -76,14 +80,15 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
-
+    parser.add_argument('-l', dest='lst', required=False,
+                        action='store_true',
+                        help='''
+    Disply only a list of the server hardware type names''')
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
     srv = hpov.servers(con)
-    net = hpov.networking(con)
-    sts = hpov.settings(con)
 
     if args.proxy:
         con.set_proxy(args.proxy.split(':')[0], args.proxy.split(':')[1])
@@ -93,7 +98,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    gethwtypes(srv)
+    get_hw_types(srv, args.lst)
 
 if __name__ == '__main__':
     import sys
