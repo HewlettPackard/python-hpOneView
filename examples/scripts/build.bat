@@ -28,9 +28,9 @@ set SRV_PASS=PASSWORD
 rem Firmware Baseline
 set FW_BASE=bp-hp-service-pack-for-proliant-oneview-2014-11-30-05.iso
 rem Server boot order (dependent on server hardware type)
-set BOOT_G78="HardDisk PXE USB CD Floppy"
-set BOOT_G9_LEGACY="HardDisk PXE USB CD"
-set BOOT_G9_UEFI="HardDisk"
+set BOOT_G78=HardDisk PXE USB CD Floppy
+set BOOT_G9_LEGACY=HardDisk PXE USB CD
+set BOOT_G9_UEFI=HardDisk
 
 
 set CONN_LIST_BFS=%TMP%\oneview_conn_list_bfs-%RANDOM%-%TIME:~6,5%.tmp
@@ -160,4 +160,4 @@ rem Define profile with firmware base line and managed boot order using Gen 7 &
 rem 8 ordering
 python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-1" -s %SRV_ADDR% -fw %FW_BASE% -bo %BOOT_G78%
 rem Define n unassigned server profile
-python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Unassigned-1" -s UNASSIGNED -sh 'DL360p Gen8 1' -fw %FW_BASE% -bo %BOOT_G78%
+python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Unassigned-1" -s UNASSIGNED -sh "DL360p Gen8 1" -fw %FW_BASE% -bo %BOOT_G78%
