@@ -160,4 +160,4 @@ rem Define profile with firmware base line and managed boot order using Gen 7 &
 rem 8 ordering
 python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-1" -s %SRV_ADDR% -fw %FW_BASE% -bo %BOOT_G78%
 rem Define n unassigned server profile
-python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Unassigned-1" -s UNASSIGNED -sh 'DL360p Gen8 1'-fw %FW_BASE% -bo %BOOT_G78%
+python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Unassigned-1" -s UNASSIGNED -sh 'DL360p Gen8 1' -fw %FW_BASE% -bo %BOOT_G78%
