@@ -220,6 +220,12 @@ class networking(object):
     def get_uplink_sets(self):
         return get_members(self._con.get(uri['uplink-sets']))
 
+    def delete_uplink_set(self, uplink_set, blocking=True, verbose=False):
+        task, body = self._con.delete(uplink_set['uri'])
+        if blocking is True:
+            task = self._activity.wait4task(task, verbose=verbose)
+        return task
+
     ###########################################################################
     # Interconnects
     ###########################################################################

@@ -48,45 +48,49 @@ def login(con, credential):
         print('Login failed')
 
 
-def import_enclosure(srv, sts, eg, ip, usr, pas, lic, baseline, force, forcefw):
-    # Locate the enclosure group
-    egroups = srv.get_enclosure_groups()
-    for group in egroups:
-        if group['name'] == eg:
-            egroup = group
-        else:
-            print('ERROR: Importing Enclosure')
-            print('Enclosure Group: "%s" has not been defined' % eg)
-            print('')
-            sys.exit()
+def import_enclosure(srv, sts, eg, ip, usr, pas, lic, baseline, force, forcefw,
+                     monitor):
+    if not monitor:
+        # Locate the enclosure group
+        egroups = srv.get_enclosure_groups()
+        for group in egroups:
+            if group['name'] == eg:
+                egroup = group
+            else:
+                print('ERROR: Importing Enclosure')
+                print('Enclosure Group: "%s" has not been defined' % eg)
+                print('')
+                sys.exit()
 
-    print('Adding Enclosure')
-    # Find the first Firmware Baseline
-    uri = ''
-    if baseline:
-        spps = sts.get_spps()
-        for spp in spps:
-            if spp['isoFileName'] == baseline:
-                uri = spp['uri']
+        print('Adding Enclosure')
+        # Find the first Firmware Baseline
+        uri = ''
+        if baseline:
+            spps = sts.get_spps()
+            for spp in spps:
+                if spp['isoFileName'] == baseline:
+                    uri = spp['uri']
+                    if not uri:
+                        print('ERROR: Locating Firmeware Baseline SPP')
+                        print('Baseline: "%s" can not be located' % baseline)
+                        print('')
+                        sys.exit()
+
         if not uri:
-            print('ERROR: Locating Firmeware Baseline SPP')
-            print('Baseline: "%s" can not be located' % baseline)
-            print('')
-            sys.exit()
-
-    if not uri:
-        add_enclosure = hpov.common.make_enclosure_dict(ip, usr, pas,
-                                                        egroup['uri'],
-                                                        licenseIntent=lic,
-                                                        force=force,
-                                                        forcefw=forcefw)
+            add_enclosure = hpov.common.make_enclosure_dict(ip, usr, pas,
+                                                            egroup['uri'],
+                                                            licenseIntent=lic,
+                                                            force=force,
+                                                            forcefw=forcefw)
+        else:
+            add_enclosure = hpov.common.make_enclosure_dict(ip, usr, pas,
+                                                            egroup['uri'],
+                                                            licenseIntent=lic,
+                                                            firmwareBaseLineUri=uri,
+                                                            force=force,
+                                                            forcefw=forcefw)
     else:
-        add_enclosure = hpov.common.make_enclosure_dict(ip, usr, pas,
-                                                        egroup['uri'],
-                                                        licenseIntent=lic,
-                                                        firmwareBaseLineUri=uri,
-                                                        force=force,
-                                                        forcefw=forcefw)
+        add_enclosure = hpov.common.make_monitored_enclosure_dict(ip, usr, pas)
 
     enclosure = srv.add_enclosure(add_enclosure)
     if 'enclosureType' in enclosure:
@@ -133,9 +137,6 @@ def main():
     parser.add_argument('-oa', dest='enc', required=True,
                         help='''
     IP address of the c7000 to import into HP OneView''')
-    parser.add_argument('-eg', dest='egroup', required=True,
-                        help='''
-    Enclosure Group to add the enclosure to''')
     parser.add_argument('-s', dest='spp', required=False,
                         help='''
     SPP Baseline file name. e.g. SPP2013090_2013_0830_30.iso''')
@@ -163,6 +164,13 @@ def main():
                         required=False,
                         help='''
     Force the installation of the provided Firmware Baseline. ''')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-eg', dest='egroup',
+                       help='''
+    Enclosure Group to add the enclosure to''')
+    group.add_argument('-m', dest='monitor', action='store_true',
+                       help='''
+    Import the enclosure as a Monitored enclosure. ''')
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
@@ -180,7 +188,7 @@ def main():
 
     import_enclosure(srv, sts, args.egroup, args.enc, args.encusr,
                      args.encpass, args.license, args.spp, args.force,
-                     args.forcefw)
+                     args.forcefw, args.monitor)
 
 if __name__ == '__main__':
     import sys

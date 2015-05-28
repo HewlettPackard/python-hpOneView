@@ -163,7 +163,9 @@ class servers(object):
 
     def add_enclosure(self, enclosure, blocking=True, verbose=False):
         task, body = self._con.post(uri['enclosures'], enclosure)
-        if enclosure['firmwareBaselineUri'] is None:
+        if enclosure['state'] is 'Monitored':
+            tout = 600
+        elif enclosure['firmwareBaselineUri'] is None:
             tout = 600
         else:
             tout = 3600

@@ -523,7 +523,7 @@ def make_egroup_dict(name, lig, smode='Enclosure'):
                                      } for N in range(1, 9)], }
 
 
-def make_enclosure_dict(host, user, passwd, egroup,
+def make_enclosure_dict(host, user, passwd, egroup, state,
                         licenseIntent='OneView',
                         firmwareBaseLineUri=None, force=False, forcefw=False):
     return {
@@ -535,7 +535,20 @@ def make_enclosure_dict(host, user, passwd, egroup,
         'firmwareBaselineUri': firmwareBaseLineUri,
         'updateFirmwareOn': 'EnclosureOnly',
         'forceInstallFirmware': forcefw,
+        'state': state,
         'licensingIntent': licenseIntent}
+
+
+def make_monitored_enclosure_dict(host, user, passwd, state='Monitored',
+                            licenseIntent='OneViewStandard', force=False):
+    return {
+        'hostname': host,
+        'username': user,
+        'password': passwd,
+        'force': force,
+        'state': state,
+        'licensingIntent': licenseIntent}
+
 
 
 def make_storage_system_dict(mdom, udom, mports, uports):
