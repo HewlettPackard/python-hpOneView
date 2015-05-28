@@ -884,13 +884,15 @@ def make_server_dict(hostname,
                      username,
                      password,
                      force=False,
-                     licensingIntent='OneView'):
+                     licensingIntent='OneView',
+                     configurationState='Managed'):
     return {
         'hostname': hostname,
         'username': username,
         'password': password,
         'force': force,
-        'licensingIntent': licensingIntent}
+        'licensingIntent': licensingIntent,
+        'configurationState': configurationState}
 
 
 def make_rack_dict(name, sn, thermal, height, depth, width, uheight):

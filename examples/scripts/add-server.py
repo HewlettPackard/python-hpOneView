@@ -47,10 +47,15 @@ def login(con, credential):
     except:
         print('Login failed')
 
-def add_server(srv, hostname, username, password, force, license):
+def add_server(srv, hostname, username, password, force, license, monitor):
     print('Adding Server')
-    server = hpov.make_server_dict(hostname,username, password, force,
-            license)
+
+    if monitor:
+        server = hpov.make_server_dict(hostname,username, password, force,
+                                       'OneViewStandard', 'Monitored')
+    else:
+        server = hpov.make_server_dict(hostname,username, password, force,
+                                       license)
 
     ret = srv.add_server(server)
     if 'model' in ret:
@@ -120,6 +125,10 @@ def main():
                         help='''
     Force adding the server when currently managed by another OneView
     appliance.''')
+    parser.add_argument('-m', dest='monitor',
+                        action='store_true',
+                        help='''
+    Add the server as a monitored device.''')
 
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
@@ -136,7 +145,7 @@ def main():
     acceptEULA(con)
 
     add_server(srv, args.hostname, args.username, args.password, args.force,
-               args.license)
+               args.license, args.monitor)
 
 if __name__ == '__main__':
     import sys
