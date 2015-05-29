@@ -140,12 +140,12 @@ echo                     Defining SAN Storage List
 echo ================================================================
 rem Create a SAN connection list using the private volume "boot1" and the
 rem shared volume "datastore"
-python define-san-storage-list.py -a %HOST% -u %USER% -p %PASS% -o RHEL -n boot1 -sl %SAN_LIST1% -cl %CONN_LIST_BFS%
-python define-san-storage-list.py -a %HOST% -u %USER% -p %PASS% -o RHEL -n datastore1 -sl %SAN_LIST1% -cl %CONN_LIST_BFS% -app
+python define-san-storage-list.py -a %HOST% -u %USER% -p %PASS% -o VMware -n boot1 -sl %SAN_LIST1% -cl %CONN_LIST_BFS%
+python define-san-storage-list.py -a %HOST% -u %USER% -p %PASS% -o VMware -n datastore1 -sl %SAN_LIST1% -cl %CONN_LIST_BFS% -app
 rem Create a SAN connection list using the private volume "boot2" and the
 rem shared volume "datastore"
-python define-san-storage-list.py -a %HOST% -u %USER% -p %PASS% -o RHEL -n boot2 -sl %SAN_LIST2% -cl %CONN_LIST_BFS%
-python define-san-storage-list.py -a %HOST% -u %USER% -p %PASS% -o RHEL -n datastore1 -sl %SAN_LIST2% -cl %CONN_LIST_BFS% -app
+python define-san-storage-list.py -a %HOST% -u %USER% -p %PASS% -o VMware -n boot2 -sl %SAN_LIST2% -cl %CONN_LIST_BFS%
+python define-san-storage-list.py -a %HOST% -u %USER% -p %PASS% -o VMware -n datastore1 -sl %SAN_LIST2% -cl %CONN_LIST_BFS% -app
 
 echo.
 echo ================================================================

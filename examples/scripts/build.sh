@@ -166,15 +166,15 @@ echo "                   Defining SAN Storage List                  "
 echo ================================================================
 # Create a SAN connection list using the private volume "boot1" and the
 # shared volume "datastore"
-./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o RHEL \
+./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o VMware \
     -n boot1 -sl $SAN_LIST1 -cl $CONN_LIST_BFS
-./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o RHEL \
+./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o VMware \
     -n datastore1 -sl $SAN_LIST1 -cl $CONN_LIST_BFS -app
 # Create a SAN connection list using the private volume "boot2" and the
 # shared volume "datastore"
-./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o RHEL \
+./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o VMware \
     -n boot2 -sl $SAN_LIST2 -cl $CONN_LIST_BFS
-./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o RHEL \
+./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o VMware \
     -n datastore1 -sl $SAN_LIST2 -cl $CONN_LIST_BFS -app
 
 echo
