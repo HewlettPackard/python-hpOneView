@@ -523,7 +523,7 @@ def make_egroup_dict(name, lig, smode='Enclosure'):
                                      } for N in range(1, 9)], }
 
 
-def make_enclosure_dict(host, user, passwd, egroup, state,
+def make_enclosure_dict(host, user, passwd, egroup, state="",
                         licenseIntent='OneView',
                         firmwareBaseLineUri=None, force=False, forcefw=False):
     return {
