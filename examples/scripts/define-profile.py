@@ -72,7 +72,7 @@ def get_server(con, srv, server_id, server_hwt, forcePowerOff):
             located_server = server
             if server['state'] != 'NoProfileApplied':
                 print('\nError: server', server_id, 'already has a profile '
-                      'defined\n')
+                      'defined or is being monitored\n')
                 sys.exit(1)
             if server['powerState'] == 'On':
                 if forcePowerOff:

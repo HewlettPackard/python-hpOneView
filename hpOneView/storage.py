@@ -40,7 +40,6 @@ from hpOneView.common import *
 from hpOneView.connection import *
 from hpOneView.activity import *
 from hpOneView.exceptions import *
-from pprint import pprint
 
 
 class storage(object):
@@ -131,8 +130,7 @@ class storage(object):
         body = self._con.get(uri['connectable-vol'])
         return body
 
-    def add_storage_volume(self, volume, blocking=True,
-                           verbose=False):
+    def add_storage_volume(self, volume, blocking=True, verbose=False):
         task, body = self._con.post(uri['storage-volumes'], volume)
         if blocking is True:
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
@@ -149,8 +147,21 @@ class storage(object):
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
         return task
 
+    def copy_storage_volume(self, vol, dest_name, blocking=True,
+                            verbose=False):
+        volume = make_storage_volume(dest_name,
+                                     vol['provisionedCapacity'],
+                                     vol['shareable'],
+                                     vol['storagePoolUri'],
+                                     vol['description'],
+                                     vol['provisionType'])
+        ret = self.add_storage_volume(volume, blocking, verbose)
+        return ret
+
+    # TODO remove the evil use/hack of the large count defaul once the
+    # OneView appliance honors -1 as a valid count vaule
     def get_storage_volumes(self):
-        body = self._con.get(uri['storage-volumes'])
+        body = self._con.get(uri['storage-volumes'] + '?start=0&count=999999')
         return body
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
