@@ -143,7 +143,7 @@ def getCertCa(sec):
 
 
 def genRabbitCa(sec):
-    sec.gen_rabbitmq_ca()
+    sec.gen_rabbitmq_internal_signed_ca()
 
 
 def getRabbitKp(sec):
