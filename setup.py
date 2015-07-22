@@ -1,5 +1,5 @@
 ###
-#  (C) Copyright 2013 Hewlett-Packard Development Company, L.P
+#  (C) Copyright (2012-2015) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,6 @@ setup(name='hpOneView',
       version='0.1',
       description='HP OneView Python Libaray',
       url='http://hp.com/go/OneViewCommunity',
-      author='Hewlett-Packard Development Company L.P.',
+      author='Hewlett Packard Enterprise Development LP',
       license='MIT',
       packages=['hpOneView'])

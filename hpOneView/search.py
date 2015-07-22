@@ -9,13 +9,13 @@ This module implements search HP OneView REST API
 
 __title__ = 'search'
 __version__ = '0.0.1'
-__copyright__ = '(C) Copyright 2012-2014 Hewlett-Packard Development ' \
-                ' Company, L.P.'
+__copyright__ = '(C) Copyright (2012-2015) Hewlett Packard Enterprise ' \
+                ' Development LP'
 __license__ = 'MIT'
 __status__ = 'Development'
 
 ###
-# (C) Copyright 2014 Hewlett-Packard Development Company, L.P.
+# (C) Copyright (2012-2015) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
