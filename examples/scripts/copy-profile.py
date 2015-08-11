@@ -213,9 +213,9 @@ def copy_profile(con, srv, sto, name, dest, server, sht):
                                     if 'wwpn' in conn:
                                         del conn['wwpn']
             if 'sanStorage' in profile:
-                san_storage = fix_san(con, sto, profile['sanStorage'])
-                profile['sanStorage'] = san_storage
-
+                if profile['sanStorage']['manageSanStorage'] is True:
+                    san_storage = fix_san(con, sto, profile['sanStorage'])
+                    profile['sanStorage'] = san_storage
 
             ret = srv.create_server_profile(profile)
             if 'serialNumberType' in ret:
@@ -239,7 +239,8 @@ def copy_profile(con, srv, sto, name, dest, server, sht):
                 print('Boot:')
                 print('  manageBoot:         ', ret['boot']['manageBoot'])
                 print('  order:              ', ret['boot']['order'], '\n')
-                return
+            else:
+                pprint(ret)
 
 
 def main():
