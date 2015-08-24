@@ -74,11 +74,12 @@ def del_profile_by_name(con, srv, name, force):
     profiles = srv.get_server_profiles()
     for profile in profiles:
         if profile['name'] == name:
-            server = con.get(profile['serverHardwareUri'])
-            if server['powerState'] == 'On':
-                print(('Powering Off Server:  %s' % server['name']))
-                ret = srv.set_server_powerstate(server, 'Off', force=True)
-                pprint(ret)
+            if profile['serverHardwareUri'] is not None:
+                server = con.get(profile['serverHardwareUri'])
+                if server['powerState'] == 'On':
+                    print(('Powering Off Server:  %s' % server['name']))
+                    ret = srv.set_server_powerstate(server, 'Off', force=True)
+                    pprint(ret)
             print(('Removing Profile %s' % profile['name']))
             ret = srv.remove_server_profile(profile, force)
             output_progress(ret['progressUpdates'])
