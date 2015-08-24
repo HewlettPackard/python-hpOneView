@@ -280,7 +280,7 @@ def main():
     Avoids error exit if server is up''')
     parser.add_argument('-s', dest='server_id', required=True,
                         help='''
-    Destinatly Server identification. There are multiple ways to specify
+    Destination Server identification. There are multiple ways to specify
     the server id:
 
     . Hostname or IP address of the stand-alone server iLO
@@ -289,12 +289,12 @@ def main():
     . "UNASSIGNED" for creating an unassigned Server Profile''')
     parser.add_argument('-sh', dest='server_hwt', required=False,
                         help='''
-    Server harware type is required for defining an unassigned profile. Note
+    Server hardware type is required for defining an unassigned profile. Note
     the Server Hardware Type must be present in the HP OneView appliance
-    before it can be uesd. For example, a sngle server with the specific server
+    before it can be uesd. For example, a single server with the specific server
     hardware type must have been added to OneView for that hardware type to
     be used. The example script get - server - hardware - types.py with the - l
-    arguement can be used to get a list of server hardware types that have
+    argument can be used to get a list of server hardware types that have
     been imported into the OneView appliance''')
 
     args = parser.parse_args()
@@ -313,7 +313,7 @@ def main():
     acceptEULA(con)
 
     if args.server_id.upper() == 'UNASSIGNED' and not args.server_hwt:
-        print('Error: Server Hardware Type must be specified when defining an'
+        print('Error: Server Hardware Type must be specified when defining an '
               'unassigned server profile')
         sys.exit()
 
