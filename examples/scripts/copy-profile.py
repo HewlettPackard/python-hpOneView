@@ -49,18 +49,19 @@ def login(con, credential):
         print('Login failed')
 
 
-def get_server(con, srv, server_id, server_hwt, forcePowerOff):
+def get_server(con, srv, server_id, forcePowerOff, name):
     sht = None
 
     if server_id.upper() == 'UNASSIGNED':
-        server_hw_types = srv.get_server_hardware_types()
-        for ht in server_hw_types:
-            if ht['name'] == server_hwt:
-                sht = con.get(ht['uri'])
-                if not sht:
-                    print('Error, server hardware type not found')
-                    sys.exit()
+        profiles = srv.get_server_profiles()
+        for profile in profiles:
+            if profile['name'] == name:
+                sht = con.get(profile['serverHardwareTypeUri'])
                 return None, sht
+
+        if sht is None:
+            print('Error, server hardware type not found')
+            sys.exit(1)
 
     # Get handle for named server and power off in necessary
     servers = srv.get_servers()
@@ -72,19 +73,20 @@ def get_server(con, srv, server_id, server_hwt, forcePowerOff):
                 print('\nError: server', server_id, 'already has a profile '
                       'defined or is being monitored\n')
                 sys.exit(1)
-                if server['powerState'] == 'On':
-                    if forcePowerOff:
-                        srv.set_server_powerstate(server, 'Off', force=True)
-                    else:
-                        print('Error: Server', server_id,
-                              ' needs to be powered off')
-                        sys.exit(1)
-                        break
+            if server['powerState'] == 'On':
+                if forcePowerOff:
+                    srv.set_server_powerstate(server, 'Off', force=True)
+                else:
+                    print('Error: Server', server_id,
+                          ' needs to be powered off')
+                    sys.exit(1)
+            break
+
     if not located_server:
         print('Server ', server_id, ' not found')
         sys.exit(1)
 
-    sht = con.get(server['serverHardwareTypeUri'])
+    sht = con.get(located_server['serverHardwareTypeUri'])
     if not sht:
         print('Error, server hardware type not found')
         sys.exit()
@@ -176,8 +178,11 @@ def copy_profile(con, srv, sto, name, dest, server, sht):
             print(('Copying Profile %s' % profile['name']))
             profile['name'] = dest
             if 'serverHardwareUri' in profile:
-                del profile['serverHardwareUri']
-            if 'serverHardwareTypeUri' in sht:
+                if server is not None:
+                    profile['serverHardwareUri'] = server['uri']
+                else:
+                    del profile['serverHardwareUri']
+            if 'uri' in sht:
                 profile['serverHardwareTypeUri'] = sht['uri']
             if 'created' in profile:
                 del profile['created']
@@ -202,6 +207,10 @@ def copy_profile(con, srv, sto, name, dest, server, sht):
                 for conn in connections:
                     if 'interconnectUri' in conn:
                         del conn['interconnectUri']
+                    if 'allocatedMbps' in conn:
+                        del conn['allocatedMbps']
+                    if 'deploymentStatus' in conn:
+                        del conn['deploymentStatus']
                     if 'macType' in conn:
                         if conn['macType'] == 'Virtual':
                             if 'mac' in conn:
@@ -212,6 +221,8 @@ def copy_profile(con, srv, sto, name, dest, server, sht):
                                         del conn['wwnn']
                                     if 'wwpn' in conn:
                                         del conn['wwpn']
+            if 'connections' in profile:
+                del profile['connections']
             if 'sanStorage' in profile:
                 if profile['sanStorage']['manageSanStorage'] is True:
                     san_storage = fix_san(con, sto, profile['sanStorage'])
@@ -242,12 +253,15 @@ def copy_profile(con, srv, sto, name, dest, server, sht):
             else:
                 pprint(ret)
 
+            sys.exit(0)
+
+    print(('Can not locate profile: %s' % name))
 
 def main():
     parser = argparse.ArgumentParser(add_help=True,
                                      formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
-    Display Server Profiles
+   Copy Server Profile
 
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
@@ -280,23 +294,13 @@ def main():
     Avoids error exit if server is up''')
     parser.add_argument('-s', dest='server_id', required=True,
                         help='''
-    Destinatly Server identification. There are multiple ways to specify
+    Destination  Server identification. There are multiple ways to specify
     the server id:
 
     . Hostname or IP address of the stand-alone server iLO
     . Server Hardware name of a server than has already been imported
       into HP OneView and is listed under Server Hardware
     . "UNASSIGNED" for creating an unassigned Server Profile''')
-    parser.add_argument('-sh', dest='server_hwt', required=False,
-                        help='''
-    Server harware type is required for defining an unassigned profile. Note
-    the Server Hardware Type must be present in the HP OneView appliance
-    before it can be uesd. For example, a sngle server with the specific server
-    hardware type must have been added to OneView for that hardware type to
-    be used. The example script get - server - hardware - types.py with the - l
-    arguement can be used to get a list of server hardware types that have
-    been imported into the OneView appliance''')
-
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
@@ -312,13 +316,8 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    if args.server_id.upper() == 'UNASSIGNED' and not args.server_hwt:
-        print('Error: Server Hardware Type must be specified when defining an'
-              'unassigned server profile')
-        sys.exit()
-
-    server, sht = get_server(con, srv, args.server_id, args.server_hwt,
-                             args.forcePowerOff)
+    server, sht = get_server(con, srv, args.server_id, args.forcePowerOff,
+                             args.name)
     copy_profile(con, srv, sto, args.name, args.dest, server, sht)
 
 if __name__ == '__main__':
