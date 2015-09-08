@@ -5,6 +5,12 @@ HP OneView Library
 
 hpOneView is a library for interfacing with HP OneView Management Appliance.
 """
+from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+from future import standard_library
+standard_library.install_aliases()
 
 __title__ = 'hpOneView'
 __version__ = '101.0.1'
@@ -36,8 +42,13 @@ __status__ = 'Development'
 ###
 
 import sys
-if sys.version_info < (3, 4):
-    raise Exception('Must use Python 3.4 or later')
+sys_ver = sys.version_info
+if sys_ver == 2:
+    if sys.version_info < (2, 9):
+        raise Exception('Must use Python 2.9 or later')
+elif sys_ver == 3:
+    if sys.version_info < (3, 4):
+        raise Exception('Must use Python 3.4 or later')
 
 from hpOneView.common import *
 from hpOneView.connection import *
