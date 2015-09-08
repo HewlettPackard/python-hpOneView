@@ -3,6 +3,9 @@
 # C extensions
 *.so
 
+# Local Certificates
+*.pem
+
 # Packages
 *.egg
 *.egg-info
