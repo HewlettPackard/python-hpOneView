@@ -15,8 +15,10 @@ Installation
 ------------
 
 ### Install the pre-requisite dependencies
+
 ```bash
 $ pip install future
+```
 
 ### From source
 
