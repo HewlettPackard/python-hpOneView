@@ -30,13 +30,14 @@ standard_library.install_aliases()
 import sys
 import hpOneView as hpov
 
-sys_ver = sys.version_info
-if sys_ver == 2:
-	if sys.version_info < (2, 9):
-		raise Exception('Must use Python 2.9 or later')
-elif sys_ver == 3:
-	if sys.version_info < (3, 4):
-		raise Exception('Must use Python 3.4 or later')
+
+PYTHON_VERSION = sys.version_info[:3]
+PY2 = (PYTHON_VERSION[0] == 2)
+if PY2:
+    if PYTHON_VERSION < (2, 7, 9):
+        raise Exception('Must use Python 2.7.9 or later')
+elif PYTHON_VERSION < (3, 4):
+    raise Exception('Must use Python 3.4 or later')
 
 print('hpOneView version: ', hpov.__version__)
 
