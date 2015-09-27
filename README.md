@@ -9,18 +9,15 @@ infrastructure.
 
 The HP OneView Python library depends on the
 [Python-Future](http://python-future.org/index.htm)  library to provide Python
-2/3 compatibility.
+2/3 compatibility.  This will be installed automatically if you use the installation
+methods described below.
 
 Installation
 ------------
 
-### Install the pre-requisite dependencies
-
-```bash
-$ pip install future
-```
-
 ### From source
+
+Either:
 
 ```bash
 $ git clone https://github.com/HewlettPackard/python-hpOneView.git
@@ -28,6 +25,16 @@ $ cd python-hpOneView
 $ python setup.py install --user  # to install in the user directory (~/.local)
 $ sudo python setup.py install    # to install globally
 ```
+
+Or if using PIP:
+
+```bash
+$ git clone https://github.com/HewlettPackard/python-hpOneView.git
+$ cd python-hpOneView
+$ pip install .
+```
+
+Both of these installation methods work if you are using virtualenv, which you should be!
 
 ### From Pypi
 

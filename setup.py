@@ -21,12 +21,13 @@
 ###
 
 
-from distutils.core import setup
+from setuptools import setup
 
 setup(name='hpOneView',
       version='0.1',
-      description='HP OneView Python Libaray',
+      description='HP OneView Python Library',
       url='http://hp.com/go/OneViewCommunity',
       author='Hewlett Packard Enterprise Development LP',
       license='MIT',
-      packages=['hpOneView'])
+      packages=['hpOneView'],
+      install_requires=['future>=0.15.2'])
