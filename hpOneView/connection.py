@@ -74,9 +74,9 @@ class connection(object):
         self._prevPage = None
         self._numTotalRecords = 0
         self._numDisplayedRecords = 0
-        self._validateVersion()
+        self._validateVersion = False
 
-    def _validateVersion(self):
+    def validateVersion(self):
         version = self.get(uri['version'])
         if 'minimumVersion' in version:
             if self._apiVersion < version['minimumVersion']:
@@ -84,6 +84,7 @@ class connection(object):
         if 'currentVersion' in version:
             if self._apiVersion > version['currentVersion']:
                 raise HPOneViewException('Unsupported API Version')
+        self._validateVersion = True
 
     def set_proxy(self, proxyHost, proxyPort):
         self._proxyHost = proxyHost
@@ -376,6 +377,9 @@ class connection(object):
     # Login/Logout to/from appliance
     ###########################################################################
     def login(self, cred, verbose=False):
+        if self._validateVersion is False:
+            self.validateVersion()
+
         self._cred = cred
         try:
             task, body = self.post(uri['loginSessions'], self._cred)
