@@ -65,15 +65,17 @@ def import_enclosure(srv, sts, eg, ip, usr, pas, lic, baseline, force, forcefw,
                      monitor):
     if not monitor:
         # Locate the enclosure group
+        egroup = None
         egroups = srv.get_enclosure_groups()
         for group in egroups:
             if group['name'] == eg:
                 egroup = group
-            else:
-                print('ERROR: Importing Enclosure')
-                print('Enclosure Group: "%s" has not been defined' % eg)
-                print('')
-                sys.exit()
+                break
+        if not egroup:
+            print('ERROR: Importing Enclosure')
+            print('Enclosure Group: "%s" has not been defined' % eg)
+            print('')
+            sys.exit()
 
         print('Adding Enclosure')
         # Find the first Firmware Baseline
