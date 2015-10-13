@@ -234,8 +234,6 @@ def copy_profile(con, srv, sto, name, dest, server, sht):
                                         del conn['wwnn']
                                     if 'wwpn' in conn:
                                         del conn['wwpn']
-            if 'connections' in profile:
-                del profile['connections']
             if 'sanStorage' in profile:
                 if profile['sanStorage']['manageSanStorage'] is True:
                     san_storage = fix_san(con, sto, profile['sanStorage'])
