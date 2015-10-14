@@ -49,6 +49,7 @@ import json
 import shutil  # for shutil.copyfileobj()
 import mmap  # so we can upload the iso without having to load it in memory
 import os
+import ssl
 
 from hpOneView.common import *
 from hpOneView.exceptions import *
@@ -114,33 +115,8 @@ class connection(object):
         bConnected = False
         while bConnected is False:
             try:
-                if self._sslTrustAll is False:
-                    import ssl
-                    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-                    context.verify_mode = ssl.CERT_REQUIRED
-                    context.load_verify_locations(self._sslTrustedBundle)
-                    if self._doProxy is False:
-                        conn = http.client.HTTPSConnection(self._host,
-                                                           context=context)
-                    else:
-                        conn = http.client.HTTPSConnection(self._proxyHost,
-                                                           self._proxyPort,
-                                                           context=context)
-                        conn.set_tunnel(self._host, 443)
-                    conn.request(method, path, body, self._headers)
-                else:
-                    import ssl
-                    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-                    context.verify_mode = ssl.CERT_NONE
-                    if self._doProxy is False:
-                        conn = http.client.HTTPSConnection(self._host,
-                                                           context=context)
-                    else:
-                        conn = http.client.HTTPSConnection(self._proxyHost,
-                                                           self._proxyPort,
-                                                           context=context)
-                        conn.set_tunnel(self._host, 443)
-                    conn.request(method, path, body, self._headers)
+                conn = self.get_connection()
+                conn.request(method, path, body, self._headers)
                 resp = conn.getresponse()
                 try:
                     tempbytes = resp.read()
@@ -163,6 +139,31 @@ class connection(object):
                 time.sleep(1)
                 continue
         return resp, body
+
+    def get_connection(self):
+        context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+        if self._sslTrustAll is False:
+            context.verify_mode = ssl.CERT_REQUIRED
+            context.load_verify_locations(self._sslTrustedBundle)
+            if self._doProxy is False:
+                conn = http.client.HTTPSConnection(self._host,
+                                                   context=context)
+            else:
+                conn = http.client.HTTPSConnection(self._proxyHost,
+                                                   self._proxyPort,
+                                                   context=context)
+                conn.set_tunnel(self._host, 443)
+        else:
+            context.verify_mode = ssl.CERT_NONE
+            if self._doProxy is False:
+                conn = http.client.HTTPSConnection(self._host,
+                                                   context=context)
+            else:
+                conn = http.client.HTTPSConnection(self._proxyHost,
+                                                   self._proxyPort,
+                                                   context=context)
+                conn.set_tunnel(self._host, 443)
+        return conn
 
     def encode_multipart_formdata(self, fields, files, baseName, verbose=False):
         """
@@ -200,12 +201,7 @@ class connection(object):
         mappedfile = mmap.mmap(inputfile.fileno(), 0, access=mmap.ACCESS_READ)
         if verbose is True:
             print(('Uploading ' + files + '...'))
-        if self._doProxy is False:
-            conn = http.client.HTTPSConnection(self._host)
-        else:
-            conn = http.client.HTTPSConnection(self._proxyHost,
-                                               self._proxyPort)
-            conn.set_tunnel(self._host, 443)
+        conn = self.get_connection()
         #conn.set_debuglevel(1)
         conn.connect()
         conn.putrequest('POST', uri)
