@@ -50,6 +50,7 @@ import shutil  # for shutil.copyfileobj()
 import mmap  # so we can upload the iso without having to load it in memory
 import os
 import ssl
+import time
 
 from hpOneView.common import *
 from hpOneView.exceptions import *
