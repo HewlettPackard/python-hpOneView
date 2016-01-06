@@ -135,10 +135,15 @@ def deflig(net, con, name, ics, ethernetSettings):
                                             sw[item], swtype['uri'])
 
     lig = net.create_lig(lig)
-    print('\nCreating Logical Interconnect Group\n')
-    if 'name' in lig:
-        print('Name:          ', lig['name'])
-        print('State:         ', lig['state'])
+    if 'type' in lig:
+        if lig['type'].startswith('TaskResource'):
+            print('\nCreating Logical Interconnect Group\n')
+            print('Name:          ', name)
+        else:
+            if 'name' in lig and 'state' in lig:
+                print('\nCreating Logical Interconnect Group\n')
+                print('Name:          ', lig['name'])
+                print('State:         ', lig['state'])
     else:
         pprint(lig)
 
