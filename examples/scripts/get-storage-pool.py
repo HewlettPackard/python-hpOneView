@@ -74,7 +74,7 @@ def get_pool_by_name(sto, stosys_name, pool_name):
                           stosys_name)
                     pprint(pool)
                     return
-            print('Pool: ', pool_name, ' not found')
+            print('Managed Storage Pool: ', pool_name, ' not found')
             return
     print('Storage System: ', stosys_name, ' not found')
 

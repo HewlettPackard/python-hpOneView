@@ -165,8 +165,7 @@ def main():
     parser.add_argument('-sp', dest='stopass', required=False,
                         help='''
     Administrative password for the storage system''')
-    parser.add_argument('-sd', dest='stodom', required=False,
-                        default='NewDomain',
+    parser.add_argument('-sd', dest='stodom', required=True,
                         help='''
     Storage Domain on the storage system''')
     parser.add_argument('-ip',  dest='import_pools', required=False,

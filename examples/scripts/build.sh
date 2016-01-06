@@ -14,10 +14,14 @@ ENC_USR=${ENC_USR:=Administrator}
 ENC_PASS=${ENC_PASS:=PASSWORD}
 # 3PAR hostname or IP Address
 STO_ADDR=${STO_ADDR:=172.18.11.11}
-# Enclosure OA username
+# 3PAR username
 STO_USR=${STO_USR:=Administrator}
-# Enclosure OA password
+# 3PAR password
 STO_PASS=${STO_PASS:=PASSWORD}
+# 3PAR Storage Domain
+STO_DOM=${STO_DOM:=NewDomain}
+# 3PAR CPG
+STO_CPG=${STO_CPG:=SND_CPG1}
 # Standalone Server iLO hostname or IP address
 SRV_ADDR=${SRV_ADDR:=172.18.6.15}
 # Standalone Server iLO username
@@ -103,7 +107,7 @@ echo
 echo ================================================================
 echo "                     Add Storage System                       "
 echo ================================================================
-./add-storage-system.py -a $OV_HOST -u $OV_USER -p $OV_PASS -sh $STO_ADDR -su $STO_USR -sp $STO_PASS
+./add-storage-system.py -a $OV_HOST -u $OV_USER -p $OV_PASS -sh $STO_ADDR -su $STO_USR -sp $STO_PASS -sd $STO_DOM
 
 echo
 echo ================================================================
@@ -115,22 +119,22 @@ echo
 echo ================================================================
 echo "                     Add Storage Pools                        "
 echo ================================================================
-./add-storage-pool.py -a $OV_HOST -u $OV_USER -p $OV_PASS -f -sp SND_CPG1
+./add-storage-pool.py -a $OV_HOST -u $OV_USER -p $OV_PASS -f -sp $STO_CPG
 
 echo
 echo ================================================================
 echo "                     Add Volume Templates                     "
 echo ================================================================
-./add-volume-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "ESX Boot" -f -sp SND_CPG1 -cap 50
+./add-volume-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "ESX Boot" -f -sp $STO_CPG -cap 50
 
 echo
 echo ================================================================
 echo "                        Add  Volumes                          "
 echo ================================================================
-./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n boot1 -sp SND_CPG1 -cap 10
-./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n boot2 -sp SND_CPG1 -cap 10
-./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n boot3 -sp SND_CPG1 -cap 10
-./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n datastore1 -sp SND_CPG1 -cap 500 -sh
+./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n boot1 -sp $STO_CPG -cap 10
+./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n boot2 -sp $STO_CPG -cap 10
+./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n boot3 -sp $STO_CPG -cap 10
+./add-volume.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n datastore1 -sp $STO_CPG -cap 500 -sh
 
 echo
 echo ================================================================

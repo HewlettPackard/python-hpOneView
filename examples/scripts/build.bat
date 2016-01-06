@@ -15,10 +15,14 @@ rem Enclosure OA password
 set ENC_PASS=PASSWORD
 rem 3PAR hostname or IP Address
 set STO_ADDR=172.18.11.11
-rem Enclosure OA username
+rem 3PAR username
 set STO_USR=Administrator
-rem Enclosure OA password
+rem 3PAR password
 set STO_PASS=PASSWORD
+rem 3PAR Storage Domain
+set STO_DOM=STORAGE_DOMAIN
+rem 3PAR CPG
+set STO_CPG=STORAGE_CPG
 rem Standalone server iLO hostname or IP Address
 set SRV_ADDR=172.18.6.15
 rem Standalone Server iLO username
@@ -71,7 +75,7 @@ python define-uplink-set.py -a %HOST% -u %USER% -p %PASS% -n "3PAR SAN B" -i "VC
 python define-uplink-set.py -a %HOST% -u %USER% -p %PASS% -n "Uplink Set 1-A" -i "VC FlexFabric Production" -t Ethernet -l VLAN-10-A VLAN-20-A VLAN-30-A VLAN-40-A VLAN-50-A VLAN-60-A -o 1:7 1:8
 python define-uplink-set.py -a %HOST% -u %USER% -p %PASS% -n "Uplink Set 1-B" -i "VC FlexFabric Production" -t Ethernet -l VLAN-10-B VLAN-20-B VLAN-30-B VLAN-40-B VLAN-50-B VLAN-60-B -o 2:7 2:8
 
-echo.
+
 echo ================================================================
 echo                   Defining Enclosure Groups
 echo ================================================================
@@ -87,7 +91,7 @@ echo.
 echo ================================================================
 echo                       Add Storage System
 echo ================================================================
-python add-storage-system.py -a %HOST% -u %USER% -p %PASS% -sh %STO_ADDR% -su %STO_USR% -sp %STO_PASS%
+python add-storage-system.py -a %HOST% -u %USER% -p %PASS% -sh %STO_ADDR% -su %STO_USR% -sp %STO_PASS% -sd %STO_DOM%
 
 echo.
 echo ================================================================
@@ -99,22 +103,22 @@ echo.
 echo ================================================================
 echo                     Add Storage Pools
 echo ================================================================
-python add-storage-pool.py -a %HOST% -u %USER% -p %PASS% -f -sp SND_CPG1
+python add-storage-pool.py -a %HOST% -u %USER% -p %PASS% -f -sp %STO_CPG%
 
 echo.
 echo ================================================================
 echo                    Add Volume Templates
 echo ================================================================
-python add-volume-template.py -a %HOST% -u %USER% -p %PASS% -n "ESX Boot" -f -sp SND_CPG1 -cap 50
+python add-volume-template.py -a %HOST% -u %USER% -p %PASS% -n "ESX Boot" -f -sp %STO_CPG% -cap 50
 
 echo.
 echo ================================================================
 echo                          Add  Volumes
 echo ================================================================
-python add-volume.py -a %HOST% -u %USER% -p %PASS% -n boot1 -sp SND_CPG1 -cap 10
-python add-volume.py -a %HOST% -u %USER% -p %PASS% -n boot2 -sp SND_CPG1 -cap 10
-python add-volume.py -a %HOST% -u %USER% -p %PASS% -n boot3 -sp SND_CPG1 -cap 10
-python add-volume.py -a %HOST% -u %USER% -p %PASS% -n datastore1 -sp SND_CPG1 -cap 500 -sh
+python add-volume.py -a %HOST% -u %USER% -p %PASS% -n boot1 -sp %STO_CPG% -cap 10
+python add-volume.py -a %HOST% -u %USER% -p %PASS% -n boot2 -sp %STO_CPG% -cap 10
+python add-volume.py -a %HOST% -u %USER% -p %PASS% -n boot3 -sp %STO_CPG% -cap 10
+python add-volume.py -a %HOST% -u %USER% -p %PASS% -n datastore1 -sp %STO_CPG% -cap 500 -sh
 
 echo.
 echo ================================================================
