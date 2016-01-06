@@ -91,8 +91,11 @@ def add_storage_system(sto, ip, usr, pas, domain, import_pools):
             conSys['unmanagedDomains'].remove(dom)
             found = True
     if not found:
-        print('Storage Domain ', domain, ' not found. Verify the domain '
-              'exsits on the storage system')
+        print('Storage Domain "',domain,'" not found. The following domains '
+              'have been found on the storage system')
+        for dom in reversed(conSys['unmanagedDomains']):
+            pprint(dom)
+        sto.remove_storage_system(conSys)
         sys.exit()
     if import_pools:
         found = False
