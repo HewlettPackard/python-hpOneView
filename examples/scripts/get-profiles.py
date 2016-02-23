@@ -75,7 +75,23 @@ def get_profile_by_name(srv, name):
             print(('Getting Profile %s' % profile['name']))
             pprint(profile)
             return
-    print('Profile: ', name, ' not found')
+    print('Profile: ', name, ' not found')    
+        
+'''
+Get a server profile's connection information.  If no profile name is supplied 
+connection information will be returned for all server profiles.
+'''        
+def get_profile_connections_list(srv, name):
+    for profile in srv.get_server_profiles():
+        if profile['connections']:
+            if name:
+                if profile['name'] == name:
+                    print(('Getting Profile Connections List for Profile %s' % name))
+                    pprint(profile['connections'])
+                    return                        
+            else:
+                print(('Getting Profile Connections List for Profile %s' % profile['name']))
+                pprint(profile['connections'])
 
 
 def main():
@@ -131,6 +147,9 @@ def main():
         sys.exit()
 
     get_profile_by_name(srv, args.name)
+    
+    # get a server profile's connection information
+    #get_profile_connections_list(srv, args.name)
 
 if __name__ == '__main__':
     import sys
