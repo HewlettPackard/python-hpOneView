@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 ###
-# (C) Copyright (2012-2015) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -54,35 +54,46 @@ def acceptEULA(con):
 
 
 def login(con, credential):
-    # Login with givin credentials
+    # Login with given credentials
     try:
         con.login(credential)
     except:
         print('Login failed')
 
 
-def get_all_profiles(srv):
+def output(con, name, profile, report):
+    if report:
+        print('\n{0:25}   {1:3}   {2:9}   {3:12}   {4:25}   {5:17}   {6:23}   {7:8}'.format('serverProfile', 'cid', 'portId', 'functionType', 'Network', 'mac', 'wwpn', 'boot'))
+        print('\n{0:25}   {1:3}   {2:9}   {3:12}   {4:25}   {5:17}   {6:23}   {7:8}'.format('-------------', '---', '------', '------------', '-------', '---', '----', '----'))
+        for conn in profile:
+            network =  con.get_by_uri(conn['networkUri'])
+            wwpn = conn['wwpn'] if conn['wwpn'] else ''
+            boot = conn['boot']['priority'] if conn['boot']['priority'] else '' # boot priority can be null
+            print('{0:25}   {1:3}   {2:9}   {3:12}   {4:25}   {5:17}   {6:23}   {7:8}'.format(name, conn['id'], conn['portId'], conn['functionType'], network['name'], conn['mac'], wwpn, boot))
+    else:
+        for conn in profile:
+            print(('\nGetting Profile Connections List for Profile %s' % name))
+            pprint(conn)
 
-    profiles = srv.get_server_profiles()
-    for profile in profiles:
-        pprint(profile)
-
-
-def get_profile_by_name(srv, name):
-    profiles = srv.get_server_profiles()
-    for profile in profiles:
-        if profile['name'] == name:
-            print(('Getting Profile %s' % profile['name']))
-            pprint(profile)
-            return
-    print('Profile: ', name, ' not found')
+'''
+Get a server profile's connection information.  If no profile name is supplied
+connection information will be returned for all server profiles.
+'''
+def get_profile_connections_list(con, srv, name, report):
+    for profile in srv.get_server_profiles():
+        if profile['connections']:
+            if name:
+                if profile['name'] == name:
+                    output(con, profile['name'], profile['connections'], report)
+            else:
+                output(con, profile['name'], profile['connections'], report)
 
 
 def main():
     parser = argparse.ArgumentParser(add_help=True,
                         formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
-    Display Server Profiles
+    Display Server Profile Connections
 
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
@@ -101,6 +112,10 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
+    parser.add_argument('-r', dest='report',
+                        required=False, action='store_true',
+                        help='''
+    Format the output using a human readable report format''')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-n', dest='name',
                        help='''
@@ -126,11 +141,8 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    if args.get_all:
-        get_all_profiles(srv)
-        sys.exit()
-
-    get_profile_by_name(srv, args.name)
+    # get a server profile's connection information
+    get_profile_connections_list(con, srv, '', args.report)
 
 if __name__ == '__main__':
     import sys
