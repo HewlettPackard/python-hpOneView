@@ -64,7 +64,7 @@ def login(con, credential):
 def output(con, name, profile, report):
     if report:
         print('\n{0:25}   {1:3}   {2:9}   {3:12}   {4:25}   {5:17}   {6:23}   {7:8}'.format('serverProfile', 'cid', 'portId', 'functionType', 'Network', 'mac', 'wwpn', 'boot'))
-        print('\n{0:25}   {1:3}   {2:9}   {3:12}   {4:25}   {5:17}   {6:23}   {7:8}'.format('-------------', '---', '------', '------------', '-------', '---', '----', '----'))
+        print('{0:25}   {1:3}   {2:9}   {3:12}   {4:25}   {5:17}   {6:23}   {7:8}'.format('-------------', '---', '------', '------------', '-------', '---', '----', '----'))
         for conn in profile:
             network =  con.get_by_uri(conn['networkUri'])
             wwpn = conn['wwpn'] if conn['wwpn'] else ''
