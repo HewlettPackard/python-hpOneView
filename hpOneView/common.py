@@ -609,7 +609,7 @@ def make_profile_connection_boot_target_dict(arrayWwpn=None, lun=None):
 
 def make_profile_dict(affinity, connections, boot, bootmode, desc,
                       firmwareBaseline, hideUnusedFlexNics, localStorage,
-                      profileName, sanStorage, server, sht):
+                      profileName, sanStorage, server, sht, bios):
     if connections:
         ptype = 'Virtual'
     else:
@@ -621,8 +621,8 @@ def make_profile_dict(affinity, connections, boot, bootmode, desc,
         suri = None
 
     return {
-        'affinity': affinity,
-        'bios': {'manageBios': False},
+        'affinity': affinity,        
+        'bios': bios,
         'boot': boot,
         'bootMode': bootmode,
         'connections': connections,
