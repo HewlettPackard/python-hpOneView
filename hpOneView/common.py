@@ -578,21 +578,29 @@ def make_port_config_info(enclosure, bay, port, speed='Auto'):
             }
 
 
-def make_EnclosureGroupV2(name, lig, smode='Enclosure'):
-    return {
-        'name': name,
-        'type': 'EnclosureGroupV2',
-        'stackingMode': smode,
-        'interconnectBayMappings': [{'interconnectBay': N,
-                                     'logicalInterconnectGroupUri': lig
-                                     } for N in range(1, 9)], }
+def make_EnclosureGroupV200(associatedLIGs, name,
+                            powerMode='RedundantPowerSupply'):
+    """ Create an EnclosureGroupV200 dictionary
 
+    Args:
+        associatedLIGs:
+            A sorted list of logical interconnect group URIs associated with
+            the enclosure group.
+        name:
+            The name of the enclosure group.
+        stackingMode:
+            Stacking mode of the enclosure group. Currently only the Enclosure
+            mode is supported. Values are 'Enclosure', 'MultiEnclosure',
+            'None', or 'SwitchParis'.
+        powerMode:
+             Power mode of the enclosure group. Values are 'RedundantPowerFeed'
+             or 'RedundantPowerSupply'.
 
-def make_EnclosureGroupV200(name, lig, smode='Enclosure',
-                            pmode='RedundantPowerSupply'):
-    uri = lig['uri']
-    icms = lig['interconnectMapTemplate']['interconnectMapEntryTemplates']
-    lst = []
+    Returns: dict
+    """
+    ligUri = associatedLIGs['uri']
+    icms = associatedLIGs['interconnectMapTemplate']['interconnectMapEntryTemplates']
+    ligs = []
     # With the 200 API, the LIG uri can only be assigned if the LIG contains a
     # definition of the interconnect bay. I.E. if the LIG only has ICM 1 and 2
     # defined then 3 - 8 must be set to None. I.E:
@@ -607,20 +615,20 @@ def make_EnclosureGroupV200(name, lig, smode='Enclosure',
     #                                 ...
     for N in range(1, 9):
         if N > len(icms):
-            lst.append({'interconnectBay': N,
+            ligs.append({'interconnectBay': N,
                          'logicalInterconnectGroupUri': None})
         else:
-            lst.append({'interconnectBay': N,
-                         'logicalInterconnectGroupUri': uri})
+            ligs.append({'interconnectBay': N,
+                         'logicalInterconnectGroupUri': ligUri})
     return {
         'name': name,
         'type': 'EnclosureGroupV200',
-        'stackingMode': smode,
-        'powerMode': pmode,
+        'stackingMode': 'Enclosure',
+        'powerMode': powerMode,
         'enclosureCount': 1,
         'enclosureTypeUri': "/rest/enclosure-types/c7000",
         'interconnectBayMappingCount': 8,
-        'interconnectBayMappings': lst
+        'interconnectBayMappings': ligs
         }
 
 def make_enclosure_dict(host, user, passwd, egroup, state="",

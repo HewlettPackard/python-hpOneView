@@ -67,7 +67,7 @@ def define_enclosure_group(net, srv, name, lname):
     for lig in ligs:
         if lig['name'] == lname:
             print('Creating Enclosure Group')
-            egroup = srv.create_enclosure_group(name, lig)
+            egroup = srv.create_enclosure_group(lig, name)
             if 'name' in egroup:
                 print('Name:          ', egroup['name'])
             else:

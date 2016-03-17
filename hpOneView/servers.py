@@ -221,7 +221,7 @@ class servers(object):
                  devices. The value can be 'Virtual', 'Physical' or 'UserDefined'.
                  It cannot be modified after the profile is created.
 
-        Returns: dict
+        Returns: server profile or task
         """
 
         # Creating a profile returns a task with no resource uri
@@ -380,9 +380,23 @@ class servers(object):
     ###########################################################################
     # Enclosure Groups
     ###########################################################################
-    def create_enclosure_group(self, name, lig, stacking='Enclosure',
-                               power='RedundantPowerSupply'):
-        egroup = make_EnclosureGroupV200(name, lig, stacking, power)
+    def create_enclosure_group(self, associatedLIGs, name,
+                               powerMode='RedundantPowerSupply'):
+        """ Create an EnclosureGroupV200 dictionary
+
+        Args:
+            associatedLIGs:
+                A sorted list of logical interconnect group URIs associated with
+                the enclosure group.
+            name:
+                The name of the enclosure group.
+            powerMode:
+                Power mode of the enclosure group. Values are 'RedundantPowerFeed'
+                or 'RedundantPowerSupply'.
+
+        Returns: enclosure group
+        """
+        egroup = make_EnclosureGroupV200(associatedLIGs, name, powerMode)
         # Creating an Enclosure Group returns the group, NOT a task
         task, body = self._con.post(uri['enclosureGroups'], egroup)
         return body
