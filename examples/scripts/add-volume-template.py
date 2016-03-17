@@ -72,13 +72,12 @@ def add_vol_template(sto, name, sto_sys, sto_pool, size,
                 if pool['name'] == sto_pool:
                     storagePoolUri = pool['uri']
                     print('Adding Volume Template')
-                    template = hpov.common.make_storage_vol_template(name,
-                                                int(size)*1024*1024*1024,
-                                                shareable,
-                                                storagePoolUri,
-                                                description,
-                                                provisionType)
-                    ret = sto.add_storage_volume_template(template)
+                    ret = sto.add_storage_volume_template(name,
+                                                          int(size)*1024*1024*1024,
+                                                          shareable,
+                                                          storagePoolUri,
+                                                          description,
+                                                          provisionType)
                     if 'provisioning' in ret:
                         print('Name:          ', ret['name'])
                         print('State:         ', ret['state'])

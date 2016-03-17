@@ -62,7 +62,7 @@ class connection(object):
         self._session = None
         self._host = applianceIp
         self._cred = None
-        self._apiVersion = 120
+        self._apiVersion = 200
         self._headers = {
             'X-API-Version': self._apiVersion,
             'Accept': 'application/json',
@@ -195,6 +195,17 @@ class connection(object):
         fin.close()
         return content_type
 
+
+    def patch(self, uri, body):
+        resp, body = self.do_http('PATCH', uri, json.dumps(body))
+        if resp.status >= 400:
+            raise HPOneViewException(body)
+        elif resp.status == 202:
+            task = self.get(resp.getheader('Location'))
+            return task, body
+        return None, body
+
+
     def post_multipart(self, uri, fields, files, baseName, verbose=False):
         content_type = self.encode_multipart_formdata(fields, files, baseName,
                                                       verbose)
@@ -203,7 +214,7 @@ class connection(object):
         if verbose is True:
             print(('Uploading ' + files + '...'))
         conn = self.get_connection()
-        #conn.set_debuglevel(1)
+        # conn.set_debuglevel(1)
         conn.connect()
         conn.putrequest('POST', uri)
         conn.putheader('uploadfilename', baseName)

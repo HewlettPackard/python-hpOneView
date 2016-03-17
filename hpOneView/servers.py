@@ -12,6 +12,7 @@ from __future__ import division
 from __future__ import absolute_import
 from future import standard_library
 standard_library.install_aliases()
+from pprint import pprint
 
 __title__ = 'servers'
 __version__ = '0.0.1'
@@ -68,6 +69,22 @@ class servers(object):
             if server['shortModel'] == name:
                 return server
 
+    def get_available_servers(self, server_hardware_type=None,
+                              enclosure_group=None, server_profile=None):
+        filters = []
+        if server_hardware_type:
+            filters.append('serverHardwareTypeUri=' + server_hardware_type['uri'])
+        if enclosure_group:
+            filters.append('enclosureGroupUri=' + enclosure_group['uri'])
+        if server_profile:
+            filters.append('serverProfileUri=' + server_profile['uri'])
+
+        query_string = ''
+        if filters:
+            query_string = '?' + '&'.join(filters)
+
+        return self._con.get(uri['profile-available-targets'] + query_string)
+
     def get_servers(self):
         return get_members(self._con.get(uri['servers']))
 
@@ -116,8 +133,107 @@ class servers(object):
     ###########################################################################
     # Server Profiles
     ###########################################################################
-    def create_server_profile(self, profile, blocking=True, verbose=False):
+    def create_server_profile(self,
+                              affinity='Bay',
+                              biosSettings=None,
+                              bootSettings=None,
+                              bootModeSetting=None,
+                              profileConnectionV4=None,
+                              description=None,
+                              firmwareSettingsV3=None,
+                              hideUnusedFlexNics=True,
+                              localStorageSettingsV3=None,
+                              macType='Virtual',
+                              name=None,
+                              sanStorageV3=None,
+                              serialNumber=None,
+                              serialNumberType='Physical',
+                              serverHardwareTypeUri=None,
+                              serverHardwareUri=None,
+                              serverProfileTemplateUri=None,
+                              uuid=None,
+                              wwnType='Virtual',
+                              blocking=True, verbose=False):
+        """ Create a ServerProfileV5 profile for use with the V200 API
+
+        Args:
+            affinity:
+                This identifies the behavior of the server profile when the server
+                hardware is removed or replaced. This can be set to 'Bay' or
+                'BayAndServer'.
+            biosSettings:
+                Dictionary that describes Server BIOS settings
+            bootSettings:
+                Dictionary that indicates that the server will attempt to boot from
+                this connection. This object can only be specified if
+                "boot.manageBoot" is set to 'true'
+            bootModeSetting:
+                Dictionary that describes the boot mode settings to be confiured on
+                Gen9 and newer servers.
+            profileConnectionV4:
+                Array of ProfileConnectionV3
+            description:
+                Description of the Server Profile
+            firmwareSettingsV3:
+                FirmwareSettingsV3 disctionary that defines the firmware baseline
+                and managemnt
+            hideUnusedFlexNics:
+                This setting controls the enumeration of physical functions that do
+                not correspond to connections in a profile.
+            localStorageSettingsV3:
+                Disctionary that describes the local storage settings.
+            macType:
+                Specifies the type of MAC address to be programmed into the IO
+                devices. The value can be 'Virtual', 'Physical' or 'UserDefined'.
+            name:
+                Unique name of the Server Profile
+            sanStorageV3:
+                Dictionary that describes teh san storage settings.
+            serialNumber:
+                A 10-byte value that is exposed to the Operating System as the
+                server hardware's Serial Number. The value can be a virtual serial
+                number, user defined serial number or physical serial number read
+                from the server's ROM. It cannot be modified after the profile is
+                created.
+            serialNumberType:
+                 Specifies the type of Serial Number and UUID to be programmed into
+                 the server ROM. The value can be 'Virtual', 'UserDefined', or
+                 'Physical'. The serialNumberType defaults to 'Virtual' when
+                 serialNumber or uuid are not specified. It cannot be modified
+                 after the profile is created.
+            serverHardwareTypeUri:
+                Identifies the server hardware type for which the Server Profile
+                was designed. The serverHardwareTypeUri is determined when the
+                profile is created.
+            serverHardwareUri:
+                 Identifies the server hardware to which the server profile is
+                 currently assigned, if applicable
+            serverProfileTemplateUri:
+                Identifies the Server profile template the Server Profile is based
+                on.
+            uuid:
+                A 36-byte value that is exposed to the Operating System as the
+                server hardware's UUID. The value can be a virtual uuid, user
+                defined uuid or physical uuid read from the server's ROM. It
+                cannot be modified after the profile is created.
+            wwnType:
+                 Specifies the type of WWN address to be programmed into the IO
+                 devices. The value can be 'Virtual', 'Physical' or 'UserDefined'.
+                 It cannot be modified after the profile is created.
+
+        Returns: dict
+        """
+
         # Creating a profile returns a task with no resource uri
+        profile = make_ServerProfileV5(affinity, biosSettings, bootSettings,
+                                       bootModeSetting, profileConnectionV4,
+                                       description, firmwareSettingsV3,
+                                       hideUnusedFlexNics,
+                                       localStorageSettingsV3, macType, name,
+                                       sanStorageV3, serialNumber,
+                                       serialNumberType, serverHardwareTypeUri,
+                                       serverHardwareUri,
+                                       serverProfileTemplateUri, uuid, wwnType)
         task, body = self._con.post(uri['profiles'], profile)
         if profile['firmware'] is None:
             tout = 600
@@ -160,6 +276,73 @@ class servers(object):
         profile = self._con.get(profileResource['resourceUri'])
         return profile
 
+    def update_server_profile_from_template(self, profile, blocking=True, verbose=False):
+        patch_request = [{'op':'replace', 'path':'/templateCompliance', 'value':'Compliant'}]
+        task, body = self._con.patch(profile['uri'], patch_request)
+        try:
+            if profile['firmware']['firmwareBaselineUri'] is None:
+                tout = 600
+            else:
+                tout = 3600
+        except Exception:
+            tout = 600
+            # Update the task to get the associated resource uri
+            if blocking is True:
+                task = self._activity.wait4task(task, tout=tout, verbose=verbose)
+            profileResource = self._activity.get_task_associated_resource(task)
+            profile = self._con.get(profileResource['resourceUri'])
+            return profile
+
+    def get_server_profile_by_name(self, name):
+        body = self._con.get_entity_byfield(uri['profiles'], 'name', name)
+        return body
+
+
+    ###########################################################################
+    # Server Profile Templates
+    ###########################################################################
+
+    def create_server_profile_template(self, profile_template, blocking=True, verbose=False):
+        # Creating a profile returns a task with no resource uri
+        task, body = self._con.post(uri['profile-templates'], profile_template)
+        tout = 600
+        if blocking is True:
+            task = self._activity.wait4task(task, tout, verbose=verbose)
+            if 'type' in task and task['type'].startswith('Task'):
+                entity = self._activity.get_task_associated_resource(task)
+                profile = self._con.get(entity['resourceUri'])
+                return profile
+        return task
+
+    def remove_server_profile_template(self, profile_template, blocking=True, verbose=False):
+        task, body = self._con.delete(profile_template['uri'])
+        if blocking is True:
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
+            return task
+        return body
+
+    def get_server_profile_templates(self):
+        body = self._con.get(uri['profile-templates'])
+        return get_members(body)
+
+    def get_server_profile_template_by_name(self, name):
+        body = self._con.get_entity_byfield(uri['profile-templates'], 'name', name)
+        return body
+
+    def update_server_profile_template(self, profile_template, blocking=True, verbose=False):
+        task, body = self._con.put(profile_template['uri'], profile_template)
+        tout = 600
+        # Update the task to get the associated resource uri
+        if blocking is True:
+            task = self._activity.wait4task(task, tout=tout, verbose=verbose)
+        profileTemplateResource = self._activity.get_task_associated_resource(task)
+        profile = self._con.get(profileTemplateResource['resourceUri'])
+        return profile_template
+
+    def get_server_profile_from_template(self, profile_template):
+        profile = self._con.get(profile_template['uri']+'/new-profile')
+        return profile
+
     ###########################################################################
     # Enclosures
     ###########################################################################
@@ -197,7 +380,9 @@ class servers(object):
     ###########################################################################
     # Enclosure Groups
     ###########################################################################
-    def create_enclosure_group(self, egroup):
+    def create_enclosure_group(self, name, lig, stacking='Enclosure',
+                               power='RedundantPowerSupply'):
+        egroup = make_EnclosureGroupV200(name, lig, stacking, power)
         # Creating an Enclosure Group returns the group, NOT a task
         task, body = self._con.post(uri['enclosureGroups'], egroup)
         return body

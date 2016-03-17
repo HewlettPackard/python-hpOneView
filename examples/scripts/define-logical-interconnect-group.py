@@ -71,7 +71,7 @@ def defethernet(igmp, timeout, mac_failover, mac_interval,
     pause_flood = not pause_flood
     network_loop = not network_loop
 
-    ethernetSettings = hpov.common.make_ethernetsettings_dict(
+    ethernetSettings = hpov.common.make_EthernetSettingsV3(
         enableFastMacCacheFailover=mac_failover,
         enableIgmpSnooping=igmp,
         enableNetworkLoopProtection=network_loop,
@@ -84,7 +84,7 @@ def defethernet(igmp, timeout, mac_failover, mac_interval,
 
 def deflig(net, con, name, ics, ethernetSettings):
 
-    lig = hpov.common.make_lig_dict(name, ethernetSettings)
+    lig = hpov.common.make_LogicalInterconnectGroupV3(name, ethernetSettings)
 
     # Create a bays dictionary and initalize each interconnect bays value to be
     # None. Then walk the list of interconnects supplied and assign the

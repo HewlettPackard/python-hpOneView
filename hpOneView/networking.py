@@ -176,7 +176,7 @@ class networking(object):
                             bw={},
                             blocking=True,
                             verbose=False):
-        xnet = make_enet_dict(name, vid, smartLink=smartLink,
+        xnet = make_NetworkV3(name, vid, smartLink=smartLink,
                               privateNetwork=privateNetwork, purpose=purpose,
                               ethernetNetworkType=ethernetNetworkType)
         task, entity = self.create_network(uri['enet'], xnet, bw, verbose)

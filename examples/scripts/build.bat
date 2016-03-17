@@ -30,7 +30,7 @@ set SRV_USR=Administrator
 rem Standalone Server iLO password
 set SRV_PASS=PASSWORD
 rem Firmware Baseline
-set FW_BASE=bp-hp-service-pack-for-proliant-oneview-2014-11-30-05.iso
+set FW_BASE=HP_Service_Pack_for_ProLiant_2015.10.0-SPP2015100.2015_0921.6.iso
 rem Server boot order (dependent on server hardware type)
 set BOOT_G78=HardDisk PXE USB CD Floppy
 set BOOT_G9_LEGACY=HardDisk PXE USB CD
@@ -155,13 +155,12 @@ echo.
 echo ================================================================
 echo                       Defining profiles
 echo ================================================================
-rem Define profiles with network and SAN storage connections
+echo "Define profiles with network and SAN storage connections"
 python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay1" -s "Encl1, bay 1" -cl %CONN_LIST_BFS% -sl %SAN_LIST1%
 python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay2" -s "Encl1, bay 2" -cl %CONN_LIST_BFS% -sl %SAN_LIST2%
-rem Define profile with network and local storage
-python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -s "Encl1, bay 4" -cl %CONN_LIST% -rl RAID1 -is
-rem Define profile with firmware base line and managed boot order using Gen 7 &
-rem 8 ordering
+echo "Define profile with network and local storage"
+python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -s "Encl1, bay 4" -cl %CONN_LIST% -rl RAID1 -pn 2 -is
+echo "Define profile with firmware base line and managed boot order using Gen 7 & 8 ordering"
 python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-1" -s %SRV_ADDR% -fw %FW_BASE% -bo %BOOT_G78%
-rem Define n unassigned server profile
+echo "Define n unassigned server profile"
 python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Unassigned-1" -s UNASSIGNED -sh "DL360p Gen8 1" -fw %FW_BASE% -bo %BOOT_G78%

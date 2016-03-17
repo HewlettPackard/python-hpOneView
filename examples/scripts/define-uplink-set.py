@@ -141,14 +141,14 @@ def adduplinkset(con, net, name, ligname, networks, utype, etype,
                                      int(bay), port['portNumber']))
 
     # Create a new uplink set to append to the logical interconnect group
-    uset = hpov.common.make_uplink_set_group_dict(name,
-                                                  ethernetNetworkType=etype,
-                                                  lacpTimer=lacp,
-                                                  logicalPortConfigInfos=port_uris,
-                                                  mode=connection,
-                                                  nativeNetworkUri=native_uri,
-                                                  networkType=utype,
-                                                  networkUris=net_uris)
+    uset = hpov.common.make_UplinkSetGroupV2(name,
+                                             ethernetNetworkType=etype,
+                                             lacpTimer=lacp,
+                                             logicalPortConfigInfos=port_uris,
+                                             mode=connection,
+                                             nativeNetworkUri=native_uri,
+                                             networkType=utype,
+                                             networkUris=net_uris)
 
     lig['uplinkSets'].append(uset)
     lig = net.update_lig(lig)

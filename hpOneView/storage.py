@@ -102,11 +102,19 @@ class storage(object):
     # Temporarly modify the headers passed for POST and DELTE on storage volume
     # templates in order to work around a bug. Without these headers the call
     # cause a NullPointerException on the appliance and a 400 gets returned.
-    def add_storage_volume_template(self, volTemplate, verbose=False):
+    def add_storage_volume_template(self, name, capacity, shareable, storagePoolUri, state='Normal',
+                                    description='', provisionType='Thin', verbose=False):
         ori_headers = self._con._headers
         self._con._headers.update({'Accept-Language': 'en'})
         self._con._headers.update({'Accept-Encoding': 'deflate'})
-        task, body = self._con.post(uri['vol-templates'], volTemplate)
+        template = make_storage_vol_templateV3(name,
+                                               capacity,
+                                               shareable,
+                                               storagePoolUri,
+                                               description,
+                                               provisionType)
+
+        task, body = self._con.post(uri['vol-templates'], template)
         self._con._headers = ori_headers
         return body
 

@@ -67,8 +67,7 @@ def define_enclosure_group(net, srv, name, lname):
     for lig in ligs:
         if lig['name'] == lname:
             print('Creating Enclosure Group')
-            egroup = hpov.common.make_egroup_dict(name, lig['uri'])
-            egroup = srv.create_enclosure_group(egroup)
+            egroup = srv.create_enclosure_group(name, lig)
             if 'name' in egroup:
                 print('Name:          ', egroup['name'])
             else:

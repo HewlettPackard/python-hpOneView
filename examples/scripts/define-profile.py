@@ -81,7 +81,8 @@ def get_server(con, srv, server_id, server_hwt, forcePowerOff):
     servers = srv.get_servers()
     located_server = None
     for server in servers:
-        if server_id == server['name'] or server_id == server['mpIpAddress']:
+        ips = server['mpHostInfo']['mpIpAddresses']
+        if server_id == server['name'] or server_id in ips:
             located_server = server
             if server['state'] != 'NoProfileApplied':
                 print('\nError: server', server_id, 'already has a profile '
@@ -107,7 +108,7 @@ def get_server(con, srv, server_id, server_hwt, forcePowerOff):
     return located_server, sht
 
 
-def local_storage_settings(sht, raidlevel, logicalboot, init_storage):
+def local_storage_settings(sht, raidlevel, lboot, init_storage, num):
     if 'model' in sht:
         model = sht['model']
     else:
@@ -121,11 +122,24 @@ def local_storage_settings(sht, raidlevel, logicalboot, init_storage):
             print('Local storage management is not supported on DL servers')
             sys.exit()
 
+    # FIXME -- Add a test to verify that the number of physical drives
+    # is consistant with the RAID level and the number of drives in the
+    # server hardware type
+
         drives = []
-        drives.append(hpov.common.make_logicaldrives_dict(raidlevel,
-                                                          logicalboot))
-        local_storage = hpov.common.make_localstorage_dict(True, init_storage,
-                                                           drives)
+        drives.append(hpov.common.make_LogicalDriveV3(bootable=lboot,
+                                                      driveName=None,
+                                                      driveTechnology=None,
+                                                      numPhysicalDrives=num,
+                                                      raidLevel=raidlevel))
+
+        controller = hpov.common.make_LocalStorageEmbeddedController(importConfiguration = True,
+                                                                     initialize = init_storage,
+                                                                     LogicalDrives = drives,
+                                                                     managed = True,
+                                                                     mode = 'RAID')
+        local_storage = hpov.common.make_LocalStorageSettingsV3(controller)
+
         return local_storage
     return None
 
@@ -133,7 +147,13 @@ def local_storage_settings(sht, raidlevel, logicalboot, init_storage):
 def get_fw_settings(sts, baseline):
     # Find the first Firmware Baseline
     uri = ''
+
     if baseline:
+        # The OneView appliance converts '.' in the filename to '_', except for
+        # the final one
+        baseline = baseline.replace('.', '_')
+        baseline = baseline.replace('_iso', '.iso')
+
         spps = sts.get_spps()
         for spp in spps:
             if spp['isoFileName'] == baseline:
@@ -145,7 +165,8 @@ def get_fw_settings(sts, baseline):
             sys.exit()
 
     if uri:
-        fw_settings = hpov.common.make_firmware_settings_dict(uri)
+        fw_settings = hpov.common.make_FirmwareSettingsV3(uri, 'FirmwareOnly',
+                                                          False, True)
     else:
         fw_settings = None
 
@@ -207,17 +228,15 @@ def boot_settings(srv, sht, disable_manage_boot, boot_order, boot_mode, pxe):
 
         if gen9:
             if boot_mode == 'BIOS':
-                bootmode = hpov.common.make_bootmode_settings_dict(True,
-                                                                   boot_mode,
-                                                                   None)
+                bootmode = hpov.common.make_BootModeSetting(True, boot_mode,
+                                                            None)
             else:
-                bootmode = hpov.common.make_bootmode_settings_dict(True,
-                                                                   boot_mode,
-                                                                   pxe)
+                bootmode = hpov.common.make_BootModeSetting(True, boot_mode,
+                                                            pxe)
         else:  # bootmode can not be set for Gen 7 & 8
             bootmode = None
 
-        boot = hpov.common.make_boot_settings_dict(boot_order, manageBoot=True)
+        boot = hpov.common.make_BootSettings(boot_order, manageBoot=True)
 
     # Managed Boot Default value WITHOUT Boot Options specified
     # Setting boot to None uses the default from the appliance which is
@@ -225,13 +244,11 @@ def boot_settings(srv, sht, disable_manage_boot, boot_order, boot_mode, pxe):
     elif not disable_manage_boot:
         if gen9:
             if boot_mode == 'BIOS':
-                bootmode = hpov.common.make_bootmode_settings_dict(True,
-                                                                   boot_mode,
-                                                                   None)
+                bootmode = hpov.common.make_BootModeSetting(True, boot_mode,
+                                                            None)
             else:
-                bootmode = hpov.common.make_bootmode_settings_dict(True,
-                                                                   boot_mode,
-                                                                   pxe)
+                bootmode = hpov.common.make_BootModeSetting(True, boot_mode,
+                                                            pxe)
 
         else:  # bootmode can not be set for Gen 7 & 8
             bootmode = None
@@ -251,7 +268,7 @@ def boot_settings(srv, sht, disable_manage_boot, boot_order, boot_mode, pxe):
         else:  # bootmode can not be set for Gen 7 & 8
             bootmode = None
 
-        boot = hpov.common.make_boot_settings_dict([], manageBoot=False)
+        boot = hpov.common.make_BootSettings([], manageBoot=False)
 
     else:
         print('Error: Unknown boot mode case')
@@ -282,12 +299,32 @@ def define_profile(con, srv, affinity, name, desc, server, sht, boot, bootmode,
     if not match:
         affinity = None
 
-    profile_dict = hpov.common.make_profile_dict(affinity, conn, boot,
-                                                 bootmode, desc, fw,
-                                                 hide_flexnics, local_storage,
-                                                 name, san, server, sht)
+    if server:
+        serverHardwareUri = server['uri']
+    else:
+        serverHardwareUri = None
 
-    profile = srv.create_server_profile(profile_dict)
+    if conn:
+        macType = 'Virtual'
+        wwnType = 'Virtual'
+    else:
+        macType = 'Physical'
+        wwnType = 'Physical'
+
+    profile = srv.create_server_profile(affinity=affinity,
+                                        bootSettings=boot,
+                                        bootModeSetting=bootmode,
+                                        profileConnectionV4=conn,
+                                        description=desc,
+                                        firmwareSettingsV3=fw,
+                                        hideUnusedFlexNics=hide_flexnics,
+                                        localStorageSettingsV3=local_storage,
+                                        macType=macType,
+                                        name=name,
+                                        sanStorageV3=san,
+                                        serverHardwareUri=serverHardwareUri,
+                                        serverHardwareTypeUri=sht['uri'],
+                                        wwnType=wwnType)
     if 'serialNumberType' in profile:
         print('\n\nName:                ', profile['name'])
         print('Description:         ', profile['description'])
@@ -454,7 +491,13 @@ def main():
                         help='''
     Enable local storage to be managed via the server profile by defining the
     RAID level for the logical drive.''')
-    parser.add_argument('-lb', dest='logicalboot', required=False,
+    parser.add_argument('-pn', dest='physnum', required=False,
+                        help='''
+    The number of physical drives to be used to build the logical drive.  The
+    provided values must be consistent with the selected RAID level and cannot
+    exceed the maximum supported number of drives for the selected server
+    hardware type.''')
+    parser.add_argument('-lb', dest='lboot', required=False,
                         action='store_true',
                         help='''
     Mark the logical drive as NOT bootable''')
@@ -524,7 +567,7 @@ def main():
     acceptEULA(con)
 
     # Invert the boolean value
-    args.logicalboot = not args.logicalboot
+    args.lboot = not args.lboot
 
     if args.boot_order and args.disable_manage_boot:
         print('Error: Managed Boot must be enabled to define a boot order')
@@ -539,15 +582,14 @@ def main():
                              args.forcePowerOff)
     boot, bootmode = boot_settings(srv, sht, args.disable_manage_boot,
                                    args.boot_order, args.boot_mode, args.pxe)
-    local_storage = local_storage_settings(sht, args.raidlevel,
-                                           args.logicalboot, args.init_storage)
+    local_storage = local_storage_settings(sht, args.raidlevel, args.lboot,
+                                           args.init_storage, args.physnum)
     fw_settings = get_fw_settings(sts, args.baseline)
     define_profile(con, srv, args.affinity, args.name, args.desc, server, sht,
                    boot, bootmode, fw_settings, args.hide_flexnics,
                    local_storage, args.conn_list, args.san_list)
 
 if __name__ == '__main__':
-    import sys
     import argparse
     sys.exit(main())
 

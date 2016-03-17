@@ -29,7 +29,7 @@ SRV_USR=${SRV_USR:=Administrator}
 # Standalone Server iLO password
 SRV_PASS=${SRV_PASS:=PASSWORD}
 # Firmware Baseline
-FW_BASE=${FW_BASE:=bp-hp-service-pack-for-proliant-oneview-2014-11-30-05.iso}
+FW_BASE=${FW_BASE:=HP_Service_Pack_for_ProLiant_2015.10.0-SPP2015100.2015_0921.6.iso}
 # Server boot order (dependent on server hardware type)
 BOOT_G78=${BOOT_G78:="HardDisk PXE USB CD Floppy"}
 BOOT_G9_LEGACY=${BOOT_G9_LEGACY:="HardDisk PXE USB CD"}
@@ -168,14 +168,14 @@ echo
 echo ================================================================
 echo "                   Defining SAN Storage List                  "
 echo ================================================================
-# Create a SAN connection list using the private volume "boot1" and the
-# shared volume "datastore"
+echo 'Create a SAN connection list using the private volume "boot1" and the'
+echo 'shared volume "datastore"'
 ./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o VMware \
     -n boot1 -sl $SAN_LIST1 -cl $CONN_LIST_BFS
 ./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o VMware \
     -n datastore1 -sl $SAN_LIST1 -cl $CONN_LIST_BFS -app
-# Create a SAN connection list using the private volume "boot2" and the
-# shared volume "datastore"
+echo 'Create a SAN connection list using the private volume "boot2" and the'
+echo 'shared volume "datastore"'
 ./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o VMware \
     -n boot2 -sl $SAN_LIST2 -cl $CONN_LIST_BFS
 ./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o VMware \
@@ -185,20 +185,21 @@ echo
 echo ================================================================
 echo "                     Defining profiles                        "
 echo ================================================================
-# Define profiles with network and SAN storage connections
+echo "Define profiles with network and SAN storage connections"
 ./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay1" \
   -s "Encl1, bay 1" -cl $CONN_LIST_BFS -sl $SAN_LIST1
 ./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay2" \
   -s "Encl1, bay 2" -cl $CONN_LIST_BFS -sl $SAN_LIST2
-# Define profile with network and local storage
+echo "Define profile with network and local storage"
 ./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay4" \
-  -s "Encl1, bay 4" -cl $CONN_LIST -rl RAID1 -is
-# Define profile with firmware base line and managed boot order using Gen 7 & 8 ordering
+  -s "Encl1, bay 4" -cl $CONN_LIST -rl RAID1 -pn 2 -is
+echo "Define profile with firmware base line and managed boot order using Gen 7 & 8 ordering"
 ./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-1" \
   -s $SRV_ADDR -fw $FW_BASE -bo $BOOT_G78
-# Define an unassigned server profile
+echo "Define an unassigned server profile"
 ./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Unassigned-1" \
   -s UNASSIGNED -sh 'DL360p Gen8 1' -fw $FW_BASE -bo $BOOT_G78
+
 # Clean up temporary files
 if [ -d $OV_TMP ]; then
   rm -Rf $OV_TMP

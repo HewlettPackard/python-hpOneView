@@ -70,15 +70,13 @@ def define_boot_list(function_type, boot_priority, boot_target, boot_lun):
                 print('Boot target and LUN can only be specified for '
                       'FibreChannel networks')
                 sys.exit(2)
-            boot = hpov.common.make_profile_connection_boot_dict(boot_priority,
-                                                                 None, None)
+            boot = hpov.common.make_ConnectionBoot(boot_priority, None, None)
         else:
             if boot_target and boot_lun is None:
                 print('Boot LUN is required when defining a boot target')
                 sys.exit(3)
-            boot = hpov.common.make_profile_connection_boot_dict(boot_priority,
-                                                                 boot_target,
-                                                                 boot_lun)
+            boot = hpov.common.make_ConnectionBoot(boot_priority, boot_target,
+                                                   boot_lun)
     else:
         boot = None
 
@@ -118,10 +116,18 @@ def define_connection_list(net, name, cid, net_name, conn_list, append, portId,
         sys.exit(1)
 
     print('Defining connection', name)
-    conn = hpov.common.make_profile_connection_dict(cid, name, network['uri'],
-                                                    boot, function_type, mac,
-                                                    macType, portId, reqMbps,
-                                                    wwnn, wwpn, wwpnType)
+    conn = hpov.common.make_ProfileConnectionV4(cid=cid,
+                                                name=name,
+                                                networkUri=network['uri'],
+                                                connectionBoot=boot,
+                                                functionType=function_type,
+                                                mac=mac,
+                                                macType=macType,
+                                                portId=portId,
+                                                requestedMbps=reqMbps,
+                                                wwnn=wwnn,
+                                                wwpn=wwpn,
+                                                wwpnType=wwpnType)
 
     if append:
         # read in the json data from the connection list file
