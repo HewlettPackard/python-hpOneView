@@ -9,6 +9,12 @@ rem OneView Appliance password
 set PASS=PASSWORD
 
 echo ================================================================
+echo                  Removing Profile Templates
+echo ================================================================
+python del-profile-template.py -a %HOST% -u %USER% -p %PASS% -d
+
+echo.
+echo ================================================================
 echo                       Removing Profiles
 echo ================================================================
 python del-profile.py -a %HOST% -u %USER% -p %PASS% -d -f

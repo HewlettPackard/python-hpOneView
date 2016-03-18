@@ -6,6 +6,12 @@ OV_USER=${OV_USER:=Administrator}
 OV_PASS=${OV_PASS:=OV_PASSWORD}
 
 echo ================================================================
+echo "                Removing Profile Templates                    "
+echo ================================================================
+./del-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d
+
+echo
+echo ================================================================
 echo "                    Removing Profiles                         "
 echo ================================================================
 ./del-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -d -f
