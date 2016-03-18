@@ -168,30 +168,127 @@ class networking(object):
             raise HPOneViewException('Could not create one or more networks')
         return enet_list
 
-    def create_enet_network(self, name, vid,
-                            purpose='General',
-                            smartLink=True,
-                            privateNetwork=False,
-                            ethernetNetworkType='Tagged',
-                            bw={},
-                            blocking=True,
-                            verbose=False):
-        xnet = make_NetworkV3(name, vid, smartLink=smartLink,
-                              privateNetwork=privateNetwork, purpose=purpose,
-                              ethernetNetworkType=ethernetNetworkType)
+    def create_enet_network(self, name, description=None,
+                            ethernetNetworkType=None, purpose='General',
+                            privateNetwork=False, smartLink=True, vlanId=0,
+                            typicalBandwidth=2500, maximumBandwidth=10000,
+                            blocking=True, verbose=False):
+        """ Create an Ethernet Network
+
+        Args:
+            name:
+                Name of the Ethernet Network
+            description:
+                Breif description of the Ethernet Network
+            vlanId:
+                The Virtual LAN (VLAN) identification number assigned to the
+                network. The VLAN ID is optional when ethernetNetworkType is
+                Untagged or Tunnel. Multiple Ethernet networks can be defined
+                with the same VLAN ID, but all Ethernet networks in an uplink
+                set or network set must have unique VLAN IDs. The VLAN ID
+                cannot be changed once the network has been created.
+            purpose:
+                A description of the network's role within the logical
+                interconnect. Values: 'FaultTolerance', 'General',
+                'Management', or 'VMMigration'
+            smartLink:
+                When enabled, the network is configured so that, within a
+                logical interconnect, all uplinks that carry the network are
+                monitored.  If all uplinks lose their link to external
+                interconnects, all corresponding dowlink (server) ports which
+                connect to the network are forced into an unlinked state. This
+                allows a server side NIC teaming driver to automatically
+                failover to an alternate path.
+            privateNetwork:
+                 When enabled, the network is configured so that all downlink
+                 (server) ports connected to the network are prevented from
+                 communicating with each other within the logical interconnect.
+                 Servers on the network only communicate with each other
+                 through an external L3 router that redirects the traffic back
+                 to the logical interconnect.
+            ethernetNetworkType:
+                The type of Ethernet network. It is optional. If this field is
+                missing or its value is Tagged, you must supply a valid vlanId;
+                if this value is Untagged or Tunnel, please either ignore vlanId
+                or specify vlanId equals 0. Values: 'NotApplicable', 'Tagged',
+                'Tunnel', 'Unknown', or 'Untagged'.
+             typicalBandwidth:
+                The transmit throughput (mbps) that should be allocated to
+                this connection. For FlexFabric connections this value must not
+                exceed the maximum bandwidth of the selected network
+             maximumBandwidth:
+                 Maximum transmit throughput (mbps) allowed on this
+                 connection. The value is limited by the maximum throughput
+                 of the network link and maximumBandwidth of the selected
+                 network.
+
+        Returns: dict
+        """
+        bw = make_Bandwidth(typicalBandwidth, maximumBandwidth)
+        xnet = make_ethernet_networkV3(name=name,
+                                       ethernetNetworkType=ethernetNetworkType,
+                                       purpose=purpose,
+                                       privateNetwork=privateNetwork,
+                                       smartLink=smartLink,
+                                       vlanId=vlanId)
         task, entity = self.create_network(uri['enet'], xnet, bw, verbose)
         if blocking is True:
             task = self._activity.wait4task(task, tout=60, verbose=verbose)
         return entity
 
-    def create_fc_network(self, name, attach='FabricAttach',
-                          autodist=True, linktime=30, bw={},
-                          managedSanUri=None, blocking=True, verbose=False):
-        xnet = make_fc_dict(name, attach, autodist, linktime, managedSanUri)
+    def create_fc_network(self, name, autoLoginRedistribution=True,
+                          description=None, fabricType='FabricAttach',
+                          linkStabilityTime=30, managedSanUri=None,
+                          typicalBandwidth=2500, maximumBandwidth=10000,
+                          blocking=True, verbose=False):
+        """ Create a Fibre Channel Network
+
+          Args:
+            name:
+                Name of the Fibre Channel Network
+            autoLoginRedistribution:
+                 Used for load balancing when logins are not evenly distributed
+                 over the Fibre Channel links, such as when an uplink that was
+                 previously down becomes available.
+            description:
+                Breif description of the Fibre Channel Network
+            fabricType:
+                The supported Fibre Channel access method. Values
+                'FabricAttach' or 'DirectAttach'.
+            linkStabilityTime:
+                The time interval, expressed in seconds, to wait after a link
+                that was previously offline becomes stable, before automatic
+                redistribution occurs within the fabric. This value is not
+                effective if autoLoginRedistribution is false.
+            managedSanUri:
+                The managed SAN URI that is associated with this Fibre Channel
+                network. This value should be null for Direct Attach Fibre
+                Channel networks and may be null for Fabric Attach Fibre
+                Channel networks.
+             typicalBandwidth:
+                The transmit throughput (mbps) that should be allocated to
+                this connection. For FlexFabric connections this value must not
+                exceed the maximum bandwidth of the selected network
+             maximumBandwidth:
+                 Maximum transmit throughput (mbps) allowed on this
+                 connection. The value is limited by the maximum throughput
+                 of the network link and maximumBandwidth of the selected
+                 network.
+
+        Returns: dict
+        """
+        bw = make_Bandwidth(typicalBandwidth, maximumBandwidth)
+        xnet = make_fc_networkV2(name,
+                                 autoLoginRedistribution=autoLoginRedistribution,
+                                 description=description,
+                                 fabricType=fabricType,
+                                 linkStabilityTime=linkStabilityTime,
+                                 managedSanUri=managedSanUri)
         task, entity = self.create_network(uri['fcnet'], xnet, bw, verbose)
         if blocking is True:
             task = self._activity.wait4task(task, tout=60, verbose=verbose)
         return entity
+
 
     def create_network(self, uri, xnet, bw={}, verbose=False):
         # throws an exception if there is an error

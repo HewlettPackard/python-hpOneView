@@ -68,10 +68,10 @@ def add_network(net, name, minbw, maxbw, san, link, dist, direct, fabric):
     maxbw = int(maxbw * 1000)
     minbw = int(minbw * 1000)
 
-    bandDict = hpov.common.make_bw_dict(maxbw, minbw)
-
     if direct:
-        fcnet = net.create_fc_network(name, attach='DirectAttach', bw=bandDict)
+        fcnet = net.create_fc_network(name, fabricType='DirectAttach',
+                                      typicalBandwidth=minbw,
+                                      maximumBandwidth=maxbw)
         print('\nCreated FC Network\n')
         print('{0:<20}\t{1:<15}\t{2:<15}'.format('NAME', 'TYPE', 'STATE'))
         print('{0:<20}\t{1:<15}\t{2:<15}'.format('-------', '-------',
@@ -81,9 +81,12 @@ def add_network(net, name, minbw, maxbw, san, link, dist, direct, fabric):
                                                  fcnet['state']))
         print('')
     else:
-        fcnet = net.create_fc_network(name, attach='FabricAttach',
-                                      autodist=dist, linktime=link,
-                                      bw=bandDict, managedSanUri=san)
+        fcnet = net.create_fc_network(name, fabricType='FabricAttach',
+                                      autoLoginRedistribution=dist,
+                                      linkStabilityTime=link,
+                                      managedSanUri=san,
+                                      typicalBandwidth=minbw,
+                                      maximumBandwidth=maxbw)
         print('\nCreated FC Network\n')
         print('{0:<20}\t{1:<15}\t{2:<11}\t{3:<9}\t{4:<15}'.format('NAME', 'TYPE', 'AUTO REDIST',
                                                  'STABILITY', 'SAN URI'))
