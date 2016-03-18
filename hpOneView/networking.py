@@ -122,9 +122,33 @@ class networking(object):
     ###########################################################################
     # NetworkSets
     ###########################################################################
-    def create_networkset(self, name, nets=[], bw={},
-                          blocking=True, verbose=False):
-        nset = make_netset_dict(name, nets)
+    def create_networkset(self, name, networkUris=[], typicalBandwidth=2500,
+                          maximumBandwidth=10000, blocking=True,
+                          verbose=False):
+        """ Create an network-set
+
+        Args:
+            name:
+                Name of the Network Set
+            networkUris:
+                A set of Ethernet network URIs that will be members of this
+                network set. NOTE: all Ethernet networks in a network set must
+                have unique VLAN IDs.
+             typicalBandwidth:
+                The transmit throughput (mbps) that should be allocated to
+                this connection. For FlexFabric connections this value must not
+                exceed the maximum bandwidth of the selected network
+             maximumBandwidth:
+                 Maximum transmit throughput (mbps) allowed on this
+                 connection. The value is limited by the maximum throughput
+                 of the network link and maximumBandwidth of the selected
+                 network.
+
+
+        Returns: dict
+        """
+        bw = make_Bandwidth(typicalBandwidth, maximumBandwidth)
+        nset = make_network_set(name, networkUris)
         body = self._con.conditional_post(uri['nset'], nset)
         task, entity = self._activity.make_task_entity_tuple(body)
         if not task and not entity:

@@ -280,12 +280,25 @@ def make_Bandwidth(typicalBandwidth=2500, maximumBandwidth=10000):
             }
 
 
-def make_netset_dict(name, networks=[]):
+def make_network_set(name, networkUris=[]):
+    """ Create an network-set dictionary
+
+    Args:
+        name:
+            Name of the Network Set
+        networkUris:
+            A set of Ethernet network URIs that will be members of this network
+            set. NOTE: all Ethernet networks in a network set must have unique
+            VLAN IDs.
+
+    Returns: dict
+    """
+
     return {
         'name': name,
         'type': 'network-set',
         'nativeNetworkUri': None,
-        'networkUris': networks[:],
+        'networkUris': networkUris[:],
         'connectionTemplateUri': None}
 
 
