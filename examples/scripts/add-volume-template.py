@@ -115,6 +115,10 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
+    parser.add_argument('-j', dest='domain', required=False,
+                        default='Local',
+                        help='''
+    HP OneView Authorized Login Domain''')
     parser.add_argument('-n', dest='name', required=True,
                         help='''
     Name of the volume template to add''')
@@ -146,7 +150,7 @@ def main():
     Use the first avaliable storage system''')
 
     args = parser.parse_args()
-    credential = {'userName': args.user, 'password': args.passwd}
+    credential = {'authLoginDomain': args.domain.upper(), 'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
     sto = hpov.storage(con)

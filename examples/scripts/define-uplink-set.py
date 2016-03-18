@@ -177,6 +177,10 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
+    parser.add_argument('-j', dest='domain', required=False,
+                        default='Local',
+                        help='''
+    HP OneView Authorized Login Domain''')
     parser.add_argument('-n', dest='uplink_set_name', required=True,
                         help='''
     Name of the uplink  set''')
@@ -220,7 +224,7 @@ def main():
     Ethernet connection mode''')
 
     args = parser.parse_args()
-    credential = {'userName': args.user, 'password': args.passwd}
+    credential = {'authLoginDomain': args.domain.upper(), 'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
     net = hpov.networking(con)
