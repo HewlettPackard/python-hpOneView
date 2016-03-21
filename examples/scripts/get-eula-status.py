@@ -73,6 +73,10 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
+    parser.add_argument('-j', dest='domain', required=False,
+                        default='Local',
+                        help='''
+    HP OneView Authorized Login Domain''')
 
     args = parser.parse_args()
 

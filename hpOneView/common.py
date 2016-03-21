@@ -125,10 +125,11 @@ uri = {
     #  Server Profiles
     #------------------------------------
     'profiles': '/rest/server-profiles',
+    'profile-templates': '/rest/server-profile-templates',
     'profile-networks': '/rest/server-profiles/available-networks',
     'profile-networks-schema': '/rest/server-profiles/available-networks/schema',
     'profile-available-servers': '/rest/server-profiles/available-servers',
-    'profile-available-servers-scema': '/rest/server-profiles/available-servers/schema',
+    'profile-available-servers-schema': '/rest/server-profiles/available-servers/schema',
     'profile-available-storage-system': '/rest/server-profiles/available-storage-system',
     'profile-available-storage-systems': '/rest/server-profiles/available-storage-systems',
     'profile-available-targets': '/rest/server-profiles/available-targets',
@@ -258,44 +259,133 @@ def make_user_dict(name, password, enabled, fullName, emailAddress,
         'roles': roles}
 
 
-def make_bw_dict(maxbw=10000, minbw=1000):
-    return {'maximumBandwidth': maxbw,
-            'typicalBandwidth': minbw
+def make_Bandwidth(typicalBandwidth=2500, maximumBandwidth=10000):
+    """ Create an Bandwidth dictionary
+
+    Args:
+        typicalBandwidth:
+            The transmit throughput (mbps) that should be allocated to this
+            connection.  For FlexFabric connections,this value must not exceed
+            the maximum bandwidth of the selected network
+        maximumBandwidth:
+            Maximum transmit throughput (mbps) allowed on this connection. The
+            value is limited by the maximum throughput of the network link and
+            maximumBandwidth of the selected network.
+
+    Returns: dict
+    """
+
+    return {'maximumBandwidth': maximumBandwidth,
+            'typicalBandwidth': typicalBandwidth
             }
 
 
-def make_netset_dict(name, networks=[]):
+def make_network_set(name, networkUris=[]):
+    """ Create an network-set dictionary
+
+    Args:
+        name:
+            Name of the Network Set
+        networkUris:
+            A set of Ethernet network URIs that will be members of this network
+            set. NOTE: all Ethernet networks in a network set must have unique
+            VLAN IDs.
+
+    Returns: dict
+    """
+
     return {
         'name': name,
         'type': 'network-set',
         'nativeNetworkUri': None,
-        'networkUris': networks[:],
+        'networkUris': networkUris[:],
         'connectionTemplateUri': None}
 
 
-def make_enet_dict(name, vlanid=0,
-                   purpose='General',
-                   smartLink=True,
-                   privateNetwork=False,
-                   ethernetNetworkType='Tagged',
-                   bw={},
-                   blocking=True,
-                   verbose=False):
+def make_ethernet_networkV3(name, description=None, ethernetNetworkType=None,
+                            purpose='General', privateNetwork=False,
+                            smartLink=True, vlanId=0):
+    """ Create an ethernet-networkV3 dictionary
+
+    Args:
+        name:
+            Name of the Ethernet Network
+        description:
+            Breif description of the Ethernet Network
+        vlanId:
+            The Virtual LAN (VLAN) identification number assigned to the
+            network. The VLAN ID is optional when ethernetNetworkType is
+            Untagged or Tunnel. Multiple Ethernet networks can be defined
+            with the same VLAN ID, but all Ethernet networks in an uplink set
+            or network set must have unique VLAN IDs. The VLAN ID cannot be
+            changed once the network has been created.
+        purpose:
+            A description of the network's role within the logical
+            interconnect. Values: 'FaultTolerance', 'General', 'Management',
+            or 'VMMigration'
+        smartLink:
+            When enabled, the network is configured so that, within a logical
+            interconnect, all uplinks that carry the network are monitored.
+            If all uplinks lose their link to external interconnects, all
+            corresponding dowlink (server) ports which connect to the network
+            are forced into an unlinked state. This allows a server side NIC
+            teaming driver to automatically failover to an alternate path.
+        privateNetwork:
+             When enabled, the network is configured so that all downlink
+             (server) ports connected to the network are prevented from
+             communicating with each other within the logical interconnect.
+             Servers on the network only communicate with each other through an
+             external L3 router that redirects the traffic back to the logical
+             interconnect.
+        ethernetNetworkType:
+            The type of Ethernet network. It is optional. If this field is
+            missing or its value is Tagged, you must supply a valid vlanId;
+            if this value is Untagged or Tunnel, please either ignore vlanId
+            or specify vlanId equals 0. Values: 'NotApplicable', 'Tagged',
+            'Tunnel', 'Unknown', or 'Untagged'.
+
+    Returns: dict
+    """
     return {
         'name': name,
-        'type': 'ethernet-networkV2',
+        'type': 'ethernet-networkV3',
         'purpose': purpose,
         'connectionTemplateUri': None,
-        'vlanId': vlanid,
+        'vlanId': vlanId,
         'smartLink': smartLink,
         'ethernetNetworkType': ethernetNetworkType,
         'privateNetwork': privateNetwork}
 
 
-def make_fc_dict(name, fabricType='FabricAttach',
-                 autoLoginRedistribution=True,
-                 linkStabilityTime=30,
-                 managedSanUri=None):
+def make_fc_networkV2(name, autoLoginRedistribution=True, description=None,
+                      fabricType='FabricAttach', linkStabilityTime=30,
+                      managedSanUri=None):
+    """ Create an ethernet-networkV3 dictionary
+
+    Args:
+        name:
+            Name of the Fibre Channel Network
+        autoLoginRedistribution:
+             Used for load balancing when logins are not evenly distributed
+             over the Fibre Channel links, such as when an uplink that was
+             previously down becomes available.
+        description:
+            Breif description of the Fibre Channel Network
+        fabricType:
+            The supported Fibre Channel access method. Values: 'FabricAttach',
+            or 'DirectAttach'.
+        linkStabilityTime:
+            The time interval, expressed in seconds, to wait after a link that
+            was previously offline becomes stable, before automatic
+            redistribution occurs within the fabric. This value is not
+            effective if autoLoginRedistribution is false.
+        managedSanUri:
+            The managed SAN URI that is associated with this Fibre Channel
+            network. This value should be null for Direct Attach Fibre Channel
+            networks and may be null for Fabric Attach Fibre Channel networks.
+
+    Returns: dict
+    """
     return {
         'name': name,
         'type': 'fc-networkV2',
@@ -337,11 +427,14 @@ def make_enet_settings(name,
     }
 
 
-def make_storage_vol_template(name,
+def make_storage_vol_templateV3(name,
                               capacity,
                               shareable,
                               storagePoolUri,
+                              state='Normal',
                               description='',
+                              storageSystemUri=None,
+                              snapshotPoolUri=None,
                               provisionType='Thin'):
     return {
         'provisioning': {
@@ -350,8 +443,11 @@ def make_storage_vol_template(name,
             'capacity': capacity,
             'storagePoolUri': storagePoolUri},
         'name': name,
+        'state': state,
         'description': description,
-        'type': 'StorageVolumeTemplate'
+        'storageSystemUri': storageSystemUri,
+        'snapshotPoolUri': snapshotPoolUri,
+        'type': 'StorageVolumeTemplateV3'
     }
 
 
@@ -388,7 +484,7 @@ def make_connectionInfo_dict(hostname, port, user, passwd, ssl=True):
          'value': ssl}]
     }
 
-def make_lig_dict(name, ethernetSettings=[]):
+def make_LogicalInterconnectGroupV2(name, ethernetSettings=[]):
     return {
         'name': name,
         'type': 'logical-interconnect-groupV2',
@@ -402,12 +498,27 @@ def make_lig_dict(name, ethernetSettings=[]):
     }
 
 
-def make_ethernetsettings_dict(enableFastMacCacheFailover=True,
-                               enableIgmpSnooping=False,
-                               enableNetworkLoopProtection=True,
-                               enablePauseFloodProtection=True,
-                               igmpIdleTimeoutInterval=260,
-                               macRefreshInterval=5):
+def make_LogicalInterconnectGroupV3(name, ethernetSettings=[],
+                                    enclosureType='C7000'):
+    return {
+        'name': name,
+        'type': 'logical-interconnect-groupV3',
+        'interconnectMapTemplate': make_interconnect_map_template(),
+        'uplinkSets': [],  # call make_uplink_template
+        'stackingMode': 'Enclosure',
+        'ethernetSettings': ethernetSettings,
+        # 'telemetryConfiguration': None,
+        # 'snmpConfiguration' : None,
+        # 'description': None
+    }
+
+
+def make_EthernetSettingsV2(enableFastMacCacheFailover=True,
+                            enableIgmpSnooping=False,
+                            enableNetworkLoopProtection=True,
+                            enablePauseFloodProtection=True,
+                            igmpIdleTimeoutInterval=260,
+                            macRefreshInterval=5):
     return{
         'enableFastMacCacheFailover': enableFastMacCacheFailover,
         'enableIgmpSnooping': enableIgmpSnooping,
@@ -416,6 +527,24 @@ def make_ethernetsettings_dict(enableFastMacCacheFailover=True,
         'igmpIdleTimeoutInterval': igmpIdleTimeoutInterval,
         'macRefreshInterval': macRefreshInterval,
         'type': 'EthernetInterconnectSettingsV2'
+    }
+
+
+def make_EthernetSettingsV3(enableFastMacCacheFailover=True,
+                            enableIgmpSnooping=False,
+                            enableNetworkLoopProtection=True,
+                            enablePauseFloodProtection=True,
+                            enableRichTLV=False,
+                            igmpIdleTimeoutInterval=260,
+                            macRefreshInterval=5):
+    return{
+        'enableFastMacCacheFailover': enableFastMacCacheFailover,
+        'enableIgmpSnooping': enableIgmpSnooping,
+        'enableNetworkLoopProtection': enableNetworkLoopProtection,
+        'enablePauseFloodProtection': enablePauseFloodProtection,
+        'igmpIdleTimeoutInterval': igmpIdleTimeoutInterval,
+        'macRefreshInterval': macRefreshInterval,
+        'type': 'EthernetInterconnectSettingsV3'
     }
 
 
@@ -479,14 +608,14 @@ def get_iobay_entry(interconnectMap, bay):
                     return iobay_entry
 
 
-def make_uplink_set_group_dict(name,
-                               ethernetNetworkType='Tagged',
-                               lacpTimer='Long',
-                               logicalPortConfigInfos=[],
-                               mode='Auto',
-                               nativeNetworkUri=None,
-                               networkType='Ethernet',
-                               networkUris=[]):
+def make_UplinkSetGroupV2(name,
+                          ethernetNetworkType='Tagged',
+                          lacpTimer='Long',
+                          logicalPortConfigInfos=[],
+                          mode='Auto',
+                          nativeNetworkUri=None,
+                          networkType='Ethernet',
+                          networkUris=[]):
     if networkType == 'Ethernet':
         return {'name': name,
                 'ethernetNetworkType': ethernetNetworkType,
@@ -520,15 +649,58 @@ def make_port_config_info(enclosure, bay, port, speed='Auto'):
             }
 
 
-def make_egroup_dict(name, lig, smode='Enclosure'):
+def make_EnclosureGroupV200(associatedLIGs, name,
+                            powerMode='RedundantPowerSupply'):
+    """ Create an EnclosureGroupV200 dictionary
+
+    Args:
+        associatedLIGs:
+            A sorted list of logical interconnect group URIs associated with
+            the enclosure group.
+        name:
+            The name of the enclosure group.
+        stackingMode:
+            Stacking mode of the enclosure group. Currently only the Enclosure
+            mode is supported. Values are 'Enclosure', 'MultiEnclosure',
+            'None', or 'SwitchParis'.
+        powerMode:
+             Power mode of the enclosure group. Values are 'RedundantPowerFeed'
+             or 'RedundantPowerSupply'.
+
+    Returns: dict
+    """
+    ligUri = associatedLIGs['uri']
+    icms = associatedLIGs['interconnectMapTemplate']['interconnectMapEntryTemplates']
+    ligs = []
+    # With the 200 API, the LIG uri can only be assigned if the LIG contains a
+    # definition of the interconnect bay. I.E. if the LIG only has ICM 1 and 2
+    # defined then 3 - 8 must be set to None. I.E:
+    #    'interconnectBayMappings': [{'interconnectBay': 1,
+    #                                 'logicalInterconnectGroupUri': '/rest/logical-interconnect-groups/f8371e33-6d07-4477-9b63-cf8400242059'},
+    #                                {'interconnectBay': 2,
+    #                                 'logicalInterconnectGroupUri': '/rest/logical-interconnect-groups/f8371e33-6d07-4477-9b63-cf8400242059'}]}
+    #                                {'interconnectBay': 3,
+    #                                 'logicalInterconnectGroupUri': None},
+    #                                {'interconnectBay': 4,
+    #                                 'logicalInterconnectGroupUri': None},
+    #                                 ...
+    for N in range(1, 9):
+        if N > len(icms):
+            ligs.append({'interconnectBay': N,
+                         'logicalInterconnectGroupUri': None})
+        else:
+            ligs.append({'interconnectBay': N,
+                         'logicalInterconnectGroupUri': ligUri})
     return {
         'name': name,
-        'type': 'EnclosureGroupV2',
-        'stackingMode': smode,
-        'interconnectBayMappings': [{'interconnectBay': N,
-                                     'logicalInterconnectGroupUri': lig
-                                     } for N in range(1, 9)], }
-
+        'type': 'EnclosureGroupV200',
+        'stackingMode': 'Enclosure',
+        'powerMode': powerMode,
+        'enclosureCount': 1,
+        'enclosureTypeUri': "/rest/enclosure-types/c7000",
+        'interconnectBayMappingCount': 8,
+        'interconnectBayMappings': ligs
+        }
 
 def make_enclosure_dict(host, user, passwd, egroup, state="",
                         licenseIntent='OneView',
@@ -568,18 +740,91 @@ def make_storage_system_dict(mdom, udom, mports, uports):
         }
 
 
-def make_profile_connection_dict(cid, name, networkUri, boot=None,
-                                 functionType='Ethernet', mac=None,
-                                 macType='Virtual', portId='Auto',
-                                 requestedMbps=None, wwnn=None, wwpn=None,
-                                 wwpnType='Virtual'):
+def make_ProfileConnectionV4(cid, name, networkUri, connectionBoot=None,
+                             functionType='Ethernet', mac=None,
+                             macType='Virtual', portId='Auto',
+                             requestedMbps=None, wwnn=None, wwpn=None,
+                             wwpnType='Virtual'):
+    """ Create a ProfileConnectionV4 dictionary
+
+    Args:
+        connectionBoot:
+            ConnectionBoot dictionary that descirbes server boot management.
+        functionType:
+            The function of the connection, either 'Ethernet' or 'FibreChannel'
+        cid:
+            A unique identifier for this connection. When creating or editing a
+            profile, an id is automatically assigned if the attribute is
+            omitted or 0 is specified. When editing a profile, a connection is
+            created if the id does not identify an existing connection.
+        mac:
+            The MAC address that is currently programmed on the FlexNic. The
+            value can be a virtual MAC, user defined MAC or physical MAC read
+            from the device. It cannot be modified after the connection is
+            created.
+        macType:
+            Specifies the type of MAC address to be programmed into the IO
+            Devices. The value can be 'Virtual', 'Physical' or 'UserDefined'.
+            It cannot be modified after the connection is created.
+        name:
+            A string used to identify the respective connection. The connection
+            name is case insensitive, limited to 63 characters and must be
+            unique within the profile.
+        networkUri:
+            Identifies the network or network set to be connected. Use GET
+            /rest/server-profiles/available-networks to retrieve the list of
+            available Ethernet networks, Fibre Channel networks and network
+            sets that are available along with their respective ports.
+        portId:
+            Identifies the port (FlexNIC) used for this connection, for
+            example 'Flb 1:1-a'. The port can be automatically selected by
+            specifying 'Auto', 'None', or a physical port when creating or
+            editing the connection. If 'Auto' is specified, a port that
+            provides access to the selected network(networkUri) will be
+            selected. A physical port(e.g. 'Flb 1:2') can be specified if the
+            choice of a specific FlexNIC on the physical port is not important.
+            If 'None' is specified, the connection will not be configured on
+            the server hardware. When omitted, portId defaults to 'Auto'. Use
+            / rest / server - profiles / profile - ports to retrieve the list
+            of available ports.
+        requestedMbps:
+            The transmit throughput (mbps) that should be allocated to this
+            connection. For FlexFabric connections, this value must not exceed
+            the maximum bandwidth of the selected network (networkUri). If
+            omitted, this value defaults to the typical bandwidth value of the
+            selected network. The sum of the requestedBW values for the
+            connections (FlexNICs) on an adapter port cannot exceed the
+            capacity of the network link. For Virtual Connect Fibre Channel
+            connections, the available discrete values are based on the adapter
+            and the Fibre Channel interconnect module.
+        wwnn:
+            The node WWN address that is currently programmed on the FlexNic.
+            The value can be a virtual WWNN, user defined WWNN or physical WWNN
+            read from the device. It cannot be modified after the connection
+            is created.
+        wwpn:
+            The port WWN address that is currently programmed on the FlexNIC.
+            The value can be a virtual WWPN, user defined WWPN or the physical
+            WWPN read from the device. It cannot be modified after the
+            connection is created.
+        wwpnType:
+            Specifies the type of WWN address to be porgrammed on the FlexNIC.
+            The value can be 'Virtual', 'Physical' or 'UserDefined'. It cannot
+            be modified after the connection is created. If the WWPN, WWNN,
+            MAC, connection's macType and connection's wwpnType are omitted in
+            the FC connection, then the connection's macType and connection's
+            wwpnType are set to the profile's default macType and profile's
+            default wwnnType.
+
+    Returns: dict
+    """
     return {
-        'id': cid,
-        'name': name,
-        'boot': boot,
+        'boot': connectionBoot,
         'functionType': functionType,
+        'id': cid,
         'mac': mac,
         'macType': macType,
+        'name': name,
         'networkUri': networkUri,
         'portId': portId,
         'requestedMbps': requestedMbps,
@@ -589,125 +834,424 @@ def make_profile_connection_dict(cid, name, networkUri, boot=None,
     }
 
 
-def make_profile_connection_boot_dict(priority='Primary',
-                                      arrayWwpn=None,
-                                      lun=None):
+def make_ConnectionBoot(priority='Primary',
+                        arrayWwpn=None,
+                        lun=None):
+    """ Create a ConnectionBoot dictionary
+
+    Args:
+        priority:
+            Indicates the boot priority for this device. PXE and Fibre Channel
+            connections are treated separately; an Ethernet connection and a
+            Fibre Channel connection can both be marked as Primary. The 'order'
+            attribute controls ordering among the different device types.
+            Choices are 'NotBootable', 'Primary', or 'Secondary'
+        arrayWwpn:
+            The wwpn of the target device that provides access to the Boot
+            Volume, 16 HEX digits as a string.
+        lun:
+            The LUN of the boot volume presented by the target device. The
+            value can be either 1 to 3 decimal digits in the range 0 to 255 or
+            13 to 16 HEX digits as a string.
+
+    Returns: dict
+    """
     if arrayWwpn is None and lun is None:
         return {
             'priority': priority}
     else:
         return {
             'priority': priority,
-            'targets': make_profile_connection_boot_target_dict(arrayWwpn,
-                                                                lun)}
+            'targets': make_BootTarget(arrayWwpn, lun)}
 
 
-def make_profile_connection_boot_target_dict(arrayWwpn=None, lun=None):
+def make_BootTarget(arrayWwpn=None, lun=None):
+    """ Create a BootTarget dictionary
+
+    Args:
+        arrayWwpn:
+            The wwpn of the target device that provides access to the Boot
+            Volume, 16 HEX digits as a string.
+        lun:
+            The LUN of the boot volume presented by the target device. The
+            value can be either 1 to 3 decimal digits in the range 0 to 255 or
+            13 to 16 HEX digits as a string.
+
+    Returns: dict
+    """
     return [{'arrayWwpn': arrayWwpn,
              'lun': lun}]
 
+def make_ServerProfileV5(affinity='Bay',
+                         biosSettings=None,
+                         bootSettings=None,
+                         bootModeSetting=None,
+                         profileConnectionV4=None,
+                         description=None,
+                         firmwareSettingsV3=None,
+                         hideUnusedFlexNics=True,
+                         localStorageSettingsV3=None,
+                         macType='Virtual',
+                         name=None,
+                         sanStorageV3=None,
+                         serialNumber=None,
+                         serialNumberType='Physical',
+                         serverHardwareTypeUri=None,
+                         serverHardwareUri=None,
+                         serverProfileTemplateUri=None,
+                         uuid=None,
+                         wwnType='Virtual'):
+    """ Create a ServerProfileV5 dictionary for use with the V200 API
 
-def make_profile_dict(affinity, connections, boot, bootmode, desc,
-                      firmwareBaseline, hideUnusedFlexNics, localStorage,
-                      profileName, sanStorage, server, sht, bios):
-    if connections:
-        ptype = 'Virtual'
-    else:
-        ptype = 'Physical'
+    Args:
+        affinity:
+            This identifies the behavior of the server profile when the server
+            hardware is removed or replaced. This can be set to 'Bay' or
+            'BayAndServer'.
+        biosSettings:
+            Dictionary that describes Server BIOS settings
+        bootSettings:
+            Dictionary that indicates that the server will attempt to boot from
+            this connection. This object can only be specified if
+            "boot.manageBoot" is set to 'true'
+        bootModeSetting:
+            Dictionary that describes the boot mode settings to be confiured on
+            Gen9 and newer servers.
+        profileConnectionV4:
+            Array of ProfileConnectionV3
+        description:
+            Description of the Server Profile
+        firmwareSettingsV3:
+            FirmwareSettingsV3 disctionary that defines the firmware baseline
+            and managemnt
+        hideUnusedFlexNics:
+            This setting controls the enumeration of physical functions that do
+            not correspond to connections in a profile.
+        localStorageSettingsV3:
+            Disctionary that describes the local storage settings.
+        macType:
+            Specifies the type of MAC address to be programmed into the IO
+            devices. The value can be 'Virtual', 'Physical' or 'UserDefined'.
+        name:
+            Unique name of the Server Profile
+        sanStorageV3:
+            Dictionary that describes teh san storage settings.
+        serialNumber:
+            A 10-byte value that is exposed to the Operating System as the
+            server hardware's Serial Number. The value can be a virtual serial
+            number, user defined serial number or physical serial number read
+            from the server's ROM. It cannot be modified after the profile is
+            created.
+        serialNumberType:
+             Specifies the type of Serial Number and UUID to be programmed into
+             the server ROM. The value can be 'Virtual', 'UserDefined', or
+             'Physical'. The serialNumberType defaults to 'Virtual' when
+             serialNumber or uuid are not specified. It cannot be modified
+             after the profile is created.
+        serverHardwareTypeUri:
+            Identifies the server hardware type for which the Server Profile
+            was designed. The serverHardwareTypeUri is determined when the
+            profile is created.
+        serverHardwareUri:
+             Identifies the server hardware to which the server profile is
+             currently assigned, if applicable
+        serverProfileTemplateUri:
+            Identifies the Server profile template the Server Profile is based
+            on.
+        uuid:
+            A 36-byte value that is exposed to the Operating System as the
+            server hardware's UUID. The value can be a virtual uuid, user
+            defined uuid or physical uuid read from the server's ROM. It
+            cannot be modified after the profile is created.
+        wwnType:
+             Specifies the type of WWN address to be programmed into the IO
+             devices. The value can be 'Virtual', 'Physical' or 'UserDefined'.
+             It cannot be modified after the profile is created.
 
-    if server:
-        suri = server['uri']
-    else:
-        suri = None
+    Returns: dict
+    """
 
     return {
-        'affinity': affinity,        
-        'bios': bios,
-        'boot': boot,
-        'bootMode': bootmode,
-        'connections': connections,
-        'description': desc,
-        'firmware': firmwareBaseline,
+        'affinity': affinity,
+        'bios': biosSettings,
+        'boot': bootSettings,
+        'bootMode': bootModeSetting,
+        'connections': profileConnectionV4,
+        'description': description,
+        'firmware': firmwareSettingsV3,
         'hideUnusedFlexNics': hideUnusedFlexNics,
-        'localStorage': localStorage,
-        'macType': ptype,
-        'name': profileName,
-        'sanStorage': sanStorage,
-        'serialNumberType': ptype,
-        'serverHardwareTypeUri': sht['uri'],
-        'serverHardwareUri': suri,
-        'type': 'ServerProfileV4',
-        'wwnType': ptype
+        'localStorage': localStorageSettingsV3,
+        'macType': macType,
+        'name': name,
+        'sanStorage': sanStorageV3,
+        'serialNumber': serialNumber,
+        'serialNumberType': serialNumberType,
+        'serverHardwareTypeUri': serverHardwareTypeUri,
+        'serverHardwareUri': serverHardwareUri,
+        'serverProfileTemplateUri': serverProfileTemplateUri,
+        'type': 'ServerProfileV5',
+        'uuid': uuid,
+        'wwnType': wwnType
     }
 
 
-def make_firmware_settings_dict(firmwareUri, manageFirmware=True,
-                                forceInstallFirmware=False):
+def make_FirmwareSettingsV3(firmwareUri,
+                            firmwareInstallType,
+                            manageFirmware=True,
+                            forceInstallFirmware=False):
+    """ Create a FirmwareSettingsV3 dictionary for use with the V200 API
+
+    Args:
+        firmwareUri:
+            Identifies the firmware baseline to be applied to the server
+            hardware.
+        firmwareInstallType:
+            FirmwareAndOSDrivers:
+                Updates the firmware and OS drivers without powering down the
+                server hardware using HP Smart Update Tools.
+            FirmwareOnly:
+                 Updates the firmware without powering down the server hardware
+                 using using HP Smart Update Tools.
+            FirmwareOnlyOfflineMode:
+                Manages the firmware through HP OneView. Selecting this option
+                requires the server hardware to be powered down.
+        manageFirmware:
+            Indicates that the server firmware is configured using the server
+            profile
+        forceInstallFirmware:
+            Force installation of firmware even if same or newer version is
+            installed.
+
+    Returns: dict
+    """
+
     return {'firmwareBaselineUri': firmwareUri,
             'manageFirmware': manageFirmware,
             'forceInstallFirmware': forceInstallFirmware
             }
 
 
-def make_bios_settings_dict(manageBios=True,
-                            overriddenSettings=[]):
+def make_BiosSettings(manageBios=True, overriddenSettings=[]):
     return {'manageBios': manageBios,
             'overriddenSettings': overriddenSettings
             }
 
 
-def make_boot_settings_dict(order, manageBoot=False):
+def make_BootSettings(order, manageBoot=False):
+    """ Create a BootSettings dictionary for use with ServerProfileV5
+
+    Args:
+        manageBoot:
+            Indicates whether the boot order is configured using the server
+            profile.
+        order:
+            Defines the order in which boot will be attempted on the available
+            devices as an array of strings: 'CD', 'USB', 'HardDisk', 'PXE'
+
+    Returns: dict
+    """
     return {'manageBoot': manageBoot,
             'order': order
             }
 
 
-def make_bootmode_settings_dict(manageMode, mode, pxeBootPolicy):
+def make_BootModeSetting(manageMode, mode, pxeBootPolicy):
+    """ Create a BootModeSetting dictionary (only with Gen9 and newer)
+
+    Args:
+        manageMode:
+           Boolean value indicates whether the boot mode is configured using
+           the server profile.
+        mode:
+            The environment used for server boot operations. Supported values
+            are: 'UEFI', 'UEFIOptimized', or 'BIOS'.
+        pxeBootPolicy:
+            Defines the filtering or priority of the PXE boot options for each
+            enabled NIC port. This field is required only when the "mode" is
+            set to "UEFI" or "UEFIOptimized". Possible values are:
+
+                'Auto': No change from current server setting
+                'IPv4': Only IPv4 entries will be allowed in the boot order.
+                'IPv6': Only IPv6 entries will be allowed in the boot order.
+                'IPv4ThenIPv6': both IPv4 and IPv6 entries will be present in
+                                the boot order with IPV4 entries coming first.
+                'IPv6ThenIPv4': both IPv4 and IPv6 entries will be present in
+                                the boot order with IPv6 entries coming first.
+
+    Returns: dict
+    """
     return {'manageMode': manageMode,
             'mode': mode,
             'pxeBootPolicy': pxeBootPolicy
             }
 
 
-def make_localstorage_dict(manageLocalStorage, initialize, logicalDrives):
-    return {'manageLocalStorage': manageLocalStorage,
-            'initialize': initialize,
-            'logicalDrives': logicalDrives
+def make_LocalStorageSettingsV3(controllers):
+    """ Create a LocalStorageSettingsV3 dictionary
+
+    Args:
+        controllers:
+            Array of LocalStorageEmbeddedController
+
+    Returns: dict
+    """
+    return {'controllers': controllers}
+
+
+def make_LocalStorageEmbeddedController(importConfiguration, initialize,
+                                        LogicalDrives, managed, mode,
+                                        slotNumber='0'):
+    """ Create a LocalStorageEmbeddedController dictionary
+
+    Args:
+        importConfiguration:
+            Boolean, should the logical drives in the current configuration be
+            imported.
+        initialize:
+            Boolearn, should the controller be initalized before configuration.
+        LogicalDrives:
+            Array of LogicalDrivesV3
+        managed:
+            Boolean value determines if the controler is managed by OneView
+        mode:
+            Determines the mode of operation of the controller. The controller
+            mode can be RAID or HBA.
+        slotNumber:
+            The PCI slot number used by the controller. This value will always
+            be set to '0;, as only the embedded controller is supported in the
+            current version.
+
+    Returns: dict
+    """
+
+def make_LogicalDriveV3(bootable, driveName, driveTechnology,
+                        numPhysicalDrives, raidLevel):
+    """ Create a LocalDriveV3 dictionary
+
+    Args:
+        bootable:
+            Indicates if the logical drive is bootable or not.
+        driveName:
+            The name of the logical drive.
+        driveTechnology:
+            Defines the interface type for drives that will be used to build
+            the logical drive. Supported values depend on the local storage
+            capabilities of the selected server hardware type.
+        numPhysicalDrives:
+            The number of physical drives to be used to build the logical
+            drive. The provided values must be consistent with the selected
+            RAID level and cannot exceed the maximum supported number of
+            drives for the selected server hardware type.
+        raidLevel:
+            The RAID level of the logical drive.
+
+    Returns: dict
+    """
+    return {'bootable': bootable,
+            'driveName': driveName,
+            'driveTechnology': driveTechnology,
+            'numPhysicalDrives': numPhysicalDrives,
+            'raidLevel': raidLevel
             }
 
 
-def make_logicaldrives_dict(raidLevel, bootable):
-    return {'raidLevel': raidLevel,
-            'bootable': bootable
-            }
 
 
-def make_sanstorage_dict(hostOSType, manageSanStorage, volumeAttachments):
+def make_SanStorageV3(hostOSType, manageSanStorage, volumeAttachments):
+    """ Create a SanStorageV3 dictionary
+
+    Args:
+        hostOSType:
+            The operating system type of the host. To retrieve the list of
+            supported host OS types, issue a REST Get request using the
+            /rest/storage-systems/host-types API.
+        manageSanStorage:
+            Boolean, identifies if SAN is managed in the server profile.
+        volumeAttachments:
+            Array of VolumeAttachmentV2
+
+    Returns: dict
+    """
     return {'hostOSType': hostOSType,
             'manageSanStorage': manageSanStorage,
             'volumeAttachments': [volumeAttachments],
             }
 
 
-def make_volumeAttachments_dict(lun, lunType, volumeUri, volumeStoragePoolUri,
-                                volumeStorageSystemUri, storagePaths):
-    if lunType == 'Manual':
-        return {'id': None,
-                'lun': lun,
-                'lunType': lunType,
-                'volumeUri': volumeUri,
-                'volumeStoragePoolUri': volumeStoragePoolUri,
-                'volumeStorageSystemUri': volumeStorageSystemUri,
-                'storagePaths': storagePaths,
-                }
+def make_VolumeAttachmentV2(lun=None,
+                            lunType='Auto',
+                            permanent=False,
+                            storagePaths=[],
+                            volumeName=None,
+                            volumeProvisionType='Thin',
+                            volumeProvisionedCapacityBytes=None,
+                            volumeShareable=False,
+                            volumeStoragePoolUri=None,
+                            volumeStorageSystemUri=None,
+                            volumeUri=None):
+    """ Create a VolumeAttachmentV2 dictionary
+
+    Args:
+        lun:
+            The logical unit number.
+        lunType:
+            The logical unit number type: 'Auto' or 'Manual'.
+        permanent:
+            If true, indicates that the volume will persist when the profile is
+            deleted. If false, then the volume will be deleted when the profile
+            is deleted.
+        storagePaths:
+            Array of StoragePathV2
+        volumeName:
+            The name of the volume. Required when creating a volume.
+        volumeProvisionType:
+            The provisioning type of the new volume: 'Thin' or 'Thick'. This
+            attribute is required when creating a volume.
+        volumeProvisionedCapacityBytes:
+            The requested provisioned capacity of the storage volume in bytes.
+            This attribute is required when creating a volume.
+        volumeShareable:
+            Identifies whether the storage volume is shared or private. If
+            false, then the volume will be private. If true, then the volume
+            will be shared. This attribute is required when creating a volume.
+        volumeStoragePoolUri:
+            The URI of the storage pool associated with this volume
+            attachment's volume.
+        volumeStorageSystemUri:
+            The URI of the storage system associated with this volume
+            attachment.
+        volumeUri:
+            The URI of the storage volume associated with this volume
+            attachment.
+
+    Returns: dict
+    """
+    if volumeProvisionedCapacityBytes:
+           volAttach = {'id': None,
+                        'lunType': lunType,
+                        'permanent': permanent,
+                        'volumeName': volumeName,
+                        'volumeUri': None,
+                        'volumeProvisionType': volumeProvisionType,
+                        'volumeProvisionedCapacityBytes': volumeProvisionedCapacityBytes,
+                        'volumeShareable': volumeShareable,
+                        'volumeStoragePoolUri': volumeStoragePoolUri,
+                        'volumeStorageSystemUri': None,
+                        'storagePaths': storagePaths,
+                        }
     else:
-        return {'id': None,
-                'lunType': lunType,
-                'volumeUri': volumeUri,
-                'volumeStoragePoolUri': volumeStoragePoolUri,
-                'volumeStorageSystemUri': volumeStorageSystemUri,
-                'storagePaths': storagePaths,
-                }
+        volAttach = {'id': None,
+                     'lunType': lunType,
+                     'volumeUri': volumeUri,
+                     'volumeStoragePoolUri': volumeStoragePoolUri,
+                     'volumeStorageSystemUri': volumeStorageSystemUri,
+                     'storagePaths': storagePaths,
+                     }
+
+    if lunType == 'Manual':
+            volAttach['lun'] = lun
+
+    return volAttach
 
 
 def make_ephemeral_volume_dict(lun, lunType, volumeUri, volumeStoragePoolUri,
@@ -723,12 +1267,39 @@ def make_ephemeral_volume_dict(lun, lunType, volumeUri, volumeStoragePoolUri,
             }
 
 
-def make_storagePaths_dict(storageTargetType='Auto', storageTargets=[],
-                           connectionId=None, isEnabled=True):
-    return {'storageTargetType': storageTargetType,
-            'storageTargets': storageTargets,
-            'connectionId': connectionId,
-            'isEnabled': isEnabled
+def make_StoragePathV2(connectionId=None, isEnabled=True,
+                       storageTargetType='Auto', storageTargets=[]):
+    """ Create a StoragePathV2 dictionary
+
+    Args:
+        connectionId:
+            The ID of the connection associated with this storage path. Use
+            GET /rest/server-profiles/available-networks to retrieve the list
+            of available networks
+        isEnabled:
+            Identifies if the storage path is enabled.
+        storageTargetType:
+            If set to 'Auto', the storage system will automatically identify
+            the storage targets. In this case, set the storageTargets field to
+            an empty array.  If set to 'TargetPorts', the storage targets can
+            be manually specified in the storageTargets field using
+            comma-separated strings.
+        storageTargets:
+            Array of WWPNs of the targets on the storage system. If
+            storageTargetType is set to Auto, the storage system will
+            automatically select the target ports, in which case the
+            storageTargets field is not needed and should be set to an empty
+            array.  If storageTargetType is set to TargetPorts, then the the
+            storageTargets field should be an array of comma-separated strings
+            representing the WWPNs intended to be used to connect with the
+            storage system.
+
+    Returns: dict
+    """
+    return {'connectionId': connectionId,
+            'isEnabled': isEnabled,
+            'storageTargetType': storageTargetType,
+            'storageTargets': storageTargets
             }
 
 

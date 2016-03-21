@@ -37,8 +37,8 @@ if PY2:
 elif PYTHON_VERSION < (3, 4):
     raise Exception('Must use Python 3.4 or later')
 
-from pprint import pprint
 import hpOneView as hpov
+from pprint import pprint
 
 
 def acceptEULA(con):
@@ -61,16 +61,37 @@ def login(con, credential):
         print('Login failed')
 
 
-def getver(sts):
-    ret = sts.get_node_version()
-    pprint(ret)
+def output_progress(progress):
+    for status in progress:
+        if 'statusUpdate' in status:
+            print('    ', status['statusUpdate'])
+
+
+def del_all_templates(srv):
+    templates = srv.get_server_profile_templates()
+    for template in templates:
+        print(('Removing Profile Template %s' % template['name']))
+        ret = srv.remove_server_profile_template(template)
+        output_progress(ret['progressUpdates'])
+
+
+def del_template_by_name(con, srv, name):
+
+    templates = srv.get_server_profile_templates()
+    for template in templates:
+        if template['name'] == name:
+            print(('Removing Profile Template %s' % template['name']))
+            ret = srv.remove_server_profile_template(template)
+            return
+
+    print('Profile Template: ', name, ' not found')
 
 
 def main():
     parser = argparse.ArgumentParser(add_help=True,
                         formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
-    Display Node Version
+    Delete server profile template(s)
 
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
@@ -93,14 +114,20 @@ def main():
                         default='Local',
                         help='''
     HP OneView Authorized Login Domain''')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-n', dest='name',
+                       help='''
+    Name of the server profile template to delete''')
+    group.add_argument('-d', dest='delete_all',
+                       action='store_true',
+                       help='''
+    Remove ALL server profile templates and exit''')
 
     args = parser.parse_args()
     credential = {'authLoginDomain': args.domain.upper(), 'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
     srv = hpov.servers(con)
-    net = hpov.networking(con)
-    sts = hpov.settings(con)
 
     if args.proxy:
         con.set_proxy(args.proxy.split(':')[0], args.proxy.split(':')[1])
@@ -110,7 +137,11 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    getver(sts)
+    if args.delete_all:
+        del_all_templates(srv)
+        sys.exit()
+
+    del_template_by_name(con, srv, args.name)
 
 if __name__ == '__main__':
     import sys

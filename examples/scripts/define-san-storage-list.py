@@ -119,14 +119,19 @@ def define_san(sto, name, san_list, conn_list, append, hostos, lun, del_vol):
 
     paths = []
     for nid in net_ids:
-        paths.append(hpov.common.make_storagePaths_dict('Auto', [], nid, True))
+        paths.append(hpov.common.make_StoragePathV2(storageTargetType='Auto',
+                                                    storageTargets=[],
+                                                    connectionId=nid,
+                                                    isEnabled=True))
 
-    vols = hpov.common.make_volumeAttachments_dict(None, lun_type, vol['uri'],
-                                                   vol['storagePoolUri'],
-                                                   vol['storageSystemUri'],
-                                                   paths)
+    vols = hpov.common.make_VolumeAttachmentV2(lun=None,
+                                               lunType=lun_type,
+                                               volumeUri=vol['uri'],
+                                               volumeStoragePoolUri=vol['storagePoolUri'],
+                                               volumeStorageSystemUri=vol['storageSystemUri'],
+                                               storagePaths=paths)
 
-    san_storage = hpov.common.make_sanstorage_dict(HOST_OS[hostos], True, vols)
+    san_storage = hpov.common.make_SanStorageV3(HOST_OS[hostos], True, vols)
 
     if append:
         data = json.loads(open(san_list).read())
@@ -168,6 +173,10 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
+    parser.add_argument('-j', dest='domain', required=False,
+                        default='Local',
+                        help='''
+    HP OneView Authorized Login Domain''')
     parser.add_argument('-sl', dest='san_list',
                         required=True,
                         help='''
@@ -235,7 +244,7 @@ def main():
     Indicates that the volume will be deleted when the profile is deleted.''')
 
     args = parser.parse_args()
-    credential = {'userName': args.user, 'password': args.passwd}
+    credential = {'authLoginDomain': args.domain.upper(), 'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
     sto = hpov.storage(con)

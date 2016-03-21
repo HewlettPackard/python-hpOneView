@@ -68,23 +68,17 @@ def add_network(net, name, minbw, maxbw, vlan, vtype, purpose, slink, private):
     maxbw = int(maxbw * 1000)
     minbw = int(minbw * 1000)
 
-    bandDict = hpov.common.make_bw_dict(maxbw, minbw)
+    if vtype != 'Tagged':
+        vlan = 0
 
-    if vtype == 'Tagged':
-        enet = net.create_enet_network(name,
-                                       vlan,
-                                       purpose=purpose,
-                                       smartLink=slink,
-                                       privateNetwork=private,
-                                       ethernetNetworkType=vtype,
-                                       bw=bandDict)
-    else:
-        enet = net.create_enet_network(name, '',
-                                       purpose=purpose,
-                                       smartLink=slink,
-                                       privateNetwork=private,
-                                       ethernetNetworkType=vtype,
-                                       bw=bandDict)
+    enet = net.create_enet_network(name=name,
+                                   vlanId=vlan,
+                                   purpose=purpose,
+                                   smartLink=slink,
+                                   privateNetwork=private,
+                                   ethernetNetworkType=vtype,
+                                   typicalBandwidth=minbw,
+                                   maximumBandwidth=maxbw)
 
     print('\nCreated Ethernet Network\n')
     print('{0:<15}\t{1:<15}\t{2:<15}\t{3:<15}\t{4:<15}\t{5:<15}'.format('NAME', 'VLAN', 'TYPE', 'PURPOSE', 'SMART LINK', 'PRIVATE'))
@@ -116,6 +110,10 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
+    parser.add_argument('-j', dest='domain', required=False,
+                        default='Local',
+                        help='''
+    HP OneView Authorized Login Domain''')
     parser.add_argument('-n', dest='network_name', required=True,
                         help='''
     Name of the network''')
@@ -151,7 +149,7 @@ def main():
     ENABLE Private Network''')
 
     args = parser.parse_args()
-    credential = {'userName': args.user, 'password': args.passwd}
+    credential = {'authLoginDomain': args.domain.upper(), 'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
     net = hpov.networking(con)

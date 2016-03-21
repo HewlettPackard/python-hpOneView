@@ -67,7 +67,6 @@ def add_network_set(net, name, networks, minbw, maxbw):
 
     maxbw = int(maxbw * 1000)
     minbw = int(minbw * 1000)
-    bandDict = hpov.common.make_bw_dict(maxbw, minbw)
 
     if networks:
         enets = net.get_enet_networks()
@@ -75,7 +74,9 @@ def add_network_set(net, name, networks, minbw, maxbw):
             if enet['name'] in networks:
                 nset.append(enet['uri'])
 
-    nset = net.create_networkset(name, nets=nset, bw=bandDict)
+    nset = net.create_networkset(name, networkUris=nset,
+                                 typicalBandwidth=minbw,
+                                 maximumBandwidth=maxbw)
     if 'connectionTemplateUri' in nset:
         print('\n\nName:           ', nset['name'])
         print('Type:           ', nset['type'])
@@ -114,6 +115,10 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
+    parser.add_argument('-j', dest='domain', required=False,
+                        default='Local',
+                        help='''
+    HP OneView Authorized Login Domain''')
     parser.add_argument('-n', dest='network_set_name', required=True,
                         help='''
     Name of the network set''')
@@ -133,7 +138,7 @@ def main():
     Maximum bandwidth between .1 and 20 Gb/s''')
 
     args = parser.parse_args()
-    credential = {'userName': args.user, 'password': args.passwd}
+    credential = {'authLoginDomain': args.domain.upper(), 'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
     net = hpov.networking(con)

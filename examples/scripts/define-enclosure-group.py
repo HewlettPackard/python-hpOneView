@@ -67,8 +67,7 @@ def define_enclosure_group(net, srv, name, lname):
     for lig in ligs:
         if lig['name'] == lname:
             print('Creating Enclosure Group')
-            egroup = hpov.common.make_egroup_dict(name, lig['uri'])
-            egroup = srv.create_enclosure_group(egroup)
+            egroup = srv.create_enclosure_group(lig, name)
             if 'name' in egroup:
                 print('Name:          ', egroup['name'])
             else:
@@ -103,6 +102,10 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
+    parser.add_argument('-j', dest='domain', required=False,
+                        default='Local',
+                        help='''
+    HP OneView Authorized Login Domain''')
     parser.add_argument('-l', dest='lname', required=False,
                         help='''
     LIG to assign to enclosure group''')
@@ -111,7 +114,7 @@ def main():
     Enclosure Group name''')
 
     args = parser.parse_args()
-    credential = {'userName': args.user, 'password': args.passwd}
+    credential = {'authLoginDomain': args.domain.upper(), 'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
     srv = hpov.servers(con)

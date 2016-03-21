@@ -141,14 +141,14 @@ def adduplinkset(con, net, name, ligname, networks, utype, etype,
                                      int(bay), port['portNumber']))
 
     # Create a new uplink set to append to the logical interconnect group
-    uset = hpov.common.make_uplink_set_group_dict(name,
-                                                  ethernetNetworkType=etype,
-                                                  lacpTimer=lacp,
-                                                  logicalPortConfigInfos=port_uris,
-                                                  mode=connection,
-                                                  nativeNetworkUri=native_uri,
-                                                  networkType=utype,
-                                                  networkUris=net_uris)
+    uset = hpov.common.make_UplinkSetGroupV2(name,
+                                             ethernetNetworkType=etype,
+                                             lacpTimer=lacp,
+                                             logicalPortConfigInfos=port_uris,
+                                             mode=connection,
+                                             nativeNetworkUri=native_uri,
+                                             networkType=utype,
+                                             networkUris=net_uris)
 
     lig['uplinkSets'].append(uset)
     lig = net.update_lig(lig)
@@ -177,6 +177,10 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
+    parser.add_argument('-j', dest='domain', required=False,
+                        default='Local',
+                        help='''
+    HP OneView Authorized Login Domain''')
     parser.add_argument('-n', dest='uplink_set_name', required=True,
                         help='''
     Name of the uplink  set''')
@@ -220,7 +224,7 @@ def main():
     Ethernet connection mode''')
 
     args = parser.parse_args()
-    credential = {'userName': args.user, 'password': args.passwd}
+    credential = {'authLoginDomain': args.domain.upper(), 'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
     net = hpov.networking(con)

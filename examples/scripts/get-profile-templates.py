@@ -37,8 +37,8 @@ if PY2:
 elif PYTHON_VERSION < (3, 4):
     raise Exception('Must use Python 3.4 or later')
 
-from pprint import pprint
 import hpOneView as hpov
+from pprint import pprint
 
 
 def acceptEULA(con):
@@ -61,16 +61,28 @@ def login(con, credential):
         print('Login failed')
 
 
-def getver(sts):
-    ret = sts.get_node_version()
-    pprint(ret)
+def get_all_templates(srv):
+
+    templates = srv.get_server_profile_templates()
+    for template in templates:
+        pprint(template)
+
+
+def get_template_by_name(srv, name):
+    templates = srv.get_server_profile_templates()
+    for template in templates:
+        if template['name'] == name:
+            print(('Getting Profile Template %s' % template['name']))
+            pprint(template)
+            return
+    print('Profile Template: ', name, ' not found')
 
 
 def main():
     parser = argparse.ArgumentParser(add_help=True,
                         formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
-    Display Node Version
+    Display Server Profiles Templates
 
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
@@ -93,6 +105,14 @@ def main():
                         default='Local',
                         help='''
     HP OneView Authorized Login Domain''')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-n', dest='name',
+                       help='''
+    Name of the server profile template to get''')
+    group.add_argument('-g', dest='get_all',
+                       action='store_true',
+                       help='''
+    Get ALL server profile templates and exit''')
 
     args = parser.parse_args()
     credential = {'authLoginDomain': args.domain.upper(), 'userName': args.user, 'password': args.passwd}
@@ -110,7 +130,11 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    getver(sts)
+    if args.get_all:
+        get_all_templates(srv)
+        sys.exit()
+
+    get_template_by_name(srv, args.name)
 
 if __name__ == '__main__':
     import sys

@@ -152,12 +152,12 @@ def fix_san(con, sto, san):
                         path['storageTargets'] = []
                     if 'status' in path:
                         del path['status']
-                volumes.append(hpov.common.make_volumeAttachments_dict(None,
-                                                                       'Auto',
-                                                                       ret['uri'],
-                                                                       ret['storagePoolUri'],
-                                                                       ret['storageSystemUri'],
-                                                                       paths))
+                volumes.append(hpov.common.make_VolumeAttachmentV2(lun=None,
+                                                                   lunType='Auto',
+                                                                   volumeUri=ret['uri'],
+                                                                   volumeStoragePoolUri=ret['storagePoolUri'],
+                                                                   volumeStorageSystemUri=ret['storageSystemUri'],
+                                                                   storagePaths=paths))
             else:
                 print(('\tMapping  Volume %s' % vol['name']))
                 paths = vols['storagePaths']
@@ -166,15 +166,14 @@ def fix_san(con, sto, san):
                         path['storageTargets'] = []
                     if 'status' in path:
                         del path['status']
-                volumes.append(hpov.common.make_volumeAttachments_dict(None,
-                                                                       'Auto',
-                                                                       vol['uri'],
-                                                                       vol['storagePoolUri'],
-                                                                       vol['storageSystemUri'],
-                                                                       paths))
+                volumes.append(hpov.common.make_VolumeAttachmentV2(lun=None,
+                                                                   lunType='Auto',
+                                                                   volumeUri=vol['uri'],
+                                                                   volumeStoragePoolUri=vol['storagePoolUri'],
+                                                                   volumeStorageSystemUri=vol['storageSystemUri'],
+                                                                   storagePaths=paths))
 
-    san_storage = hpov.common.make_sanstorage_dict(san['hostOSType'], True,
-                                                   None)
+    san_storage = hpov.common.make_SanStorageV3(san['hostOSType'], True, None)
     san_storage['volumeAttachments'] = volumes
     return san_storage
 
@@ -291,6 +290,10 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
+    parser.add_argument('-j', dest='domain', required=False,
+                        default='Local',
+                        help='''
+    HP OneView Authorized Login Domain''')
     parser.add_argument('-n', dest='name', required=True,
                         help='''
     Name of the source server profile''')
@@ -313,7 +316,7 @@ def main():
       into HP OneView and is listed under Server Hardware
     . "UNASSIGNED" for creating an unassigned Server Profile''')
     args = parser.parse_args()
-    credential = {'userName': args.user, 'password': args.passwd}
+    credential = {'authLoginDomain': args.domain.upper(), 'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
     srv = hpov.servers(con)

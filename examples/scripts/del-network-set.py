@@ -107,6 +107,10 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
+    parser.add_argument('-j', dest='domain', required=False,
+                        default='Local',
+                        help='''
+    HP OneView Authorized Login Domain''')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-d', dest='delete_all', action='store_true',
                        help='''
@@ -116,7 +120,7 @@ def main():
     Name of the Network-set to delete''')
 
     args = parser.parse_args()
-    credential = {'userName': args.user, 'password': args.passwd}
+    credential = {'authLoginDomain': args.domain.upper(), 'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
     net = hpov.networking(con)

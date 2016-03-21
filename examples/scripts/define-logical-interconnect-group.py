@@ -71,7 +71,7 @@ def defethernet(igmp, timeout, mac_failover, mac_interval,
     pause_flood = not pause_flood
     network_loop = not network_loop
 
-    ethernetSettings = hpov.common.make_ethernetsettings_dict(
+    ethernetSettings = hpov.common.make_EthernetSettingsV3(
         enableFastMacCacheFailover=mac_failover,
         enableIgmpSnooping=igmp,
         enableNetworkLoopProtection=network_loop,
@@ -84,7 +84,7 @@ def defethernet(igmp, timeout, mac_failover, mac_interval,
 
 def deflig(net, con, name, ics, ethernetSettings):
 
-    lig = hpov.common.make_lig_dict(name, ethernetSettings)
+    lig = hpov.common.make_LogicalInterconnectGroupV3(name, ethernetSettings)
 
     # Create a bays dictionary and initalize each interconnect bays value to be
     # None. Then walk the list of interconnects supplied and assign the
@@ -171,6 +171,10 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
+    parser.add_argument('-j', dest='domain', required=False,
+                        default='Local',
+                        help='''
+    HP OneView Authorized Login Domain''')
     parser.add_argument('-n', dest='logical_interconnect_group_name',
                         required=True,
                         help='''
@@ -333,7 +337,7 @@ def main():
     condition is detected or cleared.''')
 
     args = parser.parse_args()
-    credential = {'userName': args.user, 'password': args.passwd}
+    credential = {'authLoginDomain': args.domain.upper(), 'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
     net = hpov.networking(con)
