@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 ###
-# (C) Copyright (2012-2015) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -56,7 +56,7 @@ def acceptEULA(con):
 
 
 def login(con, credential):
-    # Login with givin credentials
+    # Login with given credentials
     try:
         con.login(credential)
     except:
@@ -111,7 +111,7 @@ def local_storage_settings(sht, raidlevel, logicalboot, init_storage):
     if 'model' in sht:
         model = sht['model']
     else:
-        print('Error, can not retreive server model')
+        print('Error, can not retrieve server model')
         sys.exit()
 
     if raidlevel or init_storage:
@@ -130,6 +130,27 @@ def local_storage_settings(sht, raidlevel, logicalboot, init_storage):
     return None
 
 
+def bios_settings(bios_list):
+    if bios_list:
+        try:
+            bios = json.loads(open(bios_list).read())
+            
+            overriddenSettings = []
+            overriddenBios = {}
+            for b in bios:
+                overriddenSetting = {}                
+                overriddenSetting['id'] = b['id']
+                if b['options'] and len(b['options']) > 0:         
+                    overriddenSetting['value'] = b['options'][0]['id']
+                overriddenSettings.append(overriddenSetting)
+            
+            overriddenBios['manageBios'] = True
+            overriddenBios['overriddenSettings'] = overriddenSettings;
+            return overriddenBios 
+        except ValueError:
+            print("Cannot parse BIOS JSON file! JSON must be well-formed.")
+
+
 def get_fw_settings(sts, baseline):
     # Find the first Firmware Baseline
     uri = ''
@@ -139,7 +160,7 @@ def get_fw_settings(sts, baseline):
             if spp['isoFileName'] == baseline:
                 uri = spp['uri']
         if not uri:
-            print('ERROR: Locating Firmeware Baseline SPP')
+            print('ERROR: Locating Firmware Baseline SPP')
             print('Baseline: "%s" can not be located' % baseline)
             print('')
             sys.exit()
@@ -155,14 +176,14 @@ def get_fw_settings(sts, baseline):
 def boot_settings(srv, sht, disable_manage_boot, boot_order, boot_mode, pxe):
 
     gen9 = False
-    # Get the bootCapabilites from the Server Hardwer Type
+    # Get the bootCapabilites from the Server Hardware Type
     if 'capabilities' in sht and 'bootCapabilities' in sht:
         if 'ManageBootOrder' not in sht['capabilities']:
             print('Error, server does not support managed  boot order')
             sys.exit()
         allowed_boot = sht['bootCapabilities']
     else:
-        print('Error, can not retreive server boot capabilities')
+        print('Error, can not retrieve server boot capabilities')
         sys.exit()
 
     if 'model' in sht:
@@ -238,7 +259,7 @@ def boot_settings(srv, sht, disable_manage_boot, boot_order, boot_mode, pxe):
 
         boot = None
 
-    # Managed Boot explicity disabled
+    # Managed Boot explicitly disabled
     elif disable_manage_boot:
         # For a Gen 9 BL server hardware "boot.manageBoot" cannot be set to
         # true unless "bootMode" is specified and "bootMode.manageMode" is set
@@ -261,7 +282,7 @@ def boot_settings(srv, sht, disable_manage_boot, boot_order, boot_mode, pxe):
 
 
 def define_profile(con, srv, affinity, name, desc, server, sht, boot, bootmode,
-                   fw, hide_flexnics, local_storage, conn_list, san_list):
+                   fw, hide_flexnics, local_storage, conn_list, san_list, bios):
 
     if conn_list:
         # read connection list from file
@@ -285,7 +306,7 @@ def define_profile(con, srv, affinity, name, desc, server, sht, boot, bootmode,
     profile_dict = hpov.common.make_profile_dict(affinity, conn, boot,
                                                  bootmode, desc, fw,
                                                  hide_flexnics, local_storage,
-                                                 name, san, server, sht)
+                                                 name, san, server, sht, bios)
 
     profile = srv.create_server_profile(profile_dict)
     if 'serialNumberType' in profile:
@@ -363,7 +384,7 @@ def main():
                         action='store_true',
                         help='''
     Explicitly DISABLE Boot Order Management. This value is enabled by
-    default and required for Connection boot enablement. If this optoin is
+    default and required for Connection boot enablement. If this option is
     disabled, then  PXE and FC BfS settings are disabled within the entire
     Server Profile.''')
     parser.add_argument('-bo', dest='boot_order', required=False,
@@ -381,7 +402,7 @@ def main():
     hardware in UEFI or UEFI Optimized boot mode, boot order configuration
     is not supported.
 
-    Server boot order defined as a list seperatedby spaces. For example:
+    Server boot order defined as a list separated by spaces. For example:
 
     Gen7/8 BIOS Default Boot Order:
                             -bo CD Floppy USB HardDisk PXE
@@ -405,7 +426,7 @@ def main():
                         choices=['UEFI', 'UEFIOptimized', 'BIOS'],
                         default='BIOS',
                         help='''
-    Specify the Gen9 Boot Envrionment.
+    Specify the Gen9 Boot Environment.
 
     Sets the boot mode as one of the following:
 
@@ -501,13 +522,18 @@ def main():
         . "UNASSIGNED" for creating an unassigned Server Profile''')
     parser.add_argument('-sh', dest='server_hwt', required=False,
                         help='''
-    Server harware type is required for defining an unassigned profile. Note
+    Server hardware type is required for defining an unassigned profile. Note
     the Server Hardware Type must be present in the HP OneView appliance
-    before it can be uesd. For example, a sngle server with the specific server
+    before it can be used. For example, a single server with the specific server
     hardware type must have been added to OneView for that hardware type to
     be used. The example script get-server-hardware-types.py with the -l
-    arguement can be used to get a list of server hardware types that have
+    argument can be used to get a list of server hardware types that have
     been imported into the OneView appliance''')
+    parser.add_argument('-bl', dest='bios_list',
+                        required=False,
+                        help='''
+    File in JSON format with list of BIOS settings to override for this profile. This file
+    can be created with a call to get-bios-options.py''')
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
@@ -542,9 +568,10 @@ def main():
     local_storage = local_storage_settings(sht, args.raidlevel,
                                            args.logicalboot, args.init_storage)
     fw_settings = get_fw_settings(sts, args.baseline)
+    bios = bios_settings(args.bios_list)
     define_profile(con, srv, args.affinity, args.name, args.desc, server, sht,
                    boot, bootmode, fw_settings, args.hide_flexnics,
-                   local_storage, args.conn_list, args.san_list)
+                   local_storage, args.conn_list, args.san_list, bios)
 
 if __name__ == '__main__':
     import sys
