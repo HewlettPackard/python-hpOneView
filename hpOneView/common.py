@@ -882,7 +882,6 @@ def make_BootTarget(arrayWwpn=None, lun=None):
     return [{'arrayWwpn': arrayWwpn,
              'lun': lun}]
 
-
 def make_ServerProfileV5(affinity='Bay',
                          biosSettings=None,
                          bootSettings=None,
@@ -974,7 +973,7 @@ def make_ServerProfileV5(affinity='Bay',
 
     return {
         'affinity': affinity,
-        'bios': {'manageBios': False},
+        'bios': biosSettings,
         'boot': bootSettings,
         'bootMode': bootModeSetting,
         'connections': profileConnectionV4,

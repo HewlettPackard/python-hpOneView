@@ -66,7 +66,7 @@ class servers(object):
     def get_server_by_name(self, name):
         servers = get_members(self._con.get(uri['servers']))
         for server in servers:
-            if server['shortModel'] == name:
+            if server['name'] == name:
                 return server
 
     def get_available_servers(self, server_hardware_type=None,
