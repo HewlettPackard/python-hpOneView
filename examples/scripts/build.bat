@@ -164,3 +164,10 @@ echo "Define profile with firmware base line and managed boot order using Gen 7 
 python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-1" -s %SRV_ADDR% -fw %FW_BASE% -bo %BOOT_G78%
 echo "Define n unassigned server profile"
 python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Unassigned-1" -s UNASSIGNED -sh "DL360p Gen8 1" -fw %FW_BASE% -bo %BOOT_G78%
+
+echo.
+echo ================================================================
+echo                       Copy profile
+echo ================================================================
+python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -s "Encl1, bay 5" -d "Profile-Enc1Bay5"
+python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -s "Encl1, bay 6" -d "Profile-Enc1Bay6"
