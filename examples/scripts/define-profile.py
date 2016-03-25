@@ -82,25 +82,26 @@ def get_server(con, srv, server_id, server_hwt, forcePowerOff):
     located_server = None
     for server in servers:
         ips = server['mpHostInfo']['mpIpAddresses']
-        if server_id == server['name'] or server_id in ips:
-            located_server = server
-            if server['state'] != 'NoProfileApplied':
-                print('\nError: server', server_id, 'already has a profile '
-                      'defined or is being monitored\n')
-                sys.exit(1)
-            if server['powerState'] == 'On':
-                if forcePowerOff:
-                    srv.set_server_powerstate(server, 'Off', force=True)
-                else:
-                    print('Error: Server', server_id,
-                          ' needs to be powered off')
+        for ip in ips:
+            if server_id == server['name'] or server_id == ip['address']:
+                located_server = server
+                if server['state'] != 'NoProfileApplied':
+                    print('\nError: server', server_id, 'already has a profile '
+                          'defined or is being monitored\n')
                     sys.exit(1)
-            break
+                if server['powerState'] == 'On':
+                    if forcePowerOff:
+                        srv.set_server_powerstate(server, 'Off', force=True)
+                    else:
+                        print('Error: Server', server_id,
+                              ' needs to be powered off')
+                        sys.exit(1)
+                break
     if not located_server:
         print('Server ', server_id, ' not found')
         sys.exit(1)
 
-    sht = con.get(server['serverHardwareTypeUri'])
+    sht = con.get(located_server['serverHardwareTypeUri'])
     if not sht:
         print('Error, server hardware type not found')
         sys.exit()
@@ -148,19 +149,19 @@ def bios_settings(bios_list):
     if bios_list:
         try:
             bios = json.loads(open(bios_list).read())
-            
+
             overriddenSettings = []
             overriddenBios = {}
             for b in bios:
-                overriddenSetting = {}                
+                overriddenSetting = {}
                 overriddenSetting['id'] = b['id']
-                if b['options'] and len(b['options']) > 0:         
+                if b['options'] and len(b['options']) > 0:
                     overriddenSetting['value'] = b['options'][0]['id']
                 overriddenSettings.append(overriddenSetting)
-            
+
             overriddenBios['manageBios'] = True
             overriddenBios['overriddenSettings'] = overriddenSettings;
-            return overriddenBios 
+            return overriddenBios
         except ValueError:
             print("Cannot parse BIOS JSON file! JSON must be well-formed.")
 
