@@ -234,7 +234,6 @@ class servers(object):
                                        serialNumberType, serverHardwareTypeUri,
                                        serverHardwareUri,
                                        serverProfileTemplateUri, uuid, wwnType)
-        pprint(sanStorageV3)
         task, body = self._con.post(uri['profiles'], profile)
         if profile['firmware'] is None:
             tout = 600
