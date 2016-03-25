@@ -80,20 +80,22 @@ def get_server(con, srv, server_id, forcePowerOff, name):
     servers = srv.get_servers()
     located_server = None
     for server in servers:
-        if server_id == server['name'] or server_id == server['mpIpAddress']:
-            located_server = server
-            if server['state'] != 'NoProfileApplied':
-                print('\nError: server', server_id, 'already has a profile '
-                      'defined or is being monitored\n')
-                sys.exit(1)
-            if server['powerState'] == 'On':
-                if forcePowerOff:
-                    srv.set_server_powerstate(server, 'Off', force=True)
-                else:
-                    print('Error: Server', server_id,
-                          ' needs to be powered off')
+        ips = server['mpHostInfo']['mpIpAddresses']
+        for ip in ips:
+            if server_id == server['name'] or server_id == ip['address']:
+                located_server = server
+                if server['state'] != 'NoProfileApplied':
+                    print('\nError: server', server_id, 'already has a profile '
+                          'defined or is being monitored\n')
                     sys.exit(1)
-            break
+                if server['powerState'] == 'On':
+                    if forcePowerOff:
+                        srv.set_server_powerstate(server, 'Off', force=True)
+                    else:
+                        print('Error: Server', server_id,
+                              ' needs to be powered off')
+                        sys.exit(1)
+                break
 
     if not located_server:
         print('Server ', server_id, ' not found')
@@ -152,6 +154,11 @@ def fix_san(con, sto, san):
                         path['storageTargets'] = []
                     if 'status' in path:
                         del path['status']
+                    # The connectionId get returned as int but need to be
+                    # converted to str
+                    if 'connectionId' in path:
+                        cid = path['connectionId']
+                        path['connectionId'] = str(cid)
                 volumes.append(hpov.common.make_VolumeAttachmentV2(lun=None,
                                                                    lunType='Auto',
                                                                    volumeUri=ret['uri'],
@@ -166,6 +173,12 @@ def fix_san(con, sto, san):
                         path['storageTargets'] = []
                     if 'status' in path:
                         del path['status']
+                    # The connectionId get returned as int but need to be
+                    # converted to str
+                    if 'connectionId' in path:
+                        cid = path['connectionId']
+                        path['connectionId'] = str(cid)
+
                 volumes.append(hpov.common.make_VolumeAttachmentV2(lun=None,
                                                                    lunType='Auto',
                                                                    volumeUri=vol['uri'],
@@ -238,7 +251,10 @@ def copy_profile(con, srv, sto, name, dest, server, sht):
                     san_storage = fix_san(con, sto, profile['sanStorage'])
                     profile['sanStorage'] = san_storage
 
-            ret = srv.create_server_profile(profile)
+#            pprint(profile['sanStorage'])
+#            sys.exit()
+            ret = srv.post_server_profile(profile)
+
             if 'serialNumberType' in ret:
                 print('\n\nName:                ', ret['name'])
                 print('Description:         ', ret['description'])
