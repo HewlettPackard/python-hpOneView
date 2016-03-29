@@ -200,6 +200,15 @@ echo "Define an unassigned server profile"
 ./define-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Unassigned-1" \
   -s UNASSIGNED -sh 'DL360p Gen8 1' -fw $FW_BASE -bo $BOOT_G78
 
+echo
+echo ================================================================
+echo "                     Copy profile                             "
+echo ================================================================
+./copy-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay4" \
+  -s "Encl1, bay 5" -d "Profile-Enc1Bay5"
+./copy-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay4" \
+  -s "Encl1, bay 6" -d "Profile-Enc1Bay6"
+
 # Clean up temporary files
 if [ -d $OV_TMP ]; then
   rm -Rf $OV_TMP

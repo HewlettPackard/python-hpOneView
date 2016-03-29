@@ -62,11 +62,12 @@ def login(con, credential):
         print('Login failed')
 
 
-def define_bios_options(srv, sh_name, sht_name, bios_list):
-    defined_bios = []    
-    sht = select_sht(srv, sh_name, sht_name)
+
+def get_bios_options(con, srv, server_id, server_hwt, bios_list):
+    defined_bios = []
+    sht = select_sht(con, srv, server_id, server_hwt)
     if sht:
-        print('Building BIOS options list for', sh_name, 'with SHT', sht['name'])
+        print('Building BIOS options list for', server_id, 'with SHT', sht['name'])
         for bios in sht['biosSettings']:
             bios_setting = {}
             bios_setting['id'] = bios['id']
@@ -83,34 +84,48 @@ def define_bios_options(srv, sh_name, sht_name, bios_list):
             defined_bios.append(bios_setting)
         f = open(bios_list, 'w')
         out = json.dumps(defined_bios, indent=4)
-        f.write('/*\nThis file needs to be modified before it can be used to define a' 
-        + ' server profile.\nEdit the options for each BIOS setting to select the option' 
+        f.write('/*\nThis file needs to be modified before it can be used to define a'
+        + ' server profile.\nEdit the options for each BIOS setting to select the option'
         + ' you want to override\nin the profile. Only include in the list the BIOS'
         + 'settings you wish to override.\nRemove this comment block when finished editing'
         + ' the file.*/\n')
         f.write(out)
-        f.close()    
+        f.close()
 
 
-def select_sht(srv, sh_name, sht_name):
-    if sh_name:
-        server = srv.get_server_by_name(sh_name)
-        shts = srv.get_server_hardware_types()
-        for sht in shts: 
-            if server and server['serverHardwareTypeUri'] == sht['uri']:
-                return sht
+def select_sht(con, srv, server_id, server_hwt):
+    if server_id:
+        servers = srv.get_servers()
+        located_server = None
+        for server in servers:
+            ips = server['mpHostInfo']['mpIpAddresses']
+            for ip in ips:
+                if server_id == server['name'] or server_id == ip['address']:
+                    located_server = server
+                    break
+
+        if not located_server:
+            print('Server ', server_id, ' not found')
+            sys.exit(1)
+
+        sht = con.get(located_server['serverHardwareTypeUri'])
+        if not sht:
+            print('Error, server hardware type not found')
+            sys.exit()
+        return sht
     else:
         shts = srv.get_server_hardware_types()
         for sht in shts:
-            if sht['name'] == sht_name:
+            if sht['name'] == server_hwt:
                 return sht
-    
+        print('Error, server hardware type not found')
+        sys.exit()
 
 def main():
     parser = argparse.ArgumentParser(add_help=True,
                         formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
-    Define the BIOS options of a OneView server profile. Use when defining a 
+    Define the BIOS options of a OneView server profile. Use when defining a
     server profile with manage BIOS.  Server hardware name or server hardware
     type name can be used to create the BIOS list.
 
@@ -131,20 +146,31 @@ def main():
     parser.add_argument('-y', dest='proxy', required=False,
                         help='''
     Proxy (host:port format''')
-    parser.add_argument('-shn', dest='sh_name',
-                        required=False,
-                        help='''
-    Name of the server hardware''')
-    parser.add_argument('-shtn', dest='sht_name',
-                        required=False,
-                        help='''
-    Name of the server hardware type''')
     parser.add_argument('-bl', dest='bios_list',
                         required=True,
                         help='''
-    Name of file for BIOS options list.  File will be created in JSON format and
-    need to be edited to select the desired options to manage in the server profile.''')
-    
+    Name of file for BIOS options list.  File will be created in JSON format
+    and need to be edited to select the desired options to manage in the server
+    profile.''')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-s', dest='server_id',
+                        help='''
+    Server identification. There are multiple ways to specify the server id:
+
+        . Hostname or IP address of the stand-alone server iLO
+        . The "Server Hardware Name" of a server than has already been imported
+          into HP OneView and is listed under Server Hardware''')
+    group.add_argument('-sh', dest='server_hwt',
+                        help='''
+    Server hardware type is required for defining BIOS options without
+    secifying a specific server identification. The Server Hardware Type must
+    be present in the HP OneView appliance before it can be used. For example,
+    a single server with the specific server hardware type must have been added
+    to OneView for that hardware type to be used. The example script
+    get-server-hardware-types.py with the -l argument can be used to get a list
+    of server hardware types that have been imported into the OneView
+    appliance''')
+
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
@@ -159,7 +185,7 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    define_bios_options(srv, args.sh_name, args.sht_name, args.bios_list)
+    get_bios_options(con, srv, args.server_id, args.server_hwt, args.bios_list)
 
 if __name__ == '__main__':
     import sys

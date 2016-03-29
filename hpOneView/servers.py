@@ -247,6 +247,31 @@ class servers(object):
                 return profile
         return task
 
+
+    def post_server_profile(self, profile, blocking=True, verbose=False):
+        """ POST a ServerProfileV5 profile for use with the V200 API
+
+        Args:
+            profile:
+                ServerProfileV5
+
+        Returns: server profile or task
+        """
+
+        task, body = self._con.post(uri['profiles'], profile)
+        if profile['firmware'] is None:
+            tout = 600
+        else:
+            tout = 3600
+        if blocking is True:
+            task = self._activity.wait4task(task, tout, verbose=verbose)
+            if 'type' in task and task['type'].startswith('Task'):
+                entity = self._activity.get_task_associated_resource(task)
+                profile = self._con.get(entity['resourceUri'])
+                return profile
+        return task
+
+
     def remove_server_profile(self, profile, force=False, blocking=True, verbose=False):
         if force:
             task, body = self._con.delete(profile['uri'] + '?force=True')
