@@ -154,11 +154,6 @@ def fix_san(con, sto, san):
                         path['storageTargets'] = []
                     if 'status' in path:
                         del path['status']
-                    # The connectionId get returned as int but need to be
-                    # converted to str
-                    if 'connectionId' in path:
-                        cid = path['connectionId']
-                        path['connectionId'] = str(cid)
                 volumes.append(hpov.common.make_VolumeAttachmentV2(lun=None,
                                                                    lunType='Auto',
                                                                    volumeUri=ret['uri'],
@@ -173,12 +168,6 @@ def fix_san(con, sto, san):
                         path['storageTargets'] = []
                     if 'status' in path:
                         del path['status']
-                    # The connectionId get returned as int but need to be
-                    # converted to str
-                    if 'connectionId' in path:
-                        cid = path['connectionId']
-                        path['connectionId'] = str(cid)
-
                 volumes.append(hpov.common.make_VolumeAttachmentV2(lun=None,
                                                                    lunType='Auto',
                                                                    volumeUri=vol['uri'],
@@ -211,8 +200,6 @@ def copy_profile(con, srv, sto, name, dest, server, sht):
                 profile['serverHardwareTypeUri'] = sht['uri']
             if 'created' in profile:
                 del profile['created']
-            if 'eTag' in profile:
-                del profile['eTag']
             if 'serialNumber' in profile:
                 del profile['serialNumber']
             if 'taskUri' in profile:
@@ -225,8 +212,6 @@ def copy_profile(con, srv, sto, name, dest, server, sht):
                 del profile['enclosureBay']
             if 'enclosureUri' in profile:
                 del profile['enclosureUri']
-            if 'modified' in profile:
-                del profile['modified']
             if 'connections' in profile:
                 connections = profile['connections']
                 for conn in connections:
@@ -251,8 +236,6 @@ def copy_profile(con, srv, sto, name, dest, server, sht):
                     san_storage = fix_san(con, sto, profile['sanStorage'])
                     profile['sanStorage'] = san_storage
 
-#            pprint(profile['sanStorage'])
-#            sys.exit()
             ret = srv.post_server_profile(profile)
 
             if 'serialNumberType' in ret:
