@@ -72,7 +72,7 @@ def define_profile_template(
                             enc_group, 
                             affinity, 
                             hide_flexnics):
-    task = srv.create_server_profile_template(
+    profile_template = srv.create_server_profile_template(
                                               name=name, 
                                               description=desc, 
                                               serverProfileDescription=sp_desc, 
@@ -80,6 +80,7 @@ def define_profile_template(
                                               enclosureGroupUri=enc_group,
                                               affinity=affinity,
                                               hideUnusedFlexNics=hide_flexnics)
+    pprint(profile_template)
 
 
 def main():
@@ -125,7 +126,11 @@ def main():
     argument can be used to get a list of server hardware types that have
     been imported into the OneView appliance''')
     parser.add_argument('-eg', dest='enc_group', required=True,
-                        help='''?''')
+                        help='''
+    Identifies the enclosure group for which the Server Profile Template
+    was designed. The enclosureGroupUri is determined when the profile
+    template is created and cannot be modified
+                        ''')
     parser.add_argument('-af', dest='affinity',
                         required=False, choices=['Bay', 'BayAndServer'],
                         default='Bay',
@@ -138,8 +143,8 @@ def main():
 
         . BayAndServer This profile is pinned to both the device bay and
           specific server hardware.''')
-    parser.add_argument('-hn', dest='hide_flexnics', required=False,
-                        action='store_false',
+    parser.add_argument('-hn', dest='hide_flexnics', 
+                        required=False, choices=['true', 'false'],                        
                         help='''
     This setting controls the enumeration of physical functions that do not
     correspond to connections in a profile. Using this flag will SHOW unused
