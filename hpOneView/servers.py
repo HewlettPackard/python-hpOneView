@@ -327,15 +327,15 @@ class servers(object):
     # Server Profile Templates
     ###########################################################################
     def create_server_profile_template(
-                                       self, 
-                                       name=None, 
-                                       description=None, 
-                                       serverProfileDescription=None, 
-                                       serverHardwareTypeUri=None, 
+                                       self,
+                                       name=None,
+                                       description=None,
+                                       serverProfileDescription=None,
+                                       serverHardwareTypeUri=None,
                                        enclosureGroupUri=None,
                                        affinity=None,
-                                       hideUnusedFlexNics=None, 
-                                       blocking=True, 
+                                       hideUnusedFlexNics=None,
+                                       blocking=True,
                                        verbose=False):
         """
         Create a ServerProfileTemplateV1 dictionary for use with the V200 API
@@ -357,16 +357,16 @@ class servers(object):
             affinity:
                 This identifies the behavior of the server profile when the server
                 hardware is removed or replaced. This can be set to 'Bay' or
-                'BayAndServer'.        
+                'BayAndServer'.
             hideUnusedFlexNics:
                 This setting controls the enumeration of physical functions that do
-                not correspond to connections in a profile.        
-    
+                not correspond to connections in a profile.
+
         Returns: dict
-        """       
+        """
         profile_template = make_ServerProfileTemplateV1(
-                                                        name, 
-                                                        description, 
+                                                        name,
+                                                        description,
                                                         serverProfileDescription,
                                                         serverHardwareTypeUri,
                                                         enclosureGroupUri,

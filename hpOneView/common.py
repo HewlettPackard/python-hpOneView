@@ -884,9 +884,9 @@ def make_BootTarget(arrayWwpn=None, lun=None):
 
 
 def make_ServerProfileTemplateV1(
-                                 name=None, 
-                                 description=None, 
-                                 serverProfileDescription=None, 
+                                 name=None,
+                                 description=None,
+                                 serverProfileDescription=None,
                                  serverHardwareTypeUri=None,
                                  enclosureGroupUri=None,
                                  affinity=None,
@@ -911,10 +911,10 @@ def make_ServerProfileTemplateV1(
         affinity:
             This identifies the behavior of the server profile when the server
             hardware is removed or replaced. This can be set to 'Bay' or
-            'BayAndServer'.        
+            'BayAndServer'.
         hideUnusedFlexNics:
             This setting controls the enumeration of physical functions that do
-            not correspond to connections in a profile.        
+            not correspond to connections in a profile.
 
     Returns: dict
     """

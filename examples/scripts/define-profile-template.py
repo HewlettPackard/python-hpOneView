@@ -64,18 +64,18 @@ def login(con, credential):
 
 
 def define_profile_template(
-                            srv, 
+                            srv,
                             name,
-                            desc, 
-                            sp_desc, 
-                            server_hwt, 
-                            enc_group, 
-                            affinity, 
+                            desc,
+                            sp_desc,
+                            server_hwt,
+                            enc_group,
+                            affinity,
                             hide_flexnics):
     profile_template = srv.create_server_profile_template(
-                                              name=name, 
-                                              description=desc, 
-                                              serverProfileDescription=sp_desc, 
+                                              name=name,
+                                              description=desc,
+                                              serverProfileDescription=sp_desc,
                                               serverHardwareTypeUri=server_hwt,
                                               enclosureGroupUri=enc_group,
                                               affinity=affinity,
@@ -143,8 +143,8 @@ def main():
 
         . BayAndServer This profile is pinned to both the device bay and
           specific server hardware.''')
-    parser.add_argument('-hn', dest='hide_flexnics', 
-                        required=False, choices=['true', 'false'],                        
+    parser.add_argument('-hn', dest='hide_flexnics',
+                        required=False, choices=['true', 'false'],
                         help='''
     This setting controls the enumeration of physical functions that do not
     correspond to connections in a profile. Using this flag will SHOW unused
@@ -163,13 +163,13 @@ def main():
     but no connection corresponds to the 3rd or 4th FlexNIC on either physical
     port, only the 1st and 2nd physical functions are enumerated in the
     Operating System.''')
-    
+
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
     srv = hpov.servers(con)
-    
+
     if args.proxy:
         con.set_proxy(args.proxy.split(':')[0], args.proxy.split(':')[1])
     if args.cert:
@@ -177,13 +177,13 @@ def main():
 
     login(con, credential)
     acceptEULA(con)
-    
+
     define_profile_template(
-                            srv, 
-                            args.name, 
+                            srv,
+                            args.name,
                             args.desc,
-                            args.sp_desc, 
-                            args.server_hwt, 
+                            args.sp_desc,
+                            args.server_hwt,
                             args.enc_group,
                             args.affinity,
                             args.hide_flexnics)
