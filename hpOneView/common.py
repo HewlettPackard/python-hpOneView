@@ -882,6 +882,53 @@ def make_BootTarget(arrayWwpn=None, lun=None):
     return [{'arrayWwpn': arrayWwpn,
              'lun': lun}]
 
+
+def make_ServerProfileTemplateV1(
+                                 name=None, 
+                                 description=None, 
+                                 serverProfileDescription=None, 
+                                 serverHardwareTypeUri=None,
+                                 enclosureGroupUri=None,
+                                 affinity=None,
+                                 hideUnusedFlexNics=None):
+    """
+    Create a ServerProfileTemplateV1 dictionary for use with the V200 API
+    Args:
+        name:
+            Unique name of the Server Profile Template
+        description:
+            Description of the Server Profile Template
+        serverProfileDescription:
+            The description of the server profiles created from this template.
+        serverHardwareTypeUri:
+            Identifies the server hardware type for which the Server Profile
+            was designed. The serverHardwareTypeUri is determined when the
+            profile is created.
+        enclosureGroupUri:
+             Identifies the enclosure group for which the Server Profile Template
+             was designed. The enclosureGroupUri is determined when the profile
+             template is created and cannot be modified.
+        affinity:
+            This identifies the behavior of the server profile when the server
+            hardware is removed or replaced. This can be set to 'Bay' or
+            'BayAndServer'.        
+        hideUnusedFlexNics:
+            This setting controls the enumeration of physical functions that do
+            not correspond to connections in a profile.        
+
+    Returns: dict
+    """
+    return {
+            'type': 'ServerProfileTemplateV1',
+            'name': name,
+            'description': description,
+            'serverProfileDescription': serverProfileDescription,
+            'serverHardwareTypeUri': serverHardwareTypeUri,
+            'enclosureGroupUri': enclosureGroupUri,
+            'affinity': affinity,
+            'hideUnusedFlexNics': hideUnusedFlexNics}
+
+
 def make_ServerProfileV5(affinity='Bay',
                          biosSettings=None,
                          bootSettings=None,
