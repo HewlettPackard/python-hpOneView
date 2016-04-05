@@ -58,6 +58,15 @@ class networking(object):
     ###########################################################################
     # Logical Interconnect Group
     ###########################################################################
+    def get_lig_default_settings(self):
+        """ Gets default settings for a logical interconnect group."""
+        return self._con.get(uri['lig'] + '/defaultSettings')
+
+    def get_lig_settings(self, id):
+        """ Gets the interconnect settings for a logical interconnect group."""
+        lig_settings_uri = uri['lig'] + '/{id}/settings'
+        return self._con.get(lig_settings_uri.format(id=id))
+
     def update_settings_from_default(self, settings={}):
         if not settings:
             settings = make_enet_settings('__NoName__')
@@ -93,6 +102,14 @@ class networking(object):
 
     def get_lig_by_name(self, ligname):
         return self._con.get_entity_byfield(uri['lig'], 'name', ligname)
+
+    def get_lig_by_id(self, id):
+        """ Gets a logical interconnect group."""
+        return self._con.get(uri['lig'] + '/' + id)
+
+    def get_lig_schema(self):
+        """ Gets the JSON schema for the logical interconnect group."""
+        return self._con.get(uri['lig'] + '/schema')
 
     def get_interconnect_types(self):
         # get all the supported interconnect types
@@ -353,6 +370,84 @@ class networking(object):
         if blocking is True:
             task = self._activity.wait4task(task, verbose=verbose)
         return task
+
+    ###########################################################################
+    # Logical Downlinks
+    ###########################################################################
+    def get_logical_downlinks(self, filter=''):
+        """ Gets a list of logical downlinks.
+
+        Args:
+            filter:
+                A general filter/query string that narrows the list of
+                resources returned by a multi-resource GET (read) request and
+                DELETE (delete) request. The default is no filter
+                (all resources are returned). The filter parameter specifies
+                a general filter/query string. This query string narrows the
+                selection of resources returned from a GET request that
+                returns a list of resources. The following example shows how to
+                retrieve only the first 10 logical downlinks:
+
+                self.get_logical_downlinks(filter='?start=0&count=10')
+
+                For more options, see the Common Parameters session from
+                the HP OneView API reference.
+        Returns: dict
+        """
+        downlinks_uri = uri['ld'] + filter
+        return self._con.get(downlinks_uri)
+
+    def get_logical_downlinks_schema(self):
+        """ Gets the JSON schema for the logical downlink.
+
+        Returns: JSON
+        """
+        return self._con.get(uri['ld'] + '/schema')
+
+    def get_logical_downlinks_without_ethernet(self, filter=''):
+        """ Gets a list of logical downlinks, except existing Ethernet networks.
+
+        Args:
+            filter:
+                A general filter/query string that narrows the list of
+                resources returned by a multi-resource GET (read) request and
+                DELETE (delete) request. The default is no filter
+                (all resources are returned). The filter parameter specifies
+                a general filter/query string. This query string narrows the
+                selection of resources returned from a GET request that
+                returns a list of resources. The following example shows how to
+                retrieve only the first 10 logical downlinks without ethernet:
+
+                self.get_logical_downlinks_without_ethernet(filter=
+                                                            '?start=0&count=10')
+
+                For more options, see the Common Parameters session from
+                the HP OneView API reference.
+        Returns: dict
+        """
+        downlinks_uri = uri['ld'] + '/withoutEthernet' + filter
+        return self._con.get(downlinks_uri)
+
+    def get_logical_downlink(self, id):
+        """ Gets a logical downlink
+
+        Args:
+            id:
+                the logical downlink id
+        Returns: dict
+        """
+        return self._con.get(uri['ld'] + '/' + id)
+
+    def get_logical_downlink_without_ethernet(self, id):
+        """ Gets a logical downlink excluding any existing Ethernet networks.
+
+        Args:
+            id:
+                the logical downlink id
+        Returns: dict
+        """
+        ld_uri = uri['ld'] + '/{id}/withoutEthernet'
+        return self._con.get(ld_uri.format(id=id))
 
     ###########################################################################
     # Interconnects
