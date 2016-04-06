@@ -71,7 +71,13 @@ def define_profile_template(
                             server_hwt,
                             enc_group,
                             affinity,
-                            hide_flexnics):
+                            hide_flexnics,
+                            conn_list):
+    
+    if conn_list:
+        # read connection list from file
+        conn = json.loads(open(conn_list).read())
+       
     profile_template = srv.create_server_profile_template(
                                               name=name,
                                               description=desc,
@@ -79,8 +85,30 @@ def define_profile_template(
                                               serverHardwareTypeUri=server_hwt,
                                               enclosureGroupUri=enc_group,
                                               affinity=affinity,
-                                              hideUnusedFlexNics=hide_flexnics)
-    pprint(profile_template)
+                                              hideUnusedFlexNics=hide_flexnics,
+                                              profileConnectionTemplateV1=conn)
+    if 'serialNumberType' in profile_template:
+        print('\n\nName:                ', profile_template['name'])
+        print('Type:                ', profile_template['type'])
+        print('Description:         ', profile_template['description'])        
+        print('serialNumberType:    ', profile_template['serialNumberType'])
+        print('Connections:')
+        for connection in profile_template['connections']:
+            print('  name:          ', connection['name'])
+            print('  functionType:  ', connection['functionType'])
+            print('  networkUri:    ', connection['networkUri'])
+        print('Firmware:')
+        print('  manageFirmware:       ', profile_template['firmware']['manageFirmware'])
+        print('  forceInstallFirmware: ', profile_template['firmware']['forceInstallFirmware'])
+        print('  firmwareBaselineUri:  ', profile_template['firmware']['firmwareBaselineUri'])
+        print('Bios:')
+        print('  manageBios:         ', profile_template['bios']['manageBios'])
+        print('  overriddenSettings: ', profile_template['bios']['overriddenSettings'])
+        print('Boot:')
+        print('  manageBoot:         ', profile_template['boot']['manageBoot'])
+        print('  order:              ', profile_template['boot']['order'], '\n')
+    else:
+        pprint(profile_template)
 
 
 def main():
@@ -163,7 +191,12 @@ def main():
     but no connection corresponds to the 3rd or 4th FlexNIC on either physical
     port, only the 1st and 2nd physical functions are enumerated in the
     Operating System.''')
-
+    parser.add_argument('-cl', dest='conn_list',
+                        required=False,
+                        help='''
+    File with list of connections for this profile in JSON format. This file
+    can be created with multiple calls to define-connection-list.py''')
+    
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
@@ -186,7 +219,8 @@ def main():
                             args.server_hwt,
                             args.enc_group,
                             args.affinity,
-                            args.hide_flexnics)
+                            args.hide_flexnics,
+                            args.conn_list)
 
 
 if __name__ == '__main__':

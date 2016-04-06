@@ -883,14 +883,78 @@ def make_BootTarget(arrayWwpn=None, lun=None):
              'lun': lun}]
 
 
-def make_ServerProfileTemplateV1(
-                                 name=None,
+def make_ProfileTemplateConnectionV1(cid,
+                                     name,
+                                     network_uri,
+                                     boot,
+                                     function_type='Ethernet',
+                                     port_id='Auto',
+                                     requested_mbps=None):
+    """ 
+    Create a ProfileTemplateConnectionV1 dictionary
+    Args:        
+        cid:
+            A unique identifier for this connection. When creating or editing a
+            profile, an id is automatically assigned if the attribute is
+            omitted or 0 is specified. When editing a profile, a connection is
+            created if the id does not identify an existing connection.       
+        name:
+            A string used to identify the respective connection. The connection
+            name is case insensitive, limited to 63 characters and must be
+            unique within the profile.
+        network_uri:
+            Identifies the network or network set to be connected. Use GET
+            /rest/server-profiles/available-networks to retrieve the list of
+            available Ethernet networks, Fibre Channel networks and network
+            sets that are available along with their respective ports.
+        boot:
+            ConnectionBoot dictionary that describes server boot management.
+        function_type:
+            The function of the connection, either 'Ethernet' or 'FibreChannel'
+        port_id:
+            Identifies the port (FlexNIC) used for this connection, for
+            example 'Flb 1:1-a'. The port can be automatically selected by
+            specifying 'Auto', 'None', or a physical port when creating or
+            editing the connection. If 'Auto' is specified, a port that
+            provides access to the selected network(networkUri) will be
+            selected. A physical port(e.g. 'Flb 1:2') can be specified if the
+            choice of a specific FlexNIC on the physical port is not important.
+            If 'None' is specified, the connection will not be configured on
+            the server hardware. When omitted, portId defaults to 'Auto'. Use
+            / rest / server - profiles / profile - ports to retrieve the list
+            of available ports.
+        requested_mbps:
+            The transmit throughput (mbps) that should be allocated to this
+            connection. For FlexFabric connections, this value must not exceed
+            the maximum bandwidth of the selected network (networkUri). If
+            omitted, this value defaults to the typical bandwidth value of the
+            selected network. The sum of the requestedBW values for the
+            connections (FlexNICs) on an adapter port cannot exceed the
+            capacity of the network link. For Virtual Connect Fibre Channel
+            connections, the available discrete values are based on the adapter
+            and the Fibre Channel interconnect module.        
+
+    Returns: dict
+    """
+    return {
+            'id': cid,
+            'name': name,
+            'functionType': function_type,
+            'portId': port_id,
+            'requestedMbps': requested_mbps,
+            'networkUri': network_uri,
+            'boot': boot
+            }
+
+
+def make_ServerProfileTemplateV1(name=None,
                                  description=None,
                                  serverProfileDescription=None,
                                  serverHardwareTypeUri=None,
                                  enclosureGroupUri=None,
                                  affinity=None,
-                                 hideUnusedFlexNics=None):
+                                 hideUnusedFlexNics=None,
+                                 profileConnectionTemplateV1=None):
     """
     Create a ServerProfileTemplateV1 dictionary for use with the V200 API
     Args:
@@ -915,6 +979,8 @@ def make_ServerProfileTemplateV1(
         hideUnusedFlexNics:
             This setting controls the enumeration of physical functions that do
             not correspond to connections in a profile.
+        profileConnectionTemplateV1:
+            An array of profileConnectionTemplateV1
 
     Returns: dict
     """
@@ -926,7 +992,8 @@ def make_ServerProfileTemplateV1(
             'serverHardwareTypeUri': serverHardwareTypeUri,
             'enclosureGroupUri': enclosureGroupUri,
             'affinity': affinity,
-            'hideUnusedFlexNics': hideUnusedFlexNics}
+            'hideUnusedFlexNics': hideUnusedFlexNics,
+            'connections': profileConnectionTemplateV1}
 
 
 def make_ServerProfileV5(affinity='Bay',

@@ -335,6 +335,7 @@ class servers(object):
                                        enclosureGroupUri=None,
                                        affinity=None,
                                        hideUnusedFlexNics=None,
+                                       profileConnectionTemplateV1=None,
                                        blocking=True,
                                        verbose=False):
         """
@@ -361,6 +362,8 @@ class servers(object):
             hideUnusedFlexNics:
                 This setting controls the enumeration of physical functions that do
                 not correspond to connections in a profile.
+            profileConnectionTemplateV1:
+                An array of profileConnectionTemplateV1
 
         Returns: dict
         """
@@ -371,7 +374,8 @@ class servers(object):
                                                         serverHardwareTypeUri,
                                                         enclosureGroupUri,
                                                         affinity,
-                                                        hideUnusedFlexNics)
+                                                        hideUnusedFlexNics,
+                                                        profileConnectionTemplateV1)
 
         task, body = self._con.post(uri['profile-templates'], profile_template)
         tout = 600
