@@ -86,7 +86,8 @@ def define_profile_template(
                                               enclosureGroupUri=enc_group,
                                               affinity=affinity,
                                               hideUnusedFlexNics=hide_flexnics,
-                                              profileConnectionTemplateV1=conn)
+                                              profileConnectionV4=conn)
+
     if 'serialNumberType' in profile_template:
         print('\n\nName:                ', profile_template['name'])
         print('Type:                ', profile_template['type'])
