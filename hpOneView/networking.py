@@ -116,8 +116,149 @@ class networking(object):
         resp = get_members(self._con.get(uri['ictype']))
         return resp
 
-    def get_lis(self):
-        return get_members(self._con.get(uri['li']))
+    ###########################################################################
+    # Logical Interconnects
+    ###########################################################################
+    def get_lis(self, filter=''):
+        """ Gets a collection of logical interconnects.
+
+        Args:
+            filter:
+                A general filter/query string that narrows the list of
+                resources returned by a multi-resource GET (read) request and
+                DELETE (delete) request. The default is no filter
+                (all resources are returned). The filter parameter specifies
+                a general filter/query string. This query string narrows the
+                selection of resources returned from a GET request that
+                returns a list of resources. The following example shows how to
+                retrieve only the first 10 logical interconnects:
+
+                self.get_lis(filter='?start=0&count=10')
+
+                For more options, see the Common Parameters session from
+                the HP OneView API reference.
+        Returns: dict
+        """
+        return get_members(self._con.get(uri['li'] + filter))
+
+    def correct_lis(self, uris, blocking=True, verbose=False):
+        """ Returns logical interconnects to a consistent state.
+
+        The current logical interconnect state is compared to the associated
+        logical interconnect group. Any differences identified are corrected,
+        bringing the logical interconnect back to a consistent state. Changes
+        are asynchronously applied to all managed interconnects. Note that if
+        the changes detected involve differences in the interconnect map
+        between the logical interconnect group and the logical interconnect,
+        the process of bringing the logical interconnect back to a consistent
+        state may involve automatically removing existing interconnects from
+        management and/or adding new interconnects for management.
+        """
+        request = {"uris": uris}
+        task, body = self._con.put(uri['li'] + '/compliance', request)
+        if blocking is True:
+            task = self._activity.wait4task(task, verbose=verbose)
+        return task
+
+    def create_li(self, location_entries, blocking=True, verbose=False):
+        """" Creates an interconnect at the given location.
+
+        Args:
+            location_entries:
+                A list of location entries. For example:
+                [
+                    {"type": "Enclosure", "value": "1"},
+                    {"type": "Bay", "value": "1"}
+                ]
+        """
+        request = {"locationEntries": location_entries}
+        task, body = self._con.post(
+            uri['li'] + '/locations/interconnects', request)
+        if blocking is True:
+            task = self._activity.wait4task(task, verbose=verbose)
+        return task
+
+    def delete_li(self, location, blocking=True, verbose=False):
+        """ Deletes an interconnect from a location.
+
+        Args:
+            location:
+                where the logical interconnect is located. For example:
+
+                self.delete_li('Enclosure:/rest/enclosures/09XXX,Bay:1')
+        """
+        task, body = self._con.delete(
+            uri['li'] + '/locations/interconnects?location=' + location)
+        if blocking is True:
+            task = self._activity.wait4task(task, verbose=verbose)
+        return task
+
+    def get_li_schema(self):
+        """ Gets the JSON schema for the logical interconnect."""
+        return self._con.get(uri['li'] + '/schema')
+
+    def get_li_by_id(self, id):
+        """ Gets a logical interconnect."""
+        return self._con.get(uri['li'] + '/' + id)
+
+    def correct_li_by_id(self, id, blocking=True, verbose=False):
+        """ Returns a logical interconnect to a consistent state.
+
+        The current logical interconnect state is compared to the associated
+        logical interconnect group. Any differences identified are corrected,
+        bringing the logical interconnect back to a consistent state. Changes
+        are asynchronously applied to all managed interconnects. Note that if
+        the changes detected involve differences in the interconnect map
+        between the logical interconnect group and the logical interconnect,
+        the process of bringing the logical interconnect back to a consistent
+        state may involve automatically removing existing interconnects from
+        management and/or adding new interconnects for management.
+        """
+        li_uri = uri['li'] + '/{id}/compliance'
+        task, body = self._con.put(li_uri.format(id=id), {})
+        if blocking is True:
+            task = self._activity.wait4task(task, verbose=verbose)
+        return task
+
+    def update_ethernet_interconnected_settings(self, id, settings,
+                                                blocking=True, verbose=False):
+        """ Updates the Ethernet settings for the logical interconnect.
+
+        Args:
+            id:
+                the id of the logical interconnect that will be updated.
+            settings:
+                a dict with settings properties that must be updated. Example
+                of a settings dict:
+
+                {
+                "interconnectType": "Ethernet",
+                "igmpIdleTimeoutInterval": 200,
+                "macRefreshInterval": 10,
+                "name": "ES-882901476",
+                "created": "2015-08-21T21:48:01.096Z",
+                "enableRichTLV": false,
+                "uri": "/rest/logical-interconnects/ID/ethernetSettings",
+                "enableNetworkLoopProtection": true,
+                "enableFastMacCacheFailover": true,
+                "modified": "2015-08-21T21:48:01.099Z",
+                "enableIgmpSnooping": true,
+                "enablePauseFloodProtection": true,
+                "dependentResourceUri": "/rest/logical-interconnects/ID",
+                "type": "EthernetInterconnectSettingsV3",
+                "id": "9b1380ee-a0bb-4388-af35-2c5a05e84c47"
+                }
+        """
+        settings_uri = uri['li'] + '/{id}/ethernetSettings'
+        task, body = self._con.put(settings_uri.format(id=id), settings)
+        if blocking is True:
+            task = self._activity.wait4task(task, verbose=verbose)
+        return task
+
+    def get_li_firmware(self, id):
+        """ Gets the installed firmware for a logical interconnect."""
+        firmware_uri = uri['li'] + '/{id}/firmware'
+        return self._con.get(firmware_uri.format(id=id))
 
     ###########################################################################
     # Connection Templates
