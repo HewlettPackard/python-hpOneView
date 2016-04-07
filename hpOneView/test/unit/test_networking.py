@@ -101,6 +101,104 @@ class NetworkingTest(unittest.TestCase):
 		downlink_uri = uri['ld'] + '/{id}/withoutEthernet'
 		mock_get.assert_called_once_with(downlink_uri.format(id=id))
 
+	@mock.patch.object(connection, 'get')
+	def test_get_logical_interconnects(self, mock_get):
+		self.networking.get_lis()
+		mock_get.assert_called_once_with(uri['li'])
+		mock_get.reset_mock()
+
+		# Testing with filter
+		filter = '?start=0&count=10'
+		self.networking.get_lis(filter=filter)
+		mock_get.assert_called_once_with(uri['li'] + filter)
+
+	@mock.patch.object(connection, 'put')
+	def test_correct_lis(self, mock_put):
+		uris = [uuid.uuid4().hex, uuid.uuid4().hex, uuid.uuid4().hex]
+		mock_put.return_value = (None, None)
+		request = {'uris': uris}
+
+		# passing blocking as False because we just want to test the uri.
+		self.networking.correct_lis(uris, blocking=False)
+		mock_put.assert_called_once_with(uri['li'] + '/compliance', request)
+
+	@mock.patch.object(connection, 'post')
+	def test_create_li(self, mock_post):
+		location_entries = [uuid.uuid4().hex, uuid.uuid4().hex]
+		mock_post.return_value = (None, None)
+		request = {'locationEntries': location_entries}
+
+		# passing blocking as False because we just want to test the uri.
+		self.networking.create_li(location_entries, blocking=False)
+		mock_post.assert_called_once_with(
+			uri['li'] + '/locations/interconnects', request)
+
+	@mock.patch.object(connection, 'delete')
+	def test_delete_li(self, mock_delete):
+		# the host where the li will be deleted.
+		location = self.host
+		mock_delete.return_value = (None, None)
+
+		# passing blocking as False because we just want to test the uri.
+		self.networking.delete_li(location, blocking=False)
+		mock_delete.assert_called_once_with(
+			uri['li'] + '/locations/interconnects?location=' + location)
+
+	@mock.patch.object(connection, 'get')
+	def test_get_logical_interconnects_schema(self, mock_get):
+		self.networking.get_li_schema()
+		mock_get.assert_called_once_with(uri['li'] + '/schema')
+
+	@mock.patch.object(connection, 'get')
+	def test_get_logical_interconnects_by_id(self, mock_get):
+		id = uuid.uuid4().hex
+		self.networking.get_li_by_id(id)
+		mock_get.assert_called_once_with(uri['li'] + '/' + id)
+
+	@mock.patch.object(connection, 'put')
+	def test_correct_li_by_id(self, mock_put):
+		id = uuid.uuid4().hex
+		mock_put.return_value = (None, None)
+
+		# passing blocking as False because we just want to test the uri.
+		self.networking.correct_li_by_id(id, blocking=False)
+		correct_li_uri = uri['li'] + '/{id}/compliance'
+		mock_put.assert_called_once_with(correct_li_uri.format(id=id), {})
+
+	@mock.patch.object(connection, 'put')
+	def test_update_ethernet_interconnected_settings(self, mock_put):
+		id = uuid.uuid4().hex
+		mock_put.return_value = (None, None)
+		settings_test = {"interconnectType": "Ethernet",
+                         "igmpIdleTimeoutInterval": 200,
+                         "macRefreshInterval": 10,
+                         "name": "ES-882901476",
+                         "created": "2015-08-21T21:48:01.096Z",
+                         "enableRichTLV": 'false',
+                         "uri": "/rest/logical-interconnects/ID/ethernetSettings",
+                         "enableNetworkLoopProtection": True,
+                         "enableFastMacCacheFailover": True,
+                         "modified": "2015-08-21T21:48:01.099Z",
+                         "enableIgmpSnooping": True,
+                         "enablePauseFloodProtection": True,
+                         "dependentResourceUri": "/rest/logical-interconnects/ID",
+                         "type": "EthernetInterconnectSettingsV3",
+                         "id": "9b1380ee-a0bb-4388-af35-2c5a05e84c47"}
+
+		# passing blocking as False because we just want to test the uri.
+		self.networking.update_ethernet_interconnected_settings(
+			id, settings_test, blocking=False)
+		correct_li_uri = uri['li'] + '/{id}/ethernetSettings'
+		mock_put.assert_called_once_with(correct_li_uri.format(id=id),
+			                             settings_test)
+
+	@mock.patch.object(connection, 'get')
+	def test_get_logical_interconnect_firmware(self, mock_get):
+		id = uuid.uuid4().hex
+		self.networking.get_li_firmware(id)
+
+		li_firmware_uri = uri['li'] + '/{id}/firmware'
+		mock_get.assert_called_once_with(li_firmware_uri.format(id=id))
 
 if __name__ == '__main__':
 	unittest.main()

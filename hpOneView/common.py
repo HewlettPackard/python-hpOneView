@@ -648,7 +648,6 @@ def make_port_config_info(enclosure, bay, port, speed='Auto'):
             'desiredSpeed': speed
             }
 
-
 def make_EnclosureGroupV200(associatedLIGs, name,
                             powerMode='RedundantPowerSupply'):
     """ Create an EnclosureGroupV200 dictionary
