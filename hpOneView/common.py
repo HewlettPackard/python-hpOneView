@@ -739,9 +739,9 @@ def make_storage_system_dict(mdom, udom, mports, uports):
         }
 
 
-def make_ProfileConnectionV4(cid, name, networkUri, connectionBoot=None,
-                             functionType='Ethernet', mac=None,
-                             macType='Virtual', portId='Auto',
+def make_ProfileConnectionV4(cid, name, networkUri, profileTemplateConnection,
+                             connectionBoot=None, functionType='Ethernet', 
+                             mac=None, macType='Virtual', portId='Auto',
                              requestedMbps=None, wwnn=None, wwpn=None,
                              wwpnType='Virtual'):
     """ Create a ProfileConnectionV4 dictionary
@@ -774,6 +774,9 @@ def make_ProfileConnectionV4(cid, name, networkUri, connectionBoot=None,
             /rest/server-profiles/available-networks to retrieve the list of
             available Ethernet networks, Fibre Channel networks and network
             sets that are available along with their respective ports.
+        profileTemplateConnection:
+            Specifies if the connection list is to be used in defining a server 
+            profile template.
         portId:
             Identifies the port (FlexNIC) used for this connection, for
             example 'Flb 1:1-a'. The port can be automatically selected by
@@ -817,20 +820,31 @@ def make_ProfileConnectionV4(cid, name, networkUri, connectionBoot=None,
 
     Returns: dict
     """
-    return {
-        'boot': connectionBoot,
-        'functionType': functionType,
-        'id': cid,
-        'mac': mac,
-        'macType': macType,
-        'name': name,
-        'networkUri': networkUri,
-        'portId': portId,
-        'requestedMbps': requestedMbps,
-        'wwnn': wwnn,
-        'wwpn': wwpn,
-        'wwpnType': wwpnType,
-    }
+    if profileTemplateConnection:
+        return {
+            'boot': connectionBoot,
+            'functionType': functionType,
+            'id': cid,            
+            'name': name,
+            'networkUri': networkUri,
+            'portId': portId,
+            'requestedMbps': requestedMbps,            
+        }
+    else :
+        return {
+            'boot': connectionBoot,
+            'functionType': functionType,
+            'id': cid,
+            'mac': mac,
+            'macType': macType,
+            'name': name,
+            'networkUri': networkUri,
+            'portId': portId,
+            'requestedMbps': requestedMbps,
+            'wwnn': wwnn,
+            'wwpn': wwpn,
+            'wwpnType': wwpnType,
+        }
 
 
 def make_ConnectionBoot(priority='Primary',
@@ -882,14 +896,15 @@ def make_BootTarget(arrayWwpn=None, lun=None):
              'lun': lun}]
 
 
-def make_ServerProfileTemplateV1(
-                                 name=None,
+def make_ServerProfileTemplateV1(name=None,
                                  description=None,
                                  serverProfileDescription=None,
                                  serverHardwareTypeUri=None,
                                  enclosureGroupUri=None,
                                  affinity=None,
-                                 hideUnusedFlexNics=None):
+                                 hideUnusedFlexNics=None,
+                                 profileConnectionV4=None):
+
     """
     Create a ServerProfileTemplateV1 dictionary for use with the V200 API
     Args:
@@ -914,6 +929,8 @@ def make_ServerProfileTemplateV1(
         hideUnusedFlexNics:
             This setting controls the enumeration of physical functions that do
             not correspond to connections in a profile.
+        profileConnectionV4:
+            An array of profileConnectionV4
 
     Returns: dict
     """
@@ -925,7 +942,8 @@ def make_ServerProfileTemplateV1(
             'serverHardwareTypeUri': serverHardwareTypeUri,
             'enclosureGroupUri': enclosureGroupUri,
             'affinity': affinity,
-            'hideUnusedFlexNics': hideUnusedFlexNics}
+            'hideUnusedFlexNics': hideUnusedFlexNics,
+            'connections': profileConnectionV4}
 
 
 def make_ServerProfileV5(affinity='Bay',

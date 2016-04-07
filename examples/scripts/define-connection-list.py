@@ -84,7 +84,7 @@ def define_boot_list(function_type, boot_priority, boot_target, boot_lun):
 
 def define_connection_list(net, name, cid, net_name, conn_list, append, portId,
                            function_type, mac, macType, net_set, reqGbps, wwnn,
-                           wwpn, wwpnType, boot):
+                           wwpn, wwpnType, boot, spt):
 
     reqMbps = None
     if function_type == 'Ethernet' and not net_set:
@@ -119,6 +119,7 @@ def define_connection_list(net, name, cid, net_name, conn_list, append, portId,
     conn = hpov.common.make_ProfileConnectionV4(cid=cid,
                                                 name=name,
                                                 networkUri=network['uri'],
+                                                profileTemplateConnection=spt,
                                                 connectionBoot=boot,
                                                 functionType=function_type,
                                                 mac=mac,
@@ -267,6 +268,12 @@ def main():
                         help='''
     The LUN of the Boot Volume presented by the target device. This value can
     bein the range 0 to 255.''')
+    parser.add_argument('-spt', dest='spt',
+                        required=False,
+                        action='store_true',
+                        help='''
+    Specifies if the connection list is to be used in defining a server profile 
+    template.''')
 
 
     args = parser.parse_args()
@@ -301,7 +308,7 @@ def main():
                            args.conn_list, args.append, args.portId, args.func,
                            args.mac, args.macType, args.net_set,
                            args.reqGbps, args.wwnn, args.wwpn, args.wwpnType,
-                           boot)
+                           boot, args.spt)
 
 
 if __name__ == '__main__':
