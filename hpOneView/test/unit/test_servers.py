@@ -40,7 +40,61 @@ class ServersTest(unittest.TestCase):
         self.connection = connection(self.host)
         self.servers = servers(self.connection)
         self.activity = activity(self.connection)
-    
+
+    @mock.patch.object(connection, 'get')
+    def test_get_connections(self, mock_get):
+        # Testing with filter
+        filter = '?start=0&count=10'
+        self.servers.get_connections(filter=filter)
+        mock_get.assert_called_once_with(uri['conn'] + filter)
+
+    @mock.patch.object(connection, 'get')
+    def test_get_connection(self, mock_get):
+        settings_test = {"uri": "/rest/servers/9b1380ee-a0bb-4388-af35-2c5a05e84c47"}
+        self.servers.get_connection(settings_test)
+        mock_get.assert_called_once_with(settings_test['uri'])
+
+    @mock.patch.object(connection, 'get')
+    def test_get_utilization(self, mock_get):
+        settings_test = {"uri": "/rest/servers/9b1380ee-a0bb-4388-af35-2c5a05e84c47"}
+        self.servers.get_utilization(settings_test)
+        mock_get.assert_called_once_with(settings_test['uri'] + '/utilization')
+
+    @mock.patch.object(connection, 'get')
+    def test_get_bios(self, mock_get):
+        settings_test = {"uri": "/rest/servers/9b1380ee-a0bb-4388-af35-2c5a05e84c47"}
+        self.servers.get_bios(settings_test)
+        mock_get.assert_called_once_with(settings_test['uri'] + '/bios')
+
+    @mock.patch.object(connection, 'get')
+    def test_get_envconf(self, mock_get):
+        settings_test = {"uri": "/rest/servers/9b1380ee-a0bb-4388-af35-2c5a05e84c47"}
+        self.servers.get_env_conf(settings_test)
+        mock_get.assert_called_once_with(settings_test['uri'] + '/environmentalConfiguration')
+
+    @mock.patch.object(connection, 'get')
+    def test_get_ilo(self, mock_get):
+        settings_test = {"uri": "/rest/servers/9b1380ee-a0bb-4388-af35-2c5a05e84c47"}
+        self.servers.get_ilo_sso_url(settings_test)
+        mock_get.assert_called_once_with(settings_test['uri'] + '/iloSsoUrl')
+
+    @mock.patch.object(connection, 'get')
+    def test_get_server_schema(self, mock_get):
+        self.servers.get_server_schema()
+        mock_get.assert_called_once_with(uri['servers'] + '/schema')
+
+    @mock.patch.object(connection, 'get')
+    def test_get_java_remote(self, mock_get):
+        settings_test = {"uri": "/rest/servers/9b1380ee-a0bb-4388-af35-2c5a05e84c47"}
+        self.servers.get_java_remote_console_url(settings_test)
+        mock_get.assert_called_once_with(settings_test['uri'] + '/javaRemoteConsoleUrl')
+
+    @mock.patch.object(connection, 'get')
+    def test_get_remote_console(self, mock_get):
+        settings_test = {"uri": "/rest/servers/9b1380ee-a0bb-4388-af35-2c5a05e84c47"}
+        self.servers.get_remote_console_url(settings_test)
+        mock_get.assert_called_once_with(settings_test['uri'] + '/remoteConsoleUrl')
+
     @mock.patch.object(connection, 'post')
     @mock.patch.object(activity, 'wait4task') 
     def test_create_server_profile_template(self, mock_wait4task, mock_post):        

@@ -1372,6 +1372,11 @@ def make_powerstate_dict(state, control):
             'powerControl': control}
 
 
+def make_server_type_dict(name, description):
+    return {'name': name,
+            'description': description}
+
+
 def make_ls_firmware_dict(action, sppUri, force='true'):
     return {'command': action, 'sppUri': sppUri, 'force': force}
 

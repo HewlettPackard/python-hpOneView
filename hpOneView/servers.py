@@ -55,6 +55,40 @@ class servers(object):
         self._activity = activity(con)
 
     ###########################################################################
+    # Connections
+    ###########################################################################
+
+    def get_connections(self, filter=''):
+        """ List all the active connections
+
+            Args:
+                filter:
+                    A general filter/query string that narrows the list of
+                    resources returned by a multi-resource GET (read) request and
+                    DELETE (delete) request. The default is no filter
+                    (all resources are returned). The filter parameter specifies
+                    a general filter/query string. This query string narrows the
+                    selection of resources returned from a GET request that
+                    returns a list of resources. The following example shows how to
+                    retrieve only the first 10 connections:
+
+            Returns: all the connections, filtered or not.
+            """
+        return get_members(self._con.get(uri['conn'] + filter))
+
+    def get_connection(self, server):
+        """ List a specific connection
+
+            Args:
+                server:
+                    Connection id
+
+            Returns: all the connections, filtered or not.
+        """
+        body = self._con.get(server['uri'])
+        return body
+
+    ###########################################################################
     # Server Hardware
     ###########################################################################
     def get_server_by_bay(self, baynum):
@@ -88,9 +122,15 @@ class servers(object):
     def get_servers(self):
         return get_members(self._con.get(uri['servers']))
 
-    def get_server_hardware_types(self):
-        body = self._con.get(uri['server-hardware-types'])
-        return get_members(body)
+    def get_utilization(self, server):
+        """Retrieves historical utilization data for the specified resource, metrics, and time span. """
+        body = self._con.get(server['uri'] + '/utilization')
+        return body
+
+    def get_env_conf(self, server):
+        """Gets the settings that describe the environmental configuration of the server hardware resource. """
+        body = self._con.get(server['uri'] + '/environmentalConfiguration')
+        return body
 
     def set_server_powerstate(self, server, state, force=False, blocking=True,
                               verbose=False):
@@ -128,6 +168,70 @@ class servers(object):
                 entity = self._activity.get_task_associated_resource(task)
                 server = self._con.get(entity['resourceUri'])
                 return server
+        return task
+
+    def get_server_schema(self):
+        """ Gets the JSON schema of the server hardware resource."""
+        return self._con.get(uri['servers'] + '/schema')
+
+    def get_bios(self, server):
+        """ Gets the list of BIOS/UEFI values currently set on the physical server."""
+        return self._con.get(server['uri'] + '/bios')
+
+    def get_ilo_sso_url(self, server):
+        """ Retrieves the URL to launch a Single Sign-On (SSO) session for the iLO web interface."""
+        return self._con.get(server['uri'] + '/iloSsoUrl')
+
+    def get_java_remote_console_url(self, server):
+        """ Generates a Single Sign-On (SSO) session for the iLO Java Applet console and returns
+        the URL to launch it. """
+        return self._con.get(server['uri'] + '/javaRemoteConsoleUrl')
+
+    def get_remote_console_url(self, server):
+        """ Generates a Single Sign-On (SSO) session for the iLO Integrated Remote Console Application
+        (IRC) and returns the URL to launch it."""
+        return self._con.get(server['uri'] + '/remoteConsoleUrl')
+
+    ###########################################################################
+    # Server Hardware Types
+    ###########################################################################
+    def get_server_hardware_types(self):
+        """ Get the list of server hardware type resources defined on the appliance."""
+        body = self._con.get(uri['server-hardware-types'])
+        return get_members(body)
+
+    def remove_server_hardware_type(self, server_hardware_type, force=False, blocking=True, verbose=False):
+        """ Remove the server hardware type with the specified URI. A server hardware type cannot be deleted
+         if it is associated with a server hardware or server profile resource. """
+        if force:
+            task, body = self._con.delete(server_hardware_type['uri'] + '?force=True')
+        else:
+            task, body = self._con.delete(server_hardware_type['uri'])
+        if blocking is True:
+            task = self._activity.wait4task(task, tout=600, verbose=verbose)
+        return task
+
+    def get_server_type_schema(self):
+        """ Get the JSON schema of the server hardware types resource."""
+        return self._con.get(uri['server-hardware-types'] + '/schema')
+
+    def get_server_hardware_type(self, server_type):
+        """ Get the server hardware type resource with the specified ID."""
+        return self._con.get(server_type['uri'])
+
+    def set_server_hardware_type(self, server_hardware_type, name, description):
+        """ Updates one or more attributes for a server hardware type resource.
+
+        Args:
+            name:
+                 The localized name that describes a BIOS/UEFI setting.
+            description:
+                 Brief description of the server hardware type.
+                    Maximum Length: 255
+                    Minimum Length: 0
+        """
+        request = make_server_type_dict(name, description)
+        task, body = self._con.put(server_hardware_type['uri'], request)
         return task
 
     ###########################################################################
@@ -322,6 +426,15 @@ class servers(object):
         body = self._con.get_entity_byfield(uri['profiles'], 'name', name)
         return body
 
+    def get_profile_message(self, profile):
+        """ Retrieve the error or status messages associated with the specified profile. """
+        message = self._con.get(profile['uri'] + '/messages')
+        return message
+
+    def get_profile_compliance_preview(self, profile):
+        """ Gets the preview of manual and automatic updates required to make the
+        server profile consistent with its template. """
+        return self._con.get(profile['uri'] + '/compliance-preview')
 
     ###########################################################################
     # Server Profile Templates
@@ -506,6 +619,9 @@ class servers(object):
     def get_profile_networks(self):
         body = self._con.get(uri['profile-networks'])
         return body
+
+    def get_profile_schema(self):
+        return self._con.get(uri['profile-networks-schema'])
 
     def get_profile_available_servers(self):
         body = self._con.get(uri['profile-available-servers'])
