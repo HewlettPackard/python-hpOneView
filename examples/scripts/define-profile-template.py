@@ -26,7 +26,6 @@ from __future__ import division
 from __future__ import absolute_import
 from builtins import range
 from future import standard_library
-from urllib.parse import urlparse
 standard_library.install_aliases()
 import sys
 
