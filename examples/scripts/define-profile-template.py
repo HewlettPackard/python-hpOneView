@@ -66,29 +66,25 @@ def login(con, credential):
 
 def get_eg_from_arg(srv, name):
     if srv and name:
-        path = urlparse(name).path
-        if path:
-            if path.startswith('/rest') and uri['enclosureGroups'] in path:
-                return path
-            else:
-                egs = srv.get_enclosure_groups()
-                for eg in egs:
-                    if eg['name'] == name:
-                        return eg['uri']
+        if name.startswith('/rest') and uri['enclosureGroups'] in name:
+            return name
+        else:
+            egs = srv.get_enclosure_groups()
+            for eg in egs:
+                if eg['name'] == name:
+                    return eg['uri']
     return None
 
 
 def get_sht_from_arg(srv, name):    
     if srv and name:
-        path = urlparse(name).path
-        if path:
-            if path.startswith('/rest') and uri['server-hardware-types'] in path:
-                return path
-            else:
-                shts = srv.get_server_hardware_types()
-                for sht in shts:
-                    if sht['name'] == name:
-                        return sht['uri']
+        if name.startswith('/rest') and uri['server-hardware-types'] in name:
+            return name
+        else:
+            shts = srv.get_server_hardware_types()
+            for sht in shts:
+                if sht['name'] == name:
+                    return sht['uri']
     return None
 
 
