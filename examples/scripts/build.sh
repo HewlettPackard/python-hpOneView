@@ -229,10 +229,10 @@ echo ================================================================
 echo "                     Defining profile templates               "
 echo ================================================================
 echo "Define profile templates with no network connections"
-python ./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL460c Gen9 1" -sht "BL460c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "BayAndServer"
+./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL460c Gen9 1" -sht "BL460c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "BayAndServer"
 echo "Define profile templates with network connections"
-python ./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL460c Gen8 1" -d "A server profile template" -spd "Server profile description" -sht "BL460c Gen8 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -hn false -cl $CONN_LIST_TEMPLATE
-python ./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL660c Gen8 1" -sht "BL660c Gen8 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl $CONN_LIST_TEMPLATE
+./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL460c Gen8 1" -d "A server profile template" -spd "Server profile description" -sht "BL460c Gen8 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -hn false -cl $CONN_LIST_TEMPLATE
+./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL660c Gen9 1" -sht "BL660c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl $CONN_LIST_TEMPLATE
 
 # Clean up temporary files
 if [ -d $OV_TMP ]; then

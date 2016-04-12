@@ -189,4 +189,4 @@ echo "Define profile templates with no network connections"
 python define-profile-template.py -a %HOST% -u %USER% -p %PASS% -n "BL460c Gen9 1" -d "A server profile template" -spd "Server profile description" -sht "BL460c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "BayAndServer" -hn false
 echo "Define profile templates with network connections"
 python define-profile-template.py -a %HOST% -u %USER% -p %PASS% -n "BL460c Gen8 1" -d "A server profile template" -spd "Server profile description" -sht "BL460c Gen8 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -hn false -cl %CONN_LIST_TEMPLATE%
-python define-profile-template.py -a %HOST% -u %USER% -p %PASS% -n "BL660c Gen8 1" -sht "BL660c Gen8 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl %CONN_LIST_TEMPLATE%
+python define-profile-template.py -a %HOST% -u %USER% -p %PASS% -n "BL660c Gen9 1" -sht "BL660c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl %CONN_LIST_TEMPLATE%
