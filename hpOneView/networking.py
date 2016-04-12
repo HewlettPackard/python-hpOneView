@@ -495,10 +495,15 @@ class networking(object):
         return task
 
     def get_enet_networks(self):
-        return get_members(self._con.get(uri['enet']))
+        # TODO remove the evil use/hack of the large count default. The OneView
+        # API documents that count=-1 should return everything but it is not
+        # universally honored, where the extremely large count number is.
+        return get_members(self._con.get(uri['enet'] +
+                                         '?start=0&count=9999999'))
 
     def get_fc_networks(self):
-        return get_members(self._con.get(uri['fcnet']))
+        return get_members(self._con.get(uri['fcnet'] +
+                                         '?start=0&count=9999999'))
 
     ###########################################################################
     # Uplink Sets
