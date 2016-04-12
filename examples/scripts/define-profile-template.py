@@ -39,8 +39,8 @@ elif PYTHON_VERSION < (3, 4):
 
 import hpOneView as hpov
 from pprint import pprint
-import re
 import json
+from hpOneView.common import uri
 
 
 def acceptEULA(con):
@@ -63,6 +63,30 @@ def login(con, credential):
         print('Login failed')
 
 
+def get_eg_from_arg(srv, name):
+    if srv and name:
+        if name.startswith('/rest') and uri['enclosureGroups'] in name:
+            return name
+        else:
+            egs = srv.get_enclosure_groups()
+            for eg in egs:
+                if eg['name'] == name:
+                    return eg['uri']
+    return None
+
+
+def get_sht_from_arg(srv, name):    
+    if srv and name:
+        if name.startswith('/rest') and uri['server-hardware-types'] in name:
+            return name
+        else:
+            shts = srv.get_server_hardware_types()
+            for sht in shts:
+                if sht['name'] == name:
+                    return sht['uri']
+    return None
+
+
 def define_profile_template(
                             srv,
                             name,
@@ -77,6 +101,8 @@ def define_profile_template(
     if conn_list:
         # read connection list from file
         conn = json.loads(open(conn_list).read())
+    else:
+        conn = []
        
     profile_template = srv.create_server_profile_template(
                                               name=name,
@@ -212,13 +238,17 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
+    eg = get_eg_from_arg(srv, args.enc_group)
+                
+    sht = get_sht_from_arg(srv, args.server_hwt)
+
     define_profile_template(
                             srv,
                             args.name,
                             args.desc,
                             args.sp_desc,
-                            args.server_hwt,
-                            args.enc_group,
+                            sht,
+                            eg,
                             args.affinity,
                             args.hide_flexnics,
                             args.conn_list)

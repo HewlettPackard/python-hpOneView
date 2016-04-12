@@ -45,6 +45,7 @@ OV_TMP=$OV_TMP/hpOneView_temporary_files.$RANDOM.$RANDOM.$RANDOM.$$
 }
 
 CONN_LIST=$OV_TMP/CONN-$RANDOM.$RANDOM.$$
+CONN_LIST_TEMPLATE=$OV_TMP/CONN-TEMPLATE-$RANDOM.$RANDOM.$$
 CONN_LIST_BFS=$OV_TMP/CONN-BFS-$RANDOM.$RANDOM.$$
 SAN_LIST1=$OV_TMP/SAN-1-$RANDOM.$RANDOM.$$
 SAN_LIST2=$OV_TMP/SAN-2-$RANDOM.$RANDOM.$$
@@ -163,6 +164,20 @@ echo ================================================================
   -net "Production-A" -func Ethernet -gbps 2.5 -cl $CONN_LIST -i 3 -ns -app
 ./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Prod-B" \
   -net "Production-B" -func Ethernet -gbps 2.5 -cl $CONN_LIST -i 4 -ns -app
+  
+echo
+echo ================================================================
+echo "                   Defining Connection List (templates)       "
+echo ================================================================
+# Define a connection list with no FC connections (for profile templates)
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Mgmt-A" \
+  -net "VLAN-10-A" -func Ethernet -gbps 1 -cl $CONN_LIST_TEMPLATE -i 1 -spt
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Mgmt-B" \
+  -net "VLAN-10-B" -func Ethernet -gbps 1 -cl $CONN_LIST_TEMPLATE -i 2 -spt -app
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Prod-A" \
+  -net "Production-A" -func Ethernet -gbps 2.5 -cl $CONN_LIST_TEMPLATE -i 3 -ns -spt -app
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Prod-B" \
+  -net "Production-B" -func Ethernet -gbps 2.5 -cl $CONN_LIST_TEMPLATE -i 4 -ns -spt -app
 
 echo
 echo ================================================================
@@ -208,6 +223,16 @@ echo ================================================================
   -s "Encl1, bay 5" -d "Profile-Enc1Bay5"
 ./copy-profile.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Profile-Enc1Bay4" \
   -s "Encl1, bay 6" -d "Profile-Enc1Bay6"
+
+echo
+echo ================================================================
+echo "                     Defining profile templates               "
+echo ================================================================
+echo "Define profile templates with no network connections"
+./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL460c Gen9 1" -sht "BL460c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "BayAndServer"
+echo "Define profile templates with network connections"
+./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL460c Gen8 1" -d "A server profile template" -spd "Server profile description" -sht "BL460c Gen8 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -hn false -cl $CONN_LIST_TEMPLATE
+./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL660c Gen9 1" -sht "BL660c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl $CONN_LIST_TEMPLATE
 
 # Clean up temporary files
 if [ -d $OV_TMP ]; then

@@ -39,6 +39,7 @@ set BOOT_G9_UEFI=HardDisk
 
 set CONN_LIST_BFS=%TMP%\oneview_conn_list_bfs-%RANDOM%-%TIME:~6,5%.tmp
 set CONN_LIST=%TMP%\oneview_conn_list-%RANDOM%-%TIME:~6,5%.tmp
+set CONN_LIST_TEMPLATE=%TMP%\oneview_conn_list-template-%RANDOM%-%TIME:~6,5%.tmp
 set SAN_LIST1=%TMP%\oneview_san_list1-%RANDOM%-%TIME:~6,5%.tmp
 set SAN_LIST2=%TMP%\oneview_san_list2-%RANDOM%-%TIME:~6,5%.tmp
 
@@ -140,6 +141,14 @@ python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "Prod-B" -net 
 
 echo.
 echo ================================================================
+echo                     Defining Connection Lists (templates)
+echo ================================================================
+rem Define a connection list with no FC connections (for profile templates)
+python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "Mgmt-A" -net "VLAN-10-A" -func Ethernet -gbps 1 -cl %CONN_LIST_TEMPLATE% -i 1 -spt
+python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "Mgmt-B" -net "VLAN-10-B" -func Ethernet -gbps 1 -cl %CONN_LIST_TEMPLATE% -i 2 -spt -app
+
+echo.
+echo ================================================================
 echo                     Defining SAN Storage List
 echo ================================================================
 rem Create a SAN connection list using the private volume "boot1" and the
@@ -171,3 +180,13 @@ echo                       Copy profile
 echo ================================================================
 python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -s "Encl1, bay 5" -d "Profile-Enc1Bay5"
 python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -s "Encl1, bay 6" -d "Profile-Enc1Bay6"
+
+echo.
+echo ================================================================
+echo                       Defining profile templates
+echo ================================================================
+echo "Define profile templates with no network connections"
+python define-profile-template.py -a %HOST% -u %USER% -p %PASS% -n "BL460c Gen9 1" -d "A server profile template" -spd "Server profile description" -sht "BL460c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "BayAndServer" -hn false
+echo "Define profile templates with network connections"
+python define-profile-template.py -a %HOST% -u %USER% -p %PASS% -n "BL460c Gen8 1" -d "A server profile template" -spd "Server profile description" -sht "BL460c Gen8 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -hn false -cl %CONN_LIST_TEMPLATE%
+python define-profile-template.py -a %HOST% -u %USER% -p %PASS% -n "BL660c Gen9 1" -sht "BL660c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl %CONN_LIST_TEMPLATE%
