@@ -896,7 +896,7 @@ def make_BootTarget(arrayWwpn=None, lun=None):
              'lun': lun}]
 
 
-def make_ServerProfileTemplateV2(name=None,
+def make_ServerProfileTemplateV1(name=None,
                                  bootSettings=None,
                                  bootModeSettings=None,
                                  description=None,

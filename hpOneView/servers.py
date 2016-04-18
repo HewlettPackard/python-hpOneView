@@ -439,7 +439,7 @@ class servers(object):
     ###########################################################################
     # Server Profile Templates
     ###########################################################################
-    def create_server_profile_templateV2(self,
+    def create_server_profile_template(self,
                                          name=None,
                                          bootSettings=None,
                                          bootModeSettings=None,
@@ -492,7 +492,7 @@ class servers(object):
 
         Returns: dict
         """
-        profile_template = make_ServerProfileTemplateV2(name,
+        profile_template = make_ServerProfileTemplateV1(name,
                                                         bootSettings,
                                                         bootModeSettings,
                                                         description,
