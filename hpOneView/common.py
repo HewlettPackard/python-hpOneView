@@ -897,7 +897,10 @@ def make_BootTarget(arrayWwpn=None, lun=None):
 
 
 def make_ServerProfileTemplateV1(name=None,
+                                 bootSettings=None,
+                                 bootModeSettings=None,
                                  description=None,
+                                 firmwareSettingsV3=None,
                                  serverProfileDescription=None,
                                  serverHardwareTypeUri=None,
                                  enclosureGroupUri=None,
@@ -910,8 +913,18 @@ def make_ServerProfileTemplateV1(name=None,
     Args:
         name:
             Unique name of the Server Profile Template
+        bootSettings:
+            Dictionary that indicates that the server will attempt to boot from
+            this connection. This object can only be specified if
+            "boot.manageBoot" is set to 'true'
+        bootModeSetting:
+            Dictionary that describes the boot mode settings to be confiured on
+            Gen9 and newer servers.
         description:
             Description of the Server Profile Template
+        firmwareSettingsV3:
+            FirmwareSettingsV3 disctionary that defines the firmware baseline
+            and managemnt
         serverProfileDescription:
             The description of the server profiles created from this template.
         serverHardwareTypeUri:
@@ -937,7 +950,10 @@ def make_ServerProfileTemplateV1(name=None,
     return {
             'type': 'ServerProfileTemplateV1',
             'name': name,
+            'bootMode': bootModeSettings,
+            'boot': bootSettings,
             'description': description,
+            'firmware': firmwareSettingsV3,
             'serverProfileDescription': serverProfileDescription,
             'serverHardwareTypeUri': serverHardwareTypeUri,
             'enclosureGroupUri': enclosureGroupUri,
