@@ -41,6 +41,7 @@ import hpOneView as hpov
 from pprint import pprint
 import json
 from hpOneView.common import uri
+import hpOneView.profile as profile
 
 
 def acceptEULA(con):
@@ -63,7 +64,7 @@ def login(con, credential):
         print('Login failed')
 
 
-def get_eg_from_arg(srv, name):
+def get_eg_uri_from_arg(srv, name):
     if srv and name:
         if name.startswith('/rest') and uri['enclosureGroups'] in name:
             return name
@@ -83,7 +84,7 @@ def get_sht_from_arg(srv, name):
             shts = srv.get_server_hardware_types()
             for sht in shts:
                 if sht['name'] == name:
-                    return sht['uri']
+                    return sht
     return None
 
 
@@ -96,7 +97,10 @@ def define_profile_template(
                             enc_group,
                             affinity,
                             hide_flexnics,
-                            conn_list):
+                            conn_list,
+                            fw_settings,
+                            boot,
+                            bootmode):
     
     if conn_list:
         # read connection list from file
@@ -112,7 +116,10 @@ def define_profile_template(
                                               enclosureGroupUri=enc_group,
                                               affinity=affinity,
                                               hideUnusedFlexNics=hide_flexnics,
-                                              profileConnectionV4=conn)
+                                              profileConnectionV4=conn,
+                                              firmwareSettingsV3=fw_settings,
+                                              bootSettings=boot,
+                                              bootModeSetting=bootmode)
 
     if 'serialNumberType' in profile_template:
         print('\n\nName:                ', profile_template['name'])
@@ -223,12 +230,95 @@ def main():
                         help='''
     File with list of connections for this profile in JSON format. This file
     can be created with multiple calls to define-connection-list.py''')
+    parser.add_argument('-fw', dest='baseline', required=False,
+                        help='''
+    SPP Baseline file name. e.g. SPP2013090_2013_0830_30.iso''')
+    parser.add_argument('-mb', dest='disable_manage_boot',
+                        action='store_true',
+                        help='''
+    Explicitly DISABLE Boot Order Management. This value is enabled by
+    default and required for Connection boot enablement. If this option is
+    disabled, then  PXE and FC BfS settings are disabled within the entire
+    Server Profile.''')
+    parser.add_argument('-bo', dest='boot_order', required=False,
+                        nargs='+',
+                        help='''
+    Defines the order in which boot will be attempted on the available
+    devices. Please NOTE the supported boot order is server hardware type
+    specific. For Gen7 and Gen8 server hardware the possible values are 'CD',
+    'Floppy', 'USB', 'HardDisk', and 'PXE'. For Gen9 BL server hardware in
+    Legacy BIOS boot mode, the possible values are 'CD', 'USB', 'HardDisk',
+    and 'PXE'. For Gen9 BL server hardware in UEFI or UEFI Optimized boot
+    mode, only one value is allowed and must be either 'HardDisk' or 'PXE'.
+    For Gen9 DL server hardware in Legacy BIOS boot mode, the possible
+    values are 'CD', 'USB', 'HardDisk', and 'PXE'. For Gen9 DL server
+    hardware in UEFI or UEFI Optimized boot mode, boot order configuration
+    is not supported.
+
+    Server boot order defined as a list separated by spaces. For example:
+
+    Gen7/8 BIOS Default Boot Order:
+                            -bo CD Floppy USB HardDisk PXE
+    Gen9 Legacy BIOS Boot Order:
+                            -bo CD USB HardDisk PXE
+    Gen9 UEFI Default Boot Order:
+                            -bo HardDisk
+    ''')
+    parser.add_argument('-bm', dest='boot_mode', required=False,
+                        choices=['UEFI', 'UEFIOptimized', 'BIOS'],
+                        default='BIOS',
+                        help='''
+    Specify the Gen9 Boot Environment.
+
+    Sets the boot mode as one of the following:
+
+        . UEFI
+        . UEFIOptimized
+        . BIOS
+
+    If you select UEFI or UEFI optimized for an HP ProLiant DL Gen9 rack
+    mount server, the remaining boot setting available is the PXE boot policy.
+
+    For the UEFI or UEFI optimized boot mode options, the boot mode choice
+    should be based on the expected OS and required boot features for the
+    server hardware. UEFI optimized boot mode reduces the time the system
+    spends in POST(Video driver initialization). In order to select the
+    appropriate boot mode, consider the following:
+
+        . If a secure boot is required, the boot mode must be set to UEFI
+          or UEFI optimized .
+        . For operating systems that do not support UEFI (such as DOS, or
+          older versions of Windows and Linux), the boot mode must be set
+          to BIOS.
+        . When booting in UEFI mode, Windows 7, Server 2008, or 2008 R2
+          should not be set to UEFIOptimized.''')
+    parser.add_argument('-px', dest='pxe', required=False,
+                        choices=['Auto', 'IPv4', 'IPv6',
+                                 'IPv4ThenIPv6', 'IPv6ThenIPv4'],
+                        default='IPv4',
+                        help='''
+    Controls the ordering of the network modes available to the Flexible
+    LOM (FLB); for example, IPv4 and IPv6.
+
+    Select from the following policies:
+
+        . Auto
+        . IPv4 only
+        . IPv6 only
+        . IPv4 then IPv6
+        . IPv6 then IPv4
+
+    Setting the policy to Auto means the order of the existing network boot
+    targets in the UEFI Boot Order list will not be modified, and any new
+    network boot targets will be added to the end of the list using the
+    System ROM's default policy.''')
     
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
     con = hpov.connection(args.host)
     srv = hpov.servers(con)
+    sts = hpov.settings(con)
 
     if args.proxy:
         con.set_proxy(args.proxy.split(':')[0], args.proxy.split(':')[1])
@@ -238,20 +328,27 @@ def main():
     login(con, credential)
     acceptEULA(con)
 
-    eg = get_eg_from_arg(srv, args.enc_group)
+    eg_uri = get_eg_uri_from_arg(srv, args.enc_group)
                 
     sht = get_sht_from_arg(srv, args.server_hwt)
 
-    define_profile_template(
-                            srv,
+    fw_settings = profile.make_firmware_dict(sts, args.baseline)
+    
+    boot, bootmode = profile.make_boot_settings_dict(srv, sht, args.disable_manage_boot,
+                                   args.boot_order, args.boot_mode, args.pxe)
+
+    define_profile_template(srv,
                             args.name,
                             args.desc,
                             args.sp_desc,
-                            sht,
-                            eg,
+                            sht['uri'],
+                            eg_uri,
                             args.affinity,
                             args.hide_flexnics,
-                            args.conn_list)
+                            args.conn_list,
+                            fw_settings,
+                            boot,
+                            bootmode)
 
 
 if __name__ == '__main__':

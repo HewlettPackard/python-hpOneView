@@ -906,7 +906,10 @@ def make_ServerProfileTemplateV1(name=None,
                                  enclosureGroupUri=None,
                                  affinity=None,
                                  hideUnusedFlexNics=None,
-                                 profileConnectionV4=None):
+                                 profileConnectionV4=None,
+                                 firmwareSettingsV3=None,
+                                 bootSettings=None,
+                                 bootModeSetting=None):
 
     """
     Create a ServerProfileTemplateV1 dictionary for use with the V200 API
@@ -944,6 +947,16 @@ def make_ServerProfileTemplateV1(name=None,
             not correspond to connections in a profile.
         profileConnectionV4:
             An array of profileConnectionV4
+        firmwareSettingsV3:
+            FirmwareSettingsV3 dictionary that defines the firmware baseline
+            and management
+        bootSettings:
+            Dictionary that indicates that the server will attempt to boot from
+            this connection. This object can only be specified if
+            "boot.manageBoot" is set to 'true'
+        bootModeSetting:
+            Dictionary that describes the boot mode settings to be configured on
+            Gen9 and newer servers.
 
     Returns: dict
     """
@@ -959,7 +972,11 @@ def make_ServerProfileTemplateV1(name=None,
             'enclosureGroupUri': enclosureGroupUri,
             'affinity': affinity,
             'hideUnusedFlexNics': hideUnusedFlexNics,
-            'connections': profileConnectionV4}
+            'connections': profileConnectionV4,
+            'firmware': firmwareSettingsV3,
+            'boot': bootSettings,
+            'bootMode': bootModeSetting,
+            }
 
 
 def make_ServerProfileV5(affinity='Bay',

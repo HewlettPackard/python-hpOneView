@@ -41,6 +41,7 @@ import hpOneView as hpov
 from pprint import pprint
 import re
 import json
+import hpOneView.profile as profile
 
 
 def acceptEULA(con):
@@ -107,196 +108,6 @@ def get_server(con, srv, server_id, server_hwt, forcePowerOff):
         sys.exit()
 
     return located_server, sht
-
-
-def local_storage_settings(sht, raidlevel, lboot, init_storage, num):
-    if 'model' in sht:
-        model = sht['model']
-    else:
-        print('Error, can not retrieve server model')
-        sys.exit()
-
-    if raidlevel or init_storage:
-        p = re.compile('.*DL\d.*', re.IGNORECASE)
-        match = p.match(model)
-        if match:
-            print('Local storage management is not supported on DL servers')
-            sys.exit()
-
-    # FIXME -- Add a test to verify that the number of physical drives
-    # is consistant with the RAID level and the number of drives in the
-    # server hardware type
-
-        drives = []
-        drives.append(hpov.common.make_LogicalDriveV3(bootable=lboot,
-                                                      driveName=None,
-                                                      driveTechnology=None,
-                                                      numPhysicalDrives=num,
-                                                      raidLevel=raidlevel))
-
-        controller = hpov.common.make_LocalStorageEmbeddedController(importConfiguration = True,
-                                                                     initialize = init_storage,
-                                                                     LogicalDrives = drives,
-                                                                     managed = True,
-                                                                     mode = 'RAID')
-        local_storage = hpov.common.make_LocalStorageSettingsV3(controller)
-
-        return local_storage
-    return None
-
-
-def bios_settings(bios_list):
-    if bios_list:
-        try:
-            bios = json.loads(open(bios_list).read())
-
-            overriddenSettings = []
-            overriddenBios = {}
-            for b in bios:
-                overriddenSetting = {}
-                overriddenSetting['id'] = b['id']
-                if b['options'] and len(b['options']) > 0:
-                    overriddenSetting['value'] = b['options'][0]['id']
-                overriddenSettings.append(overriddenSetting)
-
-            overriddenBios['manageBios'] = True
-            overriddenBios['overriddenSettings'] = overriddenSettings;
-            return overriddenBios
-        except ValueError:
-            print("Cannot parse BIOS JSON file! JSON must be well-formed.")
-
-
-def get_fw_settings(sts, baseline):
-    # Find the first Firmware Baseline
-    uri = ''
-
-    if baseline:
-        # The OneView appliance converts '.' in the filename to '_', except for
-        # the final one
-        baseline = baseline.replace('.', '_')
-        baseline = baseline.replace('_iso', '.iso')
-
-        spps = sts.get_spps()
-        for spp in spps:
-            if spp['isoFileName'] == baseline:
-                uri = spp['uri']
-        if not uri:
-            print('ERROR: Locating Firmware Baseline SPP')
-            print('Baseline: "%s" can not be located' % baseline)
-            print('')
-            sys.exit()
-
-    if uri:
-        fw_settings = hpov.common.make_FirmwareSettingsV3(uri, 'FirmwareOnly',
-                                                          False, True)
-    else:
-        fw_settings = None
-
-    return fw_settings
-
-
-def boot_settings(srv, sht, disable_manage_boot, boot_order, boot_mode, pxe):
-
-    gen9 = False
-    # Get the bootCapabilites from the Server Hardware Type
-    if 'capabilities' in sht and 'bootCapabilities' in sht:
-        if 'ManageBootOrder' not in sht['capabilities']:
-            print('Error, server does not support managed  boot order')
-            sys.exit()
-        allowed_boot = sht['bootCapabilities']
-    else:
-        print('Error, can not retrieve server boot capabilities')
-        sys.exit()
-
-    if 'model' in sht:
-        model = sht['model']
-    else:
-        print('Error: Can not identify server hardware type model')
-        sys.exit()
-
-    regx = re.compile('.*Gen9.*', re.IGNORECASE)
-    gen_match = regx.match(model)
-
-    if gen_match:
-        gen9 = True
-
-    # Managed Boot Enable with Boot Options specified
-    if boot_order:
-        # The FibreChannelHba boot option is not exposed to the user
-        if 'FibreChannelHba' in allowed_boot:
-            allowed_boot.remove('FibreChannelHba')
-
-        if len(boot_order) != len(allowed_boot):
-            print('Error: All supported boot options are required')
-            print('The supported options are:')
-            print('\t-bo', end=' ')
-            for item in allowed_boot:
-                print(item, end=' ')
-            print()
-            sys.exit()
-
-        # Error if the users submitted and boot option that is
-        # not supported by the server hardware type
-        diff = set(boot_order).difference(set(allowed_boot))
-        if diff:
-            print('Error:"', diff, '"are not supported boot options for this'
-                  'server hardware type')
-            print('The supported options are:')
-            print('\t-bo', end=' ')
-            for item in allowed_boot:
-                print(item, end=' ')
-            print()
-            sys.exit()
-
-        if gen9:
-            if boot_mode == 'BIOS':
-                bootmode = hpov.common.make_BootModeSetting(True, boot_mode,
-                                                            None)
-            else:
-                bootmode = hpov.common.make_BootModeSetting(True, boot_mode,
-                                                            pxe)
-        else:  # bootmode can not be set for Gen 7 & 8
-            bootmode = None
-
-        boot = hpov.common.make_BootSettings(boot_order, manageBoot=True)
-
-    # Managed Boot Default value WITHOUT Boot Options specified
-    # Setting boot to None uses the default from the appliance which is
-    # boot.manageBoot = True.
-    elif not disable_manage_boot:
-        if gen9:
-            if boot_mode == 'BIOS':
-                bootmode = hpov.common.make_BootModeSetting(True, boot_mode,
-                                                            None)
-            else:
-                bootmode = hpov.common.make_BootModeSetting(True, boot_mode,
-                                                            pxe)
-
-        else:  # bootmode can not be set for Gen 7 & 8
-            bootmode = None
-
-        boot = None
-
-    # Managed Boot explicitly disabled
-    elif disable_manage_boot:
-        # For a Gen 9 BL server hardware "boot.manageBoot" cannot be set to
-        # true unless "bootMode" is specified and "bootMode.manageMode" is set
-        # to 'true'.
-        p = re.compile('.*BL\d.*', re.IGNORECASE)
-        match = p.match(model)
-        if match:
-            print('Error: bootMode cannot be disabled on BL servers')
-            sys.exit()
-        else:  # bootmode can not be set for Gen 7 & 8
-            bootmode = None
-
-        boot = hpov.common.make_BootSettings([], manageBoot=False)
-
-    else:
-        print('Error: Unknown boot mode case')
-        sys.exit()
-
-    return boot, bootmode
 
 
 def define_profile(con, srv, affinity, name, desc, server, sht, boot, bootmode,
@@ -612,12 +423,13 @@ def main():
 
     server, sht = get_server(con, srv, args.server_id, args.server_hwt,
                              args.forcePowerOff)
-    boot, bootmode = boot_settings(srv, sht, args.disable_manage_boot,
+    boot, bootmode = profile.make_boot_settings_dict(srv, sht, args.disable_manage_boot,
                                    args.boot_order, args.boot_mode, args.pxe)
-    local_storage = local_storage_settings(sht, args.raidlevel, args.lboot,
-                                           args.init_storage, args.physnum)
-    fw_settings = get_fw_settings(sts, args.baseline)
-    bios = bios_settings(args.bios_list)
+
+    fw_settings = profile.make_firmware_dict(sts, args.baseline)
+    local_storage = profile.make_local_storage_dict(sht, args.raidlevel, args.lboot,
+                            args.init_storage, args.physnum)
+    bios = profile.make_bios_dict(args.bios_list)
     define_profile(con, srv, args.affinity, args.name, args.desc, server, sht,
                    boot, bootmode, fw_settings, args.hide_flexnics,
                    local_storage, args.conn_list, args.san_list, bios)

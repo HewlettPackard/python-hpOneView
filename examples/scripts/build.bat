@@ -171,22 +171,25 @@ echo "Define profile with network and local storage"
 python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -s "Encl1, bay 4" -cl %CONN_LIST% -rl RAID1 -pn 2 -is
 echo "Define profile with firmware base line and managed boot order using Gen 7 & 8 ordering"
 python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-1" -s %SRV_ADDR% -fw %FW_BASE% -bo %BOOT_G78%
-echo "Define n unassigned server profile"
+echo "Define an unassigned server profile"
 python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Unassigned-1" -s UNASSIGNED -sh "DL360p Gen8 1" -fw %FW_BASE% -bo %BOOT_G78%
 
 echo.
 echo ================================================================
 echo                       Copy profile
 echo ================================================================
-python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -s "Encl1, bay 5" -d "Profile-Enc1Bay5"
-python define-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -s "Encl1, bay 6" -d "Profile-Enc1Bay6"
+python copy-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -s "Encl1, bay 5" -d "Profile-Enc1Bay5"
+python copy-profile.py -a %HOST% -u %USER% -p %PASS% -n "Profile-Enc1Bay4" -s "Encl1, bay 6" -d "Profile-Enc1Bay6"
 
 echo.
 echo ================================================================
 echo                       Defining profile templates
 echo ================================================================
-echo "Define profile templates with no network connections"
+echo "Define profile template with no network connections"
 python define-profile-template.py -a %HOST% -u %USER% -p %PASS% -n "BL460c Gen9 1" -d "A server profile template" -spd "Server profile description" -sht "BL460c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "BayAndServer" -hn false
-echo "Define profile templates with network connections"
+echo "Define profile template with network connections"
 python define-profile-template.py -a %HOST% -u %USER% -p %PASS% -n "BL460c Gen8 1" -d "A server profile template" -spd "Server profile description" -sht "BL460c Gen8 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -hn false -cl %CONN_LIST_TEMPLATE%
-python define-profile-template.py -a %HOST% -u %USER% -p %PASS% -n "BL660c Gen9 1" -sht "BL660c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl %CONN_LIST_TEMPLATE%
+echo "Define profile template with network connections and managed firmware"
+python define-profile-template.py -a %HOST% -u %USER% -p %PASS% -n "BL660c Gen9 1" -sht "BL660c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl %CONN_LIST_TEMPLATE% -fw %FW_BASE%
+echo "Define profile template with network connections and boot"
+python define-profile-template.py -a %HOST% -u %USER% -p %PASS% -n "BL660c Gen9 2" -sht "BL660c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl %CONN_LIST_TEMPLATE% -fw %FW_BASE% -bo %BOOT_G9_LEGACY%

@@ -163,7 +163,7 @@ def main():
     group.add_argument('-sh', dest='server_hwt',
                         help='''
     Server hardware type is required for defining BIOS options without
-    secifying a specific server identification. The Server Hardware Type must
+    specifying a specific server identification. The Server Hardware Type must
     be present in the HP OneView appliance before it can be used. For example,
     a single server with the specific server hardware type must have been added
     to OneView for that hardware type to be used. The example script
