@@ -897,10 +897,7 @@ def make_BootTarget(arrayWwpn=None, lun=None):
 
 
 def make_ServerProfileTemplateV1(name=None,
-                                 bootSettings=None,
-                                 bootModeSettings=None,
                                  description=None,
-                                 firmwareSettingsV3=None,
                                  serverProfileDescription=None,
                                  serverHardwareTypeUri=None,
                                  enclosureGroupUri=None,

@@ -504,10 +504,7 @@ class servers(object):
         Returns: dict
         """
         profile_template = make_ServerProfileTemplateV1(name,
-                                                        bootSettings,
-                                                        bootModeSettings,
                                                         description,
-                                                        firmwareSettingsV3,
                                                         serverProfileDescription,
                                                         serverHardwareTypeUri,
                                                         enclosureGroupUri,
