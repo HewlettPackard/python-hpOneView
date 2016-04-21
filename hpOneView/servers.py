@@ -459,18 +459,8 @@ class servers(object):
         Args:
             name:
                 Unique name of the Server Profile Template
-            bootSettings:
-                Dictionary that indicates that the server will attempt to boot from
-                this connection. This object can only be specified if
-                "boot.manageBoot" is set to 'true'
-            bootModeSetting:
-                Dictionary that describes the boot mode settings to be confiured on
-                Gen9 and newer servers.
             description:
                 Description of the Server Profile Template
-            firmwareSettingsV3:
-                FirmwareSettingsV3 disctionary that defines the firmware baseline
-                and managemnt
             serverProfileDescription:
                 The description of the server profiles created from this template.
             serverHardwareTypeUri:
