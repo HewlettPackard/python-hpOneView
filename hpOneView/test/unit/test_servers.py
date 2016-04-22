@@ -103,10 +103,11 @@ class ServersTest(unittest.TestCase):
         sht = '/rest/server-hardware-types/1234'
         eg = '/rest/enclosure-groups/1'
         affinity = 'Bay'
-        hideFlex = False;
+        hide_flex = False
+        fw_settings = make_FirmwareSettingsV3('/rest/firmware-drivers/SPP2016020_2015', 'FirmwareOnly', True, False)
         
         # build the V1 SPT
-        spt = make_ServerProfileTemplateV1(name, description, None, sht, eg, affinity, hideFlex, None)
+        spt = make_ServerProfileTemplateV1(name, description, None, sht, eg, affinity, hide_flex, None, fw_settings)
         
         # build a OV task for the create SPT operation
         task = self.build_spt_add_task_resource()  
@@ -114,8 +115,32 @@ class ServersTest(unittest.TestCase):
         # return the task when waiting for completion      
         mock_post.return_value = [task, None]
                 
-        self.servers.create_server_profile_template(name, description, None, sht, eg, affinity, hideFlex, None)
+        self.servers.create_server_profile_template(name, description, None, sht, eg, affinity, hide_flex, None, fw_settings)
         mock_post.assert_called_once_with(uri['profile-templates'], spt)         
+        
+    @mock.patch.object(connection, 'post')
+    @mock.patch.object(activity, 'wait4task') 
+    def test_create_server_profile_template_with_connections(self, mock_wait4task, mock_post):        
+        name = 'spt'
+        description = 'description'
+        sht = '/rest/server-hardware-types/1234'
+        eg = '/rest/enclosure-groups/1'
+        affinity = 'Bay'
+        hide_flex = True
+        fw_settings = make_FirmwareSettingsV3('/rest/firmware-drivers/SPP2016020_2015', 'FirmwareOnly', True, False)
+        connections = make_ProfileConnectionV4(1, "eth1", '/rest/ethernet-networks/17f5e012', True, None, 'Ethernet', None, None, 'Auto', '1000', None, None, None)
+                
+        # build the V1 SPT
+        spt = make_ServerProfileTemplateV1(name, description, None, sht, eg, affinity, hide_flex, connections, fw_settings)
+        
+        # build a OV task for the create SPT operation
+        task = self.build_spt_add_task_resource()  
+        
+        # return the task when waiting for completion      
+        mock_post.return_value = [task, None]
+                
+        self.servers.create_server_profile_template(name, description, None, sht, eg, affinity, hide_flex, connections, fw_settings)
+        mock_post.assert_called_once_with(uri['profile-templates'], spt)
 
     @mock.patch.object(connection, 'post')
     @mock.patch.object(activity, 'wait4task')    

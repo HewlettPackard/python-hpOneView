@@ -228,11 +228,21 @@ echo
 echo ================================================================
 echo "                     Defining profile templates               "
 echo ================================================================
-echo "Define profile templates with no network connections"
-./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL460c Gen9 1" -sht "BL460c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "BayAndServer"
-echo "Define profile templates with network connections"
-./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL460c Gen8 1" -d "A server profile template" -spd "Server profile description" -sht "BL460c Gen8 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -hn false -cl $CONN_LIST_TEMPLATE
-./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL660c Gen9 1" -sht "BL660c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl $CONN_LIST_TEMPLATE
+echo "Define profile template with no network connections"
+./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL460c Gen9 1" \
+-sht "BL460c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "BayAndServer"
+echo "Define profile template with network connections"
+./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL460c Gen8 1" \
+-d "A server profile template" -spd "Server profile description" -sht "BL460c Gen8 1" \
+-eg "Prod VC FlexFabric Group 1" -af "Bay" -hn false -cl $CONN_LIST_TEMPLATE
+echo "Define profile template with network connections and managed firmware"
+./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL660c Gen9 1" \
+-sht "BL660c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl $CONN_LIST_TEMPLATE -fw $FW_BASE
+echo "Define profile template with network connections and boot"
+./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL660c Gen9 2" \
+-sht "BL660c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl $CONN_LIST_TEMPLATE -fw $FW_BASE \
+-bo $BOOT_G9_LEGACY
+
 
 # Clean up temporary files
 if [ -d $OV_TMP ]; then

@@ -897,34 +897,24 @@ def make_BootTarget(arrayWwpn=None, lun=None):
 
 
 def make_ServerProfileTemplateV1(name=None,
-                                 bootSettings=None,
-                                 bootModeSettings=None,
                                  description=None,
-                                 firmwareSettingsV3=None,
                                  serverProfileDescription=None,
                                  serverHardwareTypeUri=None,
                                  enclosureGroupUri=None,
                                  affinity=None,
                                  hideUnusedFlexNics=None,
-                                 profileConnectionV4=None):
+                                 profileConnectionV4=None,
+                                 firmwareSettingsV3=None,
+                                 bootSettings=None,
+                                 bootModeSetting=None):
 
     """
     Create a ServerProfileTemplateV1 dictionary for use with the V200 API
     Args:
         name:
             Unique name of the Server Profile Template
-        bootSettings:
-            Dictionary that indicates that the server will attempt to boot from
-            this connection. This object can only be specified if
-            "boot.manageBoot" is set to 'true'
-        bootModeSetting:
-            Dictionary that describes the boot mode settings to be confiured on
-            Gen9 and newer servers.
         description:
             Description of the Server Profile Template
-        firmwareSettingsV3:
-            FirmwareSettingsV3 disctionary that defines the firmware baseline
-            and managemnt
         serverProfileDescription:
             The description of the server profiles created from this template.
         serverHardwareTypeUri:
@@ -944,22 +934,33 @@ def make_ServerProfileTemplateV1(name=None,
             not correspond to connections in a profile.
         profileConnectionV4:
             An array of profileConnectionV4
+        firmwareSettingsV3:
+            FirmwareSettingsV3 dictionary that defines the firmware baseline
+            and management
+        bootSettings:
+            Dictionary that indicates that the server will attempt to boot from
+            this connection. This object can only be specified if
+            "boot.manageBoot" is set to 'true'
+        bootModeSetting:
+            Dictionary that describes the boot mode settings to be configured on
+            Gen9 and newer servers.
 
     Returns: dict
     """
     return {
             'type': 'ServerProfileTemplateV1',
             'name': name,
-            'bootMode': bootModeSettings,
-            'boot': bootSettings,
             'description': description,
-            'firmware': firmwareSettingsV3,
             'serverProfileDescription': serverProfileDescription,
             'serverHardwareTypeUri': serverHardwareTypeUri,
             'enclosureGroupUri': enclosureGroupUri,
             'affinity': affinity,
             'hideUnusedFlexNics': hideUnusedFlexNics,
-            'connections': profileConnectionV4}
+            'connections': profileConnectionV4,
+            'firmware': firmwareSettingsV3,
+            'boot': bootSettings,
+            'bootMode': bootModeSetting,
+            }
 
 
 def make_ServerProfileV5(affinity='Bay',
@@ -995,27 +996,27 @@ def make_ServerProfileV5(affinity='Bay',
             this connection. This object can only be specified if
             "boot.manageBoot" is set to 'true'
         bootModeSetting:
-            Dictionary that describes the boot mode settings to be confiured on
+            Dictionary that describes the boot mode settings to be configured on
             Gen9 and newer servers.
         profileConnectionV4:
             Array of ProfileConnectionV3
         description:
             Description of the Server Profile
         firmwareSettingsV3:
-            FirmwareSettingsV3 disctionary that defines the firmware baseline
-            and managemnt
+            FirmwareSettingsV3 dictionary that defines the firmware baseline
+            and management
         hideUnusedFlexNics:
             This setting controls the enumeration of physical functions that do
             not correspond to connections in a profile.
         localStorageSettingsV3:
-            Disctionary that describes the local storage settings.
+            Dictionary that describes the local storage settings.
         macType:
             Specifies the type of MAC address to be programmed into the IO
             devices. The value can be 'Virtual', 'Physical' or 'UserDefined'.
         name:
             Unique name of the Server Profile
         sanStorageV3:
-            Dictionary that describes teh san storage settings.
+            Dictionary that describes the SAN storage settings.
         serialNumber:
             A 10-byte value that is exposed to the Operating System as the
             server hardware's Serial Number. The value can be a virtual serial
