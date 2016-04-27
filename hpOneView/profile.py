@@ -51,7 +51,7 @@ __status__ = 'Development'
 from hpOneView.common import *
 
 
-def make_firmware_dict(settings, baseline):    
+def make_firmware_dict(settings, baseline):
     """
     Create a firmware settings dictionary for use in defining either a server
     profile or server profile template.
@@ -61,7 +61,7 @@ def make_firmware_dict(settings, baseline):
     if baseline:
         # The OneView appliance converts '.' in the filename to '_', except for
         # the final one
-        baseline = baseline.replace('.', '_').replace('_iso', '.iso')       
+        baseline = baseline.replace('.', '_').replace('_iso', '.iso')
 
         spps = settings.get_spps()
         for spp in spps:
@@ -90,6 +90,7 @@ def make_local_storage_dict(sht, raidlevel, lboot, init_storage, num):
         model = sht['model']
     else:
         print('Error, can not retrieve server model')
+        print('')
         sys.exit()
 
     if raidlevel or init_storage:
@@ -97,10 +98,11 @@ def make_local_storage_dict(sht, raidlevel, lboot, init_storage, num):
         match = p.match(model)
         if match:
             print('Local storage management is not supported on DL servers')
+            print('')
             sys.exit()
 
     # FIXME -- Add a test to verify that the number of physical drives
-    # is consistant with the RAID level and the number of drives in the
+    # is consistent with the RAID level and the number of drives in the
     # server hardware type
 
         drives = []
@@ -110,11 +112,11 @@ def make_local_storage_dict(sht, raidlevel, lboot, init_storage, num):
                                           numPhysicalDrives=num,
                                           raidLevel=raidlevel))
 
-        controller = make_LocalStorageEmbeddedController(importConfiguration = True,
-                                                         initialize = init_storage,
-                                                         LogicalDrives = drives,
-                                                         managed = True,
-                                                         mode = 'RAID')
+        controller = make_LocalStorageEmbeddedController(importConfiguration=True,
+                                                         initialize=init_storage,
+                                                         LogicalDrives=drives,
+                                                         managed=True,
+                                                         mode='RAID')
         local_storage = make_LocalStorageSettingsV3(controller)
 
         return local_storage
@@ -242,7 +244,7 @@ def make_bios_dict(bios_list):
                 overriddenSettings.append(overriddenSetting)
 
             overriddenBios['manageBios'] = True
-            overriddenBios['overriddenSettings'] = overriddenSettings;
+            overriddenBios['overriddenSettings'] = overriddenSettings
             return overriddenBios
         except ValueError:
             print("Error: Cannot parse BIOS JSON file. JSON must be well-formed.")
