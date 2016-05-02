@@ -41,3 +41,14 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+#coverage
+coverage.xml
+.coverage
+
+#virtualenv
+env
+
+#pycharm
+.idea
+.idea/
