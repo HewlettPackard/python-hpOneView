@@ -1,0 +1,19 @@
+{
+  "sourceTypeList": [
+    {
+      "sourceType": "/rest/power-devices",
+      "sampleIntervalInSeconds": "300",
+      "frequencyOfRelayInSeconds": "3600"
+    },
+    {
+      "sourceType": "/rest/enclosures",
+      "sampleIntervalInSeconds": "600",
+      "frequencyOfRelayInSeconds": "3600"
+    },
+    {
+      "sourceType": "/rest/server-hardware",
+      "sampleIntervalInSeconds": "600",
+      "frequencyOfRelayInSeconds": "1800"
+    }
+  ]
+}
