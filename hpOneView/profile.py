@@ -6,16 +6,19 @@ profile.py
 This module implements some common helper functions for building a server profile
 and server profile template in OneView
 """
+from __future__ import absolute_import
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
-from __future__ import absolute_import
-from builtins import range
 from future import standard_library
-standard_library.install_aliases()
+
 import sys
 import re
 import json
+from hpOneView.common import (make_FirmwareSettingsV3, make_LogicalDriveV3, make_LocalStorageEmbeddedController,
+                              make_LocalStorageSettingsV3, make_BootModeSetting, make_BootSettings)
+
+standard_library.install_aliases()
 
 
 __title__ = 'common'
@@ -46,9 +49,6 @@ __status__ = 'Development'
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 ###
-
-
-from hpOneView.common import *
 
 
 def make_firmware_dict(settings, baseline):
@@ -101,9 +101,9 @@ def make_local_storage_dict(sht, raidlevel, lboot, init_storage, num):
             print('')
             sys.exit()
 
-    # FIXME -- Add a test to verify that the number of physical drives
-    # is consistent with the RAID level and the number of drives in the
-    # server hardware type
+        # FIXME -- Add a test to verify that the number of physical drives
+        # is consistent with the RAID level and the number of drives in the
+        # server hardware type
 
         drives = []
         drives.append(make_LogicalDriveV3(bootable=lboot,
@@ -171,7 +171,7 @@ def make_boot_settings_dict(srv, sht, disable_manage_boot, boot_order, boot_mode
         diff = set(boot_order).difference(set(allowed_boot))
         if diff:
             print('Error:"', diff, '"are not supported boot options for this'
-                  'server hardware type')
+                                   'server hardware type')
             print('The supported options are:')
             print('\t-bo', end=' ')
             for item in allowed_boot:
@@ -239,7 +239,7 @@ def make_bios_dict(bios_list):
             for b in bios:
                 overriddenSetting = {}
                 overriddenSetting['id'] = b['id']
-                if b['options'] and len(b['options']) > 0:
+                if 'options' in b and len(b['options']) > 0:
                     overriddenSetting['value'] = b['options'][0]['id']
                 overriddenSettings.append(overriddenSetting)
 

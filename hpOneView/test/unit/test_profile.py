@@ -20,18 +20,19 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 ###
-import mock
 import unittest
-import json
 
-from hpOneView.connection import *
-from hpOneView.settings import *
-from hpOneView.servers import *
+import mock
+
 import hpOneView.profile as profile
+from hpOneView.connection import connection
+from hpOneView.servers import servers
+from hpOneView.settings import settings
+from hpOneView.test.test_utils import mock_builtin
+import json
 
 
 class ProfilesTest(unittest.TestCase):
-
     def setUp(self):
         super(ProfilesTest, self).setUp()
         self.host = 'http://1.2.3.4'
@@ -53,9 +54,9 @@ class ProfilesTest(unittest.TestCase):
         firmware = self.profile.make_firmware_dict(settings, baseline)
 
         self.assertIsNotNone(firmware)
-        self.assertEqual({'manageFirmware': True, 'firmwareBaselineUri':
-                          '/rest/firmware-drivers/SPP2016020_2015_1204_63',
-                          'forceInstallFirmware': False}, firmware)
+        self.assertEqual(
+            {'manageFirmware': True, 'firmwareBaselineUri': '/rest/firmware-drivers/SPP2016020_2015_1204_63',
+             'forceInstallFirmware': False}, firmware)
 
     @mock.patch.object(settings, 'get_spps')
     def test_make_firmware_does_not_exist(self, mock_get_spps):
@@ -68,7 +69,7 @@ class ProfilesTest(unittest.TestCase):
         mock_get_spps.return_value = [fw_driver]
 
         with self.assertRaises(SystemExit) as ex:
-            firmware = self.profile.make_firmware_dict(settings, baseline)
+            self.profile.make_firmware_dict(settings, baseline)
         self.assertIsNotNone(ex.exception)
 
     # TODO local storage is not working
@@ -82,7 +83,7 @@ class ProfilesTest(unittest.TestCase):
     def test_make_local_storage_with_dl(self):
         sht = self.build_dl_sht()
         with self.assertRaises(SystemExit) as ex:
-            local_storage = self.profile.make_local_storage_dict(
+            self.profile.make_local_storage_dict(
                 sht, 'RAID0', False, False, 2)
         self.assertIsNotNone(ex.exception)
 
@@ -90,7 +91,7 @@ class ProfilesTest(unittest.TestCase):
         sht = self.build_gen8_bl_sht()
         sht.pop('model', None)
         with self.assertRaises(SystemExit) as ex:
-            local_storage = self.profile.make_local_storage_dict(
+            self.profile.make_local_storage_dict(
                 sht, 'RAID0', False, False, 2)
         self.assertIsNotNone(ex.exception)
 
@@ -107,7 +108,7 @@ class ProfilesTest(unittest.TestCase):
         sht = self.build_gen8_bl_sht()
         boot_order = []
         with self.assertRaises(SystemExit) as ex:
-            boot, boot_mode = self.profile.make_boot_settings_dict(
+            self.profile.make_boot_settings_dict(
                 servers, sht, True, boot_order, 'BIOS', 'Auto')
         self.assertIsNotNone(ex.exception)
 
@@ -125,7 +126,7 @@ class ProfilesTest(unittest.TestCase):
         sht = self.build_gen9_bl_sht()
         boot_order = ['CD', 'USB', 'HardDisk']
         with self.assertRaises(SystemExit) as ex:
-            boot, boot_mode = self.profile.make_boot_settings_dict(
+            self.profile.make_boot_settings_dict(
                 servers, sht, False, boot_order, 'UEFI', 'Auto')
         self.assertIsNotNone(ex.exception)
 
@@ -133,29 +134,38 @@ class ProfilesTest(unittest.TestCase):
         sht = self.build_gen9_bl_sht()
         boot_order = ['CD', 'USB', 'HardDisk', 'Floppy']
         with self.assertRaises(SystemExit) as ex:
-            boot, boot_mode = self.profile.make_boot_settings_dict(
+            self.profile.make_boot_settings_dict(
                 servers, sht, False, boot_order, 'UEFI', 'Auto')
         self.assertIsNotNone(ex.exception)
 
-    @mock.patch('builtins.open')
+    @mock.patch(mock_builtin('open'))
     def test_make_bios(self, mock_open):
         filename = 'bios_list'
         mock_file = mock.Mock()
         mock_file.read.return_value = self.build_bios_list()
         mock_open.return_value = mock_file
-        bios = self.profile.make_bios_dict('bios_list')
+        bios = self.profile.make_bios_dict(filename)
         self.assertIsNotNone(bios)
-        self.assertEquals(
-            {'manageBios': True, 'overriddenSettings': [{'value': '2', 'id': '134'}]}, bios)
+        self.assertEquals({'manageBios': True, 'overriddenSettings': [{'value': '2', 'id': '134'}]}, bios)
 
-    @mock.patch('builtins.open')
+    @mock.patch(mock_builtin('open'))
+    def test_make_bios_with_defaukt_options(self, mock_open):
+        filename = 'bios_list'
+        mock_file = mock.Mock()
+        mock_file.read.return_value = self.build_bios_list_without_options()
+        mock_open.return_value = mock_file
+        bios = self.profile.make_bios_dict(filename)
+        self.assertIsNotNone(bios)
+        self.assertEquals({'manageBios': True, 'overriddenSettings': [{'id': '134'}]}, bios)
+
+    @mock.patch(mock_builtin('open'))
     def test_make_bios_invalid_json(self, mock_open):
         filename = 'bios_list'
         mock_file = mock.Mock()
         mock_file.read.return_value = 'adfadsf'
         mock_open.return_value = mock_file
         self.assertRaises(
-            ValueError, self.profile.make_bios_dict('bios_list'), 2)
+            ValueError, self.profile.make_bios_dict(filename), 2)
 
     # helper functions
     def build_dl_sht(self):
@@ -201,7 +211,8 @@ class ProfilesTest(unittest.TestCase):
             'bootModes': ['BIOS'],
             'adapters': [],
             'bootCapabilities': ['CD', 'Floppy', 'USB', 'HardDisk', 'FibreChannelHba', 'PXE'],
-            'capabilities': ['ManageBIOS', 'VirtualUUID', 'ManageLocalStorage', 'VirtualWWN', 'ManageBootOrder', 'VCConnections', 'VirtualMAC', 'FirmwareUpdate']
+            'capabilities': ['ManageBIOS', 'VirtualUUID', 'ManageLocalStorage', 'VirtualWWN', 'ManageBootOrder',
+                             'VCConnections', 'VirtualMAC', 'FirmwareUpdate']
         }
 
     def build_gen9_bl_sht(self):
@@ -224,7 +235,8 @@ class ProfilesTest(unittest.TestCase):
             'bootModes': ['UEFIOptimized', 'BIOS', 'UEFI'],
             'adapters': [],
             'bootCapabilities': ['CD', 'USB', 'HardDisk', 'FibreChannelHba', 'PXE'],
-            'capabilities': ['ManageBIOS', 'VirtualUUID', 'ManageLocalStorage', 'VirtualWWN', 'ManageBootOrder', 'VCConnections', 'VirtualMAC', 'FirmwareUpdate']
+            'capabilities': ['ManageBIOS', 'VirtualUUID', 'ManageLocalStorage', 'VirtualWWN', 'ManageBootOrder',
+                             'VCConnections', 'VirtualMAC', 'FirmwareUpdate']
         }
 
     def build_get_spp_response(self):
@@ -246,7 +258,8 @@ class ProfilesTest(unittest.TestCase):
             'state': 'Created',
             'lastTaskUri': '',
             'hpsumVersion': '750_b42',
-            'description': 'The Service Pack for ProLiant (SPP) is a comprehensive systems software and firmware update solution, which is delivered as a single ISO image.',
+            'description': 'The Service Pack for ProLiant (SPP) is a comprehensive systems software and firmware update'
+                           'solution, which is delivered as a single ISO image.',
             'name': 'Service Pack for ProLiant',
             'status': 'OK',
             'category': 'firmware-drivers',
@@ -256,7 +269,8 @@ class ProfilesTest(unittest.TestCase):
     def build_bios_list(self):
         return json.dumps([{
             'id': '134',
-            'help': 'Controls the Virtual Install Disk. The Virtual\nInstall Disk may contain drivers specific to this server\nthat an OS may use during installation.',
+            'help': 'Controls the Virtual Install Disk. The Virtual\nInstall Disk may contain drivers specific to this'
+                    'server\nthat an OS may use during installation.',
             'name': 'Virtual Install Disk',
             'options': [
                 {
@@ -265,6 +279,14 @@ class ProfilesTest(unittest.TestCase):
                 }
             ]
         }])
+
+    def build_bios_list_without_options(self):
+        return json.dumps([{
+            'id': '134',
+            'help': 'Controls the Virtual Install Disk.',
+            'name': 'Virtual Install Disk'
+        }])
+
 
 if __name__ == '__main__':
     unittest.main()
