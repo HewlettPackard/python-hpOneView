@@ -101,7 +101,7 @@ def define_san(sto, name, san_list, conn_list, append, hostos, lun, del_vol):
         print('Error, could not locate attachable volume:', name)
         sys.exit(2)
 
-    if lun:
+    if lun is not None and lun >= 0:
         lun_type = 'Manual'
     else:
         lun_type = 'Auto'
@@ -113,7 +113,7 @@ def define_san(sto, name, san_list, conn_list, append, hostos, lun, del_vol):
             net_ids.append(item['id'])
 
     if not net_ids:
-        print('Error, cound not locate FibreChannel connections to attach'
+        print('Error, could not locate FibreChannel connections to attach'
               ' volumes')
         sys.exit()
 
@@ -124,7 +124,7 @@ def define_san(sto, name, san_list, conn_list, append, hostos, lun, del_vol):
                                                     connectionId=nid,
                                                     isEnabled=True))
 
-    vols = hpov.common.make_VolumeAttachmentV2(lun=None,
+    vols = hpov.common.make_VolumeAttachmentV2(lun=lun,
                                                lunType=lun_type,
                                                volumeUri=vol['uri'],
                                                volumeStoragePoolUri=vol['storagePoolUri'],
@@ -136,7 +136,7 @@ def define_san(sto, name, san_list, conn_list, append, hostos, lun, del_vol):
     if append:
         data = json.loads(open(san_list).read())
         if 'volumeAttachments' not in data:
-            print('Error, can not locate exsisting volumeAttachments to '
+            print('Error, can not locate existing volumeAttachments to '
                   'append')
             sys.exit(3)
         vol_attach = data['volumeAttachments']
@@ -151,7 +151,7 @@ def define_san(sto, name, san_list, conn_list, append, hostos, lun, del_vol):
 
 def main():
     parser = argparse.ArgumentParser(add_help=True,
-                        formatter_class=argparse.RawTextHelpFormatter,
+                                     formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
     Define a OneView SAN Storage connection list for use with defining a
     server profile with managed SAN storage connections.
@@ -232,7 +232,7 @@ def main():
     ''')
     parser.add_argument('-n', dest='name', required=True,
                         help='''
-    Name of the exsisting storage volume to attach''')
+    Name of the existing storage volume to attach''')
     parser.add_argument('-l', dest='lun_id', required=False,
                         type=int,
                         help='''
