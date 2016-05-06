@@ -39,9 +39,11 @@ set BOOT_G9_UEFI=HardDisk
 
 set CONN_LIST_BFS=%TMP%\oneview_conn_list_bfs-%RANDOM%-%TIME:~6,5%.tmp
 set CONN_LIST=%TMP%\oneview_conn_list-%RANDOM%-%TIME:~6,5%.tmp
-set CONN_LIST_TEMPLATE=%TMP%\oneview_conn_list-template-%RANDOM%-%TIME:~6,5%.tmp
+set CONN_LIST_TEMPLATE=%TMP%\oneview_conn_list_template-%RANDOM%-%TIME:~6,5%.tmp
+set CONN_LIST_TEMPLATE_SAN=%TMP%\oneview_conn_list_template_san-%RANDOM%-%TIME:~6,5%.tmp
 set SAN_LIST1=%TMP%\oneview_san_list1-%RANDOM%-%TIME:~6,5%.tmp
 set SAN_LIST2=%TMP%\oneview_san_list2-%RANDOM%-%TIME:~6,5%.tmp
+set SAN_LIST3=%TMP%\oneview_san_list3-%RANDOM%-%TIME:~6,5%.tmp
 
 echo ================================================================
 echo              Defining Ethernet Logical Networks
@@ -146,6 +148,9 @@ echo ================================================================
 rem Define a connection list with no FC connections (for profile templates)
 python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "Mgmt-A" -net "VLAN-10-A" -func Ethernet -gbps 1 -cl %CONN_LIST_TEMPLATE% -i 1 -spt
 python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "Mgmt-B" -net "VLAN-10-B" -func Ethernet -gbps 1 -cl %CONN_LIST_TEMPLATE% -i 2 -spt -app
+rem Define a connection list with FC connections (for profile templates)
+python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "FC-A" -net "3PAR SAN A" -func FibreChannel -cl %CONN_LIST_TEMPLATE_SAN% -i 1 -spt
+python define-connection-list.py -a %HOST% -u %USER% -p %PASS% -n "FC-B" -net "3PAR SAN B" -func FibreChannel -cl %CONN_LIST_TEMPLATE_SAN% -i 2 -spt -app
 
 echo.
 echo ================================================================
@@ -159,6 +164,7 @@ rem Create a SAN connection list using the private volume "boot2" and the
 rem shared volume "datastore"
 python define-san-storage-list.py -a %HOST% -u %USER% -p %PASS% -o VMware -n boot2 -sl %SAN_LIST2% -cl %CONN_LIST_BFS%
 python define-san-storage-list.py -a %HOST% -u %USER% -p %PASS% -o VMware -n datastore1 -sl %SAN_LIST2% -cl %CONN_LIST_BFS% -app
+python define-san-storage-list.py -a %HOST% -u %USER% -p %PASS% -o VMware -n datastore1 -sl %SAN_LIST3% -cl %CONN_LIST_TEMPLATE_SAN% -l 0
 
 echo.
 echo ================================================================
@@ -193,3 +199,6 @@ echo "Define profile template with network connections and managed firmware"
 python define-profile-template.py -a %HOST% -u %USER% -p %PASS% -n "BL660c Gen9 1" -sht "BL660c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl %CONN_LIST_TEMPLATE% -fw %FW_BASE%
 echo "Define profile template with network connections and boot"
 python define-profile-template.py -a %HOST% -u %USER% -p %PASS% -n "BL660c Gen9 2" -sht "BL660c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl %CONN_LIST_TEMPLATE% -fw %FW_BASE% -bo %BOOT_G9_LEGACY%
+echo "Define profile template with network connections and SAN storage"
+python define-profile-template.py -a %HOST% -u %USER% -p %PASS% -n "BL460c Gen9 2" -sht "BL460c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl %CONN_LIST_TEMPLATE_SAN% -sl %SAN_LIST3% 
+
