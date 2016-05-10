@@ -146,7 +146,7 @@ class ProfilesTest(unittest.TestCase):
         mock_open.return_value = mock_file
         bios = self.profile.make_bios_dict(filename)
         self.assertIsNotNone(bios)
-        self.assertEquals({'manageBios': True, 'overriddenSettings': [{'value': '2', 'id': '134'}]}, bios)
+        self.assertEqual({'manageBios': True, 'overriddenSettings': [{'value': '2', 'id': '134'}]}, bios)
 
     @mock.patch(mock_builtin('open'))
     def test_make_bios_with_defaukt_options(self, mock_open):
@@ -156,7 +156,7 @@ class ProfilesTest(unittest.TestCase):
         mock_open.return_value = mock_file
         bios = self.profile.make_bios_dict(filename)
         self.assertIsNotNone(bios)
-        self.assertEquals({'manageBios': True, 'overriddenSettings': [{'id': '134'}]}, bios)
+        self.assertEqual({'manageBios': True, 'overriddenSettings': [{'id': '134'}]}, bios)
 
     @mock.patch(mock_builtin('open'))
     def test_make_bios_invalid_json(self, mock_open):
