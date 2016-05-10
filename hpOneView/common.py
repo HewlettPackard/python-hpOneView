@@ -216,8 +216,8 @@ def print_task_tuple(entities):
     for indx, (task, entity) in enumerate(entities):
         print((indx, ') Entry'))
         try:
-            print (('\tTask: ', task['name'], task['taskState'],
-                    task['taskStatus'], task['uri']))
+            print(('\tTask: ', task['name'], task['taskState'],
+                   task['taskStatus'], task['uri']))
         except KeyError:
             print('\tTask: n/a')
         try:
@@ -428,14 +428,14 @@ def make_enet_settings(name,
 
 
 def make_storage_vol_templateV3(name,
-                              capacity,
-                              shareable,
-                              storagePoolUri,
-                              state='Normal',
-                              description='',
-                              storageSystemUri=None,
-                              snapshotPoolUri=None,
-                              provisionType='Thin'):
+                                capacity,
+                                shareable,
+                                storagePoolUri,
+                                state='Normal',
+                                description='',
+                                storageSystemUri=None,
+                                snapshotPoolUri=None,
+                                provisionType='Thin'):
     return {
         'provisioning': {
             'shareable': shareable,
@@ -483,6 +483,7 @@ def make_connectionInfo_dict(hostname, port, user, passwd, ssl=True):
         {'name': 'UseSsl',
          'value': ssl}]
     }
+
 
 def make_LogicalInterconnectGroupV2(name, ethernetSettings=[]):
     return {
@@ -574,7 +575,6 @@ def make_trapdestinations_dict(trapDestination,
     }
 
 
-
 def make_snmpconfiguration_dict(enabled=False,
                                 readCommunity='public',
                                 snmpAccess=[],
@@ -593,7 +593,7 @@ def set_iobay_occupancy(switchMap, bays, stype):
     for location in switchMap['interconnectMapEntryTemplates']:
         entries = location['logicalLocation']['locationEntries']
         if [x for x in entries if x['type'] == 'Bay' and x['relativeValue']
-           in bays]:
+                in bays]:
             location['permittedInterconnectTypeUri'] = stype
 
 
@@ -648,6 +648,7 @@ def make_port_config_info(enclosure, bay, port, speed='Auto'):
             'desiredSpeed': speed
             }
 
+
 def make_EnclosureGroupV200(associatedLIGs, name,
                             powerMode='RedundantPowerSupply'):
     """ Create an EnclosureGroupV200 dictionary
@@ -699,7 +700,8 @@ def make_EnclosureGroupV200(associatedLIGs, name,
         'enclosureTypeUri': "/rest/enclosure-types/c7000",
         'interconnectBayMappingCount': 8,
         'interconnectBayMappings': ligs
-        }
+    }
+
 
 def make_enclosure_dict(host, user, passwd, egroup, state="",
                         licenseIntent='OneView',
@@ -718,7 +720,7 @@ def make_enclosure_dict(host, user, passwd, egroup, state="",
 
 
 def make_monitored_enclosure_dict(host, user, passwd, state='Monitored',
-                            licenseIntent='OneViewStandard', force=False):
+                                  licenseIntent='OneViewStandard', force=False):
     return {
         'hostname': host,
         'username': user,
@@ -728,7 +730,6 @@ def make_monitored_enclosure_dict(host, user, passwd, state='Monitored',
         'licensingIntent': licenseIntent}
 
 
-
 def make_storage_system_dict(mdom, udom, mports, uports):
     return {
         'type': 'StorageSystem',
@@ -736,11 +737,11 @@ def make_storage_system_dict(mdom, udom, mports, uports):
         'unmanagedDomains': udom[:],
         'managedPorts': mports[:],
         'unmanagedPorts': uports[:],
-        }
+    }
 
 
 def make_ProfileConnectionV4(cid, name, networkUri, profileTemplateConnection,
-                             connectionBoot=None, functionType='Ethernet', 
+                             connectionBoot=None, functionType='Ethernet',
                              mac=None, macType='Virtual', portId='Auto',
                              requestedMbps=None, wwnn=None, wwpn=None,
                              wwpnType='Virtual'):
@@ -824,13 +825,13 @@ def make_ProfileConnectionV4(cid, name, networkUri, profileTemplateConnection,
         return {
             'boot': connectionBoot,
             'functionType': functionType,
-            'id': cid,            
+            'id': cid,
             'name': name,
             'networkUri': networkUri,
             'portId': portId,
-            'requestedMbps': requestedMbps,            
+            'requestedMbps': requestedMbps,
         }
-    else :
+    else:
         return {
             'boot': connectionBoot,
             'functionType': functionType,
@@ -906,8 +907,8 @@ def make_ServerProfileTemplateV1(name=None,
                                  profileConnectionV4=None,
                                  firmwareSettingsV3=None,
                                  bootSettings=None,
-                                 bootModeSetting=None):
-
+                                 bootModeSetting=None,
+                                 sanStorageV3=None):
     """
     Create a ServerProfileTemplateV1 dictionary for use with the V200 API
     Args:
@@ -944,23 +945,26 @@ def make_ServerProfileTemplateV1(name=None,
         bootModeSetting:
             Dictionary that describes the boot mode settings to be configured on
             Gen9 and newer servers.
+        sanStorageV3:
+            Dictionary that describes the SAN storage settings.
 
     Returns: dict
     """
     return {
-            'type': 'ServerProfileTemplateV1',
-            'name': name,
-            'description': description,
-            'serverProfileDescription': serverProfileDescription,
-            'serverHardwareTypeUri': serverHardwareTypeUri,
-            'enclosureGroupUri': enclosureGroupUri,
-            'affinity': affinity,
-            'hideUnusedFlexNics': hideUnusedFlexNics,
-            'connections': profileConnectionV4,
-            'firmware': firmwareSettingsV3,
-            'boot': bootSettings,
-            'bootMode': bootModeSetting,
-            }
+        'type': 'ServerProfileTemplateV1',
+        'name': name,
+        'description': description,
+        'serverProfileDescription': serverProfileDescription,
+        'serverHardwareTypeUri': serverHardwareTypeUri,
+        'enclosureGroupUri': enclosureGroupUri,
+        'affinity': affinity,
+        'hideUnusedFlexNics': hideUnusedFlexNics,
+        'connections': profileConnectionV4,
+        'firmware': firmwareSettingsV3,
+        'boot': bootSettings,
+        'bootMode': bootModeSetting,
+        'sanStorage': sanStorageV3
+    }
 
 
 def make_ServerProfileV5(affinity='Bay',
@@ -1205,6 +1209,7 @@ def make_LocalStorageEmbeddedController(importConfiguration, initialize,
     Returns: dict
     """
 
+
 def make_LogicalDriveV3(bootable, driveName, driveTechnology,
                         numPhysicalDrives, raidLevel):
     """ Create a LocalDriveV3 dictionary
@@ -1234,8 +1239,6 @@ def make_LogicalDriveV3(bootable, driveName, driveTechnology,
             'numPhysicalDrives': numPhysicalDrives,
             'raidLevel': raidLevel
             }
-
-
 
 
 def make_SanStorageV3(hostOSType, manageSanStorage, volumeAttachments):
@@ -1308,18 +1311,18 @@ def make_VolumeAttachmentV2(lun=None,
     Returns: dict
     """
     if volumeProvisionedCapacityBytes:
-           volAttach = {'id': None,
-                        'lunType': lunType,
-                        'permanent': permanent,
-                        'volumeName': volumeName,
-                        'volumeUri': None,
-                        'volumeProvisionType': volumeProvisionType,
-                        'volumeProvisionedCapacityBytes': volumeProvisionedCapacityBytes,
-                        'volumeShareable': volumeShareable,
-                        'volumeStoragePoolUri': volumeStoragePoolUri,
-                        'volumeStorageSystemUri': None,
-                        'storagePaths': storagePaths,
-                        }
+        volAttach = {'id': None,
+                     'lunType': lunType,
+                     'permanent': permanent,
+                     'volumeName': volumeName,
+                     'volumeUri': None,
+                     'volumeProvisionType': volumeProvisionType,
+                     'volumeProvisionedCapacityBytes': volumeProvisionedCapacityBytes,
+                     'volumeShareable': volumeShareable,
+                     'volumeStoragePoolUri': volumeStoragePoolUri,
+                     'volumeStorageSystemUri': None,
+                     'storagePaths': storagePaths,
+                     }
     else:
         volAttach = {'id': None,
                      'lunType': lunType,
@@ -1330,7 +1333,7 @@ def make_VolumeAttachmentV2(lun=None,
                      }
 
     if lunType == 'Manual':
-            volAttach['lun'] = lun
+        volAttach['lun'] = lun
 
     return volAttach
 
@@ -1398,7 +1401,7 @@ def make_ls_firmware_dict(action, sppUri, force='true'):
     return {'command': action, 'sppUri': sppUri, 'force': force}
 
 
-#def get_entities(uri):
+# def get_entities(uri):
 #    return self._get_members(self.get(uri))
 
 
@@ -1430,7 +1433,7 @@ def make_appliance_network_config_dict(hostName,
             'macAddress': macAddress,
             'ipv4Type': ipv4Type,
             'ipv6Type': ipv6Type}]
-               }
+        }
     if ipv4Type == 'STATIC':
         return {
             'applianceNetworks': [{
@@ -1444,8 +1447,8 @@ def make_appliance_network_config_dict(hostName,
                 'ipv4Gateway': newIpv4Gateway,
                 # 'searchDomains': [newSearchDomain1, newSearchDomain2]
                 'searchDomains': []
-                }]
-            }
+            }]
+        }
     raise Exception('ipv4Type must be STATIC or DHCP.')
 
 
@@ -1588,8 +1591,8 @@ def make_datacenter_dict(name, coolingCapacity, coolingMultiplier, currency,
 
 
 def make_powerdevice_dict(name, deviceType, feedIdentifier, lineVoltage,
-                           model, partNumber, phaseType, ratedCapacity,
-                           serialNumber):
+                          model, partNumber, phaseType, ratedCapacity,
+                          serialNumber):
     return {
         'name': name,
         'deviceType': deviceType,
@@ -1610,7 +1613,7 @@ def make_alertMap_dict(notes, etag, state='Active', user='None',
         'alertUrgency': urgency,
         'notes': notes,
         'eTag': etag
-        }
+    }
 
 
 class pages(object):

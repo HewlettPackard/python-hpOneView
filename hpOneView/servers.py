@@ -48,6 +48,7 @@ from hpOneView.connection import *
 from hpOneView.activity import *
 from hpOneView.exceptions import *
 
+
 class servers(object):
 
     def __init__(self, con):
@@ -351,7 +352,6 @@ class servers(object):
                 return profile
         return task
 
-
     def post_server_profile(self, profile, blocking=True, verbose=False):
         """ POST a ServerProfileV5 profile for use with the V200 API
 
@@ -374,7 +374,6 @@ class servers(object):
                 profile = self._con.get(entity['resourceUri'])
                 return profile
         return task
-
 
     def remove_server_profile(self, profile, force=False, blocking=True, verbose=False):
         if force:
@@ -439,21 +438,11 @@ class servers(object):
     ###########################################################################
     # Server Profile Templates
     ###########################################################################
-    def create_server_profile_template(
-                                       self,
-                                       name=None,
-                                       description=None,
-                                       serverProfileDescription=None,
-                                       serverHardwareTypeUri=None,
-                                       enclosureGroupUri=None,
-                                       affinity=None,
-                                       hideUnusedFlexNics=None,
-                                       profileConnectionV4=None,
-                                       firmwareSettingsV3=None,
-                                       bootSettings=None,
-                                       bootModeSetting=None,
-                                       blocking=True,
-                                       verbose=False):
+    def create_server_profile_template(self, name=None, description=None,
+                                       serverProfileDescription=None, serverHardwareTypeUri=None,
+                                       enclosureGroupUri=None, affinity=None, hideUnusedFlexNics=None,
+                                       profileConnectionV4=None, firmwareSettingsV3=None, bootSettings=None,
+                                       bootModeSetting=None, sanStorageV3=None, blocking=True, verbose=False):
         """
         Create a ServerProfileTemplateV1 dictionary for use with the V200 API
         Args:
@@ -490,6 +479,8 @@ class servers(object):
             bootModeSetting:
                 Dictionary that describes the boot mode settings to be configured on
                 Gen9 and newer servers.
+            sanStorageV3:
+                Dictionary that describes the SAN storage settings.
 
         Returns: dict
         """
@@ -503,7 +494,8 @@ class servers(object):
                                                         profileConnectionV4,
                                                         firmwareSettingsV3,
                                                         bootSettings,
-                                                        bootModeSetting)
+                                                        bootModeSetting,
+                                                        sanStorageV3)
 
         task, body = self._con.post(uri['profile-templates'], profile_template)
         tout = 600

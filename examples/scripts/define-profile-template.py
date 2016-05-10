@@ -76,7 +76,7 @@ def get_eg_uri_from_arg(srv, name):
     return None
 
 
-def get_sht_from_arg(srv, name):    
+def get_sht_from_arg(srv, name):
     if srv and name:
         if name.startswith('/rest') and uri['server-hardware-types'] in name:
             return name
@@ -88,43 +88,39 @@ def get_sht_from_arg(srv, name):
     return None
 
 
-def define_profile_template(
-                            srv,
-                            name,
-                            desc,
-                            sp_desc,
-                            server_hwt,
-                            enc_group,
-                            affinity,
-                            hide_flexnics,
-                            conn_list,
-                            fw_settings,
-                            boot,
-                            bootmode):
-    
+def define_profile_template(srv, name, desc, sp_desc, server_hwt, enc_group,
+                            affinity, hide_flexnics, conn_list, fw_settings,
+                            boot, bootmode, san_list):
+
     if conn_list:
         # read connection list from file
         conn = json.loads(open(conn_list).read())
     else:
         conn = []
-       
-    profile_template = srv.create_server_profile_template(
-                                              name=name,
-                                              description=desc,
-                                              serverProfileDescription=sp_desc,
-                                              serverHardwareTypeUri=server_hwt,
-                                              enclosureGroupUri=enc_group,
-                                              affinity=affinity,
-                                              hideUnusedFlexNics=hide_flexnics,
-                                              profileConnectionV4=conn,
-                                              firmwareSettingsV3=fw_settings,
-                                              bootSettings=boot,
-                                              bootModeSetting=bootmode)
+
+    if san_list:
+        # read san list from file
+        san = json.loads(open(san_list).read())
+    else:
+        san = None
+
+    profile_template = srv.create_server_profile_template(name=name,
+                                                          description=desc,
+                                                          serverProfileDescription=sp_desc,
+                                                          serverHardwareTypeUri=server_hwt,
+                                                          enclosureGroupUri=enc_group,
+                                                          affinity=affinity,
+                                                          hideUnusedFlexNics=hide_flexnics,
+                                                          profileConnectionV4=conn,
+                                                          firmwareSettingsV3=fw_settings,
+                                                          bootSettings=boot,
+                                                          bootModeSetting=bootmode,
+                                                          sanStorageV3=san)
 
     if 'serialNumberType' in profile_template:
         print('\n\nName:                ', profile_template['name'])
         print('Type:                ', profile_template['type'])
-        print('Description:         ', profile_template['description'])        
+        print('Description:         ', profile_template['description'])
         print('serialNumberType:    ', profile_template['serialNumberType'])
         print('Connections:')
         for connection in profile_template['connections']:
@@ -312,7 +308,13 @@ def main():
     targets in the UEFI Boot Order list will not be modified, and any new
     network boot targets will be added to the end of the list using the
     System ROM's default policy.''')
-    
+    parser.add_argument('-sl', dest='san_list',
+                        required=False,
+                        help='''
+    File with list of SAN Storage connections for this profile in JSON format.
+    This file can be created with multiple calls to
+    define-san-storage-list.py''')
+
     args = parser.parse_args()
     credential = {'userName': args.user, 'password': args.passwd}
 
@@ -329,13 +331,13 @@ def main():
     acceptEULA(con)
 
     eg_uri = get_eg_uri_from_arg(srv, args.enc_group)
-                
+
     sht = get_sht_from_arg(srv, args.server_hwt)
 
     fw_settings = profile.make_firmware_dict(sts, args.baseline)
-    
+
     boot, bootmode = profile.make_boot_settings_dict(srv, sht, args.disable_manage_boot,
-                                   args.boot_order, args.boot_mode, args.pxe)
+                                                     args.boot_order, args.boot_mode, args.pxe)
 
     define_profile_template(srv,
                             args.name,
@@ -348,7 +350,8 @@ def main():
                             args.conn_list,
                             fw_settings,
                             boot,
-                            bootmode)
+                            bootmode,
+                            args.san_list)
 
 
 if __name__ == '__main__':

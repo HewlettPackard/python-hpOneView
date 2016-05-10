@@ -45,10 +45,12 @@ OV_TMP=$OV_TMP/hpOneView_temporary_files.$RANDOM.$RANDOM.$RANDOM.$$
 }
 
 CONN_LIST=$OV_TMP/CONN-$RANDOM.$RANDOM.$$
-CONN_LIST_TEMPLATE=$OV_TMP/CONN-TEMPLATE-$RANDOM.$RANDOM.$$
 CONN_LIST_BFS=$OV_TMP/CONN-BFS-$RANDOM.$RANDOM.$$
+CONN_LIST_TEMPLATE=$OV_TMP/CONN-TEMPLATE-$RANDOM.$RANDOM.$$
+CONN_LIST_TEMPLATE_SAN=$OV_TMP/CONN-TEMPLATE-SAN-$RANDOM.$RANDOM.$$
 SAN_LIST1=$OV_TMP/SAN-1-$RANDOM.$RANDOM.$$
 SAN_LIST2=$OV_TMP/SAN-2-$RANDOM.$RANDOM.$$
+SAN_LIST3=$OV_TMP/SAN-3-$RANDOM.$RANDOM.$$
 
 echo ================================================================
 echo "            Defining Ethernet Logical Networks                "
@@ -178,6 +180,10 @@ echo ================================================================
   -net "Production-A" -func Ethernet -gbps 2.5 -cl $CONN_LIST_TEMPLATE -i 3 -ns -spt -app
 ./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "Prod-B" \
   -net "Production-B" -func Ethernet -gbps 2.5 -cl $CONN_LIST_TEMPLATE -i 4 -ns -spt -app
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "FC-A" \
+  -net "3PAR SAN A" -func FibreChannel -cl $CONN_LIST_TEMPLATE_SAN -i 1 -spt
+./define-connection-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "FC-B" \
+  -net "3PAR SAN B" -func FibreChannel -cl $CONN_LIST_TEMPLATE_SAN -i 2 -app -spt
 
 echo
 echo ================================================================
@@ -195,6 +201,8 @@ echo 'shared volume "datastore"'
     -n boot2 -sl $SAN_LIST2 -cl $CONN_LIST_BFS
 ./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o VMware \
     -n datastore1 -sl $SAN_LIST2 -cl $CONN_LIST_BFS -app
+./define-san-storage-list.py -a $OV_HOST -u $OV_USER -p $OV_PASS -o VMware \
+    -n datastore1 -sl $SAN_LIST3 -cl $CONN_LIST_TEMPLATE_SAN -l 0
 
 echo
 echo ================================================================
@@ -242,6 +250,9 @@ echo "Define profile template with network connections and boot"
 ./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL660c Gen9 2" \
 -sht "BL660c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl $CONN_LIST_TEMPLATE -fw $FW_BASE \
 -bo $BOOT_G9_LEGACY
+echo "Define profile template with network connections and SAN storage"
+./define-profile-template.py -a $OV_HOST -u $OV_USER -p $OV_PASS -n "BL460c Gen9 2" \
+-sht "BL460c Gen9 1" -eg "Prod VC FlexFabric Group 1" -af "Bay" -cl $CONN_LIST_TEMPLATE_SAN -sl $SAN_LIST3 
 
 
 # Clean up temporary files
