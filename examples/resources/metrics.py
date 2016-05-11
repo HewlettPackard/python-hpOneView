@@ -1,16 +1,16 @@
 from pprint import pprint
 
-from hpOneView.connection import connection
-from hpOneView.resources.data_services.metrics import Metrics
+from hpOneView.oneview_client import OneViewClient
 
-credential = dict(
-    userName='Administrator',
-    password='password'
-)
-one_view_connection = connection('127.0.0.1')
-one_view_connection.login(credential)
+config = {"ip": "127.0.0.1",
+          "credentials": {
+              "authLoginDomain": "",
+              "userName": "administrator",
+              "password": "password"}}
 
-configuration = {
+one_view_client = OneViewClient(config)
+
+metrics_configuration = {
     "sourceTypeList": [
         {
             "sourceType": "/rest/power-devices",
@@ -30,6 +30,5 @@ configuration = {
     ]
 }
 
-metrics = Metrics(one_view_connection)
-updated_metrics_configuration = metrics.update_configuration(configuration)
+updated_metrics_configuration = one_view_client.metrics.update_configuration(metrics_configuration)
 pprint(updated_metrics_configuration)
