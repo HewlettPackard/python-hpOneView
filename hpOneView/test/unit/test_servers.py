@@ -22,18 +22,19 @@
 ###
 import mock
 import unittest
-import uuid
 import json
- 
+
 from hpOneView.common import make_server_dict
 from hpOneView.common import make_ServerProfileTemplateV1
 from hpOneView.common import uri
-from hpOneView.connection import *
-from hpOneView.servers import *
-from hpOneView.activity import *
+from hpOneView.common import make_FirmwareSettingsV3
+from hpOneView.common import make_ProfileConnectionV4
+from hpOneView.connection import connection
+from hpOneView.servers import servers
+from hpOneView.activity import activity
+
 
 class ServersTest(unittest.TestCase):
-    
     def setUp(self):
         super(ServersTest, self).setUp()
         self.host = 'http://1.2.3.4'
@@ -96,8 +97,8 @@ class ServersTest(unittest.TestCase):
         mock_get.assert_called_once_with(settings_test['uri'] + '/remoteConsoleUrl')
 
     @mock.patch.object(connection, 'post')
-    @mock.patch.object(activity, 'wait4task') 
-    def test_create_server_profile_template(self, mock_wait4task, mock_post):        
+    @mock.patch.object(activity, 'wait4task')
+    def test_create_server_profile_template(self, mock_wait4task, mock_post):
         name = 'spt'
         description = 'description'
         sht = '/rest/server-hardware-types/1234'
@@ -105,22 +106,23 @@ class ServersTest(unittest.TestCase):
         affinity = 'Bay'
         hide_flex = False
         fw_settings = make_FirmwareSettingsV3('/rest/firmware-drivers/SPP2016020_2015', 'FirmwareOnly', True, False)
-        
+
         # build the V1 SPT
         spt = make_ServerProfileTemplateV1(name, description, None, sht, eg, affinity, hide_flex, None, fw_settings)
-        
+
         # build a OV task for the create SPT operation
-        task = self.build_spt_add_task_resource()  
-        
-        # return the task when waiting for completion      
+        task = self.build_spt_add_task_resource()
+
+        # return the task when waiting for completion
         mock_post.return_value = [task, None]
-                
-        self.servers.create_server_profile_template(name, description, None, sht, eg, affinity, hide_flex, None, fw_settings)
-        mock_post.assert_called_once_with(uri['profile-templates'], spt)         
-        
+
+        self.servers.create_server_profile_template(name, description, None, sht, eg, affinity, hide_flex, None,
+                                                    fw_settings)
+        mock_post.assert_called_once_with(uri['profile-templates'], spt)
+
     @mock.patch.object(connection, 'post')
-    @mock.patch.object(activity, 'wait4task') 
-    def test_create_server_profile_template_with_connections(self, mock_wait4task, mock_post):        
+    @mock.patch.object(activity, 'wait4task')
+    def test_create_server_profile_template_with_connections(self, mock_wait4task, mock_post):
         name = 'spt'
         description = 'description'
         sht = '/rest/server-hardware-types/1234'
@@ -128,107 +130,110 @@ class ServersTest(unittest.TestCase):
         affinity = 'Bay'
         hide_flex = True
         fw_settings = make_FirmwareSettingsV3('/rest/firmware-drivers/SPP2016020_2015', 'FirmwareOnly', True, False)
-        connections = make_ProfileConnectionV4(1, "eth1", '/rest/ethernet-networks/17f5e012', True, None, 'Ethernet', None, None, 'Auto', '1000', None, None, None)
-                
+        connections = make_ProfileConnectionV4(1, "eth1", '/rest/ethernet-networks/17f5e012', True, None, 'Ethernet',
+                                               None, None, 'Auto', '1000', None, None, None)
+
         # build the V1 SPT
-        spt = make_ServerProfileTemplateV1(name, description, None, sht, eg, affinity, hide_flex, connections, fw_settings)
-        
+        spt = make_ServerProfileTemplateV1(name, description, None, sht, eg, affinity, hide_flex, connections,
+                                           fw_settings)
+
         # build a OV task for the create SPT operation
-        task = self.build_spt_add_task_resource()  
-        
-        # return the task when waiting for completion      
+        task = self.build_spt_add_task_resource()
+
+        # return the task when waiting for completion
         mock_post.return_value = [task, None]
-                
-        self.servers.create_server_profile_template(name, description, None, sht, eg, affinity, hide_flex, connections, fw_settings)
+
+        self.servers.create_server_profile_template(name, description, None, sht, eg, affinity, hide_flex, connections,
+                                                    fw_settings)
         mock_post.assert_called_once_with(uri['profile-templates'], spt)
 
     @mock.patch.object(connection, 'post')
-    @mock.patch.object(activity, 'wait4task')    
-    def test_add_server(self, mock_wait4task, mock_post):     
-        
+    @mock.patch.object(activity, 'wait4task')
+    def test_add_server(self, mock_wait4task, mock_post):
         # build the server to add
         server = make_server_dict('hostname', 'username', 'password', False, 'OneView')
-        
+
         # build a OV task for the server add operation
-        task = self.build_server_add_task_resource()        
+        task = self.build_server_add_task_resource()
         mock_post.return_value = [task, None]
-        
+
         # return the task when waiting for completion
         mock_wait4task(task).return_value = task
-                
+
         self.servers.add_server(server)
         mock_post.assert_called_once_with(uri['servers'], server)
-        
+
     # helper functions for building Task responses for server operations
     def build_server_add_task_resource(self):
         task = {
-                'type': 'TaskResourceV2',
-                'taskType': 'User',
-                'stateReason': None,
-                'associatedResource': {
-                    'resourceUri': '/rest/server-hardware/31393736',
-                    'resourceCategory': 'server-hardware',
-                    'associationType': 'MANAGED_BY',
-                    'resourceName': 'Encl1, bay 2'
-                },
-                'hidden': False,
-                'category': 'tasks',
-                'data': {
-                    'EncUri': '/rest/enclosures/09SGH100X6J'
-                },
-                'percentComplete': 100,
-                'taskState': 'Complete',
-                'taskStatus': 'Add server: Encl1, bay 2.',
-                'taskErrors': [],
-                'parentTaskUri': '/rest/tasks/7A4F318D-AD78-4F68-879E-DF317E66008E',
-                'taskOutput': [],
-                'associatedTaskUri': None,
-                'completedSteps': 20,
-                'computedPercentComplete': 100,
-                'expectedDuration': 480,
-                'progressUpdates': [],
-                'totalSteps': 20,
-                'userInitiated': True,
-                'name': 'Add',
-                'owner': 'Administrator',
-                'eTag': '18',
-                'uri': '/rest/tasks/6BAFD214-A6CE-4D3A-9E77-C266444CE517'
-            }
+            'type': 'TaskResourceV2',
+            'taskType': 'User',
+            'stateReason': None,
+            'associatedResource': {
+                'resourceUri': '/rest/server-hardware/31393736',
+                'resourceCategory': 'server-hardware',
+                'associationType': 'MANAGED_BY',
+                'resourceName': 'Encl1, bay 2'
+            },
+            'hidden': False,
+            'category': 'tasks',
+            'data': {
+                'EncUri': '/rest/enclosures/09SGH100X6J'
+            },
+            'percentComplete': 100,
+            'taskState': 'Complete',
+            'taskStatus': 'Add server: Encl1, bay 2.',
+            'taskErrors': [],
+            'parentTaskUri': '/rest/tasks/7A4F318D-AD78-4F68-879E-DF317E66008E',
+            'taskOutput': [],
+            'associatedTaskUri': None,
+            'completedSteps': 20,
+            'computedPercentComplete': 100,
+            'expectedDuration': 480,
+            'progressUpdates': [],
+            'totalSteps': 20,
+            'userInitiated': True,
+            'name': 'Add',
+            'owner': 'Administrator',
+            'eTag': '18',
+            'uri': '/rest/tasks/6BAFD214-A6CE-4D3A-9E77-C266444CE517'
+        }
         return json.dumps(task)
-    
+
     def build_spt_add_task_resource(self):
         task = {
-                'type': 'TaskResourceV2',
-                'taskType': 'User',
-                'stateReason': 'Completed',
-                'associatedResource': {
-                    'resourceUri': '/rest/server-profile-templates/bc9b8b32',
-                    'resourceCategory': 'server-profile-templates',
-                    'associationType': 'MANAGED_BY',
-                    'resourceName': ''
-                },
-                'hidden': False,
-                'category': 'tasks',
-                'data': None,
-                'percentComplete': 100,
-                'taskState': 'Completed',
-                'taskStatus': 'Created server profile template:',
-                'taskErrors': [],
-                'parentTaskUri': None,
-                'taskOutput': [],
-                'associatedTaskUri': None,
-                'completedSteps': 0,
-                'computedPercentComplete': 100,
-                'expectedDuration': 0,
-                'progressUpdates': [],
-                'totalSteps': 0,
-                'userInitiated': False,
-                'name': 'Create ',
-                'owner': 'Administrator',
-                'eTag': '3',
-                'uri': '/rest/tasks/339A4D47-757B-4425-8495-6ECFCFEF88B5'
-            }
+            'type': 'TaskResourceV2',
+            'taskType': 'User',
+            'stateReason': 'Completed',
+            'associatedResource': {
+                'resourceUri': '/rest/server-profile-templates/bc9b8b32',
+                'resourceCategory': 'server-profile-templates',
+                'associationType': 'MANAGED_BY',
+                'resourceName': ''
+            },
+            'hidden': False,
+            'category': 'tasks',
+            'data': None,
+            'percentComplete': 100,
+            'taskState': 'Completed',
+            'taskStatus': 'Created server profile template:',
+            'taskErrors': [],
+            'parentTaskUri': None,
+            'taskOutput': [],
+            'associatedTaskUri': None,
+            'completedSteps': 0,
+            'computedPercentComplete': 100,
+            'expectedDuration': 0,
+            'progressUpdates': [],
+            'totalSteps': 0,
+            'userInitiated': False,
+            'name': 'Create ',
+            'owner': 'Administrator',
+            'eTag': '3',
+            'uri': '/rest/tasks/339A4D47-757B-4425-8495-6ECFCFEF88B5'
+        }
         return json.dumps(task)
-    
+
+
 if __name__ == '__main__':
     unittest.main()
