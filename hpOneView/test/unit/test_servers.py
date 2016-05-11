@@ -22,15 +22,16 @@
 ###
 import mock
 import unittest
-import uuid
 import json
 
 from hpOneView.common import make_server_dict
 from hpOneView.common import make_ServerProfileTemplateV1
 from hpOneView.common import uri
-from hpOneView.connection import *
-from hpOneView.servers import *
-from hpOneView.activity import *
+from hpOneView.common import make_FirmwareSettingsV3
+from hpOneView.common import make_ProfileConnectionV4
+from hpOneView.connection import connection
+from hpOneView.servers import servers
+from hpOneView.activity import activity
 
 
 class ServersTest(unittest.TestCase):
@@ -112,7 +113,7 @@ class ServersTest(unittest.TestCase):
         # build a OV task for the create SPT operation
         task = self.build_spt_add_task_resource()
 
-        # return the task when waiting for completion      
+        # return the task when waiting for completion
         mock_post.return_value = [task, None]
 
         self.servers.create_server_profile_template(name, description, None, sht, eg, affinity, hide_flex, None,
@@ -139,7 +140,7 @@ class ServersTest(unittest.TestCase):
         # build a OV task for the create SPT operation
         task = self.build_spt_add_task_resource()
 
-        # return the task when waiting for completion      
+        # return the task when waiting for completion
         mock_post.return_value = [task, None]
 
         self.servers.create_server_profile_template(name, description, None, sht, eg, affinity, hide_flex, connections,
