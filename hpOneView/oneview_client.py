@@ -1,27 +1,4 @@
 # -*- coding: utf-8 -*-
-
-"""
-oneview_client.py
-~~~~~~~~~~~~
-
-This module implements a common client for HP OneView REST API
-"""
-from __future__ import unicode_literals
-from __future__ import print_function
-from __future__ import division
-from __future__ import absolute_import
-from builtins import range
-from future import standard_library
-
-standard_library.install_aliases()
-
-__title__ = 'OneViewClient'
-__version__ = '0.0.1'
-__copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
-                ' Development LP'
-__license__ = 'MIT'
-__status__ = 'Development'
-
 ###
 # (C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP
 #
@@ -43,6 +20,26 @@ __status__ = 'Development'
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 ###
+"""
+oneview_client.py
+~~~~~~~~~~~~
+
+This module implements a common client for HP OneView REST API
+"""
+from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+from future import standard_library
+
+standard_library.install_aliases()
+
+__title__ = 'OneViewClient'
+__version__ = '0.0.1'
+__copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
+                ' Development LP'
+__license__ = 'MIT'
+__status__ = 'Development'
 
 from hpOneView.connection import connection
 from hpOneView.resources.networking.fc_networks import FcNetworks
@@ -50,13 +47,17 @@ from hpOneView.resources.networking.fc_networks import FcNetworks
 
 class OneViewClient(object):
     def __init__(self, config):
-        self._config = config
-        self._connection = connection(config["ip"])
-        self._connection.login(config["credentials"])
-        self._fc_networks = None
+        self.__config = config
+        self.__connection = connection(config["ip"])
+        self.__connection.login(config["credentials"])
+        self.__fc_networks = None
+
+    @property
+    def connection(self):
+        return self.__connection
 
     @property
     def fc_networks(self):
-        if not self._fc_networks:
-            self._fc_networks = FcNetworks(self._connection)
-        return self._fc_networks
+        if not self.__fc_networks:
+            self.__fc_networks = FcNetworks(self.__connection)
+        return self.__fc_networks
