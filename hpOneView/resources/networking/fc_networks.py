@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 """
-oneview_client.py
+fc-networks.py
 ~~~~~~~~~~~~
 
-This module implements a common client for HP OneView REST API
+This module implements fc-networks for the OneView REST API
 """
-from __future__ import unicode_literals
 from __future__ import print_function
+from __future__ import unicode_literals
 from __future__ import division
 from __future__ import absolute_import
 from builtins import range
@@ -15,12 +15,13 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'OneViewClient'
+__title__ = 'fc-networks'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
                 ' Development LP'
 __license__ = 'MIT'
 __status__ = 'Development'
+
 
 ###
 # (C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP
@@ -44,19 +45,12 @@ __status__ = 'Development'
 # THE SOFTWARE.
 ###
 
-from hpOneView.connection import connection
-from hpOneView.resources.networking.fc_networks import FcNetworks
 
 
-class OneViewClient(object):
-    def __init__(self, config):
-        self._config = config
-        self._connection = connection(config["ip"])
-        self._connection.login(config["credentials"])
-        self._fc_networks = None
+class FcNetworks:
+    def __init__(self, con):
+        self._connection = con
 
-    @property
-    def fc_networks(self):
-        if not self._fc_networks:
-            self._fc_networks = FcNetworks(self._connection)
-        return self._fc_networks
+    def get_all(self):
+        # Not Implemented yet
+        pass
