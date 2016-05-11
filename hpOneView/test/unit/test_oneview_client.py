@@ -27,6 +27,8 @@ import unittest
 from hpOneView.oneview_client import OneViewClient
 from hpOneView.connection import connection
 from hpOneView.resources.networking.fc_networks import FcNetworks
+from hpOneView.resources.networking.interconnects import Interconnects
+from hpOneView.resources.data_services.metrics import Metrics
 
 
 class OneViewClientTest(unittest.TestCase):
@@ -51,3 +53,23 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_fc_networks(self):
         fcn = self._one_view.fc_networks
         self.assertEqual(fcn, self._one_view.fc_networks)
+
+    def test_interconnects_has_right_type(self):
+        self.assertIsInstance(self._one_view.interconnects, Interconnects)
+
+    def test_interconnects_has_value(self):
+        self.assertIsNotNone(self._one_view.interconnects)
+
+    def test_lazy_loading_interconnects(self):
+        fcn = self._one_view.interconnects
+        self.assertEqual(fcn, self._one_view.interconnects)
+
+    def test_metrics_has_right_type(self):
+        self.assertIsInstance(self._one_view.metrics, Metrics)
+
+    def test_metrics_has_value(self):
+        self.assertIsNotNone(self._one_view.metrics)
+
+    def test_lazy_loading_metrics(self):
+        fcn = self._one_view.metrics
+        self.assertEqual(fcn, self._one_view.metrics)
