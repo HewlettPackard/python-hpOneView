@@ -25,8 +25,8 @@ import unittest
 import uuid
 
 from hpOneView.common import uri
-from hpOneView.connection import *
-from hpOneView.networking import *
+from hpOneView.connection import connection
+from hpOneView.networking import networking
 
 
 class NetworkingTest(unittest.TestCase):
