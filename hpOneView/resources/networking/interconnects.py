@@ -40,7 +40,7 @@ from hpOneView.resources.resource import Resource
 
 
 class Interconnects(Resource):
-    def get_interconnects_statistics(self, id):
+    def get_statistics(self, id):
         """ Gets the statistics from an interconnect.
         Args:
             id(str):

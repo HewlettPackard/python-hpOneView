@@ -21,7 +21,7 @@ class InterconnectsTest(TestCase):
     def test_get_interconnects_statistics_request(self, mock_get):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         url = (uri['ic'] + '/{id}/statistics').format(id=id)
-        self.interconnect.get_interconnects_statistics(id=id)
+        self.interconnect.get_statistics(id=id)
         mock_get.assert_called_once_with(url)
 
     @mock.patch.object(connection, 'get')
@@ -34,6 +34,6 @@ class InterconnectsTest(TestCase):
         mock_response.json = stub
         mock_get.return_value = mock_response
 
-        response_dict = self.interconnect.get_interconnects_statistics(id=id)
+        response_dict = self.interconnect.get_statistics(id=id)
 
         self.assertEqual(response_dict.json, expected_dict)
