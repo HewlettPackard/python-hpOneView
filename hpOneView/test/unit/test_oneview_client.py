@@ -21,26 +21,33 @@
 # THE SOFTWARE.
 ###
 
-from __future__ import print_function
-from __future__ import unicode_literals
-from __future__ import division
-from __future__ import absolute_import
-from future import standard_library
+import mock
+import unittest
 
-standard_library.install_aliases()
-
-__title__ = 'fc-networks'
-__version__ = '0.0.1'
-__copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
-                ' Development LP'
-__license__ = 'MIT'
-__status__ = 'Development'
+from hpOneView.oneview_client import OneViewClient
+from hpOneView.connection import connection
+from hpOneView.resources.networking.fc_networks import FcNetworks
 
 
-class FcNetworks:
-    def __init__(self, con):
-        self._connection = con
+class OneViewClientTest(unittest.TestCase):
+    @mock.patch.object(connection, 'login')
+    def setUp(self, mock_login):
+        super(OneViewClientTest, self).setUp()
 
-    def get_all(self):
-        # Not Implemented yet
-        pass
+        config = {"ip": "172.16.102.59",
+                  "credentials": {
+                      "authLoginDomain": "",
+                      "userName": "administrator",
+                      "password": ""}}
+
+        self._one_view = OneViewClient(config)
+
+    def test_fc_networks_has_right_type(self):
+        self.assertIsInstance(self._one_view.fc_networks, FcNetworks)
+
+    def test_fc_networks_has_value(self):
+        self.assertIsNotNone(self._one_view.fc_networks)
+
+    def test_lazy_loading_fc_networks(self):
+        fcn = self._one_view.fc_networks
+        self.assertEqual(fcn, self._one_view.fc_networks)
