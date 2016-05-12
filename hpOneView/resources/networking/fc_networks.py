@@ -36,11 +36,21 @@ __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
 __license__ = 'MIT'
 __status__ = 'Development'
 
+from hpOneView.resources.resource import ResourceClient
 
-class FcNetworks:
+
+class FcNetworks(object):
+    URI = '/rest/fc-networks'
+
     def __init__(self, con):
         self._connection = con
+        self._client = ResourceClient(con, self.URI)
 
-    def get_all(self):
-        # Not Implemented yet
-        pass
+    def get_all(self, filter=''):
+        return self._client.get_all(filter=filter)
+
+    def delete(self, instance):
+        return self._client.delete(instance)
+
+    def get(self, id):
+        return self._client.get(id)

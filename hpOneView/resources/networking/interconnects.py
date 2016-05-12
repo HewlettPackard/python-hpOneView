@@ -36,10 +36,12 @@ __status__ = 'Development'
 ###
 
 from hpOneView.common import uri
-from hpOneView.resources.resource import Resource
 
 
-class Interconnects(Resource):
+class Interconnects(object):
+    def __init__(self, con):
+        self._connection = con
+
     def get_statistics(self, id):
         """ Gets the statistics from an interconnect.
         Args:
