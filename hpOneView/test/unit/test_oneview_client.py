@@ -37,12 +37,27 @@ class OneViewClientTest(unittest.TestCase):
         super(OneViewClientTest, self).setUp()
 
         config = {"ip": "172.16.102.59",
+                  "proxy": "127.0.0.1:3128",
                   "credentials": {
                       "authLoginDomain": "",
                       "userName": "administrator",
                       "password": ""}}
 
         self._one_view = OneViewClient(config)
+
+    def test_reaise_error_invalid_proxy(self):
+        config = {"ip": "172.16.102.59",
+                  "proxy": "3128",
+                  "credentials": {
+                      "authLoginDomain": "",
+                      "userName": "administrator",
+                      "password": ""}}
+
+        try:
+            ov = OneViewClient(config)
+            self.fail()
+        except Exception as e:
+            self.assertTrue("Proxy" in e.message)
 
     def test_fc_networks_has_right_type(self):
         self.assertIsInstance(self._one_view.fc_networks, FcNetworks)
