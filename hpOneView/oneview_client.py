@@ -47,15 +47,31 @@ from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.data_services.metrics import Metrics
 
 
-
 class OneViewClient(object):
     def __init__(self, config):
         self.__config = config
         self.__connection = connection(config["ip"])
+        self.__set_proxy(config)
         self.__connection.login(config["credentials"])
         self.__fc_networks = None
         self.__interconnects = None
         self.__metrics = None
+        # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
+
+    def __set_proxy(self, config):
+        """
+        Set proxy if needed
+        Args:
+            config: Config dict
+
+        """
+        if "proxy" in config and config["proxy"]:
+            proxy = config["proxy"]
+            splitted = proxy.split(':')
+            if len(splitted) != 2:
+                raise Exception("Invalid Proxy")
+
+            self.__connection.set_proxy(splitted[0], splitted[1])
 
     @property
     def connection(self):
@@ -78,4 +94,3 @@ class OneViewClient(object):
         if not self.__metrics:
             self.__metrics = Metrics(self.__connection)
         return self.__metrics
-
