@@ -50,13 +50,18 @@ class ResourceClient(object):
         return get_members(self._connection.get(uri))
 
     def get_all(self, start=0, count=9999999, filter='', sort=''):
+        if filter:
+            filter = "&filter=" + filter
+
+        if sort:
+            sort = "&sort=" + sort
+
         uri = "{0}?start={1}&count={2}{3}{4}".format(self._uri, start, count, filter, sort)
         return self.get_members(uri)
 
     def delete(self, obj, blocking=True, verbose=False):
-
-        if obj is dict:
-            uri = dict['uri']
+        if isinstance(obj, dict):
+            uri = obj['uri']
         else:
             uri = self._uri + "/" + obj
 
@@ -71,9 +76,10 @@ class ResourceClient(object):
     def get(self, id):
         return self._connection.get(self._uri + '/' + id)
 
-    def update(self, dict, blocking=True, verbose=False, timeout=60):
+    def update(self, id, dict, blocking=True, verbose=False, timeout=60):
         # TODO: Create uri suffix
+        # TODO: Verify extract uri from dict
         task, body = self._connection.put(self._uri + '/' + id, dict)
-        if blocking is True:
+        if blocking:
             task = self._activity.wait4task(task, tout=timeout, verbose=verbose)
         return task
