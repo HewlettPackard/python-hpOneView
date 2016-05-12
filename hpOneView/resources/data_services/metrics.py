@@ -1,20 +1,4 @@
 # -*- coding: utf-8 -*-
-
-
-from __future__ import (unicode_literals, print_function, division, absolute_import)
-
-from future import standard_library
-
-standard_library.install_aliases()
-
-__title__ = 'Metrics'
-__version__ = '0.0.1'
-__copyright__ = '(C) Copyright (2012-2015) Hewlett Packard Enterprise ' \
-                ' Development LP'
-__license__ = 'MIT'
-__status__ = 'Development'
-
-
 ###
 # (C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP
 #
@@ -36,6 +20,22 @@ __status__ = 'Development'
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 ###
+
+
+from __future__ import (unicode_literals, print_function, division, absolute_import)
+
+from future import standard_library
+
+standard_library.install_aliases()
+
+__title__ = 'Metrics'
+__version__ = '0.0.1'
+__copyright__ = '(C) Copyright (2012-2015) Hewlett Packard Enterprise ' \
+                ' Development LP'
+__license__ = 'MIT'
+__status__ = 'Development'
+
+
 
 class Metrics(object):
     """Metrics can be relayed from OneView for managed resources at a specified interval. The following steps can be
