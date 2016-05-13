@@ -43,7 +43,7 @@ class OneViewClientTest(unittest.TestCase):
                       "userName": "administrator",
                       "password": ""}}
 
-        self._one_view = OneViewClient(config)
+        self._oneview = OneViewClient(config)
 
     def test_reaise_error_invalid_proxy(self):
         config = {"ip": "172.16.102.59",
@@ -55,36 +55,40 @@ class OneViewClientTest(unittest.TestCase):
 
         try:
             ov = OneViewClient(config)
+        except ValueError as e:
+            self.assertTrue("Proxy" in e.args[0])
+        else:
             self.fail()
-        except Exception as e:
-            self.assertTrue("Proxy" in e.message)
 
     def test_fc_networks_has_right_type(self):
-        self.assertIsInstance(self._one_view.fc_networks, FcNetworks)
+        self.assertIsInstance(self._oneview.fc_networks, FcNetworks)
 
     def test_fc_networks_has_value(self):
-        self.assertIsNotNone(self._one_view.fc_networks)
+        self.assertIsNotNone(self._oneview.fc_networks)
 
     def test_lazy_loading_fc_networks(self):
-        fcn = self._one_view.fc_networks
-        self.assertEqual(fcn, self._one_view.fc_networks)
+        fcn = self._oneview.fc_networks
+        self.assertEqual(fcn, self._oneview.fc_networks)
 
     def test_interconnects_has_right_type(self):
-        self.assertIsInstance(self._one_view.interconnects, Interconnects)
+        self.assertIsInstance(self._oneview.interconnects, Interconnects)
 
     def test_interconnects_has_value(self):
-        self.assertIsNotNone(self._one_view.interconnects)
+        self.assertIsNotNone(self._oneview.interconnects)
 
     def test_lazy_loading_interconnects(self):
-        fcn = self._one_view.interconnects
-        self.assertEqual(fcn, self._one_view.interconnects)
+        fcn = self._oneview.interconnects
+        self.assertEqual(fcn, self._oneview.interconnects)
 
     def test_metrics_has_right_type(self):
-        self.assertIsInstance(self._one_view.metrics, Metrics)
+        self.assertIsInstance(self._oneview.metrics, Metrics)
 
     def test_metrics_has_value(self):
-        self.assertIsNotNone(self._one_view.metrics)
+        self.assertIsNotNone(self._oneview.metrics)
 
     def test_lazy_loading_metrics(self):
-        fcn = self._one_view.metrics
-        self.assertEqual(fcn, self._one_view.metrics)
+        fcn = self._oneview.metrics
+        self.assertEqual(fcn, self._oneview.metrics)
+
+    def test_connection_type(self):
+        self.assertIsInstance(self._oneview.connection, connection)
