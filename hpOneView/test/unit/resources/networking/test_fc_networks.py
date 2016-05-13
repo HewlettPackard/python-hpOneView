@@ -24,8 +24,6 @@
 import mock
 import unittest
 
-from hpOneView.oneview_client import OneViewClient
-from hpOneView.connection import connection
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.resource import ResourceClient
 
@@ -35,5 +33,8 @@ class FcNetworksTest(unittest.TestCase):
     def test_get_all_called_once(self, mock_get_all):
         res = FcNetworks(None)
         filter = 'name=TestName'
-        res.get_all(filter)
-        mock_get_all.assert_called_once_with(filter=filter)
+        sort = 'name:ascending'
+
+        res.get_all(2, 500, filter, sort)
+
+        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort)

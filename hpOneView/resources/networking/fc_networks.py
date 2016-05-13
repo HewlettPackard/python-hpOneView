@@ -46,8 +46,30 @@ class FcNetworks(object):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
 
-    def get_all(self, filter=''):
-        return self._client.get_all(filter=filter)
+    def get_all(self, start=0, count=9999999, filter='', sort=''):
+        """
+        Gets a paginated collection of Fibre Channel networks. The collection is based on optional sorting and filtering, and constrained by start and count parameters.
+
+        Args:
+            start:
+                The first item to return, using 0-based indexing.
+                If not specified, the default is 0 - start with the first available item.
+            count:
+                The number of resources to return. A count of -1 requests all the items.
+                The actual number of items in the response may differ from the requested
+                count if the sum of start and count exceed the total number of items, or
+                if returning the requested number of items would take too long.
+            filter:
+                A general filter/query string to narrow the list of items returned. The
+                default is no filter - all resources are returned.
+            sort:
+                The sort order of the returned data set. By default, the sort order is based
+                on create time, with the oldest entry first.
+
+        Returns: dict
+
+        """
+        return self._client.get_all(start, count, filter=filter, sort=sort)
 
     def delete(self, instance):
         return self._client.delete(instance)

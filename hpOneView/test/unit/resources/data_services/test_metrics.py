@@ -7,7 +7,6 @@ from hpOneView.test.test_utils import load_stub
 
 
 class TestMetrics(TestCase):
-
     configuration = load_stub("update_metrics_configuration.json")
 
     def test_update_metrics_configuration(self):
@@ -19,4 +18,3 @@ class TestMetrics(TestCase):
 
         connection.put.assert_called_once_with(Metrics.RESOURCE_URI, self.configuration)
         self.assertEquals(self.configuration, response)
-
