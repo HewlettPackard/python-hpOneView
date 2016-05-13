@@ -105,3 +105,12 @@ class ResourceClient(object):
         if blocking:
             task = self._activity.wait4task(task, tout=timeout, verbose=verbose)
         return task
+
+    def create(self, options, blocking=True, verbose=False):
+        self._connection.post(self._uri, options)
+        task, entity = self._activity.make_task_entity_tuple(self._connection)
+
+        if blocking:
+            self._activity.wait4task(task, verbose=verbose)
+
+        return entity
