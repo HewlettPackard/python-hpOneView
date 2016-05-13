@@ -45,6 +45,12 @@ class FcNetworks(object):
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
+        self.__default_values = {
+            'autoLoginRedistribution': False,
+            'type': 'fc-networkV2',
+            'linkStabilityTime': 30,
+            'fabricType': 'FabricAttach',
+        }
 
     def get_all(self, start=0, count=9999999, filter='', sort=''):
         """
@@ -76,3 +82,7 @@ class FcNetworks(object):
 
     def get(self, id):
         return self._client.get(id)
+
+    def create(self, dict):
+        dict.update(self.__default_values)
+        return self._client.create(dict)
