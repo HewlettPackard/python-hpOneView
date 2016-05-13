@@ -24,11 +24,18 @@
 import mock
 import unittest
 
+from hpOneView.connection import connection
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.resource import ResourceClient
 
 
 class FcNetworksTest(unittest.TestCase):
+
+    def setUp(self):
+        self.host = '127.0.0.1'
+        self.connection = connection(self.host)
+        self._fc_networks = FcNetworks(self.connection)
+
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_all_called_once(self, mock_get_all):
         res = FcNetworks(None)
@@ -38,3 +45,34 @@ class FcNetworksTest(unittest.TestCase):
         res.get_all(2, 500, filter, sort)
 
         mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort)
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_create_should_use_given_values(self, mock_create):
+        options = {
+            'name': 'OneViewSDK Test FC Network',
+            'autoLoginRedistribution': False,
+            'type': 'fc-networkV2',
+            'linkStabilityTime': 30,
+            'fabricType': None,
+        }
+        mock_create.return_value = {}
+
+        self._fc_networks.create(options)
+        mock_create.assert_called_once_with(options)
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_create_should_use_default_values(self, mock_create):
+        options = {
+            'name': 'OneViewSDK Test FC Network',
+        }
+        options_with_defaults = {
+            'name': 'OneViewSDK Test FC Network',
+            'autoLoginRedistribution': False,
+            'type': 'fc-networkV2',
+            'linkStabilityTime': 30,
+            'fabricType': 'FabricAttach',
+        }
+        mock_create.return_value = {}
+
+        self._fc_networks.create(options)
+        mock_create.assert_called_once_with(options_with_defaults)
