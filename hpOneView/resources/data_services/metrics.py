@@ -36,7 +36,6 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 
-
 class Metrics(object):
     """Metrics can be relayed from OneView for managed resources at a specified interval. The following steps can be
      followed to enable the metric relay in OneView:

@@ -24,11 +24,10 @@
 import mock
 import unittest
 
-from hpOneView.oneview_client import OneViewClient
 from hpOneView.connection import connection
 from hpOneView.activity import activity
-from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.resource import ResourceClient
+from hpOneView.exceptions import HPOneViewUnknownType
 
 
 class ResourceTest(unittest.TestCase):
@@ -44,8 +43,13 @@ class ResourceTest(unittest.TestCase):
     def test_get_all_called_once(self, mock_get_members):
         filter = 'name=TestName'
         sort = 'name:ascending'
-        self.resource_client.get_all(1, 500, filter, sort)
-        uri = self.URI + "?start=1&count=500&filter=name=TestName&sort=name:ascending"
+        query = "name NE 'WrongName'"
+        view = '"{view-name}"'
+        self.resource_client.get_all(1, 500, filter, query, sort, view)
+
+        uri = self.URI
+        uri += '?start=1&count=500&filter=name=TestName&query=name NE \'WrongName\'&sort=name:ascending&view="{view-name}"'
+
         mock_get_members.assert_called_once_with(uri)
 
     @mock.patch.object(ResourceClient, 'get_members')
@@ -83,6 +87,16 @@ class ResourceTest(unittest.TestCase):
 
         self.assertEqual(task, delete_task)
         mock_delete.assert_called_once_with("a_uri")
+
+    def test_delete_dict_invalid_uri(self):
+        dict_to_delete = {"task": "task",
+                          "uri": ""}
+        try:
+            self.resource_client.delete(dict_to_delete, False, False)
+        except HPOneViewUnknownType as e:
+            self.assertEqual("Unknown object type", e.args[0])
+        else:
+            self.fail()
 
     @mock.patch.object(connection, 'get')
     def test_get_schema_uri(self, mock_get):

@@ -13,6 +13,7 @@ from __future__ import absolute_import
 from builtins import open
 from builtins import str
 from future import standard_library
+
 standard_library.install_aliases()
 
 __title__ = 'connection'
@@ -57,7 +58,6 @@ from hpOneView.exceptions import *
 
 
 class connection(object):
-
     def __init__(self, applianceIp):
         self._session = None
         self._host = applianceIp
@@ -195,7 +195,6 @@ class connection(object):
         fin.close()
         return content_type
 
-
     def patch(self, uri, body):
         resp, body = self.do_http('PATCH', uri, json.dumps(body))
         if resp.status >= 400:
@@ -204,7 +203,6 @@ class connection(object):
             task = self.get(resp.getheader('Location'))
             return task, body
         return None, body
-
 
     def post_multipart(self, uri, fields, files, baseName, verbose=False):
         content_type = self.encode_multipart_formdata(fields, files, baseName,
@@ -300,18 +298,16 @@ class connection(object):
             return task, body
         return None, body
 
-
     def get_entities_byrange(self, uri, field, xmin, xmax, count=-1):
         new_uri = uri + '?filter="\'' + field + '\'%20>%20\'' + xmin \
-            + '\'"&filter="\'' + field + '\'%20<%20\'' + xmax \
-            + '\'"&start=0&count=' + str(count)
+                  + '\'"&filter="\'' + field + '\'%20<%20\'' + xmax \
+                  + '\'"&start=0&count=' + str(count)
         body = self.get(new_uri)
         return get_members(body)
 
-
     def get_entities_byfield(self, uri, field, value, count=-1):
         new_uri = uri + '?start=0&count=' + str(count) \
-            + '&filter=' + field + '=\'' + value + '\''
+                  + '&filter=' + field + '=\'' + value + '\''
         try:
             body = self.get(new_uri)
         except:
@@ -319,10 +315,9 @@ class connection(object):
             raise
         return get_members(body)
 
-
     def get_entity_byfield(self, uri, field, value, count=-1):
         new_uri = uri + '?filter="\'' + field + '\'%20=%20\'' + value \
-            + '\'"&start=0&count=' + str(count)
+                  + '\'"&start=0&count=' + str(count)
 
         try:
             body = self.get(new_uri)
@@ -401,7 +396,7 @@ class connection(object):
             print(('Session Key: ' + auth))
 
     def logout(self, verbose=False):
-        #resp, body = self.do_http(method, uri['loginSessions'] \
+        # resp, body = self.do_http(method, uri['loginSessions'] \
         #                        , body, self._headers)
         try:
             self.delete(uri['loginSessions'])

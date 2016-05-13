@@ -12,6 +12,7 @@ from __future__ import division
 from __future__ import absolute_import
 from builtins import range
 from future import standard_library
+
 standard_library.install_aliases()
 
 __title__ = 'networking'
@@ -42,18 +43,20 @@ __status__ = 'Development'
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 ###
+import http
 
-from hpOneView.common import *
-from hpOneView.connection import *
-from hpOneView.activity import *
-from hpOneView.exceptions import *
+from hpOneView.common import uri, get_members, make_enet_settings, \
+    make_network_set, make_Bandwidth, make_ethernet_networkV3, make_fc_networkV2
+from hpOneView.activity import activity
+from hpOneView.exceptions import HPOneViewException, HPOneViewInvalidResource
+from hpOneView.resources.networking.fc_networks import FcNetworks
 
 
 class networking(object):
-
     def __init__(self, con):
         self._con = con
         self._activity = activity(con)
+        self.__fc_networks = FcNetworks(con)
 
     ###########################################################################
     # Logical Interconnect Group
@@ -471,7 +474,6 @@ class networking(object):
             task = self._activity.wait4task(task, tout=60, verbose=verbose)
         return entity
 
-
     def create_network(self, uri, xnet, bw={}, verbose=False):
         # throws an exception if there is an error
         body = self._con.conditional_post(uri, xnet)
@@ -502,8 +504,12 @@ class networking(object):
                                          '?start=0&count=9999999'))
 
     def get_fc_networks(self):
-        return get_members(self._con.get(uri['fcnet'] +
-                                         '?start=0&count=9999999'))
+        """
+        Deprecated function, use: OneVieClient(config).fc_networks.get_all()
+        Returns: dict
+
+        """
+        return self.__fc_networks.get_all()
 
     ###########################################################################
     # Uplink Sets

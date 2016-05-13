@@ -8,9 +8,7 @@ from hpOneView.test.test_utils import load_stub
 from hpOneView.resources.networking.interconnects import Interconnects
 
 
-
 class InterconnectsTest(TestCase):
-
     def setUp(self):
         super(InterconnectsTest, self).setUp()
         self.host = 'http://1.2.3.4'

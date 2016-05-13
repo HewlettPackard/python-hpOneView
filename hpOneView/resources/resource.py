@@ -38,30 +38,52 @@ __status__ = 'Development'
 
 from hpOneView.common import get_members
 from hpOneView.activity import activity
+from hpOneView.exceptions import HPOneViewUnknownType
 
 
 class ResourceClient(object):
+    """
+    This class implements common functions for HpOneView API rest
+    """
+
     def __init__(self, con, uri):
         self._connection = con
         self._uri = uri
         self._activity = activity(con)
 
     def get_members(self, uri):
+        # TODO: common is deprecated, refactor get_members implementation
         return get_members(self._connection.get(uri))
 
-    def get_all(self, start=0, count=9999999, filter='', sort=''):
+    def get_all(self, start=0, count=9999999, filter='', query='', sort='', view=''):
+        """
+        the use of optional parameters are described here:
+        http://h17007.www1.hpe.com/docs/enterprise/servers/oneview2.0/cic-api/en/api-docs/current/index.html
+
+        Returns: a dictionary with requested data
+
+        """
         if filter:
             filter = "&filter=" + filter
+
+        if query:
+            query = "&query=" + query
 
         if sort:
             sort = "&sort=" + sort
 
-        uri = "{0}?start={1}&count={2}{3}{4}".format(self._uri, start, count, filter, sort)
+        if view:
+            view = "&view=" + view
+
+        uri = "{0}?start={1}&count={2}{3}{4}{5}{6}".format(self._uri, start, count, filter, query, sort, view)
         return self.get_members(uri)
 
     def delete(self, obj, blocking=True, verbose=False):
         if isinstance(obj, dict):
-            uri = obj['uri']
+            if 'uri' in obj and obj['uri']:
+                uri = obj['uri']
+            else:
+                raise HPOneViewUnknownType('Unknown object type')
         else:
             uri = self._uri + "/" + obj
 
