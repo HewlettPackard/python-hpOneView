@@ -98,35 +98,35 @@ class FcNetworks(object):
     def get(self, id):
         return self._client.get(id)
 
-    def create(self, options, blocking=True):
+    def create(self, resource, blocking=True):
         """
         Creates a Fibre Channel network.
 
         Args:
-            options: dict object to create
+            resource: dict object to create
             blocking:
-                Wait task completion
+                Wait task completion. Default is True.
 
-        Returns: task
+        Returns: Created resource. When blocking=False, returns the task.
 
         """
-        options.update(self.__default_values)
-        return self._client.create(options, blocking)
+        resource.update(self.__default_values)
+        return self._client.create(resource, blocking)
 
-    def update(self, options, blocking=True):
+    def update(self, resource, blocking=True):
         """
         Updates a Fibre Channel network.
 
         Args:
-            options: dict object to update
+            resource: dict object to update
             blocking:
-                Wait task completion
+                Wait task completion. Default is True.
 
-        Returns: task
+        Returns: Updated resource. When blocking=False, returns the task.
 
         """
-        options.update(self.__default_values)
-        return self._client.update(options, blocking)
+        resource.update(self.__default_values)
+        return self._client.update(resource, blocking)
 
     def get_by(self, field, value):
         """

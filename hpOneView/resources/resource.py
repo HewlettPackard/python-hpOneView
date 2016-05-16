@@ -102,14 +102,14 @@ class ResourceClient(object):
     def get(self, id):
         return self._connection.get(self._uri + '/' + id)
 
-    def update(self, options, blocking=True):
-        task, body = self._connection.put(options['uri'], options)
+    def update(self, resource, blocking=True):
+        task, body = self._connection.put(resource['uri'], resource)
         if blocking:
             return self.__wait_for_task(task, 60)
         return task
 
-    def create(self, options, blocking=True):
-        task, entity = self._connection.post(self._uri, options)
+    def create(self, resource, blocking=True):
+        task, entity = self._connection.post(self._uri, resource)
         if blocking:
             return self.__wait_for_task(task, 60)
         return task
