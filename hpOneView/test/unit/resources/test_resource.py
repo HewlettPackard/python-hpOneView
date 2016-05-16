@@ -118,10 +118,45 @@ class ResourceTest(unittest.TestCase):
 
         mock_update.return_value = task, body
         mock_wait4task.return_value = task
-        update_task = self.resource_client.update("456444", dict_to_update, True, True)
+        update_task = self.resource_client.update(dict_to_update, False)
 
         self.assertEqual(task, update_task)
-        mock_update.assert_called_once_with(self.URI + "/456444", dict_to_update)
+        mock_update.assert_called_once_with("a_uri", dict_to_update)
+
+    @mock.patch.object(connection, 'put')
+    def test_update_return_task_when_not_blocking(self, mock_put):
+        dict_to_update = {
+            "resource_name": "a name",
+            "uri": "a_uri",
+        }
+        task = {"task": "task"}
+
+        mock_put.return_value = task, dict_to_update
+
+        result = self.resource_client.update(dict_to_update, False)
+
+        self.assertEqual(result, task)
+
+    @mock.patch.object(connection, 'put')
+    @mock.patch.object(connection, 'get')
+    @mock.patch.object(activity, 'wait4task')
+    @mock.patch.object(activity, 'get_task_associated_resource')
+    def test_update_return_entity_when_blocking(self, mock_get_task_associated_resource, mock_wait4task,
+                                                mock_get, mock_put):
+        dict_to_update = {
+            "resource_name": "a name",
+            "uri": "a_uri",
+        }
+        task = {"task": "task"}
+
+        mock_put.return_value = task, {}
+        mock_wait4task.return_value = {"type": "TaskBlaBla"}
+        mock_get_task_associated_resource.return_value = {"resourceUri": self.URI + "path/ID"}
+        mock_get.return_value = dict_to_update
+
+        result = self.resource_client.update(dict_to_update, True)
+
+        self.assertEqual(result, dict_to_update)
 
     @mock.patch.object(connection, 'post')
     @mock.patch.object(activity, 'make_task_entity_tuple')
