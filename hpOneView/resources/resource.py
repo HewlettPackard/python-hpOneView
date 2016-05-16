@@ -78,14 +78,14 @@ class ResourceClient(object):
         uri = "{0}?start={1}&count={2}{3}{4}{5}{6}".format(self._uri, start, count, filter, query, sort, view)
         return self.get_members(uri)
 
-    def delete(self, obj, force=False, blocking=True, verbose=False, timeout=60):
-        if isinstance(obj, dict):
-            if 'uri' in obj and obj['uri']:
-                uri = obj['uri']
+    def delete(self, resource, force=False, blocking=True, verbose=False, timeout=60):
+        if isinstance(resource, dict):
+            if 'uri' in resource and resource['uri']:
+                uri = resource['uri']
             else:
                 raise HPOneViewUnknownType('Unknown object type')
         else:
-            uri = self._uri + "/" + obj
+            uri = self._uri + "/" + resource
 
         if force:
             uri += '?force=True'
@@ -120,3 +120,17 @@ class ResourceClient(object):
             resource = self._activity.get_task_associated_resource(task)
             entity = self._connection.get(resource['resourceUri'])
             return entity
+
+    def get_by(self, field, value):
+        """
+        This function uses get_all passing a filter
+        The search is case insensitive
+        Args:
+            field: field name to filter
+            value: value to filte
+
+        Returns: dict
+
+        """
+        filter = filter = "\"'{0}'='{1}'\"".format(field, value)
+        return self.get_all(filter=filter)
