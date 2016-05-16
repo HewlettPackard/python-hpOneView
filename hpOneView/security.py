@@ -6,11 +6,13 @@ security.py
 
 This module implements Settings HP OneView REST API
 """
-from __future__ import unicode_literals
-from __future__ import print_function
-from __future__ import division
 from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
 from future import standard_library
+
 standard_library.install_aliases()
 
 __title__ = 'security'
@@ -42,14 +44,11 @@ __status__ = 'Development'
 # THE SOFTWARE.
 ###
 
-from hpOneView.common import *
-from hpOneView.connection import *
-from hpOneView.activity import *
-from hpOneView.exceptions import *
+
+from hpOneView.common import get_members, uri, make_user_dict
 
 
 class security(object):
-
     def __init__(self, con):
         self._con = con
 
@@ -74,13 +73,13 @@ class security(object):
             req = {'type': 'RoleNameDtoV2', 'roleName': role}
             request.append(req)
         task, body = self._con.put(uri['users'] + '/' + user +
-                             '/roles?multiResource=true', request)
+                                   '/roles?multiResource=true', request)
         return body
 
     def set_user_role(self, user, role):
         request = {'type': 'RoleNameDtoV2', 'roleName': role}
         task, body = self._con.put(uri['users'] + '/' + user +
-                             '/roles?multiResource=true', [request])
+                                   '/roles?multiResource=true', [request])
         return body
 
     def create_user(self, name, password, enabled=True, fullName='',
@@ -153,7 +152,5 @@ class security(object):
     def get_role_category_actions(self):
         body = self._con.get(uri['role-category-actions'])
         return body
-
-
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

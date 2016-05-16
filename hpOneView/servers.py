@@ -6,13 +6,14 @@ servers.py
 
 This module implements servers HP OneView REST API
 """
-from __future__ import unicode_literals
-from __future__ import print_function
-from __future__ import division
 from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
 from future import standard_library
+
 standard_library.install_aliases()
-from pprint import pprint
 
 __title__ = 'servers'
 __version__ = '0.0.1'
@@ -43,14 +44,12 @@ __status__ = 'Development'
 # THE SOFTWARE.
 ###
 
-from hpOneView.common import *
-from hpOneView.connection import *
-from hpOneView.activity import *
-from hpOneView.exceptions import *
+from hpOneView.activity import activity
+from hpOneView.common import get_members, uri, make_powerstate_dict, make_server_type_dict, make_ServerProfileV5, \
+    make_EnclosureGroupV200, make_ServerProfileTemplateV1
 
 
 class servers(object):
-
     def __init__(self, con):
         self._con = con
         self._activity = activity(con)
@@ -409,7 +408,7 @@ class servers(object):
         return profile
 
     def update_server_profile_from_template(self, profile, blocking=True, verbose=False):
-        patch_request = [{'op':'replace', 'path':'/templateCompliance', 'value':'Compliant'}]
+        patch_request = [{'op': 'replace', 'path': '/templateCompliance', 'value': 'Compliant'}]
         task, body = self._con.patch(profile['uri'], patch_request)
         try:
             if profile['firmware']['firmwareBaselineUri'] is None:
@@ -533,11 +532,11 @@ class servers(object):
         if blocking is True:
             task = self._activity.wait4task(task, tout=tout, verbose=verbose)
         profileTemplateResource = self._activity.get_task_associated_resource(task)
-        profile = self._con.get(profileTemplateResource['resourceUri'])
+        self._con.get(profileTemplateResource['resourceUri'])
         return profile_template
 
     def get_server_profile_from_template(self, profile_template):
-        profile = self._con.get(profile_template['uri']+'/new-profile')
+        profile = self._con.get(profile_template['uri'] + '/new-profile')
         return profile
 
     ###########################################################################

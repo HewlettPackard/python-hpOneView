@@ -6,12 +6,14 @@ networking.py
 
 This module implements Settings HP OneView REST API
 """
-from __future__ import unicode_literals
-from __future__ import print_function
-from __future__ import division
 from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
 from builtins import range
 from future import standard_library
+
 standard_library.install_aliases()
 
 __title__ = 'networking'
@@ -43,14 +45,14 @@ __status__ = 'Development'
 # THE SOFTWARE.
 ###
 
-from hpOneView.common import *
-from hpOneView.connection import *
-from hpOneView.activity import *
-from hpOneView.exceptions import *
+import http.client
+from hpOneView.common import uri, get_members, make_network_set, make_Bandwidth, make_fc_networkV2, \
+    make_ethernet_networkV3, make_enet_settings
+from hpOneView.activity import activity
+from hpOneView.exceptions import HPOneViewInvalidResource, HPOneViewException
 
 
 class networking(object):
-
     def __init__(self, con):
         self._con = con
         self._activity = activity(con)
@@ -470,7 +472,6 @@ class networking(object):
         if blocking is True:
             task = self._activity.wait4task(task, tout=60, verbose=verbose)
         return entity
-
 
     def create_network(self, uri, xnet, bw={}, verbose=False):
         # throws an exception if there is an error

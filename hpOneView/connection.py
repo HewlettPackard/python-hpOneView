@@ -6,13 +6,15 @@ connection.py
 
 This module maintains communication with the appliance
 """
+from __future__ import absolute_import
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
-from __future__ import absolute_import
+
 from builtins import open
 from builtins import str
 from future import standard_library
+
 standard_library.install_aliases()
 
 __title__ = 'connection'
@@ -52,12 +54,11 @@ import os
 import ssl
 import time
 
-from hpOneView.common import *
-from hpOneView.exceptions import *
+from hpOneView.common import uri, get_members, get_member, make_eula_dict, make_initial_password_change_dict
+from hpOneView.exceptions import HPOneViewException
 
 
 class connection(object):
-
     def __init__(self, applianceIp):
         self._session = None
         self._host = applianceIp
@@ -195,7 +196,6 @@ class connection(object):
         fin.close()
         return content_type
 
-
     def patch(self, uri, body):
         resp, body = self.do_http('PATCH', uri, json.dumps(body))
         if resp.status >= 400:
@@ -204,7 +204,6 @@ class connection(object):
             task = self.get(resp.getheader('Location'))
             return task, body
         return None, body
-
 
     def post_multipart(self, uri, fields, files, baseName, verbose=False):
         content_type = self.encode_multipart_formdata(fields, files, baseName,
@@ -300,14 +299,12 @@ class connection(object):
             return task, body
         return None, body
 
-
     def get_entities_byrange(self, uri, field, xmin, xmax, count=-1):
         new_uri = uri + '?filter="\'' + field + '\'%20>%20\'' + xmin \
             + '\'"&filter="\'' + field + '\'%20<%20\'' + xmax \
             + '\'"&start=0&count=' + str(count)
         body = self.get(new_uri)
         return get_members(body)
-
 
     def get_entities_byfield(self, uri, field, value, count=-1):
         new_uri = uri + '?start=0&count=' + str(count) \
@@ -318,7 +315,6 @@ class connection(object):
             print(new_uri)
             raise
         return get_members(body)
-
 
     def get_entity_byfield(self, uri, field, value, count=-1):
         new_uri = uri + '?filter="\'' + field + '\'%20=%20\'' + value \
@@ -401,7 +397,7 @@ class connection(object):
             print(('Session Key: ' + auth))
 
     def logout(self, verbose=False):
-        #resp, body = self.do_http(method, uri['loginSessions'] \
+        # resp, body = self.do_http(method, uri['loginSessions'] \
         #                        , body, self._headers)
         try:
             self.delete(uri['loginSessions'])

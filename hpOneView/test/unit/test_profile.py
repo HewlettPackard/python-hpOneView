@@ -77,7 +77,6 @@ class ProfilesTest(unittest.TestCase):
         else:
             self.fail("Expected Exception")
 
-
     # TODO local storage is not working
     # https://github.com/HewlettPackard/python-hpOneView/issues/28
     def test_make_local_storage_with_bl(self):
@@ -94,7 +93,6 @@ class ProfilesTest(unittest.TestCase):
             self.assertEqual(hp_exception.args[0], 'Local storage management is not supported on DL servers')
         else:
             self.fail("Expected Exception")
-
 
     def test_make_local_storage_no_model(self):
         sht = self.build_gen8_bl_sht()

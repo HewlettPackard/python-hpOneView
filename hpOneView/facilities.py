@@ -6,11 +6,13 @@ facilities.py
 
 This module implements settings HP OneView REST API
 """
-from __future__ import unicode_literals
-from __future__ import print_function
-from __future__ import division
 from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
 from future import standard_library
+
 standard_library.install_aliases()
 
 __title__ = 'facilities'
@@ -42,14 +44,11 @@ __status__ = 'Development'
 # THE SOFTWARE.
 ###
 
-from hpOneView.common import *
-from hpOneView.connection import *
-from hpOneView.activity import *
-from hpOneView.exceptions import *
+from hpOneView.common import uri
+from hpOneView.activity import activity
 
 
 class facilities(object):
-
     def __init__(self, con):
         self._con = con
         self._activity = activity(con)
@@ -77,7 +76,7 @@ class facilities(object):
         return task
 
     def delete_rack(self, rack, force=False, blocking=True,
-                          verbose=False):
+                    verbose=False):
         if force:
             task, body = self._con.delete(rack['uri'] + '?force=True')
         else:
@@ -87,7 +86,7 @@ class facilities(object):
         return task
 
     def delete_powerdevice(self, powerdevice, force=False, blocking=True,
-                          verbose=False):
+                           verbose=False):
         if force:
             task, body = self._con.delete(powerdevice['uri'] + '?force=True')
         else:
@@ -131,7 +130,6 @@ class facilities(object):
                     return powerdevice
             return body
         return task
-
 
     def add_iPDU(self, host, user, passwd, blocking=True, verbose=False):
         request = {'hostname': host,

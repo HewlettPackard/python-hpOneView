@@ -6,14 +6,14 @@ activity.py
 
 This module implements the Activity HP OneView REST API
 """
+from __future__ import absolute_import
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
-from __future__ import absolute_import
-from builtins import open
+
 from builtins import filter
-from builtins import str
 from future import standard_library
+
 standard_library.install_aliases()
 
 __title__ = 'activity'
@@ -45,13 +45,11 @@ __status__ = 'Development'
 # THE SOFTWARE.
 ###
 
-
-from hpOneView.common import *
-from hpOneView.connection import *
-from hpOneView.exceptions import *
-import time  # For sleep
 import sys  # For verbose
-
+import time  # For sleep
+from hpOneView.common import uri, get_members
+from hpOneView.exceptions import HPOneViewInvalidResource, HPOneViewException, HPOneViewUnknownType, \
+    HPOneViewTaskError, HPOneViewTimeout
 
 TaskErrorStates = ['Error', 'Warning', 'Terminated', 'Killed']
 TaskCompletedStates = ['Error', 'Warning', 'Completed', 'Terminated', 'Killed']
@@ -59,7 +57,6 @@ TaskPendingStates = ['New', 'Starting', 'Pending', 'Running', 'Suspended', 'Stop
 
 
 class activity(object):
-
     def __init__(self, con):
         self._con = con
 
@@ -129,9 +126,9 @@ class activity(object):
             return None
         while self.is_task_running(task):
             if verbose:
-                    sys.stdout.write('Task still running after %d seconds   \r'
-                                     % count)
-                    sys.stdout.flush()
+                sys.stdout.write('Task still running after %d seconds   \r'
+                                 % count)
+                sys.stdout.flush()
             time.sleep(1)
             count += 1
             if count > tout:
@@ -139,14 +136,14 @@ class activity(object):
                                        ' seconds for task to complete, aborting')
         task = self._con.get(task['uri'])
         if task['taskState'] in TaskErrorStates and task['taskState'] != 'Warning':
-                err = task['taskErrors'][0]
-                msg = err['message']
-                if msg is not None:
-                    raise HPOneViewTaskError(msg)
-                elif task['taskStatus'] is not None:
-                    raise HPOneViewTaskError(task['taskStatus'])
-                else:
-                    raise HPOneViewTaskError('Unknown Exception')
+            err = task['taskErrors'][0]
+            msg = err['message']
+            if msg is not None:
+                raise HPOneViewTaskError(msg)
+            elif task['taskStatus'] is not None:
+                raise HPOneViewTaskError(task['taskStatus'])
+            else:
+                raise HPOneViewTaskError('Unknown Exception')
         return task
 
     def wait4tasks(self, tasks, tout=60, verbose=False):
@@ -154,8 +151,8 @@ class activity(object):
         count = 0
         while running:
             if verbose:
-                    print(('Tasks still running after %s seconds', count))
-                    print(running)
+                print(('Tasks still running after %s seconds', count))
+                print(running)
             time.sleep(1)
             count += 1
             running = list(filter(self.is_task_running, running))
@@ -171,15 +168,15 @@ class activity(object):
     ###########################################################################
     def get_alerts(self, AlertState='All'):
         if AlertState == 'All':
-        # TODO remove the evil use/hack of the large count default. The OneView
-        # API documents that count=-1 should return everything but it is not
-        # universally honored, where the extremely large count number is.
+            # TODO remove the evil use/hack of the large count default. The OneView
+            # API documents that count=-1 should return everything but it is not
+            # universally honored, where the extremely large count number is.
             return get_members(self._con.get(uri['alerts'] +
                                              '?start=0&count=9999999'))
         else:
-            return(self._con.get_entities_byfield(uri['alerts'],
-                                                  'alertState',
-                                                  AlertState, count=9999999))
+            return (self._con.get_entities_byfield(uri['alerts'],
+                                                   'alertState',
+                                                   AlertState, count=9999999))
 
     def delete_alert(self, alert):
         self._con.delete(alert['uri'])

@@ -6,11 +6,13 @@ uncategorized.py
 
 This module implements settings HP OneView REST API
 """
-from __future__ import unicode_literals
-from __future__ import print_function
-from __future__ import division
 from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
 from future import standard_library
+
 standard_library.install_aliases()
 
 __title__ = 'uncategorized'
@@ -42,14 +44,11 @@ __status__ = 'Development'
 # THE SOFTWARE.
 ###
 
-from hpOneView.common import *
-from hpOneView.connection import *
-from hpOneView.activity import *
-from hpOneView.exceptions import *
+from hpOneView.common import uri
+from hpOneView.activity import activity
 
 
 class uncategorized(object):
-
     def __init__(self, con):
         self._con = con
         self._activity = activity(con)
