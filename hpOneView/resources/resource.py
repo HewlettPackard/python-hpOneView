@@ -111,10 +111,13 @@ class ResourceClient(object):
         return task
 
     def create(self, options, blocking=True, verbose=False):
-        self._connection.post(self._uri, options)
-        task, entity = self._activity.make_task_entity_tuple(self._connection)
+        task, entity = self._connection.post(self._uri, options)
 
         if blocking:
-            self._activity.wait4task(task, verbose=verbose)
+            task = self._activity.wait4task(task, tout=60, verbose=verbose)
+            if 'type' in task and task['type'].startswith('Task'):
+                resource = self._activity.get_task_associated_resource(task)
+                entity = self._connection.get(resource['resourceUri'])
+                return entity
 
-        return entity
+        return task
