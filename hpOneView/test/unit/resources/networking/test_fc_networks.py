@@ -30,6 +30,7 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class FcNetworksTest(unittest.TestCase):
+
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -46,7 +47,7 @@ class FcNetworksTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'create')
     def test_create_should_use_given_values(self, mock_create):
-        options = {
+        resource = {
             'name': 'OneViewSDK Test FC Network',
             'autoLoginRedistribution': False,
             'type': 'fc-networkV2',
@@ -55,15 +56,15 @@ class FcNetworksTest(unittest.TestCase):
         }
         mock_create.return_value = {}
 
-        self._fc_networks.create(options, False)
-        mock_create.assert_called_once_with(options, False)
+        self._fc_networks.create(resource, False)
+        mock_create.assert_called_once_with(resource, False)
 
     @mock.patch.object(ResourceClient, 'create')
     def test_create_should_use_default_values(self, mock_create):
-        options = {
+        resource = {
             'name': 'OneViewSDK Test FC Network',
         }
-        options_with_defaults = {
+        resource_with_default_values = {
             'name': 'OneViewSDK Test FC Network',
             'autoLoginRedistribution': False,
             'type': 'fc-networkV2',
@@ -72,13 +73,13 @@ class FcNetworksTest(unittest.TestCase):
         }
         mock_create.return_value = {}
 
-        self._fc_networks.create(options)
+        self._fc_networks.create(resource)
 
-        mock_create.assert_called_once_with(options_with_defaults, True)
+        mock_create.assert_called_once_with(resource_with_default_values, True)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_should_use_given_values(self, mock_update):
-        options = {
+        resource = {
             'name': 'OneViewSDK Test FC Network',
             'autoLoginRedistribution': False,
             'type': 'fc-networkV2',
@@ -88,16 +89,16 @@ class FcNetworksTest(unittest.TestCase):
         }
         mock_update.return_value = {}
 
-        self._fc_networks.update(options, False)
-        mock_update.assert_called_once_with(options, False)
+        self._fc_networks.update(resource, False)
+        mock_update.assert_called_once_with(resource, False)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_should_use_default_values(self, mock_update):
-        options = {
+        resource = {
             'name': 'OneViewSDK Test FC Network',
             'uri': 'a_uri',
         }
-        options_with_defaults = {
+        resource_with_default_values = {
             'name': 'OneViewSDK Test FC Network',
             'autoLoginRedistribution': False,
             'type': 'fc-networkV2',
@@ -107,12 +108,13 @@ class FcNetworksTest(unittest.TestCase):
         }
         mock_update.return_value = {}
 
-        self._fc_networks.update(options)
+        self._fc_networks.update(resource)
 
-        mock_update.assert_called_once_with(options_with_defaults, True)
+        mock_update.assert_called_once_with(resource_with_default_values, True)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):
+
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         self._fc_networks.delete(id, force=False, blocking=True)
 
