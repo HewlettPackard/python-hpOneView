@@ -30,7 +30,6 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class FcNetworksTest(unittest.TestCase):
-
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -114,8 +113,13 @@ class FcNetworksTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):
-
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         self._fc_networks.delete(id, force=False, blocking=True)
 
         mock_delete.assert_called_once_with(id, force=False, blocking=True)
+
+    @mock.patch.object(ResourceClient, 'get_by')
+    def test_get_by_called_once(self, mock_get_by):
+        self._fc_networks.get_by('name', 'MyFibreNetwork')
+
+        mock_get_by.assert_called_once_with('name', 'MyFibreNetwork')

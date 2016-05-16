@@ -77,7 +77,7 @@ class FcNetworks(object):
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
-    def delete(self, instance, force=False, blocking=True):
+    def delete(self, resource, force=False, blocking=True):
         """
         Deletes a Fibre Channel network.
         Any deployed connections that are using the network are placed in the 'Failed' state.
@@ -93,7 +93,7 @@ class FcNetworks(object):
         Returns: task
 
         """
-        return self._client.delete(instance, force=force, blocking=blocking)
+        return self._client.delete(resource, force=force, blocking=blocking)
 
     def get(self, id):
         return self._client.get(id)
@@ -127,3 +127,16 @@ class FcNetworks(object):
         """
         options.update(self.__default_values)
         return self._client.update(options, blocking)
+
+    def get_by(self, field, value):
+        """
+        This function uses get_all passing a filter
+        The search is case insensitive
+        Args:
+            field: field name to filter
+            value: value to filte
+
+        Returns: dict
+
+        """
+        return self._client.get_by(field, value)
