@@ -26,3 +26,7 @@ pprint(fc_nets_sorted)
 # Gets the second record
 fc_nets_limited = oneview_client.fc_networks.get_all(1, 1)
 pprint(fc_nets_limited)
+
+# Get and delete the second record
+network_to_delete = oneview_client.fc_networks.get_all(1, 1)
+oneview_client.fc_networks.delete(network_to_delete[0])

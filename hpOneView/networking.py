@@ -492,10 +492,12 @@ class networking(object):
         return self._activity.make_task_entity_tuple(task)
 
     def delete_network(self, xnet, blocking=True, verbose=False):
-        task, body = self._con.delete(xnet['uri'])
-        if blocking is True:
-            task = self._activity.wait4task(task, verbose=verbose)
-        return task
+        """
+        Deprecated function, use: OneVieClient(config).fc_networks.delete()
+        Returns: dict
+
+        """
+        return self.__fc_networks.delete(xnet, force=False, blocking=blocking)
 
     def get_enet_networks(self):
         # TODO remove the evil use/hack of the large count default. The OneView

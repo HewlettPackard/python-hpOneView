@@ -67,10 +67,10 @@ class ResourceTest(unittest.TestCase):
         mock_delete.return_value = task, body
         mock_wait4task.return_value = task
 
-        delete_task = self.resource_client.delete('1', True, True)
+        delete_task = self.resource_client.delete('1', force=True, blocking=True, verbose=True)
 
         self.assertEqual(task, delete_task)
-        mock_delete.assert_called_once_with(self.URI + "/1")
+        mock_delete.assert_called_once_with(self.URI + "/1?force=True")
 
     @mock.patch.object(connection, 'delete')
     @mock.patch.object(activity, 'wait4task')

@@ -48,29 +48,15 @@ from hpOneView.resources.data_services.metrics import Metrics
 
 
 class OneViewClient(object):
-    def __init__(self, config, con=None):
+    def __init__(self, config):
         self.__config = config
-
-        if con:
-            self.__connection = con
-        else:
-            self.__connection = connection(config["ip"])
-            self.__set_proxy(config)
-            self.__connection.login(config["credentials"])
-
+        self.__connection = connection(config["ip"])
+        self.__set_proxy(config)
+        self.__connection.login(config["credentials"])
         self.__fc_networks = None
         self.__interconnects = None
         self.__metrics = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
-
-    @classmethod
-    def from_connection(cls, connection):
-        return cls(None, connection)
-
-    @classmethod
-    def from_json_file(cls, json_file):
-        # TODO: Implement like from_connection
-        raise NotImplementedError()
 
     def __set_proxy(self, config):
         """
