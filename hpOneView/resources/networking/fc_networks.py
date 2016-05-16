@@ -77,8 +77,23 @@ class FcNetworks(object):
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
-    def delete(self, instance):
-        return self._client.delete(instance)
+    def delete(self, instance, force=False, blocking=True):
+        """
+        Deletes a Fibre Channel network.
+        Any deployed connections that are using the network are placed in the 'Failed' state.
+
+        Args:
+            instance: dict object to delete
+            force:
+                 If set to true the operation completes despite any problems with
+                 network connectivity or errors on the resource itself. The default is false.
+            blocking:
+                Wait task completion
+
+        Returns: task
+
+        """
+        return self._client.delete(instance, force=force, blocking=blocking)
 
     def get(self, id):
         return self._client.get(id)

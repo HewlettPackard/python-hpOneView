@@ -78,7 +78,7 @@ class ResourceClient(object):
         uri = "{0}?start={1}&count={2}{3}{4}{5}{6}".format(self._uri, start, count, filter, query, sort, view)
         return self.get_members(uri)
 
-    def delete(self, obj, blocking=True, verbose=False):
+    def delete(self, obj, force=False, blocking=True, verbose=False, timeout=60):
         if isinstance(obj, dict):
             if 'uri' in obj and obj['uri']:
                 uri = obj['uri']
@@ -87,9 +87,13 @@ class ResourceClient(object):
         else:
             uri = self._uri + "/" + obj
 
+        if force:
+            uri += '?force=True'
+
         task, body = self._connection.delete(uri)
         if blocking:
-            task = self._activity.wait4task(task, verbose=verbose)
+            task = self._activity.wait4task(task, tout=timeout, verbose=verbose)
+
         return task
 
     def get_schema(self):
