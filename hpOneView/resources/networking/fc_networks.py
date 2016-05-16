@@ -98,6 +98,6 @@ class FcNetworks(object):
     def get(self, id):
         return self._client.get(id)
 
-    def create(self, dict):
-        dict.update(self.__default_values)
-        return self._client.create(dict)
+    def create(self, options, blocking=True, verbose=False):
+        options.update(self.__default_values)
+        return self._client.create(options, blocking, verbose)

@@ -56,8 +56,8 @@ class FcNetworksTest(unittest.TestCase):
         }
         mock_create.return_value = {}
 
-        self._fc_networks.create(options)
-        mock_create.assert_called_once_with(options)
+        self._fc_networks.create(options, False, False)
+        mock_create.assert_called_once_with(options, False, False)
 
     @mock.patch.object(ResourceClient, 'create')
     def test_create_should_use_default_values(self, mock_create):
@@ -74,7 +74,8 @@ class FcNetworksTest(unittest.TestCase):
         mock_create.return_value = {}
 
         self._fc_networks.create(options)
-        mock_create.assert_called_once_with(options_with_defaults)
+
+        mock_create.assert_called_once_with(options_with_defaults, True, False)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):
@@ -82,4 +83,4 @@ class FcNetworksTest(unittest.TestCase):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         self._fc_networks.delete(id, force=False, blocking=True )
 
-        mock_delete.assert_called_once_with(id, force=False, blocking=True )
+        mock_delete.assert_called_once_with(id, force=False, blocking=True)

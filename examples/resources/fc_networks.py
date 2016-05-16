@@ -3,13 +3,25 @@
 from pprint import pprint
 from hpOneView.oneview_client import OneViewClient
 
-config = {"ip": "172.16.102.59",
-          "credentials": {
-              "authLoginDomain": "",
-              "userName": "administrator",
-              "password": ""}}
+config = {
+    "ip": "172.16.102.59",
+    "credentials": {
+        "authLoginDomain": "",
+        "userName": "administrator",
+        "password": ""
+    }
+}
 
+options = {
+    "name": "OneViewSDK Test FC Network 18",
+    "connectionTemplateUri": None,
+    "autoLoginRedistribution": True,
+    "fabricType": "FabricAttach",
+}
 oneview_client = OneViewClient(config)
+
+fc_network = oneview_client.fc_networks.create(options)
+print "Created fc-network '%s' sucessfully.\n  uri = '%s'"  % (fc_network['name'], fc_network['uri'])
 
 # Get all, with defaults
 fc_nets = oneview_client.fc_networks.get_all()
