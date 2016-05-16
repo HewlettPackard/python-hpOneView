@@ -129,16 +129,14 @@ class ResourceTest(unittest.TestCase):
         dict_to_create = {
             "resource_name": "a name",
         }
-        mock_post.return_value = {}
-        mock_make_task_entity_tuple.return_value = {}, {}
+        mock_post.return_value = {}, {}
 
-        self.resource_client.create(dict_to_create, False, False)
+        self.resource_client.create(dict_to_create, False)
 
         mock_post.assert_called_once_with(self.URI, dict_to_create)
 
     @mock.patch.object(connection, 'post')
-    @mock.patch.object(activity, 'make_task_entity_tuple')
-    def test_create_return_created_resource(self, mock_make_task_entity_tuple, mock_post):
+    def test_create_return_task_when_not_blocking(self, mock_post):
         dict_to_create = {
             "resource_name": "a name",
         }
@@ -148,10 +146,33 @@ class ResourceTest(unittest.TestCase):
         }
         task = {"task": "task"}
 
-        mock_post.return_value = task
-        mock_make_task_entity_tuple.return_value = task, created_resource
+        mock_post.return_value = task, created_resource
 
-        result = self.resource_client.create(dict_to_create, False, False)
+        result = self.resource_client.create(dict_to_create, False)
+
+        self.assertEqual(result, task)
+
+    @mock.patch.object(connection, 'post')
+    @mock.patch.object(connection, 'get')
+    @mock.patch.object(activity, 'wait4task')
+    @mock.patch.object(activity, 'get_task_associated_resource')
+    def test_create_return_entity_when_blocking(self, mock_get_task_associated_resource, mock_wait4task,
+                                                mock_get, mock_post):
+        dict_to_create = {
+            "resource_name": "a name",
+        }
+        created_resource = {
+            "resource_id": "123",
+            "resource_name": "a name",
+        }
+        task = {"task": "task"}
+
+        mock_post.return_value = task, {}
+        mock_wait4task.return_value = {"type": "TaskBlaBla"}
+        mock_get_task_associated_resource.return_value = {"resourceUri": self.URI + "path/ID"}
+        mock_get.return_value = created_resource
+
+        result = self.resource_client.create(dict_to_create, True)
 
         self.assertEqual(result, created_resource)
 
@@ -160,20 +181,20 @@ class ResourceTest(unittest.TestCase):
     @mock.patch.object(activity, 'make_task_entity_tuple')
     def test_wait_for_activity_on_create(self, mock_make_task_entity_tuple, mock_wait4task, mock_post):
         task = {"task": "task"}
-        mock_post.return_value = {}
+        mock_post.return_value = task, {}
         mock_make_task_entity_tuple.return_value = task, {}
         mock_wait4task.return_value = task
 
         self.resource_client.create({}, True)
 
-        mock_wait4task.assert_called_once_with({"task": "task"}, verbose=False)
+        mock_wait4task.assert_called_once_with({"task": "task"}, tout=60, verbose=False)
 
     @mock.patch.object(connection, 'post')
     @mock.patch.object(activity, 'wait4task')
     @mock.patch.object(activity, 'make_task_entity_tuple')
     def test_not_wait_for_activity_on_create(self, mock_make_task_entity_tuple, mock_wait4task, mock_post):
         task = {"task": "task"}
-        mock_post.return_value = {}
+        mock_post.return_value = task, {}
         mock_make_task_entity_tuple.return_value = task, {}
         mock_wait4task.return_value = task
 
