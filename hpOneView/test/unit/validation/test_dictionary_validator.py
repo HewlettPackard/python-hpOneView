@@ -16,7 +16,7 @@ class DictionaryValidatorTest(TestCase):
     def test_should_not_raise_exception_when_all_requireds_are_present(self):
         dictionary = {
             "source": {
-                "name": "Teste"
+                "name": "Test"
             },
             "id": 1
         }
@@ -27,7 +27,7 @@ class DictionaryValidatorTest(TestCase):
         dictionary = {
             "index": "value"
         }
-        expected_error_message = 'Inform all required fileds. Missing: source.name; id;'
+        expected_error_message = 'Inform all required fields. Missing: source.name; id;'
         try:
             self.fakeResource.method_test(dictionary)
         except ValueError as e:

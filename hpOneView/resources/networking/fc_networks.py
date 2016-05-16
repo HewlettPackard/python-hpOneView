@@ -98,6 +98,32 @@ class FcNetworks(object):
     def get(self, id):
         return self._client.get(id)
 
-    def create(self, options, blocking=True, verbose=False):
+    def create(self, options, blocking=True):
+        """
+        Creates a Fibre Channel network.
+
+        Args:
+            options: dict object to create
+            blocking:
+                Wait task completion
+
+        Returns: task
+
+        """
         options.update(self.__default_values)
-        return self._client.create(options, blocking, verbose)
+        return self._client.create(options, blocking)
+
+    def update(self, options, blocking=True):
+        """
+        Updates a Fibre Channel network.
+
+        Args:
+            options: dict object to update
+            blocking:
+                Wait task completion
+
+        Returns: task
+
+        """
+        options.update(self.__default_values)
+        return self._client.update(options, blocking)

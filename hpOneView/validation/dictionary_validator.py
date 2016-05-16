@@ -12,17 +12,17 @@ class RequiredFields:
             pass
     """
 
-    def __init__(self, *requireds):
-        self.__requireds = requireds
+    def __init__(self, *required_fields):
+        self.__required_fields = required_fields
 
     def __call__(self, obj):
         def wrap(class_instance, dictionary):
             missing = []
-            for req in self.__requireds:
+            for req in self.__required_fields:
                 if not get_dict_property(dictionary, req):
                     missing.append(req)
             if missing:
-                message = "Inform all required fileds. Missing: " + (' '.join([str(i) + ';' for i in missing]))
+                message = "Inform all required fields. Missing: " + (' '.join([str(i) + ';' for i in missing]))
                 raise ValueError(message)
 
         return wrap

@@ -102,22 +102,21 @@ class ResourceClient(object):
     def get(self, id):
         return self._connection.get(self._uri + '/' + id)
 
-    def update(self, id, dict, blocking=True, verbose=False, timeout=60):
-        # TODO: Create uri suffix
-        # TODO: Verify extract uri from dict
-        task, body = self._connection.put(self._uri + '/' + id, dict)
+    def update(self, options, blocking=True):
+        task, body = self._connection.put(options['uri'], options)
         if blocking:
-            task = self._activity.wait4task(task, tout=timeout, verbose=verbose)
+            return self.__wait_for_task(task, 60)
         return task
 
-    def create(self, options, blocking=True, verbose=False):
+    def create(self, options, blocking=True):
         task, entity = self._connection.post(self._uri, options)
-
         if blocking:
-            task = self._activity.wait4task(task, tout=60, verbose=verbose)
-            if 'type' in task and task['type'].startswith('Task'):
-                resource = self._activity.get_task_associated_resource(task)
-                entity = self._connection.get(resource['resourceUri'])
-                return entity
-
+            return self.__wait_for_task(task, 60)
         return task
+
+    def __wait_for_task(self, task, tout=60):
+        task = self._activity.wait4task(task, tout=tout, verbose=False)
+        if 'type' in task and task['type'].startswith('Task'):
+            resource = self._activity.get_task_associated_resource(task)
+            entity = self._connection.get(resource['resourceUri'])
+            return entity
