@@ -1,0 +1,8 @@
+language: python
+python:
+  - 2.7
+install:
+  - touch hpOneView/test/__init__.py hpOneView/test/unit/__init__.py
+  - pip install tox
+script:
+  - tox -- --exit-zero --statistics --count
