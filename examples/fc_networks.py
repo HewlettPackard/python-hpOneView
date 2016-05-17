@@ -20,39 +20,40 @@ options = {
 }
 oneview_client = OneViewClient(config)
 
-# Creates a FC Network
+# Create a FC Network
 fc_network = oneview_client.fc_networks.create(options)
 print("Created fc-network '%s' sucessfully.\n  uri = '%s'" % (fc_network['name'], fc_network['uri']))
 
-# Updates the created network
+# Find recently created network by name
+fc_network = oneview_client.fc_networks.get_by('name', 'OneViewSDK Test FC Network')[0]
+print("Found fc-network by name: '%s'.\n  uri = '%s'" % (fc_network['name'], fc_network['uri']))
+
+# Update autoLoginRedistribution from recently created network
 fc_network['autoLoginRedistribution'] = False
 fc_network = oneview_client.fc_networks.update(fc_network)
-print("Updated fc-network '%s' sucessfully.\n  uri = '%s' \n  with attribute {'autoLoginRedistribution': %s}" \
-      % (fc_network['name'], fc_network['uri'], fc_network['autoLoginRedistribution']))
+print("Updated fc-network '%s' sucessfully.\n  uri = '%s'" % (fc_network['name'], fc_network['uri']))
+print("  with attribute {'autoLoginRedistribution': %s}" % fc_network['autoLoginRedistribution'])
 
 # Get all, with defaults
+print("Get all fc-networks")
 fc_nets = oneview_client.fc_networks.get_all()
 pprint(fc_nets)
 
 # Filter by name
-fc_nets_filtered = oneview_client.fc_networks.get_all(filter='name="MyFibreNetwork"')
+print("Get all fc-networks filtering by name")
+fc_nets_filtered = oneview_client.fc_networks.get_all(filter="\"'name'='OneViewSDK Test FC Network'\"")
 pprint(fc_nets_filtered)
 
-# Sort by name descending
+# Get all sorting by name descending
+print("Get all fc-networks sorting by name")
 fc_nets_sorted = oneview_client.fc_networks.get_all(sort='name:descending')
 pprint(fc_nets_sorted)
 
-# Gets the second record
-fc_nets_limited = oneview_client.fc_networks.get_all(1, 1)
+# Get the first 10 records
+print("Get the first ten fc-networks")
+fc_nets_limited = oneview_client.fc_networks.get_all(0, 10)
 pprint(fc_nets_limited)
 
-# Gets by example
-fc_nets_gotby = oneview_client.fc_networks.get_by('name', 'OneViewSDK "Test FC Network')
-pprint(fc_nets_gotby)
-
-# Get by Id
-fc_nets_byid = oneview_client.fc_networks.get('3518be0e-17c1-4189-8f81-83f3724f6155')
-pprint(fc_nets_byid)
-
-# Deletes the created network
+# Delete the created network
 oneview_client.fc_networks.delete(fc_network)
+print("Sucessfully deleted fc-network")

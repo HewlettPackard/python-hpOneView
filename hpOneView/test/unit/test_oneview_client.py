@@ -54,7 +54,7 @@ class OneViewClientTest(unittest.TestCase):
                       "password": ""}}
 
         try:
-            ov = OneViewClient(config)
+            OneViewClient(config)
         except ValueError as e:
             self.assertTrue("Proxy" in e.args[0])
         else:
