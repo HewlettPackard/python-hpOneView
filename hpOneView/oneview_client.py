@@ -48,6 +48,7 @@ from hpOneView.resources.data_services.metrics import Metrics
 
 
 class OneViewClient(object):
+
     def __init__(self, config):
         self.__config = config
         self.__connection = connection(config["ip"])

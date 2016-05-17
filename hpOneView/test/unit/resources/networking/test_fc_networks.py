@@ -122,6 +122,12 @@ class FcNetworksTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'get_by')
     def test_get_by_called_once(self, mock_get_by):
-        self._fc_networks.get_by('name', 'MyFibreNetwork')
+        self._fc_networks.get_by('name', 'OneViewSDK "Test FC Network')
 
-        mock_get_by.assert_called_once_with('name', 'MyFibreNetwork')
+        mock_get_by.assert_called_once_with('name', 'OneViewSDK "Test FC Network')
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_called_once(self, mock_get):
+        self._fc_networks.get('3518be0e-17c1-4189-8f81-83f3724f6155')
+
+        mock_get.assert_called_once_with('3518be0e-17c1-4189-8f81-83f3724f6155')
