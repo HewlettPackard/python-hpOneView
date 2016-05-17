@@ -52,7 +52,7 @@ class FcNetworks(object):
             'fabricType': 'FabricAttach',
         }
 
-    def get_all(self, start=0, count=9999999, filter='', sort=''):
+    def get_all(self, start=0, count=-1, filter='', sort=''):
         """
         Gets a paginated collection of Fibre Channel networks. The collection is based on optional sorting and filtering, and constrained by start and count parameters.
 
