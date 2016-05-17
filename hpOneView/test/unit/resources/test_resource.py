@@ -41,15 +41,14 @@ class ResourceTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'get_members')
     def test_get_all_called_once(self, mock_get_members):
-        filter = 'name=TestName'
+        filter = "'name'='OneViewSDK \"Test FC Network'"
         sort = 'name:ascending'
         query = "name NE 'WrongName'"
         view = '"{view-name}"'
         self.resource_client.get_all(1, 500, filter, query, sort, view)
 
         uri = self.URI
-        uri += '?start=1&count=500&filter=name=TestName&query=name NE \'WrongName\'&sort=name:ascending&view="{view-name}"'
-
+        uri += '?start=1&count=500&filter=%27name%27%3D%27OneViewSDK%20%22Test%20FC%20Network%27&query=name%20NE%20%27WrongName%27&sort=name%3Aascending&view=%22%7Bview-name%7D%22'
         mock_get_members.assert_called_once_with(uri)
 
     @mock.patch.object(ResourceClient, 'get_members')
@@ -107,6 +106,11 @@ class ResourceTest(unittest.TestCase):
     def test_get_by_id_uri(self, mock_get):
         self.resource_client.get('12345')
         mock_get.assert_called_once_with(self.URI + "/12345")
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_by_uri(self, mock_get_all):
+        self.resource_client.get_by('name', 'MyFibreNetwork')
+        mock_get_all.assert_called_once_with(filter="\"'name'='MyFibreNetwork'\"")
 
     @mock.patch.object(connection, 'put')
     @mock.patch.object(activity, 'wait4task')
