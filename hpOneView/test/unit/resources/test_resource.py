@@ -54,7 +54,7 @@ class ResourceTest(unittest.TestCase):
     @mock.patch.object(ResourceClient, 'get_members')
     def test_get_all_with_defaults(self, mock_get_members):
         self.resource_client.get_all()
-        uri = self.URI + "?start=0&count=9999999"
+        uri = self.URI + "?start=0&count=-1"
         mock_get_members.assert_called_once_with(uri)
 
     @mock.patch.object(connection, 'delete')

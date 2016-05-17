@@ -29,5 +29,6 @@ setup(name='hpOneView',
       url='http://hp.com/go/OneViewCommunity',
       author='Hewlett Packard Enterprise Development LP',
       license='MIT',
-      packages=['hpOneView'],
+      packages=['hpOneView', 'hpOneView/resources', 'hpOneView/resources/data_services',
+                'hpOneView/resources/networking'],
       install_requires=['future>=0.15.2'])

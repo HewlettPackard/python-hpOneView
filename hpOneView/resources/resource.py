@@ -56,7 +56,7 @@ class ResourceClient(object):
         # TODO: common is deprecated, refactor get_members implementation
         return get_members(self._connection.get(uri))
 
-    def get_all(self, start=0, count=9999999, filter='', query='', sort='', view=''):
+    def get_all(self, start=0, count=-1, filter='', query='', sort='', view=''):
         """
         the use of optional parameters are described here:
         http://h17007.www1.hpe.com/docs/enterprise/servers/oneview2.0/cic-api/en/api-docs/current/index.html
