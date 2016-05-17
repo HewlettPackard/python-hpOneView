@@ -54,6 +54,11 @@ print("Get the first ten fc-networks")
 fc_nets_limited = oneview_client.fc_networks.get_all(0, 10)
 pprint(fc_nets_limited)
 
+# Get by Id
+print("Get a fc-network by id")
+fc_nets_byid = oneview_client.fc_networks.get('3518be0e-17c1-4189-8f81-83f3724f6155')
+pprint(fc_nets_byid)
+
 # Delete the created network
 oneview_client.fc_networks.delete(fc_network)
 print("Sucessfully deleted fc-network")

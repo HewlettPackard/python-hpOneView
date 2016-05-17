@@ -36,7 +36,7 @@ __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
 __license__ = 'MIT'
 __status__ = 'Development'
 
-import urllib
+from urllib.parse import quote
 from hpOneView.common import get_members
 from hpOneView.activity import activity
 from hpOneView.exceptions import HPOneViewUnknownType
@@ -68,16 +68,16 @@ class ResourceClient(object):
 
         """
         if filter:
-            filter = "&filter=" + urllib.quote(filter)
+            filter = "&filter=" + quote(filter)
 
         if query:
-            query = "&query=" + urllib.quote(query)
+            query = "&query=" + quote(query)
 
         if sort:
-            sort = "&sort=" + urllib.quote(sort)
+            sort = "&sort=" + quote(sort)
 
         if view:
-            view = "&view=" + urllib.quote(view)
+            view = "&view=" + quote(view)
 
         uri = "{0}?start={1}&count={2}{3}{4}{5}{6}".format(self._uri, start, count, filter, query, sort, view)
         return self.get_members(uri)
