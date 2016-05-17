@@ -20,16 +20,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 ###
+import json
 import unittest
 
 import mock
 
 import hpOneView.profile as profile
 from hpOneView.connection import connection
+from hpOneView.exceptions import HPOneViewInvalidResource
 from hpOneView.servers import servers
 from hpOneView.settings import settings
 from hpOneView.test.test_utils import mock_builtin
-import json
 
 
 class ProfilesTest(unittest.TestCase):
@@ -68,9 +69,14 @@ class ProfilesTest(unittest.TestCase):
         # return the FW response when get_spps() is called
         mock_get_spps.return_value = [fw_driver]
 
-        with self.assertRaises(SystemExit) as ex:
+        try:
             self.profile.make_firmware_dict(settings, baseline)
-        self.assertIsNotNone(ex.exception)
+        except HPOneViewInvalidResource as hp_exception:
+            self.assertEqual(hp_exception.args[0], 'ERROR: Locating Firmware Baseline SPP\n Baseline: '
+                                                   '"SPP20160201_2015_1204_63.iso" can not be located')
+        else:
+            self.fail("Expected Exception")
+
 
     # TODO local storage is not working
     # https://github.com/HewlettPackard/python-hpOneView/issues/28
@@ -82,18 +88,23 @@ class ProfilesTest(unittest.TestCase):
 
     def test_make_local_storage_with_dl(self):
         sht = self.build_dl_sht()
-        with self.assertRaises(SystemExit) as ex:
-            self.profile.make_local_storage_dict(
-                sht, 'RAID0', False, False, 2)
-        self.assertIsNotNone(ex.exception)
+        try:
+            self.profile.make_local_storage_dict(sht, 'RAID0', False, False, 2)
+        except HPOneViewInvalidResource as hp_exception:
+            self.assertEqual(hp_exception.args[0], 'Local storage management is not supported on DL servers')
+        else:
+            self.fail("Expected Exception")
+
 
     def test_make_local_storage_no_model(self):
         sht = self.build_gen8_bl_sht()
         sht.pop('model', None)
-        with self.assertRaises(SystemExit) as ex:
-            self.profile.make_local_storage_dict(
-                sht, 'RAID0', False, False, 2)
-        self.assertIsNotNone(ex.exception)
+        try:
+            self.profile.make_local_storage_dict(sht, 'RAID0', False, False, 2)
+        except HPOneViewInvalidResource as hp_exception:
+            self.assertEqual(hp_exception.args[0], 'Error, can not retrieve server model')
+        else:
+            self.fail("Expected Exception")
 
     def test_make_boot_gen8_bl(self):
         sht = self.build_gen8_bl_sht()
@@ -107,10 +118,12 @@ class ProfilesTest(unittest.TestCase):
     def test_make_boot_gen8_bl_disable_boot(self):
         sht = self.build_gen8_bl_sht()
         boot_order = []
-        with self.assertRaises(SystemExit) as ex:
-            self.profile.make_boot_settings_dict(
-                servers, sht, True, boot_order, 'BIOS', 'Auto')
-        self.assertIsNotNone(ex.exception)
+        try:
+            self.profile.make_boot_settings_dict(servers, sht, True, boot_order, 'BIOS', 'Auto')
+        except HPOneViewInvalidResource as hp_exception:
+            self.assertEqual(hp_exception.args[0], 'Error: bootMode cannot be disabled on BL servers')
+        else:
+            self.fail("Expected Exception")
 
     def test_make_boot_gen9_bl(self):
         sht = self.build_gen9_bl_sht()
@@ -125,18 +138,24 @@ class ProfilesTest(unittest.TestCase):
     def test_make_boot_gen9_bl_missing_order_options(self):
         sht = self.build_gen9_bl_sht()
         boot_order = ['CD', 'USB', 'HardDisk']
-        with self.assertRaises(SystemExit) as ex:
-            self.profile.make_boot_settings_dict(
-                servers, sht, False, boot_order, 'UEFI', 'Auto')
-        self.assertIsNotNone(ex.exception)
+        try:
+            self.profile.make_boot_settings_dict(servers, sht, False, boot_order, 'UEFI', 'Auto')
+        except HPOneViewInvalidResource as hp_exception:
+            self.assertEqual(hp_exception.args[0], 'Error: All supported boot options are required. The supported '
+                                                   'options are: CD; USB; HardDisk; PXE')
+        else:
+            self.fail("Expected Exception")
 
     def test_make_boot_gen9_bl_mismatch_order_options(self):
         sht = self.build_gen9_bl_sht()
         boot_order = ['CD', 'USB', 'HardDisk', 'Floppy']
-        with self.assertRaises(SystemExit) as ex:
-            self.profile.make_boot_settings_dict(
-                servers, sht, False, boot_order, 'UEFI', 'Auto')
-        self.assertIsNotNone(ex.exception)
+        try:
+            self.profile.make_boot_settings_dict(servers, sht, False, boot_order, 'UEFI', 'Auto')
+        except HPOneViewInvalidResource as hp_exception:
+            self.assertEqual(hp_exception.args[0], 'Error: "Floppy" are not supported boot options for this server '
+                                                   'hardware type. The supported options are: CD; USB; HardDisk; PXE')
+        else:
+            self.fail("Expected Exception")
 
     @mock.patch(mock_builtin('open'))
     def test_make_bios(self, mock_open):
@@ -164,8 +183,12 @@ class ProfilesTest(unittest.TestCase):
         mock_file = mock.Mock()
         mock_file.read.return_value = 'adfadsf'
         mock_open.return_value = mock_file
-        self.assertRaises(
-            ValueError, self.profile.make_bios_dict(filename), 2)
+        try:
+            self.profile.make_bios_dict(filename)
+        except ValueError as value_error:
+            self.assertEqual(value_error.args[0], "Error: Cannot parse BIOS JSON file. JSON must be well-formed.")
+        else:
+            self.fail("Expected Exception")
 
     # helper functions
     def build_dl_sht(self):
