@@ -36,6 +36,7 @@ __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
 __license__ = 'MIT'
 __status__ = 'Development'
 
+import urllib
 from hpOneView.common import get_members
 from hpOneView.activity import activity
 from hpOneView.exceptions import HPOneViewUnknownType
@@ -60,20 +61,23 @@ class ResourceClient(object):
         the use of optional parameters are described here:
         http://h17007.www1.hpe.com/docs/enterprise/servers/oneview2.0/cic-api/en/api-docs/current/index.html
 
+        Known issues:
+            - Pass "'" inside a parameter is not supported by One View API
+
         Returns: a dictionary with requested data
 
         """
         if filter:
-            filter = "&filter=" + filter
+            filter = "&filter=" + urllib.quote(filter)
 
         if query:
-            query = "&query=" + query
+            query = "&query=" + urllib.quote(query)
 
         if sort:
-            sort = "&sort=" + sort
+            sort = "&sort=" + urllib.quote(sort)
 
         if view:
-            view = "&view=" + view
+            view = "&view=" + urllib.quote(view)
 
         uri = "{0}?start={1}&count={2}{3}{4}{5}{6}".format(self._uri, start, count, filter, query, sort, view)
         return self.get_members(uri)

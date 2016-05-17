@@ -96,6 +96,13 @@ class FcNetworks(object):
         return self._client.delete(resource, force=force, blocking=blocking)
 
     def get(self, id):
+        """
+        Gets the Fibre Channel network with the specified ID
+        Args:
+            id: ID of Fibre Channel network
+
+        Returns: dict
+        """
         return self._client.get(id)
 
     def create(self, resource, blocking=True):
@@ -134,7 +141,7 @@ class FcNetworks(object):
         The search is case insensitive
         Args:
             field: field name to filter
-            value: value to filte
+            value: value to filter
 
         Returns: dict
 
