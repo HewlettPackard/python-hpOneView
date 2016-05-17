@@ -427,7 +427,10 @@ class networking(object):
                           linkStabilityTime=30, managedSanUri=None,
                           typicalBandwidth=2500, maximumBandwidth=10000,
                           blocking=True, verbose=False):
-        """ Create a Fibre Channel Network
+        """
+        Deprecated function, use: OneViewClient(config).fc_networks.create()
+
+        Create a Fibre Channel Network
 
           Args:
             name:
@@ -493,7 +496,7 @@ class networking(object):
 
     def delete_network(self, xnet, blocking=True, verbose=False):
         """
-        Deprecated function, use: OneVieClient(config).fc_networks.delete()
+        Deprecated function, use: OneViewClient(config).fc_networks.delete()
         Returns: dict
 
         """
@@ -508,7 +511,7 @@ class networking(object):
 
     def get_fc_networks(self):
         """
-        Deprecated function, use: OneVieClient(config).fc_networks.get_all()
+        Deprecated function, use: OneViewClient(config).fc_networks.get_all()
         Returns: dict
 
         """

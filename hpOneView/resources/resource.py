@@ -131,7 +131,7 @@ class ResourceClient(object):
         The search is case insensitive
         Args:
             field: field name to filter
-            value: value to filte
+            value: value to filter
 
         Returns: dict
 
