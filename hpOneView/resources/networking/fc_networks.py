@@ -137,8 +137,9 @@ class FcNetworks(object):
 
     def get_by(self, field, value):
         """
-        This function uses get_all passing a filter
+        Get all Fibre Channel networks that matches the filter
         The search is case insensitive
+
         Args:
             field: field name to filter
             value: value to filter
