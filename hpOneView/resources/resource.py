@@ -83,6 +83,10 @@ class ResourceClient(object):
         return self.get_members(uri)
 
     def delete(self, resource, force=False, blocking=True, verbose=False, timeout=60):
+
+        if not resource:
+            raise ValueError('Resource was not provided')
+
         if isinstance(resource, dict):
             if 'uri' in resource and resource['uri']:
                 uri = resource['uri']
