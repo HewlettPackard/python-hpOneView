@@ -32,7 +32,7 @@ def get_dict_property(_dict, property):
         k = keys[key]
         if k in _dict:
             _dict = _dict[k]
-        elif type(_dict) is list and __list_has_index(_dict, k):
+        elif type(_dict) is list and list_has_index(_dict, k):
             list_key = int(k)
             _dict = _dict[list_key]
         else:
@@ -48,5 +48,7 @@ def __get_property_dict_parts(property):
     return keys
 
 
-def __list_has_index(list, index):
+def list_has_index(list, index):
+    if int(index) < 0:
+        index = abs(index + 1)
     return int(index) < len(list)

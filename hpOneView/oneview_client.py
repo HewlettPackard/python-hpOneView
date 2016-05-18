@@ -46,9 +46,10 @@ from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.data_services.metrics import Metrics
 
-
+from hpOneView.validators import RequiredFields
 class OneViewClient(object):
 
+    @RequiredFields("ip", "credentials")
     def __init__(self, config):
         self.__config = config
         self.__connection = connection(config["ip"])
