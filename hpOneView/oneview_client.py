@@ -43,12 +43,11 @@ __status__ = 'Development'
 
 from hpOneView.connection import connection
 from hpOneView.resources.networking.fc_networks import FcNetworks
-from hpOneView.resources.networking.interconnects import Interconnects
-from hpOneView.resources.data_services.metrics import Metrics
 
 from hpOneView.validators import RequiredFields
-class OneViewClient(object):
 
+
+class OneViewClient(object):
     @RequiredFields("ip", "credentials")
     def __init__(self, config):
         self.__config = config
@@ -84,15 +83,3 @@ class OneViewClient(object):
         if not self.__fc_networks:
             self.__fc_networks = FcNetworks(self.__connection)
         return self.__fc_networks
-
-    @property
-    def interconnects(self):
-        if not self.__interconnects:
-            self.__interconnects = Interconnects(self.__connection)
-        return self.__interconnects
-
-    @property
-    def metrics(self):
-        if not self.__metrics:
-            self.__metrics = Metrics(self.__connection)
-        return self.__metrics
