@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from hpOneView.validation.dictionary_validator import RequiredFields
+from hpOneView.validators import RequiredFields
 
 
 class FakeResource(object):
@@ -28,6 +28,26 @@ class DictionaryValidatorTest(TestCase):
             "index": "value"
         }
         expected_error_message = 'Inform all required fields. Missing: source.name; id;'
+        try:
+            self.fakeResource.method_test(dictionary)
+        except ValueError as e:
+            self.assertEqual(expected_error_message, e.args[0])
+        else:
+            self.fail('Exception not raised')
+
+    def test_should_raise_exception_when_dict_not_pass_through_function(self):
+        dictionary = None
+        expected_error_message = 'Required fields can not be validated. Dictionary not found.'
+        try:
+            self.fakeResource.method_test(dictionary)
+        except ValueError as e:
+            self.assertEqual(expected_error_message, e.args[0])
+        else:
+            self.fail('Exception not raised')
+
+    def test_should_raise_exception_when_argument_is_not_a_dict(self):
+        dictionary = "false dictionary"
+        expected_error_message = "Validation requires a 'dict' argument , 'str' given"
         try:
             self.fakeResource.method_test(dictionary)
         except ValueError as e:
