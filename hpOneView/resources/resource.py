@@ -108,15 +108,24 @@ class ResourceClient(object):
         return self._connection.get(self._uri + '/schema')
 
     def get(self, id):
+        if not id:
+            raise ValueError('Invalid id was provided')
+
         return self._connection.get(self._uri + '/' + id)
 
     def update(self, resource, blocking=True):
+        if not resource:
+            raise ValueError('Resource was not provided')
+
         task, body = self._connection.put(resource['uri'], resource)
         if blocking:
             return self.__wait_for_task(task, 60)
         return task
 
     def create(self, resource, blocking=True):
+        if not resource:
+            raise ValueError('Resource was not provided')
+
         task, entity = self._connection.post(self._uri, resource)
         if blocking:
             return self.__wait_for_task(task, 60)
@@ -140,5 +149,8 @@ class ResourceClient(object):
         Returns: dict
 
         """
+        if not field:
+            raise ValueError('Invalid field was provided')
+
         filter = filter = "\"'{0}'='{1}'\"".format(field, value)
         return self.get_all(filter=filter)

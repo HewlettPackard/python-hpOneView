@@ -224,7 +224,7 @@ class ResourceTest(unittest.TestCase):
         mock_make_task_entity_tuple.return_value = task, {}
         mock_wait4task.return_value = task
 
-        self.resource_client.create({}, True)
+        self.resource_client.create({"test", "test"}, True)
 
         mock_wait4task.assert_called_once_with({"task": "task"}, tout=60, verbose=False)
 
@@ -237,6 +237,70 @@ class ResourceTest(unittest.TestCase):
         mock_make_task_entity_tuple.return_value = task, {}
         mock_wait4task.return_value = task
 
-        self.resource_client.create({}, False)
+        self.resource_client.create({"test", "test"}, False)
 
         mock_wait4task.assert_not_called()
+
+    def test_delete_with_none(self):
+        try:
+            self.resource_client.delete(None)
+        except ValueError as e:
+            self.assertTrue("Resource" in e.args[0])
+        else:
+            self.fail()
+
+    def test_delete_with_empty_dict(self):
+        try:
+            self.resource_client.delete({})
+        except ValueError as e:
+            self.assertTrue("Resource" in e.args[0])
+        else:
+            self.fail()
+
+    def test_get_with_none(self):
+        try:
+            self.resource_client.get(None)
+        except ValueError as e:
+            self.assertTrue("id" in e.args[0])
+        else:
+            self.fail()
+
+    def test_create_with_none(self):
+        try:
+            self.resource_client.create(None)
+        except ValueError as e:
+            self.assertTrue("Resource" in e.args[0])
+        else:
+            self.fail()
+
+    def test_create_with_empty_dict(self):
+        try:
+            self.resource_client.create({})
+        except ValueError as e:
+            self.assertTrue("Resource" in e.args[0])
+        else:
+            self.fail()
+
+    def test_update_with_none(self):
+        try:
+            self.resource_client.update(None)
+        except ValueError as e:
+            self.assertTrue("Resource" in e.args[0])
+        else:
+            self.fail()
+
+    def test_update_with_empty_dict(self):
+        try:
+            self.resource_client.update({})
+        except ValueError as e:
+            self.assertTrue("Resource" in e.args[0])
+        else:
+            self.fail()
+
+    def test_get_by_with_name_none(self):
+        try:
+            self.resource_client.get_by(None, None)
+        except ValueError as e:
+            self.assertTrue("field" in e.args[0])
+        else:
+            self.fail()
