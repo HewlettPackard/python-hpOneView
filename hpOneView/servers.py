@@ -339,6 +339,10 @@ class servers(object):
                                        serialNumberType, serverHardwareTypeUri,
                                        serverHardwareUri,
                                        serverProfileTemplateUri, uuid, wwnType)
+
+        # missing required field: enclousure group
+        # E.g.: profile['enclosureGroupUri'] =  "/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4"
+
         task, body = self._con.post(uri['profiles'], profile)
         if profile['firmware'] is None:
             tout = 600

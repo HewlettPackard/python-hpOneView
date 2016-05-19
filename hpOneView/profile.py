@@ -10,16 +10,17 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
+
+import json
+import re
+
 from future import standard_library
 
-import sys
-import re
-import json
 from hpOneView.common import (make_FirmwareSettingsV3, make_LogicalDriveV3, make_LocalStorageEmbeddedController,
                               make_LocalStorageSettingsV3, make_BootModeSetting, make_BootSettings)
+from hpOneView.exceptions import HPOneViewInvalidResource
 
 standard_library.install_aliases()
-
 
 __title__ = 'common'
 __version__ = '0.0.1'
@@ -27,6 +28,7 @@ __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
                 ' Development LP'
 __license__ = 'MIT'
 __status__ = 'Development'
+
 
 ###
 # (C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP
@@ -68,10 +70,8 @@ def make_firmware_dict(settings, baseline):
             if spp['isoFileName'] == baseline:
                 uri = spp['uri']
         if not uri:
-            print('ERROR: Locating Firmware Baseline SPP')
-            print('Baseline: "%s" can not be located' % baseline)
-            print('')
-            sys.exit()
+            message = 'ERROR: Locating Firmware Baseline SPP\n Baseline: "%s" can not be located' % baseline
+            raise HPOneViewInvalidResource(msg=message)
 
     if uri:
         fw_settings = make_FirmwareSettingsV3(uri, 'FirmwareOnly', True, False)
@@ -89,17 +89,13 @@ def make_local_storage_dict(sht, raidlevel, lboot, init_storage, num):
     if 'model' in sht:
         model = sht['model']
     else:
-        print('Error, can not retrieve server model')
-        print('')
-        sys.exit()
+        raise HPOneViewInvalidResource('Error, can not retrieve server model')
 
     if raidlevel or init_storage:
         p = re.compile('.*DL\d.*', re.IGNORECASE)
         match = p.match(model)
         if match:
-            print('Local storage management is not supported on DL servers')
-            print('')
-            sys.exit()
+            raise HPOneViewInvalidResource('Local storage management is not supported on DL servers')
 
         # FIXME -- Add a test to verify that the number of physical drives
         # is consistent with the RAID level and the number of drives in the
@@ -123,6 +119,54 @@ def make_local_storage_dict(sht, raidlevel, lboot, init_storage, num):
     return None
 
 
+def __get_boot_settings_dict_capabilities(sht):
+    if 'capabilities' in sht and 'bootCapabilities' in sht:
+        if 'ManageBootOrder' not in sht['capabilities']:
+            raise HPOneViewInvalidResource('Error, server does not support managed  boot order')
+        allowed_boot = sht['bootCapabilities']
+        return allowed_boot
+    else:
+        raise HPOneViewInvalidResource('Error, can not retrieve server boot capabilities')
+
+
+def __get_boot_settings_dict_mode(sht):
+    if 'model' in sht:
+        model = sht['model']
+        return model
+    else:
+        raise HPOneViewInvalidResource('Error: Can not identify server hardware type model')
+
+
+def __validate_allowed_boot(allowed_boot, boot_order):
+    # The FibreChannelHba boot option is not exposed to the user
+    if 'FibreChannelHba' in allowed_boot:
+        allowed_boot.remove('FibreChannelHba')
+
+    if len(boot_order) != len(allowed_boot):
+        message = 'Error: All supported boot options are required. The supported options are: ' + \
+                  ('; '.join(allowed_boot))
+        raise HPOneViewInvalidResource(msg=message)
+
+    # Error if the users submitted and boot option that is
+    # not supported by the server hardware type
+    diff = set(boot_order).difference(set(allowed_boot))
+    if diff:
+        message = 'Error: "' + ', '.join(diff) + '" are not supported boot options for this server hardware ' \
+                                                 'type. The supported options are: ' + '; '.join(allowed_boot)
+        raise HPOneViewInvalidResource(msg=message)
+
+
+def __get_boot_settings_dict_boot_mode(gen9, boot_mode, pxe):
+    # bootmode can not be set for Gen 7 & 8
+    bootmode = None
+    if gen9:
+        if boot_mode == 'BIOS':
+            bootmode = make_BootModeSetting(True, boot_mode, None)
+        else:
+            bootmode = make_BootModeSetting(True, boot_mode, pxe)
+    return bootmode
+
+
 def make_boot_settings_dict(srv, sht, disable_manage_boot, boot_order, boot_mode, pxe):
     """
     Create boot settings and boot mode dictionaries for use in defining either a server
@@ -130,20 +174,9 @@ def make_boot_settings_dict(srv, sht, disable_manage_boot, boot_order, boot_mode
     """
     gen9 = False
     # Get the bootCapabilites from the Server Hardware Type
-    if 'capabilities' in sht and 'bootCapabilities' in sht:
-        if 'ManageBootOrder' not in sht['capabilities']:
-            print('Error, server does not support managed  boot order')
-            sys.exit()
-        allowed_boot = sht['bootCapabilities']
-    else:
-        print('Error, can not retrieve server boot capabilities')
-        sys.exit()
+    allowed_boot = __get_boot_settings_dict_capabilities(sht)
 
-    if 'model' in sht:
-        model = sht['model']
-    else:
-        print('Error: Can not identify server hardware type model')
-        sys.exit()
+    model = __get_boot_settings_dict_mode(sht)
 
     regx = re.compile('.*Gen9.*', re.IGNORECASE)
     gen_match = regx.match(model)
@@ -153,54 +186,16 @@ def make_boot_settings_dict(srv, sht, disable_manage_boot, boot_order, boot_mode
 
     # Managed Boot Enable with Boot Options specified
     if boot_order:
-        # The FibreChannelHba boot option is not exposed to the user
-        if 'FibreChannelHba' in allowed_boot:
-            allowed_boot.remove('FibreChannelHba')
+        __validate_allowed_boot(allowed_boot, boot_order)
 
-        if len(boot_order) != len(allowed_boot):
-            print('Error: All supported boot options are required')
-            print('The supported options are:')
-            print('\t-bo', end=' ')
-            for item in allowed_boot:
-                print(item, end=' ')
-            print()
-            sys.exit()
-
-        # Error if the users submitted and boot option that is
-        # not supported by the server hardware type
-        diff = set(boot_order).difference(set(allowed_boot))
-        if diff:
-            print('Error:"', diff, '"are not supported boot options for this'
-                                   'server hardware type')
-            print('The supported options are:')
-            print('\t-bo', end=' ')
-            for item in allowed_boot:
-                print(item, end=' ')
-            print()
-            sys.exit()
-
-        if gen9:
-            if boot_mode == 'BIOS':
-                bootmode = make_BootModeSetting(True, boot_mode, None)
-            else:
-                bootmode = make_BootModeSetting(True, boot_mode, pxe)
-        else:  # bootmode can not be set for Gen 7 & 8
-            bootmode = None
-
+        bootmode = __get_boot_settings_dict_boot_mode(gen9, boot_mode, pxe)
         boot = make_BootSettings(boot_order, manageBoot=True)
 
     # Managed Boot Default value WITHOUT Boot Options specified
     # Setting boot to None uses the default from the appliance which is
     # boot.manageBoot = True.
     elif not disable_manage_boot:
-        if gen9:
-            if boot_mode == 'BIOS':
-                bootmode = make_BootModeSetting(True, boot_mode, None)
-            else:
-                bootmode = make_BootModeSetting(True, boot_mode, pxe)
-        else:  # bootmode can not be set for Gen 7 & 8
-            bootmode = None
-
+        bootmode = __get_boot_settings_dict_boot_mode(gen9, boot_mode, pxe)
         boot = None
 
     # Managed Boot explicitly disabled
@@ -211,16 +206,14 @@ def make_boot_settings_dict(srv, sht, disable_manage_boot, boot_order, boot_mode
         p = re.compile('.*BL\d.*', re.IGNORECASE)
         match = p.match(model)
         if match:
-            print('Error: bootMode cannot be disabled on BL servers')
-            sys.exit()
+            raise HPOneViewInvalidResource('Error: bootMode cannot be disabled on BL servers')
         else:  # bootmode can not be set for Gen 7 & 8
             bootmode = None
 
         boot = make_BootSettings([], manageBoot=False)
 
     else:
-        print('Error: Unknown boot mode case')
-        sys.exit()
+        raise HPOneViewInvalidResource('Error: Unknown boot mode case')
 
     return boot, bootmode
 
@@ -247,4 +240,4 @@ def make_bios_dict(bios_list):
             overriddenBios['overriddenSettings'] = overriddenSettings
             return overriddenBios
         except ValueError:
-            print("Error: Cannot parse BIOS JSON file. JSON must be well-formed.")
+            raise ValueError('Error: Cannot parse BIOS JSON file. JSON must be well-formed.')
