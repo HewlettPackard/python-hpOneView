@@ -21,15 +21,16 @@
 # THE SOFTWARE.
 ###
 
+from __future__ import absolute_import
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
-from __future__ import absolute_import
+
 from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'fc-networks'
+__title__ = 'FcoeNetworks'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
                 ' Development LP'
@@ -39,22 +40,19 @@ __status__ = 'Development'
 from hpOneView.resources.resource import ResourceClient
 
 
-class FcNetworks(object):
-    URI = '/rest/fc-networks'
+class FcoeNetworks(object):
+    URI = '/rest/fcoe-networks'
 
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
         self.__default_values = {
-            'autoLoginRedistribution': False,
-            'type': 'fc-networkV2',
-            'linkStabilityTime': 30,
-            'fabricType': 'FabricAttach',
+            'type': 'fcoe-network',
         }
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a paginated collection of Fibre Channel networks. The collection is based on optional sorting and filtering, and constrained by start and count parameters.
+        Gets a paginated collection of FCoE networks. The collection is based on optional sorting and filtering, and constrained by start and count parameters
 
         Args:
             start:
@@ -73,17 +71,16 @@ class FcNetworks(object):
                 on create time, with the oldest entry first.
 
         Returns: dict
-
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
     def delete(self, resource, force=False, blocking=True):
         """
-        Deletes a Fibre Channel network.
-        Any deployed connections that are using the network are placed in the 'Failed' state.
+        Deletes a FCoE network.
 
         Args:
-            resource: dict object to delete
+            resource(str, dict):
+                Accept either the resource id  or the entire resource
             force:
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
@@ -91,15 +88,14 @@ class FcNetworks(object):
                 Wait task completion
 
         Returns: task
-
         """
         return self._client.delete(resource, force=force, blocking=blocking)
 
     def get(self, id):
         """
-        Gets the Fibre Channel network with the specified ID
+        Gets a FCoE network.
         Args:
-            id: ID of Fibre Channel network
+            id: ID of FCoE network
 
         Returns: dict
         """
@@ -107,7 +103,7 @@ class FcNetworks(object):
 
     def create(self, resource, blocking=True):
         """
-        Creates a Fibre Channel network.
+        Create FCoE network
 
         Args:
             resource: dict object to create
@@ -115,29 +111,27 @@ class FcNetworks(object):
                 Wait task completion. Default is True.
 
         Returns: Created resource. When blocking=False, returns the task.
-
         """
         resource.update(self.__default_values)
         return self._client.create(resource, blocking)
 
     def update(self, resource, blocking=True):
         """
-        Updates a Fibre Channel network.
+        Updates a FCoE network
 
         Args:
-            resource: dict object to update
+            resource (dict): Resource to update
             blocking:
                 Wait task completion. Default is True.
 
         Returns: Updated resource. When blocking=False, returns the task.
-
         """
         resource.update(self.__default_values)
         return self._client.update(resource, blocking)
 
     def get_by(self, field, value):
         """
-        Get all Fibre Channel networks that matches the filter
+        Get all FCoE networks that matches the filter
         The search is case insensitive
 
         Args:
@@ -145,6 +139,5 @@ class FcNetworks(object):
             value: value to filter
 
         Returns: dict
-
         """
         return self._client.get_by(field, value)

@@ -26,10 +26,11 @@ oneview_client.py
 
 This module implements a common client for HP OneView REST API
 """
-from __future__ import unicode_literals
-from __future__ import print_function
-from __future__ import division
 from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
 from future import standard_library
 
 standard_library.install_aliases()
@@ -43,6 +44,7 @@ __status__ = 'Development'
 
 from hpOneView.connection import connection
 from hpOneView.resources.networking.fc_networks import FcNetworks
+from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
 
 from hpOneView.validators import RequiredFields
 
@@ -55,8 +57,7 @@ class OneViewClient(object):
         self.__set_proxy(config)
         self.__connection.login(config["credentials"])
         self.__fc_networks = None
-        self.__interconnects = None
-        self.__metrics = None
+        self.__fcoe_networks = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     def __set_proxy(self, config):
@@ -83,3 +84,9 @@ class OneViewClient(object):
         if not self.__fc_networks:
             self.__fc_networks = FcNetworks(self.__connection)
         return self.__fc_networks
+
+    @property
+    def fcoe_networks(self):
+        if not self.__fcoe_networks:
+            self.__fcoe_networks = FcoeNetworks(self.__connection)
+        return self.__fcoe_networks
