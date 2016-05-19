@@ -21,12 +21,14 @@
 # THE SOFTWARE.
 ###
 
-import mock
 import unittest
 
-from hpOneView.oneview_client import OneViewClient
+import mock
+
 from hpOneView.connection import connection
+from hpOneView.oneview_client import OneViewClient
 from hpOneView.resources.networking.fc_networks import FcNetworks
+from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
 
 
 class OneViewClientTest(unittest.TestCase):
@@ -70,3 +72,13 @@ class OneViewClientTest(unittest.TestCase):
 
     def test_connection_type(self):
         self.assertIsInstance(self._oneview.connection, connection)
+
+    def test_fcoe_networks_has_right_type(self):
+        self.assertIsInstance(self._oneview.fcoe_networks, FcoeNetworks)
+
+    def test_fcoe_networks_has_value(self):
+        self.assertIsNotNone(self._oneview.fcoe_networks)
+
+    def test_lazy_loading_fcoe_networks(self):
+        fcn = self._oneview.fcoe_networks
+        self.assertEqual(fcn, self._oneview.fcoe_networks)
