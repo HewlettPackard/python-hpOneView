@@ -48,6 +48,7 @@ from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
 
 from hpOneView.validators import RequiredFields
 
+ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
 class OneViewClient(object):
     @RequiredFields("ip", "credentials")
@@ -71,7 +72,7 @@ class OneViewClient(object):
             proxy = config["proxy"]
             splitted = proxy.split(':')
             if len(splitted) != 2:
-                raise ValueError("Invalid Proxy format")
+                raise ValueError(ONEVIEW_CLIENT_INVALID_PROXY)
 
             self.__connection.set_proxy(splitted[0], splitted[1])
 

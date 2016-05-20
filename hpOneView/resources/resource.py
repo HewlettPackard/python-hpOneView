@@ -29,7 +29,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'fc-networks'
+__title__ = 'resource'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
                 ' Development LP'
@@ -40,6 +40,11 @@ from urllib.parse import quote
 from hpOneView.common import get_members
 from hpOneView.activity import activity
 from hpOneView.exceptions import HPOneViewUnknownType
+
+RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED = 'Resource was not provided'
+RESOURCE_CLIENT_INVALID_FIELD = 'Invalid field was provided'
+RESOURCE_CLIENT_INVALID_ID = 'Invalid id was provided'
+RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE = 'Unknown object type'
 
 
 class ResourceClient(object):
@@ -85,13 +90,13 @@ class ResourceClient(object):
     def delete(self, resource, force=False, blocking=True, verbose=False, timeout=60):
 
         if not resource:
-            raise ValueError('Resource was not provided')
+            raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
 
         if isinstance(resource, dict):
             if 'uri' in resource and resource['uri']:
                 uri = resource['uri']
             else:
-                raise HPOneViewUnknownType('Unknown object type')
+                raise HPOneViewUnknownType(RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE)
         else:
             uri = self._uri + "/" + resource
 
@@ -109,13 +114,13 @@ class ResourceClient(object):
 
     def get(self, id):
         if not id:
-            raise ValueError('Invalid id was provided')
+            raise ValueError(RESOURCE_CLIENT_INVALID_ID)
 
         return self._connection.get(self._uri + '/' + id)
 
     def update(self, resource, blocking=True):
         if not resource:
-            raise ValueError('Resource was not provided')
+            raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
 
         task, body = self._connection.put(resource['uri'], resource)
         if blocking:
@@ -124,7 +129,7 @@ class ResourceClient(object):
 
     def create(self, resource, blocking=True):
         if not resource:
-            raise ValueError('Resource was not provided')
+            raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
 
         task, entity = self._connection.post(self._uri, resource)
         if blocking:
@@ -150,7 +155,7 @@ class ResourceClient(object):
 
         """
         if not field:
-            raise ValueError('Invalid field was provided')
+            raise ValueError(RESOURCE_CLIENT_INVALID_FIELD)
 
         filter = filter = "\"'{0}'='{1}'\"".format(field, value)
         return self.get_all(filter=filter)
