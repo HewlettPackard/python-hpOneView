@@ -42,10 +42,8 @@ __status__ = 'Development'
 # THE SOFTWARE.
 ###
 
-from hpOneView.common import *
-from hpOneView.connection import *
-from hpOneView.activity import *
-from hpOneView.exceptions import *
+from hpOneView.common import uri, get_members
+from hpOneView.activity import activity
 
 
 class fcsans(object):
@@ -72,7 +70,7 @@ class fcsans(object):
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
         return task
 
-    def add_device_manager(self, providerUri, connInfo,  blocking=True,
+    def add_device_manager(self, providerUri, connInfo, blocking=True,
                            verbose=False):
         task, body = self._con.post(providerUri, connInfo)
         return body

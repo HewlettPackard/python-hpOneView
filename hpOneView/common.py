@@ -6,12 +6,14 @@ common.py
 
 This module implements the common and helper functions for the OneView REST API
 """
+from __future__ import absolute_import
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
-from __future__ import absolute_import
+
 from builtins import range
 from future import standard_library
+
 standard_library.install_aliases()
 
 __title__ = 'common'
@@ -47,9 +49,9 @@ __status__ = 'Development'
 # Looking for a switch type, using filters:
 # https://<appliance>/rest/switch-types?filter="partNumber = '455880-B21'"
 uri = {
-    #------------------------------------
+    # ------------------------------------
     # Settings
-    #------------------------------------
+    # ------------------------------------
     'globalSettings': '/rest/global-settings',
     'vol-tmplate-policy': '/rest/global-settings/StorageVolumeTemplateRequired',
     'eulaStatus': '/rest/appliance/eula/status',
@@ -74,9 +76,9 @@ uri = {
     'progress': '/rest/appliance/progress',
     'appliance-firmware': '/rest/appliance/firmware/image',
     'fw-pending': '/rest/appliance/firmware/pending',
-    #------------------------------------
+    # ------------------------------------
     # Security
-    #------------------------------------
+    # ------------------------------------
     'activeSessions': '/rest/active-user-sessions',
     'loginSessions': '/rest/login-sessions',
     'users': '/rest/users',
@@ -86,16 +88,16 @@ uri = {
     'category-actions': '/rest/authz/category-actions',
     'role-category-actions': '/rest/authz/role-category-actions',
     'validator': '/rest/authz/validator',
-    #------------------------------------
+    # ------------------------------------
     # Facilities
-    #------------------------------------
+    # ------------------------------------
     'datacenters': '/rest/datacenters',
     'powerDevices': '/rest/power-devices',
     'powerDevicesDiscover': '/rest/power-devices/discover',
     'racks': '/rest/racks',
-    #------------------------------------
+    # ------------------------------------
     # Systems
-    #------------------------------------
+    # ------------------------------------
     'servers': '/rest/server-hardware',
     'server-hardware-types': '/rest/server-hardware-types',
     'enclosures': '/rest/enclosures',
@@ -103,9 +105,9 @@ uri = {
     'enclosurePreview': '/rest/enclosure-preview',
     'fwUpload': '/rest/firmware-bundles',
     'fwDrivers': '/rest/firmware-drivers',
-    #------------------------------------
+    # ------------------------------------
     # Connectivity
-    #------------------------------------
+    # ------------------------------------
     'conn': '/rest/connections',
     'ct': '/rest/connection-templates',
     'enet': '/rest/ethernet-networks',
@@ -121,9 +123,9 @@ uri = {
     'vmac-pool': '/rest/id-pools/vmac',
     'vwwn-pool': '/rest/id-pools/vwwn',
     'vsn-pool': '/rest/id-pools/vsn',
-    #------------------------------------
+    # ------------------------------------
     #  Server Profiles
-    #------------------------------------
+    # ------------------------------------
     'profiles': '/rest/server-profiles',
     'profile-templates': '/rest/server-profile-templates',
     'profile-networks': '/rest/server-profiles/available-networks',
@@ -137,25 +139,25 @@ uri = {
     'profile-ports': '/rest/server-profiles/profile-ports',
     'profile-ports-schema': '/rest/server-profiles/profile-ports/schema',
     'profile-schema': '/rest/server-profiles/schema',
-    #------------------------------------
+    # ------------------------------------
     #  Health
-    #------------------------------------
+    # ------------------------------------
     'alerts': '/rest/alerts',
     'events': '/rest/events',
     'audit-logs': '/rest/audit-logs',
     'audit-logs-download': '/rest/audit-logs/download',
-    #------------------------------------
+    # ------------------------------------
     #  Certificates
-    #------------------------------------
+    # ------------------------------------
     'certificates': '/rest/certificates',
     'ca': '/rest/certificates/ca',
     'crl': '/rest/certificates/ca/crl',
     'rabbitmq-kp': '/rest/certificates/client/rabbitmq/keypair',
     'rabbitmq': '/rest/certificates/client/rabbitmq',
     'cert-https': '/rest/certificates/https',
-    #------------------------------------
+    # ------------------------------------
     #  Searching and Indexing
-    #------------------------------------
+    # ------------------------------------
     'resource': '/rest/index/resources',
     'association': '/rest/index/associations',
     'tree': '/rest/index/trees',
@@ -167,28 +169,28 @@ uri = {
     #                   '?sort=name:asc&category=networks&start=0&count=-1'),
     # 'GetFcNetworks': ('/index/rest/index/resources'
     #                  '?sort=name:asc&category=fc-networks&start=0&count=-1'),
-    #------------------------------------
+    # ------------------------------------
     #  Logging and Tracking
-    #------------------------------------
+    # ------------------------------------
     'task': '/rest/tasks',
-    #------------------------------------
+    # ------------------------------------
     # Storage
-    #------------------------------------
+    # ------------------------------------
     'storage-pools': '/rest/storage-pools',
     'storage-systems': '/rest/storage-systems',
     'storage-volumes': '/rest/storage-volumes',
     'vol-templates': '/rest/storage-volume-templates',
     'connectable-vol': '/rest/storage-volume-templates/connectable-volume-templates',
     'attachable-volumes': '/rest/storage-volumes/attachable-volumes',
-    #------------------------------------
+    # ------------------------------------
     # FC-SANS
-    #------------------------------------
+    # ------------------------------------
     'device-managers': '/rest/fc-sans/device-managers',
     'managed-sans': '/rest/fc-sans/managed-sans',
     'providers': '/rest/fc-sans/providers',
-    #------------------------------------
+    # ------------------------------------
     # Uncategorized
-    #------------------------------------
+    # ------------------------------------
     'unmanaged-devices': '/rest/unmanaged-devices',
 }
 
@@ -402,10 +404,11 @@ def make_interconnect_map_template():
         [{'logicalLocation': {
             'locationEntries':
             [{'type': 'Bay', 'relativeValue': N},
-             {'type': 'Enclosure', 'relativeValue': 1}]},
+                {'type': 'Enclosure', 'relativeValue': 1}]},
             'permittedInterconnectTypeUri': None,
-            'logicalDownlinkUri': None
-          } for N in range(1, 9)], }
+            'logicalDownlinkUri': None}
+            for N in range(1, 9)],
+    }
 
 
 def make_enet_settings(name,
@@ -470,7 +473,6 @@ def make_storage_volume(name,
 
 
 def make_connectionInfo_dict(hostname, port, user, passwd, ssl=True):
-
     return {'connectionInfo': [
         {'name': 'Host',
          'value': hostname},
@@ -520,7 +522,7 @@ def make_EthernetSettingsV2(enableFastMacCacheFailover=True,
                             enablePauseFloodProtection=True,
                             igmpIdleTimeoutInterval=260,
                             macRefreshInterval=5):
-    return{
+    return {
         'enableFastMacCacheFailover': enableFastMacCacheFailover,
         'enableIgmpSnooping': enableIgmpSnooping,
         'enableNetworkLoopProtection': enableNetworkLoopProtection,
@@ -538,7 +540,7 @@ def make_EthernetSettingsV3(enableFastMacCacheFailover=True,
                             enableRichTLV=False,
                             igmpIdleTimeoutInterval=260,
                             macRefreshInterval=5):
-    return{
+    return {
         'enableFastMacCacheFailover': enableFastMacCacheFailover,
         'enableIgmpSnooping': enableIgmpSnooping,
         'enableNetworkLoopProtection': enableNetworkLoopProtection,
@@ -564,7 +566,7 @@ def make_trapdestinations_dict(trapDestination,
                                                'Unknown',
                                                'Warning'],
                                vcmTrapCategories=['Legacy']):
-    return{
+    return {
         'trapDestination': trapDestination,
         'communityString': communityString,
         'enetTrapCategories': enetTrapCategories,
@@ -580,7 +582,7 @@ def make_snmpconfiguration_dict(enabled=False,
                                 snmpAccess=[],
                                 systemContact=None,
                                 trapDestinations=[]):
-    return{
+    return {
         'enabled': enabled,
         'readCommunity': readCommunity,
         'snmpAccess': snmpAccess,
@@ -592,8 +594,7 @@ def make_snmpconfiguration_dict(enabled=False,
 def set_iobay_occupancy(switchMap, bays, stype):
     for location in switchMap['interconnectMapEntryTemplates']:
         entries = location['logicalLocation']['locationEntries']
-        if [x for x in entries if x['type'] == 'Bay' and x['relativeValue']
-                in bays]:
+        if [x for x in entries if x['type'] == 'Bay' and x['relativeValue'] in bays]:
             location['permittedInterconnectTypeUri'] = stype
 
 
@@ -640,13 +641,13 @@ def make_UplinkSetGroupV2(name,
 
 def make_port_config_info(enclosure, bay, port, speed='Auto'):
     return {'logicalLocation': {
-            'locationEntries':
+        'locationEntries':
             [{'type': 'Enclosure', 'relativeValue': enclosure},
              {'type': 'Bay', 'relativeValue': bay},
              {'type': 'Port', 'relativeValue': port}]
-            },
-            'desiredSpeed': speed
-            }
+    },
+        'desiredSpeed': speed
+    }
 
 
 def make_EnclosureGroupV200(associatedLIGs, name,
@@ -776,7 +777,7 @@ def make_ProfileConnectionV4(cid, name, networkUri, profileTemplateConnection,
             available Ethernet networks, Fibre Channel networks and network
             sets that are available along with their respective ports.
         profileTemplateConnection:
-            Specifies if the connection list is to be used in defining a server 
+            Specifies if the connection list is to be used in defining a server
             profile template.
         portId:
             Identifies the port (FlexNIC) used for this connection, for
@@ -1617,7 +1618,6 @@ def make_alertMap_dict(notes, etag, state='Active', user='None',
 
 
 class pages(object):
-
     def __init__(self, page, connection):
         self._con = connection
         self.currentPage = page
