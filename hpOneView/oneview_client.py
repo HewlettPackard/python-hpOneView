@@ -46,12 +46,10 @@ from hpOneView.connection import connection
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
 
-from hpOneView.validators import RequiredFields
-
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
+
 class OneViewClient(object):
-    @RequiredFields("ip", "credentials")
     def __init__(self, config):
         self.__config = config
         self.__connection = connection(config["ip"])
