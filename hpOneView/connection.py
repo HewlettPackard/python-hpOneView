@@ -301,14 +301,14 @@ class connection(object):
 
     def get_entities_byrange(self, uri, field, xmin, xmax, count=-1):
         new_uri = uri + '?filter="\'' + field + '\'%20>%20\'' + xmin \
-            + '\'"&filter="\'' + field + '\'%20<%20\'' + xmax \
-            + '\'"&start=0&count=' + str(count)
+                      + '\'"&filter="\'' + field + '\'%20<%20\'' + xmax \
+                      + '\'"&start=0&count=' + str(count)
         body = self.get(new_uri)
         return get_members(body)
 
     def get_entities_byfield(self, uri, field, value, count=-1):
         new_uri = uri + '?start=0&count=' + str(count) \
-            + '&filter=' + field + '=\'' + value + '\''
+                      + '&filter=' + field + '=\'' + value + '\''
         try:
             body = self.get(new_uri)
         except:
@@ -318,7 +318,7 @@ class connection(object):
 
     def get_entity_byfield(self, uri, field, value, count=-1):
         new_uri = uri + '?filter="\'' + field + '\'%20=%20\'' + value \
-            + '\'"&start=0&count=' + str(count)
+                      + '\'"&start=0&count=' + str(count)
 
         try:
             body = self.get(new_uri)

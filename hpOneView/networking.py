@@ -44,18 +44,20 @@ __status__ = 'Development'
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 ###
-
 import http.client
-from hpOneView.common import uri, get_members, make_network_set, make_Bandwidth, make_fc_networkV2, \
-    make_ethernet_networkV3, make_enet_settings
+
+from hpOneView.common import uri, get_members, make_enet_settings, \
+    make_network_set, make_Bandwidth, make_ethernet_networkV3, make_fc_networkV2
 from hpOneView.activity import activity
-from hpOneView.exceptions import HPOneViewInvalidResource, HPOneViewException
+from hpOneView.exceptions import HPOneViewException, HPOneViewInvalidResource
+from hpOneView.resources.networking.fc_networks import FcNetworks
 
 
 class networking(object):
     def __init__(self, con):
         self._con = con
         self._activity = activity(con)
+        self.__fc_networks = FcNetworks(con)
 
     ###########################################################################
     # Logical Interconnect Group
@@ -425,7 +427,10 @@ class networking(object):
                           linkStabilityTime=30, managedSanUri=None,
                           typicalBandwidth=2500, maximumBandwidth=10000,
                           blocking=True, verbose=False):
-        """ Create a Fibre Channel Network
+        """
+        Deprecated function, use: OneViewClient(config).fc_networks.create()
+
+        Create a Fibre Channel Network
 
           Args:
             name:
@@ -490,10 +495,12 @@ class networking(object):
         return self._activity.make_task_entity_tuple(task)
 
     def delete_network(self, xnet, blocking=True, verbose=False):
-        task, body = self._con.delete(xnet['uri'])
-        if blocking is True:
-            task = self._activity.wait4task(task, verbose=verbose)
-        return task
+        """
+        Deprecated function, use: OneViewClient(config).fc_networks.delete()
+        Returns: dict
+
+        """
+        return self.__fc_networks.delete(xnet, force=False, blocking=blocking)
 
     def get_enet_networks(self):
         # TODO remove the evil use/hack of the large count default. The OneView
@@ -503,8 +510,12 @@ class networking(object):
                                          '?start=0&count=9999999'))
 
     def get_fc_networks(self):
-        return get_members(self._con.get(uri['fcnet'] +
-                                         '?start=0&count=9999999'))
+        """
+        Deprecated function, use: OneViewClient(config).fc_networks.get_all()
+        Returns: dict
+
+        """
+        return self.__fc_networks.get_all()
 
     ###########################################################################
     # Uplink Sets
