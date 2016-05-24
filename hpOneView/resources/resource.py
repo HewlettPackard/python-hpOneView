@@ -21,10 +21,11 @@
 # THE SOFTWARE.
 ###
 
+from __future__ import absolute_import
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
-from __future__ import absolute_import
+
 from future import standard_library
 
 standard_library.install_aliases()
@@ -112,11 +113,19 @@ class ResourceClient(object):
     def get_schema(self):
         return self._connection.get(self._uri + '/schema')
 
-    def get(self, id):
-        if not id:
+    def get(self, id_or_uri):
+        """
+        Args:
+            id_or_uri: Could be either the resource id or the resource uri
+        Returns:
+             The requested resource
+        """
+        if not id_or_uri:
             raise ValueError(RESOURCE_CLIENT_INVALID_ID)
+        if "/" in id_or_uri:
+            return self.__get_by_uri(id_or_uri)
 
-        return self._connection.get(self._uri + '/' + id)
+        return self._connection.get(self._uri + '/' + id_or_uri)
 
     def update(self, resource, blocking=True):
         if not resource:
@@ -159,3 +168,9 @@ class ResourceClient(object):
 
         filter = filter = "\"'{0}'='{1}'\"".format(field, value)
         return self.get_all(filter=filter)
+
+    def __get_by_uri(self, uri):
+        if self._uri in uri:
+            return self._connection.get(uri)
+        else:
+            raise HPOneViewUnknownType("Unrecognized URI for this resource")

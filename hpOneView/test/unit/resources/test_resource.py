@@ -21,13 +21,23 @@
 # THE SOFTWARE.
 ###
 
-import mock
 import unittest
 
-from hpOneView.connection import connection
+import mock
+
 from hpOneView.activity import activity
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.connection import connection
 from hpOneView.exceptions import HPOneViewUnknownType
+from hpOneView.resources.resource import ResourceClient
+
+
+class FakeResource(object):
+    def __init__(self, con):
+        self._connection = con
+        self._client = ResourceClient(con, "/rest/fake/resource")
+
+    def get_fake(self, uri):
+        return self._client.get(uri)
 
 
 class ResourceTest(unittest.TestCase):
@@ -304,3 +314,32 @@ class ResourceTest(unittest.TestCase):
             self.assertTrue("field" in e.args[0])
         else:
             self.fail()
+
+    @mock.patch.object(connection, 'get')
+    def test_get_with_uri_should_work(self, mock_get):
+        mock_get.return_value = {}
+        uri = self.URI + "/ad28cf21-8b15-4f92-bdcf-51cb2042db32"
+        self.resource_client.get(uri)
+
+        mock_get.assert_called_once_with(uri)
+
+    def test_get_with_uri_with_incompatible_url_shoud_fail(self):
+        message = "Unrecognized URI for this resource"
+        uri = "/rest/interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32"
+        try:
+            self.resource_client.get(uri)
+        except HPOneViewUnknownType as exception:
+            self.assertEqual(message, exception.args[0])
+        else:
+            self.fail("Expected Exception was not raised")
+
+    def test_get_with_uri_from_another_resource_with_incompatible_url_shoud_fail(self):
+        message = "Unrecognized URI for this resource"
+        uri = "/rest/interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32"
+        fake_resource = FakeResource(None)
+        try:
+            fake_resource.get_fake(uri)
+        except HPOneViewUnknownType as exception:
+            self.assertEqual(message, exception.args[0])
+        else:
+            self.fail("Expected Exception was not raised")

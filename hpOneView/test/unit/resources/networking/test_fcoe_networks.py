@@ -119,3 +119,10 @@ class FcoeNetworksTest(TestCase):
         self._fcoe_networks.get('3518be0e-17c1-4189-8f81-83f3724f6155')
 
         mock_get.assert_called_once_with('3518be0e-17c1-4189-8f81-83f3724f6155')
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_with_uri_called_once(self, mock_get):
+        uri = '/rest/fcoe-networks/3518be0e-17c1-4189-8f81-83f3724f6155'
+        self._fcoe_networks.get(uri)
+
+        mock_get.assert_called_once_with(uri)
