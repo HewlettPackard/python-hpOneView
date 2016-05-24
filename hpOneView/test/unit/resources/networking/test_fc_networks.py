@@ -21,8 +21,9 @@
 # THE SOFTWARE.
 ###
 
-import mock
 import unittest
+
+import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.networking.fc_networks import FcNetworks
@@ -30,7 +31,6 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class FcNetworksTest(unittest.TestCase):
-
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -114,7 +114,6 @@ class FcNetworksTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):
-
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         self._fc_networks.delete(id, force=False, blocking=True)
 
@@ -131,3 +130,10 @@ class FcNetworksTest(unittest.TestCase):
         self._fc_networks.get('3518be0e-17c1-4189-8f81-83f3724f6155')
 
         mock_get.assert_called_once_with('3518be0e-17c1-4189-8f81-83f3724f6155')
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_with_uri_called_once(self, mock_get):
+        uri = '/rest/fc-networks/3518be0e-17c1-4189-8f81-83f3724f6155'
+        self._fc_networks.get(uri)
+
+        mock_get.assert_called_once_with(uri)

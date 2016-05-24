@@ -18,7 +18,6 @@ options = {
     "name": "OneViewSDK Test FCoE Network",
     "vlanId": "201",
     "connectionTemplateUri": None,
-    "type": "fcoe-network",
 }
 oneview_client = OneViewClient(config)
 
@@ -38,31 +37,36 @@ print("  with attribute {'status': %s}" % fcoe_network['status'])
 
 # Get all, with defaults
 print("Get all fcoe-networks")
-fc_nets = oneview_client.fcoe_networks.get_all()
-pprint(fc_nets)
+fcoe_nets = oneview_client.fcoe_networks.get_all()
+pprint(fcoe_nets)
 
 # Filter by name
 print("Get all fcoe-networks filtering by name")
-fc_nets_filtered = oneview_client.fcoe_networks.get_all(filter="\"'name'='OneViewSDK Test FCoE Network'\"")
-pprint(fc_nets_filtered)
+fcoe_nets_filtered = oneview_client.fcoe_networks.get_all(filter="\"'name'='OneViewSDK Test FCoE Network'\"")
+pprint(fcoe_nets_filtered)
 
 # Get all sorting by name descending
 print("Get all fcoe-networks sorting by name")
-fc_nets_sorted = oneview_client.fcoe_networks.get_all(sort='name:descending')
-pprint(fc_nets_sorted)
+fcoe_nets_sorted = oneview_client.fcoe_networks.get_all(sort='name:descending')
+pprint(fcoe_nets_sorted)
 
 # Get the first 10 records
 print("Get the first ten fcoe-networks")
-fc_nets_limited = oneview_client.fcoe_networks.get_all(0, 10)
-pprint(fc_nets_limited)
+fcoe_nets_limited = oneview_client.fcoe_networks.get_all(0, 10)
+pprint(fcoe_nets_limited)
 
 # Get by Id
 try:
     print("Get a fcoe-network by id")
-    fc_nets_byid = oneview_client.fcoe_networks.get('452cf2a8-e5a0-4b9c-9961-0dc6deb80d01')
-    pprint(fc_nets_byid)
+    fcoe_nets_byid = oneview_client.fcoe_networks.get('452cf2a8-e5a0-4b9c-9961-0dc6deb80d01')
+    pprint(fcoe_nets_byid)
 except HPOneViewException as e:
     print(e.msg['message'])
+
+# Get by Uri
+print("Get a fcoe-network by uri")
+fcoe_nets_by_uri = oneview_client.fcoe_networks.get(fcoe_network['uri'])
+pprint(fcoe_nets_by_uri)
 
 # Delete the created network
 oneview_client.fcoe_networks.delete(fcoe_network)

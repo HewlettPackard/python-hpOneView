@@ -63,6 +63,11 @@ try:
 except HPOneViewException as e:
     print(e.msg['message'])
 
+# Get by Uri
+print("Get a fc-network by uri")
+fc_nets_by_uri = oneview_client.fc_networks.get(fc_network['uri'])
+pprint(fc_nets_by_uri)
+
 # Delete the created network
 oneview_client.fc_networks.delete(fc_network)
 print("Sucessfully deleted fc-network")
