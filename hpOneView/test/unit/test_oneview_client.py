@@ -27,6 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.oneview_client import OneViewClient
+from hpOneView.resources.data_services.metric_streaming import MetricStreaming
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
 
@@ -82,3 +83,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_fcoe_networks(self):
         fcn = self._oneview.fcoe_networks
         self.assertEqual(fcn, self._oneview.fcoe_networks)
+
+    def test_metric_streaming_has_right_type(self):
+        self.assertIsInstance(self._oneview.metric_streaming, MetricStreaming)
+
+    def test_metric_streaming_has_value(self):
+        self.assertIsNotNone(self._oneview.metric_streaming)
+
+    def test_lazy_loading_metric_streaming(self):
+        metric = self._oneview.metric_streaming
+        self.assertEqual(metric, self._oneview.metric_streaming)
