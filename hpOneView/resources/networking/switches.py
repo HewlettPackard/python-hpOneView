@@ -47,15 +47,19 @@ class Switches(object):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
 
-    def get_statistics(self, id):
+    def get_statistics(self, id, port_name=''):
         """
         Gets statistics for a switch
         Args:
             id: ID of switch
+            port_name: switch port number (optional)
 
         Returns: dict
         """
 
         uri = "{0}/{1}/statistics".format(self.URI, id)
+
+        if port_name:
+            uri += "/" + port_name
 
         return self._client.get_by_uri(uri)
