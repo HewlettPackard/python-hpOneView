@@ -3,6 +3,7 @@
 from pprint import pprint
 from hpOneView.oneview_client import OneViewClient
 from hpOneView.exceptions import HPOneViewException
+from config_loader import try_load_from_file
 
 config = {
     "ip": "172.16.102.59",
@@ -19,6 +20,10 @@ options = {
     "autoLoginRedistribution": True,
     "fabricType": "FabricAttach",
 }
+
+# Try load config from a file (if there is a config file)
+config = try_load_from_file(config)
+
 oneview_client = OneViewClient(config)
 
 # Create a FC Network
