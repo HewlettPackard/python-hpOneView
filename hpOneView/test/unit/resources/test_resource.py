@@ -123,6 +123,20 @@ class ResourceTest(unittest.TestCase):
         mock_get_all.assert_called_once_with(filter="\"'name'='MyFibreNetwork'\"")
 
     @mock.patch.object(connection, 'put')
+    def test_basic_update_called_once(self, mock_put):
+        dict_to_update = {"name": "test"}
+        uri = "/rest/resource/test"
+        task = None
+        body = {"body": "body"}
+
+        mock_put.return_value = task, body
+
+        response = self.resource_client.basic_update(dict_to_update, uri)
+
+        self.assertEqual(body, response)
+        mock_put.assert_called_once_with(uri, dict_to_update)
+
+    @mock.patch.object(connection, 'put')
     @mock.patch.object(activity, 'wait4task')
     def test_update_uri(self, mock_wait4task, mock_update):
         dict_to_update = {"resource_data": "resource_data",

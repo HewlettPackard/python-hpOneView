@@ -128,6 +128,10 @@ class ResourceClient(object):
 
         return self._connection.get(self._uri + '/' + id_or_uri)
 
+    def basic_update(self, resource, uri):
+        task, body = self._connection.put(uri, resource)
+        return body
+
     def update(self, resource, blocking=True):
         if not resource:
             raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)

@@ -52,4 +52,6 @@ env
 #pycharm
 .idea
 .idea/
+
+#Global configuration to run examples
 examples/config.json
