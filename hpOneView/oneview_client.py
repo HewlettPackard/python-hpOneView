@@ -45,6 +45,7 @@ __status__ = 'Development'
 from hpOneView.connection import connection
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
+from hpOneView.resources.networking.switches import Switches
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
@@ -57,6 +58,7 @@ class OneViewClient(object):
         self.__connection.login(config["credentials"])
         self.__fc_networks = None
         self.__fcoe_networks = None
+        self.__switches = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     def __set_proxy(self, config):
@@ -89,3 +91,9 @@ class OneViewClient(object):
         if not self.__fcoe_networks:
             self.__fcoe_networks = FcoeNetworks(self.__connection)
         return self.__fcoe_networks
+
+    @property
+    def switches(self):
+        if not self.__switches:
+            self.__switches = Switches(self.__connection)
+        return self.__switches
