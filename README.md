@@ -1,15 +1,15 @@
 [![Build Status](https://travis-ci.org/HewlettPackard/python-hpOneView.svg?branch=master)](https://travis-ci.org/HewlettPackard/python-hpOneView)
 
-hpOneView
-=========
+HPE OneView SDK Python
+======================
 
-This library provides a pure Python interface to the HP OneView REST APIs.
+This library provides a pure Python interface to the HPE OneView REST APIs.
 
-HP OneView is a fresh approach to converged infrastructure management, inspired
+HPE OneView is a fresh approach to converged infrastructure management, inspired
 by the way you expect to work, with a single integrated view of your IT
 infrastructure.
 
-The HP OneView Python library depends on the
+The HPE OneView Python library depends on the
 [Python-Future](http://python-future.org/index.htm)  library to provide Python
 2/3 compatibility.  This will be installed automatically if you use the installation
 methods described below.
@@ -46,4 +46,4 @@ Coming soon
 API Implementation
 ------------------
 
-Status listing of the HP OneView REST interfaces that have been implemented in the Python library so far is hosted in the [Wiki section](https://github.com/HewlettPackard/python-hpOneView/wiki/API-Implementation) 
+Status listing of the HPE OneView REST interfaces that have been implemented in the Python library so far is hosted in the [Wiki section](https://github.com/HewlettPackard/python-hpOneView/wiki/API-Implementation) 

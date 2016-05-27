@@ -1,62 +1,62 @@
-These sample scripts demonstrate the functionality of connecting HP OneView with
-external applications. Specifically, this example generate tickets in HP Service
-Manager based on critical alerts received from HP OneView's State-Change Message
-Bus and then annotates the alert in HP OneView with the new ticket information
-received from HP Service Manager.
+These sample scripts demonstrate the functionality of connecting HPE OneView with
+external applications. Specifically, this example generate tickets in HPE Service
+Manager based on critical alerts received from HPE OneView's State-Change Message
+Bus and then annotates the alert in HPE OneView with the new ticket information
+received from HPE Service Manager.
 
-In HP OneView the State-Change Message Bus (SCMB) is an interface that uses
+In HPE OneView the State-Change Message Bus (SCMB) is an interface that uses
 asynchronous messaging to notify subscribers of changes to managed resources,
 both logical and physical. For example, you can program applications to receive
 notifications when new server hardware is added to the managed environment or
 when the health status of physical resources changes—without having to
 continuously poll the appliance for status using the REST APIs.
 
-HP OneView resources publish messages to the SCMB when they are created,
+HPE OneView resources publish messages to the SCMB when they are created,
 updated, or deleted. The message content is sent in JSON (JavaScript Object
-Notation) format and includes the resource model. To view the list of HP OneView
-resources that publish messages, see the HP OneView REST API Reference.
+Notation) format and includes the resource model. To view the list of HPE OneView
+resources that publish messages, see the HPE OneView REST API Reference.
 
-Two sample scripts are provided to demonstrate connectivity to the HP OneView
+Two sample scripts are provided to demonstrate connectivity to the HPE OneView
 SCMB. Both of the example scripts use the external AMQP library. The first
 script, scmb.py, receives all SCMB messages in the alerts "resource-category"
 and will output all new, active alerts with a critical severity to the console.
 The second script, ov_to_sm.py, is an extension of the first script. Once a new
-critical alert is received this script will connect to HP Service Manager and
+critical alert is received this script will connect to HPE Service Manager and
 open a new ticket for the critical alert, it then takes the ticket number that
-was just created in HP Service Manager and updates the Alert Notes field in HP
+was just created in HPE Service Manager and updates the Alert Notes field in HPE
 OneView with the ticket information.
 
 In order for either of the scripts to register and listen on the SCMB a couple
 of thing need to happen first.
 
-#1. The HP OneView appliance needs to generate a Rabbit MQ keypair. This does
-not happen by default and must be done ONE TIME for the running HP OneView
+#1. The HPE OneView appliance needs to generate a Rabbit MQ keypair. This does
+not happen by default and must be done ONE TIME for the running HPE OneView
 appliance. If either of the example scripts is run with the “-g” argument it
 will request that the keypair is generated and exit. This only needs to be done
-1 time for each HP OneView appliance.
+1 time for each HPE OneView appliance.
 
 #2. The script needs to download a copy of the SSL key and certificate. If
 either of the example scripts is run with the “-d” option it will download the
 required key and certificate. Again, this only needs to be done one time for the
 script.
 
-For Example: assuming, you have a brand new HP OneView appliance invocation
+For Example: assuming, you have a brand new HPE OneView appliance invocation
 would be similar to this:
 
 # Generate the RabbitMQ keypair on the appliance
 
-  ./scmb.py -a [HP OneView Appliance IP] -u Administrator -p MyPass -g
+  ./scmb.py -a [HPE OneView Appliance IP] -u Administrator -p MyPass -g
 
 # Download the SSL key and certificate
 
-  ./scmb.py -a [HP OneView Appliance IP] -u Administrator -p MyPass -d
+  ./scmb.py -a [HPE OneView Appliance IP] -u Administrator -p MyPass -d
 
 Once those two commands have run one time:
 
 The scmby.py scrip can be invoked by:
 
-  ./scmb.py -a [HP OneView Appliance IP] -u Administrator -p MyPass
+  ./scmb.py -a [HPE OneView Appliance IP] -u Administrator -p MyPass
 
 The ov_to_sm.py script can be invoked by:
 
-  ./ov_to_sm.py -a [HP OneView Appliance IP] -u Administrator -p MyPass -sm [SM IP] -x [SM Password]
+  ./ov_to_sm.py -a [HPE OneView Appliance IP] -u Administrator -p MyPass -sm [SM IP] -x [SM Password]

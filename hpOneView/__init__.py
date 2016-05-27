@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-HP OneView Library
+HPE OneView Library
 ~~~~~~~~~~~~~~~~~~~~~
 
-hpOneView is a library for interfacing with HP OneView Management Appliance.
+hpOneView is a library for interfacing with HPE OneView Management Appliance.
 """
 from __future__ import unicode_literals
 from __future__ import print_function
@@ -69,11 +69,11 @@ from hpOneView.uncategorized import *
 def main():
     parser = argparse.ArgumentParser(add_help=True, description='Usage')
     parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
+                        help='HPE OneView Appliance hostname or IP')
     parser.add_argument('-u', '--user', dest='user', required=True,
-                        help='HP OneView Username')
+                        help='HPE OneView Username')
     parser.add_argument('-p', '--pass', dest='passwd', required=True,
-                        help='HP OneView Password')
+                        help='HPE OneView Password')
     parser.add_argument('-c', '--certificate', dest='cert', required=False,
                         help='Trusted SSL Certificate Bundle in PEM '
                         '(Base64 Encoded DER) Format')

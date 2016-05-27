@@ -4,7 +4,7 @@
 fcsans.py
 ~~~~~~~~~~~~
 
-This module implements settings HP OneView REST API
+This module implements settings HPE OneView REST API
 """
 from __future__ import unicode_literals
 from __future__ import print_function

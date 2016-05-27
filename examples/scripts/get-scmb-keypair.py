@@ -76,20 +76,20 @@ def main():
                         formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
     Download the SCMB (RabbitMq) base-64 encoded certificate and keypair from
-    the HP OneView appliance. NOTE: This requires that the keypair has been
+    the HPE OneView appliance. NOTE: This requires that the keypair has been
     previously generated (generate-scmb-ca-cert.py).
 
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
-    HP OneView Appliance hostname or IP address''')
+    HPE OneView Appliance hostname or IP address''')
     parser.add_argument('-u', dest='user', required=False,
                         default='Administrator',
                         help='''
-    HP OneView Username''')
+    HPE OneView Username''')
     parser.add_argument('-p', dest='passwd', required=True,
                         help='''
-    HP OneView Password''')
+    HPE OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
                         help='''
     Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
@@ -99,7 +99,7 @@ def main():
     parser.add_argument('-j', dest='domain', required=False,
                         default='Local',
                         help='''
-    HP OneView Authorized Login Domain''')
+    HPE OneView Authorized Login Domain''')
 
     args = parser.parse_args()
     credential = {'authLoginDomain': args.domain.upper(), 'userName': args.user, 'password': args.passwd}

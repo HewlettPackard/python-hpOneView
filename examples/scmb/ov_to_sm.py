@@ -113,7 +113,7 @@ def print_alert(uri):
 
 def update_alert(uri, smid):
     alerts = act.get_alerts()
-    notes = 'Case automatically loged in HP Service Manager with ID: ' + smid
+    notes = 'Case automatically loged in HPE Service Manager with ID: ' + smid
     for alert in alerts:
         if alert['uri'] == uri:
             amap = common.make_alertMap_dict(notes, alert['eTag'])
@@ -188,7 +188,7 @@ def callback(channel, msg):
             print('logged SMID: %s with uri: %s resourceUri: %s' %
                   (smid, resource['uri'], body['resourceUri']))
             if ret is True:
-                print('HP OneView Alert Notes Updated')
+                print('HPE OneView Alert Notes Updated')
                 print('------------------------------------------')
                 print_alert(body['resourceUri'])
 
@@ -269,11 +269,11 @@ def main():
     global smhost, smhead, act
     parser = argparse.ArgumentParser(add_help=True, description='Usage')
     parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
+                        help='HPE OneView Appliance hostname or IP')
     parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
+                        default='Administrator', help='HPE OneView Username')
     parser.add_argument('-p', '--pass', dest='passwd', required=True,
-                        help='HP OneView Password')
+                        help='HPE OneView Password')
     parser.add_argument('-r', '--route', dest='route', required=False,
                         default='scmb.alerts.#', help='AMQP Routing Key')
     parser.add_argument('-g', '--gen', dest='gen', required=False,

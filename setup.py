@@ -25,8 +25,8 @@ from setuptools import setup
 
 setup(name='hpOneView',
       version='0.1',
-      description='HP OneView Python Library',
-      url='http://hp.com/go/OneViewCommunity',
+      description='HPE OneView Python Library',
+      url='http://www.hpe.com/info/oneviewcommunity',
       author='Hewlett Packard Enterprise Development LP',
       license='MIT',
       packages=['hpOneView', 'hpOneView/resources', 'hpOneView/resources/networking', 'hpOneView/resources/data_services'],

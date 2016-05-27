@@ -91,21 +91,21 @@ def main():
                                      description='''
     Import a physical stand-alone rackmount server.
 
-    This exmaple script IS NOT USED to add a Blade Server to the appliance.
+    This example script IS NOT USED to add a Blade Server to the appliance.
     A BL server will automatically be discovered once it inserted into an
     enclosure being managed by the appliance.
 
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
-    HP OneView Appliance hostname or IP address''')
+    HPE OneView Appliance hostname or IP address''')
     parser.add_argument('-u', dest='user', required=False,
                         default='Administrator',
                         help='''
-    HP OneView Username''')
+    HPE OneView Username''')
     parser.add_argument('-p', dest='passwd', required=True,
                         help='''
-    HP OneView Password''')
+    HPE OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
                         help='''
     Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
@@ -115,7 +115,7 @@ def main():
     parser.add_argument('-j', dest='domain', required=False,
                         default='Local',
                         help='''
-    HP OneView Authorized Login Domain''')
+    HPE OneView Authorized Login Domain''')
     parser.add_argument('-sh', dest='hostname', required=True,
                         help='''
     Hostname or IP address  of the server iLO''')

@@ -4,7 +4,7 @@
 exceptions.py
 ~~~~~~~~~~~~
 
-This module implements exceptions HP OneView REST API
+This module implements exceptions HPE OneView REST API
 """
 from __future__ import unicode_literals
 from __future__ import print_function

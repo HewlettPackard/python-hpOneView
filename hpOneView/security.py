@@ -4,7 +4,7 @@
 security.py
 ~~~~~~~~~~~~
 
-This module implements Settings HP OneView REST API
+This module implements Settings HPE OneView REST API
 """
 from __future__ import absolute_import
 from __future__ import division

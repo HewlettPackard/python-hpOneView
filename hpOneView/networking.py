@@ -4,7 +4,7 @@
 networking.py
 ~~~~~~~~~~~~
 
-This module implements Settings HP OneView REST API
+This module implements Settings HPE OneView REST API
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -140,7 +140,7 @@ class networking(object):
                 self.get_lis(filter='?start=0&count=10')
 
                 For more options, see the Common Parameters session from
-                the HP OneView API reference.
+                the HPE OneView API reference.
         Returns: dict
         """
         return get_members(self._con.get(uri['li'] + filter))
@@ -549,7 +549,7 @@ class networking(object):
                 self.get_logical_downlinks(filter='?start=0&count=10')
 
                 For more options, see the Common Parameters session from
-                the HP OneView API reference.
+                the HPE OneView API reference.
         Returns: dict
         """
         downlinks_uri = uri['ld'] + filter
@@ -580,7 +580,7 @@ class networking(object):
                                                             '?start=0&count=10')
 
                 For more options, see the Common Parameters session from
-                the HP OneView API reference.
+                the HPE OneView API reference.
         Returns: dict
         """
         downlinks_uri = uri['ld'] + '/withoutEthernet' + filter

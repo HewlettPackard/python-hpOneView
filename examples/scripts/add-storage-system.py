@@ -135,21 +135,21 @@ def main():
     mapped to Expected Networks, either a Supported SAN Manager will need to
     be configured, or 3PAR Direct Attach networks will have to exist.
 
-    When adding supported HP 3PAR storage systems, please make sure
-    "startwsapi" has been executed from the HP 3PAR CLI, which enables the
-    HP 3PAR REST API that is required by HP OneView.
+    When adding supported HPE 3PAR storage systems, please make sure
+    "startwsapi" has been executed from the HPE 3PAR CLI, which enables the
+    HPE 3PAR REST API that is required by HPE OneView.
 
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
-    HP OneView Appliance hostname or IP address''')
+    HPE OneView Appliance hostname or IP address''')
     parser.add_argument('-u', dest='user', required=False,
                         default='Administrator',
                         help='''
-    HP OneView Username''')
+    HPE OneView Username''')
     parser.add_argument('-p', dest='passwd', required=True,
                         help='''
-    HP OneView Password''')
+    HPE OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
                         help='''
     Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
@@ -159,7 +159,7 @@ def main():
     parser.add_argument('-j', dest='domain', required=False,
                         default='Local',
                         help='''
-    HP OneView Authorized Login Domain''')
+    HPE OneView Authorized Login Domain''')
     parser.add_argument('-sh', dest='storage', required=True,
                         help='''
     IP address of the storage system to add''')

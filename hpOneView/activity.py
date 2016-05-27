@@ -4,7 +4,7 @@
 activity.py
 ~~~~~~~~~~~~
 
-This module implements the Activity HP OneView REST API
+This module implements the Activity HPE OneView REST API
 """
 from __future__ import absolute_import
 from __future__ import division
