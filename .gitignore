@@ -52,3 +52,4 @@ env
 #pycharm
 .idea
 .idea/
+examples/config.json

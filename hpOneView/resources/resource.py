@@ -122,8 +122,9 @@ class ResourceClient(object):
         """
         if not id_or_uri:
             raise ValueError(RESOURCE_CLIENT_INVALID_ID)
+
         if "/" in id_or_uri:
-            return self.__get_by_uri(id_or_uri)
+            return self.get_by_uri(id_or_uri)
 
         return self._connection.get(self._uri + '/' + id_or_uri)
 
@@ -169,7 +170,7 @@ class ResourceClient(object):
         filter = filter = "\"'{0}'='{1}'\"".format(field, value)
         return self.get_all(filter=filter)
 
-    def __get_by_uri(self, uri):
+    def get_by_uri(self, uri):
         if self._uri in uri:
             return self._connection.get(uri)
         else:
