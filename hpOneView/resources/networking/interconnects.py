@@ -47,15 +47,20 @@ class Interconnects(object):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
 
-    def get_statistics(self, interconnect_id):
+    def get_statistics(self, interconnect_id, port_name=''):
         """
         Gets the statistics from an interconnect.
 
         Args:
             interconnect_id: The interconnect id
+            port_name (str): A specific port name of an interconnect
 
         Returns:
              dict: The statistics for the interconnect that matches id
         """
         uri = "/rest/interconnects/%s/statistics" % interconnect_id
+
+        if port_name:
+            uri = uri + "/" + port_name
+
         return self._client.get(uri)

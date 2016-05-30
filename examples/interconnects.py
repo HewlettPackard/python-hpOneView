@@ -26,3 +26,12 @@ try:
     pprint(interconnect_statistics['moduleStatistics'])
 except HPOneViewException as e:
     print(e.msg['message'])
+
+
+# Get the Statistics from a port of an Interconnects
+print("Get the port statistics for downlink port 1 on the interconnect that matches ID ad28cf21-8b15-4f92-bdcf-51cb2042db32")
+try:
+    statistics = oneview_client.interconnects.get_statistics("ad28cf21-8b15-4f92-bdcf-51cb2042db32", "d1")
+    pprint(statistics)
+except HPOneViewException as e:
+    print(e.msg['message'])
