@@ -47,6 +47,7 @@ from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
 from hpOneView.resources.data_services.metric_streaming import MetricStreaming
 from hpOneView.resources.networking.switches import Switches
+from hpOneView.resources.servers.enclosures import Enclosures
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
@@ -60,6 +61,7 @@ class OneViewClient(object):
         self.__fc_networks = None
         self.__fcoe_networks = None
         self.__switches = None
+        self.__enclosures = None
         self.__metric_streaming = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
@@ -99,6 +101,12 @@ class OneViewClient(object):
         if not self.__switches:
             self.__switches = Switches(self.__connection)
         return self.__switches
+
+    @property
+    def enclosures(self):
+        if not self.__enclosures:
+            self.__enclosures = Enclosures(self.__connection)
+        return self.__enclosures
 
     @property
     def metric_streaming(self):

@@ -93,3 +93,11 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_metric_streaming(self):
         metric = self._oneview.metric_streaming
         self.assertEqual(metric, self._oneview.metric_streaming)
+
+    def test_lazy_loading_enclosures(self):
+        enclosures = self._oneview.enclosures
+        self.assertEqual(enclosures, self._oneview.enclosures)
+
+    def test_lazy_loading_switches(self):
+        switches = self._oneview.switches
+        self.assertEqual(switches, self._oneview.switches)
