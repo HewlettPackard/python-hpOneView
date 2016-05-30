@@ -40,6 +40,7 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class FcNetworks(object):
+
     URI = '/rest/fc-networks'
 
     def __init__(self, con):
