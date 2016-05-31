@@ -132,14 +132,14 @@ def main():
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
-    HP OneView Appliance hostname or IP address''')
+    HPE OneView Appliance hostname or IP address''')
     parser.add_argument('-u', dest='user', required=False,
                         default='Administrator',
                         help='''
-    HP OneView Username''')
+    HPE OneView Username''')
     parser.add_argument('-p', dest='passwd', required=True,
                         help='''
-    HP OneView Password''')
+    HPE OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
                         help='''
     Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
@@ -159,12 +159,12 @@ def main():
 
         . Hostname or IP address of the stand-alone server iLO
         . The "Server Hardware Name" of a server than has already been imported
-          into HP OneView and is listed under Server Hardware''')
+          into HPE OneView and is listed under Server Hardware''')
     group.add_argument('-sh', dest='server_hwt',
                         help='''
     Server hardware type is required for defining BIOS options without
     specifying a specific server identification. The Server Hardware Type must
-    be present in the HP OneView appliance before it can be used. For example,
+    be present in the HPE OneView appliance before it can be used. For example,
     a single server with the specific server hardware type must have been added
     to OneView for that hardware type to be used. The example script
     get-server-hardware-types.py with the -l argument can be used to get a list

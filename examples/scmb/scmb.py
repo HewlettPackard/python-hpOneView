@@ -159,11 +159,11 @@ def getRabbitKp(sec):
 def main():
     parser = argparse.ArgumentParser(add_help=True, description='Usage')
     parser.add_argument('-a', '--appliance', dest='host', required=True,
-                        help='HP OneView Appliance hostname or IP')
+                        help='HPE OneView Appliance hostname or IP')
     parser.add_argument('-u', '--user', dest='user', required=False,
-                        default='Administrator', help='HP OneView Username')
+                        default='Administrator', help='HPE OneView Username')
     parser.add_argument('-p', '--pass', dest='passwd', required=True,
-                        help='HP OneView Password')
+                        help='HPE OneView Password')
     parser.add_argument('-r', '--route', dest='route', required=False,
                         default='scmb.alerts.#', help='AMQP Routing Key')
     parser.add_argument('-g', '--gen', dest='gen', required=False,

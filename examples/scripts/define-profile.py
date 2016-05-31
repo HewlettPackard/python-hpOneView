@@ -187,14 +187,14 @@ def main():
     Define a server profile''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
-    HP OneView Appliance hostname or IP address''')
+    HPE OneView Appliance hostname or IP address''')
     parser.add_argument('-u', dest='user', required=False,
                         default='Administrator',
                         help='''
-    HP OneView Username''')
+    HPE OneView Username''')
     parser.add_argument('-p', dest='passwd', required=True,
                         help='''
-    HP OneView Password''')
+    HPE OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
                         help='''
     Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
@@ -204,7 +204,7 @@ def main():
     parser.add_argument('-j', dest='domain', required=False,
                         default='Local',
                         help='''
-    HP OneView Authorized Login Domain''')
+    HPE OneView Authorized Login Domain''')
     parser.add_argument('-n', dest='name',
                         required=True,
                         help='''
@@ -288,7 +288,7 @@ def main():
         . UEFIOptimized
         . BIOS
 
-    If you select UEFI or UEFI optimized for an HP ProLiant DL Gen9 rack
+    If you select UEFI or UEFI optimized for an HPE ProLiant DL Gen9 rack
     mount server, the remaining boot setting available is the PXE boot policy.
 
     For the UEFI or UEFI optimized boot mode options, the boot mode choice
@@ -378,12 +378,12 @@ def main():
 
         . Hostname or IP address of the stand-alone server iLO
         . Server Hardware name of a server than has already been imported
-          into HP OneView and is listed under Server Hardware
+          into HPE OneView and is listed under Server Hardware
         . "UNASSIGNED" for creating an unassigned Server Profile''')
     parser.add_argument('-sh', dest='server_hwt', required=False,
                         help='''
     Server hardware type is required for defining an unassigned profile. Note
-    the Server Hardware Type must be present in the HP OneView appliance
+    the Server Hardware Type must be present in the HPE OneView appliance
     before it can be used. For example, a single server with the specific server
     hardware type must have been added to OneView for that hardware type to
     be used. The example script get-server-hardware-types.py with the -l

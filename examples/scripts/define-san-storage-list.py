@@ -159,14 +159,14 @@ def main():
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
-    HP OneView Appliance hostname or IP address''')
+    HPE OneView Appliance hostname or IP address''')
     parser.add_argument('-u', dest='user', required=False,
                         default='Administrator',
                         help='''
-    HP OneView Username''')
+    HPE OneView Username''')
     parser.add_argument('-p', dest='passwd', required=True,
                         help='''
-    HP OneView Password''')
+    HPE OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
                         help='''
     Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
@@ -176,7 +176,7 @@ def main():
     parser.add_argument('-j', dest='domain', required=False,
                         default='Local',
                         help='''
-    HP OneView Authorized Login Domain''')
+    HPE OneView Authorized Login Domain''')
     parser.add_argument('-sl', dest='san_list',
                         required=True,
                         help='''
@@ -200,7 +200,7 @@ def main():
                                  'HPUX11iv2', 'HPUX11iv3', 'SUSE', 'SUSE9',
                                  'Inform'],
                         help='''
-    Specify the Host OS type, which will set the Host OS value when HP OneView
+    Specify the Host OS type, which will set the Host OS value when HPE OneView
     created the Host object on the Storage System. Accepted values:
 
          . CitrixXen = "Citrix Xen Server 5.x/6.x"

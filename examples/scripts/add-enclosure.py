@@ -121,7 +121,7 @@ def main():
     parser = argparse.ArgumentParser(add_help=True,
                                      formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
-    This example script will import an enclosure into HP OneView as a
+    This example script will import an enclosure into HPE OneView as a
     managed device.  The Onboard Administrator needs to have IP Address
     configured for each module, and a valid Administrator account with a
     password.
@@ -129,14 +129,14 @@ def main():
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
-    HP OneView Appliance hostname or IP address''')
+    HPE OneView Appliance hostname or IP address''')
     parser.add_argument('-u', dest='user', required=False,
                         default='Administrator',
                         help='''
-    HP OneView Username''')
+    HPE OneView Username''')
     parser.add_argument('-p', dest='passwd', required=True,
                         help='''
-    HP OneView Password''')
+    HPE OneView Password''')
     parser.add_argument('-c', dest='cert', required=False,
                         help='''
     Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
@@ -146,7 +146,7 @@ def main():
     parser.add_argument('-j', dest='domain', required=False,
                         default='Local',
                         help='''
-    HP OneView Authorized Login Domain''')
+    HPE OneView Authorized Login Domain''')
     parser.add_argument('-eu', dest='encusr', required=True,
                         help='''
     Administrative username for the c7000 enclosure OA''')
@@ -155,7 +155,7 @@ def main():
     Administrative password for the c7000 enclosure OA''')
     parser.add_argument('-oa', dest='enc', required=True,
                         help='''
-    IP address of the c7000 to import into HP OneView''')
+    IP address of the c7000 to import into HPE OneView''')
     parser.add_argument('-s', dest='spp', required=False,
                         help='''
     SPP Baseline file name. e.g. SPP2013090_2013_0830_30.iso''')

@@ -4,7 +4,7 @@
 search.py
 ~~~~~~~~~~~~
 
-This module implements search HP OneView REST API
+This module implements search HPE OneView REST API
 """
 from __future__ import absolute_import
 from __future__ import division

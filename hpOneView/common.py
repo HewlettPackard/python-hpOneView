@@ -1094,12 +1094,12 @@ def make_FirmwareSettingsV3(firmwareUri,
         firmwareInstallType:
             FirmwareAndOSDrivers:
                 Updates the firmware and OS drivers without powering down the
-                server hardware using HP Smart Update Tools.
+                server hardware using HPE Smart Update Tools.
             FirmwareOnly:
                  Updates the firmware without powering down the server hardware
-                 using using HP Smart Update Tools.
+                 using using HPE Smart Update Tools.
             FirmwareOnlyOfflineMode:
-                Manages the firmware through HP OneView. Selecting this option
+                Manages the firmware through HPE OneView. Selecting this option
                 requires the server hardware to be powered down.
         manageFirmware:
             Indicates that the server firmware is configured using the server

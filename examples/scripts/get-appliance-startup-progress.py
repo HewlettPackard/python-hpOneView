@@ -73,12 +73,12 @@ def main():
     parser = argparse.ArgumentParser(add_help=True,
                         formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
-    Display the startup progress of the HP OneView appliance
+    Display the startup progress of the HPE OneView appliance
 
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
-    HP OneView Appliance hostname or IP address''')
+    HPE OneView Appliance hostname or IP address''')
     parser.add_argument('-c', dest='cert', required=False,
                         help='''
     Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
@@ -88,7 +88,7 @@ def main():
     parser.add_argument('-j', dest='domain', required=False,
                         default='Local',
                         help='''
-    HP OneView Authorized Login Domain''')
+    HPE OneView Authorized Login Domain''')
 
     args = parser.parse_args()
 

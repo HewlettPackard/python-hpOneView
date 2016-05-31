@@ -59,14 +59,14 @@ def main():
                         formatter_class=argparse.RawTextHelpFormatter,
                                      description='''
     Retrieve EULA (End User License Agreement) status from the
-    HP OneView appliance. The output is "True" if the appliance requires
+    HPE OneView appliance. The output is "True" if the appliance requires
     the EULA to be accepted and "False" if the EULA has already been
     accepted.
 
     Usage: ''')
     parser.add_argument('-a', dest='host', required=True,
                         help='''
-    HP OneView Appliance hostname or IP address''')
+    HPE OneView Appliance hostname or IP address''')
     parser.add_argument('-c', dest='cert', required=False,
                         help='''
     Trusted SSL Certificate Bundle in PEM (Base64 Encoded DER) Format''')
@@ -76,7 +76,7 @@ def main():
     parser.add_argument('-j', dest='domain', required=False,
                         default='Local',
                         help='''
-    HP OneView Authorized Login Domain''')
+    HPE OneView Authorized Login Domain''')
 
     args = parser.parse_args()
 
