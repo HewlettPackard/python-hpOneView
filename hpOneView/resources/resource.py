@@ -37,6 +37,7 @@ __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
 __license__ = 'MIT'
 __status__ = 'Development'
 
+import logging
 from urllib.parse import quote
 from hpOneView.common import get_members
 from hpOneView.activity import activity
@@ -46,6 +47,9 @@ RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED = 'Resource was not provided'
 RESOURCE_CLIENT_INVALID_FIELD = 'Invalid field was provided'
 RESOURCE_CLIENT_INVALID_ID = 'Invalid id was provided'
 RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE = 'Unknown object type'
+UNRECOGNIZED_URI = 'Unrecognized URI for this resource'
+
+logger = logging.getLogger(__name__)
 
 
 class ResourceClient(object):
@@ -86,23 +90,34 @@ class ResourceClient(object):
             view = "&view=" + quote(view)
 
         uri = "{0}?start={1}&count={2}{3}{4}{5}{6}".format(self._uri, start, count, filter, query, sort, view)
-        return self.get_members(uri)
+
+        logger.debug('Getting all resources : with uri : %s' % uri)
+
+        result = self.get_members(uri)
+
+        logger.debug("Getting all resources : count : %i" % len(result))
+
+        return result
 
     def delete(self, resource, force=False, blocking=True, verbose=False, timeout=60):
 
         if not resource:
+            logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
             raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
 
         if isinstance(resource, dict):
             if 'uri' in resource and resource['uri']:
                 uri = resource['uri']
             else:
+                logger.exception(RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE)
                 raise HPOneViewUnknownType(RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE)
         else:
             uri = self._uri + "/" + resource
 
         if force:
             uri += '?force=True'
+
+        logger.debug("Delete resource (uri = %s, resource = %s)" % (self._uri, str(resource)))
 
         task, body = self._connection.delete(uri)
         if blocking:
@@ -111,6 +126,7 @@ class ResourceClient(object):
         return task
 
     def get_schema(self):
+        logger.debug('Get schema (uri = %s, resource = %s)' % (self._uri, self._uri))
         return self._connection.get(self._uri + '/schema')
 
     def get(self, id_or_uri):
@@ -121,10 +137,13 @@ class ResourceClient(object):
              The requested resource
         """
         if not id_or_uri:
+            logger.exception(RESOURCE_CLIENT_INVALID_ID)
             raise ValueError(RESOURCE_CLIENT_INVALID_ID)
 
         if "/" in id_or_uri:
             return self.get_by_uri(id_or_uri)
+
+        logger.debug('Get resource (uri = %s, ID = %s)' % (self._uri, str(id_or_uri)))
 
         return self._connection.get(self._uri + '/' + id_or_uri)
 
@@ -134,7 +153,10 @@ class ResourceClient(object):
 
     def update(self, resource, blocking=True):
         if not resource:
+            logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
             raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
+
+        logger.debug('Update (uri = %s, resource = %s)' % (self._uri, str(resource)))
 
         task, body = self._connection.put(resource['uri'], resource)
         if blocking:
@@ -143,7 +165,10 @@ class ResourceClient(object):
 
     def create(self, resource, blocking=True):
         if not resource:
+            logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
             raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
+
+        logger.debug('Create (uri = %s, resource = %s)' % (self._uri, str(resource)))
 
         task, entity = self._connection.post(self._uri, resource)
         if blocking:
@@ -151,10 +176,12 @@ class ResourceClient(object):
         return task
 
     def __wait_for_task(self, task, tout=60):
+        logger.debug('Waiting for task')
         task = self._activity.wait4task(task, tout=tout, verbose=False)
         if 'type' in task and task['type'].startswith('Task'):
             resource = self._activity.get_task_associated_resource(task)
             entity = self._connection.get(resource['resourceUri'])
+            logger.debug('Task completed')
             return entity
 
     def get_by(self, field, value):
@@ -169,16 +196,21 @@ class ResourceClient(object):
 
         """
         if not field:
+            logger.exception(RESOURCE_CLIENT_INVALID_FIELD)
             raise ValueError(RESOURCE_CLIENT_INVALID_FIELD)
 
-        filter = filter = "\"'{0}'='{1}'\"".format(field, value)
+        logger.debug('Get by (uri = %s, field = %s, value = %s)' % (self._uri, field, str(value)))
+
+        filter = "\"'{0}'='{1}'\"".format(field, value)
         return self.get_all(filter=filter)
 
     def get_by_uri(self, uri):
         if self._uri in uri:
+            logger.debug('Get resource by uri : uri : %s' % uri)
             return self._connection.get(uri)
         else:
-            raise HPOneViewUnknownType("Unrecognized URI for this resource")
+            logger.exception('Get by uri : unrecognized uri: (%s)' % uri)
+            raise HPOneViewUnknownType(UNRECOGNIZED_URI)
 
     def get_utilization(self, id, fields=None, filter=None, refresh=False, view=None):
         """

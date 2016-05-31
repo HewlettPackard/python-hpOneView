@@ -64,7 +64,11 @@ from hpOneView.storage import *
 from hpOneView.fcsans import *
 from hpOneView.facilities import *
 from hpOneView.uncategorized import *
+from hpOneView.exception_handler import handle_exceptions
 
+logging.getLogger(__name__).addHandler(logging.NullHandler())
+
+sys.excepthook = handle_exceptions
 
 def main():
     parser = argparse.ArgumentParser(add_help=True, description='Usage')

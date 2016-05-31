@@ -48,6 +48,7 @@ __status__ = 'Development'
 
 import http.client
 import json
+import logging
 import shutil  # for shutil.copyfileobj()
 import mmap  # so we can upload the iso without having to load it in memory
 import os
@@ -56,6 +57,9 @@ import time
 
 from hpOneView.common import uri, get_members, get_member, make_eula_dict, make_initial_password_change_dict
 from hpOneView.exceptions import HPOneViewException
+
+
+logger = logging.getLogger(__name__)
 
 
 class connection(object):
@@ -388,6 +392,7 @@ class connection(object):
         try:
             task, body = self.post(uri['loginSessions'], self._cred)
         except HPOneViewException:
+            logger.exception('Login failed')
             raise
         auth = body['sessionID']
         # Add the auth ID to the headers dictionary
@@ -395,6 +400,7 @@ class connection(object):
         self._session = True
         if verbose is True:
             print(('Session Key: ' + auth))
+        logger.info('Logged in successfully')
 
     def logout(self, verbose=False):
         # resp, body = self.do_http(method, uri['loginSessions'] \
@@ -402,9 +408,11 @@ class connection(object):
         try:
             self.delete(uri['loginSessions'])
         except HPOneViewException:
+            logger.exception('Logout failed')
             raise
         if verbose is True:
             print('Logged Out')
         del self._headers['auth']
         self._session = False
+        logger.info('Logged out successfully')
         return None
