@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/HewlettPackard/python-hpOneView.svg?branch=master)](https://travis-ci.org/HewlettPackard/python-hpOneView)
 
-HPE OneView SDK Python
-======================
+HPE OneView SDK for Python
+===========================
 
 This library provides a pure Python interface to the HPE OneView REST APIs.
 
