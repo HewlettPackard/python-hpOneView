@@ -37,7 +37,6 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 from hpOneView.resources.resource import ResourceClient
-from urllib.parse import quote
 
 
 class Enclosures(object):
@@ -77,8 +76,8 @@ class Enclosures(object):
                   equals (=) operator.
 
                 startDate
-                    Start date of requested starting time range in ISO 8601 format (2016-05-31T07:20:00.000Z). If omitted,
-                     the startDate is determined by the endDate minus 24 hours.
+                    Start date of requested starting time range in ISO 8601 format (2016-05-31T07:20:00.000Z).
+                    If omitted, the startDate is determined by the endDate minus 24 hours.
                 endDate
                     End date of requested starting time range in ISO 8601 format. When omitted the endDate includes the
                     latest data sample available.
@@ -126,23 +125,4 @@ class Enclosures(object):
 
         """
 
-        query = ''
-
-        if filter:
-            query += "&filter=" + quote(filter)
-
-        if fields:
-            query += "&fields=" + quote(fields)
-
-        if refresh:
-            query += "&refresh=true"
-
-        if view:
-            query += "&view=" + quote(view)
-
-        if query:
-            query = "?" + query[1:]
-
-        uri = "{0}/{1}/utilization{2}".format(self.URI, id, query)
-
-        return self._client.get(uri)
+        return self._client.get_utilization(id, fields=fields, filter=filter, refresh=refresh, view=view)

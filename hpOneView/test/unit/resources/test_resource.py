@@ -28,7 +28,7 @@ import mock
 from hpOneView.activity import activity
 from hpOneView.connection import connection
 from hpOneView.exceptions import HPOneViewUnknownType
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import ResourceClient, RESOURCE_CLIENT_INVALID_ID
 
 
 class FakeResource(object):
@@ -41,7 +41,7 @@ class FakeResource(object):
 
 
 class ResourceTest(unittest.TestCase):
-    URI = "this/is/a/test/uri"
+    URI = "/rest/testuri"
 
     def setUp(self):
         super(ResourceTest, self).setUp()
@@ -355,5 +355,36 @@ class ResourceTest(unittest.TestCase):
             fake_resource.get_fake(uri)
         except HPOneViewUnknownType as exception:
             self.assertEqual(message, exception.args[0])
+        else:
+            self.fail("Expected Exception was not raised")
+
+    @mock.patch.object(connection, 'get')
+    def test_get_utilization_with_all_args(self, mock_get):
+        self.resource_client.get_utilization('09USE7335NW3', fields='AmbientTemperature,AveragePower,PeakPower',
+                                             filter='startDate=2016-05-30T03:29:42.361Z',
+                                             refresh=True, view='day')
+
+        expected_uri = '/rest/testuri/09USE7335NW3/utilization' \
+                       '?filter=startDate%3D2016-05-30T03%3A29%3A42.361Z' \
+                       '&fields=AmbientTemperature%2CAveragePower%2CPeakPower' \
+                       '&refresh=true' \
+                       '&view=day'
+
+        mock_get.assert_called_once_with(expected_uri)
+
+    @mock.patch.object(connection, 'get')
+    def test_get_utilization_with_defaults(self, mock_get):
+        self.resource_client.get_utilization('09USE7335NW3')
+
+        expected_uri = '/rest/testuri/09USE7335NW3/utilization'
+
+        mock_get.assert_called_once_with(expected_uri)
+
+    def test_get_utilization_with_empty(self):
+
+        try:
+            self.resource_client.get_utilization('')
+        except ValueError as exception:
+            self.assertEqual(RESOURCE_CLIENT_INVALID_ID, exception.args[0])
         else:
             self.fail("Expected Exception was not raised")
