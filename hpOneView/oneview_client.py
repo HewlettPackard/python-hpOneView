@@ -43,7 +43,6 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 import json
-import os
 
 from hpOneView.connection import connection
 from hpOneView.resources.networking.fc_networks import FcNetworks
@@ -72,7 +71,15 @@ class OneViewClient(object):
 
     @classmethod
     def from_json(cls, file_name):
+        """
+        Construct OneViewClient using a json file
 
+        Args:
+            file_name: json full path
+
+        Returns: OneViewClient
+
+        """
         with open(file_name) as json_data:
             config = json.load(json_data)
 
