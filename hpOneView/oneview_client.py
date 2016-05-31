@@ -42,6 +42,9 @@ __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
 __license__ = 'MIT'
 __status__ = 'Development'
 
+import json
+import os
+
 from hpOneView.connection import connection
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
@@ -66,6 +69,14 @@ class OneViewClient(object):
         self.__metric_streaming = None
         self.__interconnects = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
+
+    @classmethod
+    def from_json(cls, file_name):
+
+        with open(file_name) as json_data:
+            config = json.load(json_data)
+
+        return cls(config)
 
     def __set_proxy(self, config):
         """
