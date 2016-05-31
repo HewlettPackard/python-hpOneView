@@ -51,3 +51,11 @@ class InterconnectsTest(unittest.TestCase):
         uri = '/rest/interconnects/3518be0e-17c1-4189-8f81-83f3724f6155/statistics/d1'
 
         mock_get_by_uri.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'get_by_uri')
+    def test_get_statistics_with_port_name_and_subport(self, mock_get_by_uri):
+        self._interconnects.get_subport_statistics('3518be0e-17c1-4189-8f81-83f3724f6155', 'd1', 1)
+
+        uri = '/rest/interconnects/3518be0e-17c1-4189-8f81-83f3724f6155/statistics/d1/subport/1'
+
+        mock_get_by_uri.assert_called_once_with(uri)

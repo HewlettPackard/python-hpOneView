@@ -64,3 +64,18 @@ class Interconnects(object):
             uri = uri + "/" + port_name
 
         return self._client.get(uri)
+
+    def get_subport_statistics(self, interconnect_id, port_name, subport_number):
+        """
+        Gets the subport statistics on an interconnect.
+
+        Args:
+            interconnect_id: The interconnect id
+            port_name (str): A specific port name of an interconnect
+            subport_number (int): The subport
+
+        Returns:
+             dict: The statistics for the interconnect that matches id, port_name and subport_number
+        """
+        uri = "/rest/interconnects/%s/statistics/%s/subport/%i" % (interconnect_id, port_name, subport_number)
+        return self._client.get(uri)
