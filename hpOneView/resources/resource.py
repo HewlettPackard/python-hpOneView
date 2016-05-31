@@ -219,29 +219,12 @@ class ResourceClient(object):
         Args:
             id: resource identification
             fields:
-                Name of the metric(s) to be retrieved in the format METRIC[,METRIC]...
-
-                Server hardware supports the following utilization metrics:
-
-                AmbientTemperature
-                    Inlet air temperature in degrees Celsius during this sample interval.
-                AveragePower
-                    Average power consumption in Watts during this sample interval.
-                PeakPower
-                    Peak power consumption in Watts during this sample interval.
-                PowerCap
-                    Dynamic power cap setting on the server hardware in Watts during this sample interval.
-                CpuUtilization
-                    CPU utilization of all CPUs in percent during this sample interval.
-                CpuAverageFreq
-                    Average CPU frequency in Mhz during this sample interval.
-
+                Name of the supported metric(s) to be retrieved in the format METRIC[,METRIC]...
                 If unspecified, all metrics supported are returned.
 
             filter:
-                Provides an expression of the requested time range of data. One condition (startDate/endDate) is
-                specified per filter specification as described below. The condition must be specified via the
-                equals (=) operator.
+                Filters should be in the format FILTER_NAME=VALUE[,FILTER_NAME=VALUE]...
+                E.g.: 'startDate=2016-05-30T11:20:44.541Z,endDate=2016-05-30T19:20:44.541Z'
 
                 startDate
                     Start date of requested starting time range in ISO 8601 format. If omitted, the startDate is
@@ -300,7 +283,7 @@ class ResourceClient(object):
         query = ''
 
         if filter:
-            query += "&filter=" + quote(filter)
+            query += self.__make_query_filter(filter)
 
         if fields:
             query += "&fields=" + quote(fields)
@@ -317,3 +300,8 @@ class ResourceClient(object):
         uri = "{0}/{1}/utilization{2}".format(self._uri, id, query)
 
         return self._connection.get(uri)
+
+    def __make_query_filter(self, filter):
+        filters = filter.split(",")
+        formated_filter = "&filter=".join(quote(f) for f in filters)
+        return "&filter=" + formated_filter

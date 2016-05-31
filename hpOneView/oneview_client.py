@@ -24,7 +24,7 @@
 oneview_client.py
 ~~~~~~~~~~~~
 
-This module implements a common client for HP OneView REST API
+This module implements a common client for HPE OneView REST API
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -50,6 +50,7 @@ from hpOneView.resources.networking.switches import Switches
 from hpOneView.resources.servers.enclosures import Enclosures
 from hpOneView.resources.servers.server_hardware import ServerHardware
 from hpOneView.resources.networking.interconnects import Interconnects
+from hpOneView.resources.facilities.power_devices import PowerDevices
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
@@ -67,6 +68,7 @@ class OneViewClient(object):
         self.__metric_streaming = None
         self.__server_hardware = None
         self.__interconnects = None
+        self.__power_devices = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     def __set_proxy(self, config):
@@ -129,3 +131,9 @@ class OneViewClient(object):
         if not self.__interconnects:
             self.__interconnects = Interconnects(self.__connection)
         return self.__interconnects
+
+    @property
+    def power_devices(self):
+        if not self.__power_devices:
+            self.__power_devices = PowerDevices(self.__connection)
+        return self.__power_devices
