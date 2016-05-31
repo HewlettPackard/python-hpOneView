@@ -26,21 +26,21 @@ from unittest import TestCase
 import mock
 
 from hpOneView.connection import connection
-from hpOneView.resources.servers.enclosures import Enclosures
+from hpOneView.resources.servers.server_hardware import ServerHardware
 from hpOneView.resources.resource import ResourceClient
 
 
-class EnclosuresTest(TestCase):
+class ServerHardwareTest(TestCase):
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
-        self._enclosures = Enclosures(self.connection)
+        self._server_hardware = ServerHardware(self.connection)
 
     @mock.patch.object(ResourceClient, 'get_utilization')
     def test_get_utilization_with_all_args(self, mock_get_utilization):
-        self._enclosures.get_utilization('09USE7335NW3', fields='AmbientTemperature,AveragePower,PeakPower',
-                                         filter='startDate=2016-05-30T03:29:42.361Z',
-                                         refresh=True, view='day')
+        self._server_hardware.get_utilization('09USE7335NW3', fields='AmbientTemperature,AveragePower,PeakPower',
+                                              filter='startDate=2016-05-30T03:29:42.361Z',
+                                              refresh=True, view='day')
 
         mock_get_utilization.assert_called_once_with('09USE7335NW3', fields='AmbientTemperature,AveragePower,PeakPower',
                                                      filter='startDate=2016-05-30T03:29:42.361Z',
@@ -48,6 +48,6 @@ class EnclosuresTest(TestCase):
 
     @mock.patch.object(ResourceClient, 'get_utilization')
     def test_get_utilization_with_defaults(self, mock_get):
-        self._enclosures.get_utilization('09USE7335NW3')
+        self._server_hardware.get_utilization('09USE7335NW3')
 
         mock_get.assert_called_once_with('09USE7335NW3', fields=None, filter=None, refresh=False, view=None)
