@@ -359,13 +359,28 @@ class ResourceTest(unittest.TestCase):
             self.fail("Expected Exception was not raised")
 
     @mock.patch.object(connection, 'get')
-    def test_get_utilization_with_all_args(self, mock_get):
+    def test_get_utilization_with_args(self, mock_get):
         self.resource_client.get_utilization('09USE7335NW3', fields='AmbientTemperature,AveragePower,PeakPower',
                                              filter='startDate=2016-05-30T03:29:42.361Z',
                                              refresh=True, view='day')
 
         expected_uri = '/rest/testuri/09USE7335NW3/utilization' \
                        '?filter=startDate%3D2016-05-30T03%3A29%3A42.361Z' \
+                       '&fields=AmbientTemperature%2CAveragePower%2CPeakPower' \
+                       '&refresh=true' \
+                       '&view=day'
+
+        mock_get.assert_called_once_with(expected_uri)
+
+    @mock.patch.object(connection, 'get')
+    def test_get_utilization_with_multiple_filters(self, mock_get):
+        self.resource_client.get_utilization('09USE7335NW3', fields='AmbientTemperature,AveragePower,PeakPower',
+                                             filter='startDate=2016-05-30T03:29:42.361Z,endDate=2016-05-31T03:29:42.361Z',
+                                             refresh=True, view='day')
+
+        expected_uri = '/rest/testuri/09USE7335NW3/utilization' \
+                       '?filter=startDate%3D2016-05-30T03%3A29%3A42.361Z' \
+                       '&filter=endDate%3D2016-05-31T03%3A29%3A42.361Z' \
                        '&fields=AmbientTemperature%2CAveragePower%2CPeakPower' \
                        '&refresh=true' \
                        '&view=day'
