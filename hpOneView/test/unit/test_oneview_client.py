@@ -24,7 +24,9 @@
 import unittest
 
 import mock
+import io
 
+from hpOneView.test.test_utils import mock_builtin
 from hpOneView.connection import connection
 from hpOneView.oneview_client import OneViewClient
 from hpOneView.resources.data_services.metric_streaming import MetricStreaming
@@ -48,7 +50,7 @@ class OneViewClientTest(unittest.TestCase):
 
         self._oneview = OneViewClient(config)
 
-    def test_reaise_error_invalid_proxy(self):
+    def test_raise_error_invalid_proxy(self):
         config = {"ip": "172.16.102.59",
                   "proxy": "3128",
                   "credentials": {
@@ -62,6 +64,28 @@ class OneViewClientTest(unittest.TestCase):
             self.assertTrue("Proxy" in e.args[0])
         else:
             self.fail()
+
+    @mock.patch.object(connection, 'login')
+    @mock.patch(mock_builtin('open'))
+    def test_from_json_file(self, mock_open, mock_login):
+
+        json_config_content = u"""{
+          "ip": "172.16.102.59",
+          "credentials": {
+            "userName": "administrator",
+            "authLoginDomain": "",
+            "password": ""
+          }
+        }"""
+
+        # Simulates a TextIOWrapper (file output)
+        output = io.StringIO(json_config_content)
+        mock_open.return_value = output
+
+        oneview_client = OneViewClient.from_json("config.json")
+
+        self.assertIsInstance(oneview_client, OneViewClient)
+        self.assertEqual("172.16.102.59", oneview_client.connection.get_host())
 
     def test_fc_networks_has_right_type(self):
         self.assertIsInstance(self._oneview.fc_networks, FcNetworks)

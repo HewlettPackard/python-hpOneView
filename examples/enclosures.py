@@ -19,22 +19,23 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
+ENCLOSURE_ID = "09SGH102X6J1"
+
 # Get Statistics with defaults
-print("Get enclousure statistics")
+print("Get enclosure statistics")
 try:
-    switch_statistics = oneview_client.enclosures.get_utilization("09SGH102X6J1")
-    pprint(switch_statistics)
+    enclosure_statistics = oneview_client.enclosures.get_utilization(ENCLOSURE_ID)
+    pprint(enclosure_statistics)
 except HPOneViewException as e:
     print(e.msg['message'])
 
-
 # Get Statistics specifying parameters
-print("Get enclousure statistics")
+print("Get enclosure statistics")
 try:
-    switch_statistics = oneview_client.enclosures.get_utilization("09SGH102X6J1",
-                                                                  fields='AveragePower',
-                                                                  filter='startDate=2016-05-30T03:29:42.000Z',
-                                                                  view='day')
-    pprint(switch_statistics)
+    enclosure_statistics = oneview_client.enclosures.get_utilization(ENCLOSURE_ID,
+                                                                     fields='AveragePower',
+                                                                     filter='startDate=2016-05-30T03:29:42.000Z',
+                                                                     view='day')
+    pprint(enclosure_statistics)
 except HPOneViewException as e:
     print(e.msg['message'])
