@@ -30,7 +30,7 @@ from hpOneView.connection import connection
 from hpOneView.exceptions import HPOneViewInvalidResource
 from hpOneView.servers import servers
 from hpOneView.settings import settings
-from hpOneView.test.test_utils import mock_builtin
+from tests.test_utils import mock_builtin
 
 
 class ProfilesTest(unittest.TestCase):

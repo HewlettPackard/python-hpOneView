@@ -43,4 +43,3 @@ try:
     pprint(statistics)
 except HPOneViewException as e:
     print(e.msg['message'])
-
