@@ -57,7 +57,8 @@ class MetricStreamingTest(TestCase):
                 }
             ]
         }
+        configuration_rest_call = configuration.copy()
         mock_update.return_value = configuration
 
         self._metrics.update_configuration(configuration)
-        mock_update.assert_called_once_with(configuration, "/rest/metrics/configuration")
+        mock_update.assert_called_once_with(configuration_rest_call, "/rest/metrics/configuration")

@@ -112,8 +112,9 @@ class FcoeNetworks(object):
 
         Returns: Created resource. When blocking=False, returns the task.
         """
-        resource.update(self.__default_values)
-        return self._client.create(resource, blocking)
+        data = self.__default_values.copy()
+        data.update(resource)
+        return self._client.create(data, blocking)
 
     def update(self, resource, blocking=True):
         """
@@ -126,8 +127,9 @@ class FcoeNetworks(object):
 
         Returns: Updated resource. When blocking=False, returns the task.
         """
-        resource.update(self.__default_values)
-        return self._client.update(resource, blocking)
+        data = self.__default_values.copy()
+        data.update(resource)
+        return self._client.update(data, blocking)
 
     def get_by(self, field, value):
         """
