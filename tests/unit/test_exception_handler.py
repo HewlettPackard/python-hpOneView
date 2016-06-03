@@ -31,11 +31,13 @@ from hpOneView.exceptions import HPOneViewException
 
 
 class ExceptionHandlerTest(unittest.TestCase):
+
+    @mock.patch.object(traceback, 'print_exception')
     @mock.patch.object(logging, 'error')
-    def test_should_log_message(self, mock_logging_error):
+    def test_should_log_message(self, mock_logging_error, mock_traceback):
         message = "test message"
         exception = HPOneViewException(message)
-        traceback_ex = {}
+        traceback_ex = None
         handle_exceptions(exception.__class__, exception, traceback_ex, mock_logging_error)
 
         log_message = "Uncaught Exception: HPOneViewException with message: test message"
@@ -47,7 +49,7 @@ class ExceptionHandlerTest(unittest.TestCase):
     def test_should_print_exception(self, mock_logging_error, mock_traceback):
         message = "test message"
         exception = HPOneViewException(message)
-        traceback_ex = {}
+        traceback_ex = None
         handle_exceptions(exception.__class__, exception, traceback_ex, mock_logging_error)
 
         mock_traceback.assert_called_once_with(exception.__class__, exception, traceback_ex)

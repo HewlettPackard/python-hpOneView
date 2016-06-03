@@ -116,6 +116,10 @@ class OneViewClientTest(unittest.TestCase):
     def test_metric_streaming_has_value(self):
         self.assertIsNotNone(self._oneview.metric_streaming)
 
+    def test_lazy_loading_tasks(self):
+        tasks = self._oneview.tasks
+        self.assertEqual(tasks, self._oneview.tasks)
+
     def test_lazy_loading_metric_streaming(self):
         metric = self._oneview.metric_streaming
         self.assertEqual(metric, self._oneview.metric_streaming)

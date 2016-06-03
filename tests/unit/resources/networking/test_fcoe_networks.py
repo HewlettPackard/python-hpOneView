@@ -85,8 +85,8 @@ class FcoeNetworksTest(TestCase):
         resource_rest_call = resource.copy()
         mock_update.return_value = {}
 
-        self._fcoe_networks.update(resource, False)
-        mock_update.assert_called_once_with(resource_rest_call, False)
+        self._fcoe_networks.update(resource, blocking=False)
+        mock_update.assert_called_once_with(resource_rest_call, blocking=False)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_should_use_default_values(self, mock_update):
@@ -101,7 +101,7 @@ class FcoeNetworksTest(TestCase):
 
         self._fcoe_networks.update(resource)
 
-        mock_update.assert_called_once_with(resource_with_default_values, True)
+        mock_update.assert_called_once_with(resource_with_default_values, blocking=True)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):

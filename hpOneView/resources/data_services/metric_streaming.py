@@ -115,4 +115,4 @@ class MetricStreaming(object):
         Returns (dict):
             The current configuration for which metrics are being relayed
         """
-        return self._client.basic_update(configuration, self.URI + "/configuration")
+        return self._client.update(configuration, uri=self.URI + "/configuration")

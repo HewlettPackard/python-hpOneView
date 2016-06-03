@@ -136,7 +136,7 @@ class FcNetworks(object):
         """
         data = self.__default_values.copy()
         data.update(resource)
-        return self._client.update(data, blocking)
+        return self._client.update(data, blocking=blocking)
 
     def get_by(self, field, value):
         """

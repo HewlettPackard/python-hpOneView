@@ -40,7 +40,7 @@ __status__ = 'Development'
 import logging
 from urllib.parse import quote
 from hpOneView.common import get_members
-from hpOneView.activity import activity
+from hpOneView.resources.task_monitor import TaskMonitor
 from hpOneView.exceptions import HPOneViewUnknownType
 
 RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED = 'Resource was not provided'
@@ -60,13 +60,13 @@ class ResourceClient(object):
     def __init__(self, con, uri):
         self._connection = con
         self._uri = uri
-        self._activity = activity(con)
+        self._task_monitor = TaskMonitor(con)
 
     def get_members(self, uri):
         # TODO: common is deprecated, refactor get_members implementation
         return get_members(self._connection.get(uri))
 
-    def get_all(self, start=0, count=-1, filter='', query='', sort='', view=''):
+    def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields=''):
         """
         the use of optional parameters are described here:
         http://h17007.www1.hpe.com/docs/enterprise/servers/oneview2.0/cic-api/en/api-docs/current/index.html
@@ -89,7 +89,11 @@ class ResourceClient(object):
         if view:
             view = "&view=" + quote(view)
 
-        uri = "{0}?start={1}&count={2}{3}{4}{5}{6}".format(self._uri, start, count, filter, query, sort, view)
+        if fields:
+            fields = "&fields=" + quote(fields)
+
+        uri = "{0}?start={1}&count={2}{3}{4}{5}{6}{7}".format(self._uri, start, count, filter, query, sort, view,
+                                                              fields)
 
         logger.debug('Getting all resources : with uri : %s' % uri)
 
@@ -121,7 +125,7 @@ class ResourceClient(object):
 
         task, body = self._connection.delete(uri)
         if blocking:
-            task = self._activity.wait4task(task, tout=timeout, verbose=verbose)
+            task = self._task_monitor.wait_for_task(task, timeout=timeout)
 
         return task
 
@@ -147,20 +151,24 @@ class ResourceClient(object):
 
         return self._connection.get(self._uri + '/' + id_or_uri)
 
-    def basic_update(self, resource, uri):
-        task, body = self._connection.put(uri, resource)
-        return body
-
-    def update(self, resource, blocking=True):
+    def update(self, resource, uri=None, blocking=True):
         if not resource:
             logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
             raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
 
-        logger.debug('Update (uri = %s, resource = %s)' % (self._uri, str(resource)))
+        logger.debug('Update async (uri = %s, resource = %s)' % (self._uri, str(resource)))
 
-        task, body = self._connection.put(resource['uri'], resource)
+        if not uri:
+            uri = resource['uri']
+
+        task, body = self._connection.put(uri, resource)
+
+        if not task:
+            return body
+
         if blocking:
             return self.__wait_for_task(task, 60)
+
         return task
 
     def create(self, resource, blocking=True):
@@ -177,12 +185,9 @@ class ResourceClient(object):
 
     def __wait_for_task(self, task, tout=60):
         logger.debug('Waiting for task')
-        task = self._activity.wait4task(task, tout=tout, verbose=False)
-        if 'type' in task and task['type'].startswith('Task'):
-            resource = self._activity.get_task_associated_resource(task)
-            entity = self._connection.get(resource['resourceUri'])
-            logger.debug('Task completed')
-            return entity
+        entity = self._task_monitor.wait_for_task(task, tout)
+        logger.debug('Task completed')
+        return entity
 
     def get_by(self, field, value):
         """
