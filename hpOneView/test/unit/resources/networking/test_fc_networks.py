@@ -49,15 +49,16 @@ class FcNetworksTest(unittest.TestCase):
     def test_create_should_use_given_values(self, mock_create):
         resource = {
             'name': 'OneViewSDK Test FC Network',
-            'autoLoginRedistribution': False,
+            'autoLoginRedistribution': True,
             'type': 'fc-networkV2',
-            'linkStabilityTime': 30,
+            'linkStabilityTime': 20,
             'fabricType': None,
         }
+        resource_rest_call = resource.copy()
         mock_create.return_value = {}
 
         self._fc_networks.create(resource, False)
-        mock_create.assert_called_once_with(resource, False)
+        mock_create.assert_called_once_with(resource_rest_call, False)
 
     @mock.patch.object(ResourceClient, 'create')
     def test_create_should_use_default_values(self, mock_create):
@@ -83,14 +84,15 @@ class FcNetworksTest(unittest.TestCase):
             'name': 'OneViewSDK Test FC Network',
             'autoLoginRedistribution': False,
             'type': 'fc-networkV2',
-            'linkStabilityTime': 30,
+            'linkStabilityTime': 20,
             'fabricType': None,
             'uri': 'a_uri',
         }
+        resource_rest_call = resource.copy()
         mock_update.return_value = {}
 
         self._fc_networks.update(resource, False)
-        mock_update.assert_called_once_with(resource, False)
+        mock_update.assert_called_once_with(resource_rest_call, False)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_should_use_default_values(self, mock_update):
