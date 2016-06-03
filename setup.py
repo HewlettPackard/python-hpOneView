@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ###
 #  (C) Copyright (2012-2015) Hewlett Packard Enterprise Development LP
 #
@@ -21,6 +22,7 @@
 ###
 
 
+from setuptools import find_packages
 from setuptools import setup
 
 setup(name='hpOneView',
@@ -29,5 +31,6 @@ setup(name='hpOneView',
       url='http://www.hpe.com/info/oneviewcommunity',
       author='Hewlett Packard Enterprise Development LP',
       license='MIT',
-      packages=['hpOneView', 'hpOneView/resources', 'hpOneView/resources/networking', 'hpOneView/resources/data_services'],
+      packages=find_packages('hpOneView'),
+      package_dir={'': 'hpOneView'},
       install_requires=['future>=0.15.2'])
