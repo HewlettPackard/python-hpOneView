@@ -26,7 +26,7 @@ import unittest
 import mock
 import io
 
-from hpOneView.test.test_utils import mock_builtin
+from tests.test_utils import mock_builtin
 from hpOneView.connection import connection
 from hpOneView.oneview_client import OneViewClient
 from hpOneView.resources.data_services.metric_streaming import MetricStreaming
