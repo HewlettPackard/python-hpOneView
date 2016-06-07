@@ -76,7 +76,7 @@ class OneViewClient(object):
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
-    def from_json(cls, file_name):
+    def from_json_file(cls, file_name):
         """
         Construct OneViewClient using a json file
 

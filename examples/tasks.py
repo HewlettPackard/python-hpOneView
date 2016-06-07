@@ -40,9 +40,9 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-# Get all tasks
-print("Get all tasks")
-tasks = oneview_client.tasks.get_all(0, 50000)
+# Getting first 500 tasks
+print("Getting first 500 tasks")
+tasks = oneview_client.tasks.get_all(0, 500)
 pprint(tasks)
 
 # Get a specific task

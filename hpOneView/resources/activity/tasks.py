@@ -89,6 +89,7 @@ class Tasks(object):
                  collections of resources.
 
         Returns:
+            dict: tasks
 
         """
         return self._client.get_all(start=start, count=count, filter=filter, query=query, sort=sort, view=view,

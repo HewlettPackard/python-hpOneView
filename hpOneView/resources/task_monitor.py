@@ -37,6 +37,7 @@ __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
 __license__ = 'MIT'
 __status__ = 'Development'
 
+import logging
 import time
 from hpOneView.exceptions import HPOneViewInvalidResource, HPOneViewTimeout, HPOneViewTaskError, HPOneViewUnknownType
 
@@ -48,6 +49,9 @@ MSG_UNKNOWN_OBJECT_TYPE = 'Unknown object type'
 MSG_TASK_TYPE_UNRECONIZED = "Task type: '%s' resource is not a recognized version"
 MSG_UNKNOWN_EXCEPTION = 'Unknown Exception'
 MSG_TIMEOUT = 'Waited %s seconds for task to complete, aborting'
+MSG_INVALID_TASK = 'Invalid task was provided'
+
+logger = logging.getLogger(__name__)
 
 
 class TaskMonitor(object):
@@ -55,7 +59,7 @@ class TaskMonitor(object):
         self._connection = con
 
     @staticmethod
-    def get_cur_seconds():
+    def get_current_seconds():
         return int(time.time())
 
     def wait_for_task(self, task, timeout=60):
@@ -65,25 +69,33 @@ class TaskMonitor(object):
             task: task dict
             timeout: timeout in seconds
 
-        Returns: associated resource when creating or updating; task when deleting
-
+        Returns: associated resource when creating or updating; Trues when deleting
         """
-
         if not task:
-            return None
+            raise HPOneViewUnknownType(MSG_INVALID_TASK)
+
+        logger.debug('Waiting for task')
 
         # gets current cpu second for timeout
-        start_time = self.get_cur_seconds()
+        start_time = self.get_current_seconds()
 
-        while self.task_is_running(task):
-            # wait 600 milisecods
-            time.sleep(.6)
-            if start_time + timeout < self.get_cur_seconds():
+        i = 0
+        while self.is_task_running(task):
+            # wait 1 to 10 seconds
+            # the value increases to avoid flooding server with requests
+            i = i + 1 if i < 10 else 10
+
+            time.sleep(i)
+            if start_time + timeout < self.get_current_seconds():
                 raise HPOneViewTimeout(MSG_TIMEOUT % str(timeout))
 
+        task_response = self.__get_task_response(task)
+        logger.debug('Task completed')
+        return task_response
+
+    def __get_task_response(self, task):
         task = self.get(task)
         if task['taskState'] in TASK_ERROR_STATES and task['taskState'] != 'Warning':
-
             msg = None
             if 'taskErrors' in task and len(task['taskErrors']) > 0:
                 err = task['taskErrors'][0]
@@ -98,14 +110,21 @@ class TaskMonitor(object):
                 raise HPOneViewTaskError(MSG_UNKNOWN_EXCEPTION)
 
         if 'type' in task and task['type'].startswith('Task') and 'name' in task and task['name'] != 'Delete':
+            # get associated resource when is not a delete task
             task, entity = self.get_associated_resource(task)
             return entity
 
+        if 'name' in task and task['name'] == 'Delete':
+            # delete task return true
+            return True
+
+        logger.warning('Task completed, unknown response: ' + str(task))
         return task
 
-    def task_is_running(self, task):
+    def is_task_running(self, task):
         """
-            Check if a task is running according: TASK_PENDING_STATES ['New', 'Starting', 'Pending', 'Running', 'Suspended', 'Stopping']
+            Check if a task is running according: TASK_PENDING_STATES ['New', 'Starting',
+            'Pending', 'Running', 'Suspended', 'Stopping']
 
         Args:
             task: task dict
@@ -147,7 +166,7 @@ class TaskMonitor(object):
         """
 
         if not task:
-            return {}, {}
+            raise HPOneViewUnknownType(MSG_INVALID_TASK)
 
         if task['category'] != 'tasks' and task['category'] != 'backups':
             # it is an error if type is not in obj, so let the except flow

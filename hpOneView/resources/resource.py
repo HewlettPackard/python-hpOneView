@@ -167,7 +167,7 @@ class ResourceClient(object):
             return body
 
         if blocking:
-            return self.__wait_for_task(task, 60)
+            return self._task_monitor.wait_for_task(task, 60)
 
         return task
 
@@ -180,14 +180,8 @@ class ResourceClient(object):
 
         task, entity = self._connection.post(self._uri, resource)
         if blocking:
-            return self.__wait_for_task(task, 60)
+            return self._task_monitor.wait_for_task(task, 60)
         return task
-
-    def __wait_for_task(self, task, tout=60):
-        logger.debug('Waiting for task')
-        entity = self._task_monitor.wait_for_task(task, tout)
-        logger.debug('Task completed')
-        return entity
 
     def get_by(self, field, value):
         """

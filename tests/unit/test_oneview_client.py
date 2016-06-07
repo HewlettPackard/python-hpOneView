@@ -82,7 +82,7 @@ class OneViewClientTest(unittest.TestCase):
         output = io.StringIO(json_config_content)
         mock_open.return_value = output
 
-        oneview_client = OneViewClient.from_json("config.json")
+        oneview_client = OneViewClient.from_json_file("config.json")
 
         self.assertIsInstance(oneview_client, OneViewClient)
         self.assertEqual("172.16.102.59", oneview_client.connection.get_host())

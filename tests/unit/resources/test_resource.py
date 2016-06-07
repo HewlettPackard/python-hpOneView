@@ -25,7 +25,6 @@ import unittest
 
 import mock
 
-from hpOneView.activity import activity
 from hpOneView.connection import connection
 from hpOneView.exceptions import HPOneViewUnknownType
 from hpOneView.resources.resource import ResourceClient, RESOURCE_CLIENT_INVALID_ID, TaskMonitor
@@ -84,15 +83,13 @@ class ResourceTest(unittest.TestCase):
         mock_delete.assert_called_once_with(self.URI + "/1?force=True")
 
     @mock.patch.object(connection, 'delete')
-    @mock.patch.object(activity, 'wait4task')
-    def test_delete_dict_called_once(self, mock_wait4task, mock_delete):
+    def test_delete_dict_called_once_non_blocking(self, mock_delete):
         dict_to_delete = {"task": "task",
                           "uri": "a_uri"}
         task = {"task": "task"}
         body = {"body": "body"}
 
         mock_delete.return_value = task, body
-        mock_wait4task.return_value = task
 
         delete_task = self.resource_client.delete(dict_to_delete, False, False)
 
@@ -170,11 +167,8 @@ class ResourceTest(unittest.TestCase):
         self.assertEqual(result, task)
 
     @mock.patch.object(connection, 'put')
-    @mock.patch.object(connection, 'get')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
-    @mock.patch.object(activity, 'get_task_associated_resource')
-    def test_update_return_entity_when_blocking(self, mock_get_task_associated_resource, mock_wait4task,
-                                                mock_get, mock_put):
+    def test_update_return_entity_when_blocking(self, mock_wait4task, mock_put):
         dict_to_update = {
             "resource_name": "a name",
             "uri": "a_uri",
@@ -182,9 +176,7 @@ class ResourceTest(unittest.TestCase):
         task = {"task": "task"}
 
         mock_put.return_value = task, {}
-        mock_wait4task.return_value = dict_to_update  # {"type": "TaskBlaBla"}
-        mock_get_task_associated_resource.return_value = {"resourceUri": self.URI + "path/ID"}
-        mock_get.return_value = dict_to_update
+        mock_wait4task.return_value = dict_to_update
 
         result = self.resource_client.update(dict_to_update, blocking=True)
 
@@ -219,11 +211,8 @@ class ResourceTest(unittest.TestCase):
         self.assertEqual(result, task)
 
     @mock.patch.object(connection, 'post')
-    @mock.patch.object(connection, 'get')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
-    @mock.patch.object(activity, 'get_task_associated_resource')
-    def test_create_return_entity_when_blocking(self, mock_get_task_associated_resource, mock_wait4task,
-                                                mock_get, mock_post):
+    def test_create_return_entity_when_blocking(self, mock_wait4task, mock_post):
         dict_to_create = {
             "resource_name": "a name",
         }
@@ -235,8 +224,6 @@ class ResourceTest(unittest.TestCase):
 
         mock_post.return_value = task, {}
         mock_wait4task.return_value = created_resource
-        mock_get_task_associated_resource.return_value = {"resourceUri": self.URI + "path/ID"}
-        mock_get.return_value = created_resource
 
         result = self.resource_client.create(dict_to_create, True)
 
@@ -255,11 +242,9 @@ class ResourceTest(unittest.TestCase):
 
     @mock.patch.object(connection, 'post')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
-    @mock.patch.object(activity, 'make_task_entity_tuple')
-    def test_not_wait_for_activity_on_create(self, mock_make_task_entity_tuple, mock_wait4task, mock_post):
+    def test_not_wait_for_activity_on_create(self, mock_wait4task, mock_post):
         task = {"task": "task"}
         mock_post.return_value = task, {}
-        mock_make_task_entity_tuple.return_value = task, {}
         mock_wait4task.return_value = task
 
         self.resource_client.create({"test", "test"}, False)
