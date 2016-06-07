@@ -47,6 +47,7 @@ import json
 from hpOneView.connection import connection
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
+from hpOneView.resources.networking.ethernet_networks import EthernetNetworks
 from hpOneView.resources.data_services.metric_streaming import MetricStreaming
 from hpOneView.resources.networking.switches import Switches
 from hpOneView.resources.servers.enclosures import Enclosures
@@ -58,6 +59,7 @@ ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
 
 class OneViewClient(object):
+
     def __init__(self, config):
         self.__config = config
         self.__connection = connection(config["ip"])
@@ -65,6 +67,7 @@ class OneViewClient(object):
         self.__connection.login(config["credentials"])
         self.__fc_networks = None
         self.__fcoe_networks = None
+        self.__ethernet_networks = None
         self.__switches = None
         self.__enclosures = None
         self.__metric_streaming = None
@@ -119,6 +122,12 @@ class OneViewClient(object):
         if not self.__fcoe_networks:
             self.__fcoe_networks = FcoeNetworks(self.__connection)
         return self.__fcoe_networks
+
+    @property
+    def ethernet_networks(self):
+        if not self.__ethernet_networks:
+            self.__ethernet_networks = EthernetNetworks(self.__connection)
+        return self.__ethernet_networks
 
     @property
     def server_hardware(self):
