@@ -62,4 +62,4 @@ class Switches(object):
         if port_name:
             uri += "/" + port_name
 
-        return self._client.get_by_uri(uri)
+        return self._client.get(uri)

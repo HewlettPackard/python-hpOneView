@@ -36,18 +36,18 @@ class SwitchesTest(unittest.TestCase):
         self.connection = connection(self.host)
         self._switches = Switches(self.connection)
 
-    @mock.patch.object(ResourceClient, 'get_by_uri')
-    def test_get_statistics_called_once(self, mock_get_by_uri):
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_statistics_called_once(self, mock_get):
         self._switches.get_statistics('3518be0e-17c1-4189-8f81-83f3724f6155')
 
         uri = '/rest/switches/3518be0e-17c1-4189-8f81-83f3724f6155/statistics'
 
-        mock_get_by_uri.assert_called_once_with(uri)
+        mock_get.assert_called_once_with(uri)
 
-    @mock.patch.object(ResourceClient, 'get_by_uri')
-    def test_get_statistics_with_portName(self, mock_get_by_uri):
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_statistics_with_portName(self, mock_get):
         self._switches.get_statistics('3518be0e-17c1-4189-8f81-83f3724f6155', 'X1')
 
         uri = '/rest/switches/3518be0e-17c1-4189-8f81-83f3724f6155/statistics/X1'
 
-        mock_get_by_uri.assert_called_once_with(uri)
+        mock_get.assert_called_once_with(uri)

@@ -257,7 +257,7 @@ class ResourceTest(unittest.TestCase):
         mock_wait4task.assert_not_called()
 
     @mock.patch.object(connection, 'patch')
-    def test_patch_request_uri_and_body_when_id_is_provided(self, mock_patch):
+    def test_patch_request_when_id_is_provided(self, mock_patch):
         request_body = [{
             'op': 'replace',
             'path': '/name',
@@ -270,7 +270,7 @@ class ResourceTest(unittest.TestCase):
         mock_patch.assert_called_once_with('/rest/testuri/123a53cz', request_body)
 
     @mock.patch.object(connection, 'patch')
-    def test_patch_request_uri_and_body_when_uri_is_provided(self, mock_patch):
+    def test_patch_request_when_uri_is_provided(self, mock_patch):
         request_body = [{
             'op': 'replace',
             'path': '/name',
