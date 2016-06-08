@@ -50,6 +50,7 @@ from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
 from hpOneView.resources.networking.ethernet_networks import EthernetNetworks
 from hpOneView.resources.data_services.metric_streaming import MetricStreaming
 from hpOneView.resources.networking.switches import Switches
+from hpOneView.resources.activity.tasks import Tasks
 from hpOneView.resources.servers.enclosures import Enclosures
 from hpOneView.resources.servers.server_hardware import ServerHardware
 from hpOneView.resources.networking.interconnects import Interconnects
@@ -69,6 +70,7 @@ class OneViewClient(object):
         self.__fcoe_networks = None
         self.__ethernet_networks = None
         self.__switches = None
+        self.__tasks = None
         self.__enclosures = None
         self.__metric_streaming = None
         self.__server_hardware = None
@@ -77,7 +79,7 @@ class OneViewClient(object):
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
-    def from_json(cls, file_name):
+    def from_json_file(cls, file_name):
         """
         Construct OneViewClient using a json file
 
@@ -140,6 +142,12 @@ class OneViewClient(object):
         if not self.__switches:
             self.__switches = Switches(self.__connection)
         return self.__switches
+
+    @property
+    def tasks(self):
+        if not self.__tasks:
+            self.__tasks = Tasks(self.__connection)
+        return self.__tasks
 
     @property
     def enclosures(self):

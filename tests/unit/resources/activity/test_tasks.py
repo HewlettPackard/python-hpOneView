@@ -26,39 +26,29 @@ from unittest import TestCase
 import mock
 
 from hpOneView.connection import connection
-from hpOneView.resources.data_services.metric_streaming import MetricStreaming
+from hpOneView.resources.activity.tasks import Tasks
 from hpOneView.resources.resource import ResourceClient
 
 
-class MetricStreamingTest(TestCase):
+class TasksTest(TestCase):
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
-        self._metrics = MetricStreaming(self.connection)
+        self._client = Tasks(self.connection)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_all(self, mock_get):
+        self._client.get_all(fields='parentTaskUri,owner,name',
+                             filter="\"taskState='Running'&filter=associatedResource.resourceCatgory='appliance'\"",
+                             sort='name:ascending',
+                             view='day')
+
+        mock_get.assert_called_once_with(count=-1, fields='parentTaskUri,owner,name',
+                                         filter='"taskState=\'Running\'&filter=associatedResource'
+                                                '.resourceCatgory=\'appliance\'"',
+                                         query='', sort='name:ascending', start=0, view='day')
 
     @mock.patch.object(ResourceClient, 'get')
-    def test_get_capability_called_once(self, mock_get):
-        self._metrics.get_capability()
-        mock_get.assert_called_once_with("/rest/metrics/capability")
-
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_configuration_called_once(self, mock_get):
-        self._metrics.get_configuration()
-        mock_get.assert_called_once_with("/rest/metrics/configuration")
-
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_should_use_given_values(self, mock_update):
-        configuration = {
-            "sourceTypeList": [
-                {
-                    "sourceType": "/rest/power-devices",
-                    "sampleIntervalInSeconds": "300",
-                    "frequencyOfRelayInSeconds": "3600"
-                }
-            ]
-        }
-        configuration_rest_call = configuration.copy()
-        mock_update.return_value = configuration
-
-        self._metrics.update_configuration(configuration)
-        mock_update.assert_called_once_with(configuration_rest_call, uri="/rest/metrics/configuration")
+    def test_get_specific(self, mock_get):
+        self._client.get('35323930-4936-4450-5531-303153474820')
+        mock_get.assert_called_once_with('35323930-4936-4450-5531-303153474820')

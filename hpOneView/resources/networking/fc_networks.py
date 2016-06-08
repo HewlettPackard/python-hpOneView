@@ -40,7 +40,6 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class FcNetworks(object):
-
     URI = '/rest/fc-networks'
 
     def __init__(self, con):
@@ -55,7 +54,8 @@ class FcNetworks(object):
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a paginated collection of Fibre Channel networks. The collection is based on optional sorting and filtering, and constrained by start and count parameters.
+        Gets a paginated collection of Fibre Channel networks. The collection is based on optional
+        sorting and filtering, and constrained by start and count parameters.
 
         Args:
             start:
@@ -136,7 +136,7 @@ class FcNetworks(object):
         """
         data = self.__default_values.copy()
         data.update(resource)
-        return self._client.update(data, blocking)
+        return self._client.update(data, blocking=blocking)
 
     def get_by(self, field, value):
         """

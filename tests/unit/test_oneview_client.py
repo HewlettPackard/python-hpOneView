@@ -82,7 +82,7 @@ class OneViewClientTest(unittest.TestCase):
         output = io.StringIO(json_config_content)
         mock_open.return_value = output
 
-        oneview_client = OneViewClient.from_json("config.json")
+        oneview_client = OneViewClient.from_json_file("config.json")
 
         self.assertIsInstance(oneview_client, OneViewClient)
         self.assertEqual("172.16.102.59", oneview_client.connection.get_host())
@@ -115,6 +115,10 @@ class OneViewClientTest(unittest.TestCase):
 
     def test_metric_streaming_has_value(self):
         self.assertIsNotNone(self._oneview.metric_streaming)
+
+    def test_lazy_loading_tasks(self):
+        tasks = self._oneview.tasks
+        self.assertEqual(tasks, self._oneview.tasks)
 
     def test_lazy_loading_metric_streaming(self):
         metric = self._oneview.metric_streaming
