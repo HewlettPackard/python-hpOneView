@@ -48,7 +48,8 @@ class Enclosures(object):
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a paginated collection of Enclosures. The collection is based on optional sorting and filtering, and constrained by start and count parameters.
+        Gets a paginated collection of Enclosures. The collection is based on optional sorting and filtering, and
+        constrained by start and count parameters.
 
         Args:
             start:

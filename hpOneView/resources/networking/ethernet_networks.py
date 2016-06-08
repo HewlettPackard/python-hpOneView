@@ -40,7 +40,6 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class EthernetNetworks(object):
-
     URI = '/rest/ethernet-networks'
 
     def __init__(self, con):
@@ -53,7 +52,8 @@ class EthernetNetworks(object):
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a paginated collection of Ethernet networks. The collection is based on optional sorting and filtering, and constrained by start and count parameters.
+        Gets a paginated collection of Ethernet networks. The collection is based on optional sorting and filtering,
+        and constrained by start and count parameters.
 
         Args:
             start:

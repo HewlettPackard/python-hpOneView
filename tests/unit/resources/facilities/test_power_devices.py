@@ -37,14 +37,17 @@ class PowerDevicesTest(TestCase):
 
     @mock.patch.object(connection, 'get')
     def test_get_utilization_with_all_args(self, mock_get):
-        self._power_devices.get_utilization('35323930-4936-4450-5531-303153474820',
-                                            fields='PeakPower,AveragePower',
-                                            filter='startDate=2016-05-30T03:29:42.361Z,endDate=2016-05-31T03:29:42.361Z',
-                                            refresh=True, view='day')
+        self._power_devices.get_utilization(
+            '35323930-4936-4450-5531-303153474820',
+            fields='PeakPower,AveragePower',
+            filter='startDate=2016-05-30T03:29:42.361Z,endDate=2016-05-31T03:29:42.361Z',
+            refresh=True, view='day')
 
         expected_uri = '/rest/power-devices/35323930-4936-4450-5531-303153474820/utilization' \
-                       '?filter=startDate%3D2016-05-30T03%3A29%3A42.361Z&filter=endDate%3D2016-05-31T03%3A29%3A42.361Z' \
-                       '&fields=PeakPower%2CAveragePower&refresh=true&view=day'
+                       '?filter=startDate%3D2016-05-30T03%3A29%3A42.361Z' \
+                       '&filter=endDate%3D2016-05-31T03%3A29%3A42.361Z' \
+                       '&fields=PeakPower%2CAveragePower' \
+                       '&refresh=true&view=day'
 
         mock_get.assert_called_once_with(expected_uri)
 

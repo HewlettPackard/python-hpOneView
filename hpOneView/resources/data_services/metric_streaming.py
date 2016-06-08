@@ -41,7 +41,8 @@ from hpOneView.resources.resource import ResourceClient
 
 class MetricStreaming(object):
     """
-    Metrics can be relayed from OneView for managed resources at a specified interval. The following steps can be followed to enable the metric relay in OneView:
+    Metrics can be relayed from OneView for managed resources at a specified interval. The following steps can be
+    followed to enable the metric relay in OneView:
     Get the list of resource types and metrics which can be configured for live streaming
     Configure the live metric stream in OneView
     Receive the stream of metric on MSMB
@@ -65,7 +66,8 @@ class MetricStreaming(object):
         modified (timestamp):
             Date and time when the resource was last modified
         eTag (str):
-            Entity tag/version ID of the resource, the same value that is returned in the ETag header on a GET of the resource
+            Entity tag/version ID of the resource, the same value that is returned in the ETag header on a GET of the
+            resource
         type (str):
             Uniquely identifies the type of the JSON object
 
@@ -97,7 +99,8 @@ class MetricStreaming(object):
 
         Args:
             configuration (dict):
-                Dictionary with a list of objects which contain frequency, sample interval and source type for each resource-type.
+                Dictionary with a list of objects which contain frequency, sample interval and source type for each
+                resource-type.
             blocking (bool):
                 Wait task completion. Default is True.
 

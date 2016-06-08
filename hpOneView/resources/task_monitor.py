@@ -69,7 +69,7 @@ class TaskMonitor(object):
             task: task dict
             timeout: timeout in seconds
 
-        Returns: associated resource when creating or updating; Trues when deleting
+        Returns: associated resource when creating or updating; True when deleting
         """
         if not task:
             raise HPOneViewUnknownType(MSG_INVALID_TASK)
