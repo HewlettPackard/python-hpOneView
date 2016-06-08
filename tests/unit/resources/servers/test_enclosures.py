@@ -36,6 +36,27 @@ class EnclosuresTest(TestCase):
         self.connection = connection(self.host)
         self._enclosures = Enclosures(self.connection)
 
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_all_called_once(self, mock_get_all):
+        filter = 'name=TestName'
+        sort = 'name:ascending'
+
+        self._enclosures.get_all(2, 500, filter, sort)
+
+        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_all_called_once_with_default_values(self, mock_get_all):
+        self._enclosures.get_all()
+
+        mock_get_all.assert_called_once_with(0, -1, filter='', sort='')
+
+    @mock.patch.object(ResourceClient, 'get_by')
+    def test_get_by_called_once(self, mock_get_by):
+        self._enclosures.get_by('name', 'OneViewSDK-Test-Enclosure')
+
+        mock_get_by.assert_called_once_with('name', 'OneViewSDK-Test-Enclosure')
+
     @mock.patch.object(ResourceClient, 'get_utilization')
     def test_get_utilization_with_all_args(self, mock_get_utilization):
         self._enclosures.get_utilization('09USE7335NW3', fields='AmbientTemperature,AveragePower,PeakPower',

@@ -19,9 +19,23 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-ENCLOSURE_ID = "09SGH102X6J1"
+# Get all, with default values
+print("Get all enclosures")
+enclosures = oneview_client.enclosures.get_all()
+pprint(enclosures)
+
+# Find an enclosure by name
+print("Get enclosure by name")
+enclosures = oneview_client.enclosures.get_by('name', 'OneViewSDK-Test-Enclosure')
+if len(enclosures) > 0:
+    enclosure = enclosures[0]
+    print("Found enclosure by name: '%s'.\n  uri = '%s'" % (enclosure['name'], enclosure['uri']))
+else:
+    print("Enclosure not found.")
 
 # Get Statistics with defaults
+ENCLOSURE_ID = "09SGH102X6J1"
+
 print("Get enclosure statistics")
 try:
     enclosure_statistics = oneview_client.enclosures.get_utilization(ENCLOSURE_ID)
