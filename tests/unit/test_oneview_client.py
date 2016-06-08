@@ -21,12 +21,11 @@
 # THE SOFTWARE.
 ###
 
+import io
 import unittest
 
 import mock
-import io
 
-from tests.test_utils import mock_builtin
 from hpOneView.connection import connection
 from hpOneView.oneview_client import OneViewClient
 from hpOneView.resources.data_services.metric_streaming import MetricStreaming
@@ -34,6 +33,8 @@ from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
 from hpOneView.resources.networking.interconnects import Interconnects
+from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
+from tests.test_utils import mock_builtin
 
 
 class OneViewClientTest(unittest.TestCase):
@@ -159,3 +160,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_power_devices(self):
         power_devices = self._oneview.power_devices
         self.assertEqual(power_devices, self._oneview.power_devices)
+
+    def test_logical_interconnect_groups_has_right_type(self):
+        self.assertIsInstance(self._oneview.logical_interconnect_groups, LogicalInterconnectGroups)
+
+    def test_logical_interconnect_groups_has_value(self):
+        self.assertIsNotNone(self._oneview.logical_interconnect_groups)
+
+    def test_lazy_loading_logical_interconnect_groups(self):
+        logical_interconnect_groups = self._oneview.logical_interconnect_groups
+        self.assertEqual(logical_interconnect_groups, self._oneview.logical_interconnect_groups)
