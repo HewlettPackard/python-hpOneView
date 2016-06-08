@@ -31,6 +31,5 @@ setup(name='hpOneView',
       url='http://www.hpe.com/info/oneviewcommunity',
       author='Hewlett Packard Enterprise Development LP',
       license='MIT',
-      packages=find_packages('hpOneView'),
-      package_dir={'': 'hpOneView'},
+      packages=find_packages(exclude=['examples*', 'tests*']),
       install_requires=['future>=0.15.2'])
