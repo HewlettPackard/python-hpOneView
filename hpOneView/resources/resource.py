@@ -183,6 +183,34 @@ class ResourceClient(object):
             return self._task_monitor.wait_for_task(task, 60)
         return task
 
+    def patch(self, id_or_uri, operation, path, value, blocking=True):
+        """
+        Uses the PATCH to update a resource.
+        Only one operation can be performed in each PATCH call.
+
+        Args:
+            id_or_uri: Could be either the resource id or the resource uri
+            operation: Patch operation
+            path: Path
+            value: Value
+            blocking: Wait task completion. Default is True.
+
+        Returns: Updated resource. When blocking=False, returns the task.
+        """
+        if "/" in id_or_uri:
+            patch_uri = id_or_uri
+        else:
+            patch_uri = self._uri + "/" + id_or_uri
+
+        logger.debug('Patch resource (uri = %s, op = %s, path = %s, value = %s)' % (patch_uri, operation, path, value))
+
+        patch_request = [{'op': operation, 'path': path, 'value': value}]
+        task, entity = self._connection.patch(patch_uri, patch_request)
+
+        if blocking:
+            return self._task_monitor.wait_for_task(task, 60)
+        return task
+
     def get_by(self, field, value):
         """
         This function uses get_all passing a filter

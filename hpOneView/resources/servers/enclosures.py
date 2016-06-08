@@ -86,6 +86,22 @@ class Enclosures(object):
         """
         return self._client.get_by(field, value)
 
+    def patch(self, id_or_uri, operation, path, value, blocking=True):
+        """
+        Uses the PATCH to update a resource for a given enclosure.
+        Only one operation can be performed in each PATCH call.
+
+        Args:
+            id_or_uri: Could be either the resource id or the resource uri
+            operation: Patch operation
+            path: Path
+            value: Value
+            blocking: Wait task completion. Default is True.
+
+        Returns: Updated resource. When blocking=False, returns the task.
+        """
+        return self._client.patch(id_or_uri, operation, path, value, blocking=blocking)
+
     def get_utilization(self, id, fields=None, filter=None, refresh=False, view=None):
         """
         Retrieves historical utilization data for the specified enclosure, metrics, and time span.

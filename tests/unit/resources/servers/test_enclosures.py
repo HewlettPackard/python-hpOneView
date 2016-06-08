@@ -57,6 +57,13 @@ class EnclosuresTest(TestCase):
 
         mock_get_by.assert_called_once_with('name', 'OneViewSDK-Test-Enclosure')
 
+    @mock.patch.object(ResourceClient, 'patch')
+    def test_patch_should_use_user_defined_values(self, mock_patch):
+        mock_patch.return_value = {}
+
+        self._enclosures.patch('123a53cz', 'replace', '/name', 'new_name', False)
+        mock_patch.assert_called_once_with('123a53cz', 'replace', '/name', 'new_name', blocking=False)
+
     @mock.patch.object(ResourceClient, 'get_utilization')
     def test_get_utilization_with_all_args(self, mock_get_utilization):
         self._enclosures.get_utilization('09USE7335NW3', fields='AmbientTemperature,AveragePower,PeakPower',

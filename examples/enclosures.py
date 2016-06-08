@@ -51,6 +51,11 @@ enclosures = oneview_client.enclosures.get_by('name', 'OneViewSDK-Test-Enclosure
 if len(enclosures) > 0:
     enclosure = enclosures[0]
     print("Found enclosure by name: '%s'.\n  uri = '%s'" % (enclosure['name'], enclosure['uri']))
+
+    # Updates the enclosure to have a name of "OneViewSDK-Test-Enclosure-Renamed"
+    print("Updates the enclosure to have a name of 'OneViewSDK-Enclosure-Renamed'")
+    enclosure = oneview_client.enclosures.patch(enclosure['uri'], 'replace', '/name', 'OneViewSDK-Enclosure-Renamed')
+    print("  Completed.\n  uri = '%s', name = %s" % (enclosure['uri'], enclosure['name']))
 else:
     print("Enclosure not found.")
 
