@@ -61,3 +61,9 @@ class LogicalInterconnectGroupsTest(unittest.TestCase):
         lig_uri = "/rest/logical-interconnect-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
         self._lig.get(lig_uri)
         mock_get.assert_called_once_with(lig_uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_default_settings_called_once(self, mock_get):
+        lig_settings_uri = "/rest/logical-interconnect-groups/defaultSettings"
+        self._lig.get_default_settings()
+        mock_get.assert_called_once_with(lig_settings_uri)

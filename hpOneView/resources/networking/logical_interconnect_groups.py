@@ -84,3 +84,13 @@ class LogicalInterconnectGroups(object):
             dict: The logical interconnect group
         """
         return self._client.get(id_or_uri)
+
+    def get_default_settings(self):
+        """
+        Gets the default interconnect settings for a logical interconnect group
+
+        Returns:
+            dict:
+        """
+        uri = self.URI + "/defaultSettings"
+        return self._client.get(uri)
