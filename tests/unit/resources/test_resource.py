@@ -58,7 +58,13 @@ class ResourceTest(unittest.TestCase):
         self.resource_client.get_all(1, 500, filter, query, sort, view, 'name,owner,modified')
 
         uri = self.URI
-        uri += '?start=1&count=500&filter=%27name%27%3D%27OneViewSDK%20%22Test%20FC%20Network%27&query=name%20NE%20%27WrongName%27&sort=name%3Aascending&view=%22%7Bview-name%7D%22&fields=name%2Cowner%2Cmodified'
+        uri += '?start=1' \
+               '&count=500' \
+               '&filter=%27name%27%3D%27OneViewSDK%20%22Test%20FC%20Network%27' \
+               '&query=name%20NE%20%27WrongName%27' \
+               '&sort=name%3Aascending' \
+               '&view=%22%7Bview-name%7D%22' \
+               '&fields=name%2Cowner%2Cmodified'
 
         mock_get_members.assert_called_once_with(uri)
 
@@ -360,9 +366,11 @@ class ResourceTest(unittest.TestCase):
 
     @mock.patch.object(connection, 'get')
     def test_get_utilization_with_multiple_filters(self, mock_get):
-        self.resource_client.get_utilization('09USE7335NW3', fields='AmbientTemperature,AveragePower,PeakPower',
-                                             filter='startDate=2016-05-30T03:29:42.361Z,endDate=2016-05-31T03:29:42.361Z',
-                                             refresh=True, view='day')
+        self.resource_client.get_utilization(
+            '09USE7335NW3',
+            fields='AmbientTemperature,AveragePower,PeakPower',
+            filter='startDate=2016-05-30T03:29:42.361Z,endDate=2016-05-31T03:29:42.361Z',
+            refresh=True, view='day')
 
         expected_uri = '/rest/testuri/09USE7335NW3/utilization' \
                        '?filter=startDate%3D2016-05-30T03%3A29%3A42.361Z' \

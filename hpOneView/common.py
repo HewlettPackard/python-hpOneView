@@ -401,13 +401,13 @@ def make_fc_networkV2(name, autoLoginRedistribution=True, description=None,
 def make_interconnect_map_template():
     return {
         'interconnectMapEntryTemplates':
-        [{'logicalLocation': {
-            'locationEntries':
-            [{'type': 'Bay', 'relativeValue': N},
-                {'type': 'Enclosure', 'relativeValue': 1}]},
-            'permittedInterconnectTypeUri': None,
-            'logicalDownlinkUri': None}
-            for N in range(1, 9)],
+            [{'logicalLocation': {
+                'locationEntries':
+                    [{'type': 'Bay', 'relativeValue': N},
+                     {'type': 'Enclosure', 'relativeValue': 1}]},
+                'permittedInterconnectTypeUri': None,
+                'logicalDownlinkUri': None}
+             for N in range(1, 9)],
     }
 
 
@@ -677,9 +677,11 @@ def make_EnclosureGroupV200(associatedLIGs, name,
     # definition of the interconnect bay. I.E. if the LIG only has ICM 1 and 2
     # defined then 3 - 8 must be set to None. I.E:
     #    'interconnectBayMappings': [{'interconnectBay': 1,
-    #                                 'logicalInterconnectGroupUri': '/rest/logical-interconnect-groups/f8371e33-6d07-4477-9b63-cf8400242059'},
+    #                                 'logicalInterconnectGroupUri':
+    #                                    '/rest/logical-interconnect-groups/f8371e33-6d07-4477-9b63-cf8400242059'},
     #                                {'interconnectBay': 2,
-    #                                 'logicalInterconnectGroupUri': '/rest/logical-interconnect-groups/f8371e33-6d07-4477-9b63-cf8400242059'}]}
+    #                                 'logicalInterconnectGroupUri':
+    #                                    '/rest/logical-interconnect-groups/f8371e33-6d07-4477-9b63-cf8400242059'}]}
     #                                {'interconnectBay': 3,
     #                                 'logicalInterconnectGroupUri': None},
     #                                {'interconnectBay': 4,
