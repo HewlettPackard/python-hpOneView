@@ -26,7 +26,7 @@ from pprint import pprint
 
 from config_loader import try_load_from_file
 from hpOneView.oneview_client import OneViewClient
-
+from hpOneView.exceptions import HPOneViewException
 config = {
     "ip": "172.16.102.59",
     "credentials": {
@@ -51,3 +51,17 @@ print("Get the first Logical Interconnect Groups, sorting by name descending, fi
 ligs = oneview_client.logical_interconnect_groups.get_all(
     0, 10, sort='name:descending', filter="\"'name'='Test Logical Interconnect Group'\"")
 pprint(ligs)
+
+# Get by Id
+try:
+    print("Get a Logical Interconnect Group by id")
+    lig_byid = oneview_client.logical_interconnect_groups.get('f0a0a113-ec97-41b4-83ce-d7c92b900e7c')
+    pprint(lig_byid)
+except HPOneViewException as e:
+    print(e.msg['message'])
+
+# Get by uri
+print("Get a Logical Interconnect Group by uri")
+lig_byuri = oneview_client.logical_interconnect_groups.get(
+    '/rest/logical-interconnect-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c')
+pprint(lig_byuri)

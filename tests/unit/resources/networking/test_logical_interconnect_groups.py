@@ -49,3 +49,15 @@ class LogicalInterconnectGroupsTest(unittest.TestCase):
     def test_get_all_called_once_with_default(self, mock_get_all):
         self._lig.get_all()
         mock_get_all.assert_called_once_with(0, -1, filter='', sort='')
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_by_id_called_once(self, mock_get):
+        lig_id = "f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
+        self._lig.get(lig_id)
+        mock_get.assert_called_once_with(lig_id)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_by_uri_called_once(self, mock_get):
+        lig_uri = "/rest/logical-interconnect-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
+        self._lig.get(lig_uri)
+        mock_get.assert_called_once_with(lig_uri)

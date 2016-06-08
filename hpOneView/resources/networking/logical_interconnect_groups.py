@@ -69,7 +69,18 @@ class LogicalInterconnectGroups(object):
                 on create time, with the oldest entry first.
 
         Returns:
-            list: A list of  Logical Interconnect Groups
+            list: A list of  logical interconnect groups
 
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
+
+    def get(self, id_or_uri):
+        """
+        Gets a logical interconnect group by ID or by uri
+        Args:
+            id_or_uri: ID, or uri of logical interconnect group
+
+        Returns:
+            dict: The logical interconnect group
+        """
+        return self._client.get(id_or_uri)
