@@ -140,7 +140,7 @@ class ResourceClient(object):
         Returns:
              The requested resource
         """
-        uri = self.__build_uri(id_or_uri)
+        uri = self.build_uri(id_or_uri)
         logger.debug('Get resource (uri = %s, ID = %s)' % (uri, str(id_or_uri)))
         return self._connection.get(uri)
 
@@ -190,7 +190,7 @@ class ResourceClient(object):
 
         Returns: Updated resource. When blocking=False, returns the task.
         """
-        uri = self.__build_uri(id_or_uri)
+        uri = self.build_uri(id_or_uri)
 
         logger.debug('Patch resource (uri = %s, op = %s, path = %s, value = %s)' % (uri, operation, path, value))
 
@@ -310,7 +310,7 @@ class ResourceClient(object):
 
         return self._connection.get(uri)
 
-    def __build_uri(self, id_or_uri):
+    def build_uri(self, id_or_uri):
         if not id_or_uri:
             logger.exception(RESOURCE_CLIENT_INVALID_ID)
             raise ValueError(RESOURCE_CLIENT_INVALID_ID)
