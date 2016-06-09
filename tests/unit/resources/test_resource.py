@@ -22,11 +22,12 @@
 ###
 
 import unittest
+
 import mock
 
 from hpOneView.connection import connection
 from hpOneView.exceptions import HPOneViewUnknownType
-from hpOneView.resources.resource import ResourceClient, RESOURCE_CLIENT_INVALID_ID, TaskMonitor
+from hpOneView.resources.resource import ResourceClient, RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor
 
 
 class FakeResource(object):
@@ -466,5 +467,49 @@ class ResourceTest(unittest.TestCase):
             self.resource_client.get_utilization('')
         except ValueError as exception:
             self.assertEqual(RESOURCE_CLIENT_INVALID_ID, exception.args[0])
+        else:
+            self.fail("Expected Exception was not raised")
+
+    def test_build_uri_with_id_should_work(self):
+        input = '09USE7335NW35'
+        expected_output = '/rest/testuri/09USE7335NW35'
+        result = self.resource_client.build_uri(input)
+        self.assertEqual(expected_output, result)
+
+    def test_build_uri_with_uri_should_work(self):
+        input = '/rest/testuri/09USE7335NW3'
+        expected_output = '/rest/testuri/09USE7335NW3'
+        result = self.resource_client.build_uri(input)
+        self.assertEqual(expected_output, result)
+
+    def test_build_uri_with_none_should_raise_exception(self):
+        try:
+            self.resource_client.build_uri(None)
+        except ValueError as exception:
+            self.assertEqual(RESOURCE_CLIENT_INVALID_ID, exception.args[0])
+        else:
+            self.fail("Expected Exception was not raised")
+
+    def test_build_uri_with_empty_str_should_raise_exception(self):
+        try:
+            self.resource_client.build_uri('')
+        except ValueError as exception:
+            self.assertEqual(RESOURCE_CLIENT_INVALID_ID, exception.args[0])
+        else:
+            self.fail("Expected Exception was not raised")
+
+    def test_build_uri_with_different_resource_uri_should_raise_exception(self):
+        try:
+            self.resource_client.build_uri('/rest/test/another/resource/uri/09USE7335NW3')
+        except HPOneViewUnknownType as exception:
+            self.assertEqual(UNRECOGNIZED_URI, exception.args[0])
+        else:
+            self.fail("Expected Exception was not raised")
+
+    def test_build_uri_with_incomplete_uri_should_raise_exception(self):
+        try:
+            self.resource_client.build_uri('/rest/')
+        except HPOneViewUnknownType as exception:
+            self.assertEqual(UNRECOGNIZED_URI, exception.args[0])
         else:
             self.fail("Expected Exception was not raised")
