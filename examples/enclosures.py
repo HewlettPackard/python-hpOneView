@@ -38,26 +38,43 @@ config = {
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
+options = {
+    "hostname": config['enclosure_hostname'],
+    "username": config['enclosure_username'],
+    "password": config['enclosure_password'],
+    "enclosureGroupUri": config['enclosure_group_uri'],
+    "licensingIntent": "OneView"
+}
+
 oneview_client = OneViewClient(config)
 
-# Get all, with default values
+# Add an Enclosure
+enclosure = oneview_client.enclosures.add(options)
+print("Added enclosure '%s'.\n  uri = '%s'" % (enclosure['name'], enclosure['uri']))
+
+# Update the enclosure name
+enclosure_name = enclosure['name'] + "-Updated"
+print("Updates the enclosure to have a name of '%s'" % enclosure_name)
+enclosure = oneview_client.enclosures.patch(enclosure['uri'], 'replace', '/name', enclosure_name)
+print("  Completed.\n  uri = '%s', name = %s" % (enclosure['uri'], enclosure['name']))
+
+# Find the recently added enclosure by name
+enclosure = oneview_client.enclosures.get_by('name', enclosure['name'])[0]
+print("Found an enclosure by name: '%s'.\n  uri = '%s'" % (enclosure['name'], enclosure['uri']))
+
+# Get by Uri
+enclosure = oneview_client.enclosures.get(enclosure['uri'])
+print("Found an enclosure by uri: '%s'." % enclosure['name'])
+
+# Get all enclosures
 print("Get all enclosures")
 enclosures = oneview_client.enclosures.get_all()
-pprint(enclosures)
+for enc in enclosures:
+    print('  %s' % enc['name'])
 
-# Find an enclosure by name
-print("Get enclosure by name")
-enclosures = oneview_client.enclosures.get_by('name', 'OneViewSDK-Test-Enclosure')
-if len(enclosures) > 0:
-    enclosure = enclosures[0]
-    print("Found enclosure by name: '%s'.\n  uri = '%s'" % (enclosure['name'], enclosure['uri']))
-
-    # Updates the enclosure to have a name of "OneViewSDK-Test-Enclosure-Renamed"
-    print("Updates the enclosure to have a name of 'OneViewSDK-Enclosure-Renamed'")
-    enclosure = oneview_client.enclosures.patch(enclosure['uri'], 'replace', '/name', 'OneViewSDK-Enclosure-Renamed')
-    print("  Completed.\n  uri = '%s', name = %s" % (enclosure['uri'], enclosure['name']))
-else:
-    print("Enclosure not found.")
+# Remove the recently added enclosure
+oneview_client.enclosures.remove(enclosure)
+print("Enclosure removed successfully")
 
 # Get Statistics with defaults
 ENCLOSURE_ID = "09SGH102X6J1"
