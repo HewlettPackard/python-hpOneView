@@ -67,3 +67,17 @@ class LogicalInterconnectGroupsTest(unittest.TestCase):
         lig_settings_uri = "/rest/logical-interconnect-groups/defaultSettings"
         self._lig.get_default_settings()
         mock_get.assert_called_once_with(lig_settings_uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_settings_called_once_when_lig_uri_provided(self, mock_get):
+        lig_uri = "/rest/logical-interconnect-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
+        lig_settings_uri = "/rest/logical-interconnect-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/settings"
+        self._lig.get_settings(lig_uri)
+        mock_get.assert_called_once_with(lig_settings_uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_settings_called_once_when_lig_id_provided(self, mock_get):
+        lig_id = "f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
+        lig_settings_uri = "/rest/logical-interconnect-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/settings"
+        self._lig.get_settings(lig_id)
+        mock_get.assert_called_once_with(lig_settings_uri)

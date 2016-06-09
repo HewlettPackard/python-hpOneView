@@ -78,7 +78,7 @@ class LogicalInterconnectGroups(object):
         """
         Gets a logical interconnect group by ID or by uri
         Args:
-            id_or_uri: ID, or uri of logical interconnect group
+            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri
 
         Returns:
             dict: The logical interconnect group
@@ -93,4 +93,17 @@ class LogicalInterconnectGroups(object):
             dict:
         """
         uri = self.URI + "/defaultSettings"
+        return self._client.get(uri)
+
+    def get_settings(self, id_or_uri):
+        """
+        Gets the interconnect settings for a logical interconnect group.
+
+        Args:
+            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri
+
+        Returns:
+            dict:
+        """
+        uri = self._client.build_uri(id_or_uri) + "/settings"
         return self._client.get(uri)

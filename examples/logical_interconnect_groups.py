@@ -62,12 +62,23 @@ except HPOneViewException as e:
     print(e.msg['message'])
 
 # Get by uri
-print("Get a Logical Interconnect Group by uri")
-lig_byuri = oneview_client.logical_interconnect_groups.get(
-    '/rest/logical-interconnect-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c')
-pprint(lig_byuri)
+try:
+    print("Get a Logical Interconnect Group by uri")
+    lig_byuri = oneview_client.logical_interconnect_groups.get(
+        '/rest/logical-interconnect-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c')
+    pprint(lig_byuri)
+except HPOneViewException as e:
+    print(e.msg['message'])
 
 # Get default settings
 print("Get the default interconnect settings for a logical interconnect group")
 lig_default_settings = oneview_client.logical_interconnect_groups.get_default_settings()
 pprint(lig_default_settings)
+
+# Get settings
+try:
+    print("Gets the interconnect settings for a logical interconnect group")
+    lig_settings = oneview_client.logical_interconnect_groups.get_settings("f0a0a113-ec97-41b4-83ce-d7c92b900e7c")
+    pprint(lig_settings)
+except HPOneViewException as e:
+    print(e.msg['message'])
