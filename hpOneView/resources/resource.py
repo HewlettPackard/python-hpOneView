@@ -140,16 +140,9 @@ class ResourceClient(object):
         Returns:
              The requested resource
         """
-        if not id_or_uri:
-            logger.exception(RESOURCE_CLIENT_INVALID_ID)
-            raise ValueError(RESOURCE_CLIENT_INVALID_ID)
-
-        if "/" in id_or_uri:
-            return self.get_by_uri(id_or_uri)
-
-        logger.debug('Get resource (uri = %s, ID = %s)' % (self._uri, str(id_or_uri)))
-
-        return self._connection.get(self._uri + '/' + id_or_uri)
+        uri = self.__build_uri(id_or_uri)
+        logger.debug('Get resource (uri = %s, ID = %s)' % (uri, str(id_or_uri)))
+        return self._connection.get(uri)
 
     def update(self, resource, uri=None, blocking=True):
         if not resource:
@@ -183,6 +176,31 @@ class ResourceClient(object):
             return self._task_monitor.wait_for_task(task, 60)
         return task
 
+    def patch(self, id_or_uri, operation, path, value, blocking=True):
+        """
+        Uses the PATCH to update a resource.
+        Only one operation can be performed in each PATCH call.
+
+        Args:
+            id_or_uri: Could be either the resource id or the resource uri
+            operation: Patch operation
+            path: Path
+            value: Value
+            blocking: Wait task completion. Default is True.
+
+        Returns: Updated resource. When blocking=False, returns the task.
+        """
+        uri = self.__build_uri(id_or_uri)
+
+        logger.debug('Patch resource (uri = %s, op = %s, path = %s, value = %s)' % (uri, operation, path, value))
+
+        patch_request = [{'op': operation, 'path': path, 'value': value}]
+        task, entity = self._connection.patch(uri, patch_request)
+
+        if blocking:
+            return self._task_monitor.wait_for_task(task, 60)
+        return task
+
     def get_by(self, field, value):
         """
         This function uses get_all passing a filter
@@ -202,14 +220,6 @@ class ResourceClient(object):
 
         filter = "\"'{0}'='{1}'\"".format(field, value)
         return self.get_all(filter=filter)
-
-    def get_by_uri(self, uri):
-        if self._uri in uri:
-            logger.debug('Get resource by uri : uri : %s' % uri)
-            return self._connection.get(uri)
-        else:
-            logger.exception('Get by uri : unrecognized uri: (%s)' % uri)
-            raise HPOneViewUnknownType(UNRECOGNIZED_URI)
 
     def get_utilization(self, id, fields=None, filter=None, refresh=False, view=None):
         """
@@ -299,6 +309,20 @@ class ResourceClient(object):
         uri = "{0}/{1}/utilization{2}".format(self._uri, id, query)
 
         return self._connection.get(uri)
+
+    def __build_uri(self, id_or_uri):
+        if not id_or_uri:
+            logger.exception(RESOURCE_CLIENT_INVALID_ID)
+            raise ValueError(RESOURCE_CLIENT_INVALID_ID)
+
+        if "/" in id_or_uri:
+            if self._uri in id_or_uri:
+                return id_or_uri
+            else:
+                logger.exception('Get by uri : unrecognized uri: (%s)' % id_or_uri)
+                raise HPOneViewUnknownType(UNRECOGNIZED_URI)
+        else:
+            return self._uri + "/" + id_or_uri
 
     def __make_query_filter(self, filter):
         filters = filter.split(",")

@@ -22,7 +22,6 @@
 ###
 
 import unittest
-
 import mock
 
 from hpOneView.connection import connection
@@ -254,6 +253,78 @@ class ResourceTest(unittest.TestCase):
         mock_wait4task.return_value = task
 
         self.resource_client.create({"test", "test"}, False)
+
+        mock_wait4task.assert_not_called()
+
+    @mock.patch.object(connection, 'patch')
+    def test_patch_request_when_id_is_provided(self, mock_patch):
+        request_body = [{
+            'op': 'replace',
+            'path': '/name',
+            'value': 'new_name',
+        }]
+        mock_patch.return_value = {}, {}
+
+        self.resource_client.patch('123a53cz', 'replace', '/name', 'new_name', False)
+
+        mock_patch.assert_called_once_with('/rest/testuri/123a53cz', request_body)
+
+    @mock.patch.object(connection, 'patch')
+    def test_patch_request_when_uri_is_provided(self, mock_patch):
+        request_body = [{
+            'op': 'replace',
+            'path': '/name',
+            'value': 'new_name',
+        }]
+        mock_patch.return_value = {}, {}
+
+        self.resource_client.patch('/rest/testuri/123a53cz', 'replace', '/name', 'new_name', False)
+
+        mock_patch.assert_called_once_with('/rest/testuri/123a53cz', request_body)
+
+    @mock.patch.object(connection, 'patch')
+    def test_patch_return_task_when_not_blocking(self, mock_patch):
+        task = {"task": "task"}
+        entity = {"resource_id": "123a53cz"}
+        mock_patch.return_value = task, entity
+
+        result = self.resource_client.patch('123a53cz', 'replace', '/name', 'new_name', False)
+
+        self.assertEqual(result, task)
+
+    @mock.patch.object(connection, 'patch')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    def test_patch_return_entity_when_blocking(self, mock_wait4task, mock_patch):
+        task = {"task": "task"}
+        entity = {"resource_id": "123a53cz"}
+        mock_patch.return_value = task, task
+        mock_wait4task.return_value = entity
+
+        result = self.resource_client.patch('123a53cz', 'replace', '/name', 'new_name', True)
+
+        self.assertEqual(result, entity)
+
+    @mock.patch.object(connection, 'patch')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    def test_wait_for_activity_on_patch(self, mock_wait4task, mock_patch):
+        task = {"task": "task"}
+        entity = {"resource_id": "123a53cz"}
+        mock_patch.return_value = task, task
+        mock_wait4task.return_value = entity
+
+        self.resource_client.patch('123a53cz', 'replace', '/name', 'new_name', True)
+
+        mock_wait4task.assert_called_once_with({"task": "task"}, mock.ANY)
+
+    @mock.patch.object(connection, 'patch')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    def test_not_wait_for_activity_on_patch(self, mock_wait4task, mock_patch):
+        task = {"task": "task"}
+        entity = {"resource_id": "123a53cz"}
+        mock_patch.return_value = task, task
+        mock_wait4task.return_value = entity
+
+        self.resource_client.patch('123a53cz', 'replace', '/name', 'new_name', False)
 
         mock_wait4task.assert_not_called()
 
