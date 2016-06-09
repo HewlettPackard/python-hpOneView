@@ -341,7 +341,10 @@ class servers(object):
 
         # missing required field: enclousure group
         # E.g.: profile['enclosureGroupUri'] =  "/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4"
+        return self.create_server_profile_from_dict(profile, blocking, verbose)
 
+    def create_server_profile_from_dict(self, profile, blocking=True, verbose=False):
+        # Creating a profile returns a task with no resource uri
         task, body = self._con.post(uri['profiles'], profile)
         if profile['firmware'] is None:
             tout = 600
@@ -354,6 +357,10 @@ class servers(object):
                 profile = self._con.get(entity['resourceUri'])
                 return profile
         return task
+
+    def get_server_profile_compliance(self, server_profile):
+        compliance_preview = self._con.get(server_profile['uri'] + '/compliance-preview')
+        return compliance_preview
 
     def post_server_profile(self, profile, blocking=True, verbose=False):
         """ POST a ServerProfileV5 profile for use with the V200 API
