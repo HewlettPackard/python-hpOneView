@@ -83,30 +83,16 @@ class ResourceTest(unittest.TestCase):
         mock_delete.return_value = task, body
         mock_wait4task.return_value = task
 
-        delete_task = self.resource_client.delete('1', force=True, blocking=True, verbose=True)
+        delete_task = self.resource_client.delete('1', force=True, timeout=-1, verbose=True)
 
         self.assertEqual(task, delete_task)
         mock_delete.assert_called_once_with(self.URI + "/1?force=True")
-
-    @mock.patch.object(connection, 'delete')
-    def test_delete_dict_called_once_non_blocking(self, mock_delete):
-        dict_to_delete = {"task": "task",
-                          "uri": "a_uri"}
-        task = {"task": "task"}
-        body = {"body": "body"}
-
-        mock_delete.return_value = task, body
-
-        delete_task = self.resource_client.delete(dict_to_delete, False, False)
-
-        self.assertEqual(task, delete_task)
-        mock_delete.assert_called_once_with("a_uri")
 
     def test_delete_dict_invalid_uri(self):
         dict_to_delete = {"task": "task",
                           "uri": ""}
         try:
-            self.resource_client.delete(dict_to_delete, False, False)
+            self.resource_client.delete(dict_to_delete, False, -1)
         except HPOneViewUnknownType as e:
             self.assertEqual("Unknown object type", e.args[0])
         else:
@@ -158,23 +144,7 @@ class ResourceTest(unittest.TestCase):
 
     @mock.patch.object(connection, 'put')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
-    def test_update_return_task_when_not_blocking(self, mock_wait_for_task, mock_put):
-        dict_to_update = {
-            "resource_name": "a name",
-            "uri": "a_uri",
-        }
-        task = {"task": "task"}
-
-        mock_put.return_value = task, dict_to_update
-        mock_wait_for_task.return_value = dict_to_update
-
-        result = self.resource_client.update(dict_to_update, blocking=False)
-
-        self.assertEqual(result, task)
-
-    @mock.patch.object(connection, 'put')
-    @mock.patch.object(TaskMonitor, 'wait_for_task')
-    def test_update_return_entity_when_blocking(self, mock_wait4task, mock_put):
+    def test_update_return_entity(self, mock_wait4task, mock_put):
         dict_to_update = {
             "resource_name": "a name",
             "uri": "a_uri",
@@ -184,7 +154,7 @@ class ResourceTest(unittest.TestCase):
         mock_put.return_value = task, {}
         mock_wait4task.return_value = dict_to_update
 
-        result = self.resource_client.update(dict_to_update, blocking=True)
+        result = self.resource_client.update(dict_to_update, timeout=-1)
 
         self.assertEqual(result, dict_to_update)
 
@@ -195,30 +165,13 @@ class ResourceTest(unittest.TestCase):
         }
         mock_post.return_value = {}, {}
 
-        self.resource_client.create(dict_to_create, False)
+        self.resource_client.create(dict_to_create, -1)
 
         mock_post.assert_called_once_with(self.URI, dict_to_create)
 
     @mock.patch.object(connection, 'post')
-    def test_create_return_task_when_not_blocking(self, mock_post):
-        dict_to_create = {
-            "resource_name": "a name",
-        }
-        created_resource = {
-            "resource_id": "123",
-            "resource_name": "a name",
-        }
-        task = {"task": "task"}
-
-        mock_post.return_value = task, created_resource
-
-        result = self.resource_client.create(dict_to_create, False)
-
-        self.assertEqual(result, task)
-
-    @mock.patch.object(connection, 'post')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
-    def test_create_return_entity_when_blocking(self, mock_wait4task, mock_post):
+    def test_create_return_entity(self, mock_wait4task, mock_post):
         dict_to_create = {
             "resource_name": "a name",
         }
@@ -231,7 +184,7 @@ class ResourceTest(unittest.TestCase):
         mock_post.return_value = task, {}
         mock_wait4task.return_value = created_resource
 
-        result = self.resource_client.create(dict_to_create, True)
+        result = self.resource_client.create(dict_to_create, -1)
 
         self.assertEqual(result, created_resource)
 
@@ -242,20 +195,9 @@ class ResourceTest(unittest.TestCase):
         mock_post.return_value = task, {}
         mock_wait4task.return_value = task
 
-        self.resource_client.create({"test", "test"}, True)
+        self.resource_client.create({"test", "test"}, 60)
 
         mock_wait4task.assert_called_once_with({"task": "task"}, 60)
-
-    @mock.patch.object(connection, 'post')
-    @mock.patch.object(TaskMonitor, 'wait_for_task')
-    def test_not_wait_for_activity_on_create(self, mock_wait4task, mock_post):
-        task = {"task": "task"}
-        mock_post.return_value = task, {}
-        mock_wait4task.return_value = task
-
-        self.resource_client.create({"test", "test"}, False)
-
-        mock_wait4task.assert_not_called()
 
     @mock.patch.object(connection, 'patch')
     def test_patch_request_when_id_is_provided(self, mock_patch):
@@ -266,7 +208,7 @@ class ResourceTest(unittest.TestCase):
         }]
         mock_patch.return_value = {}, {}
 
-        self.resource_client.patch('123a53cz', 'replace', '/name', 'new_name', False)
+        self.resource_client.patch('123a53cz', 'replace', '/name', 'new_name', 70)
 
         mock_patch.assert_called_once_with('/rest/testuri/123a53cz', request_body)
 
@@ -279,29 +221,19 @@ class ResourceTest(unittest.TestCase):
         }]
         mock_patch.return_value = {}, {}
 
-        self.resource_client.patch('/rest/testuri/123a53cz', 'replace', '/name', 'new_name', False)
+        self.resource_client.patch('/rest/testuri/123a53cz', 'replace', '/name', 'new_name', 60)
 
         mock_patch.assert_called_once_with('/rest/testuri/123a53cz', request_body)
 
     @mock.patch.object(connection, 'patch')
-    def test_patch_return_task_when_not_blocking(self, mock_patch):
-        task = {"task": "task"}
-        entity = {"resource_id": "123a53cz"}
-        mock_patch.return_value = task, entity
-
-        result = self.resource_client.patch('123a53cz', 'replace', '/name', 'new_name', False)
-
-        self.assertEqual(result, task)
-
-    @mock.patch.object(connection, 'patch')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
-    def test_patch_return_entity_when_blocking(self, mock_wait4task, mock_patch):
+    def test_patch_return_entity(self, mock_wait4task, mock_patch):
         task = {"task": "task"}
         entity = {"resource_id": "123a53cz"}
         mock_patch.return_value = task, task
         mock_wait4task.return_value = entity
 
-        result = self.resource_client.patch('123a53cz', 'replace', '/name', 'new_name', True)
+        result = self.resource_client.patch('123a53cz', 'replace', '/name', 'new_name', -1)
 
         self.assertEqual(result, entity)
 
@@ -313,21 +245,9 @@ class ResourceTest(unittest.TestCase):
         mock_patch.return_value = task, task
         mock_wait4task.return_value = entity
 
-        self.resource_client.patch('123a53cz', 'replace', '/name', 'new_name', True)
+        self.resource_client.patch('123a53cz', 'replace', '/name', 'new_name', -1)
 
         mock_wait4task.assert_called_once_with({"task": "task"}, mock.ANY)
-
-    @mock.patch.object(connection, 'patch')
-    @mock.patch.object(TaskMonitor, 'wait_for_task')
-    def test_not_wait_for_activity_on_patch(self, mock_wait4task, mock_patch):
-        task = {"task": "task"}
-        entity = {"resource_id": "123a53cz"}
-        mock_patch.return_value = task, task
-        mock_wait4task.return_value = entity
-
-        self.resource_client.patch('123a53cz', 'replace', '/name', 'new_name', False)
-
-        mock_wait4task.assert_not_called()
 
     def test_delete_with_none(self):
         try:

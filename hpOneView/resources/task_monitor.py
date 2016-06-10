@@ -51,6 +51,8 @@ MSG_UNKNOWN_EXCEPTION = 'Unknown Exception'
 MSG_TIMEOUT = 'Waited %s seconds for task to complete, aborting'
 MSG_INVALID_TASK = 'Invalid task was provided'
 
+UNLIMITED_TIMEOUT = -1
+
 logger = logging.getLogger(__name__)
 
 
@@ -62,7 +64,7 @@ class TaskMonitor(object):
     def get_current_seconds():
         return int(time.time())
 
-    def wait_for_task(self, task, timeout=60):
+    def wait_for_task(self, task, timeout=-1):
         """
         Wait for task execution and return associated resource
         Args:
@@ -85,16 +87,23 @@ class TaskMonitor(object):
             # the value increases to avoid flooding server with requests
             i = i + 1 if i < 10 else 10
 
+            logger.debug("Waiting for task. Percentage complete: " + str(task.get('computedPercentComplete')))
+            logger.debug("Waiting for task. Task state: " + str(task.get('taskState')))
+
             time.sleep(i)
-            if start_time + timeout < self.get_current_seconds():
+            if (timeout != UNLIMITED_TIMEOUT) and (start_time + timeout < self.get_current_seconds()):
                 raise HPOneViewTimeout(MSG_TIMEOUT % str(timeout))
+
+        task = self.get(task)
+
+        logger.debug("Waiting for task. Percentage complete: " + str(task.get('computedPercentComplete')))
+        logger.debug("Waiting for task. Task state: " + str(task.get('taskState')))
 
         task_response = self.__get_task_response(task)
         logger.debug('Task completed')
         return task_response
 
     def __get_task_response(self, task):
-        task = self.get(task)
         if task['taskState'] in TASK_ERROR_STATES and task['taskState'] != 'Warning':
             msg = None
             if 'taskErrors' in task and len(task['taskErrors']) > 0:

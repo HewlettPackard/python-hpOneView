@@ -86,7 +86,7 @@ class Enclosures(object):
         """
         return self._client.get_by(field, value)
 
-    def add(self, information):
+    def add(self, information, timeout=-1):
         """
         Takes information about an enclosure (e.g. IP address, username, password) and uses
         it to claim/configure the enclosure and add its components to the appliance.
@@ -97,7 +97,7 @@ class Enclosures(object):
         Returns: Enclosure.
 
         """
-        return self._client.create(information)
+        return self._client.create(information, timeout=timeout)
 
     def get(self, id_or_uri):
         """
@@ -109,7 +109,7 @@ class Enclosures(object):
         """
         return self._client.get(id_or_uri)
 
-    def patch(self, id_or_uri, operation, path, value, blocking=True):
+    def patch(self, id_or_uri, operation, path, value, timeout=-1):
         """
         Uses the PATCH to update a resource for a given enclosure.
         Only one operation can be performed in each PATCH call.
@@ -119,11 +119,12 @@ class Enclosures(object):
             operation: Patch operation
             path: Path
             value: Value
-            blocking: Wait task completion. Default is True.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+            in OneView, just stop waiting its completion.
 
         Returns: Updated resource. When blocking=False, returns the task.
         """
-        return self._client.patch(id_or_uri, operation, path, value, blocking=blocking)
+        return self._client.patch(id_or_uri, operation, path, value, timeout=timeout)
 
     def remove(self, resource, force=False):
         """

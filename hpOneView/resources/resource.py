@@ -103,7 +103,7 @@ class ResourceClient(object):
 
         return result
 
-    def delete(self, resource, force=False, blocking=True, verbose=False, timeout=60):
+    def delete(self, resource, force=False, verbose=False, timeout=-1):
 
         if not resource:
             logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
@@ -124,8 +124,8 @@ class ResourceClient(object):
         logger.debug("Delete resource (uri = %s, resource = %s)" % (self._uri, str(resource)))
 
         task, body = self._connection.delete(uri)
-        if blocking:
-            task = self._task_monitor.wait_for_task(task, timeout=timeout)
+
+        task = self._task_monitor.wait_for_task(task, timeout=timeout)
 
         return task
 
@@ -144,7 +144,7 @@ class ResourceClient(object):
         logger.debug('Get resource (uri = %s, ID = %s)' % (uri, str(id_or_uri)))
         return self._connection.get(uri)
 
-    def update(self, resource, uri=None, blocking=True):
+    def update(self, resource, uri=None, timeout=-1):
         if not resource:
             logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
             raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
@@ -159,12 +159,9 @@ class ResourceClient(object):
         if not task:
             return body
 
-        if blocking:
-            return self._task_monitor.wait_for_task(task, 60)
+        return self._task_monitor.wait_for_task(task, timeout)
 
-        return task
-
-    def create(self, resource, blocking=True):
+    def create(self, resource, timeout=-1):
         if not resource:
             logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
             raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
@@ -172,11 +169,13 @@ class ResourceClient(object):
         logger.debug('Create (uri = %s, resource = %s)' % (self._uri, str(resource)))
 
         task, entity = self._connection.post(self._uri, resource)
-        if blocking:
-            return self._task_monitor.wait_for_task(task, 60)
-        return task
 
-    def patch(self, id_or_uri, operation, path, value, blocking=True):
+        if not task:
+            return entity
+
+        return self._task_monitor.wait_for_task(task, timeout)
+
+    def patch(self, id_or_uri, operation, path, value, timeout=-1):
         """
         Uses the PATCH to update a resource.
         Only one operation can be performed in each PATCH call.
@@ -186,9 +185,10 @@ class ResourceClient(object):
             operation: Patch operation
             path: Path
             value: Value
-            blocking: Wait task completion. Default is True.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+            in OneView, just stop waiting its completion.
 
-        Returns: Updated resource. When blocking=False, returns the task.
+        Returns: Updated resource.
         """
         uri = self.build_uri(id_or_uri)
 
@@ -197,9 +197,10 @@ class ResourceClient(object):
         patch_request = [{'op': operation, 'path': path, 'value': value}]
         task, entity = self._connection.patch(uri, patch_request)
 
-        if blocking:
-            return self._task_monitor.wait_for_task(task, 60)
-        return task
+        if not task:
+            return entity
+
+        return self._task_monitor.wait_for_task(task, timeout)
 
     def get_by(self, field, value):
         """

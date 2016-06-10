@@ -76,7 +76,7 @@ class EthernetNetworks(object):
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
-    def delete(self, resource, force=False, blocking=True):
+    def delete(self, resource, force=False, timeout=-1):
         """
         Deletes an Ethernet network.
         Any deployed connections that are using the network are placed in the 'Failed' state.
@@ -86,13 +86,15 @@ class EthernetNetworks(object):
             force:
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
-            blocking:
-                Wait task completion
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
 
-        Returns: task
+        Returns:
+            bool:
 
         """
-        return self._client.delete(resource, force=force, blocking=blocking)
+        return self._client.delete(resource, force=force, timeout=timeout)
 
     def get(self, id):
         """
@@ -104,37 +106,39 @@ class EthernetNetworks(object):
         """
         return self._client.get(id)
 
-    def create(self, resource, blocking=True):
+    def create(self, resource, timeout=-1):
         """
         Creates an Ethernet network.
 
         Args:
             resource: dict object to create
-            blocking:
-                Wait task completion. Default is True.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
 
-        Returns: Created resource. When blocking=False, returns the task.
+        Returns: Created resource.
 
         """
         data = self.__default_values.copy()
         data.update(resource)
-        return self._client.create(data, blocking)
+        return self._client.create(data, timeout)
 
-    def update(self, resource, blocking=True):
+    def update(self, resource, timeout=-1):
         """
         Updates an Ethernet network.
 
         Args:
             resource: dict object to update
-            blocking:
-                Wait task completion. Default is True.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
 
         Returns: Updated resource. When blocking=False, returns the task.
 
         """
         data = self.__default_values.copy()
         data.update(resource)
-        return self._client.update(data, blocking=blocking)
+        return self._client.update(data, timeout=timeout)
 
     def get_by(self, field, value):
         """
@@ -150,28 +154,30 @@ class EthernetNetworks(object):
         """
         return self._client.get_by(field, value)
 
-    def get_associated_profiles(self, id):
+    def get_associated_profiles(self, id_or_uri):
         """
         Gets the URIs of profiles which are using an Ethernet network.
 
         Args:
-            id: The Ethernet id
+            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri
 
-        Returns: dict of URIs
+        Returns:
+            dict: URIs
 
         """
-        uri = "/rest/ethernet-networks/%s/associatedProfiles" % (id)
+        uri = self._client.build_uri(id_or_uri) + "/associatedProfiles"
         return self._client.get(uri)
 
-    def get_associated_uplink_groups(self, id):
+    def get_associated_uplink_groups(self, id_or_uri):
         """
         Gets the uplink sets which are using an Ethernet network.
 
         Args:
-            id: The Ethernet id
+            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri
 
-        Returns: dict of URIs
+        Returns:
+            dict: URIs
 
         """
-        uri = "/rest/ethernet-networks/%s/associatedUplinkGroups" % (id)
+        uri = self._client.build_uri(id_or_uri) + "/associatedUplinkGroups"
         return self._client.get(uri)
