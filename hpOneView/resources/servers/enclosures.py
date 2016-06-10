@@ -86,6 +86,29 @@ class Enclosures(object):
         """
         return self._client.get_by(field, value)
 
+    def add(self, information):
+        """
+        Takes information about an enclosure (e.g. IP address, username, password) and uses
+        it to claim/configure the enclosure and add its components to the appliance.
+
+        Args:
+            resource: enclosure information
+
+        Returns: Enclosure.
+
+        """
+        return self._client.create(information)
+
+    def get(self, id_or_uri):
+        """
+        Returns the enclosure with the specified ID, if it exists.
+        Args:
+            id: ID or URI of Enclosure
+
+        Returns: dict
+        """
+        return self._client.get(id_or_uri)
+
     def patch(self, id_or_uri, operation, path, value, blocking=True):
         """
         Uses the PATCH to update a resource for a given enclosure.
@@ -101,6 +124,24 @@ class Enclosures(object):
         Returns: Updated resource. When blocking=False, returns the task.
         """
         return self._client.patch(id_or_uri, operation, path, value, blocking=blocking)
+
+    def remove(self, resource, force=False):
+        """
+        Removes and unconfigures the specified enclosure from the appliance. All components of the enclosure (e.g.
+        blades and interconnects) are unconfigured/removed as part of this process.
+        If the force option is set to "true" then any errors encountered as part of unconfiguring the enclosure or its
+        components are ignored and the enclosure is removed regardless of any errors that occur.
+
+        Args:
+            resource: dict object to delete
+            force:
+                 If set to true the operation completes despite any problems with
+                 network connectivity or errors on the resource itself. The default is false.
+
+        Returns: Result status
+
+        """
+        return self._client.delete(resource, force=force)
 
     def get_utilization(self, id, fields=None, filter=None, refresh=False, view=None):
         """

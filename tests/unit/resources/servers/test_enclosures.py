@@ -57,12 +57,49 @@ class EnclosuresTest(TestCase):
 
         mock_get_by.assert_called_once_with('name', 'OneViewSDK-Test-Enclosure')
 
+    @mock.patch.object(ResourceClient, 'create')
+    def test_add_called_once(self, mock_create):
+        information = {
+            'enclosureGroupUri': '/rest/enclosure-groups/id-enclosure-group'
+        }
+        mock_create.return_value = {}
+
+        self._enclosures.add(information)
+        mock_create.assert_called_once_with(information.copy())
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_called_once(self, mock_get):
+        self._enclosures.get('3518be0e-17c1-4189-8f81-83f3724f6155')
+
+        mock_get.assert_called_once_with('3518be0e-17c1-4189-8f81-83f3724f6155')
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_with_uri_called_once(self, mock_get):
+        uri = '/rest/enclosures/3518be0e-17c1-4189-8f81-83f3724f6155'
+        self._enclosures.get(uri)
+
+        mock_get.assert_called_once_with(uri)
+
     @mock.patch.object(ResourceClient, 'patch')
     def test_patch_should_use_user_defined_values(self, mock_patch):
         mock_patch.return_value = {}
 
         self._enclosures.patch('123a53cz', 'replace', '/name', 'new_name', False)
         mock_patch.assert_called_once_with('123a53cz', 'replace', '/name', 'new_name', blocking=False)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_remove_called_once(self, mock_delete):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._enclosures.remove(id, force=False)
+
+        mock_delete.assert_called_once_with(id, force=False)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_remove_called_once_with_force(self, mock_delete):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._enclosures.remove(id, force=True)
+
+        mock_delete.assert_called_once_with(id, force=True)
 
     @mock.patch.object(ResourceClient, 'get_utilization')
     def test_get_utilization_with_all_args(self, mock_get_utilization):

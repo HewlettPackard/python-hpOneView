@@ -109,7 +109,9 @@ class TaskMonitor(object):
             else:
                 raise HPOneViewTaskError(MSG_UNKNOWN_EXCEPTION)
 
-        if 'type' in task and task['type'].startswith('Task') and 'name' in task and task['name'] != 'Delete':
+        deleted_resource = (task['name'] == 'Delete' or task['name'] == 'Remove')
+
+        if 'type' in task and task['type'].startswith('Task') and 'name' in task and not deleted_resource:
             # get associated resource when is not a delete task
             task, entity = self.get_associated_resource(task)
             return entity
