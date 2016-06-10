@@ -96,7 +96,7 @@ class EthernetNetworksTest(TestCase):
         mock_update.return_value = {}
 
         self._ethernet_networks.update(resource, False)
-        mock_update.assert_called_once_with(resource_rest_call, False)
+        mock_update.assert_called_once_with(resource_rest_call, blocking=False)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_should_use_default_values(self, mock_update):
@@ -112,7 +112,8 @@ class EthernetNetworksTest(TestCase):
 
         self._ethernet_networks.update(resource)
 
-        mock_update.assert_called_once_with(resource_with_default_values, True)
+        mock_update.assert_called_once_with(
+            resource_with_default_values, blocking=True)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):
@@ -140,5 +141,21 @@ class EthernetNetworksTest(TestCase):
     def test_get_with_uri_called_once(self, mock_get):
         uri = '/rest/ethernet-networks/3518be0e-17c1-4189-8f81-83f3724f6155'
         self._ethernet_networks.get(uri)
+
+        mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_associated_uplink_groups_uri_called_once(self, mock_get):
+        self._ethernet_networks.get_associated_uplink_groups(
+            '3518be0e-17c1-4189-8f81-83f3724f6155')
+        uri = '/rest/ethernet-networks/3518be0e-17c1-4189-8f81-83f3724f6155/associatedUplinkGroups'
+
+        mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_associated_profiles_called_once(self, mock_get):
+        self._ethernet_networks.get_associated_profiles(
+            '3518be0e-17c1-4189-8f81-83f3724f6155')
+        uri = '/rest/ethernet-networks/3518be0e-17c1-4189-8f81-83f3724f6155/associatedProfiles'
 
         mock_get.assert_called_once_with(uri)
