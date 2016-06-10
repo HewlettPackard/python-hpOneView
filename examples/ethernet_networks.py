@@ -105,6 +105,18 @@ ethernet_nets_by_uri = oneview_client.ethernet_networks.get(
     ethernet_network['uri'])
 pprint(ethernet_nets_by_uri)
 
+# Get URIs of associated profiles
+print("Get associated profiles uri(s)")
+associated_profiles = oneview_client.ethernet_networks.get_associated_profiles(
+    'b17671cb-e106-4ccb-bb66-5f1d6f034ece')
+pprint(associated_profiles)
+
+# Get URIs of uplink port group
+print("Get uplink port group uri(s)")
+uplink_group = oneview_client.ethernet_networks.get_associated_uplink_groups(
+    'b17671cb-e106-4ccb-bb66-5f1d6f034ece')
+pprint(uplink_group)
+
 # Delete the created network
 oneview_client.ethernet_networks.delete(ethernet_network)
 print("Sucessfully deleted ethernet-network")

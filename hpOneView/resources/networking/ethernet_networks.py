@@ -134,7 +134,7 @@ class EthernetNetworks(object):
         """
         data = self.__default_values.copy()
         data.update(resource)
-        return self._client.update(data, blocking)
+        return self._client.update(data, blocking=blocking)
 
     def get_by(self, field, value):
         """
@@ -149,3 +149,29 @@ class EthernetNetworks(object):
 
         """
         return self._client.get_by(field, value)
+
+    def get_associated_profiles(self, id):
+        """
+        Gets the URIs of profiles which are using an Ethernet network.
+
+        Args:
+            id: The Ethernet id
+
+        Returns: dict of URIs
+
+        """
+        uri = "/rest/ethernet-networks/%s/associatedProfiles" % (id)
+        return self._client.get(uri)
+
+    def get_associated_uplink_groups(self, id):
+        """
+        Gets the uplink sets which are using an Ethernet network.
+
+        Args:
+            id: The Ethernet id
+
+        Returns: dict of URIs
+
+        """
+        uri = "/rest/ethernet-networks/%s/associatedUplinkGroups" % (id)
+        return self._client.get(uri)
