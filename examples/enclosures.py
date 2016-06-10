@@ -39,10 +39,10 @@ config = {
 config = try_load_from_file(config)
 
 options = {
+    "enclosureGroupUri": config['enclosure_group_uri'],
     "hostname": config['enclosure_hostname'],
     "username": config['enclosure_username'],
     "password": config['enclosure_password'],
-    "enclosureGroupUri": config['enclosure_group_uri'],
     "licensingIntent": "OneView"
 }
 
@@ -71,6 +71,13 @@ print("Get all enclosures")
 enclosures = oneview_client.enclosures.get_all()
 for enc in enclosures:
     print('  %s' % enc['name'])
+
+print("Reapply the appliance's configuration on the enclosure")
+try:
+    oneview_client.enclosures.update_configuration(enclosure['uri'])
+    print("  Done.")
+except HPOneViewException as e:
+    print(e.msg['message'])
 
 # Remove the recently added enclosure
 oneview_client.enclosures.remove(enclosure)

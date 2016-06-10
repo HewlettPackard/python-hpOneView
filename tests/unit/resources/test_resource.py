@@ -114,6 +114,31 @@ class ResourceTest(unittest.TestCase):
         mock_get_all.assert_called_once_with(filter="\"'name'='MyFibreNetwork'\"")
 
     @mock.patch.object(connection, 'put')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    def test_update_with_zero_body_called_once(self, mock_wait4task, mock_update):
+        task = {"task": "task"}
+
+        mock_update.return_value = task, task
+        mock_wait4task.return_value = task
+        self.resource_client.update_with_zero_body('/rest/enclosures/09USE133E5H4/configuration',
+                                                   timeout=-1)
+
+        mock_update.assert_called_once_with("/rest/enclosures/09USE133E5H4/configuration", None)
+
+    @mock.patch.object(connection, 'put')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    def test_update_with_zero_body_return_entity(self, mock_wait4task, mock_put):
+        response_body = {"resource_name": "name"}
+        task = {"task": "task"}
+
+        mock_put.return_value = task, task
+        mock_wait4task.return_value = response_body
+
+        result = self.resource_client.update_with_zero_body('/rest/enclosures/09USE133E5H4/configuration', timeout=-1)
+
+        self.assertEqual(result, response_body)
+
+    @mock.patch.object(connection, 'put')
     def test_update_with_uri_called_once(self, mock_put):
         dict_to_update = {"name": "test"}
         uri = "/rest/resource/test"
