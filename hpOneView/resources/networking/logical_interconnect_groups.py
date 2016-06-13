@@ -107,3 +107,52 @@ class LogicalInterconnectGroups(object):
         """
         uri = self._client.build_uri(id_or_uri) + "/settings"
         return self._client.get(uri)
+
+    def create(self, resource, timeout=-1):
+        """
+        Creates a logical interconnect group.
+        Args:
+            resource (dict): Object to create
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            dict: Created logical interconnect group.
+
+        """
+        return self._client.create(resource, timeout=timeout)
+
+    def update(self, resource, timeout=-1):
+        """
+        Updates a logical interconnect group.
+        Args:
+            resource (dict): Object to update
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            dict: Updated logical interconnect group.
+
+        """
+        return self._client.update(resource, timeout=timeout)
+
+    def delete(self, resource, force=False, timeout=-1):
+        """
+        Deletes a logical interconnect group.
+
+        Args:
+            resource (dict): object to delete
+            force (bool):
+                 If set to true the operation completes despite any problems with
+                 network connectivity or errors on the resource itself. The default is false.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            dict: Details of associated resource
+
+        """
+        return self._client.delete(resource, force=force, timeout=timeout)

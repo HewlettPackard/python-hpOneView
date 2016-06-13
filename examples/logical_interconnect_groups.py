@@ -37,20 +37,42 @@ config = {
     }
 }
 
+options = {
+    "type": "logical-interconnect-groupV3",
+    "name": "OneView Test Logical Interconnect Group",
+    "interconnectMapTemplate": {
+        "interconnectMapEntryTemplates": []
+    },
+    "uplinkSets": [],
+    "enclosureType": "C7000",
+}
+
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-# Get all, with defaults
-print("Get all Logical Interconnect Groups")
-ligs = oneview_client.logical_interconnect_groups.get_all()
-pprint(ligs)
+# Create a logical interconnect group
+print("Create a logical interconnect group")
+created_lig = oneview_client.logical_interconnect_groups.create(options)
+pprint(created_lig)
 
 # Get the first 10 records, sorting by name descending, filtering by name
 print("Get the first Logical Interconnect Groups, sorting by name descending, filtering by name")
 ligs = oneview_client.logical_interconnect_groups.get_all(
-    0, 10, sort='name:descending', filter="\"'name'='Test Logical Interconnect Group'\"")
+    0, 10, sort='name:descending', filter="\"'name'='OneView Test Logical Interconnect Group'\"")
+pprint(ligs)
+
+# Update a logical interconnect group
+print("Update a logical interconnect group")
+lig_to_update = created_lig.copy()
+lig_to_update["name"] = "Renamed Logical Interconnect Group"
+updated_lig = oneview_client.logical_interconnect_groups.update(lig_to_update)
+pprint(updated_lig)
+
+# Get all, with defaults
+print("Get all Logical Interconnect Groups")
+ligs = oneview_client.logical_interconnect_groups.get_all()
 pprint(ligs)
 
 # Get by Id
@@ -64,8 +86,7 @@ except HPOneViewException as e:
 # Get by uri
 try:
     print("Get a Logical Interconnect Group by uri")
-    lig_byuri = oneview_client.logical_interconnect_groups.get(
-        '/rest/logical-interconnect-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c')
+    lig_byuri = oneview_client.logical_interconnect_groups.get(created_lig["uri"])
     pprint(lig_byuri)
 except HPOneViewException as e:
     print(e.msg['message'])
@@ -76,9 +97,11 @@ lig_default_settings = oneview_client.logical_interconnect_groups.get_default_se
 pprint(lig_default_settings)
 
 # Get settings
-try:
-    print("Gets the interconnect settings for a logical interconnect group")
-    lig_settings = oneview_client.logical_interconnect_groups.get_settings("f0a0a113-ec97-41b4-83ce-d7c92b900e7c")
-    pprint(lig_settings)
-except HPOneViewException as e:
-    print(e.msg['message'])
+print("Gets the interconnect settings for a logical interconnect group")
+lig_settings = oneview_client.logical_interconnect_groups.get_settings(created_lig["uri"])
+pprint(lig_settings)
+
+# Delete a logical interconnect group
+print("Delete the created logical interconnect group")
+oneview_client.logical_interconnect_groups.delete(updated_lig)
+print("Sucessfully deleted logical interconnect group")
