@@ -159,6 +159,28 @@ class EnclosuresTest(TestCase):
 
         mock_update.assert_called_once_with(configuration_rest_call, uri=uri_rest_call, timeout=-1)
 
+    @mock.patch.object(ResourceClient, 'update')
+    def test_refresh_state_by_uri(self, mock_update):
+        uri_enclosure = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/refreshState'
+        configuration = {"refreshState": "RefreshPending"}
+        configuration_rest_call = configuration.copy()
+
+        self._enclosures.refresh_state(uri_enclosure, configuration)
+
+        mock_update.assert_called_once_with(configuration_rest_call, uri=uri_rest_call, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_refresh_state_by_id(self, mock_update):
+        id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/refreshState'
+        configuration = {"refreshState": "RefreshPending"}
+        configuration_rest_call = configuration.copy()
+
+        self._enclosures.refresh_state(id_enclosure, configuration)
+
+        mock_update.assert_called_once_with(configuration_rest_call, uri=uri_rest_call, timeout=-1)
+
     @mock.patch.object(ResourceClient, 'get_utilization')
     def test_get_utilization_with_all_args(self, mock_get_utilization):
         self._enclosures.get_utilization('09USE7335NW3', fields='AmbientTemperature,AveragePower,PeakPower',

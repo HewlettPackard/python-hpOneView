@@ -94,6 +94,14 @@ try:
 except HPOneViewException as e:
     print("  %s" % e.msg['message'])
 
+print("Refresh the enclosure")
+try:
+    config = {"refreshState": "RefreshPending"}
+    enclosure = oneview_client.enclosures.refresh_state(enclosure['uri'], config)
+    print("  Done")
+except HPOneViewException as e:
+    print("  %s" % e.msg['message'])
+
 # Remove the recently added enclosure
 oneview_client.enclosures.remove(enclosure)
 print("Enclosure removed successfully")

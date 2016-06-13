@@ -189,6 +189,25 @@ class Enclosures(object):
         uri = self._client.build_uri(id_or_uri) + '/environmentalConfiguration'
         return self._client.update(configuration, uri=uri, timeout=timeout)
 
+    def refresh_state(self, id_or_uri, configuration, timeout=-1):
+        """
+        Refreshes the enclosure along with all of its components, including interconnects and servers. Any new
+        hardware is added and any hardware that is no longer present within the enclosure is removed. The
+        "refreshStateConfig" passed in must have the "refreshState" field set to "Refreshing" and optionally
+        provide information to re-claim the enclosure (e.g. IP address, user name, password, etc.). A task is
+        returned to the caller which can be used to track the progress of the operation.
+
+        Args:
+            id_or_uri: Could be either the resource id or the resource uri
+            configuration: Configuration
+            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Return: Enclosure
+        """
+        uri = self._client.build_uri(id_or_uri) + "/refreshState"
+        return self._client.update(configuration, uri=uri, timeout=timeout)
+
     def get_utilization(self, id, fields=None, filter=None, refresh=False, view=None):
         """
         Retrieves historical utilization data for the specified enclosure, metrics, and time span.
