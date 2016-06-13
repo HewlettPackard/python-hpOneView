@@ -92,14 +92,30 @@ class EnclosuresTest(TestCase):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         self._enclosures.remove(id, force=False)
 
-        mock_delete.assert_called_once_with(id, force=False)
+        mock_delete.assert_called_once_with(id, force=False, timeout=-1)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_remove_called_once_with_force(self, mock_delete):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         self._enclosures.remove(id, force=True)
 
-        mock_delete.assert_called_once_with(id, force=True)
+        mock_delete.assert_called_once_with(id, force=True, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'update_with_zero_body')
+    def test_update_configuration_by_uri(self, mock_update_with_zero_body):
+        uri_enclosure = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/configuration'
+        self._enclosures.update_configuration(uri_enclosure)
+
+        mock_update_with_zero_body.assert_called_once_with(uri_rest_call, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'update_with_zero_body')
+    def test_update_configuration_by_id(self, mock_update_with_zero_body):
+        uri_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/configuration'
+        self._enclosures.update_configuration(uri_enclosure)
+
+        mock_update_with_zero_body.assert_called_once_with(uri_rest_call, timeout=-1)
 
     @mock.patch.object(ResourceClient, 'get_utilization')
     def test_get_utilization_with_all_args(self, mock_get_utilization):

@@ -126,7 +126,7 @@ class Enclosures(object):
         """
         return self._client.patch(id_or_uri, operation, path, value, timeout=timeout)
 
-    def remove(self, resource, force=False):
+    def remove(self, resource, force=False, timeout=-1):
         """
         Removes and unconfigures the specified enclosure from the appliance. All components of the enclosure (e.g.
         blades and interconnects) are unconfigured/removed as part of this process.
@@ -138,11 +138,29 @@ class Enclosures(object):
             force:
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
 
         Returns: Result status
 
         """
-        return self._client.delete(resource, force=force)
+        return self._client.delete(resource, force=force, timeout=timeout)
+
+    def update_configuration(self, id_or_uri, timeout=-1):
+        """
+        Reapplies the appliance's configuration on the enclosure. This includes running the same configure steps
+        that were performed as part of the enclosure add. A task is returned to the caller which can be used to
+        track the progress of the operation.
+
+        Args:
+            id_or_uri: Could be either the resource id or the resource uri
+            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns: Enclosure
+        """
+        uri = self._client.build_uri(id_or_uri) + "/configuration"
+        return self._client.update_with_zero_body(uri, timeout=timeout)
 
     def get_utilization(self, id, fields=None, filter=None, refresh=False, view=None):
         """

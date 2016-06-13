@@ -144,6 +144,16 @@ class ResourceClient(object):
         logger.debug('Get resource (uri = %s, ID = %s)' % (uri, str(id_or_uri)))
         return self._connection.get(uri)
 
+    def update_with_zero_body(self, uri, timeout=-1):
+        logger.debug('Update with zero length body (uri = %s)' % uri)
+
+        task, body = self._connection.put(uri, None)
+
+        if not task:
+            return body
+
+        return self._task_monitor.wait_for_task(task, timeout)
+
     def update(self, resource, uri=None, timeout=-1):
         if not resource:
             logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
