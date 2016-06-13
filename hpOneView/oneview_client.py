@@ -48,6 +48,7 @@ from hpOneView.connection import connection
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
 from hpOneView.resources.networking.ethernet_networks import EthernetNetworks
+from hpOneView.resources.networking.network_sets import NetworkSets
 from hpOneView.resources.data_services.metric_streaming import MetricStreaming
 from hpOneView.resources.networking.switches import Switches
 from hpOneView.resources.activity.tasks import Tasks
@@ -61,6 +62,7 @@ ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
 
 class OneViewClient(object):
+
     def __init__(self, config):
         self.__config = config
         self.__connection = connection(config["ip"])
@@ -69,6 +71,7 @@ class OneViewClient(object):
         self.__fc_networks = None
         self.__fcoe_networks = None
         self.__ethernet_networks = None
+        self.__network_sets = None
         self.__switches = None
         self.__tasks = None
         self.__enclosures = None
@@ -133,6 +136,12 @@ class OneViewClient(object):
         return self.__ethernet_networks
 
     @property
+    def network_sets(self):
+        if not self.__network_sets:
+            self.__network_sets = NetworkSets(self.__connection)
+        return self.__network_sets
+
+    @property
     def server_hardware(self):
         if not self.__server_hardware:
             self.__server_hardware = ServerHardware(self.__connection)
@@ -171,7 +180,8 @@ class OneViewClient(object):
     @property
     def logical_interconnect_groups(self):
         if not self.__logical_interconnect_groups:
-            self.__logical_interconnect_groups = LogicalInterconnectGroups(self.__connection)
+            self.__logical_interconnect_groups = LogicalInterconnectGroups(
+                self.__connection)
         return self.__logical_interconnect_groups
 
     @property
