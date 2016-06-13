@@ -162,6 +162,33 @@ class Enclosures(object):
         uri = self._client.build_uri(id_or_uri) + "/configuration"
         return self._client.update_with_zero_body(uri, timeout=timeout)
 
+    def get_environmental_configuration(self, id_or_uri):
+        """
+        Gets the settings that describe the environmental configuration (supported feature set, calibrated minimum &
+        maximum power, location & dimensions, ...) of the enclosure resource
+
+        Args:
+            id_or_uri: Could be either the resource id or the resource uri
+
+        Return: Settings that describe the environmental configuration
+        """
+        uri = self._client.build_uri(id_or_uri) + '/environmentalConfiguration'
+        return self._client.get(uri)
+
+    def update_environmental_configuration(self, id_or_uri, configuration, timeout=-1):
+        """
+        Sets the calibrated max power of an unmanaged or unsupported enclosure
+        Args:
+            id_or_uri: Could be either the resource id or the resource uri
+            configuration: Configuration
+            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Return: Settings that describe the environmental configuration
+        """
+        uri = self._client.build_uri(id_or_uri) + '/environmentalConfiguration'
+        return self._client.update(configuration, uri=uri, timeout=timeout)
+
     def get_utilization(self, id, fields=None, filter=None, refresh=False, view=None):
         """
         Retrieves historical utilization data for the specified enclosure, metrics, and time span.

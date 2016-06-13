@@ -79,6 +79,21 @@ try:
 except HPOneViewException as e:
     print(e.msg['message'])
 
+print("Retrieve environmental configuration data for the enclosure")
+try:
+    environmental_configuration = oneview_client.enclosures.get_environmental_configuration(enclosure['uri'])
+    print("  Enclosure calibratedMaxPower = %s" % environmental_configuration['calibratedMaxPower'])
+except HPOneViewException as e:
+    print("  %s" % e.msg['message'])
+
+print("Set the calibrated max power of the enclosure")
+try:
+    config = {"calibratedMaxPower": 2500}
+    environmental_configuration = oneview_client.enclosures.update_environmental_configuration(enclosure['uri'], config)
+    print("  Enclosure calibratedMaxPower = %s" % environmental_configuration['calibratedMaxPower'])
+except HPOneViewException as e:
+    print("  %s" % e.msg['message'])
+
 # Remove the recently added enclosure
 oneview_client.enclosures.remove(enclosure)
 print("Enclosure removed successfully")
