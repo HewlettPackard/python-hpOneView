@@ -137,3 +137,17 @@ class LogicalInterconnectGroupsTest(unittest.TestCase):
         }
         self._lig.update(lig, 70)
         mock_update.assert_called_once_with(lig, timeout=70)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_delete_called_once(self, mock_delete):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._lig.delete(id, force=True, timeout=50)
+
+        mock_delete.assert_called_once_with(id, force=True, timeout=50)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_delete_called_once_with_defaults(self, mock_delete):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._lig.delete(id)
+
+        mock_delete.assert_called_once_with(id, force=False, timeout=-1)

@@ -70,7 +70,6 @@ lig_to_update["name"] = "Renamed Logical Interconnect Group"
 updated_lig = oneview_client.logical_interconnect_groups.update(lig_to_update)
 pprint(updated_lig)
 
-
 # Get all, with defaults
 print("Get all Logical Interconnect Groups")
 ligs = oneview_client.logical_interconnect_groups.get_all()
@@ -101,3 +100,8 @@ pprint(lig_default_settings)
 print("Gets the interconnect settings for a logical interconnect group")
 lig_settings = oneview_client.logical_interconnect_groups.get_settings(created_lig["uri"])
 pprint(lig_settings)
+
+# Delete a logical interconnect group
+print("Delete the created logical interconnect group")
+oneview_client.logical_interconnect_groups.delete(updated_lig)
+print("Sucessfully deleted logical interconnect group")
