@@ -88,8 +88,9 @@ class MetricStreaming(object):
         """
         Fetches the current configuration for which metrics are being relayed.
 
-        Returns (list):
-            List of objects which contain frequency, sample interval and source type for each resource-type
+        Returns:
+            list: List of objects which contain frequency, sample interval and source type for each resource-type
+
         """
         return self._client.get(self.URI + "/configuration")
 
@@ -101,8 +102,6 @@ class MetricStreaming(object):
             configuration (dict):
                 Dictionary with a list of objects which contain frequency, sample interval and source type for each
                 resource-type.
-            blocking (bool):
-                Wait task completion. Default is True.
 
             Example:
              {
@@ -115,7 +114,8 @@ class MetricStreaming(object):
                 ]
             }
 
-        Returns (dict):
-            The current configuration for which metrics are being relayed
+        Returns:
+            dict: The current configuration for which metrics are being relayed
+
         """
         return self._client.update(configuration, uri=self.URI + "/configuration")

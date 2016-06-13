@@ -57,8 +57,8 @@ class FcNetworksTest(unittest.TestCase):
         resource_rest_call = resource.copy()
         mock_create.return_value = {}
 
-        self._fc_networks.create(resource, False)
-        mock_create.assert_called_once_with(resource_rest_call, False)
+        self._fc_networks.create(resource, 30)
+        mock_create.assert_called_once_with(resource_rest_call, 30)
 
     @mock.patch.object(ResourceClient, 'create')
     def test_create_should_use_default_values(self, mock_create):
@@ -76,7 +76,7 @@ class FcNetworksTest(unittest.TestCase):
 
         self._fc_networks.create(resource)
 
-        mock_create.assert_called_once_with(resource_with_default_values, True)
+        mock_create.assert_called_once_with(resource_with_default_values, -1)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_should_use_given_values(self, mock_update):
@@ -91,8 +91,8 @@ class FcNetworksTest(unittest.TestCase):
         resource_rest_call = resource.copy()
         mock_update.return_value = {}
 
-        self._fc_networks.update(resource, False)
-        mock_update.assert_called_once_with(resource_rest_call, blocking=False)
+        self._fc_networks.update(resource, 60)
+        mock_update.assert_called_once_with(resource_rest_call, timeout=60)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_should_use_default_values(self, mock_update):
@@ -112,14 +112,14 @@ class FcNetworksTest(unittest.TestCase):
 
         self._fc_networks.update(resource)
 
-        mock_update.assert_called_once_with(resource_with_default_values, blocking=True)
+        mock_update.assert_called_once_with(resource_with_default_values, timeout=-1)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        self._fc_networks.delete(id, force=False, blocking=True)
+        self._fc_networks.delete(id, force=False, timeout=-1)
 
-        mock_delete.assert_called_once_with(id, force=False, blocking=True)
+        mock_delete.assert_called_once_with(id, force=False, timeout=-1)
 
     @mock.patch.object(ResourceClient, 'get_by')
     def test_get_by_called_once(self, mock_get_by):

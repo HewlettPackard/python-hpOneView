@@ -41,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 def handle_exceptions(exception_type, exception_value, exception_traceback, logger=logger):
     message = __get_message(exception_value, exception_type)
-    logger.error("Uncaught Exception: %s with message: %s" % (exception_type.__name__, message),
-                 exc_info=(exception_type, exception_value, exception_traceback))
+    logger.error("Uncaught Exception: %s with message: %s" % (exception_type.__name__, message))
     traceback.print_exception(exception_type, exception_value, exception_traceback)
 
 

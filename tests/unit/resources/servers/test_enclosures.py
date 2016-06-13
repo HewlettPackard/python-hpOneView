@@ -65,7 +65,7 @@ class EnclosuresTest(TestCase):
         mock_create.return_value = {}
 
         self._enclosures.add(information)
-        mock_create.assert_called_once_with(information.copy())
+        mock_create.assert_called_once_with(information.copy(), timeout=-1)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_called_once(self, mock_get):
@@ -84,8 +84,8 @@ class EnclosuresTest(TestCase):
     def test_patch_should_use_user_defined_values(self, mock_patch):
         mock_patch.return_value = {}
 
-        self._enclosures.patch('123a53cz', 'replace', '/name', 'new_name', False)
-        mock_patch.assert_called_once_with('123a53cz', 'replace', '/name', 'new_name', blocking=False)
+        self._enclosures.patch('123a53cz', 'replace', '/name', 'new_name', 1)
+        mock_patch.assert_called_once_with('123a53cz', 'replace', '/name', 'new_name', timeout=1)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_remove_called_once(self, mock_delete):

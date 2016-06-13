@@ -41,8 +41,7 @@ class ExceptionHandlerTest(unittest.TestCase):
         handle_exceptions(exception.__class__, exception, traceback_ex, mock_logging_error)
 
         log_message = "Uncaught Exception: HPOneViewException with message: test message"
-        mock_logging_error.error.assert_called_once_with(log_message,
-                                                         exc_info=(exception.__class__, exception, traceback_ex))
+        mock_logging_error.error.assert_called_once_with(log_message)
 
     @mock.patch.object(traceback, 'print_exception')
     @mock.patch.object(logging, 'error')
