@@ -57,15 +57,23 @@ print("Create a logical interconnect group")
 created_lig = oneview_client.logical_interconnect_groups.create(options)
 pprint(created_lig)
 
-# Get all, with defaults
-print("Get all Logical Interconnect Groups")
-ligs = oneview_client.logical_interconnect_groups.get_all()
-pprint(ligs)
-
 # Get the first 10 records, sorting by name descending, filtering by name
 print("Get the first Logical Interconnect Groups, sorting by name descending, filtering by name")
 ligs = oneview_client.logical_interconnect_groups.get_all(
     0, 10, sort='name:descending', filter="\"'name'='OneView Test Logical Interconnect Group'\"")
+pprint(ligs)
+
+# Update a logical interconnect group
+print("Update a logical interconnect group")
+lig_to_update = created_lig.copy()
+lig_to_update["name"] = "Renamed Logical Interconnect Group"
+updated_lig = oneview_client.logical_interconnect_groups.update(lig_to_update)
+pprint(updated_lig)
+
+
+# Get all, with defaults
+print("Get all Logical Interconnect Groups")
+ligs = oneview_client.logical_interconnect_groups.get_all()
 pprint(ligs)
 
 # Get by Id

@@ -122,3 +122,18 @@ class LogicalInterconnectGroups(object):
 
         """
         return self._client.create(resource, timeout=timeout)
+
+    def update(self, resource, timeout=-1):
+        """
+        Updates a logical interconnect group.
+        Args:
+            resource (dict): Object to update
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            dict: Updated logical interconnect group.
+
+        """
+        return self._client.update(resource, timeout=timeout)
