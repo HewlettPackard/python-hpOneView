@@ -51,6 +51,7 @@ from hpOneView.resources.networking.ethernet_networks import EthernetNetworks
 from hpOneView.resources.networking.network_sets import NetworkSets
 from hpOneView.resources.data_services.metric_streaming import MetricStreaming
 from hpOneView.resources.networking.switches import Switches
+from hpOneView.resources.networking.switch_types import SwitchTypes
 from hpOneView.resources.activity.tasks import Tasks
 from hpOneView.resources.servers.enclosures import Enclosures
 from hpOneView.resources.servers.server_hardware import ServerHardware
@@ -73,6 +74,7 @@ class OneViewClient(object):
         self.__ethernet_networks = None
         self.__network_sets = None
         self.__switches = None
+        self.__switch_types = None
         self.__tasks = None
         self.__enclosures = None
         self.__metric_streaming = None
@@ -152,6 +154,12 @@ class OneViewClient(object):
         if not self.__switches:
             self.__switches = Switches(self.__connection)
         return self.__switches
+
+    @property
+    def switch_types(self):
+        if not self.__switch_types:
+            self.__switch_types = SwitchTypes(self.__connection)
+        return self.__switch_types
 
     @property
     def tasks(self):
