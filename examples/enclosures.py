@@ -102,6 +102,13 @@ try:
 except HPOneViewException as e:
     print("  %s" % e.msg['message'])
 
+print("Get the enclosure script")
+try:
+    script = oneview_client.enclosures.get_script(enclosure['uri'])
+    pprint(script)
+except HPOneViewException as e:
+    print("  %s" % e.msg['message'])
+
 # Remove the recently added enclosure
 oneview_client.enclosures.remove(enclosure)
 print("Enclosure removed successfully")

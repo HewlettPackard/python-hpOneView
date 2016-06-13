@@ -208,6 +208,18 @@ class Enclosures(object):
         uri = self._client.build_uri(id_or_uri) + "/refreshState"
         return self._client.update(configuration, uri=uri, timeout=timeout)
 
+    def get_script(self, id_or_uri):
+        """
+        Gets the script of the enclosure
+
+        Args:
+            id_or_uri: Could be either the resource id or the resource uri
+
+        Return: Enclosure script
+        """
+        uri = self._client.build_uri(id_or_uri) + "/script"
+        return self._client.get(uri)
+
     def get_utilization(self, id, fields=None, filter=None, refresh=False, view=None):
         """
         Retrieves historical utilization data for the specified enclosure, metrics, and time span.
