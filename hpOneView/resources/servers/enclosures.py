@@ -220,6 +220,20 @@ class Enclosures(object):
         uri = self._client.build_uri(id_or_uri) + "/script"
         return self._client.get(uri)
 
+    def get_sso(self, id_or_uri, role):
+        """
+        Builds the SSO (Single Sign-On) URL parameters for the specified enclosure. This allows the user to
+        log in to the enclosure without providing credentials. This API is currently only supported by C7000 enclosures.
+
+        Args:
+            id_or_uri: Could be either the resource id or the resource uri
+            role: Role
+
+        Return: SSO (Single Sign-On) URL parameters
+        """
+        uri = self._client.build_uri(id_or_uri) + "/sso?role='%s'" % role
+        return self._client.get(uri)
+
     def get_utilization(self, id, fields=None, filter=None, refresh=False, view=None):
         """
         Retrieves historical utilization data for the specified enclosure, metrics, and time span.

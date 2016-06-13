@@ -109,6 +109,13 @@ try:
 except HPOneViewException as e:
     print("  %s" % e.msg['message'])
 
+print("Builds the SSO (Single Sign-On) URL parameters for the enclosure")
+try:
+    sso_url_parameters = oneview_client.enclosures.get_sso(enclosure['uri'], 'Active')
+    pprint(sso_url_parameters)
+except HPOneViewException as e:
+    print("  %s" % e.msg['message'])
+
 # Remove the recently added enclosure
 oneview_client.enclosures.remove(enclosure)
 print("Enclosure removed successfully")

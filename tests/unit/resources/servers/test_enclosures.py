@@ -199,6 +199,24 @@ class EnclosuresTest(TestCase):
 
         mock_get.assert_called_once_with(uri_rest_call)
 
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_sso_by_uri(self, mock_get):
+        uri_enclosure = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/sso?role=\'Active\''
+
+        self._enclosures.get_sso(uri_enclosure, 'Active')
+
+        mock_get.assert_called_once_with(uri_rest_call)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_sso_by_id(self, mock_get):
+        id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/sso?role=\'Active\''
+
+        self._enclosures.get_sso(id_enclosure, 'Active')
+
+        mock_get.assert_called_once_with(uri_rest_call)
+
     @mock.patch.object(ResourceClient, 'get_utilization')
     def test_get_utilization_with_all_args(self, mock_get_utilization):
         self._enclosures.get_utilization('09USE7335NW3', fields='AmbientTemperature,AveragePower,PeakPower',
