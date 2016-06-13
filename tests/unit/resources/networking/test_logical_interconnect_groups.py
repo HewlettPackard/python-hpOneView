@@ -81,3 +81,33 @@ class LogicalInterconnectGroupsTest(unittest.TestCase):
         lig_settings_uri = "/rest/logical-interconnect-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/settings"
         self._lig.get_settings(lig_id)
         mock_get.assert_called_once_with(lig_settings_uri)
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_create_called_once_with_defaults(self, mock_create):
+        lig = {
+            "type": "logical-interconnect-groupV3",
+            "name": "OneView Test Logical Interconnect Group",
+            "interconnectMapTemplate": {
+                "interconnectMapEntryTemplates": []
+            },
+            "uplinkSets": [],
+            "enclosureType": "C7000",
+        }
+        self._lig.create(lig)
+        mock_create.assert_called_once_with(lig, timeout=-1)
+
+    mock.patch.object(ResourceClient, 'create')
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_create_called_once(self, mock_create):
+        lig = {
+            "type": "logical-interconnect-groupV3",
+            "name": "OneView Test Logical Interconnect Group",
+            "interconnectMapTemplate": {
+                "interconnectMapEntryTemplates": []
+            },
+            "uplinkSets": [],
+            "enclosureType": "C7000",
+        }
+        self._lig.create(lig, 70)
+        mock_create.assert_called_once_with(lig, timeout=70)

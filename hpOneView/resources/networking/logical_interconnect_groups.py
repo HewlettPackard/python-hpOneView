@@ -107,3 +107,18 @@ class LogicalInterconnectGroups(object):
         """
         uri = self._client.build_uri(id_or_uri) + "/settings"
         return self._client.get(uri)
+
+    def create(self, resource, timeout=-1):
+        """
+        Creates a logical interconnect group.
+        Args:
+            resource (dict): Object to create
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            dict: Created logical interconnect group.
+
+        """
+        return self._client.create(resource, timeout=timeout)
