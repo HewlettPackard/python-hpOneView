@@ -151,3 +151,9 @@ class LogicalInterconnectGroupsTest(unittest.TestCase):
         self._lig.delete(id)
 
         mock_delete.assert_called_once_with(id, force=False, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'get_by')
+    def test_get_by_called_once(self, mock_get_by):
+        self._lig.get_by("name", "test name")
+
+        mock_get_by.assert_called_once_with("name", "test name")

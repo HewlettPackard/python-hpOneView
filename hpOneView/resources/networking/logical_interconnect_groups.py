@@ -156,3 +156,17 @@ class LogicalInterconnectGroups(object):
 
         """
         return self._client.delete(resource, force=force, timeout=timeout)
+
+    def get_by(self, field, value):
+        """
+        Get all Logical interconnect groups that matches the filter
+        The search is case insensitive
+
+        Args:
+            field: field name to filter
+            value: value to filter
+
+        Returns: dict
+
+        """
+        return self._client.get_by(field, value)
