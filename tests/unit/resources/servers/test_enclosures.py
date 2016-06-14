@@ -105,17 +105,117 @@ class EnclosuresTest(TestCase):
     def test_update_configuration_by_uri(self, mock_update_with_zero_body):
         uri_enclosure = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/configuration'
+
         self._enclosures.update_configuration(uri_enclosure)
 
         mock_update_with_zero_body.assert_called_once_with(uri_rest_call, timeout=-1)
 
     @mock.patch.object(ResourceClient, 'update_with_zero_body')
     def test_update_configuration_by_id(self, mock_update_with_zero_body):
-        uri_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/configuration'
-        self._enclosures.update_configuration(uri_enclosure)
+
+        self._enclosures.update_configuration(id_enclosure)
 
         mock_update_with_zero_body.assert_called_once_with(uri_rest_call, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_environmental_configuration_by_uri(self, mock_get):
+        uri_enclosure = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/environmentalConfiguration'
+
+        self._enclosures.get_environmental_configuration(uri_enclosure)
+
+        mock_get.assert_called_once_with(uri_rest_call)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_environmental_configuration_by_id(self, mock_get):
+        id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/environmentalConfiguration'
+
+        self._enclosures.get_environmental_configuration(id_enclosure)
+
+        mock_get.assert_called_once_with(uri_rest_call)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_environmental_configuration_by_uri(self, mock_update):
+        uri_enclosure = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/environmentalConfiguration'
+        configuration = {"calibratedMaxPower": 2500}
+        configuration_rest_call = configuration.copy()
+
+        self._enclosures.update_environmental_configuration(uri_enclosure, configuration)
+
+        mock_update.assert_called_once_with(configuration_rest_call, uri=uri_rest_call, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_environmental_configuration_by_id(self, mock_update):
+        id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/environmentalConfiguration'
+        configuration = {"calibratedMaxPower": 2500}
+        configuration_rest_call = configuration.copy()
+
+        self._enclosures.update_environmental_configuration(id_enclosure, configuration)
+
+        mock_update.assert_called_once_with(configuration_rest_call, uri=uri_rest_call, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_refresh_state_by_uri(self, mock_update):
+        uri_enclosure = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/refreshState'
+        configuration = {"refreshState": "RefreshPending"}
+        configuration_rest_call = configuration.copy()
+
+        self._enclosures.refresh_state(uri_enclosure, configuration)
+
+        mock_update.assert_called_once_with(configuration_rest_call, uri=uri_rest_call, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_refresh_state_by_id(self, mock_update):
+        id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/refreshState'
+        configuration = {"refreshState": "RefreshPending"}
+        configuration_rest_call = configuration.copy()
+
+        self._enclosures.refresh_state(id_enclosure, configuration)
+
+        mock_update.assert_called_once_with(configuration_rest_call, uri=uri_rest_call, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_script_by_uri(self, mock_get):
+        uri_enclosure = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/script'
+
+        self._enclosures.get_script(uri_enclosure)
+
+        mock_get.assert_called_once_with(uri_rest_call)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_script_by_id(self, mock_get):
+        id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/script'
+
+        self._enclosures.get_script(id_enclosure)
+
+        mock_get.assert_called_once_with(uri_rest_call)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_sso_by_uri(self, mock_get):
+        uri_enclosure = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/sso?role=\'Active\''
+
+        self._enclosures.get_sso(uri_enclosure, 'Active')
+
+        mock_get.assert_called_once_with(uri_rest_call)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_sso_by_id(self, mock_get):
+        id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/sso?role=\'Active\''
+
+        self._enclosures.get_sso(id_enclosure, 'Active')
+
+        mock_get.assert_called_once_with(uri_rest_call)
 
     @mock.patch.object(ResourceClient, 'get_utilization')
     def test_get_utilization_with_all_args(self, mock_get_utilization):

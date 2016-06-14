@@ -79,6 +79,43 @@ try:
 except HPOneViewException as e:
     print(e.msg['message'])
 
+print("Retrieve environmental configuration data for the enclosure")
+try:
+    environmental_configuration = oneview_client.enclosures.get_environmental_configuration(enclosure['uri'])
+    print("  Enclosure calibratedMaxPower = %s" % environmental_configuration['calibratedMaxPower'])
+except HPOneViewException as e:
+    print("  %s" % e.msg['message'])
+
+print("Set the calibrated max power of the enclosure")
+try:
+    config = {"calibratedMaxPower": 2500}
+    environmental_configuration = oneview_client.enclosures.update_environmental_configuration(enclosure['uri'], config)
+    print("  Enclosure calibratedMaxPower = %s" % environmental_configuration['calibratedMaxPower'])
+except HPOneViewException as e:
+    print("  %s" % e.msg['message'])
+
+print("Refresh the enclosure")
+try:
+    config = {"refreshState": "RefreshPending"}
+    enclosure = oneview_client.enclosures.refresh_state(enclosure['uri'], config)
+    print("  Done")
+except HPOneViewException as e:
+    print("  %s" % e.msg['message'])
+
+print("Get the enclosure script")
+try:
+    script = oneview_client.enclosures.get_script(enclosure['uri'])
+    pprint(script)
+except HPOneViewException as e:
+    print("  %s" % e.msg['message'])
+
+print("Builds the SSO (Single Sign-On) URL parameters for the enclosure")
+try:
+    sso_url_parameters = oneview_client.enclosures.get_sso(enclosure['uri'], 'Active')
+    pprint(sso_url_parameters)
+except HPOneViewException as e:
+    print("  %s" % e.msg['message'])
+
 # Remove the recently added enclosure
 oneview_client.enclosures.remove(enclosure)
 print("Enclosure removed successfully")
