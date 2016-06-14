@@ -48,6 +48,7 @@ from hpOneView.connection import connection
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
 from hpOneView.resources.networking.ethernet_networks import EthernetNetworks
+from hpOneView.resources.networking.connection_templates import ConnectionTemplates
 from hpOneView.resources.networking.fabrics import Fabrics
 from hpOneView.resources.networking.network_sets import NetworkSets
 from hpOneView.resources.data_services.metric_streaming import MetricStreaming
@@ -70,6 +71,7 @@ class OneViewClient(object):
         self.__connection = connection(config["ip"])
         self.__set_proxy(config)
         self.__connection.login(config["credentials"])
+        self.__connection_templates = None
         self.__fc_networks = None
         self.__fcoe_networks = None
         self.__ethernet_networks = None
@@ -120,6 +122,13 @@ class OneViewClient(object):
     @property
     def connection(self):
         return self.__connection
+
+    @property
+    def connection_templates(self):
+        if not self.__connection_templates:
+            self.__connection_templates = ConnectionTemplates(
+                self.__connection)
+        return self.__connection_templates
 
     @property
     def fc_networks(self):
