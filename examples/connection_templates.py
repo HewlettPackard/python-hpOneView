@@ -40,28 +40,43 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-# Get all fabrics
-print("Get all fabrics")
-fabrics = oneview_client.fabrics.get_all()
-pprint(fabrics)
+# Get all connection templates
+print("Get all connection templates")
+con_templates = oneview_client.connection_templates.get_all()
+pprint(con_templates)
 
 # Get all sorting by name descending
-print("Get all fabrics sorting by name")
-fabrics_sorted = oneview_client.fabrics.get_all(
+print("Get all connection templates sorting by name")
+con_templates_sorted = oneview_client.connection_templates.get_all(
     sort='name:descending')
-pprint(fabrics_sorted)
+pprint(con_templates_sorted)
 
-# Get by Id
+# Get default template
+print("Get default connection template")
+con_template_default = oneview_client.connection_templates.get_default()
+pprint(con_template_default)
+
+# Get by name
 try:
-    print("Get a fabric by id")
-    fabrics_byid = oneview_client.fabrics.get(
-        '7a9f7d09-3c24-4efe-928f-50a1af411120')
-    pprint(fabrics_byid)
+    print("Get a connection_template by name")
+    con_template_byname = oneview_client.connection_templates.get_by(
+        'name', 'name-1428677812-1465588045762')[0]
+    pprint(con_template_byname)
 except HPOneViewException as e:
     print(e.msg['message'])
 
-# Get by name
-print("Get a fabrics by name")
-fabric_byname = oneview_client.fabrics.get_by(
-    'name', 'DefaultFabric')[0]
-pprint(fabric_byname)
+# Get by Id and update name
+try:
+    print("Get a connection template by id")
+    con_template_byid = oneview_client.connection_templates.get(
+        '12aa10e3-693d-45f9-8512-2e9f0dd94c2c')
+    pprint(con_template_byid)
+    print("Update name of connection template")
+    con_template_byid['name'] = "renamed"
+    con_template_byid = oneview_client.connection_templates.update(
+        con_template_byid)
+    print("Updated connection template successfully\n  uri = '%s'" %
+          (con_template_byid['uri']))
+    print("  with attribute {'name': '%s'}" % con_template_byid['name'])
+except HPOneViewException as e:
+    print(e.msg['message'])
