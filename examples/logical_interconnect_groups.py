@@ -63,6 +63,10 @@ ligs = oneview_client.logical_interconnect_groups.get_all(
     0, 10, sort='name:descending', filter="\"'name'='OneView Test Logical Interconnect Group'\"")
 pprint(ligs)
 
+# Get Logical Interconnect by property
+lig = oneview_client.logical_interconnect_groups.get_by('name', 'OneView Test Logical Interconnect Group')[0]
+print("Found lig by name: '%s'.\n  uri = '%s'" % (lig['name'], lig['uri']))
+
 # Update a logical interconnect group
 print("Update a logical interconnect group")
 lig_to_update = created_lig.copy()
