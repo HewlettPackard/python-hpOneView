@@ -401,13 +401,12 @@ def make_fc_networkV2(name, autoLoginRedistribution=True, description=None,
 def make_interconnect_map_template():
     return {
         'interconnectMapEntryTemplates':
-            [{'logicalLocation': {
-                'locationEntries':
-                    [{'type': 'Bay', 'relativeValue': N},
-                     {'type': 'Enclosure', 'relativeValue': 1}]},
-                'permittedInterconnectTypeUri': None,
-                'logicalDownlinkUri': None}
-             for N in range(1, 9)],
+            [{'logicalLocation':
+                {
+                    'locationEntries':
+                        [{'type': 'Bay', 'relativeValue': N},
+                         {'type': 'Enclosure', 'relativeValue': 1}]
+                }, 'permittedInterconnectTypeUri': None, 'logicalDownlinkUri': None} for N in range(1, 9)],
     }
 
 
@@ -1633,3 +1632,40 @@ class pages(object):
             return self.currentPage
         else:
             raise StopIteration
+
+
+def resource_compare(resource1, resource2):
+    """
+    Recursively compares dictionary contents, ignoring type and order
+    Args:
+        resource1: first dictionary
+        resource2: second dictionary
+
+    Returns:
+        True when equal;
+        False when different.
+
+    """
+
+    # Check all keys in first dict
+    for key in resource1.keys():
+        if key not in resource2:
+            # no key in second dict
+            return False
+        elif isinstance(resource1[key], dict):
+            # recursive call
+            if not resource_compare(resource1[key], resource2[key]):
+                # if different, stops here
+                return False
+        elif str(resource1[key]) != str(resource2[key]):
+            # different value
+            return False
+
+    # Check all keys in second dict to find missing
+    for key in resource2.keys():
+        if key not in resource1:
+            # not exists in first dict
+            return False
+
+    # no differences found
+    return True
