@@ -29,7 +29,6 @@ from config_loader import try_load_from_file
 config = {
     "ip": "172.16.102.59",
     "credentials": {
-        "authLoginDomain": "",
         "userName": "administrator",
         "password": ""
     }
