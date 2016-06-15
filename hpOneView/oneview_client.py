@@ -59,6 +59,7 @@ from hpOneView.resources.servers.enclosures import Enclosures
 from hpOneView.resources.servers.server_hardware import ServerHardware
 from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.interconnect_types import InterconnectTypes
+from hpOneView.resources.networking.logical_downlinks import LogicalDownlinks
 from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
 
@@ -88,6 +89,7 @@ class OneViewClient(object):
         self.__interconnect_types = None
         self.__power_devices = None
         self.__logical_interconnect_groups = None
+        self.__logical_downlinks = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -216,6 +218,13 @@ class OneViewClient(object):
             self.__logical_interconnect_groups = LogicalInterconnectGroups(
                 self.__connection)
         return self.__logical_interconnect_groups
+
+    @property
+    def logical_downlinks(self):
+        if not self.__logical_downlinks:
+            self.__logical_downlinks = LogicalDownlinks(
+                self.__connection)
+        return self.__logical_downlinks
 
     @property
     def power_devices(self):
