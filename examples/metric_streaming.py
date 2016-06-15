@@ -29,7 +29,6 @@ from hpOneView.oneview_client import OneViewClient
 config = {
     "ip": "172.16.102.59",
     "credentials": {
-        "authLoginDomain": "",
         "userName": "administrator",
         "password": ""
     }
