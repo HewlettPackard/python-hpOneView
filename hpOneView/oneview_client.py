@@ -58,6 +58,7 @@ from hpOneView.resources.activity.tasks import Tasks
 from hpOneView.resources.servers.enclosures import Enclosures
 from hpOneView.resources.servers.server_hardware import ServerHardware
 from hpOneView.resources.networking.interconnects import Interconnects
+from hpOneView.resources.networking.interconnect_types import InterconnectTypes
 from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
 
@@ -84,6 +85,7 @@ class OneViewClient(object):
         self.__metric_streaming = None
         self.__server_hardware = None
         self.__interconnects = None
+        self.__interconnect_types = None
         self.__power_devices = None
         self.__logical_interconnect_groups = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
@@ -201,6 +203,12 @@ class OneViewClient(object):
         if not self.__interconnects:
             self.__interconnects = Interconnects(self.__connection)
         return self.__interconnects
+
+    @property
+    def interconnect_types(self):
+        if not self.__interconnect_types:
+            self.__interconnect_types = InterconnectTypes(self.__connection)
+        return self.__interconnect_types
 
     @property
     def logical_interconnect_groups(self):

@@ -26,20 +26,20 @@ import unittest
 import mock
 
 from hpOneView.connection import connection
-from hpOneView.resources.networking.switch_types import SwitchTypes
+from hpOneView.resources.networking.interconnect_types import InterconnectTypes
 from hpOneView.resources.resource import ResourceClient
 
 
-class SwitchTypesTest(unittest.TestCase):
+class InterconnectTypesTest(unittest.TestCase):
 
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
-        self._switch_types = SwitchTypes(self.connection)
+        self._interconnect_types = InterconnectTypes(self.connection)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_called_once(self, mock_get):
-        self._switch_types.get('c6f4e705-2bb5-430a-b7a1-a35b2f7aa9b9')
+        self._interconnect_types.get('c6f4e705-2bb5-430a-b7a1-a35b2f7aa9b9')
 
         mock_get.assert_called_once_with(
             'c6f4e705-2bb5-430a-b7a1-a35b2f7aa9b9')
@@ -49,13 +49,13 @@ class SwitchTypesTest(unittest.TestCase):
         filter = 'name=TestName'
         sort = 'name:ascending'
 
-        self._switch_types.get_all(2, 500, filter, sort)
+        self._interconnect_types.get_all(2, 500, filter, sort)
 
         mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort)
 
     @mock.patch.object(ResourceClient, 'get_by')
     def test_get_by_called_once(self, mock_get_by):
-        self._switch_types.get_by('name', 'Cisco Nexus 6xxx')
+        self._interconnect_types.get_by('name', 'HP VC Flex-10 Enet Module')
 
         mock_get_by.assert_called_once_with(
-            'name', 'Cisco Nexus 6xxx')
+            'name', 'HP VC Flex-10 Enet Module')
