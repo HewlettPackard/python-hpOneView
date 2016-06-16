@@ -92,10 +92,7 @@ class EnclosureGroups(object):
             dict:
         """
 
-        if "/" in id_or_uri:
-            uri = id_or_uri
-        else:
-            uri = self.URI + "/" + id_or_uri + "/script"
+        uri = self._client.build_uri(id_or_uri) + "/script"
 
         return self._client.get(uri)
 

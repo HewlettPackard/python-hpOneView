@@ -76,3 +76,11 @@ try:
     pprint(eg_byuri)
 except HPOneViewException as e:
     print(e.msg['message'])
+
+# Gets the configuration script of a Enclosure Group
+try:
+    print("Gets the configuration script of a Enclosure Group")
+    script = oneview_client.enclosure_groups.get_script(egs[0]["uri"])
+    print(script)
+except HPOneViewException as e:
+    print(e.msg['message'])

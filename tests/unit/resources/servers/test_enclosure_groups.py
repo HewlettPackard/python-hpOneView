@@ -70,9 +70,9 @@ class EnclosureGroupsTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_script_by_uri_called_once(self, mock_get):
-        uri = "/rest/enclosure-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/script"
+        uri = "/rest/enclosure-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
         self.client.get_script(uri)
-        mock_get.assert_called_once_with(uri)
+        mock_get.assert_called_once_with(uri + "/script")
 
     @mock.patch.object(ResourceClient, 'get_by')
     def test_get_by_called_once(self, mock_get_by):
