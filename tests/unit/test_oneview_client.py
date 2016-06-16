@@ -117,9 +117,29 @@ class OneViewClientTest(unittest.TestCase):
     def test_metric_streaming_has_value(self):
         self.assertIsNotNone(self._oneview.metric_streaming)
 
+    def test_lazy_loading_enclosure_groups(self):
+        enclosure_groups = self._oneview.enclosure_groups
+        self.assertEqual(enclosure_groups, self._oneview.enclosure_groups)
+
     def test_lazy_loading_tasks(self):
         tasks = self._oneview.tasks
         self.assertEqual(tasks, self._oneview.tasks)
+
+    def test_lazy_loading_connection_templates(self):
+        connection_templates = self._oneview.connection_templates
+        self.assertEqual(connection_templates, self._oneview.connection_templates)
+
+    def test_lazy_loading_switch_types(self):
+        switch_types = self._oneview.switch_types
+        self.assertEqual(switch_types, self._oneview.switch_types)
+
+    def test_lazy_loading_network_sets(self):
+        network_sets = self._oneview.network_sets
+        self.assertEqual(network_sets, self._oneview.network_sets)
+
+    def test_lazy_loading_fabrics(self):
+        fabrics = self._oneview.fabrics
+        self.assertEqual(fabrics, self._oneview.fabrics)
 
     def test_lazy_loading_metric_streaming(self):
         metric = self._oneview.metric_streaming

@@ -39,7 +39,6 @@ __status__ = 'Development'
 
 import logging
 from urllib.parse import quote
-from hpOneView.common import get_members
 from hpOneView.resources.task_monitor import TaskMonitor
 from hpOneView.exceptions import HPOneViewUnknownType
 
@@ -61,10 +60,6 @@ class ResourceClient(object):
         self._connection = con
         self._uri = uri
         self._task_monitor = TaskMonitor(con)
-
-    def get_members(self, uri):
-        # TODO: common is deprecated, refactor get_members implementation
-        return get_members(self._connection.get(uri))
 
     def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields=''):
         """
@@ -97,13 +92,14 @@ class ResourceClient(object):
 
         logger.debug('Getting all resources : with uri : %s' % uri)
 
-        result = self.get_members(uri)
+        response = self._connection.get(uri)
+        result = self.__get_members(response)
 
         logger.debug("Getting all resources : count : %i" % len(result))
 
         return result
 
-    def delete(self, resource, force=False, verbose=False, timeout=-1):
+    def delete(self, resource, force=False, timeout=-1):
 
         if not resource:
             logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
@@ -339,3 +335,9 @@ class ResourceClient(object):
         filters = filter.split(",")
         formated_filter = "&filter=".join(quote(f) for f in filters)
         return "&filter=" + formated_filter
+
+    def __get_members(self, mlist):
+        if mlist and 'members' in mlist:
+            return mlist['members']
+        else:
+            return []
