@@ -48,14 +48,16 @@ class ResourceTest(unittest.TestCase):
         self.connection = connection(self.host)
         self.resource_client = ResourceClient(self.connection, self.URI)
 
-    @mock.patch.object(ResourceClient, 'get_members')
-    def test_get_all_called_once(self, mock_get_members):
+    @mock.patch.object(connection, 'get')
+    def test_get_all_called_once(self, mock_get):
         filter = "'name'='OneViewSDK \"Test FC Network'"
         sort = 'name:ascending'
         query = "name NE 'WrongName'"
         view = '"{view-name}"'
 
-        self.resource_client.get_all(1, 500, filter, query, sort, view, 'name,owner,modified')
+        mock_get.return_value = {"members": "members"}
+
+        result = self.resource_client.get_all(1, 500, filter, query, sort, view, 'name,owner,modified')
 
         uri = self.URI
         uri += '?start=1' \
@@ -66,13 +68,14 @@ class ResourceTest(unittest.TestCase):
                '&view=%22%7Bview-name%7D%22' \
                '&fields=name%2Cowner%2Cmodified'
 
-        mock_get_members.assert_called_once_with(uri)
+        self.assertEqual("members", result)
+        mock_get.assert_called_once_with(uri)
 
-    @mock.patch.object(ResourceClient, 'get_members')
-    def test_get_all_with_defaults(self, mock_get_members):
+    @mock.patch.object(connection, 'get')
+    def test_get_all_with_defaults(self, mock_get):
         self.resource_client.get_all()
         uri = self.URI + "?start=0&count=-1"
-        mock_get_members.assert_called_once_with(uri)
+        mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(connection, 'delete')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
@@ -83,7 +86,7 @@ class ResourceTest(unittest.TestCase):
         mock_delete.return_value = task, body
         mock_wait4task.return_value = task
 
-        delete_task = self.resource_client.delete('1', force=True, timeout=-1, verbose=True)
+        delete_task = self.resource_client.delete('1', force=True, timeout=-1)
 
         self.assertEqual(task, delete_task)
         mock_delete.assert_called_once_with(self.URI + "/1?force=True")
@@ -133,6 +136,18 @@ class ResourceTest(unittest.TestCase):
 
         mock_put.return_value = task, task
         mock_wait4task.return_value = response_body
+
+        result = self.resource_client.update_with_zero_body('/rest/enclosures/09USE133E5H4/configuration', timeout=-1)
+
+        self.assertEqual(result, response_body)
+
+    @mock.patch.object(connection, 'put')
+    def test_update_with_zero_body_without_task(self, mock_put):
+
+        response_body = {"resource_name": "name"}
+        task = None
+
+        mock_put.return_value = task, response_body
 
         result = self.resource_client.update_with_zero_body('/rest/enclosures/09USE133E5H4/configuration', timeout=-1)
 
@@ -281,6 +296,19 @@ class ResourceTest(unittest.TestCase):
             self.assertTrue("Resource" in e.args[0])
         else:
             self.fail()
+
+    @mock.patch.object(connection, 'delete')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    def test_delete_with_dict_uri(self, mock_wait4task, mock_delete):
+
+        resource = {"uri": "uri"}
+
+        mock_delete.return_value = {}, {}
+        delete_result = self.resource_client.delete(resource)
+
+        self.assertTrue(delete_result)
+        mock_delete.assert_called_once_with("uri")
+        mock_wait4task.assert_called_once_with({}, timeout=-1)
 
     def test_delete_with_empty_dict(self):
         try:
