@@ -57,6 +57,7 @@ from hpOneView.resources.networking.switch_types import SwitchTypes
 from hpOneView.resources.activity.tasks import Tasks
 from hpOneView.resources.servers.enclosures import Enclosures
 from hpOneView.resources.servers.server_hardware import ServerHardware
+from hpOneView.resources.servers.server_hardware_types import ServerHardwareTypes
 from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.interconnect_types import InterconnectTypes
 from hpOneView.resources.networking.logical_downlinks import LogicalDownlinks
@@ -85,6 +86,7 @@ class OneViewClient(object):
         self.__enclosures = None
         self.__metric_streaming = None
         self.__server_hardware = None
+        self.__server_hardware_types = None
         self.__interconnects = None
         self.__interconnect_types = None
         self.__power_devices = None
@@ -169,6 +171,13 @@ class OneViewClient(object):
         if not self.__server_hardware:
             self.__server_hardware = ServerHardware(self.__connection)
         return self.__server_hardware
+
+    @property
+    def server_hardware_types(self):
+        if not self.__server_hardware_types:
+            self.__server_hardware_types = ServerHardwareTypes(
+                self.__connection)
+        return self.__server_hardware_types
 
     @property
     def switches(self):
