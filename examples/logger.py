@@ -44,7 +44,6 @@ logger.setLevel(logging.DEBUG)
 config = {
     "ip": "172.16.102.59",
     "credentials": {
-        "authLoginDomain": "",
         "userName": "administrator",
         "password": ""
     }
