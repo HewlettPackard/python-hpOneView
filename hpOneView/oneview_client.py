@@ -45,6 +45,7 @@ __status__ = 'Development'
 import json
 
 from hpOneView.connection import connection
+from hpOneView.resources.servers.connections import Connections
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
 from hpOneView.resources.networking.ethernet_networks import EthernetNetworks
@@ -74,6 +75,7 @@ class OneViewClient(object):
         self.__connection = connection(config["ip"])
         self.__set_proxy(config)
         self.__connection.login(config["credentials"])
+        self.__connections = None
         self.__connection_templates = None
         self.__fc_networks = None
         self.__fcoe_networks = None
@@ -128,6 +130,13 @@ class OneViewClient(object):
     @property
     def connection(self):
         return self.__connection
+
+    @property
+    def connections(self):
+        if not self.__connections:
+            self.__connections = Connections(
+                self.__connection)
+        return self.__connections
 
     @property
     def connection_templates(self):
