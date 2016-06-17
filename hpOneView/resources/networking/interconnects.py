@@ -79,3 +79,13 @@ class Interconnects(object):
         """
         uri = "/rest/interconnects/%s/statistics/%s/subport/%i" % (interconnect_id, port_name, subport_number)
         return self._client.get(uri)
+
+    def get(self, id_or_uri):
+        """
+        Gets the Interconnect by ID or by uri
+        Args:
+            id_or_uri: Could be either the interconnect id or the interconnect uri
+
+        Returns: dict
+        """
+        return self._client.get(id_or_uri)

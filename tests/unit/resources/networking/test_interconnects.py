@@ -59,3 +59,10 @@ class InterconnectsTest(unittest.TestCase):
         uri = '/rest/interconnects/3518be0e-17c1-4189-8f81-83f3724f6155/statistics/d1/subport/1'
 
         mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_interconnect(self, mock_get):
+        interconnect_id = '5v8f3ec0-52t4-475a-84g4-c4iod72d2c20'
+
+        self._interconnects.get(interconnect_id)
+        mock_get.assert_called_once_with(interconnect_id)
