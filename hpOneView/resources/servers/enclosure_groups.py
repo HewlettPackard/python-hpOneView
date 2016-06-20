@@ -128,3 +128,20 @@ class EnclosureGroups(object):
         data = self.__default_values.copy()
         data.update(resource)
         return self._client.create(data, timeout=timeout)
+
+    def delete(self, resource, timeout=-1):
+        """
+         Deletes an enclosure group. An enclosure group cannot be deleted if any enclosures
+         are currently part of that enclosure group.
+
+        Args:
+            resource (dict): object to delete
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            boolean: True when success
+
+        """
+        return self._client.delete(resource, timeout=timeout)

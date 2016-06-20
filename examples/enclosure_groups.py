@@ -74,7 +74,7 @@ data = {
 }
 
 # Create a Enclosure Group
-print("Create a logical interconnect group")
+print("Create a Enclosure Group")
 created_eg = oneview_client.enclosure_groups.create(data)
 pprint(created_eg)
 
@@ -120,3 +120,8 @@ try:
     print(script)
 except HPOneViewException as e:
     print(e.msg['message'])
+
+# Delete a Enclosure Group
+print("Delete the created Enclosure Group")
+oneview_client.enclosure_groups.delete(created_eg)
+print("Sucessfully deleted Enclosure Group")

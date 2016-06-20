@@ -298,8 +298,7 @@ class ResourceTest(unittest.TestCase):
             self.fail()
 
     @mock.patch.object(connection, 'delete')
-    @mock.patch.object(TaskMonitor, 'wait_for_task')
-    def test_delete_with_dict_uri(self, mock_wait4task, mock_delete):
+    def test_delete_with_dict_uri(self, mock_delete):
 
         resource = {"uri": "uri"}
 
@@ -308,7 +307,6 @@ class ResourceTest(unittest.TestCase):
 
         self.assertTrue(delete_result)
         mock_delete.assert_called_once_with("uri")
-        mock_wait4task.assert_called_once_with({}, timeout=-1)
 
     def test_delete_with_empty_dict(self):
         try:

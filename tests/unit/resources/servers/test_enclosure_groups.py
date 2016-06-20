@@ -112,7 +112,7 @@ class EnclosureGroupsTest(unittest.TestCase):
         mock_get_by.assert_called_once_with("name", "test name")
 
     @mock.patch.object(ResourceClient, 'create')
-    def test_create_called_once_with_defaults(self, mock_create):
+    def test_create_called_once(self, mock_create):
         eg_initial = self.MINIMAL_DATA_FOR_EG_CREATION.copy()
 
         self.client.create(eg_initial)
@@ -121,3 +121,9 @@ class EnclosureGroupsTest(unittest.TestCase):
         eg_expected["type"] = "EnclosureGroupV200"
 
         mock_create.assert_called_once_with(eg_expected, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_delete_called_once(self, mock_delete):
+        self.client.delete({"an_entity": ""})
+
+        mock_delete.assert_called_once_with({"an_entity": ""}, timeout=-1)
