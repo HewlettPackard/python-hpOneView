@@ -138,3 +138,10 @@ class EnclosureGroupsTest(unittest.TestCase):
         eg_expected["type"] = "EnclosureGroupV200"
 
         mock_update.assert_called_once_with(eg_expected, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_script_by_uri_called_once(self, mock_update):
+        uri = "/rest/enclosure-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
+        script_body = "#TEST COMMAND"
+        self.client.update_script(uri, script_body)
+        mock_update.assert_called_once_with(script_body, uri=uri + "/script")

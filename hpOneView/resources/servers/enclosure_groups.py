@@ -162,3 +162,18 @@ class EnclosureGroups(object):
         data = self.__default_values.copy()
         data.update(resource)
         return self._client.update(data, timeout=timeout)
+
+    def update_script(self, id_or_uri, script_body):
+        """
+        Updates the configuration script of the enclosure-group with the specified URI.
+        Args:
+            id_or_uri: id or resource uri
+            script_body:  configuration script
+
+        Returns:
+            dict: Updated enclosure group
+
+        """
+        uri = self._client.build_uri(id_or_uri) + "/script"
+
+        return self._client.update(script_body, uri=uri)

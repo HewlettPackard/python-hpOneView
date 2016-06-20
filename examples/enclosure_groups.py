@@ -96,7 +96,7 @@ else:
 print("Update an Enclosure Group")
 eg_to_update = created_eg.copy()
 eg_to_update["name"] = "Renamed Enclosure Group"
-updated_eg = oneview_client.logical_interconnect_groups.update(eg_to_update)
+updated_eg = oneview_client.enclosure_groups.update(eg_to_update)
 pprint(updated_eg)
 
 # Get all, with default
@@ -119,6 +119,12 @@ try:
     pprint(eg_byuri)
 except HPOneViewException as e:
     print(e.msg['message'])
+
+# Update an Enclosure Group Script
+print("Update an Enclosure Group Script")
+script = "#TEST COMMAND"
+update_script_result = oneview_client.enclosure_groups.update_script(eg_to_update["uri"], script)
+pprint(update_script_result)
 
 # Gets the configuration script of a Enclosure Group
 try:
