@@ -128,3 +128,230 @@ class ServerHardware(object):
         """
 
         return self._client.get_utilization(id, fields=fields, filter=filter, refresh=refresh, view=view)
+
+    def get_all(self, start=0, count=-1, filter='', sort=''):
+        """
+        Gets a list of server hardware resources. Returns a list of resources based on optional sorting and filtering,
+        and constrained by start and count parameters.
+
+        Args:
+            start:
+                The first item to return, using 0-based indexing.
+                If not specified, the default is 0 - start with the first available item.
+            count:
+                The number of resources to return. A count of -1 requests all the items.
+                The actual number of items in the response may differ from the requested
+                count if the sum of start and count exceed the total number of items, or
+                if returning the requested number of items would take too long.
+            filter:
+                A general filter/query string to narrow the list of items returned. The
+                default is no filter - all resources are returned.
+            sort:
+                The sort order of the returned data set. By default, the sort order is based
+                on create time, with the oldest entry first.
+
+        Returns:
+            list: A list of server hardware resources
+
+        """
+        return self._client.get_all(start, count, filter=filter, sort=sort)
+
+    def add(self, information, timeout=-1):
+        """
+        Adds a rack-mount server for management by the appliance. This API initiates the asynchronous addition of
+        supported server models. Note: servers in an enclosure are added by adding the enclosure resource. This is
+        only supported on appliances which support rack mounted servers.
+        Args:
+            resource (dict): Object to create
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
+
+        Returns:
+            dict: Created rack mount server.
+
+        """
+        return self._client.create(information, timeout=timeout)
+
+    def get(self, id_or_uri):
+        """
+        Gets a server hardware resource by ID or by uri
+        Args:
+            id_or_uri: Could be either the server hardware resource id or uri
+
+        Returns:
+            dict: The server hardware resource
+        """
+        return self._client.get(id_or_uri)
+
+    def get_by(self, field, value):
+        """
+        Get all server hardware that match the filter
+        The search is case insensitive
+
+        Args:
+            field: field name to filter
+            value: value to filter
+
+        Returns: dict
+
+        """
+        return self._client.get_by(field, value)
+
+    def remove(self, resource, force=False, timeout=-1):
+        """
+        Removes the rack-server with the specified URI. Note: This operation is only supported on appliances which
+        support rack mounted servers.
+
+        Args:
+            resource (dict): object to delete
+            force (bool):
+                 If set to true the operation completes despite any problems with
+                 network connectivity or errors on the resource itself. The default is false.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
+
+        Returns:
+            dict: Details of associated resource
+
+        """
+        return self._client.delete(resource, force=force, timeout=timeout)
+
+    def get_bios(self, id_or_uri):
+        """
+        Gets the list of BIOS/UEFI values currently set on the physical server.
+
+        Args:
+            id_or_uri: Could be either the server hardware resource id or uri
+
+        Returns:
+            dict of BIOS/UEFI values
+        """
+        uri = self._client.build_uri(id_or_uri) + "/bios"
+        return self._client.get(uri)
+
+    def get_environmental_configuration(self, id_or_uri):
+        """
+        Gets the settings that describe the environmental configuration (supported feature set, calibrated minimum &
+        maximum power, location & dimensions, ...) of the server hardware resource.
+
+        Args:
+            id_or_uri: Could be either the server hardware resource id or uri
+
+        Returns:
+            dict: environmental configuration settings
+        """
+        uri = self._client.build_uri(id_or_uri) + "/environmentalConfiguration"
+        return self._client.get(uri)
+
+    def update_environmental_configuration(self, configuration, id_or_uri, timeout=-1):
+        """
+        Sets the calibrated max power of an unmanaged or unsupported server hardware resource.
+
+        Args:
+            id_or_uri: Could be either the server hardware resource id or uri
+            configuration: configuration
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            dict: environmental configuration settings
+        """
+        uri = self._client.build_uri(id_or_uri) + "/environmentalConfiguration"
+        return self._client.update(configuration, uri, timeout=timeout)
+
+    def get_ilo_sso_url(self, id_or_uri):
+        """
+        Retrieves the URL to launch a Single Sign-On (SSO) session for the iLO web interface. If the server hardware is
+        unsupported, the resulting URL will not use SSO and the iLO web interface will prompt for credentials. Note,
+        this is not supported on G7/iLO3 or earlier servers.
+
+        Args:
+            id_or_uri: Could be either the server hardware resource id or uri
+
+        Returns:
+            URL
+        """
+        uri = self._client.build_uri(id_or_uri) + "/iloSsoUrl"
+        return self._client.get(uri)
+
+    def get_java_remote_console_url(self, id_or_uri):
+        """
+        Generates a Single Sign-On (SSO) session for the iLO Java Applet console and returns the URL to launch it.
+        If the server hardware is unmanaged or unsupported, the resulting URL will not use SSO and the iLO Java Applet
+        will prompt for credentials. Note, this is not supported on G7/iLO3 or earlier servers.
+
+        Args:
+            id_or_uri: Could be either the server hardware resource id or uri
+
+        Returns:
+            URL
+        """
+        uri = self._client.build_uri(id_or_uri) + "/javaRemoteConsoleUrl"
+        return self._client.get(uri)
+
+    def update_mp_firware_version(self, id_or_uri, timeout=-1):
+        """
+        Updates the iLO firmware on a physical server to a minimum ILO firmware version required by OneView to
+        manage the server.
+
+        Args:
+            id_or_uri: Could be either the server hardware resource id or uri
+
+        Returns:
+            resource
+        """
+        uri = self._client.build_uri(id_or_uri) + "/mpFirmwareVersion"
+        return self._client.update_with_zero_body(uri, timeout)
+
+    def update_power_state(self, configuration, id_or_uri, timeout=-1):
+        """
+        Refreshes the server hardware to fix configuration issues.
+
+        Args:
+            id_or_uri: Could be either the server hardware resource id or uri
+            configuration: configuration
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            resource
+        """
+        uri = self._client.build_uri(id_or_uri) + "/powerState"
+        return self._client.update(configuration, uri, timeout=timeout)
+
+    def refresh_state(self, configuration, id_or_uri, timeout=-1):
+        """
+        Refreshes the server hardware to fix configuration issues.
+
+        Args:
+            id_or_uri: Could be either the server hardware resource id or uri
+            configuration: configuration
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            resource
+        """
+        uri = self._client.build_uri(id_or_uri) + "/refreshState"
+        return self._client.update(configuration, uri=uri, timeout=timeout)
+
+    def get_remote_console_url(self, id_or_uri):
+        """
+        Generates a Single Sign-On (SSO) session for the iLO Integrated Remote Console Application (IRC) and returns the
+        URL to launch it. If the server hardware is unmanaged or unsupported, the resulting URL will not use SSO and the
+        IRC application will prompt for credentials. Use of this URL requires a previous installation of the iLO IRC and
+        is supported only on Windows clients.
+
+        Args:
+            id_or_uri: Could be either the server hardware resource id or uri
+
+        Returns:
+            URL
+        """
+        uri = self._client.build_uri(id_or_uri) + "/remoteConsoleUrl"
+        return self._client.get(uri)
