@@ -46,6 +46,7 @@ class EnclosureGroups(object):
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
+        self.__default_values = {"type": "EnclosureGroupV200"}
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
@@ -109,3 +110,21 @@ class EnclosureGroups(object):
 
         """
         return self._client.get_by(field, value)
+
+    def create(self, resource, timeout=-1):
+        """
+         Creates an enclosure group. An interconnect bay mapping must be provided for each
+          of the interconnect bays in the enclosure. For this release, the same logical
+          interconnect group must be provided for each interconnect bay mapping.
+        Args:
+            resource (dict): Object to create
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            dict: Created enclosure group
+        """
+        data = self.__default_values.copy()
+        data.update(resource)
+        return self._client.create(data, timeout=timeout)

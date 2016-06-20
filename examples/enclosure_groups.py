@@ -41,11 +41,47 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-# Get the first 10 records, sorting by name descending, filtering by name
-print("Get the ten first Enclosure Groups, sorting by name descending, filtering by name")
+data = {
+    "name": "Enclosure Group 1",
+    "stackingMode": "Enclosure",
+    "interconnectBayMappings":
+        [
+            {
+                "interconnectBay": 1,
+            },
+            {
+                "interconnectBay": 2,
+            },
+            {
+                "interconnectBay": 3,
+            },
+            {
+                "interconnectBay": 4,
+            },
+            {
+                "interconnectBay": 5,
+            },
+            {
+                "interconnectBay": 6,
+            },
+            {
+                "interconnectBay": 7,
+            },
+            {
+                "interconnectBay": 8,
+            }
+        ]
+}
+
+# Create a Enclosure Group
+print("Create a logical interconnect group")
+created_eg = oneview_client.enclosure_groups.create(data)
+pprint(created_eg)
+
+# Get the first 10 records, sorting by name descending
+print("Get the ten first Enclosure Groups, sorting by name descending")
 egs = oneview_client.enclosure_groups.get_all(0, 10,
-                                              sort='name:descending',
-                                              filter="\"'name'='Enclosure Group 1'\"")
+                                              sort='name:descending')
 pprint(egs)
 
 # Get Enclosure Group by property
@@ -64,7 +100,7 @@ pprint(egs)
 # Get by Id
 try:
     print("Get a Enclosure Group by id")
-    eg_byid = oneview_client.enclosure_groups.get('dafa6ccb-208a-4b7c-8f37-2fcb8b75a995')
+    eg_byid = oneview_client.enclosure_groups.get('54184fae-42d5-4248-a732-cfe5115f7857')
     pprint(eg_byid)
 except HPOneViewException as e:
     print(e.msg['message'])

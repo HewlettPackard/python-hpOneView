@@ -31,6 +31,38 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class EnclosureGroupsTest(unittest.TestCase):
+    MINIMAL_DATA_FOR_EG_CREATION = {
+        "name": "Enclosure Group 1",
+        "stackingMode": "Enclosure",
+        "interconnectBayMappings":
+            [
+                {
+                    "interconnectBay": 1,
+                },
+                {
+                    "interconnectBay": 2,
+                },
+                {
+                    "interconnectBay": 3,
+                },
+                {
+                    "interconnectBay": 4,
+                },
+                {
+                    "interconnectBay": 5,
+                },
+                {
+                    "interconnectBay": 6,
+                },
+                {
+                    "interconnectBay": 7,
+                },
+                {
+                    "interconnectBay": 8,
+                }
+            ]
+    }
+
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -78,3 +110,14 @@ class EnclosureGroupsTest(unittest.TestCase):
     def test_get_by_called_once(self, mock_get_by):
         self.client.get_by("name", "test name")
         mock_get_by.assert_called_once_with("name", "test name")
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_create_called_once_with_defaults(self, mock_create):
+        eg_initial = self.MINIMAL_DATA_FOR_EG_CREATION.copy()
+
+        self.client.create(eg_initial)
+
+        eg_expected = self.MINIMAL_DATA_FOR_EG_CREATION.copy()
+        eg_expected["type"] = "EnclosureGroupV200"
+
+        mock_create.assert_called_once_with(eg_expected, timeout=-1)
