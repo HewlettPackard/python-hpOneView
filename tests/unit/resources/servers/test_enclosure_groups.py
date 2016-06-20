@@ -127,3 +127,14 @@ class EnclosureGroupsTest(unittest.TestCase):
         self.client.delete({"an_entity": ""})
 
         mock_delete.assert_called_once_with({"an_entity": ""}, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_called_once(self, mock_update):
+        eg_initial = self.MINIMAL_DATA_FOR_EG_CREATION.copy()
+
+        self.client.update(eg_initial)
+
+        eg_expected = self.MINIMAL_DATA_FOR_EG_CREATION.copy()
+        eg_expected["type"] = "EnclosureGroupV200"
+
+        mock_update.assert_called_once_with(eg_expected, timeout=-1)

@@ -145,3 +145,20 @@ class EnclosureGroups(object):
 
         """
         return self._client.delete(resource, timeout=timeout)
+
+    def update(self, resource, timeout=-1):
+        """
+        Updates an enclosure group with new attributes.
+        Args:
+            resource (dict): Object to update
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            dict: Updated enclosure group
+
+        """
+        data = self.__default_values.copy()
+        data.update(resource)
+        return self._client.update(data, timeout=timeout)

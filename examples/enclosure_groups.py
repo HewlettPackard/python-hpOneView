@@ -92,6 +92,13 @@ if len(result) > 0:
 else:
     print("No Enclosure Group found.")
 
+# Update an Enclosure Group
+print("Update an Enclosure Group")
+eg_to_update = created_eg.copy()
+eg_to_update["name"] = "Renamed Enclosure Group"
+updated_eg = oneview_client.logical_interconnect_groups.update(eg_to_update)
+pprint(updated_eg)
+
 # Get all, with default
 print("Get all Enclosure Groups")
 egs = oneview_client.enclosure_groups.get_all()
@@ -99,7 +106,7 @@ pprint(egs)
 
 # Get by Id
 try:
-    print("Get a Enclosure Group by id")
+    print("Get an Enclosure Group by id")
     eg_byid = oneview_client.enclosure_groups.get('54184fae-42d5-4248-a732-cfe5115f7857')
     pprint(eg_byid)
 except HPOneViewException as e:
@@ -107,7 +114,7 @@ except HPOneViewException as e:
 
 # Get by uri
 try:
-    print("Get a Enclosure Group by uri")
+    print("Get an Enclosure Group by uri")
     eg_byuri = oneview_client.enclosure_groups.get(egs[0]["uri"])
     pprint(eg_byuri)
 except HPOneViewException as e:
@@ -115,13 +122,13 @@ except HPOneViewException as e:
 
 # Gets the configuration script of a Enclosure Group
 try:
-    print("Gets the configuration script of a Enclosure Group")
+    print("Gets the configuration script of an Enclosure Group")
     script = oneview_client.enclosure_groups.get_script(egs[0]["uri"])
     print(script)
 except HPOneViewException as e:
     print(e.msg['message'])
 
-# Delete a Enclosure Group
+# Delete an Enclosure Group
 print("Delete the created Enclosure Group")
-oneview_client.enclosure_groups.delete(created_eg)
+oneview_client.enclosure_groups.delete(updated_eg)
 print("Sucessfully deleted Enclosure Group")
