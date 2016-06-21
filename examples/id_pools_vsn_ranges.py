@@ -111,13 +111,13 @@ pprint(successfully_allocated_ids)
 # Get all allocated fragments in vsn range
 print("Get all allocated fragments in vsn range")
 allocated_fragments = oneview_client.id_pools_vsn_ranges.get_allocated_fragments(
-    vsn_range)
+    vsn_range['uri'])
 pprint(allocated_fragments)
 
 # Get all free fragments in vsn range
 print("Get all free fragments in vsn range")
 allocated_fragments = oneview_client.id_pools_vsn_ranges.get_free_fragments(
-    vsn_range)
+    vsn_range['uri'])
 pprint(allocated_fragments)
 
 # Collect a set of IDs back to vsn range

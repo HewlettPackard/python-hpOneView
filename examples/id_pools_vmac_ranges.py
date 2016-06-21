@@ -111,13 +111,13 @@ pprint(successfully_allocated_ids)
 # Get all allocated fragments in vmac range
 print("Get all allocated fragments in vmac range")
 allocated_fragments = oneview_client.id_pools_vmac_ranges.get_allocated_fragments(
-    vmac_range)
+    vmac_range['uri'])
 pprint(allocated_fragments)
 
 # Get all free fragments in vmac range
 print("Get all free fragments in vmac range")
 allocated_fragments = oneview_client.id_pools_vmac_ranges.get_free_fragments(
-    vmac_range)
+    vmac_range['uri'])
 pprint(allocated_fragments)
 
 # Collect a set of IDs back to vmac range

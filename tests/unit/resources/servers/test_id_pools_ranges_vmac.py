@@ -96,7 +96,8 @@ class TestIdPoolsRangesVmac(unittest.TestCase):
             "uri": "/rest/id-pools/vmac/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c",
         }
 
-        self._id_pools_vmac_ranges.get_allocated_fragments(id_pools_vmac_range)
+        self._id_pools_vmac_ranges.get_allocated_fragments(
+            id_pools_vmac_range['uri'])
         uri = "/rest/id-pools/vmac/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/allocated-fragments?start=0&count=-1"
         mock_get.assert_called_once_with(uri)
 
@@ -107,7 +108,7 @@ class TestIdPoolsRangesVmac(unittest.TestCase):
         }
 
         self._id_pools_vmac_ranges.get_allocated_fragments(
-            id_pools_vmac_range, 5, 2)
+            id_pools_vmac_range['uri'], 5, 2)
         uri = "/rest/id-pools/vmac/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/allocated-fragments?start=2&count=5"
         mock_get.assert_called_once_with(uri)
 
@@ -117,7 +118,8 @@ class TestIdPoolsRangesVmac(unittest.TestCase):
             "uri": "/rest/id-pools/vmac/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c",
         }
 
-        self._id_pools_vmac_ranges.get_free_fragments(id_pools_vmac_range)
+        self._id_pools_vmac_ranges.get_free_fragments(
+            id_pools_vmac_range['uri'])
         uri = "/rest/id-pools/vmac/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/free-fragments?start=0&count=-1"
         mock_get.assert_called_once_with(uri)
 
@@ -128,7 +130,7 @@ class TestIdPoolsRangesVmac(unittest.TestCase):
         }
 
         self._id_pools_vmac_ranges.get_free_fragments(
-            id_pools_vmac_range, 5, 2)
+            id_pools_vmac_range['uri'], 5, 2)
         uri = "/rest/id-pools/vmac/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/free-fragments?start=2&count=5"
         mock_get.assert_called_once_with(uri)
 

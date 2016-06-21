@@ -29,7 +29,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'id-pools-vmac-ranges'
+__title__ = 'id-pools-wwwn-ranges'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP'
 __license__ = 'MIT'
@@ -39,8 +39,8 @@ from hpOneView.resources.resource import ResourceClient
 from hpOneView.resources.servers.id_pools_ranges import IdPoolsRanges
 
 
-class IdPoolsVmacRanges(IdPoolsRanges):
-    URI = '/rest/id-pools/vmac/ranges'
+class IdPoolsVwwnRanges(IdPoolsRanges):
+    URI = '/rest/id-pools/vwwn/ranges'
 
     def __init__(self, con):
         IdPoolsRanges.__init__(self, object, self.URI)

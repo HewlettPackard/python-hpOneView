@@ -24,61 +24,61 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.resource import ResourceClient
-from hpOneView.resources.servers.id_pools_vsn_ranges import IdPoolsVsnRanges
+from hpOneView.resources.servers.id_pools_vwwn_ranges import IdPoolsVwwnRanges
 import unittest
 
 
-class TestIdPoolsRangesVsn(unittest.TestCase):
+class TestIdPoolsRangesVwwn(unittest.TestCase):
 
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
-        self._id_pools_vsn_ranges = IdPoolsVsnRanges(self.connection)
+        self._id_pools_vwwn_ranges = IdPoolsVwwnRanges(self.connection)
 
     @mock.patch.object(ResourceClient, 'create')
     def test_create_called_once(self, mock_create):
-        vsn_range = {
+        vwwn_range = {
             "type": "Range",
-            "name": "VSN",
+            "name": "VWWN",
             "prefix": None,
             "enabled": True,
-            "startAddress": "VCGS5EI000",
-            "endAddress": "VCGS5EIZZZ",
+            "startAddress": "10:00:38:9d:30:60:00:00",
+            "endAddress": "10:00:38:9d:30:6f:ff:ff",
             "rangeCategory": "Generated",
-            "totalCount": 46656,
-            "freeIdCount": 46656,
+            "totalCount": 1048576,
+            "freeIdCount": 1048576,
             "allocatedIdCount": 0,
             "defaultRange": True,
             "allocatorUri":
-                "/rest/id-pools/vsn/ranges/ae2df099-5570-4f9e-9503-16531324d9a4/allocator",
+                "/rest/id-pools/vwwn/ranges/daa36872-03b1-463b-aaf7-09d58b650142/allocator",
             "collectorUri":
-                "/rest/id-pools/vsn/ranges/ae2df099-5570-4f9e-9503-16531324d9a4/collector",
+                "/rest/id-pools/vwwn/ranges/daa36872-03b1-463b-aaf7-09d58b650142/collector",
             "reservedIdCount": 0,
             "freeFragmentUri":
-                "/rest/id-pools/vsn/ranges/ae2df099-5570-4f9e-9503-16531324d9a4/free-fragments?start=0&count=-1",
+                "/rest/id-pools/vwwn/ranges/daa36872-03b1-463b-aaf7-09d58b650142/free-fragments?start=0&count=-1",
             "allocatedFragmentUri":
-                "/rest/id-pools/vsn/ranges/ae2df099-5570-4f9e-9503-16531324d9a4/allocated-fragments?start=0&count=-1",
-            "category": "id-range-VSN",
+                "/rest/id-pools/vwwn/ranges/daa36872-03b1-463b-aaf7-09d58b650142/allocated-fragments?start=0&count=-1",
+            "category": "id-range-VWWN",
             "uri":
-                "/rest/id-pools/vsn/ranges/ae2df099-5570-4f9e-9503-16531324d9a4",
+                "/rest/id-pools/vwwn/ranges/daa36872-03b1-463b-aaf7-09d58b650142",
             "eTag": None,
-            "created": "2013-04-08 18:11:17.862",
-            "modified": "2013-04-08 18:11:17.862"
+            "created": "2013-04-08 18:11:18.049",
+            "modified": "2013-04-08 18:11:18.049"
         }
-        self._id_pools_vsn_ranges.create(vsn_range, 70)
-        mock_create.assert_called_once_with(vsn_range, timeout=70)
+        self._id_pools_vwwn_ranges.create(vwwn_range, 70)
+        mock_create.assert_called_once_with(vwwn_range, timeout=70)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_by_id_called_once(self, mock_get):
-        id_pools_vsn_range_id = "f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
-        self._id_pools_vsn_ranges.get(id_pools_vsn_range_id)
-        mock_get.assert_called_once_with(id_pools_vsn_range_id)
+        id_pools_vwwn_range_id = "f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
+        self._id_pools_vwwn_ranges.get(id_pools_vwwn_range_id)
+        mock_get.assert_called_once_with(id_pools_vwwn_range_id)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_by_uri_called_once(self, mock_get):
-        id_pools_vsn_range_uri = "/rest/id-pools/vsn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
-        self._id_pools_vsn_ranges.get(id_pools_vsn_range_uri)
-        mock_get.assert_called_once_with(id_pools_vsn_range_uri)
+        id_pools_vwwn_range_uri = "/rest/id-pools/vwwn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
+        self._id_pools_vwwn_ranges.get(id_pools_vwwn_range_uri)
+        mock_get.assert_called_once_with(id_pools_vwwn_range_uri)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_enable_called_once(self, update):
@@ -86,65 +86,66 @@ class TestIdPoolsRangesVsn(unittest.TestCase):
             "type": "Range",
             "enabled": True
         }
-        id_pools_vsn_range_uri = "/rest/id-pools/vsn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
-        self._id_pools_vsn_ranges.enable(information, id_pools_vsn_range_uri)
+        id_pools_vwwn_range_uri = "/rest/id-pools/vwwn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
+        self._id_pools_vwwn_ranges.enable(information, id_pools_vwwn_range_uri)
         update.assert_called_once_with(
-            information, id_pools_vsn_range_uri, timeout=-1)
+            information, id_pools_vwwn_range_uri, timeout=-1)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_allocated_fragments_called_once_with_defaults(self, mock_get):
-        id_pools_vsn_range = {
-            "uri": "/rest/id-pools/vsn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c",
+        id_pools_vwwn_range = {
+            "uri": "/rest/id-pools/vwwn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c",
         }
 
-        self._id_pools_vsn_ranges.get_allocated_fragments(
-            id_pools_vsn_range['uri'])
-        uri = "/rest/id-pools/vsn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/allocated-fragments?start=0&count=-1"
+        self._id_pools_vwwn_ranges.get_allocated_fragments(
+            id_pools_vwwn_range['uri'])
+        uri = "/rest/id-pools/vwwn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/allocated-fragments?start=0&count=-1"
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_allocated_fragments_called_once(self, mock_get):
-        id_pools_vsn_range = {
-            "uri": "/rest/id-pools/vsn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c",
+        id_pools_vwwn_range = {
+            "uri": "/rest/id-pools/vwwn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c",
         }
 
-        self._id_pools_vsn_ranges.get_allocated_fragments(
-            id_pools_vsn_range['uri'], 5, 2)
-        uri = "/rest/id-pools/vsn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/allocated-fragments?start=2&count=5"
+        self._id_pools_vwwn_ranges.get_allocated_fragments(
+            id_pools_vwwn_range['uri'], 5, 2)
+        uri = "/rest/id-pools/vwwn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/allocated-fragments?start=2&count=5"
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_free_fragments_called_once_with_defaults(self, mock_get):
-        id_pools_vsn_range = {
-            "uri": "/rest/id-pools/vsn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c",
+        id_pools_vwwn_range = {
+            "uri": "/rest/id-pools/vwwn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c",
         }
 
-        self._id_pools_vsn_ranges.get_free_fragments(id_pools_vsn_range['uri'])
-        uri = "/rest/id-pools/vsn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/free-fragments?start=0&count=-1"
+        self._id_pools_vwwn_ranges.get_free_fragments(
+            id_pools_vwwn_range['uri'])
+        uri = "/rest/id-pools/vwwn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/free-fragments?start=0&count=-1"
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_free_fragments_called_once(self, mock_get):
-        id_pools_vsn_range = {
-            "uri": "/rest/id-pools/vsn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c",
+        id_pools_vwwn_range = {
+            "uri": "/rest/id-pools/vwwn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c",
         }
 
-        self._id_pools_vsn_ranges.get_free_fragments(
-            id_pools_vsn_range['uri'], 5, 2)
-        uri = "/rest/id-pools/vsn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/free-fragments?start=2&count=5"
+        self._id_pools_vwwn_ranges.get_free_fragments(
+            id_pools_vwwn_range['uri'], 5, 2)
+        uri = "/rest/id-pools/vwwn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/free-fragments?start=2&count=5"
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        self._id_pools_vsn_ranges.delete(id, force=True, timeout=50)
+        self._id_pools_vwwn_ranges.delete(id, force=True, timeout=50)
 
         mock_delete.assert_called_once_with(id, force=True, timeout=50)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once_with_defaults(self, mock_delete):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        self._id_pools_vsn_ranges.delete(id)
+        self._id_pools_vwwn_ranges.delete(id)
 
         mock_delete.assert_called_once_with(id, force=False, timeout=-1)
 
@@ -153,11 +154,11 @@ class TestIdPoolsRangesVsn(unittest.TestCase):
         information = {
             "count": 5
         }
-        id_pools_vsn_range_uri = "/rest/id-pools/vsn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
-        self._id_pools_vsn_ranges.allocate(
-            information, id_pools_vsn_range_uri)
+        id_pools_vwwn_range_uri = "/rest/id-pools/vwwn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
+        self._id_pools_vwwn_ranges.allocate(
+            information, id_pools_vwwn_range_uri)
         update.assert_called_once_with(
-            information, id_pools_vsn_range_uri + "/allocator", timeout=-1)
+            information, id_pools_vwwn_range_uri + "/allocator", timeout=-1)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_collect_called_once(self, update):
@@ -167,8 +168,8 @@ class TestIdPoolsRangesVsn(unittest.TestCase):
                 "VCG434R001"
             ]
         }
-        id_pools_vsn_range_uri = "/rest/id-pools/vsn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
-        self._id_pools_vsn_ranges.collect(
-            information, id_pools_vsn_range_uri)
+        id_pools_vwwn_range_uri = "/rest/id-pools/vwwn/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
+        self._id_pools_vwwn_ranges.collect(
+            information, id_pools_vwwn_range_uri)
         update.assert_called_once_with(
-            information, id_pools_vsn_range_uri + "/collector", timeout=-1)
+            information, id_pools_vwwn_range_uri + "/collector", timeout=-1)
