@@ -65,6 +65,7 @@ from hpOneView.resources.servers.enclosure_groups import EnclosureGroups
 from hpOneView.resources.servers.server_hardware import ServerHardware
 from hpOneView.resources.servers.server_hardware_types import ServerHardwareTypes
 from hpOneView.resources.servers.id_pools_vsn_ranges import IdPoolsVsnRanges
+from hpOneView.resources.servers.id_pools_vmac_ranges import IdPoolsVmacRanges
 from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.interconnect_types import InterconnectTypes
 from hpOneView.resources.networking.logical_downlinks import LogicalDownlinks
@@ -97,6 +98,7 @@ class OneViewClient(object):
         self.__server_hardware = None
         self.__server_hardware_types = None
         self.__id_pools_vsn_ranges = None
+        self.__id_pools_vmac_ranges = None
         self.__interconnects = None
         self.__interconnect_types = None
         self.__power_devices = None
@@ -202,6 +204,13 @@ class OneViewClient(object):
             self.__id_pools_vsn_ranges = IdPoolsVsnRanges(
                 self.__connection)
         return self.__id_pools_vsn_ranges
+
+    @property
+    def id_pools_vmac_ranges(self):
+        if not self.__id_pools_vmac_ranges:
+            self.__id_pools_vmac_ranges = IdPoolsVmacRanges(
+                self.__connection)
+        return self.__id_pools_vmac_ranges
 
     @property
     def switches(self):
