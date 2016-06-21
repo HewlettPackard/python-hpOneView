@@ -121,6 +121,11 @@ class ResourceClient(object):
 
         task, body = self._connection.delete(uri)
 
+        if not task:
+            # 204 NO CONTENT
+            # Successful return from a synchronous delete operation.
+            return True
+
         task = self._task_monitor.wait_for_task(task, timeout=timeout)
 
         return task

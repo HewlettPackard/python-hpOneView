@@ -31,6 +31,38 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class EnclosureGroupsTest(unittest.TestCase):
+    MINIMAL_DATA_FOR_EG_CREATION = {
+        "name": "Enclosure Group 1",
+        "stackingMode": "Enclosure",
+        "interconnectBayMappings":
+            [
+                {
+                    "interconnectBay": 1,
+                },
+                {
+                    "interconnectBay": 2,
+                },
+                {
+                    "interconnectBay": 3,
+                },
+                {
+                    "interconnectBay": 4,
+                },
+                {
+                    "interconnectBay": 5,
+                },
+                {
+                    "interconnectBay": 6,
+                },
+                {
+                    "interconnectBay": 7,
+                },
+                {
+                    "interconnectBay": 8,
+                }
+            ]
+    }
+
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -78,3 +110,38 @@ class EnclosureGroupsTest(unittest.TestCase):
     def test_get_by_called_once(self, mock_get_by):
         self.client.get_by("name", "test name")
         mock_get_by.assert_called_once_with("name", "test name")
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_create_called_once(self, mock_create):
+        eg_initial = self.MINIMAL_DATA_FOR_EG_CREATION.copy()
+
+        self.client.create(eg_initial)
+
+        eg_expected = self.MINIMAL_DATA_FOR_EG_CREATION.copy()
+        eg_expected["type"] = "EnclosureGroupV200"
+
+        mock_create.assert_called_once_with(eg_expected, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_delete_called_once(self, mock_delete):
+        self.client.delete({"an_entity": ""})
+
+        mock_delete.assert_called_once_with({"an_entity": ""}, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_called_once(self, mock_update):
+        eg_initial = self.MINIMAL_DATA_FOR_EG_CREATION.copy()
+
+        self.client.update(eg_initial)
+
+        eg_expected = self.MINIMAL_DATA_FOR_EG_CREATION.copy()
+        eg_expected["type"] = "EnclosureGroupV200"
+
+        mock_update.assert_called_once_with(eg_expected, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_script_by_uri_called_once(self, mock_update):
+        uri = "/rest/enclosure-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
+        script_body = "#TEST COMMAND"
+        self.client.update_script(uri, script_body)
+        mock_update.assert_called_once_with(script_body, uri=uri + "/script")

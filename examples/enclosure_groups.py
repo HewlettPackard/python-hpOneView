@@ -41,11 +41,47 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-# Get the first 10 records, sorting by name descending, filtering by name
-print("Get the ten first Enclosure Groups, sorting by name descending, filtering by name")
+data = {
+    "name": "Enclosure Group 1",
+    "stackingMode": "Enclosure",
+    "interconnectBayMappings":
+        [
+            {
+                "interconnectBay": 1,
+            },
+            {
+                "interconnectBay": 2,
+            },
+            {
+                "interconnectBay": 3,
+            },
+            {
+                "interconnectBay": 4,
+            },
+            {
+                "interconnectBay": 5,
+            },
+            {
+                "interconnectBay": 6,
+            },
+            {
+                "interconnectBay": 7,
+            },
+            {
+                "interconnectBay": 8,
+            }
+        ]
+}
+
+# Create a Enclosure Group
+print("Create a Enclosure Group")
+created_eg = oneview_client.enclosure_groups.create(data)
+pprint(created_eg)
+
+# Get the first 10 records, sorting by name descending
+print("Get the ten first Enclosure Groups, sorting by name descending")
 egs = oneview_client.enclosure_groups.get_all(0, 10,
-                                              sort='name:descending',
-                                              filter="\"'name'='Enclosure Group 1'\"")
+                                              sort='name:descending')
 pprint(egs)
 
 # Get Enclosure Group by property
@@ -56,6 +92,13 @@ if len(result) > 0:
 else:
     print("No Enclosure Group found.")
 
+# Update an Enclosure Group
+print("Update an Enclosure Group")
+eg_to_update = created_eg.copy()
+eg_to_update["name"] = "Renamed Enclosure Group"
+updated_eg = oneview_client.enclosure_groups.update(eg_to_update)
+pprint(updated_eg)
+
 # Get all, with default
 print("Get all Enclosure Groups")
 egs = oneview_client.enclosure_groups.get_all()
@@ -63,24 +106,35 @@ pprint(egs)
 
 # Get by Id
 try:
-    print("Get a Enclosure Group by id")
-    eg_byid = oneview_client.enclosure_groups.get('dafa6ccb-208a-4b7c-8f37-2fcb8b75a995')
+    print("Get an Enclosure Group by id")
+    eg_byid = oneview_client.enclosure_groups.get('54184fae-42d5-4248-a732-cfe5115f7857')
     pprint(eg_byid)
 except HPOneViewException as e:
     print(e.msg['message'])
 
 # Get by uri
 try:
-    print("Get a Enclosure Group by uri")
+    print("Get an Enclosure Group by uri")
     eg_byuri = oneview_client.enclosure_groups.get(egs[0]["uri"])
     pprint(eg_byuri)
 except HPOneViewException as e:
     print(e.msg['message'])
 
+# Update an Enclosure Group Script
+print("Update an Enclosure Group Script")
+script = "#TEST COMMAND"
+update_script_result = oneview_client.enclosure_groups.update_script(eg_to_update["uri"], script)
+pprint(update_script_result)
+
 # Gets the configuration script of a Enclosure Group
 try:
-    print("Gets the configuration script of a Enclosure Group")
+    print("Gets the configuration script of an Enclosure Group")
     script = oneview_client.enclosure_groups.get_script(egs[0]["uri"])
     print(script)
 except HPOneViewException as e:
     print(e.msg['message'])
+
+# Delete an Enclosure Group
+print("Delete the created Enclosure Group")
+oneview_client.enclosure_groups.delete(updated_eg)
+print("Sucessfully deleted Enclosure Group")

@@ -46,6 +46,7 @@ class EnclosureGroups(object):
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
+        self.__default_values = {"type": "EnclosureGroupV200"}
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
@@ -109,3 +110,70 @@ class EnclosureGroups(object):
 
         """
         return self._client.get_by(field, value)
+
+    def create(self, resource, timeout=-1):
+        """
+         Creates an enclosure group. An interconnect bay mapping must be provided for each
+          of the interconnect bays in the enclosure. For this release, the same logical
+          interconnect group must be provided for each interconnect bay mapping.
+        Args:
+            resource (dict): Object to create
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            dict: Created enclosure group
+        """
+        data = self.__default_values.copy()
+        data.update(resource)
+        return self._client.create(data, timeout=timeout)
+
+    def delete(self, resource, timeout=-1):
+        """
+         Deletes an enclosure group. An enclosure group cannot be deleted if any enclosures
+         are currently part of that enclosure group.
+
+        Args:
+            resource (dict): object to delete
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            boolean: True when success
+
+        """
+        return self._client.delete(resource, timeout=timeout)
+
+    def update(self, resource, timeout=-1):
+        """
+        Updates an enclosure group with new attributes.
+        Args:
+            resource (dict): Object to update
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            dict: Updated enclosure group
+
+        """
+        data = self.__default_values.copy()
+        data.update(resource)
+        return self._client.update(data, timeout=timeout)
+
+    def update_script(self, id_or_uri, script_body):
+        """
+        Updates the configuration script of the enclosure-group with the specified URI.
+        Args:
+            id_or_uri: id or resource uri
+            script_body:  configuration script
+
+        Returns:
+            dict: Updated enclosure group
+
+        """
+        uri = self._client.build_uri(id_or_uri) + "/script"
+
+        return self._client.update(script_body, uri=uri)
