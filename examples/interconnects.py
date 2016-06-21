@@ -58,9 +58,17 @@ except HPOneViewException as e:
 
 # Get the subport Statistics from a port of an Interconnects
 print("Get the subport statistics for subport 1 on downlink port 2 on the interconnect "
-      "that mataches ID ad28cf21-8b15-4f92-bdcf-51cb2042db32")
+      "that matches ID ad28cf21-8b15-4f92-bdcf-51cb2042db32")
 try:
     statistics = oneview_client.interconnects.get_subport_statistics("ad28cf21-8b15-4f92-bdcf-51cb2042db32", "d2", 1)
     pprint(statistics)
+except HPOneViewException as e:
+    print(e.msg['message'])
+
+# Get by ID
+print("Get Interconnect that matches ID 66fd5e22-5a71-4605-a7e9-b6ead772ea4d")
+try:
+    interconnect = oneview_client.interconnects.get('66fd5e22-5a71-4605-a7e9-b6ead772ea4d')
+    pprint(interconnect)
 except HPOneViewException as e:
     print(e.msg['message'])
