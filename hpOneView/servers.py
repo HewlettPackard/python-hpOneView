@@ -424,12 +424,12 @@ class servers(object):
                 tout = 3600
         except Exception:
             tout = 600
-            # Update the task to get the associated resource uri
-            if blocking is True:
-                task = self._activity.wait4task(task, tout=tout, verbose=verbose)
-            profileResource = self._activity.get_task_associated_resource(task)
-            profile = self._con.get(profileResource['resourceUri'])
-            return profile
+        # Update the task to get the associated resource uri
+        if blocking is True:
+            task = self._activity.wait4task(task, tout=tout, verbose=verbose)
+        profileResource = self._activity.get_task_associated_resource(task)
+        profile = self._con.get(profileResource['resourceUri'])
+        return profile
 
     def get_server_profile_by_name(self, name):
         body = self._con.get_entity_byfield(uri['profiles'], 'name', name)
