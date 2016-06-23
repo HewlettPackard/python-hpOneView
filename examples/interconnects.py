@@ -72,3 +72,17 @@ try:
     pprint(interconnect)
 except HPOneViewException as e:
     print(e.msg['message'])
+
+# Turn the power off
+print("Turn the power off and the UID light to 'Off' for interconnect " +
+      "that matches ID 66fd5e22-5a71-4605-a7e9-b6ead772ea4d")
+try:
+    interconnect = oneview_client.interconnects.patch(
+        id_or_uri='e542bdab-c75f-4cf2-b89e-9a566849e292',
+        operation='replace',
+        path='/powerState',
+        value='Off'
+    )
+    pprint(interconnect)
+except HPOneViewException as e:
+    print(e.msg)

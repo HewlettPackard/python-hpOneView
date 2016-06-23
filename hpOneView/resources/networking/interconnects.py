@@ -89,3 +89,21 @@ class Interconnects(object):
         Returns: dict
         """
         return self._client.get(id_or_uri)
+
+    def patch(self, id_or_uri, operation, path, value, timeout=-1):
+        """
+        Performs a specific patch operation for the given interconnect.
+        There are a limited set of interconnect properties which may be changed.
+        They are: 'powerState', 'uidState', 'deviceResetState'.
+        If the interconnect supports the operation, the operation is performed and
+        a task is returned through which the results are reported.
+        Args:
+            id_or_uri: Could be either the interconnect id or the interconnect uri
+            operation: The type of operation: one of "add", "copy", "move", "remove", "replace", or "test".
+            path: The JSON path the operation is to use. The exact meaning depends on the type of operation.
+            value: The value to add or replace for "add" and "replace" operations, or the value to compare against
+                for a "test" operation. Not used by "copy", "move", or "remove".
+
+        Returns: dict
+        """
+        return self._client.patch(id_or_uri, operation, path, value, timeout)

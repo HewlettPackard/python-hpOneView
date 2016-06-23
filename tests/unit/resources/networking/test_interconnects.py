@@ -66,3 +66,14 @@ class InterconnectsTest(unittest.TestCase):
 
         self._interconnects.get(interconnect_id)
         mock_get.assert_called_once_with(interconnect_id)
+
+    @mock.patch.object(ResourceClient, 'patch')
+    def test_patch_interconnect_should_return_the_task(self, mock_patch):
+        interconnect_id = '5v8f3ec0-52t4-475a-84g4-c4iod72d2c20'
+        operation = 'replace'
+        path = '/powerState'
+        value = 'On'
+        timeout = 10
+
+        self._interconnects.patch(interconnect_id, operation, path, value, timeout)
+        mock_patch.assert_called_once_with(interconnect_id, operation, path, value, timeout)
