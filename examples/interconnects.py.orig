@@ -22,9 +22,10 @@
 ###
 
 from pprint import pprint
-from hpOneView.oneview_client import OneViewClient
-from hpOneView.exceptions import HPOneViewException
+
 from config_loader import try_load_from_file
+from hpOneView.exceptions import HPOneViewException
+from hpOneView.oneview_client import OneViewClient
 
 config = {
     "ip": "172.16.102.59",
@@ -68,11 +69,12 @@ except HPOneViewException as e:
 # Get by ID
 print("Get Interconnect that matches ID 66fd5e22-5a71-4605-a7e9-b6ead772ea4d")
 try:
-    interconnect = oneview_client.interconnects.get('66fd5e22-5a71-4605-a7e9-b6ead772ea4d')
+    interconnect = oneview_client.interconnects.get('ad28cf21-8b15-4f92-bdcf-51cb2042db32')
     pprint(interconnect)
 except HPOneViewException as e:
     print(e.msg['message'])
 
+<<<<<<< c67e8e0e38d9e52050a2212c0a97c95463cb03a5
 # Turn the power off
 print("Turn the power off and the UID light to 'Off' for interconnect " +
       "that matches ID 66fd5e22-5a71-4605-a7e9-b6ead772ea4d")
@@ -86,7 +88,7 @@ try:
     pprint(interconnect)
 except HPOneViewException as e:
     print(e.msg)
-
+=======
 port = {
     "type": "port",
     "bayNumber": 1,
@@ -141,3 +143,4 @@ try:
     pprint(updated)
 except HPOneViewException as e:
     print(e.msg['message'])
+>>>>>>> Add support to update interconnect ports

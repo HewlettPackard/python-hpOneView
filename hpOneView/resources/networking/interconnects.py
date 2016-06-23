@@ -107,3 +107,20 @@ class Interconnects(object):
         Returns: dict
         """
         return self._client.patch(id_or_uri, operation, path, value, timeout)
+
+    def update_port(self, port_information, id_or_uri, timeout=-1):
+        """
+        Updates an interconnect port.
+
+        Args:
+            id_or_uri: Could be either the interconnect id or the interconnect uri
+            port_information (dict): object to update
+            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            dict: The interconnect with updated port
+
+        """
+        uri = self._client.build_uri(id_or_uri) + "/ports"
+        return self._client.update(port_information, uri, timeout)
