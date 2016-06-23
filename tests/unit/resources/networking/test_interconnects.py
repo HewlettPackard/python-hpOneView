@@ -79,7 +79,7 @@ class InterconnectsTest(unittest.TestCase):
         mock_patch.assert_called_once_with(interconnect_id, operation, path, value, timeout)
 
     @mock.patch.object(ResourceClient, 'update')
-    def test_update_interconnect_port(self, mock_get):
+    def test_update_interconnect_port(self, mock_update):
         interconnect_id = '5v8f3ec0-52t4-475a-84g4-c4iod72d2c20'
         url = '/rest/interconnects/5v8f3ec0-52t4-475a-84g4-c4iod72d2c20/ports'
         information = {
@@ -87,4 +87,11 @@ class InterconnectsTest(unittest.TestCase):
             "bayNumber": 1,
         }
         self._interconnects.update_port(information, interconnect_id)
-        mock_get.assert_called_once_with(information, url, -1)
+        mock_update.assert_called_once_with(information, url, -1)
+
+    @mock.patch.object(ResourceClient, 'update_with_zero_body')
+    def test_reset_port_protection(self, mock_update):
+        interconnect_id = '5v8f3ec0-52t4-475a-84g4-c4iod72d2c20'
+        url = '/rest/interconnects/5v8f3ec0-52t4-475a-84g4-c4iod72d2c20/resetportprotection'
+        self._interconnects.reset_port_protection(interconnect_id)
+        mock_update.assert_called_once_with(url, -1)

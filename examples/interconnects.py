@@ -141,3 +141,11 @@ try:
     pprint(updated)
 except HPOneViewException as e:
     print(e.msg['message'])
+
+# Reset of port protection.
+print("Trigger a reset of port protection of the interconnect hat matches ID ad28cf21-8b15-4f92-bdcf-51cb2042db32")
+try:
+    result = oneview_client.interconnects.reset_port_protection("ad28cf21-8b15-4f92-bdcf-51cb2042db32")
+    pprint(result)
+except HPOneViewException as e:
+    print(e.msg['message'])

@@ -124,3 +124,19 @@ class Interconnects(object):
         """
         uri = self._client.build_uri(id_or_uri) + "/ports"
         return self._client.update(port_information, uri, timeout)
+
+    def reset_port_protection(self, id_or_uri, timeout=-1):
+        """
+        Triggers a reset of port protection.
+        Cause port protection to be reset on all the interconnects of the logical interconnect that matches ID
+        Args:
+            id_or_uri: Could be either the interconnect id or the interconnect uri
+            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            dict: The interconnect
+
+        """
+        uri = self._client.build_uri(id_or_uri) + "/resetportprotection"
+        return self._client.update_with_zero_body(uri, timeout)
