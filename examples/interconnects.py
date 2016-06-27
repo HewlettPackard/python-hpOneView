@@ -86,3 +86,66 @@ try:
     pprint(interconnect)
 except HPOneViewException as e:
     print(e.msg)
+
+port = {
+    "type": "port",
+    "bayNumber": 1,
+    "pairedPortName": None,
+    "subports": None,
+    "connectorType": "absent",
+    "associatedUplinkSetUri": None,
+    "available": True,
+    "portStatusReason": "Unknown",
+    "vendorSpecificPortName": None,
+    "portRunningCapabilityType": None,
+    "neighbor": None,
+    "lagId": 0,
+    "interconnectName": "Encl2, interconnect 1",
+    "lagStates": None,
+    "portTypeExtended": "External",
+    "enabled": False,
+    "vlans": None,
+    "dcbxInfo": None,
+    "portStatus": "Unlinked",
+    "portName": "Q1.1",
+    "portType": "Uplink",
+    "fcPortProperties": None,
+    "portId": "ad28cf21-8b15-4f92-bdcf-51cb2042db32:Q1.1",
+    "portMonitorConfigInfo": "NotMonitored",
+    "portHealthStatus": "Disabled",
+    "capability": [
+        "EnetFcoe",
+        "Ethernet"
+    ],
+    "operationalSpeed": "Speed_0M",
+    "configPortTypes": [
+        "EnetFcoe",
+        "Ethernet"
+    ],
+    "portSplitMode": "NotApplicable",
+    "description": None,
+    "name": "Q1.1",
+    "state": None,
+    "status": "Disabled",
+    "category": "ports",
+    "created": None,
+    "modified": None,
+    "eTag": None,
+    "uri": "/rest/interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/ports/ad28cf21-8b15-4f92-bdcf-51cb2042db32:Q1.1"
+}
+
+# Updates an interconnect port.
+print("Update the interconnect port")
+try:
+    updated = oneview_client.interconnects.update_port(port, "ad28cf21-8b15-4f92-bdcf-51cb2042db32")
+    pprint(updated)
+except HPOneViewException as e:
+    print(e.msg['message'])
+
+# Reset of port protection.
+print("Trigger a reset of port protection of the interconnect hat matches ID ad28cf21-8b15-4f92-bdcf-51cb2042db32")
+try:
+    result = oneview_client.interconnects.reset_port_protection("ad28cf21-8b15-4f92-bdcf-51cb2042db32")
+    pprint(result)
+except HPOneViewException as e:
+    print(e.msg['message'])
