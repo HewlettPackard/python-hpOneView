@@ -76,7 +76,7 @@ class ResourceCompareTest(unittest.TestCase):
                                  'level3': {
                                      "lvl3_t1": u"lvl3_t1x"
                                  },
-                                 "list": [1, 2, '3']
+                                 "list": [1, 2, 3]
                              },
                              u'modified': u'2016-06-13T20:39:15.993Z',
                              u'fabricUri': u'/rest/fabrics/a3cff65e-6d95-4d4d-9047-3548b6aca902',
@@ -86,6 +86,49 @@ class ResourceCompareTest(unittest.TestCase):
                                  u'/rest/connection-templates/0799d26c-68db-4b4c-b007-d31cf9d60a2f',
                              u'type': u'fcoe-network',
                              u'name': 'Test FCoE Network'}
+
+    DICT_EMPTY_NONE1 = {
+        "name": "Enclosure Group 1",
+        "interconnectBayMappings":
+            [
+                {
+                    "interconnectBay": 1,
+                },
+                {
+                    "interconnectBay": 2,
+                },
+            ]
+    }
+
+    DICT_EMPTY_NONE2 = {
+        "name": "Enclosure Group 1",
+        "interconnectBayMappings":
+            [
+                {
+                    "interconnectBay": 1,
+                    'logicalInterconnectGroupUri': None
+                },
+                {
+                    "interconnectBay": 2,
+                    'logicalInterconnectGroupUri': None
+                },
+            ]
+    }
+
+    DICT_EMPTY_NONE3 = {
+        "name": "Enclosure Group 1",
+        "interconnectBayMappings":
+            [
+                {
+                    "interconnectBay": 1,
+                    'logicalInterconnectGroupUri': ''
+                },
+                {
+                    "interconnectBay": 2,
+                    'logicalInterconnectGroupUri': None
+                },
+            ]
+    }
 
     def test_resource_compare_equals(self):
         self.assertTrue(resource_compare(self.DICT_ORIGINAL, self.DICT_EQUAL_ORIGINAL))
@@ -105,6 +148,40 @@ class ResourceCompareTest(unittest.TestCase):
     def test_resource_compare_different_on_level3(self):
         self.assertFalse(resource_compare(self.DICT_ORIGINAL, self.DICT_DIF_ORIGINAL_LV3))
 
+    def test_resource_compare_equals_with_empty_eq_none(self):
+        self.assertTrue(resource_compare(self.DICT_EMPTY_NONE1, self.DICT_EMPTY_NONE2))
+
+    def test_resource_compare_equals_with_empty_eq_none_inverse(self):
+        self.assertTrue(resource_compare(self.DICT_EMPTY_NONE2, self.DICT_EMPTY_NONE1))
+
+    def test_resource_compare_equals_with_empty_eq_none_different(self):
+        self.assertFalse(resource_compare(self.DICT_EMPTY_NONE3, self.DICT_EMPTY_NONE1))
+
+    def test_resource_compare_with_double_level_list(self):
+        dict1 = {list: [
+            [1, 2, 3],
+            [4, 5, 6]
+        ]}
+
+        dict2 = {list: [
+            [1, 2, 3],
+            [4, 5, "6"]
+        ]}
+
+        self.assertTrue(resource_compare(dict1, dict2))
+
+    def test_resource_compare_with_double_level_list_different(self):
+        dict1 = {list: [
+            [1, 2, 3],
+            [4, 5, 6]
+        ]}
+
+        dict2 = {list: [
+            [1, 2, 3],
+            [4, 5, "7"]
+        ]}
+
+        self.assertFalse(resource_compare(dict1, dict2))
 
 if __name__ == '__main__':
     unittest.main()

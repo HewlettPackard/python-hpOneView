@@ -1651,10 +1651,17 @@ def resource_compare(resource1, resource2):
     for key in resource1.keys():
         if key not in resource2:
             # no key in second dict
-            return False
+            if resource1[key] is not None:
+                # key inexistent is equivalent to exist and value None
+                return False
         elif isinstance(resource1[key], dict):
             # recursive call
             if not resource_compare(resource1[key], resource2[key]):
+                # if different, stops here
+                return False
+        elif isinstance(resource1[key], list):
+            # change comparison function (list compare)
+            if not resource_compare_list(resource1[key], resource2[key]):
                 # if different, stops here
                 return False
         elif str(resource1[key]) != str(resource2[key]):
@@ -1665,6 +1672,41 @@ def resource_compare(resource1, resource2):
     for key in resource2.keys():
         if key not in resource1:
             # not exists in first dict
+            if resource2[key] is not None:
+                # key inexistent is equivalent to exist and value None
+                return False
+
+    # no differences found
+    return True
+
+
+def resource_compare_list(resource1, resource2):
+    """
+    Recursively compares lists contents, ignoring type
+    Args:
+        resource1: first list
+        resource2: second list
+
+    Returns:
+        True when equal;
+        False when different.
+
+    """
+    if len(resource1) != len(resource2):
+        # different length
+        return False
+
+    for i, val in enumerate(resource1):
+        if isinstance(val, dict):
+            # change comparison function
+            if not resource_compare(val, resource2[i]):
+                return False
+        elif isinstance(val, list):
+            # recursive call
+            if not resource_compare_list(val, resource2[i]):
+                return False
+        elif str(val) != str(resource2[i]):
+            # value is different
             return False
 
     # no differences found
