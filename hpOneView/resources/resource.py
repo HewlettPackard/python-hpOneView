@@ -117,7 +117,8 @@ class ResourceClient(object):
         if force:
             uri += '?force=True'
 
-        logger.debug("Delete resource (uri = %s, resource = %s)" % (self._uri, str(resource)))
+        logger.debug("Delete resource (uri = %s, resource = %s)" %
+                     (self._uri, str(resource)))
 
         task, body = self._connection.delete(uri)
 
@@ -131,7 +132,8 @@ class ResourceClient(object):
         return task
 
     def get_schema(self):
-        logger.debug('Get schema (uri = %s, resource = %s)' % (self._uri, self._uri))
+        logger.debug('Get schema (uri = %s, resource = %s)' %
+                     (self._uri, self._uri))
         return self._connection.get(self._uri + '/schema')
 
     def get(self, id_or_uri):
@@ -142,7 +144,8 @@ class ResourceClient(object):
              The requested resource
         """
         uri = self.build_uri(id_or_uri)
-        logger.debug('Get resource (uri = %s, ID = %s)' % (uri, str(id_or_uri)))
+        logger.debug('Get resource (uri = %s, ID = %s)' %
+                     (uri, str(id_or_uri)))
         return self._connection.get(uri)
 
     def update_with_zero_body(self, uri, timeout=-1):
@@ -160,7 +163,8 @@ class ResourceClient(object):
             logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
             raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
 
-        logger.debug('Update async (uri = %s, resource = %s)' % (self._uri, str(resource)))
+        logger.debug('Update async (uri = %s, resource = %s)' %
+                     (self._uri, str(resource)))
 
         if not uri:
             uri = resource['uri']
@@ -172,14 +176,18 @@ class ResourceClient(object):
 
         return self._task_monitor.wait_for_task(task, timeout)
 
-    def create(self, resource, timeout=-1):
+    def create(self, resource, uri=None, timeout=-1):
         if not resource:
             logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
             raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
 
-        logger.debug('Create (uri = %s, resource = %s)' % (self._uri, str(resource)))
+        if not uri:
+            uri = self._uri
 
-        task, entity = self._connection.post(self._uri, resource)
+        logger.debug('Create (uri = %s, resource = %s)' %
+                     (uri, str(resource)))
+
+        task, entity = self._connection.post(uri, resource)
 
         if not task:
             return entity
@@ -203,7 +211,8 @@ class ResourceClient(object):
         """
         uri = self.build_uri(id_or_uri)
 
-        logger.debug('Patch resource (uri = %s, op = %s, path = %s, value = %s)' % (uri, operation, path, value))
+        logger.debug('Patch resource (uri = %s, op = %s, path = %s, value = %s)' % (
+            uri, operation, path, value))
 
         patch_request = [{'op': operation, 'path': path, 'value': value}]
         task, entity = self._connection.patch(uri, patch_request)
@@ -228,7 +237,8 @@ class ResourceClient(object):
             logger.exception(RESOURCE_CLIENT_INVALID_FIELD)
             raise ValueError(RESOURCE_CLIENT_INVALID_FIELD)
 
-        logger.debug('Get by (uri = %s, field = %s, value = %s)' % (self._uri, field, str(value)))
+        logger.debug('Get by (uri = %s, field = %s, value = %s)' %
+                     (self._uri, field, str(value)))
 
         filter = "\"'{0}'='{1}'\"".format(field, value)
         return self.get_all(filter=filter)
@@ -331,7 +341,8 @@ class ResourceClient(object):
             if self._uri in id_or_uri:
                 return id_or_uri
             else:
-                logger.exception('Get by uri : unrecognized uri: (%s)' % id_or_uri)
+                logger.exception(
+                    'Get by uri : unrecognized uri: (%s)' % id_or_uri)
                 raise HPOneViewUnknownType(UNRECOGNIZED_URI)
         else:
             return self._uri + "/" + id_or_uri
