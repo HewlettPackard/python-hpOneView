@@ -3,7 +3,7 @@
 HPE OneView SDK for Python
 ===========================
 
-This library provides a pure Python interface to the HP OneView REST APIs.
+This library provides a pure Python interface to the HPE OneView REST APIs.
 
 HP OneView is a fresh approach to converged infrastructure management, inspired
 by the way you expect to work, with a single integrated view of your IT
