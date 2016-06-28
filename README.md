@@ -5,11 +5,11 @@ HPE OneView SDK for Python
 
 This library provides a pure Python interface to the HPE OneView REST APIs.
 
-HP OneView is a fresh approach to converged infrastructure management, inspired
+HPE OneView is a fresh approach to converged infrastructure management, inspired
 by the way you expect to work, with a single integrated view of your IT
 infrastructure.
 
-The HP OneView Python library depends on the
+The HPE OneView Python library depends on the
 [Python-Future](http://python-future.org/index.htm)  library to provide Python
 2/3 compatibility.  This will be installed automatically if you use the installation
 methods described below.
