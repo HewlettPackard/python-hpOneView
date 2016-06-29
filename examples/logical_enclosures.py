@@ -40,14 +40,10 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-logical_enclosure_uri = config['logical_enclosure_uri']
-
-# Get logical enclosure by uri
-logical_enclosure = oneview_client.logical_enclosures.get(
-    logical_enclosure_uri)
-print("Got logical enclosure '{}' by\n   uri: '{}'".format(
+# Get first logical enclosure
+logical_enclosure = oneview_client.logical_enclosures.get_all()[0]
+print("Found logical enclosure '{}' at\n   uri: '{}'".format(
     logical_enclosure['name'], logical_enclosure['uri']))
-pprint(logical_enclosure)
 
 # Update the logical enclosure name
 logical_enclosure_name = logical_enclosure['name']
@@ -71,6 +67,13 @@ try:
 except HPOneViewException as e:
     print(e.msg['message'])
 
+# Get logical enclosure by uri
+logical_enclosure = oneview_client.logical_enclosures.get(
+    logical_enclosure['uri'])
+print("Got logical enclosure '{}' by\n   uri: '{}'".format(
+    logical_enclosure['name'], logical_enclosure['uri']))
+pprint(logical_enclosure)
+
 # Get logical enclosure by name
 try:
     logical_enclosure_by_name = oneview_client.logical_enclosures.get_by(
@@ -79,12 +82,6 @@ try:
         logical_enclosure_by_name['name'], logical_enclosure_by_name['uri']))
 except HPOneViewException as e:
     print(e.msg['message'])
-
-# Get all logical enclosures
-print("Get all logical enclosures")
-logical_enclosures = oneview_client.logical_enclosures.get_all()
-for enc in logical_enclosures:
-    print('   %s' % enc['name'])
 
 # Update configuration
 print("Reapply the appliance's configuration to the logical enclosure")
@@ -122,4 +119,9 @@ try:
     print("   Done")
 except HPOneViewException as e:
     print("  %s" % e.msg['message'])
-print()
+
+# Get all logical enclosures
+print("Get all logical enclosures")
+logical_enclosures = oneview_client.logical_enclosures.get_all()
+for enc in logical_enclosures:
+    print('   %s' % enc['name'])
