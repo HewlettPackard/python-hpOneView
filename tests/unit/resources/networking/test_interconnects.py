@@ -67,6 +67,14 @@ class InterconnectsTest(unittest.TestCase):
         self._interconnects.get(interconnect_id)
         mock_get.assert_called_once_with(interconnect_id)
 
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_all_called_once(self, mock_get_all):
+        filter = 'name=TestName'
+        sort = 'name:ascending'
+
+        self._interconnects.get_all(2, 5, filter, sort)
+        mock_get_all.assert_called_once_with(2, 5, filter=filter, sort=sort)
+
     @mock.patch.object(ResourceClient, 'patch')
     def test_patch_interconnect_should_return_the_task(self, mock_patch):
         interconnect_id = '5v8f3ec0-52t4-475a-84g4-c4iod72d2c20'
