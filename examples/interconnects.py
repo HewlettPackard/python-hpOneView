@@ -39,8 +39,8 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-# Get first two Interconnects
-print("Get first two interconnects")
+# Get the first two Interconnects
+print("Get the first two interconnects")
 try:
     interconnects = oneview_client.interconnects.get_all(0, 2)
     pprint(interconnects)
@@ -48,7 +48,7 @@ except HPOneViewException as e:
     print(e.msg['message'])
 
 # Get Interconnects Statistics
-print("Get a interconnect statistics")
+print("Get an interconnect statistics")
 try:
     interconnect_statistics = oneview_client.interconnects.get_statistics("ad28cf21-8b15-4f92-bdcf-51cb2042db32")
     pprint(interconnect_statistics['moduleStatistics'])
