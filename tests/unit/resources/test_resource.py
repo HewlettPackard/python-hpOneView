@@ -31,6 +31,7 @@ from hpOneView.resources.resource import ResourceClient, RESOURCE_CLIENT_INVALID
 
 
 class FakeResource(object):
+
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, "/rest/fake/resource")
@@ -57,7 +58,8 @@ class ResourceTest(unittest.TestCase):
 
         mock_get.return_value = {"members": "members"}
 
-        result = self.resource_client.get_all(1, 500, filter, query, sort, view, 'name,owner,modified')
+        result = self.resource_client.get_all(
+            1, 500, filter, query, sort, view, 'name,owner,modified')
 
         uri = self.URI
         uri += '?start=1' \
@@ -114,7 +116,8 @@ class ResourceTest(unittest.TestCase):
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_by_uri(self, mock_get_all):
         self.resource_client.get_by('name', 'MyFibreNetwork')
-        mock_get_all.assert_called_once_with(filter="\"'name'='MyFibreNetwork'\"")
+        mock_get_all.assert_called_once_with(
+            filter="\"'name'='MyFibreNetwork'\"")
 
     @mock.patch.object(connection, 'put')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
@@ -126,7 +129,8 @@ class ResourceTest(unittest.TestCase):
         self.resource_client.update_with_zero_body('/rest/enclosures/09USE133E5H4/configuration',
                                                    timeout=-1)
 
-        mock_update.assert_called_once_with("/rest/enclosures/09USE133E5H4/configuration", None)
+        mock_update.assert_called_once_with(
+            "/rest/enclosures/09USE133E5H4/configuration", None)
 
     @mock.patch.object(connection, 'put')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
@@ -137,7 +141,8 @@ class ResourceTest(unittest.TestCase):
         mock_put.return_value = task, task
         mock_wait4task.return_value = response_body
 
-        result = self.resource_client.update_with_zero_body('/rest/enclosures/09USE133E5H4/configuration', timeout=-1)
+        result = self.resource_client.update_with_zero_body(
+            '/rest/enclosures/09USE133E5H4/configuration', timeout=-1)
 
         self.assertEqual(result, response_body)
 
@@ -149,7 +154,8 @@ class ResourceTest(unittest.TestCase):
 
         mock_put.return_value = task, response_body
 
-        result = self.resource_client.update_with_zero_body('/rest/enclosures/09USE133E5H4/configuration', timeout=-1)
+        result = self.resource_client.update_with_zero_body(
+            '/rest/enclosures/09USE133E5H4/configuration', timeout=-1)
 
         self.assertEqual(result, response_body)
 
@@ -205,7 +211,7 @@ class ResourceTest(unittest.TestCase):
         }
         mock_post.return_value = {}, {}
 
-        self.resource_client.create(dict_to_create, -1)
+        self.resource_client.create(dict_to_create, timeout=-1)
 
         mock_post.assert_called_once_with(self.URI, dict_to_create)
 
@@ -235,7 +241,7 @@ class ResourceTest(unittest.TestCase):
         mock_post.return_value = task, {}
         mock_wait4task.return_value = task
 
-        self.resource_client.create({"test", "test"}, 60)
+        self.resource_client.create({"test", "test"}, timeout=60)
 
         mock_wait4task.assert_called_once_with({"task": "task"}, 60)
 
@@ -248,9 +254,11 @@ class ResourceTest(unittest.TestCase):
         }]
         mock_patch.return_value = {}, {}
 
-        self.resource_client.patch('123a53cz', 'replace', '/name', 'new_name', 70)
+        self.resource_client.patch(
+            '123a53cz', 'replace', '/name', 'new_name', 70)
 
-        mock_patch.assert_called_once_with('/rest/testuri/123a53cz', request_body)
+        mock_patch.assert_called_once_with(
+            '/rest/testuri/123a53cz', request_body)
 
     @mock.patch.object(connection, 'patch')
     def test_patch_request_when_uri_is_provided(self, mock_patch):
@@ -261,9 +269,11 @@ class ResourceTest(unittest.TestCase):
         }]
         mock_patch.return_value = {}, {}
 
-        self.resource_client.patch('/rest/testuri/123a53cz', 'replace', '/name', 'new_name', 60)
+        self.resource_client.patch(
+            '/rest/testuri/123a53cz', 'replace', '/name', 'new_name', 60)
 
-        mock_patch.assert_called_once_with('/rest/testuri/123a53cz', request_body)
+        mock_patch.assert_called_once_with(
+            '/rest/testuri/123a53cz', request_body)
 
     @mock.patch.object(connection, 'patch')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
@@ -273,7 +283,8 @@ class ResourceTest(unittest.TestCase):
         mock_patch.return_value = task, task
         mock_wait4task.return_value = entity
 
-        result = self.resource_client.patch('123a53cz', 'replace', '/name', 'new_name', -1)
+        result = self.resource_client.patch(
+            '123a53cz', 'replace', '/name', 'new_name', -1)
 
         self.assertEqual(result, entity)
 
@@ -285,7 +296,8 @@ class ResourceTest(unittest.TestCase):
         mock_patch.return_value = task, task
         mock_wait4task.return_value = entity
 
-        self.resource_client.patch('123a53cz', 'replace', '/name', 'new_name', -1)
+        self.resource_client.patch(
+            '123a53cz', 'replace', '/name', 'new_name', -1)
 
         mock_wait4task.assert_called_once_with({"task": "task"}, mock.ANY)
 
@@ -471,7 +483,8 @@ class ResourceTest(unittest.TestCase):
 
     def test_build_uri_with_different_resource_uri_should_raise_exception(self):
         try:
-            self.resource_client.build_uri('/rest/test/another/resource/uri/09USE7335NW3')
+            self.resource_client.build_uri(
+                '/rest/test/another/resource/uri/09USE7335NW3')
         except HPOneViewUnknownType as exception:
             self.assertEqual(UNRECOGNIZED_URI, exception.args[0])
         else:
