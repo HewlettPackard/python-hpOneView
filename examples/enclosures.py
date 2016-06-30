@@ -53,9 +53,9 @@ print("Added enclosure '%s'.\n  uri = '%s'" % (enclosure['name'], enclosure['uri
 
 # Update the enclosure name
 enclosure_name = enclosure['name'] + "-Updated"
-print("Updates the enclosure to have a name of '%s'" % enclosure_name)
+print("Updating the enclosure to have a name of '%s'" % enclosure_name)
 enclosure = oneview_client.enclosures.patch(enclosure['uri'], 'replace', '/name', enclosure_name)
-print("  Completed.\n  uri = '%s', name = %s" % (enclosure['uri'], enclosure['name']))
+print("  Done.\n  uri = '%s', name = %s" % (enclosure['uri'], enclosure['name']))
 
 # Find the recently added enclosure by name
 enclosure = oneview_client.enclosures.get_by('name', enclosure['name'])[0]
@@ -71,29 +71,21 @@ enclosures = oneview_client.enclosures.get_all()
 for enc in enclosures:
     print('  %s' % enc['name'])
 
-print("Reapply the appliance's configuration on the enclosure")
+print("Reapplying the appliance's configuration on the enclosure")
 try:
     oneview_client.enclosures.update_configuration(enclosure['uri'])
     print("  Done.")
 except HPOneViewException as e:
     print(e.msg['message'])
 
-print("Retrieve environmental configuration data for the enclosure")
+print("Retrieve the environmental configuration data for the enclosure")
 try:
     environmental_configuration = oneview_client.enclosures.get_environmental_configuration(enclosure['uri'])
     print("  Enclosure calibratedMaxPower = %s" % environmental_configuration['calibratedMaxPower'])
 except HPOneViewException as e:
     print("  %s" % e.msg['message'])
 
-print("Set the calibrated max power of the enclosure")
-try:
-    config = {"calibratedMaxPower": 2500}
-    environmental_configuration = oneview_client.enclosures.update_environmental_configuration(enclosure['uri'], config)
-    print("  Enclosure calibratedMaxPower = %s" % environmental_configuration['calibratedMaxPower'])
-except HPOneViewException as e:
-    print("  %s" % e.msg['message'])
-
-print("Refresh the enclosure")
+print("Refreshing the enclosure")
 try:
     config = {"refreshState": "RefreshPending"}
     enclosure = oneview_client.enclosures.refresh_state(enclosure['uri'], config)
@@ -108,34 +100,24 @@ try:
 except HPOneViewException as e:
     print("  %s" % e.msg['message'])
 
-print("Builds the SSO (Single Sign-On) URL parameters for the enclosure")
+print("Build the SSO (Single Sign-On) URL parameters for the enclosure")
 try:
     sso_url_parameters = oneview_client.enclosures.get_sso(enclosure['uri'], 'Active')
     pprint(sso_url_parameters)
 except HPOneViewException as e:
     print("  %s" % e.msg['message'])
 
-# Remove the recently added enclosure
-oneview_client.enclosures.remove(enclosure)
-print("Enclosure removed successfully")
-
-# Get Statistics with defaults
-ENCLOSURE_ID = "09SGH102X6J1"
-
-print("Get enclosure statistics")
-try:
-    enclosure_statistics = oneview_client.enclosures.get_utilization(ENCLOSURE_ID)
-    pprint(enclosure_statistics)
-except HPOneViewException as e:
-    print(e.msg['message'])
-
 # Get Statistics specifying parameters
-print("Get enclosure statistics")
+print("Get the enclosure statistics")
 try:
-    enclosure_statistics = oneview_client.enclosures.get_utilization(ENCLOSURE_ID,
+    enclosure_statistics = oneview_client.enclosures.get_utilization(enclosure['uri'],
                                                                      fields='AveragePower',
-                                                                     filter='startDate=2016-05-30T03:29:42.000Z',
+                                                                     filter='startDate=2016-06-30T03:29:42.000Z',
                                                                      view='day')
     pprint(enclosure_statistics)
 except HPOneViewException as e:
     print(e.msg['message'])
+
+# Remove the recently added enclosure
+oneview_client.enclosures.remove(enclosure)
+print("Enclosure removed successfully")

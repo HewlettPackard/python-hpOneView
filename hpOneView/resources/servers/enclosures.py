@@ -231,15 +231,15 @@ class Enclosures(object):
 
         Return: SSO (Single Sign-On) URL parameters
         """
-        uri = self._client.build_uri(id_or_uri) + "/sso?role='%s'" % role
+        uri = self._client.build_uri(id_or_uri) + "/sso?role=%s" % role
         return self._client.get(uri)
 
-    def get_utilization(self, id, fields=None, filter=None, refresh=False, view=None):
+    def get_utilization(self, id_or_uri, fields=None, filter=None, refresh=False, view=None):
         """
         Retrieves historical utilization data for the specified enclosure, metrics, and time span.
 
         Args:
-            id:
+            id: Could be either the resource id or the resource uri
             fields:
                  Name of the metric(s) to be retrieved in the format METRIC[,METRIC]... Enclosures support the following
                   utilization metrics:
@@ -313,4 +313,4 @@ class Enclosures(object):
 
         """
 
-        return self._client.get_utilization(id, fields=fields, filter=filter, refresh=refresh, view=view)
+        return self._client.get_utilization(id_or_uri, fields=fields, filter=filter, refresh=refresh, view=view)

@@ -202,7 +202,7 @@ class EnclosuresTest(TestCase):
     @mock.patch.object(ResourceClient, 'get')
     def test_get_sso_by_uri(self, mock_get):
         uri_enclosure = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/sso?role=\'Active\''
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/sso?role=Active'
 
         self._enclosures.get_sso(uri_enclosure, 'Active')
 
@@ -211,7 +211,7 @@ class EnclosuresTest(TestCase):
     @mock.patch.object(ResourceClient, 'get')
     def test_get_sso_by_id(self, mock_get):
         id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/sso?role=\'Active\''
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/sso?role=Active'
 
         self._enclosures.get_sso(id_enclosure, 'Active')
 
@@ -228,7 +228,14 @@ class EnclosuresTest(TestCase):
                                                      refresh=True, view='day')
 
     @mock.patch.object(ResourceClient, 'get_utilization')
-    def test_get_utilization_with_defaults(self, mock_get):
+    def test_get_utilization_by_id_with_defaults(self, mock_get):
         self._enclosures.get_utilization('09USE7335NW3')
 
         mock_get.assert_called_once_with('09USE7335NW3', fields=None, filter=None, refresh=False, view=None)
+
+    @mock.patch.object(ResourceClient, 'get_utilization')
+    def test_get_utilization_by_uri_with_defaults(self, mock_get):
+        self._enclosures.get_utilization('/rest/enclosures/09USE7335NW3')
+
+        mock_get.assert_called_once_with('/rest/enclosures/09USE7335NW3',
+                                         fields=None, filter=None, refresh=False, view=None)

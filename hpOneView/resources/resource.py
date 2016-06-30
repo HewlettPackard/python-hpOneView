@@ -243,12 +243,12 @@ class ResourceClient(object):
         filter = "\"'{0}'='{1}'\"".format(field, value)
         return self.get_all(filter=filter)
 
-    def get_utilization(self, id, fields=None, filter=None, refresh=False, view=None):
+    def get_utilization(self, id_or_uri, fields=None, filter=None, refresh=False, view=None):
         """
         Retrieves historical utilization data for the specified resource, metrics, and time span.
 
         Args:
-            id: resource identification
+            id_or_uri: resource identification
             fields:
                 Name of the supported metric(s) to be retrieved in the format METRIC[,METRIC]...
                 If unspecified, all metrics supported are returned.
@@ -308,7 +308,7 @@ class ResourceClient(object):
 
         """
 
-        if not id:
+        if not id_or_uri:
             raise ValueError(RESOURCE_CLIENT_INVALID_ID)
 
         query = ''
@@ -328,7 +328,7 @@ class ResourceClient(object):
         if query:
             query = "?" + query[1:]
 
-        uri = "{0}/{1}/utilization{2}".format(self._uri, id, query)
+        uri = "{0}/utilization{1}".format(self.build_uri(id_or_uri), query)
 
         return self._connection.get(uri)
 
