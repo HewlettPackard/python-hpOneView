@@ -75,7 +75,7 @@ class Interconnects(object):
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
-    def get_statistics(self, interconnect_id, port_name=''):
+    def get_statistics(self, id_or_uri, port_name=''):
         """
         Gets the statistics from an interconnect.
 
@@ -86,14 +86,14 @@ class Interconnects(object):
         Returns:
              dict: The statistics for the interconnect that matches id
         """
-        uri = "/rest/interconnects/%s/statistics" % interconnect_id
+        uri = self._client.build_uri(id_or_uri) + "/statistics"
 
         if port_name:
             uri = uri + "/" + port_name
 
         return self._client.get(uri)
 
-    def get_subport_statistics(self, interconnect_id, port_name, subport_number):
+    def get_subport_statistics(self, id_or_uri, port_name, subport_number):
         """
         Gets the subport statistics on an interconnect.
 
@@ -105,7 +105,21 @@ class Interconnects(object):
         Returns:
              dict: The statistics for the interconnect that matches id, port_name and subport_number
         """
-        uri = "/rest/interconnects/%s/statistics/%s/subport/%i" % (interconnect_id, port_name, subport_number)
+        uri = self._client.build_uri(id_or_uri) + "/statistics/{0}/subport/{1}".format(port_name, subport_number)
+        return self._client.get(uri)
+
+    def get_name_servers(self, id_or_uri):
+        """
+        Gets the named servers for an interconnect.
+
+        Args:
+            id_or_uri:  can be either the interconnect id or the interconnect uri
+
+        Returns:
+             dict: the name servers for an interconnect.
+        """
+
+        uri = self._client.build_uri(id_or_uri) + "/nameServers"
         return self._client.get(uri)
 
     def get(self, id_or_uri):

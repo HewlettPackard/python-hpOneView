@@ -27,7 +27,7 @@ from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "172.16.102.59",
+    "ip": "",
     "credentials": {
         "userName": "administrator",
         "password": ""
@@ -155,5 +155,13 @@ print("Trigger a reset of port protection of the interconnect hat matches ID ad2
 try:
     result = oneview_client.interconnects.reset_port_protection("ad28cf21-8b15-4f92-bdcf-51cb2042db32")
     pprint(result)
+except HPOneViewException as e:
+    print(e.msg['message'])
+
+# Get name servers
+print("Get name servers that matches ID ba4d2df2-a8d9-4fdc-928f-c47703382738")
+try:
+    interconnect_ns = oneview_client.interconnects.get_name_servers('ba4d2df2-a8d9-4fdc-928f-c47703382738')
+    pprint(interconnect_ns)
 except HPOneViewException as e:
     print(e.msg['message'])
