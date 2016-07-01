@@ -437,8 +437,16 @@ class ResourceTest(unittest.TestCase):
         mock_get.assert_called_once_with(expected_uri)
 
     @mock.patch.object(connection, 'get')
-    def test_get_utilization_with_defaults(self, mock_get):
+    def test_get_utilization_by_id_with_defaults(self, mock_get):
         self.resource_client.get_utilization('09USE7335NW3')
+
+        expected_uri = '/rest/testuri/09USE7335NW3/utilization'
+
+        mock_get.assert_called_once_with(expected_uri)
+
+    @mock.patch.object(connection, 'get')
+    def test_get_utilization_by_uri_with_defaults(self, mock_get):
+        self.resource_client.get_utilization('/rest/testuri/09USE7335NW3')
 
         expected_uri = '/rest/testuri/09USE7335NW3/utilization'
 
