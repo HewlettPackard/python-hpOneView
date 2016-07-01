@@ -39,9 +39,9 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-# Getting first 500 tasks
-print("Getting first 500 tasks")
-tasks = oneview_client.tasks.get_all(0, 500)
+# Getting the first 5 tasks
+print("Getting the first 5 tasks")
+tasks = oneview_client.tasks.get_all(0, 5)
 pprint(tasks)
 
 # Get a specific task
@@ -53,6 +53,6 @@ except HPOneViewException as e:
     print(e.msg['message'])
 
 # Get a tree of tasks with specified filter
-print("Get a specific task")
+print("Get a tree of tasks")
 tasks = oneview_client.tasks.get_all(filter="\"taskState='Completed'\"", view="tree")
 pprint(tasks)
