@@ -87,8 +87,8 @@ class EthernetNetworks(object):
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns:
             bool:
@@ -113,15 +113,44 @@ class EthernetNetworks(object):
         Args:
             resource: dict object to create
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns: Created resource.
 
         """
         data = self.__default_values.copy()
         data.update(resource)
-        return self._client.create(data, timeout)
+        return self._client.create(data, timeout=timeout)
+
+    def create_bulk(self, resource, timeout=-1):
+        """
+        Creates bulk Ethernet networks.
+
+        Args:
+            resource: dict object to create
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
+
+        Returns: created resources
+
+        """
+        data = {"type": "bulk-ethernet-network"}
+        data.update(resource)
+        uri = self.URI + '/bulk'
+        self._client.create(data, uri=uri, timeout=timeout)
+
+        filter = '"\'name\' matches \'{}\_%\'"'.format(
+            resource['namePrefix'])
+        ethernet_networks = self.get_all(filter=filter)
+
+        start, end = resource['vlanIdRange'].split('-')
+        vlanIdRange = range(int(start), int(end) + 1)
+        for net in ethernet_networks:
+            if int(net['vlanId']) not in vlanIdRange:
+                ethernet_networks.remove(net)
+        return ethernet_networks
 
     def update(self, resource, timeout=-1):
         """
@@ -130,10 +159,10 @@ class EthernetNetworks(object):
         Args:
             resource: dict object to update
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
-        Returns: Updated resource. When blocking=False, returns the task.
+        Returns: Updated resource.
 
         """
         data = self.__default_values.copy()
