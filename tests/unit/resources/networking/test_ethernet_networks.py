@@ -49,7 +49,7 @@ class EthernetNetworksTest(TestCase):
     @mock.patch.object(ResourceClient, 'create')
     def test_create_should_use_given_values(self, mock_create):
         resource = {
-            "vlanId": 10,
+            'vlanId': 10,
             'name': 'OneViewSDK Test Ethernet Network',
             "ethernetNetworkType": "Tagged",
             "purpose": "Management",
@@ -62,7 +62,7 @@ class EthernetNetworksTest(TestCase):
         mock_create.return_value = {}
 
         self._ethernet_networks.create(resource, False)
-        mock_create.assert_called_once_with(resource_rest_call, False)
+        mock_create.assert_called_once_with(resource_rest_call, timeout=False)
 
     @mock.patch.object(ResourceClient, 'create')
     def test_create_should_use_default_values(self, mock_create):
@@ -71,14 +71,41 @@ class EthernetNetworksTest(TestCase):
         }
         resource_with_default_values = {
             'name': 'OneViewSDK Test Ethernet Network',
-            "ethernetNetworkType": "Tagged",
-            "type": "ethernet-networkV3"
+            'ethernetNetworkType': 'Tagged',
+            'type': 'ethernet-networkV3'
         }
         mock_create.return_value = {}
 
         self._ethernet_networks.create(resource)
 
-        mock_create.assert_called_once_with(resource_with_default_values, -1)
+        mock_create.assert_called_once_with(
+            resource_with_default_values, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'create')
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_create_bulk(self, mock_get_all, mock_create):
+        resource = {
+            'vlanIdRange': '1-10',
+            'purpose': 'General',
+            'namePrefix': 'TestNetwork',
+            'smartLink': False,
+            'privateNetwork': False,
+            'bandwidth': {
+                'maximumBandwidth': 10000,
+                'typicalBandwidth': 2000
+            },
+            'type': 'bulk-ethernet-network'
+        }
+        resource_rest_call = resource.copy()
+        mock_create.return_value = {}
+        mock_get_all.return_value = {}
+
+        self._ethernet_networks.create_bulk(resource, False)
+
+        mock_create.assert_called_once_with(
+            resource_rest_call, uri='/rest/ethernet-networks/bulk', timeout=False)
+        mock_get_all.assert_called_once_with(
+            0, -1, filter='"\'name\' matches \'TestNetwork\\_%\'"', sort='')
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_should_use_given_values(self, mock_update):
@@ -112,7 +139,8 @@ class EthernetNetworksTest(TestCase):
 
         self._ethernet_networks.update(resource)
 
-        mock_update.assert_called_once_with(resource_with_default_values, timeout=-1)
+        mock_update.assert_called_once_with(
+            resource_with_default_values, timeout=-1)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):
@@ -145,7 +173,8 @@ class EthernetNetworksTest(TestCase):
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_associated_uplink_groups_uri_called_once_with_id(self, mock_get):
-        self._ethernet_networks.get_associated_uplink_groups('3518be0e-17c1-4189-8f81-83f3724f6155')
+        self._ethernet_networks.get_associated_uplink_groups(
+            '3518be0e-17c1-4189-8f81-83f3724f6155')
         uri = '/rest/ethernet-networks/3518be0e-17c1-4189-8f81-83f3724f6155/associatedUplinkGroups'
 
         mock_get.assert_called_once_with(uri)
@@ -160,14 +189,16 @@ class EthernetNetworksTest(TestCase):
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_associated_profiles_called_once_with_id(self, mock_get):
-        self._ethernet_networks.get_associated_profiles('3518be0e-17c1-4189-8f81-83f3724f6155')
+        self._ethernet_networks.get_associated_profiles(
+            '3518be0e-17c1-4189-8f81-83f3724f6155')
         uri = '/rest/ethernet-networks/3518be0e-17c1-4189-8f81-83f3724f6155/associatedProfiles'
 
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_associated_profiles_called_once_with_uri(self, mock_get):
-        self._ethernet_networks.get_associated_profiles('/rest/ethernet-networks/3518be0e-17c1-4189-8f81-83f3724f6155')
+        self._ethernet_networks.get_associated_profiles(
+            '/rest/ethernet-networks/3518be0e-17c1-4189-8f81-83f3724f6155')
         uri = '/rest/ethernet-networks/3518be0e-17c1-4189-8f81-83f3724f6155/associatedProfiles'
 
         mock_get.assert_called_once_with(uri)
