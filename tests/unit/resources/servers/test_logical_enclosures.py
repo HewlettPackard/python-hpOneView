@@ -31,7 +31,6 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class LogicalEnclosuresTest(TestCase):
-
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -143,7 +142,7 @@ class LogicalEnclosuresTest(TestCase):
     def test_update_script_by_uri(self, mock_update):
         logical_enclosure_uri = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         uri_rest_call = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/script'
-        information = {"#TEST COMMAND"}
+        information = {"#TEST COMMAND": ""}
         configuration_rest_call = information.copy()
 
         self._logical_enclosures.update_script(
@@ -156,7 +155,7 @@ class LogicalEnclosuresTest(TestCase):
     def test_update_script_by_id(self, mock_update):
         logical_enclosure_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         uri_rest_call = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/script'
-        information = {"#TEST COMMAND"}
+        information = {"#TEST COMMAND": ""}
         configuration_rest_call = information.copy()
 
         self._logical_enclosures.update_script(

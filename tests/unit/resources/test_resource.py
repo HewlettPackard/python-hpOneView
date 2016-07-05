@@ -241,7 +241,7 @@ class ResourceTest(unittest.TestCase):
         mock_post.return_value = task, {}
         mock_wait4task.return_value = task
 
-        self.resource_client.create({"test", "test"}, timeout=60)
+        self.resource_client.create({"test": "test"}, timeout=60)
 
         mock_wait4task.assert_called_once_with({"task": "task"}, 60)
 
