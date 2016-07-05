@@ -232,11 +232,11 @@ class TaskMonitorTest(unittest.TestCase):
 
         mock_is_running.return_value = False
         mock_get.return_value = task
-        mock_assoc_res.return_value = task.copy(), {"resource", "resource1"}
+        mock_assoc_res.return_value = task.copy(), {"resource": "resource1"}
 
         ret_entity = self.task_monitor.wait_for_task(task.copy())
 
-        self.assertEqual(ret_entity, {"resource", "resource1"})
+        self.assertEqual(ret_entity, {"resource": "resource1"})
 
     @mock.patch.object(TaskMonitor, 'is_task_running')
     @mock.patch.object(TaskMonitor, 'get')
@@ -266,7 +266,7 @@ class TaskMonitorTest(unittest.TestCase):
 
         mock_is_running.return_value = False
         mock_get.return_value = task
-        mock_assoc_res.return_value = task.copy(), {"resource", "resource1"}
+        mock_assoc_res.return_value = task.copy(), {"resource": "resource1"}
 
         ret = self.task_monitor.wait_for_task(task.copy())
 

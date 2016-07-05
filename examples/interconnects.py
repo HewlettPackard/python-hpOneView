@@ -159,9 +159,10 @@ except HPOneViewException as e:
     print(e.msg['message'])
 
 # Get name servers
-print("Get name servers that matches ID ba4d2df2-a8d9-4fdc-928f-c47703382738")
+print("Get name servers that matches ID 929f265b-30dc-44bd-97f7-0942d56e9939")
+
 try:
-    interconnect_ns = oneview_client.interconnects.get_name_servers('ba4d2df2-a8d9-4fdc-928f-c47703382738')
+    interconnect_ns = oneview_client.interconnects.get_name_servers('929f265b-30dc-44bd-97f7-0942d56e9939')
     pprint(interconnect_ns)
 except HPOneViewException as e:
     print(e.msg['message'])
