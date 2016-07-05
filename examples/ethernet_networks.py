@@ -22,9 +22,10 @@
 ###
 
 from pprint import pprint
+
+from config_loader import try_load_from_file
 from hpOneView.exceptions import HPOneViewException
 from hpOneView.oneview_client import OneViewClient
-from config_loader import try_load_from_file
 
 config = {
     "ip": "",
@@ -45,7 +46,7 @@ options = {
 }
 
 options_bulk = {
-    "vlanIdRange": "1-5",
+    "vlanIdRange": "1-5,7",
     "purpose": "General",
     "namePrefix": "TestNetwork",
     "smartLink": False,
