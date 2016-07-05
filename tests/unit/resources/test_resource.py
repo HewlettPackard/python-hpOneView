@@ -126,6 +126,22 @@ class ResourceTest(unittest.TestCase):
         self.assertIsNone(response)
         mock_get_by.assert_called_once_with("name", 'Resource Name,')
 
+    @mock.patch.object(connection, 'get')
+    def test_get_collection_uri(self, mock_get):
+        mock_get.return_value = {"members": [{"key": "value"}, {"key": "value"}]}
+
+        self.resource_client.get_collection('12345')
+
+        mock_get.assert_called_once_with(self.URI + "/12345")
+
+    @mock.patch.object(connection, 'get')
+    def test_get_collection_should_return_list(self, mock_get):
+        mock_get.return_value = {"members": [{"key": "value"}, {"key": "value"}]}
+
+        collection = self.resource_client.get_collection('12345')
+
+        self.assertEqual(len(collection), 2)
+
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_by_uri(self, mock_get_all):
         self.resource_client.get_by('name', 'MyFibreNetwork')
@@ -185,6 +201,20 @@ class ResourceTest(unittest.TestCase):
 
         self.assertEqual(body, response)
         mock_put.assert_called_once_with(uri, dict_to_update)
+
+    @mock.patch.object(connection, 'put')
+    def test_update_with_force(self, mock_put):
+        dict_to_update = {"name": "test"}
+        uri = "/rest/resource/test"
+        task = None
+        body = {"body": "body"}
+
+        mock_put.return_value = task, body
+
+        self.resource_client.update(dict_to_update, uri=uri, force=True)
+
+        expected_uri = "/rest/resource/test?force=True"
+        mock_put.assert_called_once_with(expected_uri, dict_to_update)
 
     @mock.patch.object(connection, 'put')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
@@ -344,6 +374,14 @@ class ResourceTest(unittest.TestCase):
     def test_get_with_none(self):
         try:
             self.resource_client.get(None)
+        except ValueError as e:
+            self.assertTrue("id" in e.args[0])
+        else:
+            self.fail()
+
+    def test_get_collection_with_none(self):
+        try:
+            self.resource_client.get_collection(None)
         except ValueError as e:
             self.assertTrue("id" in e.args[0])
         else:

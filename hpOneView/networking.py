@@ -122,7 +122,11 @@ class networking(object):
     # Logical Interconnects
     ###########################################################################
     def get_lis(self, filter=''):
-        """ Gets a collection of logical interconnects.
+        """
+        This function is deprecated, use
+            OneViewClient(config).logical_interconnects.get_all() instead.
+
+        Gets a collection of logical interconnects.
 
         Args:
             filter:
@@ -200,11 +204,19 @@ class networking(object):
         return self._con.get(uri['li'] + '/schema')
 
     def get_li_by_id(self, id):
-        """ Gets a logical interconnect."""
+        """
+        This function is deprecated, use
+            OneViewClient(config).logical_interconnects.get() instead.
+
+        Gets a logical interconnect."""
         return self._con.get(uri['li'] + '/' + id)
 
     def correct_li_by_id(self, id, blocking=True, verbose=False):
-        """ Returns a logical interconnect to a consistent state.
+        """
+        This function is deprecated, use
+            OneViewClient(config).logical_interconnects.update_compliance() instead.
+
+        Returns a logical interconnect to a consistent state.
 
         The current logical interconnect state is compared to the associated
         logical interconnect group. Any differences identified are corrected,
@@ -224,7 +236,11 @@ class networking(object):
 
     def update_ethernet_interconnected_settings(self, id, settings,
                                                 blocking=True, verbose=False):
-        """ Updates the Ethernet settings for the logical interconnect.
+        """
+        This function is deprecated, use
+            OneViewClient(config).logical_interconnects.update_ethernet_settings() instead.
+
+        Updates the Ethernet settings for the logical interconnect.
 
         Args:
             id:

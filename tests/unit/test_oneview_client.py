@@ -33,6 +33,7 @@ from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
 from hpOneView.resources.networking.interconnects import Interconnects
+from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
 from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
 from tests.test_utils import mock_builtin
 
@@ -190,3 +191,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_logical_interconnect_groups(self):
         logical_interconnect_groups = self._oneview.logical_interconnect_groups
         self.assertEqual(logical_interconnect_groups, self._oneview.logical_interconnect_groups)
+
+    def test_logical_interconnects_has_right_type(self):
+        self.assertIsInstance(self._oneview.logical_interconnects, LogicalInterconnects)
+
+    def test_logical_interconnects_has_value(self):
+        self.assertIsNotNone(self._oneview.logical_interconnects)
+
+    def test_lazy_loading_logical_interconnects(self):
+        logical_interconnects = self._oneview.logical_interconnects
+        self.assertEqual(logical_interconnects, self._oneview.logical_interconnects)

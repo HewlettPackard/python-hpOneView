@@ -148,6 +148,18 @@ class ResourceClient(object):
                      (uri, str(id_or_uri)))
         return self._connection.get(uri)
 
+    def get_collection(self, id_or_uri):
+        """
+        Args:
+            id_or_uri: Could be either the resource id or the resource uri
+        Returns:
+             Collection of the requested resource
+        """
+        uri = self.build_uri(id_or_uri)
+        logger.debug('Get resource collection (uri = %s, ID = %s)' % (uri, str(id_or_uri)))
+        response = self._connection.get(uri)
+        return self.__get_members(response)
+
     def update_with_zero_body(self, uri, timeout=-1):
         logger.debug('Update with zero length body (uri = %s)' % uri)
 
@@ -158,7 +170,7 @@ class ResourceClient(object):
 
         return self._task_monitor.wait_for_task(task, timeout)
 
-    def update(self, resource, uri=None, timeout=-1):
+    def update(self, resource, uri=None, force=False, timeout=-1):
         if not resource:
             logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
             raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
@@ -168,6 +180,9 @@ class ResourceClient(object):
 
         if not uri:
             uri = resource['uri']
+
+        if force:
+            uri += '?force=True'
 
         task, body = self._connection.put(uri, resource)
 
