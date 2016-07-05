@@ -69,6 +69,7 @@ from hpOneView.resources.networking.interconnect_types import InterconnectTypes
 from hpOneView.resources.networking.logical_downlinks import LogicalDownlinks
 from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
+from hpOneView.resources.storage.storage_systems import StorageSystems
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
@@ -104,6 +105,7 @@ class OneViewClient(object):
         self.__power_devices = None
         self.__logical_interconnect_groups = None
         self.__logical_downlinks = None
+        self.__storage_systems = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -292,3 +294,9 @@ class OneViewClient(object):
         if not self.__power_devices:
             self.__power_devices = PowerDevices(self.__connection)
         return self.__power_devices
+
+    @property
+    def storage_systems(self):
+        if not self.__storage_systems:
+            self.__storage_systems = StorageSystems(self.__connection)
+        return self.__storage_systems

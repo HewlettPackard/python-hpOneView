@@ -11,5 +11,8 @@
   "enclosure_group_uri": "",
   "server_hostname": "",
   "server_username": "",
-  "server_password": ""
+  "server_password": "",
+  "storage_system_hostname": "",
+  "storage_system_username": "",
+  "storage_system_password": ""
 }
