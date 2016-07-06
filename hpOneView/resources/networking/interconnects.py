@@ -28,6 +28,8 @@ from __future__ import unicode_literals
 
 from future import standard_library
 
+from future.utils import lmap
+
 standard_library.install_aliases()
 
 __title__ = 'Interconnects'
@@ -161,11 +163,35 @@ class Interconnects(object):
                 in OneView, just stop waiting its completion.
 
         Returns:
-            dict: The interconnect with updated port
+            dict: The interconnect
 
         """
         uri = self._client.build_uri(id_or_uri) + "/ports"
         return self._client.update(port_information, uri, timeout)
+
+    def update_ports(self, ports, id_or_uri, timeout=-1):
+        """
+        Updates the interconnect ports.
+
+        Args:
+            id_or_uri: Could be either the interconnect id or the interconnect uri
+            ports (dict): array of ports to update
+            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns:
+            dict: The interconnect
+
+        """
+        resources = lmap(self.__port_with_default_type, ports)
+
+        uri = self._client.build_uri(id_or_uri) + "/update-ports"
+        return self._client.update(resources, uri, timeout)
+
+    def __port_with_default_type(self, port):
+        data = dict(type="port")
+        data.update(port)
+        return data
 
     def reset_port_protection(self, id_or_uri, timeout=-1):
         """

@@ -34,6 +34,24 @@ config = {
     }
 }
 
+interconnect_id = "748d4699-62ff-454e-8ec8-773815c4aa2f"
+
+port_d1 = {
+    "type": "port",
+    "portName": "d1",
+    "bayNumber": 1,
+    "enabled": False,
+    "portId": "{0}:d1".format(interconnect_id)
+}
+
+port_d2 = {
+    "portName": "d2",
+    "enabled": False,
+    "portId": "{0}:d2".format(interconnect_id)
+}
+
+ports_for_update = [port_d1, port_d2]
+
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
@@ -50,43 +68,48 @@ except HPOneViewException as e:
 # Get Interconnects Statistics
 print("Get an interconnect statistics")
 try:
-    interconnect_statistics = oneview_client.interconnects.get_statistics("ad28cf21-8b15-4f92-bdcf-51cb2042db32")
-    pprint(interconnect_statistics['moduleStatistics'])
+    interconnect_statistics = oneview_client.interconnects.get_statistics(interconnect_id)
+    if interconnect_statistics:
+        pprint(interconnect_statistics['moduleStatistics'])
+    else:
+        pprint("There are no statistics for the interconnect {0}".format(interconnect_id))
 except HPOneViewException as e:
     print(e.msg['message'])
 
 # Get the Statistics from a port of an Interconnects
 print("Get the port statistics for downlink port 1 on the interconnect "
-      "that matches ID ad28cf21-8b15-4f92-bdcf-51cb2042db32")
+      "that matches the specified ID")
 try:
-    statistics = oneview_client.interconnects.get_statistics("ad28cf21-8b15-4f92-bdcf-51cb2042db32", "d1")
+    statistics = oneview_client.interconnects.get_statistics(interconnect_id, port_d1["portName"])
     pprint(statistics)
 except HPOneViewException as e:
     print(e.msg['message'])
 
 # Get the subport Statistics from a port of an Interconnects
 print("Get the subport statistics for subport 1 on downlink port 2 on the interconnect "
-      "that matches ID ad28cf21-8b15-4f92-bdcf-51cb2042db32")
+      "that matches the specified ID")
 try:
-    statistics = oneview_client.interconnects.get_subport_statistics("ad28cf21-8b15-4f92-bdcf-51cb2042db32", "d2", 1)
+    statistics = oneview_client.interconnects.get_subport_statistics(interconnect_id,
+                                                                     port_d1["portName"],
+                                                                     port_d1["bayNumber"])
     pprint(statistics)
 except HPOneViewException as e:
     print(e.msg['message'])
 
 # Get by ID
-print("Get Interconnect that matches ID 66fd5e22-5a71-4605-a7e9-b6ead772ea4d")
+print("Get Interconnect that matches the specified ID")
 try:
-    interconnect = oneview_client.interconnects.get('66fd5e22-5a71-4605-a7e9-b6ead772ea4d')
+    interconnect = oneview_client.interconnects.get(interconnect_id)
     pprint(interconnect)
 except HPOneViewException as e:
     print(e.msg['message'])
 
 # Turn the power off
 print("Turn the power off and the UID light to 'Off' for interconnect " +
-      "that matches ID 66fd5e22-5a71-4605-a7e9-b6ead772ea4d")
+      "that matches the specified ID")
 try:
     interconnect = oneview_client.interconnects.patch(
-        id_or_uri='e542bdab-c75f-4cf2-b89e-9a566849e292',
+        id_or_uri=interconnect_id,
         operation='replace',
         path='/powerState',
         value='Off'
@@ -95,65 +118,21 @@ try:
 except HPOneViewException as e:
     print(e.msg)
 
-port = {
-    "type": "port",
-    "bayNumber": 1,
-    "pairedPortName": None,
-    "subports": None,
-    "connectorType": "absent",
-    "associatedUplinkSetUri": None,
-    "available": True,
-    "portStatusReason": "Unknown",
-    "vendorSpecificPortName": None,
-    "portRunningCapabilityType": None,
-    "neighbor": None,
-    "lagId": 0,
-    "interconnectName": "Encl2, interconnect 1",
-    "lagStates": None,
-    "portTypeExtended": "External",
-    "enabled": False,
-    "vlans": None,
-    "dcbxInfo": None,
-    "portStatus": "Unlinked",
-    "portName": "Q1.1",
-    "portType": "Uplink",
-    "fcPortProperties": None,
-    "portId": "ad28cf21-8b15-4f92-bdcf-51cb2042db32:Q1.1",
-    "portMonitorConfigInfo": "NotMonitored",
-    "portHealthStatus": "Disabled",
-    "capability": [
-        "EnetFcoe",
-        "Ethernet"
-    ],
-    "operationalSpeed": "Speed_0M",
-    "configPortTypes": [
-        "EnetFcoe",
-        "Ethernet"
-    ],
-    "portSplitMode": "NotApplicable",
-    "description": None,
-    "name": "Q1.1",
-    "state": None,
-    "status": "Disabled",
-    "category": "ports",
-    "created": None,
-    "modified": None,
-    "eTag": None,
-    "uri": "/rest/interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/ports/ad28cf21-8b15-4f92-bdcf-51cb2042db32:Q1.1"
-}
-
 # Updates an interconnect port.
 print("Update the interconnect port")
 try:
-    updated = oneview_client.interconnects.update_port(port, "ad28cf21-8b15-4f92-bdcf-51cb2042db32")
+    port_for_update = port_d1.copy()
+    port_for_update["enabled"] = False
+
+    updated = oneview_client.interconnects.update_port(port_for_update, interconnect_id)
     pprint(updated)
 except HPOneViewException as e:
     print(e.msg['message'])
 
 # Reset of port protection.
-print("Trigger a reset of port protection of the interconnect hat matches ID ad28cf21-8b15-4f92-bdcf-51cb2042db32")
+print("Trigger a reset of port protection of the interconnect that matches the specified ID")
 try:
-    result = oneview_client.interconnects.reset_port_protection("ad28cf21-8b15-4f92-bdcf-51cb2042db32")
+    result = oneview_client.interconnects.reset_port_protection(interconnect_id)
     pprint(result)
 except HPOneViewException as e:
     print(e.msg['message'])
@@ -164,5 +143,19 @@ print("Get name servers that matches ID 929f265b-30dc-44bd-97f7-0942d56e9939")
 try:
     interconnect_ns = oneview_client.interconnects.get_name_servers('929f265b-30dc-44bd-97f7-0942d56e9939')
     pprint(interconnect_ns)
+except HPOneViewException as e:
+    print(e.msg['message'])
+
+# Updates the interconnect ports.
+print("Update the interconnect ports")
+
+try:
+    updated = oneview_client.interconnects.update_ports(ports_for_update, interconnect_id)
+
+    # filtering only updated ports
+    names = [port_d1["portName"], port_d2["portName"]]
+    updated_ports = [port for port in updated["ports"] if port["portName"] in names]
+
+    pprint(updated_ports)
 except HPOneViewException as e:
     print(e.msg['message'])
