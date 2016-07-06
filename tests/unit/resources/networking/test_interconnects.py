@@ -111,3 +111,28 @@ class InterconnectsTest(unittest.TestCase):
         url = '/rest/interconnects/5v8f3ec0-52t4-475a-84g4-c4iod72d2c20/resetportprotection'
         self._interconnects.reset_port_protection(interconnect_id)
         mock_update.assert_called_once_with(url, -1)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_ports(self, mock_update):
+        interconnect_id = '5v8f3ec0-52t4-475a-84g4-c4iod72d2c20'
+        url = '/rest/interconnects/5v8f3ec0-52t4-475a-84g4-c4iod72d2c20/update-ports'
+
+        port1 = {
+            "type": "port2",
+            "portName": "d1",
+            "enabled": False,
+            "portId": "0f6f4937-6801-4494-a528-5dc01368c043:d1"
+        }
+        port2 = {
+            "portName": "d2",
+            "enabled": False,
+            "portId": "0f6f4937-6801-4494-a528-5dc01368c043:d2"
+        }
+        ports = [port1, port2]
+
+        clone = port2.copy()
+        clone["type"] = "port"
+        expected_ports = [port1, clone]
+
+        self._interconnects.update_ports(ports, interconnect_id)
+        mock_update.assert_called_once_with(expected_ports, url, -1)
