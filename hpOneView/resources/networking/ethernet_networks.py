@@ -21,10 +21,11 @@
 # THE SOFTWARE.
 ###
 
+from __future__ import absolute_import
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
-from __future__ import absolute_import
+
 from future import standard_library
 
 standard_library.install_aliases()
@@ -141,14 +142,54 @@ class EthernetNetworks(object):
         uri = self.URI + '/bulk'
         self._client.create(data, uri=uri, timeout=timeout)
 
-        filter = '"\'name\' matches \'{}\_%\'"'.format(
-            resource['namePrefix'])
+        return self.get_range(resource['namePrefix'], resource['vlanIdRange'])
+
+    def get_range(self, name_prefix, vlan_id_range):
+        """
+        Gets a list of Ethernet Networks that match the 'given name_prefix' and the 'vlan_id_range'
+
+        Examples:
+
+            For name_prefix equals to 'Enet_name' and vlan_id_range equals to '1-2,5', it is expected that
+            the result contains the ethernet network with names:
+                * Enet_name_1
+                * Enet_name_2
+                * Enet_name_5
+
+            For name_prefix equals to 'Enet_name' and vlan_id_range equals to '2', it is expected that
+            the result contains the ethernet network with names:
+                * Enet_name_1
+                * Enet_name_2
+
+        Args:
+            name_prefix: The Ethernet Network prefix
+            vlan_id_range: A combination of values or ranges to be retrieved. The VLAN ID range is specified as a
+                combination of values or ranges. For example '1-10,50,51,500-700'.
+
+        Returns:
+            list: List of Ethernet Networks.
+
+        """
+        filter = '"\'name\' matches \'{}\_%\'"'.format(name_prefix)
         ethernet_networks = self.get_all(filter=filter)
 
-        start, end = resource['vlanIdRange'].split('-')
-        vlanIdRange = range(int(start), int(end) + 1)
-        for net in ethernet_networks:
-            if int(net['vlanId']) not in vlanIdRange:
+        values_or_ranges = vlan_id_range.split(',')
+        vlan_ids = []
+        # The expected result is different if the vlan_id_range contains only one value
+        if len(values_or_ranges) == 1 and '-' not in values_or_ranges[0]:
+            vlan_ids = range(1, int(values_or_ranges[0]) + 1)
+        else:
+            for value_or_range in values_or_ranges:
+                value_or_range.strip()
+                if '-' not in value_or_range:
+                    vlan_ids.append(int(value_or_range))
+                else:
+                    start, end = value_or_range.split('-')
+                    range_ids = range(int(start), int(end) + 1)
+                    vlan_ids.extend(range_ids)
+
+        for net in ethernet_networks[:]:
+            if int(net['vlanId']) not in vlan_ids:
                 ethernet_networks.remove(net)
         return ethernet_networks
 

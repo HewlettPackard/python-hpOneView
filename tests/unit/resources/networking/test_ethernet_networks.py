@@ -31,7 +31,6 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class EthernetNetworksTest(TestCase):
-
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -98,7 +97,7 @@ class EthernetNetworksTest(TestCase):
         }
         resource_rest_call = resource.copy()
         mock_create.return_value = {}
-        mock_get_all.return_value = {}
+        mock_get_all.return_value = []
 
         self._ethernet_networks.create_bulk(resource, False)
 
@@ -202,3 +201,82 @@ class EthernetNetworksTest(TestCase):
         uri = '/rest/ethernet-networks/3518be0e-17c1-4189-8f81-83f3724f6155/associatedProfiles'
 
         mock_get.assert_called_once_with(uri)
+
+    def __mock_enet_gel_all(self):
+        return [
+            {'name': 'TestNetwork_1', 'vlanId': 1},
+            {'name': 'TestNetwork_2', 'vlanId': 2},
+            {'name': 'TestNetwork_3', 'vlanId': 3},
+            {'name': 'TestNetwork_4', 'vlanId': 4},
+            {'name': 'TestNetwork_5', 'vlanId': 5},
+            {'name': 'TestNetwork_5', 'vlanId': 6},
+            {'name': 'TestNetwork_7', 'vlanId': 7},
+            {'name': 'TestNetwork_8', 'vlanId': 8},
+            {'name': 'TestNetwork_9', 'vlanId': 9},
+            {'name': 'TestNetwork_10', 'vlanId': 10},
+        ]
+
+    @mock.patch.object(EthernetNetworks, 'get_all')
+    def test_get_bulk_with_one_range(self, mock_get_all):
+        mock_get_all.return_value = self.__mock_enet_gel_all()
+
+        expected_result = [
+            {'name': 'TestNetwork_1', 'vlanId': 1},
+            {'name': 'TestNetwork_2', 'vlanId': 2},
+            {'name': 'TestNetwork_3', 'vlanId': 3},
+            {'name': 'TestNetwork_4', 'vlanId': 4},
+        ]
+
+        result = self._ethernet_networks.get_range('TestNetwork', '1-4')
+        self.assertEqual(result, expected_result)
+
+    @mock.patch.object(EthernetNetworks, 'get_all')
+    def test_get_bulk_with_one_value(self, mock_get_all):
+        mock_get_all.return_value = self.__mock_enet_gel_all()
+
+        expected_result = [
+            {'name': 'TestNetwork_1', 'vlanId': 1},
+            {'name': 'TestNetwork_2', 'vlanId': 2},
+        ]
+
+        result = self._ethernet_networks.get_range('TestNetwork', '2')
+        self.assertEqual(result, expected_result)
+
+    @mock.patch.object(EthernetNetworks, 'get_all')
+    def test_get_bulk_with_one_value_and_one_range(self, mock_get_all):
+        mock_get_all.return_value = self.__mock_enet_gel_all()
+
+        expected_result = [
+            {'name': 'TestNetwork_2', 'vlanId': 2},
+            {'name': 'TestNetwork_9', 'vlanId': 9},
+            {'name': 'TestNetwork_10', 'vlanId': 10},
+        ]
+
+        result = self._ethernet_networks.get_range('TestNetwork', '2, 9-10')
+        self.assertEqual(result, expected_result)
+
+    @mock.patch.object(EthernetNetworks, 'get_all')
+    def test_get_bulk_with_multiple_values(self, mock_get_all):
+        mock_get_all.return_value = self.__mock_enet_gel_all()
+
+        expected_result = [
+            {'name': 'TestNetwork_9', 'vlanId': 9},
+            {'name': 'TestNetwork_10', 'vlanId': 10},
+        ]
+
+        result = self._ethernet_networks.get_range('TestNetwork', '9,10')
+        self.assertEqual(result, expected_result)
+
+    @mock.patch.object(EthernetNetworks, 'get_all')
+    def test_get_bulk_with_multiple_ranges(self, mock_get_all):
+        mock_get_all.return_value = self.__mock_enet_gel_all()
+
+        expected_result = [
+            {'name': 'TestNetwork_5', 'vlanId': 6},
+            {'name': 'TestNetwork_7', 'vlanId': 7},
+            {'name': 'TestNetwork_9', 'vlanId': 9},
+            {'name': 'TestNetwork_10', 'vlanId': 10},
+        ]
+
+        result = self._ethernet_networks.get_range('TestNetwork', '6-7,9-10')
+        self.assertEqual(result, expected_result)
