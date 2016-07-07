@@ -53,11 +53,14 @@ class LogicalEnclosuresTest(TestCase):
 
     @mock.patch.object(ResourceClient, 'get_by')
     def test_get_by_called_once(self, mock_get_by):
-        self._logical_enclosures.get_by(
-            'name', 'OneViewSDK-Test-Logical-Enclosure')
+        self._logical_enclosures.get_by('name', 'OneViewSDK-Test-Logical-Enclosure')
 
-        mock_get_by.assert_called_once_with(
-            'name', 'OneViewSDK-Test-Logical-Enclosure')
+        mock_get_by.assert_called_once_with('name', 'OneViewSDK-Test-Logical-Enclosure')
+
+    @mock.patch.object(ResourceClient, 'get_by_name')
+    def test_get_by_name_called_once(self, mock_get_by_name):
+        self._logical_enclosures.get_by_name('OneViewSDK-Test-Logical-Enclosure')
+        mock_get_by_name.assert_called_once_with(name='OneViewSDK-Test-Logical-Enclosure')
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_with_id_called_once(self, mock_get):

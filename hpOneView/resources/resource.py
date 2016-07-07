@@ -243,6 +243,20 @@ class ResourceClient(object):
         filter = "\"'{0}'='{1}'\"".format(field, value)
         return self.get_all(filter=filter)
 
+    def get_by_name(self, name):
+        """
+        Retrieve a resource by his name
+        Args:
+            name: resource name
+
+        Returns: dict
+        """
+        result = self.get_by('name', name)
+        if not result:
+            return None
+        else:
+            return result[0]
+
     def get_utilization(self, id_or_uri, fields=None, filter=None, refresh=False, view=None):
         """
         Retrieves historical utilization data for the specified resource, metrics, and time span.

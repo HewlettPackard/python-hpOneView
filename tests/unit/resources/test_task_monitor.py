@@ -85,6 +85,22 @@ class TaskMonitorTest(unittest.TestCase):
         self.assertEqual(entity, {"resource": "resource1"})
         self.assertEqual(ret_task, task)
 
+    def test_get_associated_resource_support_dump(self):
+
+        task = {
+            "category": "tasks",
+            "type": "TaskResourceV2",
+            "associatedResource": {
+                "resourceUri": "/rest/appliance/support-dumps/hennig59.eco-MyDump16-E-2016_07_07-17_53_42.867287.sdmp"
+            }}
+
+        ret_task, entity = self.task_monitor.get_associated_resource(task.copy())
+
+        self.assertEqual(
+            entity,
+            "/rest/appliance/support-dumps/hennig59.eco-MyDump16-E-2016_07_07-17_53_42.867287.sdmp")
+        self.assertEqual(ret_task, task)
+
     def test_get_associated_resource_with_task_empty(self):
         try:
             self.task_monitor.get_associated_resource({})

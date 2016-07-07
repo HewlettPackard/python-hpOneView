@@ -31,7 +31,6 @@ from hpOneView.resources.resource import ResourceClient, RESOURCE_CLIENT_INVALID
 
 
 class FakeResource(object):
-
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, "/rest/fake/resource")
@@ -112,6 +111,20 @@ class ResourceTest(unittest.TestCase):
     def test_get_by_id_uri(self, mock_get):
         self.resource_client.get('12345')
         mock_get.assert_called_once_with(self.URI + "/12345")
+
+    @mock.patch.object(ResourceClient, 'get_by')
+    def test_get_by_name_with_result(self, mock_get_by):
+        mock_get_by.return_value = [{"name": "value"}]
+        response = self.resource_client.get_by_name('Resource Name,')
+        self.assertEqual(response, {"name": "value"})
+        mock_get_by.assert_called_once_with("name", 'Resource Name,')
+
+    @mock.patch.object(ResourceClient, 'get_by')
+    def test_get_by_name_without_result(self, mock_get_by):
+        mock_get_by.return_value = []
+        response = self.resource_client.get_by_name('Resource Name,')
+        self.assertIsNone(response)
+        mock_get_by.assert_called_once_with("name", 'Resource Name,')
 
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_by_uri(self, mock_get_all):
