@@ -86,6 +86,16 @@ class LogicalEnclosures(object):
         """
         return self._client.get_by(field, value)
 
+    def get_by_name(self, name):
+        """
+        Retrieve a resource by his name
+        Args:
+            name: resource name
+
+        Returns: dict
+        """
+        return self._client.get_by_name(name=name)
+
     def get(self, id_or_uri):
         """
         Returns the logical enclosure with the specified ID, if it exists.

@@ -31,7 +31,6 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class LogicalEnclosuresTest(TestCase):
-
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -54,11 +53,14 @@ class LogicalEnclosuresTest(TestCase):
 
     @mock.patch.object(ResourceClient, 'get_by')
     def test_get_by_called_once(self, mock_get_by):
-        self._logical_enclosures.get_by(
-            'name', 'OneViewSDK-Test-Logical-Enclosure')
+        self._logical_enclosures.get_by('name', 'OneViewSDK-Test-Logical-Enclosure')
 
-        mock_get_by.assert_called_once_with(
-            'name', 'OneViewSDK-Test-Logical-Enclosure')
+        mock_get_by.assert_called_once_with('name', 'OneViewSDK-Test-Logical-Enclosure')
+
+    @mock.patch.object(ResourceClient, 'get_by_name')
+    def test_get_by_name_called_once(self, mock_get_by_name):
+        self._logical_enclosures.get_by_name('OneViewSDK-Test-Logical-Enclosure')
+        mock_get_by_name.assert_called_once_with(name='OneViewSDK-Test-Logical-Enclosure')
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_with_id_called_once(self, mock_get):
@@ -143,7 +145,7 @@ class LogicalEnclosuresTest(TestCase):
     def test_update_script_by_uri(self, mock_update):
         logical_enclosure_uri = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         uri_rest_call = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/script'
-        information = {"#TEST COMMAND"}
+        information = {"#TEST COMMAND": ""}
         configuration_rest_call = information.copy()
 
         self._logical_enclosures.update_script(
@@ -156,7 +158,7 @@ class LogicalEnclosuresTest(TestCase):
     def test_update_script_by_id(self, mock_update):
         logical_enclosure_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         uri_rest_call = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/script'
-        information = {"#TEST COMMAND"}
+        information = {"#TEST COMMAND": ""}
         configuration_rest_call = information.copy()
 
         self._logical_enclosures.update_script(
