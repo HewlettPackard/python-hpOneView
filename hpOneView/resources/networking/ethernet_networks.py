@@ -163,21 +163,40 @@ class EthernetNetworks(object):
 
         Args:
             name_prefix: The Ethernet Network prefix
-            vlan_id_range: A combination of values or ranges to be retrieved. The VLAN ID range is specified as a
-                combination of values or ranges. For example '1-10,50,51,500-700'.
+            vlan_id_range: A combination of values or ranges to be retrieved. For example '1-10,50,51,500-700'.
 
         Returns:
             list: List of Ethernet Networks.
 
         """
         filter = '"\'name\' matches \'{}\_%\'"'.format(name_prefix)
-        ethernet_networks = self.get_all(filter=filter)
+        ethernet_networks = self.get_all(filter=filter, sort='vlanId:ascending')
 
+        vlan_ids = self.dissociate_values_or_ranges(vlan_id_range)
+
+        for net in ethernet_networks[:]:
+            if int(net['vlanId']) not in vlan_ids:
+                ethernet_networks.remove(net)
+        return ethernet_networks
+
+    def dissociate_values_or_ranges(self, vlan_id_range):
+        """
+        Build a list of vlan ids given a combination of ranges and/or values
+        Examples:
+            * vlan_id_range = '1-2,5' => [1, 2, 5]
+            * vlan_id_range = '5' => [1, 2, 3, 4, 5]
+            * vlan_id_range = '4-5,7-8' => [4, 5, 7, 8]
+        Args:
+            vlan_id_range: A combination of values or ranges. For example '1-10,50,51,500-700'.
+
+        Returns:
+            list: vlan ids
+        """
         values_or_ranges = vlan_id_range.split(',')
         vlan_ids = []
         # The expected result is different if the vlan_id_range contains only one value
         if len(values_or_ranges) == 1 and '-' not in values_or_ranges[0]:
-            vlan_ids = range(1, int(values_or_ranges[0]) + 1)
+            vlan_ids = list(range(1, int(values_or_ranges[0]) + 1))
         else:
             for value_or_range in values_or_ranges:
                 value_or_range.strip()
@@ -188,10 +207,7 @@ class EthernetNetworks(object):
                     range_ids = range(int(start), int(end) + 1)
                     vlan_ids.extend(range_ids)
 
-        for net in ethernet_networks[:]:
-            if int(net['vlanId']) not in vlan_ids:
-                ethernet_networks.remove(net)
-        return ethernet_networks
+        return vlan_ids
 
     def update(self, resource, timeout=-1):
         """
