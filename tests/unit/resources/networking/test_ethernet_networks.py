@@ -104,7 +104,7 @@ class EthernetNetworksTest(TestCase):
         mock_create.assert_called_once_with(
             resource_rest_call, uri='/rest/ethernet-networks/bulk', timeout=False)
         mock_get_all.assert_called_once_with(
-            0, -1, filter='"\'name\' matches \'TestNetwork\\_%\'"', sort='')
+            0, -1, filter='"\'name\' matches \'TestNetwork\\_%\'"', sort='vlanId:ascending')
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_should_use_given_values(self, mock_update):
@@ -279,4 +279,24 @@ class EthernetNetworksTest(TestCase):
         ]
 
         result = self._ethernet_networks.get_range('TestNetwork', '6-7,9-10')
+        self.assertEqual(result, expected_result)
+
+    def test_dissociate_values_or_ranges_with_one_value(self):
+        expected_result = [1, 2, 3, 4, 5]
+        result = self._ethernet_networks.dissociate_values_or_ranges('5')
+        self.assertEqual(result, expected_result)
+
+    def test_dissociate_values_or_ranges_with_multiple_values(self):
+        expected_result = [6, 7, 9]
+        result = self._ethernet_networks.dissociate_values_or_ranges('6,7,9')
+        self.assertEqual(result, expected_result)
+
+    def test_dissociate_values_or_ranges_with_one_range(self):
+        expected_result = [6, 7]
+        result = self._ethernet_networks.dissociate_values_or_ranges('6-7')
+        self.assertEqual(result, expected_result)
+
+    def test_dissociate_values_or_ranges_with_multiple_ranges(self):
+        expected_result = [6, 7, 9, 10]
+        result = self._ethernet_networks.dissociate_values_or_ranges('6-7,9-10')
         self.assertEqual(result, expected_result)
