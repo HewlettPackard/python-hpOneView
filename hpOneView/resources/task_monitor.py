@@ -186,7 +186,7 @@ class TaskMonitor(object):
         if task['type'] == 'TaskResourceV2':
             resource_uri = task['associatedResource']['resourceUri']
 
-            if resource_uri.startswith("/rest/appliance/support-dumps/"):
+            if resource_uri and resource_uri.startswith("/rest/appliance/support-dumps/"):
                 # Specific for support dumps
                 return task, resource_uri
 
