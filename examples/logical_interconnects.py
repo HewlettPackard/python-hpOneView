@@ -34,11 +34,18 @@ config = {
     }
 }
 
+# To run this example you must define a logical interconnect id
+logical_interconnect_id = ""
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
+
+# Get installed firmware
+print("Gets the installed firmware for a logical interconnect that matches the specified ID.")
+firmware = oneview_client.logical_interconnects.get_firmware(logical_interconnect_id)
+pprint(firmware)
 
 # Get all logical interconnects
 print("Get all logical interconnects")

@@ -41,7 +41,9 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class LogicalInterconnects(object):
+
     URI = '/rest/logical-interconnects'
+    FIRMWARE_PATH = "/firmware"
 
     def __init__(self, con):
         self._connection = con
@@ -233,3 +235,17 @@ class LogicalInterconnects(object):
 
         """
         return self._client.get(telemetry_configuration_uri)
+
+    def get_firmware(self, id_or_uri):
+        """
+        Gets the installed firmware for a logical interconnect.
+
+        Args:
+            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri
+
+        Returns:
+            dict: LIFirmware
+        """
+        logical_interconnect_uri = self._client.build_uri(id_or_uri)
+        complete_uri = logical_interconnect_uri + self.FIRMWARE_PATH
+        return self._client.get(complete_uri)
