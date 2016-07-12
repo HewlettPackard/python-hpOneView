@@ -225,6 +225,7 @@ class connection(object):
         conn.putheader('Content-Type', content_type)
         totalSize = os.path.getsize(files + '.b64')
         conn.putheader('Content-Length', totalSize)
+        conn.putheader('X-API-Version', self._apiVersion)
         conn.endheaders()
         while mappedfile.tell() < mappedfile.size():
             # Send 1MB at a time
