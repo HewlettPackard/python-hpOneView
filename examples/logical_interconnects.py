@@ -37,15 +37,27 @@ config = {
 # To run this example you must define a logical interconnect id
 logical_interconnect_id = ""
 
+# To install the firmware driver you must define the firmware_driver_uri
+firmware_driver_uri = ""
+
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
 # Get installed firmware
-print("Gets the installed firmware for a logical interconnect that matches the specified ID.")
+print("Get the installed firmware for a logical interconnect that matches the specified ID.")
 firmware = oneview_client.logical_interconnects.get_firmware(logical_interconnect_id)
 pprint(firmware)
+
+# Install the firmware to a logical interconnect
+print("Install the firmware to a logical interconnect that matches the specified ID.")
+firmware_to_install = dict(
+    command="Update",
+    sppUri=firmware_driver_uri
+)
+installed_firmware = oneview_client.logical_interconnects.install_firmware(firmware_to_install, logical_interconnect_id)
+pprint(installed_firmware)
 
 # Get all logical interconnects
 print("Get all logical interconnects")

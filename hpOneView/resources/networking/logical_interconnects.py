@@ -246,6 +246,20 @@ class LogicalInterconnects(object):
         Returns:
             dict: LIFirmware
         """
-        logical_interconnect_uri = self._client.build_uri(id_or_uri)
-        complete_uri = logical_interconnect_uri + self.FIRMWARE_PATH
-        return self._client.get(complete_uri)
+        firmware_uri = self.__build_firmware_uri(id_or_uri)
+        return self._client.get(firmware_uri)
+
+    def install_firmware(self, firmware_information, id_or_uri):
+        """
+        Installs firmware to a logical interconnect. The three operations that are supported for the firmware
+        update are Stage (uploads firmware to the interconnect), Activate (installs firmware on the interconnect)
+        and Update (which does a Stage and Activate in a sequential manner).
+
+        Returns:
+            dict:
+        """
+        firmware_uri = self.__build_firmware_uri(id_or_uri)
+        return self._client.update(firmware_information, firmware_uri)
+
+    def __build_firmware_uri(self, id_or_uri):
+        return self._client.build_uri(id_or_uri) + self.FIRMWARE_PATH

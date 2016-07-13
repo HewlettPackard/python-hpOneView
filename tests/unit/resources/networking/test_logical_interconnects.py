@@ -293,3 +293,21 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
         self._logical_interconnect.get_firmware(logical_interconnect_id)
         mock_get.assert_called_once_with(expected_uri)
+
+    @mock.patch.object(ResourceClient, 'build_uri')
+    @mock.patch.object(ResourceClient, 'update')
+    def test_install_firmware(self, mock_update, mock_build_uri):
+        logical_interconnect_id = '3518be0e-17c1-4189-8f81-83f3724f6155'
+
+        fake_firmware = dict(
+            command="Update",
+            sppUri="/rest/firmware-drivers/Service_0Pack_0for_0ProLiant"
+        )
+
+        uri_logical_interconnect = "/rest/logical-interconnects/" + logical_interconnect_id
+        mock_build_uri.return_value = uri_logical_interconnect
+
+        expected_uri = uri_logical_interconnect + "/firmware"
+
+        self._logical_interconnect.install_firmware(fake_firmware, logical_interconnect_id)
+        mock_update.assert_called_once_with(fake_firmware, expected_uri)
