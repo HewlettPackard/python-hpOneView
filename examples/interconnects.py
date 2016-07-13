@@ -104,6 +104,14 @@ try:
 except HPOneViewException as e:
     print(e.msg['message'])
 
+# Get by name
+print("Get an interconnect by name")
+try:
+    interconnect = oneview_client.interconnects.get_by('name', interconnect["name"])[0]
+    pprint(interconnect)
+except HPOneViewException as e:
+    print(e.msg['message'])
+
 # Turn the power off
 print("Turn the power off and the UID light to 'Off' for interconnect " +
       "that matches the specified ID")

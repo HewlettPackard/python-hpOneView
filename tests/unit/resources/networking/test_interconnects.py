@@ -75,6 +75,14 @@ class InterconnectsTest(unittest.TestCase):
         self._interconnects.get(interconnect_id)
         mock_get.assert_called_once_with(interconnect_id)
 
+    @mock.patch.object(ResourceClient, 'get_by')
+    def test_get_interconnect_by_name(self, mock_get_by):
+        field = 'name'
+        value = ''
+
+        self._interconnects.get_by(field, value)
+        mock_get_by.assert_called_once_with(field, value)
+
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_all_called_once(self, mock_get_all):
         filter = 'name=TestName'

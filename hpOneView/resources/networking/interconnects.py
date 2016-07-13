@@ -134,6 +134,20 @@ class Interconnects(object):
         """
         return self._client.get(id_or_uri)
 
+    def get_by(self, field, value):
+        """
+        Gets all interconnects that matches the filter
+        The search is case insensitive
+
+        Args:
+            field: field name to filter
+            value: value to filter
+
+        Returns:
+            list: A list of interconnects
+        """
+        return self._client.get_by(field, value)
+
     def patch(self, id_or_uri, operation, path, value, timeout=-1):
         """
         Performs a specific patch operation for the given interconnect.
