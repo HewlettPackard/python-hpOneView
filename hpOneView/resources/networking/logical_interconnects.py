@@ -44,6 +44,8 @@ class LogicalInterconnects(object):
 
     URI = '/rest/logical-interconnects'
     FIRMWARE_PATH = "/firmware"
+    LOCATIONS_PATH = "/locations/interconnects"
+    locations_uri = "{uri}{locations}".format(uri=URI, locations=LOCATIONS_PATH)
 
     def __init__(self, con):
         self._connection = con
@@ -235,6 +237,44 @@ class LogicalInterconnects(object):
 
         """
         return self._client.get(telemetry_configuration_uri)
+
+    def create_interconnect(self, location_entries, timeout=-1):
+        """
+        Creates an interconnect at the given location.
+
+        WARN: It does not create the LOGICAL INTERCONNECT itself.
+        It will fail if no interconnect is already present on the specified position.
+
+        Args:
+            location_entries: dictionary with location entries
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns: Created interconnect.
+        """
+        return self._client.create(location_entries, uri=self.locations_uri, timeout=timeout)
+
+    def delete_interconnect(self, enclosure_uri, bay, timeout=-1):
+        """
+        Deletes an interconnect from a location.
+
+        WARN: This won't delete the LOGICAL INTERCONNECT itself, and may cause inconsistency between the enclosure
+        and Logical Interconnect Group.
+
+        Args:
+            enclosure_uri: URI of the Enclosure
+            bay: Bay
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
+                in OneView, just stop waiting its completion.
+
+        Returns: bool: indicating if the interconnect was successfully deleted.
+        """
+        uri = "{locations_uri}?location=Enclosure:{enclosure_uri},Bay:{bay}".format(locations_uri=self.locations_uri,
+                                                                                    enclosure_uri=enclosure_uri,
+                                                                                    bay=bay)
+        return self._client.delete(uri, timeout=timeout)
 
     def get_firmware(self, id_or_uri):
         """

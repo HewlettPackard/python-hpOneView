@@ -281,6 +281,25 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
         mock_get.assert_called_once_with(uri_telemetry_configuration)
 
+    @mock.patch.object(ResourceClient, 'create')
+    def test_create_interconnect_called_once(self, mock_create):
+        location_entries = {"locationEntries": [{"type": "Bay", "value": "1"}]}
+
+        self._logical_interconnect.create_interconnect(location_entries.copy(), timeout=-1)
+
+        mock_create.assert_called_once_with(location_entries,
+                                            uri="/rest/logical-interconnects/locations/interconnects",
+                                            timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_delete_interconnect_called_once(self, mock_delete):
+        self._logical_interconnect.delete_interconnect(enclosure_uri="/rest/enclosures/09SGH100X6J1",
+                                                       bay=3, timeout=-1)
+
+        expected_uri = "/rest/logical-interconnects/locations/interconnects" \
+                       "?location=Enclosure:/rest/enclosures/09SGH100X6J1,Bay:3"
+        mock_delete.assert_called_once_with(expected_uri, timeout=-1)
+
     @mock.patch.object(ResourceClient, 'build_uri')
     @mock.patch.object(ResourceClient, 'get')
     def test_get_firmware(self, mock_get, mock_build_uri):

@@ -51,14 +51,11 @@ pprint(firmware)
 print("Get all logical interconnects")
 logical_interconnects = oneview_client.logical_interconnects.get_all()
 for logical_interconnect in logical_interconnects:
-    print('  Name: {}').format(logical_interconnect['name'])
-
-logical_interconnect = logical_interconnects[0]
+    print('  Name: {name}').format(**logical_interconnect)
 
 # Get a logical interconnect by name
 logical_interconnect = oneview_client.logical_interconnects.get_by_name(logical_interconnect['name'])
-print("Found logical interconnect by name {}.\n URI: {}").format(logical_interconnect['name'],
-                                                                 logical_interconnect['uri'])
+print("Found logical interconnect by name {name}.\n URI: {uri}").format(**logical_interconnect)
 
 # Get by URI
 try:
@@ -74,9 +71,8 @@ ethernet_settings['macRefreshInterval'] = 10
 logical_interconnect = oneview_client.logical_interconnects.update_ethernet_settings(logical_interconnect['uri'],
                                                                                      ethernet_settings,
                                                                                      force=True)
-current_mac_refresh_interval = str(logical_interconnect['ethernetSettings']['macRefreshInterval'])
 print("Updated the ethernet settings")
-print("  with attribute 'macRefreshInterval' = {}").format(current_mac_refresh_interval)
+print("  with attribute 'macRefreshInterval' = {macRefreshInterval}").format(**logical_interconnect['ethernetSettings'])
 
 # Update the internal networks on the logical interconnect
 ethernet_network_options = {
@@ -97,7 +93,7 @@ else:
 logical_interconnect = oneview_client.logical_interconnects.update_internal_networks(logical_interconnect['uri'],
                                                                                      [ethernet_network['uri']])
 print("Updated internal networks on the logical interconnect")
-print("  with attribute 'internalNetworkUris' = {}").format(logical_interconnect['internalNetworkUris'])
+print("  with attribute 'internalNetworkUris' = {internalNetworkUris}").format(**logical_interconnect)
 
 # Get the internal VLAN IDs
 print("Get the internal VLAN IDs for the provisioned networks on the logical interconnect")
@@ -110,13 +106,10 @@ interconnect_settings = {
     'fcoeSettings': {}
 }
 interconnect_settings['ethernetSettings']['macRefreshInterval'] = 7
-
 logical_interconnect = oneview_client.logical_interconnects.update_settings(logical_interconnect['uri'],
                                                                             interconnect_settings)
-current_mac_refresh_interval = str(logical_interconnect['ethernetSettings']['macRefreshInterval'])
-
 print("Updated interconnect settings on the logical interconnect")
-print("  with attribute 'macRefreshInterval' = {}").format(current_mac_refresh_interval)
+print("  with attribute 'macRefreshInterval' = {macRefreshInterval}").format(**logical_interconnect['ethernetSettings'])
 pprint(logical_interconnect)
 
 # Get a collection of uplink ports from the member interconnects which are eligible for assignment to an analyzer port
@@ -139,4 +132,22 @@ print("  Done.")
 # Return the logical interconnect to a consistent state
 print("Return the logical interconnect to a consistent state")
 logical_interconnect = oneview_client.logical_interconnects.update_compliance(logical_interconnect['uri'])
-print("  Done. The current consistency state is {}.").format(logical_interconnect['consistencyStatus'])
+print("  Done. The current consistency state is {consistencyStatus}.").format(**logical_interconnect)
+
+# Create an interconnect at a specified location
+enclosure_uri = ""  # Set the enclosure URI to create/delete the interconnect at the given location
+bay = 1
+
+if enclosure_uri:
+    print("Create an interconnect at the specified location")
+    location = {
+        "locationEntries": [
+            {"type": "Enclosure", "value": enclosure_uri},
+            {"type": "Bay", "value": bay}
+        ]
+    }
+    interconnect = oneview_client.logical_interconnects.create_interconnect(location)
+    pprint(interconnect)
+
+    oneview_client.logical_interconnects.delete_interconnect(enclosure_uri, bay)
+    print("The interconnect was successfully deleted.")

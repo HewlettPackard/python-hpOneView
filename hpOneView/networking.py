@@ -167,7 +167,11 @@ class networking(object):
         return task
 
     def create_li(self, location_entries, blocking=True, verbose=False):
-        """" Creates an interconnect at the given location.
+        """"
+        This function is deprecated, use
+            OneViewClient(config).logical_interconnects.create_interconnect() instead.
+
+        Creates an interconnect at the given location.
 
         Args:
             location_entries:
@@ -185,7 +189,11 @@ class networking(object):
         return task
 
     def delete_li(self, location, blocking=True, verbose=False):
-        """ Deletes an interconnect from a location.
+        """
+        This function is deprecated, use
+            OneViewClient(config).logical_interconnects.delete_interconnect() instead.
+
+        Deletes an interconnect from a location.
 
         Args:
             location:
@@ -274,7 +282,11 @@ class networking(object):
         return task
 
     def get_li_firmware(self, id):
-        """ Gets the installed firmware for a logical interconnect."""
+        """
+        This function is deprecated, use
+            OneViewClient(config).logical_interconnects.get_firmware() instead.
+
+        Gets the installed firmware for a logical interconnect."""
         firmware_uri = uri['li'] + '/{id}/firmware'
         return self._con.get(firmware_uri.format(id=id))
 
