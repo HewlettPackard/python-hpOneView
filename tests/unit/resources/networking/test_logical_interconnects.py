@@ -31,6 +31,7 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class LogicalInterconnectsTest(unittest.TestCase):
+
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -279,3 +280,16 @@ class LogicalInterconnectsTest(unittest.TestCase):
         self._logical_interconnect.get_telemetry_configuration(uri_telemetry_configuration)
 
         mock_get.assert_called_once_with(uri_telemetry_configuration)
+
+    @mock.patch.object(ResourceClient, 'build_uri')
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_firmware(self, mock_get, mock_build_uri):
+        logical_interconnect_id = '3518be0e-17c1-4189-8f81-83f3724f6155'
+
+        uri_logical_interconnect = "/rest/logical-interconnects/" + logical_interconnect_id
+        mock_build_uri.return_value = uri_logical_interconnect
+
+        expected_uri = uri_logical_interconnect + "/firmware"
+
+        self._logical_interconnect.get_firmware(logical_interconnect_id)
+        mock_get.assert_called_once_with(expected_uri)
