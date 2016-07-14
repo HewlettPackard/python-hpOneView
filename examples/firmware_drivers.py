@@ -21,8 +21,8 @@
 # THE SOFTWARE.
 ###
 
-from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
+from hpOneView.oneview_client import OneViewClient
 
 config = {
     "ip": "<oneview_ip>",
@@ -32,31 +32,44 @@ config = {
     }
 }
 
-firmware_uri = "/rest/firmware-drivers/Service_0Pack_0for_0ProLiant"
+firmware_uri = "/rest/firmware-drivers/hp-firmware-hdd-a1b08f8a6b-HPGH-1_1_x86_64"
+firmware_file_name = "hp-firmware-hdd-a1b08f8a6b-HPGH-1.1.x86_64.rpm"
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
+#
+# # Get by Uri
+# print("Get firmware baseline resource by URI.")
+# founded_firmware = oneview_client.firmware_drivers.get(firmware_uri)
+# firmware_name = founded_firmware['name']
+# print("Found a firmware by uri: '{0}'.".format(firmware_name))
+#
+# # Find an firmware by name
+# print("\nGet firmware baseline resource by name.")
+# founded_firmware = oneview_client.firmware_drivers.get_by('name', firmware_name)[0]
+# print("Found a firmware by name: '{name}'.\n  uri = '{uri}'".format(**founded_firmware))
+#
+# # Find an firmware by file name
+# print("\nGet firmware baseline resource by file name.")
+# firmware = oneview_client.firmware_drivers.get_by_file_name(firmware_file_name)
+# print("Found a firmware by file name: '{0}'.\n  name = '{1}'"
+#       .format(firmware['fwComponents'][0]['fileName'], firmware['name']))
+#
+# # Get all firmwares
+# print("\nGets the list of firmware baseline resources managed by the appliance.")
+# all_firmwares = oneview_client.firmware_drivers.get_all()
+# for firmware in all_firmwares:
+#     print('  {name}'.format(**firmware))
+#
+# # Remove the firmware
+# print("\nDelete the firmware baseline resource")
+# oneview_client.firmware_drivers.delete(founded_firmware)
+# print("Firmware deleted successfully")
 
 
-# Get by Uri
-print("Get firmware baseline resource by URI.")
-founded_firmware = oneview_client.firmware_drivers.get(firmware_uri)
-firmware_name = founded_firmware['name']
-print("Found an firmware by uri: '{0}'.".format(firmware_name))
-
-# Find an firmware by name
-print("\nGet firmware baseline resource by name.")
-founded_firmware = oneview_client.firmware_drivers.get_by('name', firmware_name)[0]
-print("Found an firmware by name: '{0}'.\n  uri = '{1}'".format(founded_firmware['name'], founded_firmware['uri']))
-
+from pprint import pprint
 # Get all firmwares
 print("\nGets the list of firmware baseline resources managed by the appliance.")
 all_firmwares = oneview_client.firmware_drivers.get_all()
-for firmware in all_firmwares:
-    print('  {0}'.format(firmware['name']))
-
-# Remove the firmware
-print("\nDelete the firmware baseline resource")
-oneview_client.firmware_drivers.delete(founded_firmware)
-print("Firmware deleted successfully")
+pprint(all_firmwares)
