@@ -88,7 +88,28 @@ class FirmwareDrivers(object):
             list: list of firmware baseline resources
 
         """
-        return self._client.get_by(field, value)
+        firmwares = self.get_all()
+        matches = []
+        for item in firmwares:
+            if item.get(field) == value:
+                matches.append(item)
+        return matches
+
+    def get_by_file_name(self, file_name):
+        """
+        Gets a firmware resource with match the file name.
+
+        Args:
+            file_name: file name to filter (without path)
+        Returns:
+            dict: firmware baseline resource
+
+        """
+        firmwares = self.get_all()
+        for firmware in firmwares:
+            if firmware['fwComponents'][0]['fileName'] == file_name:
+                return firmware
+        return None
 
     def get(self, id_or_uri):
         """
