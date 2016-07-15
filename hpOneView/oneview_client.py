@@ -73,12 +73,12 @@ from hpOneView.resources.networking.logical_interconnect_groups import LogicalIn
 from hpOneView.resources.storage.storage_systems import StorageSystems
 from hpOneView.resources.storage.storage_pools import StoragePools
 from hpOneView.resources.settings.firmware_drivers import FirmwareDrivers
+from hpOneView.resources.settings.firmware_bundles import FirmwareBundles
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
 
 class OneViewClient(object):
-
     def __init__(self, config):
         self.__config = config
         self.__connection = connection(config["ip"])
@@ -112,6 +112,7 @@ class OneViewClient(object):
         self.__storage_systems = None
         self.__storage_pools = None
         self.__firmware_drivers = None
+        self.__firmware_bundles = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -325,3 +326,9 @@ class OneViewClient(object):
         if not self.__firmware_drivers:
             self.__firmware_drivers = FirmwareDrivers(self.__connection)
         return self.__firmware_drivers
+
+    @property
+    def firmware_bundles(self):
+        if not self.__firmware_bundles:
+            self.__firmware_bundles = FirmwareBundles(self.__connection)
+        return self.__firmware_bundles
