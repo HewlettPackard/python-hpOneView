@@ -99,7 +99,7 @@ class ResourceClient(object):
 
         return result
 
-    def delete(self, resource, force=False, timeout=-1):
+    def delete(self, resource, force=False, timeout=-1, custom_headers=None):
 
         if not resource:
             logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
@@ -120,7 +120,7 @@ class ResourceClient(object):
         logger.debug("Delete resource (uri = %s, resource = %s)" %
                      (self._uri, str(resource)))
 
-        task, body = self._connection.delete(uri)
+        task, body = self._connection.delete(uri, custom_headers=custom_headers)
 
         if not task:
             # 204 NO CONTENT
@@ -160,17 +160,17 @@ class ResourceClient(object):
         response = self._connection.get(uri)
         return self.__get_members(response)
 
-    def update_with_zero_body(self, uri, timeout=-1):
+    def update_with_zero_body(self, uri, timeout=-1, custom_headers=None):
         logger.debug('Update with zero length body (uri = %s)' % uri)
 
-        task, body = self._connection.put(uri, None)
+        task, body = self._connection.put(uri, None, custom_headers=custom_headers)
 
         if not task:
             return body
 
         return self._task_monitor.wait_for_task(task, timeout)
 
-    def update(self, resource, uri=None, force=False, timeout=-1):
+    def update(self, resource, uri=None, force=False, timeout=-1, custom_headers=None):
         if not resource:
             logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
             raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
@@ -184,14 +184,14 @@ class ResourceClient(object):
         if force:
             uri += '?force=True'
 
-        task, body = self._connection.put(uri, resource)
+        task, body = self._connection.put(uri, resource, custom_headers=custom_headers)
 
         if not task:
             return body
 
         return self._task_monitor.wait_for_task(task, timeout)
 
-    def create(self, resource, uri=None, timeout=-1):
+    def create(self, resource, uri=None, timeout=-1, custom_headers=None):
         if not resource:
             logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
             raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
@@ -202,14 +202,14 @@ class ResourceClient(object):
         logger.debug('Create (uri = %s, resource = %s)' %
                      (uri, str(resource)))
 
-        task, entity = self._connection.post(uri, resource)
+        task, entity = self._connection.post(uri, resource, custom_headers=custom_headers)
 
         if not task:
             return entity
 
         return self._task_monitor.wait_for_task(task, timeout)
 
-    def patch(self, id_or_uri, operation, path, value, timeout=-1):
+    def patch(self, id_or_uri, operation, path, value, timeout=-1, custom_headers=None):
         """
         Uses the PATCH to update a resource.
         Only one operation can be performed in each PATCH call.
@@ -230,7 +230,7 @@ class ResourceClient(object):
             uri, operation, path, value))
 
         patch_request = [{'op': operation, 'path': path, 'value': value}]
-        task, entity = self._connection.patch(uri, patch_request)
+        task, entity = self._connection.patch(uri, patch_request, custom_headers=custom_headers)
 
         if not task:
             return entity
