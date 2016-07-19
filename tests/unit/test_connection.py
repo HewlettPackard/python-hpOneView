@@ -64,6 +64,13 @@ class ConnectionTest(unittest.TestCase):
     def test_default_headers(self):
         self.assertEqual(self.default_headers, self.connection._headers)
 
+    def test_headers_with_api_version_300(self):
+        self.connection = connection(self.host, 300)
+
+        expected_headers = self.default_headers.copy()
+        expected_headers['X-API-Version'] = 300
+        self.assertEqual(expected_headers, self.connection._headers)
+
     @mock.patch.object(HTTPSConnection, 'request')
     @mock.patch.object(HTTPSConnection, 'getresponse')
     def test_post_should_do_rest_call_when_status_ok(self, mock_response, mock_request):

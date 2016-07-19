@@ -64,11 +64,11 @@ logger = logging.getLogger(__name__)
 
 class connection(object):
 
-    def __init__(self, applianceIp):
+    def __init__(self, applianceIp, api_version=200):
         self._session = None
         self._host = applianceIp
         self._cred = None
-        self._apiVersion = 200
+        self._apiVersion = api_version
         self._headers = {
             'X-API-Version': self._apiVersion,
             'Accept': 'application/json',

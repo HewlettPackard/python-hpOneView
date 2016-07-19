@@ -81,8 +81,7 @@ ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
 class OneViewClient(object):
     def __init__(self, config):
-        self.__config = config
-        self.__connection = connection(config["ip"])
+        self.__connection = connection(config["ip"], config.get('api_version', 200))
         self.__set_proxy(config)
         self.__connection.login(config["credentials"])
         self.__connections = None

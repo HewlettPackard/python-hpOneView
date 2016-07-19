@@ -42,6 +42,10 @@ from tests.test_utils import mock_builtin
 
 class OneViewClientTest(unittest.TestCase):
 
+    def __mock_file_open(self, json_config_content):
+        # Simulates a TextIOWrapper (file output)
+        return io.StringIO(json_config_content)
+
     @mock.patch.object(connection, 'login')
     def setUp(self, mock_login):
         super(OneViewClientTest, self).setUp()
@@ -73,7 +77,6 @@ class OneViewClientTest(unittest.TestCase):
     @mock.patch.object(connection, 'login')
     @mock.patch(mock_builtin('open'))
     def test_from_json_file(self, mock_open, mock_login):
-
         json_config_content = u"""{
           "ip": "172.16.102.59",
           "credentials": {
@@ -82,15 +85,44 @@ class OneViewClientTest(unittest.TestCase):
             "password": ""
           }
         }"""
-
-        # Simulates a TextIOWrapper (file output)
-        output = io.StringIO(json_config_content)
-        mock_open.return_value = output
-
+        mock_open.return_value = self.__mock_file_open(json_config_content)
         oneview_client = OneViewClient.from_json_file("config.json")
 
         self.assertIsInstance(oneview_client, OneViewClient)
         self.assertEqual("172.16.102.59", oneview_client.connection.get_host())
+
+    @mock.patch.object(connection, 'login')
+    @mock.patch(mock_builtin('open'))
+    def test_default_api_version(self, mock_open, mock_login):
+        json_config_content = u"""{
+          "ip": "172.16.102.59",
+          "credentials": {
+            "userName": "administrator",
+            "authLoginDomain": "",
+            "password": ""
+          }
+        }"""
+        mock_open.return_value = self.__mock_file_open(json_config_content)
+        oneview_client = OneViewClient.from_json_file("config.json")
+
+        self.assertEqual(200, oneview_client.connection._apiVersion)
+
+    @mock.patch.object(connection, 'login')
+    @mock.patch(mock_builtin('open'))
+    def test_configured_api_version(self, mock_open, mock_login):
+        json_config_content = u"""{
+          "ip": "172.16.102.59",
+          "api_version": 300,
+          "credentials": {
+            "userName": "administrator",
+            "authLoginDomain": "",
+            "password": ""
+          }
+        }"""
+        mock_open.return_value = self.__mock_file_open(json_config_content)
+        oneview_client = OneViewClient.from_json_file("config.json")
+
+        self.assertEqual(300, oneview_client.connection._apiVersion)
 
     def test_fc_networks_has_right_type(self):
         self.assertIsInstance(self._oneview.fc_networks, FcNetworks)
