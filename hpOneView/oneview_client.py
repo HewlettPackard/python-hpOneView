@@ -70,6 +70,7 @@ from hpOneView.resources.networking.logical_downlinks import LogicalDownlinks
 from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
 from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
+from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGroups
 from hpOneView.resources.storage.storage_systems import StorageSystems
 from hpOneView.resources.storage.storage_pools import StoragePools
 from hpOneView.resources.settings.firmware_drivers import FirmwareDrivers
@@ -108,6 +109,7 @@ class OneViewClient(object):
         self.__power_devices = None
         self.__logical_interconnects = None
         self.__logical_interconnect_groups = None
+        self.__logical_switch_groups = None
         self.__logical_downlinks = None
         self.__storage_systems = None
         self.__storage_pools = None
@@ -239,6 +241,13 @@ class OneViewClient(object):
         if not self.__switch_types:
             self.__switch_types = SwitchTypes(self.__connection)
         return self.__switch_types
+
+    @property
+    def logical_switch_groups(self):
+        if not self.__logical_switch_groups:
+            self.__logical_switch_groups = LogicalSwitchGroups(
+                self.__connection)
+        return self.__logical_switch_groups
 
     @property
     def tasks(self):

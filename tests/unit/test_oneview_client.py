@@ -35,10 +35,13 @@ from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
 from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
 from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
+from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGroups
+
 from tests.test_utils import mock_builtin
 
 
 class OneViewClientTest(unittest.TestCase):
+
     @mock.patch.object(connection, 'login')
     def setUp(self, mock_login):
         super(OneViewClientTest, self).setUp()
@@ -191,6 +194,16 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_logical_interconnect_groups(self):
         logical_interconnect_groups = self._oneview.logical_interconnect_groups
         self.assertEqual(logical_interconnect_groups, self._oneview.logical_interconnect_groups)
+
+    def test_logical_switch_groups_has_right_type(self):
+        self.assertIsInstance(self._oneview.logical_switch_groups, LogicalSwitchGroups)
+
+    def test_logical_switch_groups_has_value(self):
+        self.assertIsNotNone(self._oneview.logical_switch_groups)
+
+    def test_lazy_loading_logical_switch_groups(self):
+        logical_switch_groups = self._oneview.logical_switch_groups
+        self.assertEqual(logical_switch_groups, self._oneview.logical_switch_groups)
 
     def test_logical_interconnects_has_right_type(self):
         self.assertIsInstance(self._oneview.logical_interconnects, LogicalInterconnects)
