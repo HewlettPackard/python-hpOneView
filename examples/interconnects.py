@@ -34,7 +34,8 @@ config = {
     }
 }
 
-interconnect_id = "748d4699-62ff-454e-8ec8-773815c4aa2f"
+# To run this example you must define a logical interconnect id
+interconnect_id = ""
 
 port_d1 = {
     "type": "port",
@@ -104,10 +105,18 @@ try:
 except HPOneViewException as e:
     print(e.msg['message'])
 
+# Get by hostName
+print("Get an interconnect by hostName")
+try:
+    interconnect = oneview_client.interconnects.get_by('hostName', interconnect["hostName"])[0]
+    pprint(interconnect)
+except HPOneViewException as e:
+    print(e.msg['message'])
+
 # Get by name
 print("Get an interconnect by name")
 try:
-    interconnect = oneview_client.interconnects.get_by('name', interconnect["name"])[0]
+    interconnect = oneview_client.interconnects.get_by_name(interconnect["name"])
     pprint(interconnect)
 except HPOneViewException as e:
     print(e.msg['message'])
@@ -146,10 +155,10 @@ except HPOneViewException as e:
     print(e.msg['message'])
 
 # Get name servers
-print("Get name servers that matches ID 929f265b-30dc-44bd-97f7-0942d56e9939")
+print("Get the named servers for the interconnect that matches the specified ID")
 
 try:
-    interconnect_ns = oneview_client.interconnects.get_name_servers('929f265b-30dc-44bd-97f7-0942d56e9939')
+    interconnect_ns = oneview_client.interconnects.get_name_servers(interconnect_id)
     pprint(interconnect_ns)
 except HPOneViewException as e:
     print(e.msg['message'])
