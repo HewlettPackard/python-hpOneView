@@ -48,7 +48,7 @@ oneview_client = OneViewClient(config)
 
 # Create a FC Network
 fc_network = oneview_client.fc_networks.create(options)
-print("Created fc-network '%s' sucessfully.\n  uri = '%s'" % (fc_network['name'], fc_network['uri']))
+print("Created fc-network '%s' successfully.\n  uri = '%s'" % (fc_network['name'], fc_network['uri']))
 
 # Find recently created network by name
 fc_network = oneview_client.fc_networks.get_by('name', 'OneViewSDK Test FC Network')[0]
@@ -57,7 +57,7 @@ print("Found fc-network by name: '%s'.\n  uri = '%s'" % (fc_network['name'], fc_
 # Update autoLoginRedistribution from recently created network
 fc_network['autoLoginRedistribution'] = False
 fc_network = oneview_client.fc_networks.update(fc_network)
-print("Updated fc-network '%s' sucessfully.\n  uri = '%s'" % (fc_network['name'], fc_network['uri']))
+print("Updated fc-network '%s' successfully.\n  uri = '%s'" % (fc_network['name'], fc_network['uri']))
 print("  with attribute {'autoLoginRedistribution': %s}" % fc_network['autoLoginRedistribution'])
 
 # Get all, with defaults
@@ -95,4 +95,4 @@ pprint(fc_nets_by_uri)
 
 # Delete the created network
 oneview_client.fc_networks.delete(fc_network)
-print("Sucessfully deleted fc-network")
+print("Successfully deleted fc-network")
