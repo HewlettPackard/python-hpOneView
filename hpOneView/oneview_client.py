@@ -74,6 +74,7 @@ from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGr
 from hpOneView.resources.storage.storage_systems import StorageSystems
 from hpOneView.resources.storage.storage_pools import StoragePools
 from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTemplates
+from hpOneView.resources.storage.storage_volume_attachments import StorageVolumeAttachments
 from hpOneView.resources.settings.firmware_drivers import FirmwareDrivers
 from hpOneView.resources.settings.firmware_bundles import FirmwareBundles
 
@@ -115,6 +116,7 @@ class OneViewClient(object):
         self.__storage_systems = None
         self.__storage_pools = None
         self.__storage_volume_templates = None
+        self.__storage_volume_attachments = None
         self.__firmware_drivers = None
         self.__firmware_bundles = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
@@ -335,9 +337,14 @@ class OneViewClient(object):
     @property
     def storage_volume_templates(self):
         if not self.__storage_volume_templates:
-            self.__storage_volume_templates = StorageVolumeTemplates(
-                self.__connection)
+            self.__storage_volume_templates = StorageVolumeTemplates(self.__connection)
         return self.__storage_volume_templates
+
+    @property
+    def storage_volume_attachments(self):
+        if not self.__storage_volume_attachments:
+            self.__storage_volume_attachments = StorageVolumeAttachments(self.__connection)
+        return self.__storage_volume_attachments
 
     @property
     def firmware_drivers(self):
