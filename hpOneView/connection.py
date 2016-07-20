@@ -63,6 +63,7 @@ logger = logging.getLogger(__name__)
 
 
 class connection(object):
+
     def __init__(self, applianceIp):
         self._session = None
         self._host = applianceIp
@@ -117,12 +118,16 @@ class connection(object):
     def make_url(self, path):
         return 'https://%s%s' % (self._host, path)
 
-    def do_http(self, method, path, body):
+    def do_http(self, method, path, body, custom_headers=None):
+        http_headers = self._headers.copy()
+        if custom_headers:
+            http_headers.update(custom_headers)
+
         bConnected = False
         while bConnected is False:
             try:
                 conn = self.get_connection()
-                conn.request(method, path, body, self._headers)
+                conn.request(method, path, body, http_headers)
                 resp = conn.getresponse()
                 try:
                     tempbytes = resp.read()
@@ -199,15 +204,6 @@ class connection(object):
         fout.close()
         fin.close()
         return content_type
-
-    def patch(self, uri, body):
-        resp, body = self.do_http('PATCH', uri, json.dumps(body))
-        if resp.status >= 400:
-            raise HPOneViewException(body)
-        elif resp.status == 202:
-            task = self.get(resp.getheader('Location'))
-            return task, body
-        return None, body
 
     def post_multipart(self, uri, fields, files, baseName, verbose=False):
         content_type = self.encode_multipart_formdata(fields, files, baseName,
@@ -286,23 +282,17 @@ class connection(object):
             members = self.getPrevPage()
         return members
 
-    def put(self, uri, body):
-        resp, body = self.do_http('PUT', uri, json.dumps(body))
-        if resp.status >= 400:
-            raise HPOneViewException(body)
-        elif resp.status == 202:
-            task = self.get(resp.getheader('Location'))
-            return task, body
-        return None, body
+    def delete(self, uri, custom_headers=None):
+        return self.__do_rest_call('DELETE', uri, '', custom_headers=custom_headers)
 
-    def post(self, uri, body):
-        resp, body = self.do_http('POST', uri, json.dumps(body))
-        if resp.status >= 400:
-            raise HPOneViewException('response: %s\n%s' % (resp.status, body))
-        elif resp.status == 202:
-            task = self.get(resp.getheader('Location'))
-            return task, body
-        return None, body
+    def put(self, uri, body, custom_headers=None):
+        return self.__do_rest_call('PUT', uri, body, custom_headers=custom_headers)
+
+    def post(self, uri, body, custom_headers=None):
+        return self.__do_rest_call('POST', uri, body, custom_headers=custom_headers)
+
+    def patch(self, uri, body, custom_headers=None):
+        return self.__do_rest_call('PATCH', uri, body, custom_headers=custom_headers)
 
     def get_entities_byrange(self, uri, field, xmin, xmax, count=-1):
         new_uri = uri + '?filter="\'' + field + '\'%20>%20\'' + xmin \
@@ -353,9 +343,12 @@ class connection(object):
                 raise e
         return entity
 
-    def delete(self, uri):
-        resp, body = self.do_http('DELETE', uri, '')
-        if resp.status >= 400 and resp.status != 404:
+    def __do_rest_call(self, http_method, uri, body, custom_headers):
+        resp, body = self.do_http(method=http_method,
+                                  path=uri,
+                                  body=json.dumps(body),
+                                  custom_headers=custom_headers)
+        if resp.status >= 400:
             raise HPOneViewException(body)
         elif resp.status == 202:
             task = self.get(resp.getheader('Location'))

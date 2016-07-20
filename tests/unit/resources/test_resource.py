@@ -21,9 +21,8 @@
 # THE SOFTWARE.
 ###
 
-import unittest
-
 import mock
+import unittest
 
 from hpOneView.connection import connection
 from hpOneView.exceptions import HPOneViewUnknownType
@@ -47,6 +46,9 @@ class ResourceTest(unittest.TestCase):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
         self.resource_client = ResourceClient(self.connection, self.URI)
+        self.task = {"task": "task"}
+        self.response_body = {"body": "body"}
+        self.custom_headers = {'Accept-Language': 'en_US'}
 
     @mock.patch.object(connection, 'get')
     def test_get_all_called_once(self, mock_get):
@@ -60,14 +62,13 @@ class ResourceTest(unittest.TestCase):
         result = self.resource_client.get_all(
             1, 500, filter, query, sort, view, 'name,owner,modified')
 
-        uri = self.URI
-        uri += '?start=1' \
-               '&count=500' \
-               '&filter=%27name%27%3D%27OneViewSDK%20%22Test%20FC%20Network%27' \
-               '&query=name%20NE%20%27WrongName%27' \
-               '&sort=name%3Aascending' \
-               '&view=%22%7Bview-name%7D%22' \
-               '&fields=name%2Cowner%2Cmodified'
+        uri = '{resource_uri}?start=1' \
+              '&count=500' \
+              '&filter=%27name%27%3D%27OneViewSDK%20%22Test%20FC%20Network%27' \
+              '&query=name%20NE%20%27WrongName%27' \
+              '&sort=name%3Aascending' \
+              '&view=%22%7Bview-name%7D%22' \
+              '&fields=name%2Cowner%2Cmodified'.format(resource_uri=self.URI)
 
         self.assertEqual("members", result)
         mock_get.assert_called_once_with(uri)
@@ -75,22 +76,30 @@ class ResourceTest(unittest.TestCase):
     @mock.patch.object(connection, 'get')
     def test_get_all_with_defaults(self, mock_get):
         self.resource_client.get_all()
-        uri = self.URI + "?start=0&count=-1"
+        uri = "{resource_uri}?start=0&count=-1".format(resource_uri=self.URI)
+
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(connection, 'delete')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
     def test_delete_by_id_called_once(self, mock_wait4task, mock_delete):
-        task = {"task": "task"}
-        body = {"body": "body"}
-
-        mock_delete.return_value = task, body
-        mock_wait4task.return_value = task
+        mock_delete.return_value = self.task, self.response_body
+        mock_wait4task.return_value = self.task
 
         delete_task = self.resource_client.delete('1', force=True, timeout=-1)
 
-        self.assertEqual(task, delete_task)
-        mock_delete.assert_called_once_with(self.URI + "/1?force=True")
+        self.assertEqual(self.task, delete_task)
+        mock_delete.assert_called_once_with(self.URI + "/1?force=True", custom_headers=None)
+
+    @mock.patch.object(connection, 'delete')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    def test_delete_with_custom_headers(self, mock_wait4task, mock_delete):
+        mock_delete.return_value = self.task, self.response_body
+        mock_wait4task.return_value = self.task
+
+        self.resource_client.delete('1', custom_headers=self.custom_headers)
+
+        mock_delete.assert_called_once_with(mock.ANY, custom_headers={'Accept-Language': 'en_US'})
 
     def test_delete_dict_invalid_uri(self):
         dict_to_delete = {"task": "task",
@@ -151,23 +160,29 @@ class ResourceTest(unittest.TestCase):
     @mock.patch.object(connection, 'put')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
     def test_update_with_zero_body_called_once(self, mock_wait4task, mock_update):
-        task = {"task": "task"}
-
-        mock_update.return_value = task, task
-        mock_wait4task.return_value = task
+        mock_update.return_value = self.task, self.task
+        mock_wait4task.return_value = self.task
         self.resource_client.update_with_zero_body('/rest/enclosures/09USE133E5H4/configuration',
                                                    timeout=-1)
 
         mock_update.assert_called_once_with(
-            "/rest/enclosures/09USE133E5H4/configuration", None)
+            "/rest/enclosures/09USE133E5H4/configuration", None, custom_headers=None)
+
+    @mock.patch.object(connection, 'put')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    def test_update_with_zero_body_and_custom_headers(self, mock_wait4task, mock_update):
+        mock_update.return_value = self.task, self.task
+        mock_wait4task.return_value = self.task
+        self.resource_client.update_with_zero_body('1', custom_headers=self.custom_headers)
+
+        mock_update.assert_called_once_with(mock.ANY, mock.ANY, custom_headers={'Accept-Language': 'en_US'})
 
     @mock.patch.object(connection, 'put')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
     def test_update_with_zero_body_return_entity(self, mock_wait4task, mock_put):
         response_body = {"resource_name": "name"}
-        task = {"task": "task"}
 
-        mock_put.return_value = task, task
+        mock_put.return_value = self.task, self.task
         mock_wait4task.return_value = response_body
 
         result = self.resource_client.update_with_zero_body(
@@ -177,59 +192,57 @@ class ResourceTest(unittest.TestCase):
 
     @mock.patch.object(connection, 'put')
     def test_update_with_zero_body_without_task(self, mock_put):
-
-        response_body = {"resource_name": "name"}
-        task = None
-
-        mock_put.return_value = task, response_body
+        mock_put.return_value = None, self.response_body
 
         result = self.resource_client.update_with_zero_body(
             '/rest/enclosures/09USE133E5H4/configuration', timeout=-1)
 
-        self.assertEqual(result, response_body)
+        self.assertEqual(result, self.response_body)
 
     @mock.patch.object(connection, 'put')
     def test_update_with_uri_called_once(self, mock_put):
         dict_to_update = {"name": "test"}
         uri = "/rest/resource/test"
-        task = None
-        body = {"body": "body"}
 
-        mock_put.return_value = task, body
+        mock_put.return_value = None, self.response_body
 
         response = self.resource_client.update(dict_to_update, uri=uri)
 
-        self.assertEqual(body, response)
-        mock_put.assert_called_once_with(uri, dict_to_update)
+        self.assertEqual(self.response_body, response)
+        mock_put.assert_called_once_with(uri, dict_to_update, custom_headers=None)
+
+    @mock.patch.object(connection, 'put')
+    def test_update_with_custom_headers(self, mock_put):
+        dict_to_update = {"name": "test"}
+        mock_put.return_value = None, self.response_body
+
+        self.resource_client.update(dict_to_update, uri="/path", custom_headers=self.custom_headers)
+
+        mock_put.assert_called_once_with(mock.ANY, mock.ANY, custom_headers={'Accept-Language': 'en_US'})
 
     @mock.patch.object(connection, 'put')
     def test_update_with_force(self, mock_put):
         dict_to_update = {"name": "test"}
         uri = "/rest/resource/test"
-        task = None
-        body = {"body": "body"}
-
-        mock_put.return_value = task, body
+        mock_put.return_value = None, self.response_body
 
         self.resource_client.update(dict_to_update, uri=uri, force=True)
 
         expected_uri = "/rest/resource/test?force=True"
-        mock_put.assert_called_once_with(expected_uri, dict_to_update)
+        mock_put.assert_called_once_with(expected_uri, dict_to_update, custom_headers=None)
 
     @mock.patch.object(connection, 'put')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
     def test_update_uri(self, mock_wait4task, mock_update):
         dict_to_update = {"resource_data": "resource_data",
                           "uri": "a_uri"}
-        task = {"task": "task"}
-        body = {"body": "body"}
 
-        mock_update.return_value = task, body
-        mock_wait4task.return_value = task
+        mock_update.return_value = self.task, self.response_body
+        mock_wait4task.return_value = self.task
         update_task = self.resource_client.update(dict_to_update, False)
 
-        self.assertEqual(task, update_task)
-        mock_update.assert_called_once_with("a_uri", dict_to_update)
+        self.assertEqual(self.task, update_task)
+        mock_update.assert_called_once_with("a_uri", dict_to_update, custom_headers=None)
 
     @mock.patch.object(connection, 'put')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
@@ -238,9 +251,7 @@ class ResourceTest(unittest.TestCase):
             "resource_name": "a name",
             "uri": "a_uri",
         }
-        task = {"task": "task"}
-
-        mock_put.return_value = task, {}
+        mock_put.return_value = self.task, {}
         mock_wait4task.return_value = dict_to_update
 
         result = self.resource_client.update(dict_to_update, timeout=-1)
@@ -249,14 +260,21 @@ class ResourceTest(unittest.TestCase):
 
     @mock.patch.object(connection, 'post')
     def test_create_uri(self, mock_post):
-        dict_to_create = {
-            "resource_name": "a name",
-        }
+        dict_to_create = {"resource_name": "a name"}
         mock_post.return_value = {}, {}
 
         self.resource_client.create(dict_to_create, timeout=-1)
 
-        mock_post.assert_called_once_with(self.URI, dict_to_create)
+        mock_post.assert_called_once_with(self.URI, dict_to_create, custom_headers=None)
+
+    @mock.patch.object(connection, 'post')
+    def test_create_with_custom_headers(self, mock_post):
+        dict_to_create = {"resource_name": "a name"}
+        mock_post.return_value = {}, {}
+
+        self.resource_client.create(dict_to_create, custom_headers=self.custom_headers)
+
+        mock_post.assert_called_once_with(mock.ANY, mock.ANY, custom_headers={'Accept-Language': 'en_US'})
 
     @mock.patch.object(connection, 'post')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
@@ -268,9 +286,8 @@ class ResourceTest(unittest.TestCase):
             "resource_id": "123",
             "resource_name": "a name",
         }
-        task = {"task": "task"}
 
-        mock_post.return_value = task, {}
+        mock_post.return_value = self.task, {}
         mock_wait4task.return_value = created_resource
 
         result = self.resource_client.create(dict_to_create, -1)
@@ -280,9 +297,8 @@ class ResourceTest(unittest.TestCase):
     @mock.patch.object(connection, 'post')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
     def test_wait_for_activity_on_create(self, mock_wait4task, mock_post):
-        task = {"task": "task"}
-        mock_post.return_value = task, {}
-        mock_wait4task.return_value = task
+        mock_post.return_value = self.task, {}
+        mock_wait4task.return_value = self.task
 
         self.resource_client.create({"test": "test"}, timeout=60)
 
@@ -301,7 +317,7 @@ class ResourceTest(unittest.TestCase):
             '123a53cz', 'replace', '/name', 'new_name', 70)
 
         mock_patch.assert_called_once_with(
-            '/rest/testuri/123a53cz', request_body)
+            '/rest/testuri/123a53cz', request_body, custom_headers=None)
 
     @mock.patch.object(connection, 'patch')
     def test_patch_request_when_uri_is_provided(self, mock_patch):
@@ -316,14 +332,22 @@ class ResourceTest(unittest.TestCase):
             '/rest/testuri/123a53cz', 'replace', '/name', 'new_name', 60)
 
         mock_patch.assert_called_once_with(
-            '/rest/testuri/123a53cz', request_body)
+            '/rest/testuri/123a53cz', request_body, custom_headers=None)
+
+    @mock.patch.object(connection, 'patch')
+    def test_patch_with_custom_headers(self, mock_patch):
+        mock_patch.return_value = {}, {}
+
+        self.resource_client.patch('/rest/testuri/123', 'operation', '/field', 'value',
+                                   custom_headers=self.custom_headers)
+
+        mock_patch.assert_called_once_with(mock.ANY, mock.ANY, custom_headers={'Accept-Language': 'en_US'})
 
     @mock.patch.object(connection, 'patch')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
     def test_patch_return_entity(self, mock_wait4task, mock_patch):
-        task = {"task": "task"}
         entity = {"resource_id": "123a53cz"}
-        mock_patch.return_value = task, task
+        mock_patch.return_value = self.task, self.task
         mock_wait4task.return_value = entity
 
         result = self.resource_client.patch(
@@ -334,9 +358,8 @@ class ResourceTest(unittest.TestCase):
     @mock.patch.object(connection, 'patch')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
     def test_wait_for_activity_on_patch(self, mock_wait4task, mock_patch):
-        task = {"task": "task"}
         entity = {"resource_id": "123a53cz"}
-        mock_patch.return_value = task, task
+        mock_patch.return_value = self.task, self.task
         mock_wait4task.return_value = entity
 
         self.resource_client.patch(
@@ -361,7 +384,7 @@ class ResourceTest(unittest.TestCase):
         delete_result = self.resource_client.delete(resource)
 
         self.assertTrue(delete_result)
-        mock_delete.assert_called_once_with("uri")
+        mock_delete.assert_called_once_with("uri", custom_headers=None)
 
     def test_delete_with_empty_dict(self):
         try:
