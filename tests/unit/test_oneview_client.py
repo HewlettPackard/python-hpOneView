@@ -36,6 +36,7 @@ from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
 from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
 from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGroups
+from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTemplates
 
 from tests.test_utils import mock_builtin
 
@@ -214,3 +215,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_logical_interconnects(self):
         logical_interconnects = self._oneview.logical_interconnects
         self.assertEqual(logical_interconnects, self._oneview.logical_interconnects)
+
+    def test_storage_volume_templates_has_right_type(self):
+        self.assertIsInstance(self._oneview.storage_volume_templates, StorageVolumeTemplates)
+
+    def test_storage_volume_templates_has_value(self):
+        self.assertIsNotNone(self._oneview.storage_volume_templates)
+
+    def test_lazy_loading_storage_volume_templates(self):
+        storage_volume_templates = self._oneview.storage_volume_templates
+        self.assertEqual(storage_volume_templates, self._oneview.storage_volume_templates)
