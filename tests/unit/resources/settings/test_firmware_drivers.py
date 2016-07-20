@@ -86,32 +86,6 @@ class FirmwareDriversTest(TestCase):
         result = self.resource.get_by(property_name, firmware_name)
         self.assertEqual(0, len(result))
 
-    @mock.patch.object(ResourceClient, 'get_all')
-    def test_get_by_file_name(self, mock_get_all):
-        file_name = 'hp-firmware-hdd-a1b08f8a6b-HPGH-1.1.x86_64.rpm'
-
-        expected_result = ALL_FIRMWARE_DRIVERS[0]
-        mock_get_all.return_value = ALL_FIRMWARE_DRIVERS
-
-        result = self.resource.get_by_file_name(file_name)
-        self.assertEqual(expected_result, result)
-
-    @mock.patch.object(ResourceClient, 'get_all')
-    def test_get_by_file_name_without_match(self, mock_get_all):
-        file_name = 'hp-firmware-hdd.rpm'
-        mock_get_all.return_value = ALL_FIRMWARE_DRIVERS
-
-        result = self.resource.get_by_file_name(file_name)
-        self.assertIsNone(result)
-
-    @mock.patch.object(ResourceClient, 'get_all')
-    def test_get_by_file_name_when_there_are_not_any_firmware(self, mock_get_all):
-        file_name = 'hp-firmware-hdd-a1b08f8a6b-HPGH-1.1.x86.rpm'
-        mock_get_all.return_value = []
-
-        result = self.resource.get_by_file_name(file_name)
-        self.assertIsNone(result)
-
     @mock.patch.object(ResourceClient, 'get')
     def test_get_by_id(self, mock_get):
         firmware_id = "SPP2012080.2012_0713.57"

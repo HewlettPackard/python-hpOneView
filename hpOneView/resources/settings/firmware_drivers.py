@@ -21,10 +21,11 @@
 # THE SOFTWARE.
 ###
 
+from __future__ import absolute_import
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
-from __future__ import absolute_import
+
 from future import standard_library
 
 standard_library.install_aliases()
@@ -40,7 +41,6 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class FirmwareDrivers(object):
-
     URI = '/rest/firmware-drivers'
 
     def __init__(self, con):
@@ -94,22 +94,6 @@ class FirmwareDrivers(object):
             if item.get(field) == value:
                 matches.append(item)
         return matches
-
-    def get_by_file_name(self, file_name):
-        """
-        Gets a firmware resource with match the file name.
-
-        Args:
-            file_name: file name to filter (without path)
-        Returns:
-            dict: firmware baseline resource
-
-        """
-        firmwares = self.get_all()
-        for firmware in firmwares:
-            if firmware['fwComponents'][0]['fileName'] == file_name:
-                return firmware
-        return None
 
     def get(self, id_or_uri):
         """
