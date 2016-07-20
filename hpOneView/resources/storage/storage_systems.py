@@ -199,3 +199,30 @@ class StorageSystems(object):
 
         """
         return self._client.get_by(field, value)
+
+    def get_by_name(self, name):
+        """
+        Retrieve a resource by his name
+        Args:
+            name: resource name
+
+        Returns: dict
+        """
+        return self._client.get_by_name(name=name)
+
+    def get_by_ip_hostname(self, ip_hostname):
+        """
+        Retrieve a storage system by his IP
+        Args:
+            ip_hostname: storage system IP or hostname
+
+        Returns: dict
+        """
+        resources = self._client.get_all()
+
+        resources_filtered = [x for x in resources if x['credentials']['ip_hostname'] == ip_hostname]
+
+        if resources_filtered:
+            return resources_filtered[0]
+        else:
+            return None
