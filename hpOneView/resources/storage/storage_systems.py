@@ -202,7 +202,7 @@ class StorageSystems(object):
 
     def get_by_name(self, name):
         """
-        Retrieve a resource by his name
+        Retrieve a resource by its name
         Args:
             name: resource name
 
@@ -212,7 +212,7 @@ class StorageSystems(object):
 
     def get_by_ip_hostname(self, ip_hostname):
         """
-        Retrieve a storage system by his IP
+        Retrieve a storage system by its IP
         Args:
             ip_hostname: storage system IP or hostname
 

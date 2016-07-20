@@ -205,3 +205,36 @@ class StorageSystemsTest(unittest.TestCase):
         self._storage_systems.get_by_name("test name")
 
         mock_get_by.assert_called_once_with(name="test name")
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_by_ip_hostname_find_value(self, get_all):
+        get_all.return_value = [
+            {"credentials": {
+                "ip_hostname": "10.0.0.0",
+                "username": "username"}},
+            {"credentials": {
+                "ip_hostname": "20.0.0.0",
+                "username": "username"}},
+        ]
+
+        result = self._storage_systems.get_by_ip_hostname("20.0.0.0")
+        get_all.assert_called_once()
+        self.assertEqual(
+            {"credentials": {
+                "ip_hostname": "20.0.0.0",
+                "username": "username"}}, result)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_by_ip_hostname_value_not_found(self, get_all):
+        get_all.return_value = [
+            {"credentials": {
+                "ip_hostname": "10.0.0.0",
+                "username": "username"}},
+            {"credentials": {
+                "ip_hostname": "20.0.0.0",
+                "username": "username"}},
+        ]
+
+        result = self._storage_systems.get_by_ip_hostname("30.0.0.0")
+        get_all.assert_called_once()
+        self.assertIsNone(result)
