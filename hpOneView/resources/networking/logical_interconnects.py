@@ -45,6 +45,7 @@ class LogicalInterconnects(object):
     URI = '/rest/logical-interconnects'
     FIRMWARE_PATH = "/firmware"
     LOCATIONS_PATH = "/locations/interconnects"
+    FORWARDING_INFORMATION_PATH = "/forwarding-information-base"
     locations_uri = "{uri}{locations}".format(uri=URI, locations=LOCATIONS_PATH)
 
     def __init__(self, con):
@@ -300,6 +301,42 @@ class LogicalInterconnects(object):
         """
         firmware_uri = self.__build_firmware_uri(id_or_uri)
         return self._client.update(firmware_information, firmware_uri)
+
+    def get_forwarding_information_base(self, id_or_uri, filter=''):
+        """
+        Gets the forwarding information base data for a logical interconnect. Maximum of 100 entries is returned.
+        Optional filtering criteria may be specified.
+
+        Args:
+            id_or_uri:
+                Could be either the logical interconnect id or the logical interconnect uri.
+            filter:
+                Filtering criteria may be specified using supported attributes: interconnectUri, macAddress,
+                internalVlan, externalVlan, and supported relation = (Equals). macAddress is 12 hexadecimal digits with
+                a colon between each pair of digits.(upper or lower case).
+                The default is no filter - all resources are returned.
+
+        Returns:
+            list: A set of interconnect MAC address entries.
+        """
+        uri = self._client.build_uri(id_or_uri) + self.FORWARDING_INFORMATION_PATH
+        return self._client.get_collection(uri, filter=filter)
+
+    def create_forwarding_information_base(self, id_or_uri, timeout=-1):
+        """
+        Generates the forwarding information base dump file for a logical interconnect.
+
+        Args:
+            id_or_uri:
+                Could be either the logical interconnect id or the logical interconnect uri.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+                OneView, just stops waiting for its completion.
+
+        Returns: Interconnect Forwarding Information Base DataInfo
+        """
+        uri = self._client.build_uri(id_or_uri) + self.FORWARDING_INFORMATION_PATH
+        return self._client.create_with_zero_body(uri=uri, timeout=timeout)
 
     def __build_firmware_uri(self, id_or_uri):
         return self._client.build_uri(id_or_uri) + self.FIRMWARE_PATH

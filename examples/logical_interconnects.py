@@ -40,6 +40,9 @@ logical_interconnect_id = ""
 # To install the firmware driver you must define the firmware_driver_uri
 firmware_driver_uri = ""
 
+# An Enclosure URI must be set to create/delete an interconnect at a given location
+enclosure_uri = ""
+
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
@@ -64,6 +67,8 @@ print("Get all logical interconnects")
 logical_interconnects = oneview_client.logical_interconnects.get_all()
 for logical_interconnect in logical_interconnects:
     print('  Name: {name}').format(**logical_interconnect)
+
+logical_interconnect = logical_interconnects[0]
 
 # Get a logical interconnect by name
 logical_interconnect = oneview_client.logical_interconnects.get_by_name(logical_interconnect['name'])
@@ -147,11 +152,9 @@ logical_interconnect = oneview_client.logical_interconnects.update_compliance(lo
 print("  Done. The current consistency state is {consistencyStatus}.").format(**logical_interconnect)
 
 # Create an interconnect at a specified location
-enclosure_uri = ""  # Set the enclosure URI to create/delete the interconnect at the given location
-bay = 1
-
 if enclosure_uri:
     print("Create an interconnect at the specified location")
+    bay = 1
     location = {
         "locationEntries": [
             {"type": "Enclosure", "value": enclosure_uri},
@@ -163,3 +166,13 @@ if enclosure_uri:
 
     oneview_client.logical_interconnects.delete_interconnect(enclosure_uri, bay)
     print("The interconnect was successfully deleted.")
+
+# Generate the forwarding information base dump file for the logical interconnect
+print("Generate the forwarding information base dump file for the logical interconnect")
+fwd_info_datainfo = oneview_client.logical_interconnects.create_forwarding_information_base(logical_interconnect['uri'])
+pprint(fwd_info_datainfo)
+
+# Get the forwarding information base data for the logical interconnect
+print("Get the forwarding information base data for the logical interconnect")
+fwd_information = oneview_client.logical_interconnects.get_forwarding_information_base(logical_interconnect['uri'])
+pprint(fwd_information)

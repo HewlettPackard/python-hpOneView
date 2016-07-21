@@ -86,10 +86,10 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'update_with_zero_body')
     def test_update_compliance_by_uri(self, mock_update_with_zero_body):
-        uri_logical_interconnect = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/compliance'
 
-        self._logical_interconnect.update_compliance(uri_logical_interconnect)
+        self._logical_interconnect.update_compliance(logical_interconnect_uri)
 
         mock_update_with_zero_body.assert_called_once_with(uri_rest_call, timeout=-1)
 
@@ -105,12 +105,12 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_ethernet_settings_by_uri(self, mock_update):
-        uri_logical_interconnect = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/ethernetSettings'
         configuration = {"enableNetworkLoopProtection": True}
         configuration_rest_call = configuration.copy()
 
-        self._logical_interconnect.update_ethernet_settings(uri_logical_interconnect, configuration)
+        self._logical_interconnect.update_ethernet_settings(logical_interconnect_uri, configuration)
 
         mock_update.assert_called_once_with(configuration_rest_call, uri=uri_rest_call, force=False, timeout=-1)
 
@@ -135,11 +135,11 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_internal_networks_by_uri(self, mock_update):
-        uri_logical_interconnect = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/internalNetworks'
         network_uri_list = ['/rest/ethernet-networks/123s4s', '/rest/ethernet-networks/335d']
 
-        self._logical_interconnect.update_internal_networks(uri_logical_interconnect, network_uri_list)
+        self._logical_interconnect.update_internal_networks(logical_interconnect_uri, network_uri_list)
 
         mock_update.assert_called_once_with(network_uri_list, uri=uri_rest_call, force=False, timeout=-1)
 
@@ -161,10 +161,10 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'get_collection')
     def test_get_internal_vlans_by_uri(self, mock_get_collection):
-        uri_logical_interconnect = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/internalVlans'
 
-        self._logical_interconnect.get_internal_vlans(uri_logical_interconnect)
+        self._logical_interconnect.get_internal_vlans(logical_interconnect_uri)
 
         mock_get_collection.assert_called_once_with(uri_rest_call)
 
@@ -179,7 +179,7 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_settings_by_uri(self, mock_update):
-        uri_logical_interconnect = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/settings'
         settings = {
             "type": "type",
@@ -190,7 +190,7 @@ class LogicalInterconnectsTest(unittest.TestCase):
         }
         settings_rest_call = settings.copy()
 
-        self._logical_interconnect.update_settings(uri_logical_interconnect, settings)
+        self._logical_interconnect.update_settings(logical_interconnect_uri, settings)
 
         mock_update.assert_called_once_with(settings_rest_call, uri=uri_rest_call, force=False, timeout=-1)
 
@@ -237,10 +237,10 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'update_with_zero_body')
     def test_update_configuration_by_uri(self, mock_update_with_zero_body):
-        uri_logical_interconnect = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/configuration'
 
-        self._logical_interconnect.update_configuration(uri_logical_interconnect)
+        self._logical_interconnect.update_configuration(logical_interconnect_uri)
 
         mock_update_with_zero_body.assert_called_once_with(uri=uri_rest_call, timeout=-1)
 
@@ -255,18 +255,18 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'get_collection')
     def test_get_unassigned_uplink_ports_by_uri(self, mock_get_collection):
-        uri_logical_interconnect = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = uri_logical_interconnect + '/unassignedUplinkPortsForPortMonitor'
+        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = logical_interconnect_uri + '/unassignedUplinkPortsForPortMonitor'
 
-        self._logical_interconnect.get_unassigned_uplink_ports(uri_logical_interconnect)
+        self._logical_interconnect.get_unassigned_uplink_ports(logical_interconnect_uri)
 
         mock_get_collection.assert_called_once_with(uri_rest_call)
 
     @mock.patch.object(ResourceClient, 'get_collection')
     def test_get_unassigned_uplink_ports_by_id(self, mock_get_collection):
         logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_logical_interconnect = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = uri_logical_interconnect + '/unassignedUplinkPortsForPortMonitor'
+        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = logical_interconnect_uri + '/unassignedUplinkPortsForPortMonitor'
 
         self._logical_interconnect.get_unassigned_uplink_ports(logical_interconnect_id)
 
@@ -305,10 +305,10 @@ class LogicalInterconnectsTest(unittest.TestCase):
     def test_get_firmware(self, mock_get, mock_build_uri):
         logical_interconnect_id = '3518be0e-17c1-4189-8f81-83f3724f6155'
 
-        uri_logical_interconnect = "/rest/logical-interconnects/" + logical_interconnect_id
-        mock_build_uri.return_value = uri_logical_interconnect
+        logical_interconnect_uri = "/rest/logical-interconnects/" + logical_interconnect_id
+        mock_build_uri.return_value = logical_interconnect_uri
 
-        expected_uri = uri_logical_interconnect + "/firmware"
+        expected_uri = logical_interconnect_uri + "/firmware"
 
         self._logical_interconnect.get_firmware(logical_interconnect_id)
         mock_get.assert_called_once_with(expected_uri)
@@ -323,10 +323,54 @@ class LogicalInterconnectsTest(unittest.TestCase):
             sppUri="/rest/firmware-drivers/Service_0Pack_0for_0ProLiant"
         )
 
-        uri_logical_interconnect = "/rest/logical-interconnects/" + logical_interconnect_id
-        mock_build_uri.return_value = uri_logical_interconnect
+        logical_interconnect_uri = "/rest/logical-interconnects/" + logical_interconnect_id
+        mock_build_uri.return_value = logical_interconnect_uri
 
-        expected_uri = uri_logical_interconnect + "/firmware"
+        expected_uri = logical_interconnect_uri + "/firmware"
 
         self._logical_interconnect.install_firmware(fake_firmware, logical_interconnect_id)
         mock_update.assert_called_once_with(fake_firmware, expected_uri)
+
+    @mock.patch.object(ResourceClient, 'get_collection')
+    def test_get_forwarding_information_base_by_id(self, mock_get_collection):
+        filter = 'name=TestName'
+        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+
+        self._logical_interconnect.get_forwarding_information_base(logical_interconnect_id, filter)
+
+        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/forwarding-information-base'
+        mock_get_collection.assert_called_once_with(expected_uri, filter=filter)
+
+    @mock.patch.object(ResourceClient, 'get_collection')
+    def test_get_forwarding_information_base_by_uri(self, mock_get_collection):
+        filter = 'name=TestName'
+        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+
+        self._logical_interconnect.get_forwarding_information_base(logical_interconnect_uri, filter)
+
+        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/forwarding-information-base'
+        mock_get_collection.assert_called_once_with(expected_uri, filter=filter)
+
+    @mock.patch.object(ResourceClient, 'get_collection')
+    def test_get_forwarding_information_base_when_no_filtering(self, mock_get_collection):
+        self._logical_interconnect.get_forwarding_information_base("ad28cf21")
+
+        mock_get_collection.assert_called_once_with(mock.ANY, filter='')
+
+    @mock.patch.object(ResourceClient, 'create_with_zero_body')
+    def test_create_interconnect_called_once_when_id_provided(self, mock_create_with_zero_body):
+        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+
+        self._logical_interconnect.create_forwarding_information_base(logical_interconnect_id)
+
+        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/forwarding-information-base'
+        mock_create_with_zero_body.assert_called_once_with(uri=expected_uri, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'create_with_zero_body')
+    def test_create_interconnect_called_once_when_uri_provided(self, mock_create_with_zero_body):
+        logical_interconnect_uri = "/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32"
+
+        self._logical_interconnect.create_forwarding_information_base(logical_interconnect_uri)
+
+        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/forwarding-information-base'
+        mock_create_with_zero_body.assert_called_once_with(uri=expected_uri, timeout=-1)
