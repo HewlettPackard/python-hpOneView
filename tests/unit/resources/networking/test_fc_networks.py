@@ -58,7 +58,7 @@ class FcNetworksTest(unittest.TestCase):
         mock_create.return_value = {}
 
         self._fc_networks.create(resource, 30)
-        mock_create.assert_called_once_with(resource_rest_call, 30)
+        mock_create.assert_called_once_with(resource_rest_call, timeout=30)
 
     @mock.patch.object(ResourceClient, 'create')
     def test_create_should_use_default_values(self, mock_create):
@@ -76,7 +76,7 @@ class FcNetworksTest(unittest.TestCase):
 
         self._fc_networks.create(resource)
 
-        mock_create.assert_called_once_with(resource_with_default_values, -1)
+        mock_create.assert_called_once_with(resource_with_default_values, timeout=-1)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_should_use_given_values(self, mock_update):
