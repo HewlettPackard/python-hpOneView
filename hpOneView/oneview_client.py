@@ -77,6 +77,7 @@ from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTe
 from hpOneView.resources.storage.storage_volume_attachments import StorageVolumeAttachments
 from hpOneView.resources.settings.firmware_drivers import FirmwareDrivers
 from hpOneView.resources.settings.firmware_bundles import FirmwareBundles
+from hpOneView.resources.storage.volumes import Volumes
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
@@ -119,6 +120,7 @@ class OneViewClient(object):
         self.__storage_volume_attachments = None
         self.__firmware_drivers = None
         self.__firmware_bundles = None
+        self.__volumes = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -357,3 +359,9 @@ class OneViewClient(object):
         if not self.__firmware_bundles:
             self.__firmware_bundles = FirmwareBundles(self.__connection)
         return self.__firmware_bundles
+
+    @property
+    def volumes(self):
+        if not self.__volumes:
+            self.__volumes = Volumes(self.__connection)
+        return self.__volumes
