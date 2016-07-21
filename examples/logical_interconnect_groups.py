@@ -107,4 +107,4 @@ pprint(lig_settings)
 # Delete a logical interconnect group
 print("Delete the created logical interconnect group")
 oneview_client.logical_interconnect_groups.delete(updated_lig)
-print("Sucessfully deleted logical interconnect group")
+print("Successfully deleted logical interconnect group")

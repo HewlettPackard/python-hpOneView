@@ -119,8 +119,8 @@ class Enclosures(object):
             operation: Patch operation
             path: Path
             value: Value
-            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-            in OneView, just stop waiting its completion.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns: Updated resource. When blocking=False, returns the task.
         """
@@ -138,8 +138,8 @@ class Enclosures(object):
             force:
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns: Result status
 
@@ -154,8 +154,8 @@ class Enclosures(object):
 
         Args:
             id_or_uri: Could be either the resource id or the resource uri
-            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns: Enclosure
         """
@@ -181,8 +181,8 @@ class Enclosures(object):
         Args:
             id_or_uri: Could be either the resource id or the resource uri
             configuration: Configuration
-            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Return: Settings that describe the environmental configuration
         """
@@ -200,8 +200,8 @@ class Enclosures(object):
         Args:
             id_or_uri: Could be either the resource id or the resource uri
             configuration: Configuration
-            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Return: Enclosure
         """

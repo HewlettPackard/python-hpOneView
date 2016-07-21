@@ -121,8 +121,8 @@ class ConnectionTemplates(object):
         Args:
             resource: dict object to update
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns: Updated resource. When blocking=False, returns the task.
 
