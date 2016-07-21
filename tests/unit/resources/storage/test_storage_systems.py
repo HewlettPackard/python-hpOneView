@@ -68,21 +68,21 @@ class StorageSystemsTest(unittest.TestCase):
         self._storage_systems.get_host_types()
         mock_get.assert_called_once_with(storage_systems_host_types_uri)
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceClient, 'get_collection')
     def test_get_managed_ports_called_once_with_uri(self, mock_get):
         storage_systems_uri = "/rest/storage-systems/TXQ1010306"
         storage_systems_managed_ports_uri = "/rest/storage-systems/TXQ1010306/managedPorts"
         self._storage_systems.get_managed_ports(storage_systems_uri)
         mock_get.assert_called_once_with(storage_systems_managed_ports_uri)
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceClient, 'get_collection')
     def test_get_managed_ports_called_once_with_id(self, mock_get):
         storage_systems_id = "TXQ1010306"
         storage_systems_managed_ports_uri = "/rest/storage-systems/TXQ1010306/managedPorts"
         self._storage_systems.get_managed_ports(storage_systems_id)
         mock_get.assert_called_once_with(storage_systems_managed_ports_uri)
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceClient, 'get_collection')
     def test_get_managed_ports_called_once_with_uri_and_port_id(self, mock_get):
         storage_systems_uri = "/rest/storage-systems/TXQ1010306"
         port_id = "C862833E-907C-4124-8841-BDC75444CF76"
@@ -91,7 +91,7 @@ class StorageSystemsTest(unittest.TestCase):
         self._storage_systems.get_managed_ports(storage_systems_uri, port_id)
         mock_get.assert_called_once_with(storage_systems_managed_ports_uri)
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceClient, 'get_collection')
     def test_get_managed_ports_called_once_with_id_and_port_id(self, mock_get):
         storage_systems_id = "TXQ1010306"
         port_id = "C862833E-907C-4124-8841-BDC75444CF76"
@@ -100,7 +100,7 @@ class StorageSystemsTest(unittest.TestCase):
         self._storage_systems.get_managed_ports(storage_systems_id, port_id)
         mock_get.assert_called_once_with(storage_systems_managed_ports_uri)
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceClient, 'get_collection')
     def test_get_managed_ports_called_once_with_uri_and_port_uri(self, mock_get):
         storage_systems_uri = "/rest/storage-systems/TXQ1010306"
         port_uri = \
@@ -110,7 +110,7 @@ class StorageSystemsTest(unittest.TestCase):
         self._storage_systems.get_managed_ports(storage_systems_uri, port_uri)
         mock_get.assert_called_once_with(storage_systems_managed_ports_uri)
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceClient, 'get_collection')
     def test_get_managed_ports_called_once_with_id_and_port_uri(self, mock_get):
         storage_systems_id = "TXQ1010306"
         port_uri = \

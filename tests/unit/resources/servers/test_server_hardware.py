@@ -31,7 +31,6 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class ServerHardwareTest(TestCase):
-
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -290,3 +289,12 @@ class ServerHardwareTest(TestCase):
         self._server_hardware.get_remote_console_url(id_server_hardware)
 
         mock_get.assert_called_once_with(uri_rest_call)
+
+    @mock.patch.object(ResourceClient, 'update_with_zero_body')
+    def test_update_mp_firware_version_called_once(self, mock_get):
+        id_server_hardware = '/rest/server-hardware/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+
+        self._server_hardware.update_mp_firware_version(id_server_hardware)
+
+        mock_get.assert_called_once_with('/rest/server-hardware/ad28cf21-8b15-4f92-bdcf-51cb2042db32/mpFirmwareVersion',
+                                         -1)
