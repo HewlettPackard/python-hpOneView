@@ -76,7 +76,7 @@ class NetworkSets(object):
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
-    def delete(self, resource, force=False, blocking=True):
+    def delete(self, resource, force=False, timeout=-1):
         """
         Deletes a network set.
         Any deployed connections that are using the network are placed in the 'Failed' state.
@@ -86,13 +86,13 @@ class NetworkSets(object):
             force:
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
-            blocking:
-                Wait task completion
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns: task
 
         """
-        return self._client.delete(resource, force=force, blocking=blocking)
+        return self._client.delete(resource, force=force, timeout=timeout)
 
     def get(self, id):
         """
@@ -104,37 +104,37 @@ class NetworkSets(object):
         """
         return self._client.get(id)
 
-    def create(self, resource, blocking=True):
+    def create(self, resource, timeout=-1):
         """
         Creates a network set.
 
         Args:
             resource: dict object to create
-            blocking:
-                Wait task completion. Default is True.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
-        Returns: Created resource. When blocking=False, returns the task.
+        Returns: Created resource.
 
         """
         data = self.__default_values.copy()
         data.update(resource)
-        return self._client.create(data, blocking)
+        return self._client.create(data, timeout=timeout)
 
-    def update(self, resource, blocking=True):
+    def update(self, resource, timeout=-1):
         """
         Updates a network set.
 
         Args:
             resource: dict object to update
-            blocking:
-                Wait task completion. Default is True.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
-        Returns: Updated resource. When blocking=False, returns the task.
+        Returns: Updated resource.
 
         """
         data = self.__default_values.copy()
         data.update(resource)
-        return self._client.update(data, blocking=blocking)
+        return self._client.update(data, timeout=timeout)
 
     def get_by(self, field, value):
         """

@@ -60,8 +60,8 @@ class EthernetNetworksTest(TestCase):
         resource_rest_call = resource.copy()
         mock_create.return_value = {}
 
-        self._ethernet_networks.create(resource, False)
-        mock_create.assert_called_once_with(resource_rest_call, timeout=False)
+        self._ethernet_networks.create(resource, 12)
+        mock_create.assert_called_once_with(resource_rest_call, timeout=12)
 
     @mock.patch.object(ResourceClient, 'create')
     def test_create_should_use_default_values(self, mock_create):
@@ -99,10 +99,10 @@ class EthernetNetworksTest(TestCase):
         mock_create.return_value = {}
         mock_get_all.return_value = []
 
-        self._ethernet_networks.create_bulk(resource, False)
+        self._ethernet_networks.create_bulk(resource, 27)
 
         mock_create.assert_called_once_with(
-            resource_rest_call, uri='/rest/ethernet-networks/bulk', timeout=False)
+            resource_rest_call, uri='/rest/ethernet-networks/bulk', timeout=27)
         mock_get_all.assert_called_once_with(
             0, -1, filter='"\'name\' matches \'TestNetwork\\_%\'"', sort='vlanId:ascending')
 
