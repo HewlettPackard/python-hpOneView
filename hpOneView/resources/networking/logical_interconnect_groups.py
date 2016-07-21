@@ -114,8 +114,8 @@ class LogicalInterconnectGroups(object):
         Args:
             resource (dict): Object to create
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns:
             dict: Created logical interconnect group.
@@ -129,8 +129,8 @@ class LogicalInterconnectGroups(object):
         Args:
             resource (dict): Object to update
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns:
             dict: Updated logical interconnect group.
@@ -148,8 +148,8 @@ class LogicalInterconnectGroups(object):
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns:
             dict: Details of associated resource

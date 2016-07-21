@@ -65,7 +65,7 @@ oneview_client = OneViewClient(config)
 
 # Create an ethernet Network
 ethernet_network = oneview_client.ethernet_networks.create(options)
-print("Created ethernet-network '%s' sucessfully.\n   uri = '%s'" %
+print("Created ethernet-network '%s' successfully.\n   uri = '%s'" %
       (ethernet_network['name'], ethernet_network['uri']))
 
 # Find recently created network by name
@@ -77,7 +77,7 @@ print("Found ethernet-network by name: '%s'.\n   uri = '%s'" %
 # Update purpose recently created network
 ethernet_network['purpose'] = 'Management'
 ethernet_network = oneview_client.ethernet_networks.update(ethernet_network)
-print("Updated ethernet-network '%s' sucessfully.\n   uri = '%s'" %
+print("Updated ethernet-network '%s' successfully.\n   uri = '%s'" %
       (ethernet_network['name'], ethernet_network['uri']))
 print("   with attribute {'purpose': %s}" % ethernet_network['purpose'])
 
@@ -147,4 +147,4 @@ print("   Done.")
 
 # Delete the created network
 oneview_client.ethernet_networks.delete(ethernet_network)
-print("Sucessfully deleted ethernet-network")
+print("Successfully deleted ethernet-network")

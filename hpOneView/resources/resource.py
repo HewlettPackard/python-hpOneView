@@ -219,8 +219,8 @@ class ResourceClient(object):
             operation: Patch operation
             path: Path
             value: Value
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
-                OneView, just stops waiting for its completion
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns: Updated resource.
         """

@@ -137,4 +137,4 @@ except HPOneViewException as e:
 # Delete an Enclosure Group
 print("Delete the created Enclosure Group")
 oneview_client.enclosure_groups.delete(updated_eg)
-print("Sucessfully deleted Enclosure Group")
+print("Successfully deleted Enclosure Group")

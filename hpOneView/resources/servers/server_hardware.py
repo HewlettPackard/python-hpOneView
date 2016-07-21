@@ -253,8 +253,8 @@ class ServerHardware(object):
             id_or_uri: Could be either the server hardware resource id or uri
             configuration: configuration
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns:
             dict: environmental configuration settings
@@ -314,8 +314,8 @@ class ServerHardware(object):
             id_or_uri: Could be either the server hardware resource id or uri
             configuration: configuration
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns:
             resource
@@ -331,8 +331,8 @@ class ServerHardware(object):
             id_or_uri: Could be either the server hardware resource id or uri
             configuration: configuration
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns:
             resource

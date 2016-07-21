@@ -116,8 +116,8 @@ class LogicalInterconnects(object):
 
         Args:
             id_or_uri: Could be either the resource id or the resource uri
-            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns: Logical Interconnect
         """
@@ -133,8 +133,8 @@ class LogicalInterconnects(object):
             configuration:  Ethernet interconnect settings.
             force: If set to true the operation completes despite any problems with network connectivity or errors
                 on the resource itself. The default is false.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns: Logical Interconnect
         """
@@ -150,8 +150,8 @@ class LogicalInterconnects(object):
             network_uri_list: List of Ethernet network uris.
             force: If set to true the operation completes despite any problems with network connectivity or errors
                 on the resource itself. The default is false.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns: Logical Interconnect
         """
@@ -182,8 +182,8 @@ class LogicalInterconnects(object):
             settings: Interconnect settings
             force: If set to true the operation completes despite any problems with network connectivity or errors
                 on the resource itself. The default is false.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns: Logical Interconnect
         """
@@ -202,8 +202,8 @@ class LogicalInterconnects(object):
 
         Args:
             id_or_uri: Could be either the resource id or the resource uri
-            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns: Logical Interconnect
         """
@@ -248,8 +248,8 @@ class LogicalInterconnects(object):
         Args:
             location_entries: dictionary with location entries
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns: Created interconnect.
         """
@@ -266,8 +266,8 @@ class LogicalInterconnects(object):
             enclosure_uri: URI of the Enclosure
             bay: Bay
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns: bool: indicating if the interconnect was successfully deleted.
         """

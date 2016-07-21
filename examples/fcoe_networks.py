@@ -47,7 +47,7 @@ oneview_client = OneViewClient(config)
 
 # Create a FC Network
 fcoe_network = oneview_client.fcoe_networks.create(options)
-print("Created fcoe-network '%s' sucessfully.\n  uri = '%s'" % (fcoe_network['name'], fcoe_network['uri']))
+print("Created fcoe-network '%s' successfully.\n  uri = '%s'" % (fcoe_network['name'], fcoe_network['uri']))
 
 # Find recently created network by name
 fcoe_network = oneview_client.fcoe_networks.get_by('name', 'OneViewSDK Test FCoE Network')[0]
@@ -56,7 +56,7 @@ print("Found fcoe-network by name: '%s'.\n  uri = '%s'" % (fcoe_network['name'],
 # Update autoLoginRedistribution from recently created network
 fcoe_network['status'] = 'Warning'
 fcoe_network = oneview_client.fcoe_networks.update(fcoe_network)
-print("Updated fcoe-network '%s' sucessfully.\n  uri = '%s'" % (fcoe_network['name'], fcoe_network['uri']))
+print("Updated fcoe-network '%s' successfully.\n  uri = '%s'" % (fcoe_network['name'], fcoe_network['uri']))
 print("  with attribute {'status': %s}" % fcoe_network['status'])
 
 # Get all, with defaults
@@ -94,4 +94,4 @@ pprint(fcoe_nets_by_uri)
 
 # Delete the created network
 oneview_client.fcoe_networks.delete(fcoe_network)
-print("Sucessfully deleted fcoe-network")
+print("Successfully deleted fcoe-network")

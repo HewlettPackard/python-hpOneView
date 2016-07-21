@@ -119,8 +119,8 @@ class EnclosureGroups(object):
         Args:
             resource (dict): Object to create
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns:
             dict: Created enclosure group
@@ -137,8 +137,8 @@ class EnclosureGroups(object):
         Args:
             resource (dict): object to delete
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns:
             boolean: True when success
@@ -152,8 +152,8 @@ class EnclosureGroups(object):
         Args:
             resource (dict): Object to update
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns:
             dict: Updated enclosure group

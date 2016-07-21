@@ -85,8 +85,8 @@ class FcoeNetworks(object):
             force:
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-            in OneView, just stop waiting its completion.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns:
             bool:
@@ -109,8 +109,8 @@ class FcoeNetworks(object):
 
         Args:
             resource: dict object to create
-            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-            in OneView, just stop waiting its completion.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns: Created resource.
         """
@@ -124,8 +124,8 @@ class FcoeNetworks(object):
 
         Args:
             resource (dict): Resource to update
-            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-            in OneView, just stop waiting its completion.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns: Updated resource.
         """

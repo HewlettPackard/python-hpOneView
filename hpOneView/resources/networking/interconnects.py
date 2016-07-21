@@ -173,8 +173,8 @@ class Interconnects(object):
         Args:
             id_or_uri: Could be either the interconnect id or the interconnect uri
             port_information (dict): object to update
-            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns:
             dict: The interconnect
@@ -190,8 +190,8 @@ class Interconnects(object):
         Args:
             id_or_uri: Could be either the interconnect id or the interconnect uri
             ports (dict): array of ports to update
-            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns:
             dict: The interconnect
@@ -213,8 +213,8 @@ class Interconnects(object):
         Cause port protection to be reset on all the interconnects of the logical interconnect that matches ID
         Args:
             id_or_uri: Could be either the interconnect id or the interconnect uri
-            timeout: Timeout in seconds. Wait task completion by default. The timeout do not abort the operation
-                in OneView, just stop waiting its completion.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns:
             dict: The interconnect

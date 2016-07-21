@@ -89,8 +89,8 @@ class FcNetworks(object):
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
-                OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
         Returns:
             bool:
@@ -115,8 +115,8 @@ class FcNetworks(object):
         Args:
             resource: dict object to create
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
-                OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stop waiting for its completion.
 
         Returns: Created resource.
 
@@ -132,8 +132,8 @@ class FcNetworks(object):
         Args:
             resource: dict object to update
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
-                OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stop waiting for its completion.
 
         Returns: Updated resource.
 
