@@ -61,7 +61,7 @@ class ResourceClient(object):
         self._uri = uri
         self._task_monitor = TaskMonitor(con)
 
-    def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields=''):
+    def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None):
         """
         the use of optional parameters are described here:
         http://h17007.www1.hpe.com/docs/enterprise/servers/oneview2.0/cic-api/en/api-docs/current/index.html
@@ -87,8 +87,10 @@ class ResourceClient(object):
         if fields:
             fields = "&fields=" + quote(fields)
 
-        uri = "{0}?start={1}&count={2}{3}{4}{5}{6}{7}".format(self._uri, start, count, filter, query, sort, view,
-                                                              fields)
+        path = uri if uri else self._uri
+        self.__validate_resource_uri(path)
+
+        uri = "{0}?start={1}&count={2}{3}{4}{5}{6}{7}".format(path, start, count, filter, query, sort, view, fields)
 
         logger.debug('Getting all resources : with uri : %s' % uri)
 
@@ -298,13 +300,14 @@ class ResourceClient(object):
 
         return self._task_monitor.wait_for_task(task, timeout)
 
-    def get_by(self, field, value):
+    def get_by(self, field, value, uri=None):
         """
         This function uses get_all passing a filter
         The search is case insensitive
         Args:
             field: field name to filter
             value: value to filter
+            uri: resource uri
 
         Returns: dict
 
@@ -313,11 +316,15 @@ class ResourceClient(object):
             logger.exception(RESOURCE_CLIENT_INVALID_FIELD)
             raise ValueError(RESOURCE_CLIENT_INVALID_FIELD)
 
+        if not uri:
+            uri = self._uri
+        self.__validate_resource_uri(uri)
+
         logger.debug('Get by (uri = %s, field = %s, value = %s)' %
-                     (self._uri, field, str(value)))
+                     (uri, field, str(value)))
 
         filter = "\"'{0}'='{1}'\"".format(field, value)
-        return self.get_all(filter=filter)
+        return self.get_all(filter=filter, uri=uri)
 
     def get_by_name(self, name):
         """
@@ -428,14 +435,15 @@ class ResourceClient(object):
             raise ValueError(RESOURCE_CLIENT_INVALID_ID)
 
         if "/" in id_or_uri:
-            if self._uri in id_or_uri:
-                return id_or_uri
-            else:
-                logger.exception(
-                    'Get by uri : unrecognized uri: (%s)' % id_or_uri)
-                raise HPOneViewUnknownType(UNRECOGNIZED_URI)
+            self.__validate_resource_uri(id_or_uri)
+            return id_or_uri
         else:
             return self._uri + "/" + id_or_uri
+
+    def __validate_resource_uri(self, path):
+        if self._uri not in path:
+            logger.exception('Get by uri : unrecognized uri: (%s)' % path)
+            raise HPOneViewUnknownType(UNRECOGNIZED_URI)
 
     def __make_query_filter(self, filter):
         filters = filter.split(",")

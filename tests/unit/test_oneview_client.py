@@ -33,12 +33,12 @@ from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
 from hpOneView.resources.networking.interconnects import Interconnects
-from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
 from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
+from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
 from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGroups
-from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTemplates
 from hpOneView.resources.storage.storage_volume_attachments import StorageVolumeAttachments
-
+from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTemplates
+from hpOneView.resources.storage.volumes import Volumes
 from tests.test_utils import mock_builtin
 
 
@@ -315,3 +315,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_storage_volume_attachments(self):
         storage_volume_attachments = self._oneview.storage_volume_attachments
         self.assertEqual(storage_volume_attachments, self._oneview.storage_volume_attachments)
+
+    def test_volumes_has_right_type(self):
+        self.assertIsInstance(self._oneview.volumes, Volumes)
+
+    def test_volumes_has_value(self):
+        self.assertIsNotNone(self._oneview.volumes)
+
+    def test_lazy_loading_volumes(self):
+        copy_volumes = self._oneview.volumes
+        self.assertEqual(copy_volumes, self._oneview.volumes)

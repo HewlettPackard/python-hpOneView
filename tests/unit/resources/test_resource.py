@@ -21,8 +21,9 @@
 # THE SOFTWARE.
 ###
 
-import mock
 import unittest
+
+import mock
 
 from hpOneView.connection import connection
 from hpOneView.exceptions import HPOneViewUnknownType
@@ -79,6 +80,22 @@ class ResourceTest(unittest.TestCase):
         uri = "{resource_uri}?start=0&count=-1".format(resource_uri=self.URI)
 
         mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(connection, 'get')
+    def test_get_all_with_custom_uri(self, mock_get):
+        self.resource_client.get_all(uri='/rest/testuri/12467836/subresources')
+        uri = "/rest/testuri/12467836/subresources?start=0&count=-1"
+
+        mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(connection, 'get')
+    def test_get_all_with_different_resource_uri_should_fail(self, mock_get):
+        try:
+            self.resource_client.get_all(uri='/rest/other/resource/12467836/subresources')
+        except HPOneViewUnknownType as e:
+            self.assertEqual(UNRECOGNIZED_URI, e.args[0])
+        else:
+            self.fail('Expected Exception was not raised')
 
     @mock.patch.object(connection, 'delete')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
@@ -160,10 +177,23 @@ class ResourceTest(unittest.TestCase):
         self.assertEqual(len(collection), 2)
 
     @mock.patch.object(ResourceClient, 'get_all')
-    def test_get_by_uri(self, mock_get_all):
+    def test_get_by_property(self, mock_get_all):
         self.resource_client.get_by('name', 'MyFibreNetwork')
-        mock_get_all.assert_called_once_with(
-            filter="\"'name'='MyFibreNetwork'\"")
+        mock_get_all.assert_called_once_with(filter="\"'name'='MyFibreNetwork'\"", uri='/rest/testuri')
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_by_property_with_uri(self, mock_get_all):
+        self.resource_client.get_by('name', 'MyFibreNetwork', uri='/rest/testuri/5435534/sub')
+        mock_get_all.assert_called_once_with(filter="\"'name'='MyFibreNetwork'\"", uri='/rest/testuri/5435534/sub')
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_by_property_with__invalid_uri(self, mock_get_all):
+        try:
+            self.resource_client.get_by('name', 'MyFibreNetwork', uri='/rest/other/5435534/sub')
+        except HPOneViewUnknownType as e:
+            self.assertEqual('Unrecognized URI for this resource', e.args[0])
+        else:
+            self.fail()
 
     @mock.patch.object(connection, 'put')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
