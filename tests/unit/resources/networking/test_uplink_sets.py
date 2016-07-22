@@ -66,3 +66,62 @@ class UplinkSetsTest(unittest.TestCase):
         self._uplink_sets.get(uri)
 
         mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_create_should_use_given_values(self, mock_create):
+        resource = {
+            "type": "uplink-setV2",
+            "name": "uls2",
+        }
+        resource_rest_call = resource.copy()
+        mock_create.return_value = {}
+
+        self._uplink_sets.create(resource, 30)
+        mock_create.assert_called_once_with(resource_rest_call, timeout=30)
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_create_should_use_default_values(self, mock_create):
+        resource = {
+            "name": "uls2",
+        }
+        resource_with_default_values = {
+            "type": "uplink-setV3",
+            "name": "uls2",
+        }
+        mock_create.return_value = {}
+
+        self._uplink_sets.create(resource)
+        mock_create.assert_called_once_with(resource_with_default_values, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_should_use_given_values(self, mock_update):
+        resource = {
+            "type": "uplink-setV2",
+            "name": "uls2",
+        }
+        resource_rest_call = resource.copy()
+        mock_update.return_value = {}
+
+        self._uplink_sets.update(resource, 60)
+        mock_update.assert_called_once_with(resource_rest_call, timeout=60)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_should_use_default_values(self, mock_update):
+        resource = {
+            "name": "uls2",
+        }
+        resource_with_default_values = {
+            "type": "uplink-setV3",
+            "name": "uls2",
+        }
+        mock_update.return_value = {}
+
+        self._uplink_sets.update(resource)
+        mock_update.assert_called_once_with(resource_with_default_values, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_delete_called_once(self, mock_delete):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._uplink_sets.delete(id, force=False, timeout=-1)
+
+        mock_delete.assert_called_once_with(id, force=False, timeout=-1)

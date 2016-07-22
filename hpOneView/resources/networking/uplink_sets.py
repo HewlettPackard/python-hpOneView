@@ -47,6 +47,10 @@ class UplinkSets(object):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
 
+        self.__default_values = {
+            "type": "uplink-setV3",
+        }
+
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
         Gets a paginated list of uplink sets based on optional sorting and filtering, and constrained by start and
@@ -101,3 +105,59 @@ class UplinkSets(object):
 
         """
         return self._client.get_by(field, value)
+
+    def create(self, resource, timeout=-1):
+        """
+        Creates an uplink set.
+
+        Args:
+            resource: dict object to create
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+                OneView, just stops waiting for its completion.
+
+        Returns:
+            dict: Created resource.
+
+        """
+        data = self.__default_values.copy()
+        data.update(resource)
+        return self._client.create(data, timeout=timeout)
+
+    def update(self, resource, timeout=-1):
+        """
+        Updates an uplink set.
+
+        Args:
+            resource (dict): Resource to update
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+                OneView, just stops waiting for its completion.
+
+        Returns:
+            dict: Updated resource.
+
+        """
+        data = self.__default_values.copy()
+        data.update(resource)
+        return self._client.update(data, timeout=timeout)
+
+    def delete(self, resource, force=False, timeout=-1):
+        """
+        Deletes an uplink set. If the uplink set was carrying a Fibre Channel (FC) network, any connections which are
+        deployed and using the FC network will be placed into a 'Failed' state.
+
+        Args:
+            resource: Resource to delete or the resource ID
+            force:
+                 If set to true the operation completes despite any problems with
+                 network connectivity or errors on the resource itself. The default is false.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+                OneView, just stops waiting for its completion.
+
+            Returns:
+                bool: True if successfully deleted
+
+        """
+        return self._client.delete(resource, force=force, timeout=timeout)

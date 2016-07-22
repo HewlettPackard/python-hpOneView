@@ -24,7 +24,6 @@
 from pprint import pprint
 
 from config_loader import try_load_from_file
-from hpOneView.exceptions import HPOneViewException
 from hpOneView.oneview_client import OneViewClient
 
 # To run this example fill the ip and the credentials bellow or use a configuration file
@@ -39,13 +38,32 @@ config = {
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
+oneview_client = OneViewClient(config)
+
+# To run this example you must define an interconnect uri (logicalInterconnectUri) bellow
 options = {
-    "name": "Test Snapshot",
-    "description": "Description for the snapshot",
-    "snapshotType": "PhysicalCopy"
+    "name": "Uplink Set Demo",
+    "status": "OK",
+    "logicalInterconnectUri": "",
+    "networkUris": [],
+    "fcNetworkUris": [],
+    "fcoeNetworkUris": [],
+    "portConfigInfos": [],
+    "connectionMode": "Auto",
+    "networkType": "Ethernet",
+    "manualLoginRedistributionState": "NotSupported",
 }
 
-oneview_client = OneViewClient(config)
+# Create an uplink set
+print("\nCreate an uplink set")
+created_uplink_set = oneview_client.uplink_sets.create(options)
+print("Created uplink set '{name}' successfully.\n  uri = '{uri}'".format(**created_uplink_set))
+
+# Update an uplink set
+print("\nUpdate an uplink set")
+created_uplink_set['name'] = 'Renamed Uplink Set Demo'
+updated_uplink_set = oneview_client.uplink_sets.update(created_uplink_set)
+print("Updated uplink set name to '{name}' successfully.\n  uri = '{uri}'".format(**updated_uplink_set))
 
 # Get a paginated list of uplink set resources sorting by name ascending and filtering by status
 print("\nGet a list of uplink sets")
@@ -53,19 +71,17 @@ uplink_sets = oneview_client.uplink_sets.get_all(0, 15, sort='name:ascending', f
 for uplink_set in uplink_sets:
     print('  %s' % uplink_set['name'])
 
-uplink_set_name = uplink_sets[0]['name']
-
 # Get an uplink set resource by name
 print("\nGet uplink set by name")
-uplink_set = oneview_client.uplink_sets.get_by('name', uplink_set_name)[0]
+uplink_set = oneview_client.uplink_sets.get_by('name', 'Renamed Uplink Set Demo')[0]
 print("Found uplink set at uri '{uri}'\n  by name = '{name}'".format(**uplink_set))
-
-uplink_set_uri = uplink_sets[0]['uri']
 
 # Get an uplink set resource by uri
 print("\nGet an uplink set by uri")
-try:
-    uplink_set = oneview_client.uplink_sets.get(uplink_set_uri)
-    pprint(uplink_set)
-except HPOneViewException as e:
-    print(e.msg)
+uplink_set = oneview_client.uplink_sets.get(created_uplink_set['uri'])
+pprint(uplink_set)
+
+# Delete the recently created uplink set
+print("\nDelete the uplink set")
+oneview_client.fc_networks.delete(updated_uplink_set)
+print("Successfully deleted the uplink set")
