@@ -234,10 +234,28 @@ class LogicalInterconnects(object):
             id_or_uri: Could be either the logical interconnect id or the logical interconnect uri
 
         Returns:
-            dict: Collection of uplink ports
+            dict: port monitor configuration
         """
         uri = self._client.build_uri(id_or_uri) + "/port-monitor"
         return self._client.get(uri)
+
+    def update_port_monitor(self, id_or_uri, resource, timeout=-1):
+        """
+        Updates the port monitor configuration of a logical interconnect.
+
+        Args:
+            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri
+            resource: port monitor configuration
+
+        Returns:
+            dict: port monitor configuration
+        """
+        data = resource.copy()
+        if 'type' not in data:
+            data['type'] = 'port-monitor'
+
+        uri = self._client.build_uri(id_or_uri) + "/port-monitor"
+        return self._client.update(data, uri=uri, timeout=timeout)
 
     def get_telemetry_configuration(self, telemetry_configuration_uri):
         """
