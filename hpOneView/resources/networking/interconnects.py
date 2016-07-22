@@ -148,6 +148,18 @@ class Interconnects(object):
         """
         return self._client.get_by(field, value)
 
+    def get_by_name(self, name):
+        """
+        Retrieve an Interconnect by its name
+
+        Args:
+            name: Interconnect name
+
+        Returns:
+            dict: Interconnect
+        """
+        return self._client.get_by_name(name)
+
     def patch(self, id_or_uri, operation, path, value, timeout=-1):
         """
         Performs a specific patch operation for the given interconnect.
