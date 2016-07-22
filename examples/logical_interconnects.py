@@ -48,6 +48,11 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
+# Get by ID
+print("Get a logical interconnect by ID")
+logical_interconnect = oneview_client.logical_interconnects.get(logical_interconnect_id)
+pprint(logical_interconnect)
+
 # Get installed firmware
 print("Get the installed firmware for a logical interconnect that matches the specified ID.")
 firmware = oneview_client.logical_interconnects.get_firmware(logical_interconnect_id)
@@ -73,14 +78,6 @@ logical_interconnect = logical_interconnects[0]
 # Get a logical interconnect by name
 logical_interconnect = oneview_client.logical_interconnects.get_by_name(logical_interconnect['name'])
 print("Found logical interconnect by name {name}.\n URI: {uri}").format(**logical_interconnect)
-
-# Get by URI
-try:
-    print("Get a logical interconnect by URI")
-    logical_interconnect_by_uri = oneview_client.logical_interconnects.get(logical_interconnect['uri'])
-    pprint(logical_interconnect_by_uri)
-except HPOneViewException as e:
-    print(e.msg['message'])
 
 # Update the Ethernet interconnect settings for the logical interconnect
 ethernet_settings = logical_interconnect['ethernetSettings'].copy()
@@ -176,3 +173,17 @@ pprint(fwd_info_datainfo)
 print("Get the forwarding information base data for the logical interconnect")
 fwd_information = oneview_client.logical_interconnects.get_forwarding_information_base(logical_interconnect['uri'])
 pprint(fwd_information)
+
+# Get the QoS aggregated configuration for the logical interconnect.
+print("Gets the QoS aggregated configuration for the logical interconnect.")
+qos = oneview_client.logical_interconnects.get_qos_aggregated_configuration(logical_interconnect['uri'])
+pprint(qos)
+
+# Update the QOS aggregated configuration
+try:
+    print("Update QoS aggregated settings on the logical interconnect")
+    qos['activeQosConfig']['configType'] = 'CustomNoFCoE'
+    li = oneview_client.logical_interconnects.update_qos_aggregated_configuration(logical_interconnect['uri'], qos)
+    pprint(li['qosConfiguration'])
+except HPOneViewException as e:
+    print(e.msg['message'])
