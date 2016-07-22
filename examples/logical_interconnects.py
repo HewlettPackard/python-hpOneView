@@ -39,20 +39,20 @@ logical_interconnect_id = ""
 
 # To install the firmware driver you must define the firmware_driver_uri
 firmware_driver_uri = ""
-
+ 
 # An Enclosure URI must be set to create/delete an interconnect at a given location
 enclosure_uri = ""
-
+ 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
-
+ 
 oneview_client = OneViewClient(config)
-
+ 
 # Get installed firmware
 print("Get the installed firmware for a logical interconnect that matches the specified ID.")
 firmware = oneview_client.logical_interconnects.get_firmware(logical_interconnect_id)
 pprint(firmware)
-
+ 
 # Install the firmware to a logical interconnect
 print("Install the firmware to a logical interconnect that matches the specified ID.")
 firmware_to_install = dict(
@@ -61,19 +61,19 @@ firmware_to_install = dict(
 )
 installed_firmware = oneview_client.logical_interconnects.install_firmware(firmware_to_install, logical_interconnect_id)
 pprint(installed_firmware)
-
+ 
 # Get all logical interconnects
 print("Get all logical interconnects")
 logical_interconnects = oneview_client.logical_interconnects.get_all()
 for logical_interconnect in logical_interconnects:
     print('  Name: {name}').format(**logical_interconnect)
-
+  
 logical_interconnect = logical_interconnects[0]
-
+  
 # Get a logical interconnect by name
 logical_interconnect = oneview_client.logical_interconnects.get_by_name(logical_interconnect['name'])
 print("Found logical interconnect by name {name}.\n URI: {uri}").format(**logical_interconnect)
-
+ 
 # Get by URI
 try:
     print("Get a logical interconnect by URI")
@@ -81,7 +81,7 @@ try:
     pprint(logical_interconnect_by_uri)
 except HPOneViewException as e:
     print(e.msg['message'])
-
+ 
 # Update the Ethernet interconnect settings for the logical interconnect
 ethernet_settings = logical_interconnect['ethernetSettings'].copy()
 ethernet_settings['macRefreshInterval'] = 10
@@ -90,7 +90,7 @@ logical_interconnect = oneview_client.logical_interconnects.update_ethernet_sett
                                                                                      force=True)
 print("Updated the ethernet settings")
 print("  with attribute 'macRefreshInterval' = {macRefreshInterval}").format(**logical_interconnect['ethernetSettings'])
-
+ 
 # Update the internal networks on the logical interconnect
 ethernet_network_options = {
     "name": "OneViewSDK Test Ethernet Network on Logical Interconnect",
@@ -106,17 +106,17 @@ if len(ethernet_networks) > 0:
     ethernet_network = ethernet_networks[0]
 else:
     ethernet_network = oneview_client.ethernet_networks.create(ethernet_network_options)
-
+ 
 logical_interconnect = oneview_client.logical_interconnects.update_internal_networks(logical_interconnect['uri'],
                                                                                      [ethernet_network['uri']])
 print("Updated internal networks on the logical interconnect")
 print("  with attribute 'internalNetworkUris' = {internalNetworkUris}").format(**logical_interconnect)
-
+ 
 # Get the internal VLAN IDs
 print("Get the internal VLAN IDs for the provisioned networks on the logical interconnect")
 internal_vlans = oneview_client.logical_interconnects.get_internal_vlans(logical_interconnect['uri'])
 pprint(internal_vlans)
-
+ 
 # Update the interconnect settings
 interconnect_settings = {
     'ethernetSettings': logical_interconnect['ethernetSettings'].copy(),
@@ -128,12 +128,17 @@ logical_interconnect = oneview_client.logical_interconnects.update_settings(logi
 print("Updated interconnect settings on the logical interconnect")
 print("  with attribute 'macRefreshInterval' = {macRefreshInterval}").format(**logical_interconnect['ethernetSettings'])
 pprint(logical_interconnect)
-
+ 
 # Get a collection of uplink ports from the member interconnects which are eligible for assignment to an analyzer port
 print("Get a collection of uplink ports from the member interconnects which are eligible for assignment to "
       "an analyzer port on the logical interconnect")
 unassigned_uplink_ports = oneview_client.logical_interconnects.get_unassigned_uplink_ports(logical_interconnect['uri'])
 pprint(unassigned_uplink_ports)
+
+# Get the port monitor configuration of a logical interconnect
+print("Get the port monitor configuration of a logical interconnect")
+moniter_configuration = oneview_client.logical_interconnects.get_port_monitor(logical_interconnect_id)
+pprint(moniter_configuration)
 
 # Get the telemetry configuration of the logical interconnect
 print("Get the telemetry configuration of the logical interconnect")
