@@ -253,6 +253,24 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
         mock_update_with_zero_body.assert_called_once_with(uri=uri_rest_call, timeout=-1)
 
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_snmp_configuration_by_uri(self, mock_get):
+        logical_interconnect_uri = '/rest/logical-interconnects/be227eaf-3810-4b8a-b9ba-0af4479a9fe2'
+        uri_rest_call = '/rest/logical-interconnects/be227eaf-3810-4b8a-b9ba-0af4479a9fe2/snmp-configuration'
+  
+        self._logical_interconnect.get_snmp_configuration(logical_interconnect_uri)
+  
+        mock_get.assert_called_once_with(uri_rest_call)
+  
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_snmp_configuration_by_id(self, mock_get):
+        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/snmp-configuration'
+  
+        self._logical_interconnect.get_snmp_configuration(logical_interconnect_id)
+  
+        mock_get.assert_called_once_with(uri_rest_call)
+
     @mock.patch.object(ResourceClient, 'get_collection')
     def test_get_unassigned_uplink_ports_by_uri(self, mock_get_collection):
         logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'

@@ -44,6 +44,8 @@ class LogicalInterconnects(object):
 
     URI = '/rest/logical-interconnects'
     FIRMWARE_PATH = "/firmware"
+    SNMP_CONFIGURATION_PATH = "/snmp-configuration"
+    PORT_MONITOR_PATH = "/port-monitor"
     LOCATIONS_PATH = "/locations/interconnects"
     FORWARDING_INFORMATION_PATH = "/forwarding-information-base"
     locations_uri = "{uri}{locations}".format(uri=URI, locations=LOCATIONS_PATH)
@@ -210,6 +212,19 @@ class LogicalInterconnects(object):
         """
         uri = self._client.build_uri(id_or_uri) + "/configuration"
         return self._client.update_with_zero_body(uri=uri, timeout=timeout)
+    
+    def get_snmp_configuration(self, id_or_uri):
+        """
+        Gets the SNMP configuration for a logical interconnect.
+
+        Args:
+            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri
+
+        Returns:
+            dict: SNMP configuration
+        """
+        uri = self._client.build_uri(id_or_uri) + self.SNMP_CONFIGURATION_PATH
+        return self._client.get(uri)
 
     def get_unassigned_uplink_ports(self, id_or_uri):
         """
@@ -236,7 +251,7 @@ class LogicalInterconnects(object):
         Returns:
             dict: port monitor configuration
         """
-        uri = self._client.build_uri(id_or_uri) + "/port-monitor"
+        uri = self._client.build_uri(id_or_uri) + self.PORT_MONITOR_PATH
         return self._client.get(uri)
 
     def update_port_monitor(self, id_or_uri, resource, timeout=-1):
@@ -254,7 +269,7 @@ class LogicalInterconnects(object):
         if 'type' not in data:
             data['type'] = 'port-monitor'
 
-        uri = self._client.build_uri(id_or_uri) + "/port-monitor"
+        uri = self._client.build_uri(id_or_uri) + self.PORT_MONITOR_PATH
         return self._client.update(data, uri=uri, timeout=timeout)
 
     def get_telemetry_configuration(self, telemetry_configuration_uri):

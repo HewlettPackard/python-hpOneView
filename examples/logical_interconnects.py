@@ -129,6 +129,11 @@ print("Updated interconnect settings on the logical interconnect")
 print("  with attribute 'macRefreshInterval' = {macRefreshInterval}").format(**logical_interconnect['ethernetSettings'])
 pprint(logical_interconnect)
 
+# Get the SNMP configuration for the logical interconnect
+print("Get the SNMP configuration for the logical interconnect")
+snmp_configuration = oneview_client.logical_interconnects.get_snmp_configuration(logical_interconnect['uri'])
+pprint(snmp_configuration)
+
 # Get a collection of uplink ports from the member interconnects which are eligible for assignment to an analyzer port
 print("Get a collection of uplink ports from the member interconnects which are eligible for assignment to "
       "an analyzer port on the logical interconnect")
@@ -137,7 +142,7 @@ pprint(unassigned_uplink_ports)
 
 # Get the port monitor configuration of a logical interconnect
 print("Get the port monitor configuration of a logical interconnect")
-monitor_configuration = oneview_client.logical_interconnects.get_port_monitor(logical_interconnect_id)
+monitor_configuration = oneview_client.logical_interconnects.get_port_monitor(logical_interconnect['uri'])
 pprint(monitor_configuration)
 
 # Update port monitor configuration of a logical interconnect
