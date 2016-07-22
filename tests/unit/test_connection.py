@@ -91,7 +91,7 @@ class ConnectionTest(unittest.TestCase):
 
         expected_calls = [call('POST', '/path', self.dumped_request_body, self.default_headers),
                           call('GET', '/task/uri', '', self.default_headers)]
-        self.assertEquals(expected_calls, mock_request.call_args_list)
+        self.assertEqual(expected_calls, mock_request.call_args_list)
 
     @mock.patch.object(HTTPSConnection, 'request')
     @mock.patch.object(HTTPSConnection, 'getresponse')
@@ -102,7 +102,7 @@ class ConnectionTest(unittest.TestCase):
         self.connection.post('/path', self.request_body, custom_headers=self.accept_language_header)
 
         expected_calls = [call('POST', mock.ANY, mock.ANY, self.merged_headers), mock.ANY]
-        self.assertEquals(expected_calls, mock_request.call_args_list)
+        self.assertEqual(expected_calls, mock_request.call_args_list)
 
     @mock.patch.object(HTTPSConnection, 'request')
     @mock.patch.object(HTTPSConnection, 'getresponse')
@@ -172,7 +172,7 @@ class ConnectionTest(unittest.TestCase):
 
         expected_calls = [call('PUT', '/path', self.dumped_request_body, self.default_headers),
                           call('GET', '/task/uri', '', self.default_headers)]
-        self.assertEquals(expected_calls, mock_request.call_args_list)
+        self.assertEqual(expected_calls, mock_request.call_args_list)
 
     @mock.patch.object(HTTPSConnection, 'request')
     @mock.patch.object(HTTPSConnection, 'getresponse')
@@ -183,7 +183,7 @@ class ConnectionTest(unittest.TestCase):
         self.connection.put('/path', self.request_body, custom_headers=self.accept_language_header)
 
         expected_calls = [call('PUT', mock.ANY, mock.ANY, self.merged_headers), mock.ANY]
-        self.assertEquals(expected_calls, mock_request.call_args_list)
+        self.assertEqual(expected_calls, mock_request.call_args_list)
 
     @mock.patch.object(HTTPSConnection, 'request')
     @mock.patch.object(HTTPSConnection, 'getresponse')
@@ -253,7 +253,7 @@ class ConnectionTest(unittest.TestCase):
 
         expected_calls = [call('PATCH', '/path', self.dumped_request_body, self.default_headers),
                           call('GET', '/task/uri', '', self.default_headers)]
-        self.assertEquals(expected_calls, mock_request.call_args_list)
+        self.assertEqual(expected_calls, mock_request.call_args_list)
 
     @mock.patch.object(HTTPSConnection, 'request')
     @mock.patch.object(HTTPSConnection, 'getresponse')
@@ -264,7 +264,7 @@ class ConnectionTest(unittest.TestCase):
         self.connection.patch('/path', self.request_body, custom_headers=self.accept_language_header)
 
         expected_calls = [call('PATCH', mock.ANY, mock.ANY, self.merged_headers), mock.ANY]
-        self.assertEquals(expected_calls, mock_request.call_args_list)
+        self.assertEqual(expected_calls, mock_request.call_args_list)
 
     @mock.patch.object(HTTPSConnection, 'request')
     @mock.patch.object(HTTPSConnection, 'getresponse')
@@ -334,7 +334,7 @@ class ConnectionTest(unittest.TestCase):
 
         expected_calls = [call('DELETE', '/path', json.dumps(''), self.default_headers),
                           call('GET', '/task/uri', '', self.default_headers)]
-        self.assertEquals(expected_calls, mock_request.call_args_list)
+        self.assertEqual(expected_calls, mock_request.call_args_list)
 
     @mock.patch.object(HTTPSConnection, 'request')
     @mock.patch.object(HTTPSConnection, 'getresponse')
@@ -345,7 +345,7 @@ class ConnectionTest(unittest.TestCase):
         self.connection.delete('/path', custom_headers=self.accept_language_header)
 
         expected_calls = [call('DELETE', mock.ANY, mock.ANY, self.merged_headers), mock.ANY]
-        self.assertEquals(expected_calls, mock_request.call_args_list)
+        self.assertEqual(expected_calls, mock_request.call_args_list)
 
     @mock.patch.object(HTTPSConnection, 'request')
     @mock.patch.object(HTTPSConnection, 'getresponse')

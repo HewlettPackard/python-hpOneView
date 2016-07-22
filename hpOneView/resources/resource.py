@@ -148,29 +148,64 @@ class ResourceClient(object):
                      (uri, str(id_or_uri)))
         return self._connection.get(uri)
 
-    def get_collection(self, id_or_uri):
+    def get_collection(self, id_or_uri, filter=''):
         """
+        Retrieves a collection of resources.
+
+        Use this function when the 'start' and 'count' parameters are not allowed in the GET call.
+        Otherwise, use get_all instead.
+
+        Optional filtering criteria may be specified.
+
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
+            id_or_uri: Could be either the resource id or the resource uri.
+            filter: General filter/query string.
+
         Returns:
-             Collection of the requested resource
+             Collection of the requested resource.
         """
-        uri = self.build_uri(id_or_uri)
-        logger.debug('Get resource collection (uri = %s, ID = %s)' % (uri, str(id_or_uri)))
+        if filter:
+            filter = "?filter=" + quote(filter)
+
+        uri = "{uri}{filter}".format(uri=self.build_uri(id_or_uri), filter=filter)
+        logger.debug('Get resource collection (uri = %s)' % uri)
         response = self._connection.get(uri)
         return self.__get_members(response)
 
     def update_with_zero_body(self, uri, timeout=-1, custom_headers=None):
+        """
+        Makes a PUT request to update a resource, when no request body is required.
+
+        Args:
+            uri:
+                Could be either the resource id or the resource uri.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
+            custom_headers:
+                Allows set specific HTTP headers.
+
+        Returns: Updated resource.
+        """
         logger.debug('Update with zero length body (uri = %s)' % uri)
 
-        task, body = self._connection.put(uri, None, custom_headers=custom_headers)
-
-        if not task:
-            return body
-
-        return self._task_monitor.wait_for_task(task, timeout)
+        return self.__do_put(uri, None, timeout, custom_headers)
 
     def update(self, resource, uri=None, force=False, timeout=-1, custom_headers=None):
+        """
+        Makes a PUT request to update a resource, when a request body is required.
+
+        Args:
+            uri:
+                Could be either the resource id or the resource uri.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
+            custom_headers:
+                Allows set specific HTTP headers.
+
+        Returns: Updated resource.
+        """
         if not resource:
             logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
             raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
@@ -184,14 +219,45 @@ class ResourceClient(object):
         if force:
             uri += '?force=True'
 
-        task, body = self._connection.put(uri, resource, custom_headers=custom_headers)
+        return self.__do_put(uri, resource, timeout, custom_headers)
 
-        if not task:
-            return body
+    def create_with_zero_body(self, uri=None, timeout=-1, custom_headers=None):
+        """
+        Makes a POST request to create a resource, when no request body is required.
 
-        return self._task_monitor.wait_for_task(task, timeout)
+        Args:
+            uri:
+                Could be either the resource id or the resource uri.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
+            custom_headers:
+                Allows set specific HTTP headers.
+
+        Returns: Created resource.
+        """
+        if not uri:
+            uri = self._uri
+
+        logger.debug('Create with zero body (uri = %s)' % uri)
+
+        return self.__do_post(uri, None, timeout, custom_headers)
 
     def create(self, resource, uri=None, timeout=-1, custom_headers=None):
+        """
+        Makes a POST request to create a resource, when a request body is required.
+
+        Args:
+            uri:
+                Could be either the resource id or the resource uri.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
+            custom_headers:
+                Allows set specific HTTP headers.
+
+        Returns: Created resource.
+        """
         if not resource:
             logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
             raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
@@ -202,12 +268,7 @@ class ResourceClient(object):
         logger.debug('Create (uri = %s, resource = %s)' %
                      (uri, str(resource)))
 
-        task, entity = self._connection.post(uri, resource, custom_headers=custom_headers)
-
-        if not task:
-            return entity
-
-        return self._task_monitor.wait_for_task(task, timeout)
+        return self.__do_post(uri, resource, timeout, custom_headers)
 
     def patch(self, id_or_uri, operation, path, value, timeout=-1, custom_headers=None):
         """
@@ -386,3 +447,19 @@ class ResourceClient(object):
             return mlist['members']
         else:
             return []
+
+    def __do_post(self, uri, resource, timeout, custom_headers):
+        task, entity = self._connection.post(uri, resource, custom_headers=custom_headers)
+
+        if not task:
+            return entity
+
+        return self._task_monitor.wait_for_task(task, timeout)
+
+    def __do_put(self, uri, resource, timeout, custom_headers):
+        task, body = self._connection.put(uri, resource, custom_headers=custom_headers)
+
+        if not task:
+            return body
+
+        return self._task_monitor.wait_for_task(task, timeout)

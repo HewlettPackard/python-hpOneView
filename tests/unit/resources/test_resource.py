@@ -144,6 +144,14 @@ class ResourceTest(unittest.TestCase):
         mock_get.assert_called_once_with(self.URI + "/12345")
 
     @mock.patch.object(connection, 'get')
+    def test_get_collection_with_filter(self, mock_get):
+        mock_get.return_value = {}
+
+        self.resource_client.get_collection('12345', 'name=name')
+
+        mock_get.assert_called_once_with(self.URI + "/12345?filter=name%3Dname")
+
+    @mock.patch.object(connection, 'get')
     def test_get_collection_should_return_list(self, mock_get):
         mock_get.return_value = {"members": [{"key": "value"}, {"key": "value"}]}
 
@@ -257,6 +265,48 @@ class ResourceTest(unittest.TestCase):
         result = self.resource_client.update(dict_to_update, timeout=-1)
 
         self.assertEqual(result, dict_to_update)
+
+    @mock.patch.object(connection, 'post')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    def test_create_with_zero_body_called_once(self, mock_wait4task, mock_post):
+        mock_post.return_value = self.task, self.task
+        mock_wait4task.return_value = self.task
+        self.resource_client.create_with_zero_body('/rest/enclosures/09USE133E5H4/configuration',
+                                                   timeout=-1)
+
+        mock_post.assert_called_once_with(
+            "/rest/enclosures/09USE133E5H4/configuration", None, custom_headers=None)
+
+    @mock.patch.object(connection, 'post')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    def test_create_with_zero_body_and_custom_headers(self, mock_wait4task, mock_post):
+        mock_post.return_value = self.task, self.task
+        mock_wait4task.return_value = self.task
+        self.resource_client.create_with_zero_body('1', custom_headers=self.custom_headers)
+
+        mock_post.assert_called_once_with(mock.ANY, mock.ANY, custom_headers={'Accept-Language': 'en_US'})
+
+    @mock.patch.object(connection, 'post')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    def test_create_with_zero_body_return_entity(self, mock_wait4task, mock_post):
+        response_body = {"resource_name": "name"}
+
+        mock_post.return_value = self.task, self.task
+        mock_wait4task.return_value = response_body
+
+        result = self.resource_client.create_with_zero_body(
+            '/rest/enclosures/09USE133E5H4/configuration', timeout=-1)
+
+        self.assertEqual(result, response_body)
+
+    @mock.patch.object(connection, 'post')
+    def test_create_with_zero_body_without_task(self, mock_post):
+        mock_post.return_value = None, self.response_body
+
+        result = self.resource_client.create_with_zero_body(
+            '/rest/enclosures/09USE133E5H4/configuration', timeout=-1)
+
+        self.assertEqual(result, self.response_body)
 
     @mock.patch.object(connection, 'post')
     def test_create_uri(self, mock_post):
