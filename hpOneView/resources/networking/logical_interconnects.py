@@ -212,7 +212,7 @@ class LogicalInterconnects(object):
         """
         uri = self._client.build_uri(id_or_uri) + "/configuration"
         return self._client.update_with_zero_body(uri=uri, timeout=timeout)
-    
+
     def get_snmp_configuration(self, id_or_uri):
         """
         Gets the SNMP configuration for a logical interconnect.
@@ -225,6 +225,25 @@ class LogicalInterconnects(object):
         """
         uri = self._client.build_uri(id_or_uri) + self.SNMP_CONFIGURATION_PATH
         return self._client.get(uri)
+
+    def update_snmp_configuration(self, id_or_uri, configuration, timeout=-1):
+        """
+        Updates the SNMP configuration of a logical interconnect. Changes to the SNMP configuration are asynchronously
+        applied to all managed interconnects.
+
+        Args:
+            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri
+            configuration: snmp configuration
+
+        Returns:
+            dict: snmp configuration
+        """
+        data = configuration.copy()
+        if 'type' not in data:
+            data['type'] = 'snmp-configuration'
+
+        uri = self._client.build_uri(id_or_uri) + self.SNMP_CONFIGURATION_PATH
+        return self._client.update(data, uri=uri, timeout=timeout)
 
     def get_unassigned_uplink_ports(self, id_or_uri):
         """
