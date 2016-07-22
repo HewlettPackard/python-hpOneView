@@ -43,7 +43,6 @@ from tests.test_utils import mock_builtin
 
 
 class OneViewClientTest(unittest.TestCase):
-
     def __mock_file_open(self, json_config_content):
         # Simulates a TextIOWrapper (file output)
         return io.StringIO(json_config_content)
@@ -208,6 +207,54 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_interconnects(self):
         interconnects = self._oneview.interconnects
         self.assertEqual(interconnects, self._oneview.interconnects)
+
+    def test_lazy_loading_connections(self):
+        connections = self._oneview.connections
+        self.assertEqual(connections, self._oneview.connections)
+
+    def test_lazy_loading_server_hardware_types(self):
+        server_hardware_types = self._oneview.server_hardware_types
+        self.assertEqual(server_hardware_types, self._oneview.server_hardware_types)
+
+    def test_lazy_loading_id_pools_vsn_ranges(self):
+        id_pools_vsn_ranges = self._oneview.id_pools_vsn_ranges
+        self.assertEqual(id_pools_vsn_ranges, self._oneview.id_pools_vsn_ranges)
+
+    def test_lazy_loading_id_pools_vmac_ranges(self):
+        id_pools_vmac_ranges = self._oneview.id_pools_vmac_ranges
+        self.assertEqual(id_pools_vmac_ranges, self._oneview.id_pools_vmac_ranges)
+
+    def test_lazy_loading_id_pools_vwwn_ranges(self):
+        id_pools_vwwn_ranges = self._oneview.id_pools_vwwn_ranges
+        self.assertEqual(id_pools_vwwn_ranges, self._oneview.id_pools_vwwn_ranges)
+
+    def test_lazy_loading_logical_enclosures(self):
+        logical_enclosures = self._oneview.logical_enclosures
+        self.assertEqual(logical_enclosures, self._oneview.logical_enclosures)
+
+    def test_lazy_loading_interconnect_types(self):
+        interconnect_types = self._oneview.interconnect_types
+        self.assertEqual(interconnect_types, self._oneview.interconnect_types)
+
+    def test_lazy_loading_logical_downlinks(self):
+        logical_downlinks = self._oneview.logical_downlinks
+        self.assertEqual(logical_downlinks, self._oneview.logical_downlinks)
+
+    def test_lazy_loading_storage_systems(self):
+        storage_systems = self._oneview.storage_systems
+        self.assertEqual(storage_systems, self._oneview.storage_systems)
+
+    def test_lazy_loading_storage_pools(self):
+        storage_pools = self._oneview.storage_pools
+        self.assertEqual(storage_pools, self._oneview.storage_pools)
+
+    def test_lazy_loading_firmware_drivers(self):
+        firmware_drivers = self._oneview.firmware_drivers
+        self.assertEqual(firmware_drivers, self._oneview.firmware_drivers)
+
+    def test_lazy_loading_firmware_bundles(self):
+        firmware_bundles = self._oneview.firmware_bundles
+        self.assertEqual(firmware_bundles, self._oneview.firmware_bundles)
 
     def test_power_devices_has_right_type(self):
         self.assertIsInstance(self._oneview.power_devices, PowerDevices)

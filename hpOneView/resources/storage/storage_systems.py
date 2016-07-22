@@ -184,7 +184,7 @@ class StorageSystems(object):
         else:
             uri = self._client.build_uri(id_or_uri) + "/managedPorts"
 
-        return self._client.get(uri)
+        return self._client.get_collection(uri)
 
     def get_by(self, field, value):
         """

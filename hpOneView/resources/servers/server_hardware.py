@@ -299,7 +299,9 @@ class ServerHardware(object):
 
         Args:
             id_or_uri: Could be either the server hardware resource id or uri
-
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
         Returns:
             resource
         """
