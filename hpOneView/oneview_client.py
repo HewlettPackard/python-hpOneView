@@ -78,12 +78,12 @@ from hpOneView.resources.storage.storage_volume_attachments import StorageVolume
 from hpOneView.resources.settings.firmware_drivers import FirmwareDrivers
 from hpOneView.resources.settings.firmware_bundles import FirmwareBundles
 from hpOneView.resources.storage.volumes import Volumes
+from hpOneView.resources.networking.uplink_sets import UplinkSets
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
 
 class OneViewClient(object):
-
     def __init__(self, config):
         self.__connection = connection(config["ip"], config.get('api_version', 200))
         self.__set_proxy(config)
@@ -120,6 +120,7 @@ class OneViewClient(object):
         self.__storage_volume_attachments = None
         self.__firmware_drivers = None
         self.__firmware_bundles = None
+        self.__uplink_sets = None
         self.__volumes = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
@@ -359,6 +360,12 @@ class OneViewClient(object):
         if not self.__firmware_bundles:
             self.__firmware_bundles = FirmwareBundles(self.__connection)
         return self.__firmware_bundles
+
+    @property
+    def uplink_sets(self):
+        if not self.__uplink_sets:
+            self.__uplink_sets = UplinkSets(self.__connection)
+        return self.__uplink_sets
 
     @property
     def volumes(self):

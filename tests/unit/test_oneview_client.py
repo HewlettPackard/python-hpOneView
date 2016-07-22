@@ -36,6 +36,7 @@ from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
 from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
 from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGroups
+from hpOneView.resources.networking.uplink_sets import UplinkSets
 from hpOneView.resources.storage.storage_volume_attachments import StorageVolumeAttachments
 from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTemplates
 from hpOneView.resources.storage.volumes import Volumes
@@ -315,6 +316,16 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_storage_volume_attachments(self):
         storage_volume_attachments = self._oneview.storage_volume_attachments
         self.assertEqual(storage_volume_attachments, self._oneview.storage_volume_attachments)
+
+    def test_uplink_sets_has_right_type(self):
+        self.assertIsInstance(self._oneview.uplink_sets, UplinkSets)
+
+    def test_uplink_sets_has_value(self):
+        self.assertIsNotNone(self._oneview.uplink_sets)
+
+    def test_lazy_loading_uplink_sets(self):
+        copy_uplink_sets = self._oneview.uplink_sets
+        self.assertEqual(copy_uplink_sets, self._oneview.uplink_sets)
 
     def test_volumes_has_right_type(self):
         self.assertIsInstance(self._oneview.volumes, Volumes)
