@@ -273,6 +273,69 @@ class LogicalInterconnectsTest(unittest.TestCase):
         mock_get_collection.assert_called_once_with(uri_rest_call)
 
     @mock.patch.object(ResourceClient, 'get')
+    def test_get_port_monitor_by_uri(self, mock_get):
+        uri_logical_interconnect = '/rest/logical-interconnects/be227eaf-3810-4b8a-b9ba-0af4479a9fe2'
+        uri_rest_call = uri_logical_interconnect + '/port-monitor'
+
+        self._logical_interconnect.get_port_monitor(uri_logical_interconnect)
+
+        mock_get.assert_called_once_with(uri_rest_call)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_port_monitor_by_id(self, mock_get):
+        logical_interconnect_id = 'be227eaf-3810-4b8a-b9ba-0af4479a9fe2'
+        uri_logical_interconnect = '/rest/logical-interconnects/be227eaf-3810-4b8a-b9ba-0af4479a9fe2'
+        uri_rest_call = uri_logical_interconnect + '/port-monitor'
+
+        self._logical_interconnect.get_port_monitor(logical_interconnect_id)
+
+        mock_get.assert_called_once_with(uri_rest_call)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_port_monitor_by_uri(self, mock_update):
+        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/port-monitor'
+        monitor_data = {
+            "analyzerPort": {
+                "portUri": "/rest/interconnects/76ad8f4b-b01b-d2ac31295c19/ports/76ad8f4b-6f13:X1",
+                "portMonitorConfigInfo": "AnalyzerPort"
+            },
+            "enablePortMonitor": True,
+            "type": "port-monitor",
+            "monitoredPorts": [{
+                "portUri": "/rest/interconnects/76ad8f4b-b01b-d2ac31295c19/ports/76ad8f4b-6f13:X1",
+                "portMonitorConfigInfo": "MonitoredBoth"
+            }]
+        }
+        port_monitor_rest_call = monitor_data.copy()
+
+        self._logical_interconnect.update_port_monitor(logical_interconnect_uri, monitor_data)
+
+        mock_update.assert_called_once_with(port_monitor_rest_call, uri=uri_rest_call, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_port_monitor_by_id(self, mock_update):
+        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/port-monitor'
+        monitor_data = {
+            "analyzerPort": {
+                "portUri": "/rest/interconnects/76ad8f4b-b01b-d2ac31295c19/ports/76ad8f4b-6f13:X1",
+                "portMonitorConfigInfo": "AnalyzerPort"
+            },
+            "enablePortMonitor": True,
+            "type": "port-monitor",
+            "monitoredPorts": [{
+                "portUri": "/rest/interconnects/76ad8f4b-b01b-d2ac31295c19/ports/76ad8f4b-6f13:X1",
+                "portMonitorConfigInfo": "MonitoredBoth"
+            }]
+        }
+        port_monitor_rest_call = monitor_data.copy()
+
+        self._logical_interconnect.update_port_monitor(logical_interconnect_id, monitor_data)
+
+        mock_update.assert_called_once_with(port_monitor_rest_call, uri=uri_rest_call, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'get')
     def test_get_telemetry_configuration_by_uri(self, mock_get):
         uri_telemetry_configuration = '/rest/logical-interconnects/091c597d-5c68-45e5-ba40-5d69a1da8f90/' \
                                       'telemetry-configurations/dead0c9c-54db-4683-b402-48c2e86fe278'

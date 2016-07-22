@@ -135,6 +135,22 @@ print("Get a collection of uplink ports from the member interconnects which are 
 unassigned_uplink_ports = oneview_client.logical_interconnects.get_unassigned_uplink_ports(logical_interconnect['uri'])
 pprint(unassigned_uplink_ports)
 
+# Get the port monitor configuration of a logical interconnect
+print("Get the port monitor configuration of a logical interconnect")
+monitor_configuration = oneview_client.logical_interconnects.get_port_monitor(logical_interconnect_id)
+pprint(monitor_configuration)
+
+# Update port monitor configuration of a logical interconnect
+try:
+    print("Update the port monitor configuration of a logical interconnect")
+    monitor_configuration['enablePortMonitor'] = True
+    monitor_configuration = oneview_client.logical_interconnects.update_port_monitor(
+        logical_interconnect_id, monitor_configuration)
+    print("  Updated port monitor at uri: {uri}\n  with 'enablePortMonitor': '{enablePortMonitor}'".format(
+        monitor_configuration))
+except HPOneViewException as e:
+    print(e.msg['message'])
+
 # Get the telemetry configuration of the logical interconnect
 print("Get the telemetry configuration of the logical interconnect")
 telemetry_configuration_uri = logical_interconnect['telemetryConfiguration']['uri']
