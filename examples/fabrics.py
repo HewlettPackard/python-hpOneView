@@ -22,9 +22,10 @@
 ###
 
 from pprint import pprint
-from hpOneView.oneview_client import OneViewClient
-from hpOneView.exceptions import HPOneViewException
+
 from config_loader import try_load_from_file
+from hpOneView.exceptions import HPOneViewException
+from hpOneView.oneview_client import OneViewClient
 
 config = {
     "ip": "",
@@ -33,6 +34,9 @@ config = {
         "password": ""
     }
 }
+
+# To run this example you must to defined here a fabric id
+fabric_id = ''
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
@@ -45,22 +49,19 @@ fabrics = oneview_client.fabrics.get_all()
 pprint(fabrics)
 
 # Get all sorting by name descending
-print("Get all fabrics sorting by name")
-fabrics_sorted = oneview_client.fabrics.get_all(
-    sort='name:descending')
+print("\nGet all fabrics sorting by name")
+fabrics_sorted = oneview_client.fabrics.get_all(sort='name:descending')
 pprint(fabrics_sorted)
 
 # Get by Id
 try:
-    print("Get a fabric by id")
-    fabrics_byid = oneview_client.fabrics.get(
-        '7a9f7d09-3c24-4efe-928f-50a1af411120')
+    print("\nGet a fabric by id")
+    fabrics_byid = oneview_client.fabrics.get(fabric_id)
     pprint(fabrics_byid)
 except HPOneViewException as e:
     print(e.msg['message'])
 
 # Get by name
-print("Get a fabrics by name")
-fabric_byname = oneview_client.fabrics.get_by(
-    'name', 'DefaultFabric')[0]
+print("\nGet a fabrics by name")
+fabric_byname = oneview_client.fabrics.get_by('name', 'DefaultFabric')[0]
 pprint(fabric_byname)
