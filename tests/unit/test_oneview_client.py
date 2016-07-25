@@ -40,10 +40,12 @@ from hpOneView.resources.networking.uplink_sets import UplinkSets
 from hpOneView.resources.storage.storage_volume_attachments import StorageVolumeAttachments
 from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTemplates
 from hpOneView.resources.storage.volumes import Volumes
+from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
 from tests.test_utils import mock_builtin
 
 
 class OneViewClientTest(unittest.TestCase):
+
     def __mock_file_open(self, json_config_content):
         # Simulates a TextIOWrapper (file output)
         return io.StringIO(json_config_content)
@@ -336,3 +338,10 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_volumes(self):
         copy_volumes = self._oneview.volumes
         self.assertEqual(copy_volumes, self._oneview.volumes)
+
+    def test_server_profile_templates_has_right_type(self):
+        self.assertIsInstance(self._oneview.server_profile_templates, ServerProfileTemplate)
+
+    def test_lazy_loading_server_profile_templates(self):
+        server_profile_templates = self._oneview.server_profile_templates
+        self.assertEqual(server_profile_templates, self._oneview.server_profile_templates)
