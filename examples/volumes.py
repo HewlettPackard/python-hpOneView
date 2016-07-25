@@ -38,25 +38,103 @@ config = {
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
-# To run this example you must have created a volume on OneView and defined here its id
-volume_id = ''
+# To run this example, you may set a WWN to create a volume using the WWN of the volume (optional)
+unmanaged_volume_wwn = ''
 
-options = {
+oneview_client = OneViewClient(config)
+
+# Defines the storage system and the storage pool which are provided to create the volumes
+storage_system = oneview_client.storage_systems.get_all()[0]
+storage_pools = oneview_client.storage_pools.get_all()
+storage_pool_available = False
+for sp in storage_pools:
+    if sp['storageSystemUri'] == storage_system['uri']:
+        storage_pool_available = True
+        storage_pool = sp
+if not storage_pool_available:
+    raise ValueError("ERROR: No storage pools found attached to the storage system")
+
+# Create a volume with a Storage Pool
+print("\nCreate a volume with a specified Storage Pool")
+
+options_with_storage_pool = {
+    "name": 'ONEVIEW_SDK_TEST_VOLUME_TYPE_1',
+    "description": 'Test volume with common creation: Storage Pool',
+    "provisioningParameters": {
+        "provisionType": 'Full',
+        "shareable": True,
+        "requestedCapacity": 1024 * 1024 * 1024,  # 1GB
+        "storagePoolUri": storage_pool['uri']
+    }
+}
+volume_with_storage_pool = oneview_client.volumes.create(options_with_storage_pool)
+pprint(volume_with_storage_pool)
+
+# Create a volume with a Storage System, a Storage Pool, and a Snapshot Pool
+print("\nCreate a volume with a specified Snapshot Pool")
+
+options_with_snapshot_pool = {
+    "name": 'ONEVIEW_SDK_TEST_VOLUME_TYPE_3',
+    "description": 'Test volume with common creation: Storage System + Storage Pool + Snapshot Pool',
+    "provisioningParameters": {
+        "provisionType": 'Full',
+        "shareable": True,
+        "requestedCapacity": 1024 * 1024 * 1024,  # 1GB
+        "storagePoolUri": storage_pool['uri']
+    },
+    "storageSystemUri": storage_system['uri'],
+    "snapshotPoolUri": storage_pool['uri']
+}
+volume_with_snapshot_pool = oneview_client.volumes.create(options_with_snapshot_pool)
+pprint(volume_with_snapshot_pool)
+
+# Create a volume for management by the appliance using the WWN of the volume
+print("\nCreate a volume for management by the appliance using the WWN of the volume")
+
+if unmanaged_volume_wwn:
+    options_with_wwn = {
+        "type": "AddStorageVolumeV2",
+        "name": 'ONEVIEW_SDK_TEST_VOLUME_TYPE_4',
+        "description": 'Test volume with common creation: Storage System + Storage Pool + WWN',
+        "storageSystemUri": storage_system['uri'],
+        "wwn": unmanaged_volume_wwn,
+        "provisioningParameters": {
+            "shareable": False
+        }
+    }
+    volume_created_with_wwn = oneview_client.volumes.create(options_with_wwn)
+    pprint(volume_created_with_wwn)
+
+# Get all managed volumes
+print("\nGet a list of all managed volumes")
+volumes = oneview_client.volumes.get_all()
+for volume in volumes:
+    print('  Name: {name}').format(**volume)
+
+# Find a volume by name
+volume = oneview_client.volumes.get_by('name', volume_with_storage_pool['name'])[0]
+print("\nFound a volume by name: '{name}'.\n  uri = '{uri}'".format(**volume))
+
+# Find a volume by URI
+volume_uri = volume_with_storage_pool['uri']
+volume = oneview_client.volumes.get(volume_uri)
+print("\nFind a volume by URI")
+pprint(volume)
+
+# Create a snapshot
+print("\nCreate a snapshot")
+
+snapshot_options = {
     "name": "Test Snapshot",
     "description": "Description for the snapshot",
     "snapshotType": "PhysicalCopy"
 }
-
-oneview_client = OneViewClient(config)
-
-# Create a snapshot
-print("\nCreate a snapshot")
-volume = oneview_client.volumes.create_snapshot(volume_id, options)
-print("Created a snapshot for the volume '{deviceVolumeName}'".format(**volume))
+volume_with_snapshot_pool = oneview_client.volumes.create_snapshot(volume_with_snapshot_pool['uri'], snapshot_options)
+print("Created a snapshot for the volume '{name}'".format(**volume_with_snapshot_pool))
 
 # Get recently created snapshot resource by name
-print("\nGet snapshot by name")
-created_snapshot = oneview_client.volumes.get_snapshot_by(volume_id, 'name', 'Test Snapshot')[0]
+print("\nGet a snapshot by name")
+created_snapshot = oneview_client.volumes.get_snapshot_by(volume_with_snapshot_pool['uri'], 'name', 'Test Snapshot')[0]
 print("Found snapshot at uri '{uri}'\n  by name = '{name}'".format(**created_snapshot))
 
 snapshot_uri = created_snapshot['uri']
@@ -64,18 +142,26 @@ snapshot_uri = created_snapshot['uri']
 # Get recently created snapshot resource by uri
 print("\nGet a snapshot")
 try:
-    snapshot = oneview_client.volumes.get_snapshot(snapshot_uri, volume_id)
+    snapshot = oneview_client.volumes.get_snapshot(snapshot_uri, volume_uri)
     pprint(snapshot)
 except HPOneViewException as e:
     print(e.msg['message'])
 
 # Get a paginated list of snapshot resources sorting by name ascending
-print("\nGet a list of snapshots")
-all_snapshots = oneview_client.volumes.get_snapshots(volume_id, 0, 10, sort='name:ascending')
-for snapshot in all_snapshots:
-    print('  %s' % snapshot['name'])
+print("\nGet a list of the first 10 snapshots")
+snapshots = oneview_client.volumes.get_snapshots(volume_with_snapshot_pool['uri'], 0, 10, sort='name:ascending')
+for snapshot in snapshots:
+    print('  {name}'.format(**snapshot))
 
 # Delete the recently created snapshot resource
 print("\nDelete the recently created snapshot")
 returned = oneview_client.volumes.delete_snapshot(created_snapshot)
 print("Snapshot deleted successfully")
+
+print("\nDelete the recently created volumes")
+if oneview_client.volumes.delete(volume_with_storage_pool):
+    print("The volume, that was previously created with a Storage Pool, was deleted from OneView and storage system")
+if oneview_client.volumes.delete(volume_with_snapshot_pool):
+    print("The volume, that was previously created with a Snapshot Pool, was deleted from OneView and storage system")
+if unmanaged_volume_wwn and oneview_client.volumes.delete(volume_created_with_wwn, export_only=True):
+    print("The volume, that was previously created with a WWN Pool, was deleted from OneView")

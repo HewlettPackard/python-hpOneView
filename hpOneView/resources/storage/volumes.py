@@ -52,6 +52,103 @@ class Volumes(object):
             "type": "Snapshot"
         }
 
+    def get_all(self, start=0, count=-1, filter='', sort=''):
+        """
+        Gets a paginated collection of managed volumes. The collection is based on optional
+        sorting and filtering, and constrained by start and count parameters.
+
+        Args:
+            start:
+                The first item to return, using 0-based indexing.
+                If not specified, the default is 0 - start with the first available item.
+            count:
+                The number of resources to return. A count of -1 requests all the items.
+                The actual number of items in the response may differ from the requested
+                count if the sum of start and count exceed the total number of items, or
+                if returning the requested number of items would take too long.
+            filter:
+                A general filter/query string to narrow the list of items returned. The
+                default is no filter - all resources are returned.
+            sort:
+                The sort order of the returned data set. By default, the sort order is based
+                on create time, with the oldest entry first.
+
+        Returns: A list of volumes.
+
+        """
+        return self._client.get_all(start, count, filter=filter, sort=sort)
+
+    def get(self, id_or_uri):
+        """
+        Gets the managed volume.
+
+        Args:
+            id_or_uri: Could be either the volume id or the volume uri.
+
+        Returns: Managed volume.
+        """
+        return self._client.get(id_or_uri)
+
+    def get_by(self, field, value):
+        """
+        Get all managed volumes that matches the given filter.
+        The search is case insensitive.
+
+        Args:
+            field: Field name to filter.
+            value: Value to filter.
+
+        Returns: A list of volumes.
+
+        """
+        return self._client.get_by(field, value)
+
+    def create(self, resource, timeout=-1):
+        """
+        Creates a Volume.
+
+          It's possible to create the volume in 6 different ways:
+          1) Common = Storage System + Storage Pool
+          2) Template = Storage Volume Template
+          3) Common with snapshots = Storage System + Storage Pool + Snapshot Pool
+          4) Management = Storage System + wwn
+          5) Management by name = Storage System + Storage System Volume Name
+          6) Snapshot = Snapshot Pool + Storage Pool + Snapshot.
+
+        Args:
+            resource: dict object to create
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stop waiting for its completion.
+
+        Returns: Created resource.
+
+        """
+        return self._client.create(resource, timeout=timeout)
+
+    def delete(self, resource, force=False, export_only=False, timeout=-1):
+        """
+        Deletes a managed volume.
+
+        Args:
+            resource: dict object to delete
+            force:
+                 If set to true the operation completes despite any problems with
+                 network connectivity or errors on the resource itself. The default is false.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
+            export_only:
+                By default, volumes will be deleted from OneView and storage system.
+                To delete the volume only from OneView, you must set its value to True.
+                Setting its value to False has the same behaviour as the default behaviour.
+
+        Returns:
+            bool: indicating if the volume was successfully deleted.
+        """
+        custom_headers = {"exportOnly": export_only}
+        return self._client.delete(resource, force=force, timeout=timeout, custom_headers=custom_headers)
+
     def __build_volume_snapshot_uri(self, volume_id_or_uri=None, snapshot_id_or_uri=None):
         if snapshot_id_or_uri and "/" in snapshot_id_or_uri:
             return snapshot_id_or_uri
