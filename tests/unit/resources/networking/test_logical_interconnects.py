@@ -437,3 +437,43 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
         expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/forwarding-information-base'
         mock_create_with_zero_body.assert_called_once_with(uri=expected_uri, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_qos_aggregated_configuration_by_id(self, mock_get):
+        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+
+        self._logical_interconnect.get_qos_aggregated_configuration(logical_interconnect_id)
+
+        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/qos-aggregated-configuration'
+        mock_get.assert_called_once_with(expected_uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_qos_aggregated_configuration_by_uri(self, mock_get):
+        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+
+        self._logical_interconnect.get_qos_aggregated_configuration(logical_interconnect_uri)
+
+        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/qos-aggregated-configuration'
+        mock_get.assert_called_once_with(expected_uri)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_qos_aggregated_configuration_by_uri(self, mock_update):
+        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        qos_configuration = {"type": "qos-aggregated-configuration"}
+        qos_configuration_rest_call = qos_configuration.copy()
+
+        self._logical_interconnect.update_qos_aggregated_configuration(logical_interconnect_uri, qos_configuration)
+
+        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/qos-aggregated-configuration'
+        mock_update.assert_called_once_with(qos_configuration_rest_call, uri=expected_uri, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_qos_aggregated_configuration_by_id(self, mock_update):
+        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        qos_configuration = {"type": "qos-aggregated-configuration"}
+        qos_configuration_rest_call = qos_configuration.copy()
+
+        self._logical_interconnect.update_qos_aggregated_configuration(logical_interconnect_id, qos_configuration)
+
+        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/qos-aggregated-configuration'
+        mock_update.assert_called_once_with(qos_configuration_rest_call, uri=expected_uri, timeout=-1)

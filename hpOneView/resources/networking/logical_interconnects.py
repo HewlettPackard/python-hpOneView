@@ -46,6 +46,7 @@ class LogicalInterconnects(object):
     FIRMWARE_PATH = "/firmware"
     LOCATIONS_PATH = "/locations/interconnects"
     FORWARDING_INFORMATION_PATH = "/forwarding-information-base"
+    QOS_AGGREGATED_CONFIGURATION = "/qos-aggregated-configuration"
     locations_uri = "{uri}{locations}".format(uri=URI, locations=LOCATIONS_PATH)
 
     def __init__(self, con):
@@ -368,6 +369,36 @@ class LogicalInterconnects(object):
         """
         uri = self._client.build_uri(id_or_uri) + self.FORWARDING_INFORMATION_PATH
         return self._client.create_with_zero_body(uri=uri, timeout=timeout)
+
+    def get_qos_aggregated_configuration(self, id_or_uri):
+        """
+        Gets the QoS aggregated configuration for the logical interconnect.
+
+        Args:
+            id_or_uri:
+                Could be either the logical interconnect id or the logical interconnect uri.
+
+        Returns:
+            dict: QoS Configuration
+        """
+        uri = self._client.build_uri(id_or_uri) + self.QOS_AGGREGATED_CONFIGURATION
+        return self._client.get(uri)
+
+    def update_qos_aggregated_configuration(self, id_or_uri, qos_configuration, timeout=-1):
+        """
+        Updates the QoS aggregated configuration for the logical interconnect.
+
+        Args:
+            id_or_uri:
+                Could be either the logical interconnect id or the logical interconnect uri.
+            qos_configuration:
+                QOS configuration.
+
+        Returns:
+            dict: Logical Interconnect
+        """
+        uri = self._client.build_uri(id_or_uri) + self.QOS_AGGREGATED_CONFIGURATION
+        return self._client.update(qos_configuration, uri=uri, timeout=timeout)
 
     def __build_firmware_uri(self, id_or_uri):
         return self._client.build_uri(id_or_uri) + self.FIRMWARE_PATH
