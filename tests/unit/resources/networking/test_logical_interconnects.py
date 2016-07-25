@@ -253,6 +253,100 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
         mock_update_with_zero_body.assert_called_once_with(uri=uri_rest_call, timeout=-1)
 
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_snmp_configuration_by_uri(self, mock_get):
+        logical_interconnect_uri = '/rest/logical-interconnects/be227eaf-3810-4b8a-b9ba-0af4479a9fe2'
+        uri_rest_call = '/rest/logical-interconnects/be227eaf-3810-4b8a-b9ba-0af4479a9fe2/snmp-configuration'
+
+        self._logical_interconnect.get_snmp_configuration(logical_interconnect_uri)
+
+        mock_get.assert_called_once_with(uri_rest_call)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_snmp_configuration_by_id(self, mock_get):
+        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/snmp-configuration'
+
+        self._logical_interconnect.get_snmp_configuration(logical_interconnect_id)
+
+        mock_get.assert_called_once_with(uri_rest_call)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_snmp_configuration_by_uri(self, mock_update):
+        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/snmp-configuration'
+        configuration = {
+            "readCommunity": "public",
+            "enabled": True,
+            "systemContact": "",
+            "snmpAccess": [
+                "10.0.0.0/24"
+            ],
+            "type": "snmp-configuration",
+            "trapDestinations": [{
+                "enetTrapCategories": [
+                    "PortStatus"
+                ],
+                "vcmTrapCategories": [
+                    "Legacy"
+                ],
+                "trapSeverities": [
+                    "Normal",
+                    "Info",
+                    "Warning"
+                ],
+                "communityString": "public",
+                "fcTrapCategories": [
+                    "PortStatus"
+                ],
+                "trapDestination": "dest",
+                "trapFormat": "SNMPv1"
+            }],
+        }
+        port_monitor_rest_call = configuration.copy()
+
+        self._logical_interconnect.update_snmp_configuration(logical_interconnect_uri, configuration)
+
+        mock_update.assert_called_once_with(port_monitor_rest_call, uri=uri_rest_call, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_snmp_configuration_by_id(self, mock_update):
+        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/snmp-configuration'
+        configuration = {
+            "readCommunity": "public",
+            "enabled": True,
+            "systemContact": "",
+            "snmpAccess": [
+                "10.0.0.0/24"
+            ],
+            "type": "snmp-configuration",
+            "trapDestinations": [{
+                "enetTrapCategories": [
+                    "PortStatus"
+                ],
+                "vcmTrapCategories": [
+                    "Legacy"
+                ],
+                "trapSeverities": [
+                    "Normal",
+                    "Info",
+                    "Warning"
+                ],
+                "communityString": "public",
+                "fcTrapCategories": [
+                    "PortStatus"
+                ],
+                "trapDestination": "dest",
+                "trapFormat": "SNMPv1"
+            }],
+        }
+        port_monitor_rest_call = configuration.copy()
+
+        self._logical_interconnect.update_snmp_configuration(logical_interconnect_id, configuration)
+
+        mock_update.assert_called_once_with(port_monitor_rest_call, uri=uri_rest_call, timeout=-1)
+
     @mock.patch.object(ResourceClient, 'get_collection')
     def test_get_unassigned_uplink_ports_by_uri(self, mock_get_collection):
         logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
