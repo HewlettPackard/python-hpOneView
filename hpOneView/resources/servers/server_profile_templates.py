@@ -76,3 +76,14 @@ class ServerProfileTemplate(object):
 
         """
         return self._client.get_all(start=start, count=count, filter=filter, sort=sort)
+
+    def get(self, id_or_uri):
+        """
+        Gets a server profile template resource by ID or by uri
+        Args:
+            id_or_uri: Could be either the server profile template resource id or uri
+
+        Returns:
+            dict: The server profile template resource
+        """
+        return self._client.get(id_or_uri=id_or_uri)

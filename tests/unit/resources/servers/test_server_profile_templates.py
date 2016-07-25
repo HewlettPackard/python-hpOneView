@@ -44,3 +44,10 @@ class ServerProfileTemplateTest(TestCase):
 
         self._resource.get_all(start=2, count=500, filter=query_filter, sort=sort)
         mock_get_all.assert_called_once_with(start=2, count=500, filter=query_filter, sort=sort)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_by_id(self, mock_get):
+        template_id = "6fee02f3-b7c7-42bd-a528-04341e16bad6"
+
+        self._resource.get(template_id)
+        mock_get.assert_called_once_with(id_or_uri=template_id)
