@@ -71,6 +71,7 @@ from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
 from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
 from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGroups
+from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
 from hpOneView.resources.storage.storage_systems import StorageSystems
 from hpOneView.resources.storage.storage_pools import StoragePools
 from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTemplates
@@ -114,6 +115,7 @@ class OneViewClient(object):
         self.__logical_interconnect_groups = None
         self.__logical_switch_groups = None
         self.__logical_downlinks = None
+        self.__server_profile_templates = None
         self.__storage_systems = None
         self.__storage_pools = None
         self.__storage_volume_templates = None
@@ -324,6 +326,12 @@ class OneViewClient(object):
         if not self.__power_devices:
             self.__power_devices = PowerDevices(self.__connection)
         return self.__power_devices
+
+    @property
+    def server_profile_templates(self):
+        if not self.__server_profile_templates:
+            self.__server_profile_templates = ServerProfileTemplate(self.__connection)
+        return self.__server_profile_templates
 
     @property
     def storage_systems(self):
