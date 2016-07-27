@@ -21,6 +21,7 @@
 # THE SOFTWARE.
 ###
 
+from pprint import pprint
 from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
 
@@ -42,3 +43,9 @@ print("Get list of all server profile templates")
 all_templates = oneview_client.server_profile_templates.get_all()
 for template in all_templates:
     print('  %s' % template['name'])
+
+# Get by uri
+print("\nGet a server profile template by uri")
+template_uri = all_templates[0]["uri"]
+template = oneview_client.server_profile_templates.get(template_uri)
+pprint(template)
