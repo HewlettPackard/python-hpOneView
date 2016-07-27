@@ -57,8 +57,7 @@ class StorageVolumeTemplates(object):
             count:
                 The number of resources to return. A count of -1 requests all the items.
                 The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items, or
-                if returning the requested number of items would take too long.
+                count if the sum of start and count exceed the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
                 default is no filter - all resources are returned.
@@ -66,7 +65,7 @@ class StorageVolumeTemplates(object):
                 The sort order of the returned data set. By default, the sort order is based
                 on create time, with the oldest entry first.
         Returns:
-            list: A list of storage volume templates
+            list: A list of storage volume templates.
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
@@ -144,6 +143,6 @@ class StorageVolumeTemplates(object):
             field: field name to filter
             value: value to filter
         Returns:
-            list: A list of storage volume templates that match the filter
+            list: A list of storage volume templates that match the filter.
         """
         return self._client.get_by(field, value)

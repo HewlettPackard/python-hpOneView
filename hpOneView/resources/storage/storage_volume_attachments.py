@@ -57,8 +57,7 @@ class StorageVolumeAttachments(object):
             count:
                 The number of resources to return. A count of -1 requests all the items.
                 The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items, or
-                if returning the requested number of items would take too long.
+                count if the sum of start and count exceed the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
                 default is no filter - all resources are returned.
@@ -66,7 +65,7 @@ class StorageVolumeAttachments(object):
                 The sort order of the returned data set. By default, the sort order is based
                 on create time, with the oldest entry first.
         Returns:
-            list: volume attachment resources
+            list: Volume attachment resources.
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
@@ -81,8 +80,7 @@ class StorageVolumeAttachments(object):
             count:
                 The number of resources to return. A count of -1 requests all the items.
                 The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items, or
-                if returning the requested number of items would take too long.
+                count if the sum of start and count exceed the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
                 default is no filter - all resources are returned.
@@ -147,6 +145,7 @@ class StorageVolumeAttachments(object):
         Args:
             field: field name to filter
             value: value to filter
-        Returns: dict of volume attachments
+        Returns:
+            list: List of volume attachments.
         """
         return self._client.get_by(field, value)

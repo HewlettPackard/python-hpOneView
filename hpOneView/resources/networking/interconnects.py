@@ -62,8 +62,7 @@ class Interconnects(object):
             count:
                 The number of resources to return. A count of -1 requests all the items.
                 The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items, or
-                if returning the requested number of items would take too long.
+                count if the sum of start and count exceed the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
                 default is no filter - all resources are returned.
@@ -72,8 +71,7 @@ class Interconnects(object):
                 on create time, with the oldest entry first.
 
         Returns:
-            list: A list of interconnects
-
+            list: A list of interconnects.
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
@@ -144,7 +142,7 @@ class Interconnects(object):
             value: value to filter
 
         Returns:
-            list: A list of interconnects
+            list: A list of interconnects.
         """
         return self._client.get_by(field, value)
 

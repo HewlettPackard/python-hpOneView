@@ -75,7 +75,7 @@ class ServerProfileTemplate(object):
                 on create time, with the oldest entry first.
 
         Returns:
-            list: A list of server profile templates
+            list: A list of server profile templates.
 
         """
         return self._client.get_all(start=start, count=count, filter=filter, sort=sort)

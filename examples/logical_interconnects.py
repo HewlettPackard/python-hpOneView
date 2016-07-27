@@ -135,10 +135,10 @@ pprint(snmp_configuration)
 try:
     print("Update the SNMP configuration for the logical interconnect")
     snmp_configuration['enabled'] = True
-    snmp_configuration = oneview_client.logical_interconnects.update_snmp_configuration(
-        logical_interconnect['uri'], snmp_configuration)
-    print("  Updated port monitor at uri: {uri}\n  with 'enabled': '{enabled}'".format(
-        **snmp_configuration))
+    logical_interconnect = oneview_client.logical_interconnects.update_snmp_configuration(logical_interconnect['uri'],
+                                                                                          snmp_configuration)
+    interconnect_snmp = logical_interconnect['snmpConfiguration']
+    print("  Updated port monitor at uri: {uri}\n  with 'enabled': '{enabled}'".format(**interconnect_snmp))
 except HPOneViewException as e:
     print(e.msg['message'])
 
