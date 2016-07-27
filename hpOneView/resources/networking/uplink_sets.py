@@ -38,6 +38,7 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.networking.ethernet_networks import EthernetNetworks
 
 
 class UplinkSets(object):
@@ -46,7 +47,7 @@ class UplinkSets(object):
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
-
+        self._ethernet_network = EthernetNetworks(con)
         self.__default_values = {
             "type": "uplink-setV3",
         }
@@ -161,3 +162,21 @@ class UplinkSets(object):
 
         """
         return self._client.delete(resource, force=force, timeout=timeout)
+
+    def get_ethernet_networks(self, id_or_uri):
+        """
+        Gets a list of associated ethernet networks of an uplink set
+        Args:
+            id_or_uri:
+                Could be either the uplink set id or the uplink set uri
+
+        Returns:
+            list: Associated ethernet networks
+        """
+        uplink = self.get(id_or_uri)
+        network_uris = uplink.get('networkUris')
+        networks = []
+        if network_uris:
+            for uri in network_uris:
+                networks.append(self._ethernet_network.get(uri))
+        return networks

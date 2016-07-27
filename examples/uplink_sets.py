@@ -81,6 +81,11 @@ print("\nGet an uplink set by uri")
 uplink_set = oneview_client.uplink_sets.get(created_uplink_set['uri'])
 pprint(uplink_set)
 
+# Get the associated ethernet networks of an uplink set
+print("\nGet the associated ethernet networks of the uplink set")
+networks = oneview_client.uplink_sets.get_ethernet_networks(created_uplink_set['uri'])
+pprint(networks)
+
 # Delete the recently created uplink set
 print("\nDelete the uplink set")
 oneview_client.fc_networks.delete(updated_uplink_set)

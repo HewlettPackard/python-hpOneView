@@ -26,6 +26,7 @@ import unittest
 import mock
 
 from hpOneView.connection import connection
+from hpOneView.resources.networking.ethernet_networks import EthernetNetworks
 from hpOneView.resources.networking.uplink_sets import UplinkSets
 from hpOneView.resources.resource import ResourceClient
 
@@ -125,3 +126,39 @@ class UplinkSetsTest(unittest.TestCase):
         self._uplink_sets.delete(id, force=False, timeout=-1)
 
         mock_delete.assert_called_once_with(id, force=False, timeout=-1)
+
+    @mock.patch.object(EthernetNetworks, 'get')
+    @mock.patch.object(UplinkSets, 'get')
+    def test_get_ethernet_networks(self, mock_uplink_get, mock_get_enet):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uplink = {
+            'name': 'UplinkName',
+            'networkUris': ['/rest/ethernet-networks/5f14bf27-f839-4e9f-9ec8-9f0e0b413939',
+                            '/rest/ethernet-networks/d34dcf5e-0d8e-441c-b00d-e1dd6a067188',
+                            '/rest/ethernet-networks/fg0dcf5e-1589-4mn0-852f-85hd6a067963',
+                            ],
+        }
+
+        result_get_enet = [
+            {'name': 'Ethernet Network 1'},
+            {'name': 'Ethernet Network 2'},
+            {'name': 'Ethernet Network 3'},
+        ]
+
+        mock_uplink_get.return_value = uplink
+        mock_get_enet.side_effect = result_get_enet
+        result = self._uplink_sets.get_ethernet_networks(id)
+        self.assertEqual(mock_get_enet.call_count, 3)
+        self.assertEqual(result_get_enet, result)
+
+    @mock.patch.object(EthernetNetworks, 'get')
+    @mock.patch.object(UplinkSets, 'get')
+    def test_get_ethernet_networks_with_empty_list(self, mock_uplink_get, mock_get_enet):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uplink = {
+            'name': 'UplinkName',
+        }
+
+        mock_uplink_get.return_value = uplink
+        result = self._uplink_sets.get_ethernet_networks(id)
+        self.assertEqual([], result)
