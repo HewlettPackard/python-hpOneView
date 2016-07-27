@@ -66,3 +66,14 @@ class ServerProfileTemplateTest(TestCase):
 
         self._resource.get_by_name(template_name)
         mock_get_by_name.assert_called_once_with(template_name)
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_create(self, mock_create):
+        template = dict(name="BL460c Gen8 1")
+        timeout = -1
+
+        expected_template = template.copy()
+        expected_template["type"] = "ServerProfileTemplateV1"
+
+        self._resource.create(resource=template, timeout=timeout)
+        mock_create.assert_called_once_with(resource=expected_template, timeout=timeout)

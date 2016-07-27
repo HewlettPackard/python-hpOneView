@@ -44,6 +44,9 @@ class ServerProfileTemplate(object):
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
+        self.__default_values = {
+            'type': 'ServerProfileTemplateV1'
+        }
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
@@ -113,3 +116,20 @@ class ServerProfileTemplate(object):
             dict: The server profile template resource
         """
         return self._client.get_by_name(name)
+
+    def create(self, resource, timeout=-1):
+        """
+         Creates a server profile template.
+
+        Args:
+            resource: dict object to create
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stop waiting for its completion.
+
+        Returns: Created resource.
+
+        """
+        data = self.__default_values.copy()
+        data.update(resource)
+        return self._client.create(resource=data, timeout=timeout)

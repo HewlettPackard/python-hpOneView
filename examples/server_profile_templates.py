@@ -33,10 +33,24 @@ config = {
     }
 }
 
+SERVER_PROFILE_NAME = "ProfileTemplate101"
+SERVER_HARDWARE_TYPE_URI = "/rest/server-hardware-types/94B55683-173F-4B36-8FA6-EC250BA2328B"
+ENCLOSURE_GROUP_URI = "/rest/enclosure-groups/ad5e9e88-b858-4935-ba58-017d60a17c89"
+
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
+
+# Create a server profile template
+print("\nCreate a basic connection-less server profile template ")
+template = dict(
+    name=SERVER_PROFILE_NAME,
+    serverHardwareTypeUri=SERVER_HARDWARE_TYPE_URI,
+    enclosureGroupUri=ENCLOSURE_GROUP_URI
+)
+new_template = oneview_client.server_profile_templates.create(template)
+pprint(new_template)
 
 # Get all
 print("Get list of all server profile templates")
@@ -59,6 +73,5 @@ for template in templates:
 
 # Get by name
 print("\nGet a server profile templates by name")
-template_name = all_templates[0]["name"]
-template = oneview_client.server_profile_templates.get_by_name(template_name)
+template = oneview_client.server_profile_templates.get_by_name(SERVER_PROFILE_NAME)
 pprint(template)
