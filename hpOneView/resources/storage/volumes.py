@@ -105,9 +105,10 @@ class Volumes(object):
 
     def create(self, resource, timeout=-1):
         """
-        Creates a Volume.
+        Creates or adds a volume.
 
-          It's possible to create the volume in 6 different ways:
+        It's possible to create the volume in 6 different ways:
+
           1) Common = Storage System + Storage Pool
           2) Template = Storage Volume Template
           3) Common with snapshots = Storage System + Storage Pool + Snapshot Pool
@@ -115,13 +116,15 @@ class Volumes(object):
           5) Management by name = Storage System + Storage System Volume Name
           6) Snapshot = Snapshot Pool + Storage Pool + Snapshot.
 
+          NOTE: The 4) and 5) are for adding a volume for management, it do not create new volumes.
+
         Args:
             resource: dict object to create
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stop waiting for its completion.
 
-        Returns: Created resource.
+        Returns: Created or added resource.
 
         """
         return self._client.create(resource, timeout=timeout)

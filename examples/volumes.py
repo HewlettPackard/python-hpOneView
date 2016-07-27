@@ -38,7 +38,7 @@ config = {
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
-# To run this example, you may set a WWN to create a volume using the WWN of the volume (optional)
+# To run this example, you may set a WWN to add a volume using the WWN of the volume (optional)
 unmanaged_volume_wwn = ''
 
 oneview_client = OneViewClient(config)
@@ -88,22 +88,22 @@ options_with_snapshot_pool = {
 volume_with_snapshot_pool = oneview_client.volumes.create(options_with_snapshot_pool)
 pprint(volume_with_snapshot_pool)
 
-# Create a volume for management by the appliance using the WWN of the volume
-print("\nCreate a volume for management by the appliance using the WWN of the volume")
-
+# Add a volume for management by the appliance using the WWN of the volume
 if unmanaged_volume_wwn:
+    print("\nAdd a volume for management by the appliance using the WWN of the volume")
+
     options_with_wwn = {
         "type": "AddStorageVolumeV2",
         "name": 'ONEVIEW_SDK_TEST_VOLUME_TYPE_4',
-        "description": 'Test volume with common creation: Storage System + Storage Pool + WWN',
+        "description": 'Test volume added for management: Storage System + Storage Pool + WWN',
         "storageSystemUri": storage_system['uri'],
         "wwn": unmanaged_volume_wwn,
         "provisioningParameters": {
             "shareable": False
         }
     }
-    volume_created_with_wwn = oneview_client.volumes.create(options_with_wwn)
-    pprint(volume_created_with_wwn)
+    volume_added_with_wwn = oneview_client.volumes.create(options_with_wwn)
+    pprint(volume_added_with_wwn)
 
 # Get all managed volumes
 print("\nGet a list of all managed volumes")
@@ -163,5 +163,5 @@ if oneview_client.volumes.delete(volume_with_storage_pool):
     print("The volume, that was previously created with a Storage Pool, was deleted from OneView and storage system")
 if oneview_client.volumes.delete(volume_with_snapshot_pool):
     print("The volume, that was previously created with a Snapshot Pool, was deleted from OneView and storage system")
-if unmanaged_volume_wwn and oneview_client.volumes.delete(volume_created_with_wwn, export_only=True):
-    print("The volume, that was previously created with a WWN Pool, was deleted from OneView")
+if unmanaged_volume_wwn and oneview_client.volumes.delete(volume_added_with_wwn, export_only=True):
+    print("The volume, that was previously added using the WWN of the volume, was deleted from OneView")
