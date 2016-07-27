@@ -58,93 +58,101 @@ options_bulk = {
     "type": "bulk-ethernet-network"
 }
 
+# To run the get by id and get associated uplink group examples you must define an ethernet network id
+ethernet_network_id = ''
+
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
 # Create an ethernet Network
+print("\nCreate an ethernet network")
 ethernet_network = oneview_client.ethernet_networks.create(options)
-print("Created ethernet-network '%s' successfully.\n   uri = '%s'" %
-      (ethernet_network['name'], ethernet_network['uri']))
+print("Created ethernet-network '{name}' successfully.\n   uri = '{uri}'" .format(**ethernet_network))
 
 # Find recently created network by name
+print("\nFind recently created network by name")
 ethernet_network = oneview_client.ethernet_networks.get_by(
     'name', 'OneViewSDK Test Ethernet Network')[0]
-print("Found ethernet-network by name: '%s'.\n   uri = '%s'" %
-      (ethernet_network['name'], ethernet_network['uri']))
+print("Found ethernet-network by name: '{name}'.\n   uri = '{uri}'" .format(**ethernet_network))
 
 # Update purpose recently created network
+print("\nUpdate the purpose attribute from the recently created network")
 ethernet_network['purpose'] = 'Management'
 ethernet_network = oneview_client.ethernet_networks.update(ethernet_network)
-print("Updated ethernet-network '%s' successfully.\n   uri = '%s'" %
-      (ethernet_network['name'], ethernet_network['uri']))
-print("   with attribute {'purpose': %s}" % ethernet_network['purpose'])
+print("Updated ethernet-network '{name}' successfully.\n   uri = '{uri}'\n   with attribute ['purpose': {purpose}]"
+      .format(**ethernet_network))
 
 # Get all, with defaults
-print("Get all ethernet-networks")
+print("\nGet all ethernet-networks")
 ethernet_nets = oneview_client.ethernet_networks.get_all()
 for net in ethernet_nets:
-    print("   '{}' at uri: '{}'".format(net['name'], net['uri']))
+    print("   '{name}' at uri: '{uri}'".format(**net))
 
 # Create bulk ethernet networks
-print("Create bulk ethernet networks")
+print("\nCreate bulk ethernet networks")
 ethernet_nets_bulk = oneview_client.ethernet_networks.create_bulk(options_bulk)
 pprint(ethernet_nets_bulk)
 
 # Filter by name
-print("Get all ethernet-networks filtering by name")
+print("\nGet all ethernet-networks filtering by name")
 ethernet_nets_filtered = oneview_client.ethernet_networks.get_all(
     filter="\"'name'='OneViewSDK Test Ethernet Network'\"")
 for net in ethernet_nets_filtered:
-    print("   '{}' at uri: '{}'".format(net['name'], net['uri']))
+    print("   '{name}' at uri: '{uri}'".format(**net))
 
 # Get all sorting by name descending
-print("Get all ethernet-networks sorting by name")
-ethernet_nets_sorted = oneview_client.ethernet_networks.get_all(
-    sort='name:descending')
+print("\nGet all ethernet-networks sorting by name")
+ethernet_nets_sorted = oneview_client.ethernet_networks.get_all(sort='name:descending')
 for net in ethernet_nets_sorted:
-    print("   '{}' at uri: '{}'".format(net['name'], net['uri']))
+    print("   '{name}' at uri: '{uri}'".format(**net))
 
 # Get the first 10 records
-print("Get the first ten ethernet-networks")
+print("\nGet the first ten ethernet-networks")
 ethernet_nets_limited = oneview_client.ethernet_networks.get_all(0, 10)
 for net in ethernet_nets_limited:
-    print("   '{}' at uri: '{}'".format(net['name'], net['uri']))
+    print("   '{name}' at uri: '{uri}'".format(**net))
 
 # Get by Id
 try:
-    print("Get an ethernet-network by id")
-    ethernet_nets_byid = oneview_client.ethernet_networks.get(
-        '42c25912-7350-411b-8b9c-daeef96fa775')
+    print("\nGet an ethernet-network by id")
+    ethernet_nets_byid = oneview_client.ethernet_networks.get(ethernet_network_id)
     pprint(ethernet_nets_byid)
 except HPOneViewException as e:
     print(e.msg['message'])
 
 # Get by Uri
-print("Get an ethernet-network by uri")
+print("\nGet an ethernet-network by uri")
 ethernet_nets_by_uri = oneview_client.ethernet_networks.get(
     ethernet_network['uri'])
 pprint(ethernet_nets_by_uri)
 
 # Get URIs of associated profiles
-print("Get associated profiles uri(s)")
-associated_profiles = oneview_client.ethernet_networks.get_associated_profiles(
-    '3f7c5ec7-35e2-4aa6-abda-6ae1ab00c8d8')
+print("\nGet associated profiles uri(s)")
+associated_profiles = oneview_client.ethernet_networks.get_associated_profiles(ethernet_network_id)
 pprint(associated_profiles)
 
 # Get URIs of uplink port group
-print("Get uplink port group uri(s)")
-uplink_group = oneview_client.ethernet_networks.get_associated_uplink_groups(
-    '45b39812-c629-4eb1-a6ec-78710f3a1679')
-pprint(uplink_group)
+print("\nGet uplink port group uri(s)")
+uplink_group_uris = oneview_client.ethernet_networks.get_associated_uplink_groups(ethernet_network_id)
+pprint(uplink_group_uris)
+
+# Get the associated uplink set resources
+print("\nGet uplink port group uri(s)")
+uplink_groups = []
+for uri in uplink_group_uris:
+    uplink_groups.append(oneview_client.uplink_sets.get(uri))
+pprint(uplink_groups)
+
 
 # Delete bulk ethernet networks
-print("Delete bulk ethernet networks")
+print("\nDelete bulk ethernet networks")
 for net in ethernet_nets_bulk:
     oneview_client.ethernet_networks.delete(net)
 print("   Done.")
 
 # Delete the created network
+print("\nDelete the ethernet network")
 oneview_client.ethernet_networks.delete(ethernet_network)
 print("Successfully deleted ethernet-network")
