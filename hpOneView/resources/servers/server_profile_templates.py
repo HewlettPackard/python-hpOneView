@@ -87,3 +87,29 @@ class ServerProfileTemplate(object):
             dict: The server profile template resource
         """
         return self._client.get(id_or_uri=id_or_uri)
+
+    def get_by(self, field, value):
+        """
+        Get all server profile templates that matches a specified filter
+        The search is case insensitive
+
+        Args:
+            field: field name to filter
+            value: value to filter
+
+        Returns:
+            list: A list of server profile templates
+        """
+        return self._client.get_by(field, value)
+
+    def get_by_name(self, name):
+        """
+        Gets a server profile template by name.
+
+        Args:
+            name: Name of the server profile template
+
+        Returns:
+            dict: The server profile template resource
+        """
+        return self._client.get_by_name(name)

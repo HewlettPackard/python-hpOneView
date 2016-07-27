@@ -49,3 +49,16 @@ print("\nGet a server profile template by uri")
 template_uri = all_templates[0]["uri"]
 template = oneview_client.server_profile_templates.get(template_uri)
 pprint(template)
+
+# Get by property
+print("\nGet a list of server profile templates that matches the specified macType")
+template_mac_type = all_templates[1]["macType"]
+templates = oneview_client.server_profile_templates.get_by('macType', template_mac_type)
+for template in templates:
+    print('  %s' % template['name'])
+
+# Get by name
+print("\nGet a server profile templates by name")
+template_name = all_templates[0]["name"]
+template = oneview_client.server_profile_templates.get_by_name(template_name)
+pprint(template)
