@@ -44,8 +44,11 @@ oneview_client = OneViewClient(config)
 options = {
     "name": "Uplink Set Demo",
     "status": "OK",
-    "logicalInterconnectUri": "",
-    "networkUris": [],
+    "logicalInterconnectUri": "/rest/logical-interconnects/0de81de6-6652-4861-94f9-9c24b2fd0d66",
+    "networkUris": [
+        '/rest/ethernet-networks/9e8472ad-5ad1-4cbd-aab1-566b67ffc6a4',
+        '/rest/ethernet-networks/28ea7c1a-4930-4432-854b-30cf239226a2'
+    ],
     "fcNetworkUris": [],
     "fcoeNetworkUris": [],
     "portConfigInfos": [],
@@ -75,6 +78,15 @@ for uplink_set in uplink_sets:
 print("\nGet uplink set by name")
 uplink_set = oneview_client.uplink_sets.get_by('name', 'Renamed Uplink Set Demo')[0]
 print("Found uplink set at uri '{uri}'\n  by name = '{name}'".format(**uplink_set))
+
+
+# Add an ethernet network to the uplink set
+# To run this example you must define an ethernet network uri or ID below
+ethernet_network_id = None
+if ethernet_network_id:
+    print("\nAdd an ethernet network to the uplink set")
+    uplink_set = oneview_client.uplink_sets.add_ethernet_networks(created_uplink_set['uri'], ethernet_network_id)
+    print("The uplink set with name = '{name}' have now the networkUris:\n {networkUris}".format(**uplink_set))
 
 # Get an uplink set resource by uri
 print("\nGet an uplink set by uri")

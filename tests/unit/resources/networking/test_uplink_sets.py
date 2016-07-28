@@ -151,9 +151,8 @@ class UplinkSetsTest(unittest.TestCase):
         self.assertEqual(mock_get_enet.call_count, 3)
         self.assertEqual(result_get_enet, result)
 
-    @mock.patch.object(EthernetNetworks, 'get')
     @mock.patch.object(UplinkSets, 'get')
-    def test_get_ethernet_networks_with_empty_list(self, mock_uplink_get, mock_get_enet):
+    def test_get_ethernet_networks_with_empty_list(self, mock_uplink_get):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         uplink = {
             'name': 'UplinkName',
@@ -162,3 +161,133 @@ class UplinkSetsTest(unittest.TestCase):
         mock_uplink_get.return_value = uplink
         result = self._uplink_sets.get_ethernet_networks(id)
         self.assertEqual([], result)
+
+    @mock.patch.object(UplinkSets, 'update')
+    @mock.patch.object(UplinkSets, 'get')
+    def test_add_one_ethernet_network(self, mock_uplink_get, mock_uplink_update):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        ethernet_to_add = '/rest/ethernet-networks/5f14bf27-f839-4e9f-9ec8-9f0e0b413939'
+        uplink = {
+            'name': 'UplinkName',
+        }
+
+        uplink_to_update = {
+            'name': 'UplinkName',
+            'networkUris': ['/rest/ethernet-networks/5f14bf27-f839-4e9f-9ec8-9f0e0b413939', ]
+        }
+
+        mock_uplink_get.return_value = uplink
+        self._uplink_sets.add_ethernet_networks(id, ethernet_to_add)
+        mock_uplink_update.assert_called_once_with(uplink_to_update)
+
+    @mock.patch.object(UplinkSets, 'update')
+    @mock.patch.object(UplinkSets, 'get')
+    def test_add_a_list_of_ethernet_networks(self, mock_uplink_get, mock_uplink_update):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        ethernet_to_add = [
+            '/rest/ethernet-networks/5f14bf27-f839-4e9f-9ec8-9f0e0b413939',
+            '/rest/ethernet-networks/134dcf5e-0d8e-441c-b00d-e1dd6a067188',
+        ]
+        uplink = {
+            'name': 'UplinkName',
+        }
+
+        uplink_to_update = {
+            'name': 'UplinkName',
+            'networkUris': ['/rest/ethernet-networks/134dcf5e-0d8e-441c-b00d-e1dd6a067188',
+                            '/rest/ethernet-networks/5f14bf27-f839-4e9f-9ec8-9f0e0b413939', ]
+        }
+
+        mock_uplink_get.return_value = uplink
+        self._uplink_sets.add_ethernet_networks(id, ethernet_to_add)
+        mock_uplink_update.assert_called_once_with(uplink_to_update)
+
+    @mock.patch.object(UplinkSets, 'update')
+    @mock.patch.object(UplinkSets, 'get')
+    def test_add_a_list_of_ethernet_network_uris(self, mock_uplink_get, mock_uplink_update):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        ethernet_to_add = [
+            '/rest/ethernet-networks/5f14bf27-f839-4e9f-9ec8-9f0e0b413939',
+            '/rest/ethernet-networks/d34dcf5e-0d8e-441c-b00d-e1dd6a067188',
+        ]
+        uplink = {
+            'name': 'UplinkName',
+        }
+
+        uplink_to_update = {
+            'name': 'UplinkName',
+            'networkUris': ['/rest/ethernet-networks/5f14bf27-f839-4e9f-9ec8-9f0e0b413939',
+                            '/rest/ethernet-networks/d34dcf5e-0d8e-441c-b00d-e1dd6a067188', ]
+        }
+
+        mock_uplink_get.return_value = uplink
+        self._uplink_sets.add_ethernet_networks(id, ethernet_to_add)
+        mock_uplink_update.assert_called_once_with(uplink_to_update)
+
+    @mock.patch.object(UplinkSets, 'update')
+    @mock.patch.object(UplinkSets, 'get')
+    def test_add_a_list_of_ethernet_network_ids(self, mock_uplink_get, mock_uplink_update):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        ethernet_to_add = [
+            '5f14bf27-f839-4e9f-9ec8-9f0e0b413939',
+            'd34dcf5e-0d8e-441c-b00d-e1dd6a067188',
+        ]
+        uplink = {
+            'name': 'UplinkName',
+        }
+        uplink_to_update = {
+            'name': 'UplinkName',
+            'networkUris': ['/rest/ethernet-networks/5f14bf27-f839-4e9f-9ec8-9f0e0b413939',
+                            '/rest/ethernet-networks/d34dcf5e-0d8e-441c-b00d-e1dd6a067188', ]
+        }
+        uplink_return = uplink_to_update.copy()
+
+        mock_uplink_update.return_value = uplink_return
+        mock_uplink_get.return_value = uplink
+
+        result = self._uplink_sets.add_ethernet_networks(id, ethernet_to_add)
+        mock_uplink_update.assert_called_once_with(uplink_to_update)
+        self.assertEqual(uplink_return, result)
+
+    @mock.patch.object(UplinkSets, 'update')
+    @mock.patch.object(UplinkSets, 'get')
+    def test_add_missing_ethernet_networks(self, mock_uplink_get, mock_uplink_update):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        ethernet_to_add = [
+            '5f14bf27-f839-4e9f-9ec8-9f0e0b413939',
+            'd34dcf5e-0d8e-441c-b00d-e1dd6a067188',
+        ]
+        uplink = {
+            'name': 'UplinkName',
+            'networkUris': ['/rest/ethernet-networks/d34dcf5e-0d8e-441c-b00d-e1dd6a067188', ]
+        }
+        uplink_to_update = {
+            'name': 'UplinkName',
+            'networkUris': ['/rest/ethernet-networks/5f14bf27-f839-4e9f-9ec8-9f0e0b413939',
+                            '/rest/ethernet-networks/d34dcf5e-0d8e-441c-b00d-e1dd6a067188', ]
+        }
+        uplink_return = uplink_to_update.copy()
+
+        mock_uplink_get.return_value = uplink
+        mock_uplink_update.return_value = uplink_return
+
+        result = self._uplink_sets.add_ethernet_networks(id, ethernet_to_add)
+        mock_uplink_update.assert_called_once_with(uplink_to_update)
+        self.assertEqual(uplink_return, result)
+
+    @mock.patch.object(UplinkSets, 'update')
+    @mock.patch.object(UplinkSets, 'get')
+    def test_not_add_ethernet_networks_already_associated(self, mock_uplink_get, mock_uplink_update):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        ethernet_to_add = [
+            'd34dcf5e-0d8e-441c-b00d-e1dd6a067188',
+        ]
+        uplink = {
+            'name': 'UplinkName',
+            'networkUris': ['/rest/ethernet-networks/d34dcf5e-0d8e-441c-b00d-e1dd6a067188', ]
+        }
+
+        mock_uplink_get.return_value = uplink
+        result = self._uplink_sets.add_ethernet_networks(id, ethernet_to_add)
+        self.assertEqual(mock_uplink_update.call_count, 0)
+        self.assertEqual(uplink, result)

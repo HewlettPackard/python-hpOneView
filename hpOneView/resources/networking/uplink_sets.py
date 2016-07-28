@@ -39,6 +39,7 @@ __status__ = 'Development'
 
 from hpOneView.resources.resource import ResourceClient
 from hpOneView.resources.networking.ethernet_networks import EthernetNetworks
+from builtins import isinstance
 
 
 class UplinkSets(object):
@@ -180,3 +181,33 @@ class UplinkSets(object):
             for uri in network_uris:
                 networks.append(self._ethernet_network.get(uri))
         return networks
+
+    def add_ethernet_networks(self, id_or_uri, ethernet_id_or_uris):
+        """
+        Adds existing ethernet networks to an uplink set
+        Args:
+            id_or_uri:
+                Could be either the uplink set id or the uplink set uri
+            ethernet_id_or_uris:
+                Could be either one or more ethernet network id or ethernet network uri
+
+        Returns:
+            dict: The updated uplink set
+        """
+        if not isinstance(ethernet_id_or_uris, list):
+            ethernet_id_or_uris = [ethernet_id_or_uris]
+
+        uplink = self.get(id_or_uri)
+
+        associated_enets = uplink.get('networkUris', [])
+
+        for i, enet in enumerate(ethernet_id_or_uris):
+            ethernet_id_or_uris[i] = enet if '/' in enet else self._ethernet_network.URI + '/' + enet
+
+        missing_enets = sorted(list(set(ethernet_id_or_uris) - set(associated_enets)))
+
+        if len(missing_enets) > 0:
+            uplink['networkUris'] = missing_enets + associated_enets
+            return self.update(uplink)
+        else:
+            return uplink
