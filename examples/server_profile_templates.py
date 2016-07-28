@@ -33,9 +33,9 @@ config = {
     }
 }
 
-SERVER_PROFILE_NAME = "ProfileTemplate101"
-SERVER_HARDWARE_TYPE_URI = "/rest/server-hardware-types/94B55683-173F-4B36-8FA6-EC250BA2328B"
-ENCLOSURE_GROUP_URI = "/rest/enclosure-groups/ad5e9e88-b858-4935-ba58-017d60a17c89"
+server_profile_name = "ProfileTemplate101"
+server_hardware_type_uri = "/rest/server-hardware-types/94B55683-173F-4B36-8FA6-EC250BA2328B"
+enclosure_group_uri = "/rest/enclosure-groups/ad5e9e88-b858-4935-ba58-017d60a17c89"
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
@@ -43,17 +43,27 @@ config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
 
 # Create a server profile template
-print("\nCreate a basic connection-less server profile template ")
-template = dict(
-    name=SERVER_PROFILE_NAME,
-    serverHardwareTypeUri=SERVER_HARDWARE_TYPE_URI,
-    enclosureGroupUri=ENCLOSURE_GROUP_URI
+print("Create a basic connection-less server profile template ")
+basic_template_options = dict(
+    name=server_profile_name,
+    serverHardwareTypeUri=server_hardware_type_uri,
+    enclosureGroupUri=enclosure_group_uri
 )
-new_template = oneview_client.server_profile_templates.create(template)
-pprint(new_template)
+basic_template = oneview_client.server_profile_templates.create(basic_template_options)
+pprint(basic_template)
+
+# Update bootMode from recently created template
+print("\nUpdate bootMode from recently created template")
+template_to_update = basic_template.copy()
+template_to_update["bootMode"] = dict(manageMode=True, mode="BIOS")
+updated = oneview_client.server_profile_templates.update(
+    resource=template_to_update,
+    id_or_uri=template_to_update["uri"]
+)
+pprint(updated)
 
 # Get all
-print("Get list of all server profile templates")
+print("\nGet list of all server profile templates")
 all_templates = oneview_client.server_profile_templates.get_all()
 for template in all_templates:
     print('  %s' % template['name'])
@@ -73,5 +83,10 @@ for template in templates:
 
 # Get by name
 print("\nGet a server profile templates by name")
-template = oneview_client.server_profile_templates.get_by_name(SERVER_PROFILE_NAME)
+template = oneview_client.server_profile_templates.get_by_name(server_profile_name)
 pprint(template)
+
+# Delete the created template
+print("\nDelete the created template")
+oneview_client.server_profile_templates.delete(basic_template)
+print("The template was successfully deleted.")
