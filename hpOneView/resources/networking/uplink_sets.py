@@ -194,6 +194,23 @@ class UplinkSets(object):
         Returns:
             dict: The updated uplink set
         """
+        return self.__set_ethernet_uris(id_or_uri, ethernet_id_or_uris, operation="add")
+
+    def remove_ethernet_networks(self, id_or_uri, ethernet_id_or_uris):
+        """
+        Remove existing ethernet networks of an uplink set
+        Args:
+            id_or_uri:
+                Could be either the uplink set id or the uplink set uri
+            ethernet_id_or_uris:
+                Could be either one or more ethernet network id or ethernet network uri
+
+        Returns:
+            dict: The updated uplink set
+        """
+        return self.__set_ethernet_uris(id_or_uri, ethernet_id_or_uris, operation="remove")
+
+    def __set_ethernet_uris(self, id_or_uri, ethernet_id_or_uris, operation="add"):
         if not isinstance(ethernet_id_or_uris, list):
             ethernet_id_or_uris = [ethernet_id_or_uris]
 
@@ -204,10 +221,15 @@ class UplinkSets(object):
         for i, enet in enumerate(ethernet_id_or_uris):
             ethernet_id_or_uris[i] = enet if '/' in enet else self._ethernet_network.URI + '/' + enet
 
-        missing_enets = sorted(list(set(ethernet_id_or_uris) - set(associated_enets)))
+        if operation == "remove":
+            enets_to_update = sorted(list(set(associated_enets) - set(ethernet_id_or_uris)))
+        elif operation == "add":
+            enets_to_update = sorted(list(set(associated_enets).union(set(ethernet_id_or_uris))))
+        else:
+            raise ValueError("Value {} is not supported as operation. The supported values are: ['add', 'remove']")
 
-        if len(missing_enets) > 0:
-            uplink['networkUris'] = missing_enets + associated_enets
+        if set(enets_to_update) != set(associated_enets):
+            uplink['networkUris'] = enets_to_update
             return self.update(uplink)
         else:
             return uplink
