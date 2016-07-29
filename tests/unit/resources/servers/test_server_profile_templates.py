@@ -96,3 +96,11 @@ class ServerProfileTemplateTest(TestCase):
 
         self._resource.delete(resource=template, timeout=TIMEOUT)
         mock_delete.assert_called_once_with(resource=template, timeout=TIMEOUT)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_new_profile(self, mock_get):
+        template_id = "6fee02f3-b7c7-42bd-a528-04341e16bad6"
+        expected_uri = '/rest/server-profile-templates/6fee02f3-b7c7-42bd-a528-04341e16bad6/new-profile'
+
+        self._resource.get_new_profile(id_or_uri=template_id)
+        mock_get.assert_called_once_with(id_or_uri=expected_uri)

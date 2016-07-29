@@ -68,12 +68,6 @@ all_templates = oneview_client.server_profile_templates.get_all()
 for template in all_templates:
     print('  %s' % template['name'])
 
-# Get by uri
-print("\nGet a server profile template by uri")
-template_uri = all_templates[0]["uri"]
-template = oneview_client.server_profile_templates.get(template_uri)
-pprint(template)
-
 # Get by property
 print("\nGet a list of server profile templates that matches the specified macType")
 template_mac_type = all_templates[1]["macType"]
@@ -85,6 +79,17 @@ for template in templates:
 print("\nGet a server profile templates by name")
 template = oneview_client.server_profile_templates.get_by_name(server_profile_name)
 pprint(template)
+
+# Get by uri
+print("\nGet a server profile template by uri")
+template_uri = all_templates[0]["uri"]
+template = oneview_client.server_profile_templates.get(template_uri)
+pprint(template)
+
+# Get new profile
+print("\nGet new profile")
+profile = oneview_client.server_profile_templates.get_new_profile(template_uri)
+pprint(profile)
 
 # Delete the created template
 print("\nDelete the created template")
