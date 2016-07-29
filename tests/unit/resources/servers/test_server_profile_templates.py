@@ -51,3 +51,18 @@ class ServerProfileTemplateTest(TestCase):
 
         self._resource.get(template_id)
         mock_get.assert_called_once_with(id_or_uri=template_id)
+
+    @mock.patch.object(ResourceClient, 'get_by')
+    def test_get_by_property(self, mock_get_by):
+        template_property = "name"
+        template_name = "BL460c Gen8 1"
+
+        self._resource.get_by(template_property, template_name)
+        mock_get_by.assert_called_once_with(template_property, template_name)
+
+    @mock.patch.object(ResourceClient, 'get_by_name')
+    def test_get_by_name(self, mock_get_by_name):
+        template_name = "BL460c Gen8 1"
+
+        self._resource.get_by_name(template_name)
+        mock_get_by_name.assert_called_once_with(template_name)
