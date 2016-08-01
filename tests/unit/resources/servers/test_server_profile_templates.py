@@ -29,6 +29,8 @@ from hpOneView.connection import connection
 from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
 from hpOneView.resources.resource import ResourceClient
 
+TIMEOUT = -1
+
 
 class ServerProfileTemplateTest(TestCase):
 
@@ -66,3 +68,31 @@ class ServerProfileTemplateTest(TestCase):
 
         self._resource.get_by_name(template_name)
         mock_get_by_name.assert_called_once_with(template_name)
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_create(self, mock_create):
+        template = dict(name="BL460c Gen8 1")
+
+        expected_template = template.copy()
+        expected_template["type"] = "ServerProfileTemplateV1"
+
+        self._resource.create(resource=template, timeout=TIMEOUT)
+        mock_create.assert_called_once_with(resource=expected_template, timeout=TIMEOUT)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update(self, mock_update):
+        uri = "/rest/server-profile-templates/4ff2327f-7638-4b66-ad9d-283d4940a4ae"
+        template = dict(name="BL460c Gen8 1", macType="Virtual")
+
+        expected_template = template.copy()
+        expected_template["type"] = "ServerProfileTemplateV1"
+
+        self._resource.update(resource=template, id_or_uri=uri)
+        mock_update.assert_called_once_with(resource=expected_template, uri=uri)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_delete(self, mock_delete):
+        template = dict(name="BL460c Gen8 1")
+
+        self._resource.delete(resource=template, timeout=TIMEOUT)
+        mock_delete.assert_called_once_with(resource=template, timeout=TIMEOUT)

@@ -44,6 +44,9 @@ class ServerProfileTemplate(object):
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
+        self.__default_values = {
+            'type': 'ServerProfileTemplateV1'
+        }
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
@@ -113,3 +116,58 @@ class ServerProfileTemplate(object):
             dict: The server profile template resource
         """
         return self._client.get_by_name(name)
+
+    def create(self, resource, timeout=-1):
+        """
+         Creates a server profile template.
+
+        Args:
+            resource: dict object to create
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stop waiting for its completion.
+
+        Returns: Created resource.
+
+        """
+        data = self.__default_values.copy()
+        data.update(resource)
+        return self._client.create(resource=data, timeout=timeout)
+
+    def update(self, resource, id_or_uri):
+        """
+        Allows a server profile template object to have its configuration modified. These modifications can be as
+        simple as a name or description change or much more complex changes around the networking configuration.
+        It should be noted that selection of a virtual or physical MAC or Serial Number type is not mutable once a
+        profile template has been created, and attempts to change those elements will not be applied to the target
+        profile template. Connection requests can be one of the following types - port Auto, auto and explicit.
+        An explicit request is where the request portId parameter includes the adapter, port and flexNic. An auto
+        request  is where portId is set to "Auto" and a port auto request is where just the portId parameter includes
+        just the adapter and port. The fields listed as required in the Request Body section need to be specified
+        only when their associated parent is used.
+
+        Args:
+            id_or_uri: Could be either the template id or the template uri
+            resource (dict): object to update
+
+        Returns:
+            dict: The server profile template resource
+        """
+        data = self.__default_values.copy()
+        data.update(resource)
+        return self._client.update(resource=data, uri=id_or_uri)
+
+    def delete(self, resource, timeout=-1):
+        """
+        Deletes a server profile template object from the appliance based on its profile template UUID.
+
+        Args:
+            resource: dict object to delete
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
+
+        Returns:
+            bool:
+        """
+        return self._client.delete(resource=resource, timeout=timeout)
