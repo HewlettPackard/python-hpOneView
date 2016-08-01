@@ -129,6 +129,25 @@ class Volumes(object):
         """
         return self._client.create(resource, timeout=timeout)
 
+    def update(self, resource, force=False, timeout=-1):
+        """
+        Updates properties of a volume.
+
+        Reverts a volume to the specified snapshot.
+
+        Args:
+            resource: dict object to update
+            force:
+                If set to true the operation completes despite any problems with network connectivity or errors on
+                the resource itself. The default is false.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stop waiting for its completion.
+
+        Returns: Updated resource.
+        """
+        return self._client.update(resource, timeout=timeout, force=force)
+
     def delete(self, resource, force=False, export_only=False, timeout=-1):
         """
         Deletes a managed volume.

@@ -75,6 +75,30 @@ class VolumesTest(unittest.TestCase):
         self._volumes.create(resource)
         mock_create.assert_called_once_with(resource_rest_call, timeout=-1)
 
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_called_once(self, mock_update):
+        resource = {
+            'uri': '/rest/storage-volumes/3518be0e-17c1-4189-8f81-83f3724f6155',
+            'name': 'ONEVIEW_SDK_TEST_VOLUME_TYPE_1'
+        }
+        resource_rest_call = resource.copy()
+
+        self._volumes.update(resource)
+
+        mock_update.assert_called_once_with(resource_rest_call, timeout=-1, force=False)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_called_once_with_force(self, mock_update):
+        resource = {
+            'uri': '/rest/storage-volumes/3518be0e-17c1-4189-8f81-83f3724f6155',
+            'name': 'ONEVIEW_SDK_TEST_VOLUME_TYPE_1'
+        }
+        resource_rest_call = resource.copy()
+
+        self._volumes.update(resource, force=True)
+
+        mock_update.assert_called_once_with(resource_rest_call, timeout=mock.ANY, force=True)
+
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_by_id_called_once(self, mock_delete):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
