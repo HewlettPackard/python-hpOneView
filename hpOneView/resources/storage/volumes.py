@@ -64,8 +64,7 @@ class Volumes(object):
             count:
                 The number of resources to return. A count of -1 requests all the items.
                 The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items, or
-                if returning the requested number of items would take too long.
+                count if the sum of start and count exceed the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
                 default is no filter - all resources are returned.
@@ -73,8 +72,8 @@ class Volumes(object):
                 The sort order of the returned data set. By default, the sort order is based
                 on create time, with the oldest entry first.
 
-        Returns: A list of volumes.
-
+        Returns:
+            list: A list of managed volumes.
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
@@ -98,8 +97,8 @@ class Volumes(object):
             field: Field name to filter.
             value: Value to filter.
 
-        Returns: A list of volumes.
-
+        Returns:
+            list: A list of managed volumes.
         """
         return self._client.get_by(field, value)
 
@@ -108,6 +107,8 @@ class Volumes(object):
         Creates or adds a volume.
 
         It's possible to create the volume in 6 different ways:
+
+          It's possible to create the volume in 6 different ways:
 
           1) Common = Storage System + Storage Pool
           2) Template = Storage Volume Template
@@ -124,8 +125,8 @@ class Volumes(object):
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stop waiting for its completion.
 
-        Returns: Created or added resource.
-
+        Returns:
+            dict: Created or added resource.
         """
         return self._client.create(resource, timeout=timeout)
 
@@ -175,8 +176,7 @@ class Volumes(object):
             count:
                 The number of resources to return. A count of -1 requests all the items.
                 The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items, or
-                if returning the requested number of items would take too long.
+                count if the sum of start and count exceed the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
                 default is no filter - all resources are returned.

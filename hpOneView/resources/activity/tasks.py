@@ -71,7 +71,7 @@ class Tasks(object):
             count:
                 The number of resources to return. A count of -1 requests all the items. The actual number of items in
                 the response may differ from the requested count if the sum of start and count exceed the total number
-                of items, or if returning the requested number of items would take too long.
+                of items.
             fields:
                  Specifies which fields should be returned in the result set.
             filter:
@@ -89,8 +89,7 @@ class Tasks(object):
                  collections of resources.
 
         Returns:
-            dict: tasks
-
+            list: A list of tasks.
         """
         return self._client.get_all(start=start, count=count, filter=filter, query=query, sort=sort, view=view,
                                     fields=fields)

@@ -49,7 +49,7 @@ class FirmwareDrivers(object):
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a paginated collection of Enclosures. The collection is based on optional sorting and filtering, and
+        Gets a paginated collection of Firware Drivers. The collection is based on optional sorting and filtering, and
         constrained by start and count parameters.
 
         Args:
@@ -59,8 +59,7 @@ class FirmwareDrivers(object):
             count:
                 The number of resources to return. A count of -1 requests all the items.
                 The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items, or
-                if returning the requested number of items would take too long.
+                count if the sum of start and count exceed the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
                 default is no filter - all resources are returned.
@@ -69,8 +68,7 @@ class FirmwareDrivers(object):
                 on create time, with the oldest entry first.
 
         Returns:
-            list: list of firmware baseline resources
-
+            list: list of firmware baseline resources.
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
@@ -85,8 +83,7 @@ class FirmwareDrivers(object):
             value: value to filter
 
         Returns:
-            list: list of firmware baseline resources
-
+            list: list of firmware baseline resources.
         """
         firmwares = self.get_all()
         matches = []
