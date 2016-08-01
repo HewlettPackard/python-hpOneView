@@ -63,14 +63,45 @@ class ResourceClient(object):
 
     def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None):
         """
-        the use of optional parameters are described here:
+        Gets all items according with the given arguments.
+
+        More than one request can be send to get the items, regardless the query parameter 'count', since the actual
+        number of items in the response may differ from the requested count. Some types of resource has a limited
+        number of items returned on each call. For those resources, additional calls are made to the API to retrieve
+        any other items matching the given filter. The actual number of items can also diverge from the requested call
+        if the requested number of items would take too long.
+
+        The use of optional parameters for OneView 2.0 is described at:
         http://h17007.www1.hpe.com/docs/enterprise/servers/oneview2.0/cic-api/en/api-docs/current/index.html
 
-        Known issues:
-            - Pass "'" inside a parameter is not supported by One View API
+        NOTE: Single quote - "'" - inside a query parameter is not supported by OneView API.
 
-        Returns: a dictionary with requested data
+        Args:
+            start:
+                The first item to return, using 0-based indexing.
+                If not specified, the default is 0 - start with the first available item.
+            count:
+                The number of resources to return. A count of -1 requests all the items (default).
+            filter:
+                A general filter/query string to narrow the list of items returned. The default is no filter - all
+                resources are returned.
+            query:
+                A single query parameter can do what would take multiple parameters or multiple GET requests using
+                filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.
+            sort:
+                The sort order of the returned data set. By default, the sort order is based on create time, with the
+                oldest entry first.
+            view:
+                Returns a specific subset of the attributes of the resource or collection by specifying the name of a
+                predefined view. The default view is expand (show all attributes of the resource, and all elements of
+                collections or resources).
+            fields:
+                Nome of the fields.
+            uri:
+                A specific URI (optional)
 
+        Returns:
+            list: A list of items matching the specified filter.
         """
         if filter:
             filter = "&filter=" + quote(filter)
@@ -92,12 +123,9 @@ class ResourceClient(object):
 
         uri = "{0}?start={1}&count={2}{3}{4}{5}{6}{7}".format(path, start, count, filter, query, sort, view, fields)
 
-        logger.debug('Getting all resources : with uri : %s' % uri)
+        logger.debug('Getting all resources with uri: {0}'.format(uri))
 
-        response = self._connection.get(uri)
-        result = self.__get_members(response)
-
-        logger.debug("Getting all resources : count : %i" % len(result))
+        result = self.__do_requests_to_getall(uri, count)
 
         return result
 
@@ -474,3 +502,19 @@ class ResourceClient(object):
             return body
 
         return self._task_monitor.wait_for_task(task, timeout)
+
+    def __do_requests_to_getall(self, uri, count):
+        items = []
+        request_needed = True
+
+        while request_needed:
+            logger.debug('Making HTTP request to get all resources. Uri: {0}'.format(uri))
+            response = self._connection.get(uri)
+            members = self.__get_members(response)
+            uri = response.get('nextPageUri')
+            items += members
+            logger.debug("Response getAll: nextPageUri = {0}, members list length: {1}".format(uri, str(len(members))))
+            request_needed = uri and not len(members) == 0 and (len(items) < count or count == -1)
+
+        logger.debug('Total # of members found = {0}'.format(str(len(items))))
+        return items

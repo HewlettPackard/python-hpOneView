@@ -72,8 +72,7 @@ class LogicalSwitchGroups(object):
                 on create time, with the oldest entry first.
 
         Returns:
-            list: A list of  logical switch groups
-
+            list: A list of logical switch groups.
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
@@ -151,7 +150,6 @@ class LogicalSwitchGroups(object):
             value: value to filter
 
         Returns:
-            list: A list of  logical switch groups that match the filter
-
+            list: A list of logical switch groups that match the filter.
         """
         return self._client.get_by(field, value)

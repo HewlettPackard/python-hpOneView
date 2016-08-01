@@ -22,9 +22,9 @@
 ###
 
 import unittest
-
 import mock
 
+from mock import call
 from hpOneView.connection import connection
 from hpOneView.exceptions import HPOneViewUnknownType
 from hpOneView.resources.resource import ResourceClient, RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor
@@ -58,7 +58,7 @@ class ResourceTest(unittest.TestCase):
         query = "name NE 'WrongName'"
         view = '"{view-name}"'
 
-        mock_get.return_value = {"members": "members"}
+        mock_get.return_value = {"members": [{"member": "member"}]}
 
         result = self.resource_client.get_all(
             1, 500, filter, query, sort, view, 'name,owner,modified')
@@ -71,7 +71,7 @@ class ResourceTest(unittest.TestCase):
               '&view=%22%7Bview-name%7D%22' \
               '&fields=name%2Cowner%2Cmodified'.format(resource_uri=self.URI)
 
-        self.assertEqual("members", result)
+        self.assertEqual([{'member': 'member'}], result)
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(connection, 'get')
@@ -96,6 +96,82 @@ class ResourceTest(unittest.TestCase):
             self.assertEqual(UNRECOGNIZED_URI, e.args[0])
         else:
             self.fail('Expected Exception was not raised')
+
+    @mock.patch.object(connection, 'get')
+    def test_get_all_should_do_multi_requests_when_response_paginated(self, mock_get):
+        uri_list = ['/rest/testuri?start=0&count=-1',
+                    '/rest/testuri?start=3&count=3',
+                    '/rest/testuri?start=6&count=3']
+
+        results = [{'nextPageUri': uri_list[1], 'members': [{'id': '1'}, {'id': '2'}, {'id': '3'}]},
+                   {'nextPageUri': uri_list[2], 'members': [{'id': '4'}, {'id': '5'}, {'id': '6'}]},
+                   {'nextPageUri': None, 'members': [{'id': '7'}, {'id': '8'}]}]
+
+        mock_get.side_effect = results
+
+        self.resource_client.get_all()
+
+        expected_calls = [call(uri_list[0]), call(uri_list[1]), call(uri_list[2])]
+        self.assertEqual(mock_get.call_args_list, expected_calls)
+
+    @mock.patch.object(connection, 'get')
+    def test_get_all_with_count_should_do_multi_requests_when_response_paginated(self, mock_get):
+        uri_list = ['/rest/testuri?start=0&count=15',
+                    '/rest/testuri?start=3&count=3',
+                    '/rest/testuri?start=6&count=3']
+
+        results = [{'nextPageUri': uri_list[1], 'members': [{'id': '1'}, {'id': '2'}, {'id': '3'}]},
+                   {'nextPageUri': uri_list[2], 'members': [{'id': '4'}, {'id': '5'}, {'id': '6'}]},
+                   {'nextPageUri': None, 'members': [{'id': '7'}, {'id': '8'}]}]
+
+        mock_get.side_effect = results
+
+        self.resource_client.get_all(count=15)
+
+        expected_calls = [call(uri_list[0]), call(uri_list[1]), call(uri_list[2])]
+        self.assertEqual(mock_get.call_args_list, expected_calls)
+
+    @mock.patch.object(connection, 'get')
+    def test_get_all_should_return_all_items_when_response_paginated(self, mock_get):
+        uri_list = ['/rest/testuri?start=0&count=-1',
+                    '/rest/testuri?start=3&count=3',
+                    '/rest/testuri?start=6&count=1']
+
+        results = [{'nextPageUri': uri_list[1], 'members': [{'id': '1'}, {'id': '2'}, {'id': '3'}]},
+                   {'nextPageUri': uri_list[2], 'members': [{'id': '4'}, {'id': '5'}, {'id': '6'}]},
+                   {'nextPageUri': None, 'members': [{'id': '7'}]}]
+
+        mock_get.side_effect = results
+
+        result = self.resource_client.get_all()
+
+        expected_items = [{'id': '1'}, {'id': '2'}, {'id': '3'}, {'id': '4'}, {'id': '5'}, {'id': '6'}, {'id': '7'}]
+        self.assertSequenceEqual(result, expected_items)
+
+    @mock.patch.object(connection, 'get')
+    def test_get_all_with_count_should_return_all_items_when_response_paginated(self, mock_get):
+        uri_list = ['/rest/testuri?start=0&count=15',
+                    '/rest/testuri?start=3&count=3',
+                    '/rest/testuri?start=6&count=1']
+
+        results = [{'nextPageUri': uri_list[1], 'members': [{'id': '1'}, {'id': '2'}, {'id': '3'}]},
+                   {'nextPageUri': uri_list[2], 'members': [{'id': '4'}, {'id': '5'}, {'id': '6'}]},
+                   {'nextPageUri': None, 'members': [{'id': '7'}]}]
+
+        mock_get.side_effect = results
+
+        result = self.resource_client.get_all(count=15)
+
+        expected_items = [{'id': '1'}, {'id': '2'}, {'id': '3'}, {'id': '4'}, {'id': '5'}, {'id': '6'}, {'id': '7'}]
+        self.assertSequenceEqual(result, expected_items)
+
+    @mock.patch.object(connection, 'get')
+    def test_get_all_should_return_empty_list_when_response_has_no_items(self, mock_get):
+        mock_get.return_value = {'nextPageUri': None, 'members': []}
+
+        result = self.resource_client.get_all()
+
+        self.assertEqual(result, [])
 
     @mock.patch.object(connection, 'delete')
     @mock.patch.object(TaskMonitor, 'wait_for_task')

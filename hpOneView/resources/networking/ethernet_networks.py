@@ -63,8 +63,7 @@ class EthernetNetworks(object):
             count:
                 The number of resources to return. A count of -1 requests all the items.
                 The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items, or
-                if returning the requested number of items would take too long.
+                count if the sum of start and count exceed the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
                 default is no filter - all resources are returned.
@@ -72,8 +71,8 @@ class EthernetNetworks(object):
                 The sort order of the returned data set. By default, the sort order is based
                 on create time, with the oldest entry first.
 
-        Returns: dict
-
+        Returns:
+            list: A list of ethernet networks.
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
@@ -167,7 +166,7 @@ class EthernetNetworks(object):
             vlan_id_range: A combination of values or ranges to be retrieved. For example '1-10,50,51,500-700'.
 
         Returns:
-            list: List of Ethernet Networks.
+            list: A list of Ethernet Networks.
 
         """
         filter = '"\'name\' matches \'{}\_%\'"'.format(name_prefix)
@@ -236,8 +235,8 @@ class EthernetNetworks(object):
             field: field name to filter
             value: value to filter
 
-        Returns: dict
-
+        Returns:
+            list: A list of ethernet networks.
         """
         return self._client.get_by(field, value)
 
