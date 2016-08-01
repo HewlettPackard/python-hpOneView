@@ -97,15 +97,16 @@ class EthernetNetworks(object):
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
-    def get(self, id):
+    def get(self, id_or_uri):
         """
-        Gets the Ethernet network with the specified ID
+        Gets the Ethernet network
         Args:
-            id: ID of Ethernet network
+            id_or_uri: ID or uri of Ethernet network
 
-        Returns: dict
+        Returns:
+            dict: The ethernet network
         """
-        return self._client.get(id)
+        return self._client.get(id_or_uri)
 
     def create(self, resource, timeout=-1):
         """

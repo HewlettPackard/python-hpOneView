@@ -40,12 +40,14 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-# To run this example you must define an interconnect uri (logicalInterconnectUri) bellow
+# To run this example you must define an interconnect uri (logicalInterconnectUri) and at leat one ethernet network
+# in 'networkUris' bellow
 options = {
     "name": "Uplink Set Demo",
     "status": "OK",
     "logicalInterconnectUri": "",
-    "networkUris": [],
+    "networkUris": [
+    ],
     "fcNetworkUris": [],
     "fcoeNetworkUris": [],
     "portConfigInfos": [],
@@ -76,10 +78,31 @@ print("\nGet uplink set by name")
 uplink_set = oneview_client.uplink_sets.get_by('name', 'Renamed Uplink Set Demo')[0]
 print("Found uplink set at uri '{uri}'\n  by name = '{name}'".format(**uplink_set))
 
+# Add an ethernet network to the uplink set
+# To run this example you must define an ethernet network uri or ID below
+ethernet_network_id = None
+if ethernet_network_id:
+    print("\nAdd an ethernet network to the uplink set")
+    uplink_set = oneview_client.uplink_sets.add_ethernet_networks(created_uplink_set['uri'], ethernet_network_id)
+    print("The uplink set with name = '{name}' have now the networkUris:\n {networkUris}".format(**uplink_set))
+
 # Get an uplink set resource by uri
 print("\nGet an uplink set by uri")
 uplink_set = oneview_client.uplink_sets.get(created_uplink_set['uri'])
 pprint(uplink_set)
+
+# Remove an ethernet network to the uplink set
+# To run this example you must define an ethernet network uri or ID below
+ethernet_network_id = None
+if ethernet_network_id:
+    print("\nRemove an ethernet network of the uplink set")
+    uplink_set = oneview_client.uplink_sets.remove_ethernet_networks(created_uplink_set['uri'], ethernet_network_id)
+    print("The uplink set with name = '{name}' have now the networkUris:\n {networkUris}".format(**uplink_set))
+
+# Get the associated ethernet networks of an uplink set
+print("\nGet the associated ethernet networks of the uplink set")
+networks = oneview_client.uplink_sets.get_ethernet_networks(created_uplink_set['uri'])
+pprint(networks)
 
 # Delete the recently created uplink set
 print("\nDelete the uplink set")
