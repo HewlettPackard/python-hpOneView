@@ -115,6 +115,11 @@ for volume in volumes:
 volume = oneview_client.volumes.get_by('name', volume_with_storage_pool['name'])[0]
 print("\nFound a volume by name: '{name}'.\n  uri = '{uri}'".format(**volume))
 
+# Update the name of the volume recently found to 'ONEVIEW_SDK_TEST_VOLUME_TYPE_1_RENAMED'
+volume['name'] = 'ONEVIEW_SDK_TEST_VOLUME_TYPE_1_RENAMED'
+volume = oneview_client.volumes.update(volume)
+print("\nVolume updated successfully.\n  uri = '{uri}'\n  with attribute 'name' = {name}".format(**volume))
+
 # Find a volume by URI
 volume_uri = volume_with_storage_pool['uri']
 volume = oneview_client.volumes.get(volume_uri)
