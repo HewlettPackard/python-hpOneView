@@ -66,6 +66,7 @@ from hpOneView.resources.servers.id_pools_vmac_ranges import IdPoolsVmacRanges
 from hpOneView.resources.servers.id_pools_vwwn_ranges import IdPoolsVwwnRanges
 from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.interconnect_types import InterconnectTypes
+from hpOneView.resources.networking.interconnect_link_topologies import InterconnectLinkTopologies
 from hpOneView.resources.networking.logical_downlinks import LogicalDownlinks
 from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
@@ -110,6 +111,7 @@ class OneViewClient(object):
         self.__id_pools_vwwn_ranges = None
         self.__interconnects = None
         self.__interconnect_types = None
+        self.__interconnect_link_topologies = None
         self.__power_devices = None
         self.__logical_interconnects = None
         self.__logical_interconnect_groups = None
@@ -299,6 +301,12 @@ class OneViewClient(object):
         if not self.__interconnect_types:
             self.__interconnect_types = InterconnectTypes(self.__connection)
         return self.__interconnect_types
+
+    @property
+    def interconnect_link_topologies(self):
+        if not self.__interconnect_link_topologies:
+            self.__interconnect_link_topologies = InterconnectLinkTopologies(self.__connection)
+        return self.__interconnect_link_topologies
 
     @property
     def logical_interconnect_groups(self):
