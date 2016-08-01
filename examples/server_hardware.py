@@ -45,13 +45,17 @@ options = {
     "configurationState": "Managed"
 }
 
+# Set the server_hardware_id to run this example.
+# server_hardware_id example: 37333036-3831-4753-4831-30315838524E
+server_hardware_id = ""
+
 oneview_client = OneViewClient(config)
 
 # Get Statistics with defaults
 print("Get server-hardware statistics")
 try:
     server_utilization = oneview_client.server_hardware.get_utilization(
-        "37333036-3831-584D-5131-303030333037")
+        server_hardware_id)
     pprint(server_utilization)
 except HPOneViewException as e:
     print(e.msg['message'])
@@ -59,7 +63,7 @@ except HPOneViewException as e:
 # Get Statistics specifying parameters
 print("Get server-hardware statistics specifying parameters")
 try:
-    server_utilization = oneview_client.server_hardware.get_utilization("37333036-3831-584D-5131-303030333037",
+    server_utilization = oneview_client.server_hardware.get_utilization(server_hardware_id,
                                                                         fields='AveragePower',
                                                                         filter='startDate=2016-05-30T03:29:42.000Z',
                                                                         view='day')
@@ -93,7 +97,7 @@ print("Found server at uri '%s'\n  by name = '%s'" %
 try:
     print("Get list of BIOS/UEFI Values")
     bios = oneview_client.server_hardware.get_bios(
-        '37333036-3831-4753-4831-30305838524E')
+        server_hardware_id)
     pprint(bios)
 except HPOneViewException as e:
     print(e.msg['message'])
@@ -101,8 +105,7 @@ except HPOneViewException as e:
 # Get the settings that describe the environmental configuration of server
 print(
     "Get the settings that describe the environmental configuration of server")
-server_envConf = oneview_client.server_hardware.get_environmental_configuration(
-    server['uuid'])
+server_envConf = oneview_client.server_hardware.get_environmental_configuration(server['uuid'])
 pprint(server_envConf)
 
 # Set the calibrated max power of an unmanaged or unsupported server
@@ -113,8 +116,8 @@ try:
     configuration = {
         "calibratedMaxPower": 2500
     }
-    server_updated_encConf = oneview_client.server_hardware.update_environmental_configuration(
-        configuration, '31393736-3831-4753-4831-30315835524E')
+    server_updated_encConf = oneview_client.server_hardware.update_environmental_configuration(configuration,
+                                                                                               server_hardware_id)
 except HPOneViewException as e:
     print(e.msg['message'])
 
@@ -125,16 +128,14 @@ print("URL to launch a Single Sign-On (SSO) session for the iLO web interface fo
 
 # Generates a Single Sign-On (SSO) session for the iLO Java Applet console
 # and return URL to launch it
-java_remote_console_url = oneview_client.server_hardware.get_java_remote_console_url(
-    server['uri'])
+java_remote_console_url = oneview_client.server_hardware.get_java_remote_console_url(server['uri'])
 print("URL to launch a Single Sign-On (SSO) session for the iiLO Java Applet console for server at uri:\n",
       "   {}\n   '{}'".format(
           server['uri'], java_remote_console_url))
 
 # Update iLO firmware to minimum version required
 oneview_client.server_hardware.update_mp_firware_version(server['uri'])
-print("Successfully updated iLO firmware on server at\n  uri: '{}'".format(
-    server['uri']))
+print("Successfully updated iLO firmware on server at\n  uri: '{}'".format(server['uri']))
 
 # Request power operation to change the power state of the physical server.
 try:
@@ -142,10 +143,8 @@ try:
         "powerState": "Off",
         "powerControl": "MomentaryPress"
     }
-    server_power = oneview_client.server_hardware.update_power_state(
-        configuration, '37333036-3831-4753-4831-30305838524E')
-    print("Successfully changed the power state of server '{}' to '{}'".format(
-        server_power['name'], server_power['powerState']))
+    server_power = oneview_client.server_hardware.update_power_state(configuration, server_hardware_id)
+    print("Successfully changed the power state of server '{name}' to '{powerState}'".format(**server_power))
 except HPOneViewException as e:
     print(e.msg['message'])
 
@@ -154,8 +153,7 @@ try:
     configuration = {
         "refreshState": "RefreshPending"
     }
-    server_refresh = oneview_client.server_hardware.refresh_state(
-        configuration, '37333036-3831-4753-4831-30305838524E')
+    server_refresh = oneview_client.server_hardware.refresh_state(configuration, server_hardware_id)
     print("Successfully refreshed the state of the server at:\n   'uri': '{}'".format(
         server_refresh['uri']))
 except HPOneViewException as e:
@@ -163,8 +161,7 @@ except HPOneViewException as e:
 
 # Get URL to launch SSO session for iLO Integrated Remote Console
 # Application (IRC)
-remote_console_url = oneview_client.server_hardware.get_java_remote_console_url(
-    server['uri'])
+remote_console_url = oneview_client.server_hardware.get_java_remote_console_url(server['uri'])
 print("URL to launch a Single Sign-On (SSO) session for iLO Integrated Remote Console Application",
       " for server at uri:\n   {}\n   '{}'".format(server['uri'], remote_console_url))
 
