@@ -38,6 +38,67 @@ class VolumesTest(unittest.TestCase):
         self._volumes = Volumes(self.connection)
 
     @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_all_called_once(self, mock_get_all):
+        filter = 'name=TestName'
+        sort = 'name:ascending'
+
+        self._volumes.get_all(2, 500, filter, sort)
+
+        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort)
+
+    @mock.patch.object(ResourceClient, 'get_by')
+    def test_get_by_called_once(self, mock_get_by):
+        self._volumes.get_by('name', 'Test Volume')
+
+        mock_get_by.assert_called_once_with('name', 'Test Volume')
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_by_id_called_once(self, mock_get):
+        self._volumes.get('3518be0e-17c1-4189-8f81-83f3724f6155')
+
+        mock_get.assert_called_once_with('3518be0e-17c1-4189-8f81-83f3724f6155')
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_by_uri_called_once(self, mock_get):
+        self._volumes.get('/rest/storage-volumes/3518be0e-17c1-4189-8f81-83f3724f6155')
+
+        mock_get.assert_called_once_with('/rest/storage-volumes/3518be0e-17c1-4189-8f81-83f3724f6155')
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_create_called_once(self, mock_create):
+        resource = {
+            'name': 'ONEVIEW_SDK_TEST_VOLUME_TYPE_1'
+        }
+        resource_rest_call = resource.copy()
+        mock_create.return_value = {}
+
+        self._volumes.create(resource)
+        mock_create.assert_called_once_with(resource_rest_call, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_delete_by_id_called_once(self, mock_delete):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._volumes.delete(id, force=False, timeout=-1)
+
+        expected_headers = {"exportOnly": False}
+        mock_delete.assert_called_once_with(id, force=False, timeout=-1, custom_headers=expected_headers)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_delete_with_force_called_once(self, mock_delete):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._volumes.delete(id, force=True)
+
+        mock_delete.assert_called_once_with(mock.ANY, force=True, timeout=mock.ANY, custom_headers=mock.ANY)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_delete_only_from_oneview_called_once(self, mock_delete):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._volumes.delete(id, export_only=True)
+
+        expected_headers = {"exportOnly": True}
+        mock_delete.assert_called_once_with(id, force=mock.ANY, timeout=mock.ANY, custom_headers=expected_headers)
+
+    @mock.patch.object(ResourceClient, 'get_all')
     def test_get_snapshots_called_once(self, mock_get_all):
         filter = 'name=TestName'
         sort = 'name:ascending'
@@ -112,7 +173,7 @@ class VolumesTest(unittest.TestCase):
         mock_create.assert_called_once_with(resource, uri=uri, timeout=-1)
 
     @mock.patch.object(ResourceClient, 'delete')
-    def test_delete_called_once(self, mock_delete):
+    def test_delete_snapshot_called_once(self, mock_delete):
         resource = {
             'name': 'OneViewSDK Test Snapshot',
             'type': 'SnapshotV3',
@@ -123,7 +184,7 @@ class VolumesTest(unittest.TestCase):
         mock_delete.assert_called_once_with(resource, force=True, timeout=50)
 
     @mock.patch.object(ResourceClient, 'delete')
-    def test_delete_called_once_with_defaults(self, mock_delete):
+    def test_delete_snapshot_called_once_with_defaults(self, mock_delete):
         resource = {
             'name': 'OneViewSDK Test Snapshot',
             'type': 'SnapshotV3',
