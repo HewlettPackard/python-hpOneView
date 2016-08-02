@@ -32,21 +32,21 @@ from hpOneView.resources.data_services.metric_streaming import MetricStreaming
 from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
-from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.interconnect_link_topologies import InterconnectLinkTopologies
+from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
 from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
 from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGroups
 from hpOneView.resources.networking.uplink_sets import UplinkSets
+from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
+from hpOneView.resources.servers.server_profiles import ServerProfiles
 from hpOneView.resources.storage.storage_volume_attachments import StorageVolumeAttachments
 from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTemplates
 from hpOneView.resources.storage.volumes import Volumes
-from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
 from tests.test_utils import mock_builtin
 
 
 class OneViewClientTest(unittest.TestCase):
-
     def __mock_file_open(self, json_config_content):
         # Simulates a TextIOWrapper (file output)
         return io.StringIO(json_config_content)
@@ -353,6 +353,19 @@ class OneViewClientTest(unittest.TestCase):
     def test_server_profile_templates_has_right_type(self):
         self.assertIsInstance(self._oneview.server_profile_templates, ServerProfileTemplate)
 
+    def test_server_profile_templates_has_value(self):
+        self.assertIsNotNone(self._oneview.server_profile_templates)
+
     def test_lazy_loading_server_profile_templates(self):
         server_profile_templates = self._oneview.server_profile_templates
         self.assertEqual(server_profile_templates, self._oneview.server_profile_templates)
+
+    def test_server_profiles_has_right_type(self):
+        self.assertIsInstance(self._oneview.server_profiles, ServerProfiles)
+
+    def test_server_profiles_has_value(self):
+        self.assertIsNotNone(self._oneview.server_profiles)
+
+    def test_lazy_loading_server_profiles(self):
+        server_profiles = self._oneview.server_profiles
+        self.assertEqual(server_profiles, self._oneview.server_profiles)
