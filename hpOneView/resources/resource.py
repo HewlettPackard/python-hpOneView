@@ -121,7 +121,10 @@ class ResourceClient(object):
         path = uri if uri else self._uri
         self.__validate_resource_uri(path)
 
-        uri = "{0}?start={1}&count={2}{3}{4}{5}{6}{7}".format(path, start, count, filter, query, sort, view, fields)
+        symbol = '?' if '?' not in path else '&'
+
+        uri = "{0}{1}start={2}&count={3}{4}{5}{6}{7}{8}".format(path, symbol, start, count, filter, query, sort,
+                                                                view, fields)
 
         logger.debug('Getting all resources with uri: {0}'.format(uri))
 

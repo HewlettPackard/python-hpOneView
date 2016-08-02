@@ -89,6 +89,13 @@ class ResourceTest(unittest.TestCase):
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(connection, 'get')
+    def test_get_all_with_custom_uri_and_query_string(self, mock_get):
+        self.resource_client.get_all(uri='/rest/testuri/12467836/subresources?param=value')
+
+        uri = "/rest/testuri/12467836/subresources?param=value&start=0&count=-1"
+        mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(connection, 'get')
     def test_get_all_with_different_resource_uri_should_fail(self, mock_get):
         try:
             self.resource_client.get_all(uri='/rest/other/resource/12467836/subresources')
