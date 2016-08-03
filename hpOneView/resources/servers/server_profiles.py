@@ -202,3 +202,12 @@ class ServerProfiles(object):
             dict: The server profile resource.
         """
         return self._client.get_by_name(name)
+
+    def get_schema(self):
+        """
+        Generates the ServerProfile schema.
+
+        Returns:
+            dict: The server profile schema.
+        """
+        return self._client.get_schema()

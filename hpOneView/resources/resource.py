@@ -162,8 +162,7 @@ class ResourceClient(object):
         return task
 
     def get_schema(self):
-        logger.debug('Get schema (uri = %s, resource = %s)' %
-                     (self._uri, self._uri))
+        logger.debug('Get schema (uri = %s, resource = %s)' % (self._uri, self._uri))
         return self._connection.get(self._uri + '/schema')
 
     def get(self, id_or_uri):
