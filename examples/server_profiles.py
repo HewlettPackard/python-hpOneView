@@ -35,8 +35,9 @@ config = {
 }
 
 server_profile_name = "Profile101"
-server_hardware_type_uri = "/rest/server-hardware-types/C8DEF9A6-9586-465E-A951-3070988BC226"
-enclosure_group_uri = "/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4"
+# To run this sample you must define a server hardware type uri and an eclosure group uri
+server_hardware_type_uri = None
+enclosure_group_uri = None
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
@@ -59,6 +60,15 @@ profile_to_update = basic_profile.copy()
 profile_to_update["bootMode"] = dict(manageMode=True, mode="BIOS")
 profile_updated = oneview_client.server_profiles.update(resource=profile_to_update, id_or_uri=profile_to_update["uri"])
 pprint(profile_updated)
+
+# Patch
+# To run this sample you must define a server profile id with an associated server profile template
+server_profile_id = None
+if server_profile_id:
+    print("\nUpdate the profile configuration from server profile template")
+    profile_updated = oneview_client.server_profiles.patch(id_or_uri=server_profile_id, operation="replace",
+                                                           path="/templateCompliance", value="Compliant")
+    pprint(profile_updated)
 
 # Get all
 print("\nGet list of all server profiles")

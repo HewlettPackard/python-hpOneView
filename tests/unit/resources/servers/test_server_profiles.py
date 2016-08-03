@@ -80,7 +80,7 @@ class ServerProfilesTest(TestCase):
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update(self, mock_update):
-        uri = "/rest/server-profile-templates/4ff2327f-7638-4b66-ad9d-283d4940a4ae"
+        uri = "/rest/server-profiles/4ff2327f-7638-4b66-ad9d-283d4940a4ae"
         template = dict(name="Server Profile Test", macType="Virtual")
 
         expected_template = template.copy()
@@ -95,3 +95,10 @@ class ServerProfilesTest(TestCase):
 
         self._resource.delete(resource=template, timeout=TIMEOUT)
         mock_delete.assert_called_once_with(resource=template, timeout=TIMEOUT)
+
+    @mock.patch.object(ResourceClient, 'patch')
+    def test_patch(self, mock_pacth):
+        uri = "/rest/server-profiles/4ff2327f-7638-4b66-ad9d-283d4940a4ae"
+
+        self._resource.patch(uri, "replace", "/templateCompliance", "Compliant")
+        mock_pacth.assert_called_once_with(uri, "replace", "/templateCompliance", "Compliant", -1)
