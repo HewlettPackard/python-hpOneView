@@ -453,8 +453,7 @@ class LogicalInterconnectsTest(unittest.TestCase):
         self._logical_interconnect.delete_interconnect(enclosure_uri="/rest/enclosures/09SGH100X6J1",
                                                        bay=3, timeout=-1)
 
-        expected_uri = "/rest/logical-interconnects/locations/interconnects" \
-                       "?location=Enclosure:/rest/enclosures/09SGH100X6J1,Bay:3"
+        expected_uri = "/locations/interconnects?location=Enclosure:/rest/enclosures/09SGH100X6J1,Bay:3"
         mock_delete.assert_called_once_with(expected_uri, timeout=-1)
 
     @mock.patch.object(ResourceClient, 'build_uri')

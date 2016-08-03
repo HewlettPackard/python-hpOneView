@@ -336,9 +336,9 @@ class LogicalInterconnects(object):
 
         Returns: bool: indicating if the interconnect was successfully deleted.
         """
-        uri = "{locations_uri}?location=Enclosure:{enclosure_uri},Bay:{bay}".format(locations_uri=self.locations_uri,
-                                                                                    enclosure_uri=enclosure_uri,
-                                                                                    bay=bay)
+        uri = "{path}?location=Enclosure:{enclosure_uri},Bay:{bay}".format(path=self.LOCATIONS_PATH,
+                                                                           enclosure_uri=enclosure_uri,
+                                                                           bay=bay)
         return self._client.delete(uri, timeout=timeout)
 
     def get_firmware(self, id_or_uri):
