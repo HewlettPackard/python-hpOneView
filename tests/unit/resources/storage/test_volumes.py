@@ -225,3 +225,57 @@ class VolumesTest(unittest.TestCase):
         self._volumes.get_snapshot_by(volume_id, "name", "test name")
 
         mock_get_by.assert_called_once_with("name", "test name", uri=volume_uri)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_extra_managed_storage_volume_paths_called_once(self, mock_get_all):
+        filter = 'name=TestName'
+        sort = 'name:ascending'
+
+        self._volumes.get_extra_managed_storage_volume_paths(2, 500, filter, sort)
+
+        expected_uri = '/rest/storage-volumes/repair?alertFixType=ExtraManagedStorageVolumePaths'
+        mock_get_all.assert_called_once_with(2, 500, uri=expected_uri, filter=filter, sort=sort)
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_repair_by_id_called_once(self, mock_create):
+        volume_id = '280FF951-F007-478F-AC29-E4655FC'
+        data = {
+            'resourceUri': '/rest/storage-volumes/280FF951-F007-478F-AC29-E4655FC',
+            'type': 'ExtraManagedStorageVolumePaths'
+        }
+        self._volumes.repair(volume_id)
+
+        custom_headers = {u'Accept-Language': u'en_US'}
+        mock_create.assert_called_once_with(data, uri='/rest/storage-volumes/repair', timeout=-1,
+                                            custom_headers=custom_headers)
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_repair_by_uri_called_once(self, mock_create):
+        volume_id = '/rest/storage-volumes/280FF951-F007-478F-AC29-E4655FC'
+        data = {
+            'resourceUri': '/rest/storage-volumes/280FF951-F007-478F-AC29-E4655FC',
+            'type': 'ExtraManagedStorageVolumePaths'
+        }
+        self._volumes.repair(volume_id)
+
+        custom_headers = {u'Accept-Language': u'en_US'}
+        mock_create.assert_called_once_with(data, uri='/rest/storage-volumes/repair', timeout=-1,
+                                            custom_headers=custom_headers)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_attachable_volumes_called_once(self, mock_get_all):
+        filter = 'name=TestName'
+        sort = 'name:ascending'
+        query = 'availableNetworks IN [/rest/fc-networks/123-45-67,/rest/fc-networks/111-222-333]'
+
+        self._volumes.get_attachable_volumes(2, 500, filter, query, sort)
+
+        expected_uri = '/rest/storage-volumes/attachable-volumes'
+        mock_get_all.assert_called_once_with(2, 500, uri=expected_uri, filter=filter, query=query, sort=sort)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_attachable_volumes_called_with_default_values(self, mock_get_all):
+        self._volumes.get_attachable_volumes()
+
+        expected_uri = '/rest/storage-volumes/attachable-volumes'
+        mock_get_all.assert_called_once_with(0, -1, uri=expected_uri, filter='', query='', sort='')

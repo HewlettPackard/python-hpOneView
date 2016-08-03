@@ -280,3 +280,84 @@ class Volumes(object):
         """
         uri = self.__build_volume_snapshot_uri(volume_id_or_uri)
         return self._client.get_by(field, value, uri=uri)
+
+    def get_extra_managed_storage_volume_paths(self, start=0, count=-1, filter='', sort=''):
+        """
+        Gets the list of extra managed storage volume paths.
+
+        Args:
+            start:
+                The first item to return, using 0-based indexing.
+                If not specified, the default is 0 - start with the first available item.
+            count:
+                The number of resources to return. A count of -1 requests all the items.
+                The actual number of items in the response may differ from the requested
+                count if the sum of start and count exceed the total number of items.
+            filter:
+                A general filter/query string to narrow the list of items returned. The
+                default is no filter - all resources are returned.
+            sort:
+                The sort order of the returned data set. By default, the sort order is based
+                on create time, with the oldest entry first.
+
+        Returns:
+            list: A list of extra managed storage volume paths.
+        """
+        uri = self.URI + '/repair?alertFixType=ExtraManagedStorageVolumePaths'
+        return self._client.get_all(start, count, filter=filter, sort=sort, uri=uri)
+
+    def repair(self, volume_id_or_uri, timeout=-1):
+        """
+        Removes extra presentations from a specified volume on the storage system.
+
+        Args:
+            volume_id_or_uri:
+                Could be either the volume id or the volume uri.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+                OneView, just stops waiting for its completion.
+
+        Returns:
+            dict: Storage Volume.
+        """
+        data = {
+            "type": "ExtraManagedStorageVolumePaths",
+            "resourceUri": self._client.build_uri(volume_id_or_uri)
+        }
+        custom_headers = {'Accept-Language': 'en_US'}
+        uri = self.URI + '/repair'
+        return self._client.create(data, uri=uri, timeout=timeout, custom_headers=custom_headers)
+
+    def get_attachable_volumes(self, start=0, count=-1, filter='', query='', sort=''):
+        """
+        Gets the volumes that are connected on the specified networks based on the storage system port's expected
+        network connectivity.
+
+        A volume is attachable if it satisfies either of the following conditions:
+
+        - The volume is shareable
+        - The volume not shareable and not attached.
+
+        Args:
+            start:
+                The first item to return, using 0-based indexing.
+                If not specified, the default is 0 - start with the first available item.
+            count:
+                The number of resources to return. A count of -1 requests all the items.
+                The actual number of items in the response may differ from the requested
+                count if the sum of start and count exceed the total number of items.
+            filter:
+                A general filter/query string to narrow the list of items returned. The
+                default is no filter - all resources are returned.
+            query:
+                A general query string to narrow the list of resources returned. The default
+                is no query - all resources are returned.
+            sort:
+                The sort order of the returned data set. By default, the sort order is based
+                on create time, with the oldest entry first.
+
+        Returns:
+            list: A list of attachable volumes which are managed by the appliance.
+        """
+        uri = self.URI + '/attachable-volumes'
+        return self._client.get_all(start, count, filter=filter, query=query, sort=sort, uri=uri)

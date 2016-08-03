@@ -163,6 +163,21 @@ print("\nDelete the recently created snapshot")
 returned = oneview_client.volumes.delete_snapshot(created_snapshot)
 print("Snapshot deleted successfully")
 
+# Get the list of all extra managed storage volume paths from the appliance
+extra_volumes = oneview_client.volumes.get_extra_managed_storage_volume_paths()
+print("\nGet the list of all extra managed storage volume paths from the appliance")
+pprint(extra_volumes)
+
+# Remove extra presentations from the specified volume on the storage system
+print("\nRemove extra presentations from the specified volume on the storage system")
+oneview_client.volumes.repair(volume['uri'])
+print("  Done.")
+
+# Get all the attachable volumes which are managed by the appliance
+print("\nGet all the attachable volumes which are managed by the appliance")
+attachable_volumes = oneview_client.volumes.get_attachable_volumes()
+pprint(attachable_volumes)
+
 print("\nDelete the recently created volumes")
 if oneview_client.volumes.delete(volume_with_storage_pool):
     print("The volume, that was previously created with a Storage Pool, was deleted from OneView and storage system")
