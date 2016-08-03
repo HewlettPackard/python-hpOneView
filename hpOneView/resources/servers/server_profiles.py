@@ -91,6 +91,31 @@ class ServerProfiles(object):
         data.update(resource)
         return self._client.update(resource=data, uri=id_or_uri)
 
+    def patch(self, id_or_uri, operation, path, value, timeout=-1):
+        """
+        Performs a specific patch operation for the given server profile.
+        The supported operation is:
+            Update the server profile from the server profile template.
+                Operation: replace
+                Path: /templateCompliance
+                Value: Compliant
+
+        Args:
+            id_or_uri:
+                Could be either the server profile id or the server profile uri
+            operation:
+                The type of operation: one of "add", "copy", "move", "remove", "replace", or "test".
+            path:
+                The JSON path the operation is to use. The exact meaning depends on the type of operation.
+            value:
+                The value to add or replace for "add" and "replace" operations, or the value to compare against
+                for a "test" operation. Not used by "copy", "move", or "remove".
+
+        Returns:
+            dict: Server profile resource.
+        """
+        return self._client.patch(id_or_uri, operation, path, value, timeout)
+
     def delete(self, resource, timeout=-1):
         """
         Deletes a server profile object from the appliance based on its server profile UUID.
