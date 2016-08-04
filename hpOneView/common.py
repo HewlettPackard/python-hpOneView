@@ -1711,3 +1711,23 @@ def resource_compare_list(resource1, resource2):
 
     # no differences found
     return True
+
+
+def transform_list_to_dict(list):
+    """
+        Transforms a list into a dictionary, putting values as keys
+    Args:
+        id:
+    Returns:
+        dict: dictionary built
+    """
+
+    ret = {}
+
+    for value in list:
+        if isinstance(value, dict):
+            ret.update(value)
+        else:
+            ret[str(value)] = True
+
+    return ret

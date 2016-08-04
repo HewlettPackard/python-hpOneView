@@ -22,7 +22,7 @@
 ###
 import unittest
 
-from hpOneView import resource_compare
+from hpOneView import resource_compare, transform_list_to_dict
 
 
 class ResourceCompareTest(unittest.TestCase):
@@ -182,6 +182,19 @@ class ResourceCompareTest(unittest.TestCase):
         ]}
 
         self.assertFalse(resource_compare(dict1, dict2))
+
+    def test_transform_list_to_dict(self):
+        list = ['one', 'two', {'tree': 3}, 'four', 5]
+
+        dict_transformed = transform_list_to_dict(list=list)
+
+        self.assertEquals(dict_transformed,
+                          {'5': True,
+                           'four': True,
+                           'one': True,
+                           'tree': 3,
+                           'two': True})
+
 
 if __name__ == '__main__':
     unittest.main()
