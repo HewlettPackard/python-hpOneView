@@ -30,6 +30,7 @@ from hpOneView.connection import connection
 from hpOneView.oneview_client import OneViewClient
 from hpOneView.resources.data_services.metric_streaming import MetricStreaming
 from hpOneView.resources.facilities.power_devices import PowerDevices
+from hpOneView.resources.facilities.racks import Racks
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
 from hpOneView.resources.networking.interconnect_link_topologies import InterconnectLinkTopologies
@@ -279,6 +280,16 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_power_devices(self):
         power_devices = self._oneview.power_devices
         self.assertEqual(power_devices, self._oneview.power_devices)
+
+    def test_racks_has_right_type(self):
+        self.assertIsInstance(self._oneview.racks, Racks)
+
+    def test_racks_has_value(self):
+        self.assertIsNotNone(self._oneview.racks)
+
+    def test_lazy_loading_racks(self):
+        racks = self._oneview.racks
+        self.assertEqual(racks, self._oneview.racks)
 
     def test_logical_interconnect_groups_has_right_type(self):
         self.assertIsInstance(self._oneview.logical_interconnect_groups, LogicalInterconnectGroups)
