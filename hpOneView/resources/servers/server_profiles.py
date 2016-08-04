@@ -224,3 +224,23 @@ class ServerProfiles(object):
         """
         uri = self._client.build_uri(id_or_uri) + '/compliance-preview'
         return self._client.get(uri)
+
+    def get_profile_ports(self, **kwargs):
+        """
+        Retrieves the port model associated with a server or server hardware type and enclosure group.
+
+        Args:
+            enclosureGroupUri (str):
+                The URI of the enclosure group associated with the resource.
+            serverHardwareTypeUri (str):
+                The URI of the server hardware type associated with the resource.
+            serverHardwareUri (str):
+                The URI of the server hardware associated with the resource.
+
+        Returns:
+            dict: Profile port.
+        """
+        query_string = '&'.join('{}={}'.format(key, kwargs[key]) for key in sorted(kwargs))
+
+        uri = self.URI + '/profile-ports?' + query_string
+        return self._client.get(uri)

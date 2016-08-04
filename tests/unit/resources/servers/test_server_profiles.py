@@ -115,3 +115,16 @@ class ServerProfilesTest(TestCase):
 
         self._resource.get_compliance_preview(server_uri)
         mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_profile_ports(self, mock_get):
+        uri = "/rest/server-profiles/profile-ports" \
+              "?enclosureGroupUri=/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4" \
+              "&serverHardwareTypeUri=/rest/server-hardware-types/C8DEF9A6-9586-465E-A951-3070988BC226"
+
+        server_hardware_type_uri = "/rest/server-hardware-types/C8DEF9A6-9586-465E-A951-3070988BC226"
+        enclosure_group_uri = "/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4"
+
+        self._resource.get_profile_ports(enclosureGroupUri=enclosure_group_uri,
+                                         serverHardwareTypeUri=server_hardware_type_uri)
+        mock_get.assert_called_once_with(uri)
