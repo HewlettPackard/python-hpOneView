@@ -34,10 +34,13 @@ config = {
     }
 }
 
-server_profile_name = "Profile101"
-# To run this sample you must define a server hardware type uri and an eclosure group uri
+# To run this sample you must define a server hardware type uri, an eclosure group uri and a server profile id with
+# an associated server profile template
 server_hardware_type_uri = None
 enclosure_group_uri = None
+server_profile_id = "83e2e117-59dc-4e33-9f24-462af951cbbe"
+
+server_profile_name = "Profile101"
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
@@ -62,8 +65,6 @@ profile_updated = oneview_client.server_profiles.update(resource=profile_to_upda
 pprint(profile_updated)
 
 # Patch
-# To run this sample you must define a server profile id with an associated server profile template
-server_profile_id = None
 if server_profile_id:
     print("\nUpdate the profile configuration from server profile template")
     profile_updated = oneview_client.server_profiles.patch(id_or_uri=server_profile_id, operation="replace",
@@ -97,6 +98,12 @@ pprint(profile)
 # Retrieve ServerProfile schema
 print("\nRetrieve the generated ServerProfile schema")
 schema = oneview_client.server_profiles.get_schema()
+pprint(schema)
+
+# Server profile compliance preview
+print("\nGets the preview of manual and automatic updates required to make the server profile consistent "
+      "with its template.")
+schema = oneview_client.server_profiles.get_compliance_preview(server_profile_id)
 pprint(schema)
 
 # Delete the created server profile

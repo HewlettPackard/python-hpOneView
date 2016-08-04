@@ -107,3 +107,11 @@ class ServerProfilesTest(TestCase):
     def test_get_schema(self, get_schema):
         self._resource.get_schema()
         get_schema.assert_called_once()
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_compliance_preview(self, mock_get):
+        server_uri = "/rest/server-profiles/4ff2327f-7638-4b66-ad9d-283d4940a4ae"
+        uri = "/rest/server-profiles/4ff2327f-7638-4b66-ad9d-283d4940a4ae/compliance-preview"
+
+        self._resource.get_compliance_preview(server_uri)
+        mock_get.assert_called_once_with(uri)

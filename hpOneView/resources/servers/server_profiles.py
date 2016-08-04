@@ -211,3 +211,16 @@ class ServerProfiles(object):
             dict: The server profile schema.
         """
         return self._client.get_schema()
+
+    def get_compliance_preview(self, id_or_uri):
+        """
+        Gets the preview of manual and automatic updates required to make the server profile
+        consistent with its template.
+        Args:
+            id_or_uri: Could be either the server profile resource id or uri.
+
+        Returns:
+            dict: Server profile compliance preview.
+        """
+        uri = self._client.build_uri(id_or_uri) + '/compliance-preview'
+        return self._client.get(uri)
