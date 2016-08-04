@@ -102,3 +102,8 @@ class ServerProfilesTest(TestCase):
 
         self._resource.patch(uri, "replace", "/templateCompliance", "Compliant")
         mock_pacth.assert_called_once_with(uri, "replace", "/templateCompliance", "Compliant", -1)
+
+    @mock.patch.object(ResourceClient, 'get_schema')
+    def test_get_schema(self, get_schema):
+        self._resource.get_schema()
+        get_schema.assert_called_once()

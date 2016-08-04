@@ -94,6 +94,11 @@ profile_uri = all_profiles[0]["uri"]
 profile = oneview_client.server_profiles.get(profile_uri)
 pprint(profile)
 
+# Retrieve ServerProfile schema
+print("\nRetrieve the generated ServerProfile schema")
+schema = oneview_client.server_profiles.get_schema()
+pprint(schema)
+
 # Delete the created server profile
 print("\nDelete the created server profile")
 oneview_client.server_profiles.delete(basic_profile)
