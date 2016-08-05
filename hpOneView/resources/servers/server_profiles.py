@@ -244,3 +244,16 @@ class ServerProfiles(object):
 
         uri = self.URI + '/profile-ports?' + query_string
         return self._client.get(uri)
+
+    def get_messages(self, id_or_uri):
+        """
+        Retrieve the error or status messages associated with the specified profile.
+
+        Args:
+            id_or_uri: Could be either the server profile resource id or uri.
+
+        Returns:
+            dict: Server Profile Health
+        """
+        uri = self._client.build_uri(id_or_uri) + '/messages'
+        return self._client.get(uri)

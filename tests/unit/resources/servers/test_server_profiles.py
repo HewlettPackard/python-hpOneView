@@ -128,3 +128,11 @@ class ServerProfilesTest(TestCase):
         self._resource.get_profile_ports(enclosureGroupUri=enclosure_group_uri,
                                          serverHardwareTypeUri=server_hardware_type_uri)
         mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_messages(self, mock_get):
+        server_uri = "/rest/server-profiles/4ff2327f-7638-4b66-ad9d-283d4940a4ae"
+        uri = "/rest/server-profiles/4ff2327f-7638-4b66-ad9d-283d4940a4ae/messages"
+
+        self._resource.get_messages(server_uri)
+        mock_get.assert_called_once_with(uri)

@@ -119,6 +119,11 @@ if server_hardware_uri:
     profile_ports = oneview_client.server_profiles.get_profile_ports(serverHardwareUri=server_hardware_uri)
     pprint(profile_ports)
 
+# Retrieve the error or status messages associated with the specified profile
+print("\nList profile status messages associated with a profile")
+messages = oneview_client.server_profiles.get_messages(server_profile_id)
+pprint(messages)
+
 # Delete the created server profile
 print("\nDelete the created server profile")
 oneview_client.server_profiles.delete(basic_profile)
