@@ -34,7 +34,7 @@ config = {
     }
 }
 
-# To run this sample you must define a server hardware type uri, an eclosure group uri and a server profile id with
+# To run this sample you must define a server hardware type uri, an enclosure group uri and a server profile id with
 # an associated server profile template
 server_hardware_type_uri = None
 enclosure_group_uri = None
@@ -123,6 +123,18 @@ if server_hardware_uri:
 print("\nList profile status messages associated with a profile")
 messages = oneview_client.server_profiles.get_messages(server_profile_id)
 pprint(messages)
+
+try:
+    # Transform an server profile
+    print("\nTransform an existing profile by supplying a new server hardware type and/or enclosure group.")
+    server_transformed = oneview_client.server_profiles.get_transformation(
+        basic_profile['uri'], enclosureGroupUri=enclosure_group_uri, serverHardwareTypeUri=server_hardware_type_uri)
+
+    print("Transformation complete. Updating server profile with the new configuration.")
+    profile_updated = oneview_client.server_profiles.update(server_transformed, server_transformed["uri"])
+    pprint(profile_updated)
+except Exception as e:
+    print(e.args[0])
 
 # Delete the created server profile
 print("\nDelete the created server profile")

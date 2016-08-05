@@ -136,3 +136,17 @@ class ServerProfilesTest(TestCase):
 
         self._resource.get_messages(server_uri)
         mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_transformation(self, mock_get):
+        server_id = "4ff2327f-7638-4b66-ad9d-283d4940a4ae"
+        uri = "/rest/server-profiles/4ff2327f-7638-4b66-ad9d-283d4940a4ae/transformation" \
+              "?enclosureGroupUri=/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4" \
+              "&serverHardwareTypeUri=/rest/server-hardware-types/C8DEF9A6-9586-465E-A951-3070988BC226"
+
+        server_hardware_type_uri = "/rest/server-hardware-types/C8DEF9A6-9586-465E-A951-3070988BC226"
+        enclosure_group_uri = "/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4"
+
+        self._resource.get_transformation(server_id, enclosureGroupUri=enclosure_group_uri,
+                                          serverHardwareTypeUri=server_hardware_type_uri)
+        mock_get.assert_called_once_with(uri)

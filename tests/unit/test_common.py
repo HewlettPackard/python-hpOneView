@@ -188,12 +188,12 @@ class ResourceCompareTest(unittest.TestCase):
 
         dict_transformed = transform_list_to_dict(list=list)
 
-        self.assertEquals(dict_transformed,
-                          {'5': True,
-                           'four': True,
-                           'one': True,
-                           'tree': 3,
-                           'two': True})
+        self.assertEqual(dict_transformed,
+                         {'5': True,
+                          'four': True,
+                          'one': True,
+                          'tree': 3,
+                          'two': True})
 
 
 if __name__ == '__main__':
