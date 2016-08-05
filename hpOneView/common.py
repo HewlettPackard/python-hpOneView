@@ -1210,6 +1210,13 @@ def make_LocalStorageEmbeddedController(importConfiguration, initialize,
 
     Returns: dict
     """
+    return {'slotNumber': slotNumber,
+            'managed': managed,
+            'mode': mode,
+            'initialize': initialize,
+            'importConfiguration': importConfiguration,
+            'logicalDrives': LogicalDrives
+            }
 
 
 def make_LogicalDriveV3(bootable, driveName, driveTechnology,
