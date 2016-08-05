@@ -83,18 +83,20 @@ class ProfilesTest(unittest.TestCase):
         local_storage = self.profile.make_local_storage_dict(
             sht, 'RAID0', False, False, 2)
         self.assertIsNotNone(local_storage)
-        self.assertEqual({'controllers': {'slotNumber': '0', 'logicalDrives': [
-                         {'driveTechnology': None, 'driveName': None, 'raidLevel': 'RAID0', 'bootable': False,
-                          'numPhysicalDrives': 2}], 'importConfiguration': True, 'mode': 'RAID', 'initialize': False,
-                          'managed': True}},
-                          local_storage)
+        self.assertEqual(
+            {'controllers': {'slotNumber': '0', 'logicalDrives': [
+                             {'driveTechnology': None, 'driveName': None, 'raidLevel': 'RAID0', 'bootable': False,
+                              'numPhysicalDrives': 2}], 'importConfiguration': True, 'mode': 'RAID',
+                             'initialize': False, 'managed': True}},
+            local_storage)
 
     def test_make_local_storage_with_dl(self):
         sht = self.build_dl_sht()
         try:
             self.profile.make_local_storage_dict(sht, 'RAID0', False, False, 2)
         except HPOneViewInvalidResource as hp_exception:
-            self.assertEqual(hp_exception.args[0], 'Local storage management is not supported on DL servers')
+            self.assertEqual(
+                hp_exception.args[0], 'Local storage management is not supported on DL servers')
         else:
             self.fail("Expected Exception")
 
@@ -104,7 +106,8 @@ class ProfilesTest(unittest.TestCase):
         try:
             self.profile.make_local_storage_dict(sht, 'RAID0', False, False, 2)
         except HPOneViewInvalidResource as hp_exception:
-            self.assertEqual(hp_exception.args[0], 'Error, can not retrieve server model')
+            self.assertEqual(
+                hp_exception.args[0], 'Error, can not retrieve server model')
         else:
             self.fail("Expected Exception")
 
@@ -121,9 +124,11 @@ class ProfilesTest(unittest.TestCase):
         sht = self.build_gen8_bl_sht()
         boot_order = []
         try:
-            self.profile.make_boot_settings_dict(servers, sht, True, boot_order, 'BIOS', 'Auto')
+            self.profile.make_boot_settings_dict(
+                servers, sht, True, boot_order, 'BIOS', 'Auto')
         except HPOneViewInvalidResource as hp_exception:
-            self.assertEqual(hp_exception.args[0], 'Error: bootMode cannot be disabled on BL servers')
+            self.assertEqual(
+                hp_exception.args[0], 'Error: bootMode cannot be disabled on BL servers')
         else:
             self.fail("Expected Exception")
 
@@ -141,7 +146,8 @@ class ProfilesTest(unittest.TestCase):
         sht = self.build_gen9_bl_sht()
         boot_order = ['CD', 'USB', 'HardDisk']
         try:
-            self.profile.make_boot_settings_dict(servers, sht, False, boot_order, 'UEFI', 'Auto')
+            self.profile.make_boot_settings_dict(
+                servers, sht, False, boot_order, 'UEFI', 'Auto')
         except HPOneViewInvalidResource as hp_exception:
             self.assertEqual(hp_exception.args[0], 'Error: All supported boot options are required. The supported '
                                                    'options are: CD; USB; HardDisk; PXE')
@@ -152,7 +158,8 @@ class ProfilesTest(unittest.TestCase):
         sht = self.build_gen9_bl_sht()
         boot_order = ['CD', 'USB', 'HardDisk', 'Floppy']
         try:
-            self.profile.make_boot_settings_dict(servers, sht, False, boot_order, 'UEFI', 'Auto')
+            self.profile.make_boot_settings_dict(
+                servers, sht, False, boot_order, 'UEFI', 'Auto')
         except HPOneViewInvalidResource as hp_exception:
             self.assertEqual(hp_exception.args[0], 'Error: "Floppy" are not supported boot options for this server '
                                                    'hardware type. The supported options are: CD; USB; HardDisk; PXE')
@@ -167,7 +174,8 @@ class ProfilesTest(unittest.TestCase):
         mock_open.return_value = mock_file
         bios = self.profile.make_bios_dict(filename)
         self.assertIsNotNone(bios)
-        self.assertEqual({'manageBios': True, 'overriddenSettings': [{'value': '2', 'id': '134'}]}, bios)
+        self.assertEqual(
+            {'manageBios': True, 'overriddenSettings': [{'value': '2', 'id': '134'}]}, bios)
 
     @mock.patch(mock_builtin('open'))
     def test_make_bios_with_defaukt_options(self, mock_open):
@@ -177,7 +185,8 @@ class ProfilesTest(unittest.TestCase):
         mock_open.return_value = mock_file
         bios = self.profile.make_bios_dict(filename)
         self.assertIsNotNone(bios)
-        self.assertEqual({'manageBios': True, 'overriddenSettings': [{'id': '134'}]}, bios)
+        self.assertEqual(
+            {'manageBios': True, 'overriddenSettings': [{'id': '134'}]}, bios)
 
     @mock.patch(mock_builtin('open'))
     def test_make_bios_invalid_json(self, mock_open):
@@ -188,7 +197,8 @@ class ProfilesTest(unittest.TestCase):
         try:
             self.profile.make_bios_dict(filename)
         except ValueError as value_error:
-            self.assertEqual(value_error.args[0], "Error: Cannot parse BIOS JSON file. JSON must be well-formed.")
+            self.assertEqual(value_error.args[
+                             0], "Error: Cannot parse BIOS JSON file. JSON must be well-formed.")
         else:
             self.fail("Expected Exception")
 
