@@ -211,3 +211,75 @@ class ServerProfiles(object):
             dict: The server profile schema.
         """
         return self._client.get_schema()
+
+    def get_compliance_preview(self, id_or_uri):
+        """
+        Gets the preview of manual and automatic updates required to make the server profile
+        consistent with its template.
+        Args:
+            id_or_uri: Could be either the server profile resource id or uri.
+
+        Returns:
+            dict: Server profile compliance preview.
+        """
+        uri = self._client.build_uri(id_or_uri) + '/compliance-preview'
+        return self._client.get(uri)
+
+    def get_profile_ports(self, **kwargs):
+        """
+        Retrieves the port model associated with a server or server hardware type and enclosure group.
+
+        Args:
+            enclosureGroupUri (str):
+                The URI of the enclosure group associated with the resource.
+            serverHardwareTypeUri (str):
+                The URI of the server hardware type associated with the resource.
+            serverHardwareUri (str):
+                The URI of the server hardware associated with the resource.
+
+        Returns:
+            dict: Profile port.
+        """
+        query_string = '&'.join('{}={}'.format(key, kwargs[key]) for key in sorted(kwargs))
+
+        uri = self.URI + '/profile-ports?' + query_string
+        return self._client.get(uri)
+
+    def get_messages(self, id_or_uri):
+        """
+        Retrieve the error or status messages associated with the specified profile.
+
+        Args:
+            id_or_uri: Could be either the server profile resource id or uri.
+
+        Returns:
+            dict: Server Profile Health
+        """
+        uri = self._client.build_uri(id_or_uri) + '/messages'
+        return self._client.get(uri)
+
+    def get_transformation(self, id_or_uri, **kwargs):
+        """
+        Transforms an existing profile by supplying a new server hardware type and/or enclosure group. A profile
+        will be returned with a new configuration based on the capabilities of the supplied server hardware type
+        and/or enclosure group. All deployed connections will have their port assignment set to 'Auto'.
+        Re-selection of the server hardware may also be required. The new profile can subsequently be used for update
+        the server profile but is not guaranteed to pass validation. Any incompatibilities will be flagged when the
+        transformed server profile is submitted.
+
+        Args:
+            id_or_uri:
+                Could be either the server profile resource id or uri.
+            enclosureGroupUri (str):
+                The URI of the enclosure group associated with the resource.
+            serverHardwareTypeUri (str):
+                The URI of the server hardware type associated with the resource.
+            serverHardwareUri (str):
+                The URI of the server hardware associated with the resource.
+
+        Returns:
+            dict: Server Profile
+        """
+        query_string = '&'.join('{}={}'.format(key, kwargs[key]) for key in sorted(kwargs))
+        uri = self._client.build_uri(id_or_uri) + '/transformation?' + query_string
+        return self._client.get(uri)

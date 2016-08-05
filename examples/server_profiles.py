@@ -34,10 +34,13 @@ config = {
     }
 }
 
-server_profile_name = "Profile101"
-# To run this sample you must define a server hardware type uri and an eclosure group uri
+# To run this sample you must define a server hardware type uri, an enclosure group uri and a server profile id with
+# an associated server profile template
 server_hardware_type_uri = None
 enclosure_group_uri = None
+server_profile_id = None
+
+server_profile_name = "Profile101"
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
@@ -62,13 +65,10 @@ profile_updated = oneview_client.server_profiles.update(resource=profile_to_upda
 pprint(profile_updated)
 
 # Patch
-# To run this sample you must define a server profile id with an associated server profile template
-server_profile_id = None
-if server_profile_id:
-    print("\nUpdate the profile configuration from server profile template")
-    profile_updated = oneview_client.server_profiles.patch(id_or_uri=server_profile_id, operation="replace",
-                                                           path="/templateCompliance", value="Compliant")
-    pprint(profile_updated)
+print("\nUpdate the profile configuration from server profile template")
+profile_updated = oneview_client.server_profiles.patch(id_or_uri=server_profile_id, operation="replace",
+                                                       path="/templateCompliance", value="Compliant")
+pprint(profile_updated)
 
 # Get all
 print("\nGet list of all server profiles")
@@ -98,6 +98,43 @@ pprint(profile)
 print("\nRetrieve the generated ServerProfile schema")
 schema = oneview_client.server_profiles.get_schema()
 pprint(schema)
+
+# Server profile compliance preview
+print("\nGets the preview of manual and automatic updates required to make the server profile consistent "
+      "with its template.")
+schema = oneview_client.server_profiles.get_compliance_preview(server_profile_id)
+pprint(schema)
+
+# Get profile ports
+print("\nRetrieve the port model associated with a server hardware type and enclosure group")
+profile_ports = oneview_client.server_profiles.get_profile_ports(enclosureGroupUri=enclosure_group_uri,
+                                                                 serverHardwareTypeUri=server_hardware_type_uri)
+pprint(profile_ports)
+
+# Get profile ports
+# To run this example you must define a server hardware uri
+server_hardware_uri = None
+if server_hardware_uri:
+    print("\nRetrieve the port model associated with a server hardware")
+    profile_ports = oneview_client.server_profiles.get_profile_ports(serverHardwareUri=server_hardware_uri)
+    pprint(profile_ports)
+
+# Retrieve the error or status messages associated with the specified profile
+print("\nList profile status messages associated with a profile")
+messages = oneview_client.server_profiles.get_messages(server_profile_id)
+pprint(messages)
+
+try:
+    # Transform an server profile
+    print("\nTransform an existing profile by supplying a new server hardware type and/or enclosure group.")
+    server_transformed = oneview_client.server_profiles.get_transformation(
+        basic_profile['uri'], enclosureGroupUri=enclosure_group_uri, serverHardwareTypeUri=server_hardware_type_uri)
+
+    print("Transformation complete. Updating server profile with the new configuration.")
+    profile_updated = oneview_client.server_profiles.update(server_transformed, server_transformed["uri"])
+    pprint(profile_updated)
+except Exception as e:
+    print(e.args[0])
 
 # Delete the created server profile
 print("\nDelete the created server profile")
