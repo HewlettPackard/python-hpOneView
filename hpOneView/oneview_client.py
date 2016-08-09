@@ -71,6 +71,7 @@ from hpOneView.resources.networking.logical_downlinks import LogicalDownlinks
 from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.facilities.racks import Racks
 from hpOneView.resources.fc_sans.san_managers import SanManagers
+from hpOneView.resources.fc_sans.endpoints import Endpoints
 from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
 from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
 from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGroups
@@ -118,6 +119,7 @@ class OneViewClient(object):
         self.__power_devices = None
         self.__racks = None
         self.__san_managers = None
+        self.__endpoints = None
         self.__logical_interconnects = None
         self.__logical_interconnect_groups = None
         self.__logical_switch_groups = None
@@ -352,6 +354,12 @@ class OneViewClient(object):
         if not self.__san_managers:
             self.__san_managers = SanManagers(self.__connection)
         return self.__san_managers
+
+    @property
+    def endpoints(self):
+        if not self.__endpoints:
+            self.__endpoints = Endpoints(self.__connection)
+        return self.__endpoints
 
     @property
     def server_profiles(self):
