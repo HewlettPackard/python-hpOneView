@@ -150,3 +150,68 @@ class ServerProfilesTest(TestCase):
         self._resource.get_transformation(server_id, enclosureGroupUri=enclosure_group_uri,
                                           serverHardwareTypeUri=server_hardware_type_uri)
         mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_available_networks(self, mock_get):
+        uri = "/rest/server-profiles/available-networks" \
+              "?enclosureGroupUri=/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4" \
+              "&serverHardwareTypeUri=/rest/server-hardware-types/C8DEF9A6-9586-465E-A951-3070988BC226"
+
+        server_hardware_type_uri = "/rest/server-hardware-types/C8DEF9A6-9586-465E-A951-3070988BC226"
+        enclosure_group_uri = "/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4"
+
+        self._resource.get_available_networks(enclosureGroupUri=enclosure_group_uri,
+                                              serverHardwareTypeUri=server_hardware_type_uri)
+        mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_available_servers(self, mock_get):
+        uri = "/rest/server-profiles/available-servers" \
+              "?enclosureGroupUri=/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4" \
+              "&serverHardwareTypeUri=/rest/server-hardware-types/C8DEF9A6-9586-465E-A951-3070988BC226"
+
+        server_hardware_type_uri = "/rest/server-hardware-types/C8DEF9A6-9586-465E-A951-3070988BC226"
+        enclosure_group_uri = "/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4"
+
+        self._resource.get_available_servers(enclosureGroupUri=enclosure_group_uri,
+                                             serverHardwareTypeUri=server_hardware_type_uri)
+        mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_available_storage_system(self, mock_get):
+        uri = "/rest/server-profiles/available-storage-system" \
+              "?enclosureGroupUri=/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4" \
+              "&serverHardwareTypeUri=/rest/server-hardware-types/C8DEF9A6-9586-465E-A951-3070988BC226"
+
+        server_hardware_type_uri = "/rest/server-hardware-types/C8DEF9A6-9586-465E-A951-3070988BC226"
+        enclosure_group_uri = "/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4"
+
+        self._resource.get_available_storage_system(enclosureGroupUri=enclosure_group_uri,
+                                                    serverHardwareTypeUri=server_hardware_type_uri)
+        mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_available_storage_systems(self, mock_get):
+        uri = "/rest/server-profiles/available-storage-systems" \
+              "?enclosureGroupUri=/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4" \
+              "&serverHardwareTypeUri=/rest/server-hardware-types/C8DEF9A6-9586-465E-A951-3070988BC226"
+
+        server_hardware_type_uri = "/rest/server-hardware-types/C8DEF9A6-9586-465E-A951-3070988BC226"
+        enclosure_group_uri = "/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4"
+
+        self._resource.get_available_storage_systems(enclosureGroupUri=enclosure_group_uri,
+                                                     serverHardwareTypeUri=server_hardware_type_uri)
+        mock_get.assert_called_once_with(start=0, count=-1, filter='', sort='', uri=uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_available_targets(self, mock_get):
+        uri = "/rest/server-profiles/available-targets" \
+              "?enclosureGroupUri=/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4" \
+              "&serverHardwareTypeUri=/rest/server-hardware-types/C8DEF9A6-9586-465E-A951-3070988BC226"
+
+        server_hardware_type_uri = "/rest/server-hardware-types/C8DEF9A6-9586-465E-A951-3070988BC226"
+        enclosure_group_uri = "/rest/enclosure-groups/a0f1c07b-f811-4c85-8e38-ac5ec34ea2f4"
+
+        self._resource.get_available_targets(enclosureGroupUri=enclosure_group_uri,
+                                             serverHardwareTypeUri=server_hardware_type_uri)
+        mock_get.assert_called_once_with(uri)

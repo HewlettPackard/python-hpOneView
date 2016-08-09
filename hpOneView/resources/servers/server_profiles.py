@@ -240,9 +240,7 @@ class ServerProfiles(object):
         Returns:
             dict: Profile port.
         """
-        query_string = '&'.join('{}={}'.format(key, kwargs[key]) for key in sorted(kwargs))
-
-        uri = self.URI + '/profile-ports?' + query_string
+        uri = self.__build_uri_with_query_string(kwargs, '/profile-ports')
         return self._client.get(uri)
 
     def get_messages(self, id_or_uri):
@@ -280,6 +278,130 @@ class ServerProfiles(object):
         Returns:
             dict: Server Profile
         """
-        query_string = '&'.join('{}={}'.format(key, kwargs[key]) for key in sorted(kwargs))
-        uri = self._client.build_uri(id_or_uri) + '/transformation?' + query_string
+        uri = self.__build_uri_with_query_string(kwargs, '/transformation', id_or_uri)
         return self._client.get(uri)
+
+    def get_available_networks(self, **kwargs):
+        """
+        Retrieves the list of Ethernet networks, Fibre Channel networks and network sets that are available to a
+        server profile along with their respective ports.
+
+         Args:
+            enclosureGroupUri (str):
+                The URI of the enclosure group associated with the resource.
+            functionType (str):
+                The FunctionType (Ethernet or FibreChannel) to filter the list of networks returned.
+            serverHardwareTypeUri (str):
+                The URI of the server hardware type associated with the resource.
+            serverHardwareUri (str):
+                The URI of the server hardware associated with the resource.
+            view (str):
+                Return a specific subset of the attributes of the resource or collection, by specifying the name of a
+                predefined view. The default view is expand - show all attributes of the resource and all elements of
+                collections of resources.
+
+                Values:
+                    Ethernet - Specifies that the connection is to an Ethernet network or a network set.
+                    FibreChannel - Specifies that the connection is to a Fibre Channel network.
+
+        Returns:
+            list: Available networks.
+        """
+        uri = self.__build_uri_with_query_string(kwargs, '/available-networks')
+        return self._client.get(uri)
+
+    def get_available_servers(self, **kwargs):
+        """
+        Retrieves the list of available servers.
+
+         Args:
+            enclosureGroupUri (str):
+                The URI of the enclosure group associated with the resource.
+            serverHardwareTypeUri (str):
+                The URI of the server hardware type associated with the resource.
+            profileUri (str):
+                The URI of the server profile resource.
+
+        Returns:
+            list: Available servers.
+        """
+        uri = self.__build_uri_with_query_string(kwargs, '/available-servers')
+        return self._client.get(uri)
+
+    def get_available_storage_system(self, **kwargs):
+        """
+        Retrieve a specific storage system and its associated volumes that are available to the server profile based
+        on the given server hardware type and enclosure group.
+
+         Args:
+            enclosureGroupUri (str):
+                The URI of the enclosure group associated with the resource.
+            serverHardwareTypeUri (str):
+                The URI of the server hardware type associated with the resource.
+            storageSystemId (str):
+                The storage system ID associated with the resource.
+
+        Returns:
+            dict: Available storage system.
+        """
+        uri = self.__build_uri_with_query_string(kwargs, '/available-storage-system')
+        return self._client.get(uri)
+
+    def get_available_storage_systems(self, start=0, count=-1, filter='', sort='', **kwargs):
+        """
+        Retrieves the list of the storage systems and their associated volumes that are available to the server profile
+        based on the given server hardware type and enclosure group.
+
+         Args:
+            count:
+                The number of resources to return. A count of -1 requests all the items. The actual number of items in
+                 the response may differ from the requested count if the sum of start and count exceed the total
+                 number of items, or if returning the requested number of items would take too long.
+            start:
+                The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
+                first available item.
+            filter:
+                A general filter/query string to narrow the list of items returned. The default is no filter - all
+                resources are returned.
+            sort:
+                The sort order of the returned data set. By default, the sort order is based on create time, with the
+                oldest entry first.
+            enclosureGroupUri (str):
+                The URI of the enclosure group associated with the resource.
+            serverHardwareTypeUri (str):
+                The URI of the server hardware type associated with the resource.
+
+
+        Returns:
+            list: Available storage systems.
+        """
+        uri = self.__build_uri_with_query_string(kwargs, '/available-storage-systems')
+        return self._client.get_all(start=start, count=count, filter=filter, sort=sort, uri=uri)
+
+    def get_available_targets(self, **kwargs):
+        """
+        Retrieves a list of the target servers and empty device bays that are available for assignment to the server
+        profile.
+
+         Args:
+
+            enclosureGroupUri (str):
+                The URI of the enclosure group associated with the resource.
+            serverHardwareTypeUri (str):
+                The URI of the server hardware type associated with the resource.
+            profileUri (str):
+                The URI of the server profile associated with the resource
+
+        Returns:
+            list:???
+        """
+        uri = self.__build_uri_with_query_string(kwargs, '/available-targets')
+        return self._client.get(uri)
+
+    def __build_uri_with_query_string(self, kwargs, sufix_path, id_or_uri=None):
+        uri = self.URI
+        if id_or_uri:
+            uri = self._client.build_uri(id_or_uri)
+
+        query_string = '&'.join('{}={}'.format(key, kwargs[key]) for key in sorted(kwargs))
+        return uri + sufix_path + '?' + query_string
