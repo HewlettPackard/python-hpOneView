@@ -103,6 +103,13 @@ class ServerProfilesTest(TestCase):
         self._resource.patch(uri, "replace", "/templateCompliance", "Compliant")
         mock_pacth.assert_called_once_with(uri, "replace", "/templateCompliance", "Compliant", -1)
 
+    @mock.patch.object(ResourceClient, 'delete_all')
+    def test_delete_all(self, delete_all):
+        query_filter = 'name=TestName'
+
+        self._resource.delete_all(filter=query_filter, force=True, timeout=60)
+        delete_all.assert_called_once_with(filter=query_filter, force=True, timeout=60)
+
     @mock.patch.object(ResourceClient, 'get_schema')
     def test_get_schema(self, get_schema):
         self._resource.get_schema()

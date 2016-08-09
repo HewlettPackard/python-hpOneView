@@ -22,9 +22,10 @@
 ###
 
 import unittest
-import mock
 
+import mock
 from mock import call
+
 from hpOneView.connection import connection
 from hpOneView.exceptions import HPOneViewUnknownType
 from hpOneView.resources.resource import ResourceClient, RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor
@@ -179,6 +180,39 @@ class ResourceTest(unittest.TestCase):
         result = self.resource_client.get_all()
 
         self.assertEqual(result, [])
+
+    @mock.patch.object(connection, 'delete')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    def test_delete_all_called_once(self, mock_wait4task, mock_delete):
+        mock_delete.return_value = self.task, self.response_body
+        mock_wait4task.return_value = self.task
+
+        filter = "name='Exchange Server'"
+        uri = "/rest/testuri?filter=name%3D%27Exchange%20Server%27&force=True"
+        self.resource_client.delete_all(filter=filter, force=True, timeout=-1)
+
+        mock_delete.assert_called_once_with(uri)
+
+    @mock.patch.object(connection, 'delete')
+    def test_delete_all_should_return_true(self, mock_delete):
+        mock_delete.return_value = None, self.response_body
+
+        filter = "name='Exchange Server'"
+        result = self.resource_client.delete_all(filter=filter, force=True, timeout=-1)
+
+        self.assertTrue(result)
+
+    @mock.patch.object(connection, 'delete')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    def test_delete_all_should_wait_for_task(self, mock_wait4task, mock_delete):
+        mock_delete.return_value = self.task, self.response_body
+        mock_wait4task.return_value = self.task
+
+        filter = "name='Exchange Server'"
+        delete_task = self.resource_client.delete_all(filter=filter, force=True, timeout=-1)
+
+        mock_wait4task.assert_called_with(self.task, timeout=-1)
+        self.assertEqual(self.task, delete_task)
 
     @mock.patch.object(connection, 'delete')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
