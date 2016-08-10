@@ -108,12 +108,13 @@ def make_local_storage_dict(sht, raidlevel, lboot, init_storage, num):
                                           numPhysicalDrives=num,
                                           raidLevel=raidlevel))
 
-        controller = make_LocalStorageEmbeddedController(importConfiguration=True,
-                                                         initialize=init_storage,
-                                                         LogicalDrives=drives,
-                                                         managed=True,
-                                                         mode='RAID')
-        local_storage = make_LocalStorageSettingsV3(controller)
+        controllers = []
+        controllers.append(make_LocalStorageEmbeddedController(importConfiguration=True,
+                                                               initialize=init_storage,
+                                                               LogicalDrives=drives,
+                                                               managed=True,
+                                                               mode='RAID'))
+        local_storage = make_LocalStorageSettingsV3(controllers)
 
         return local_storage
     return None
