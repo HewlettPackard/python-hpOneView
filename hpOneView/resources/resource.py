@@ -132,6 +132,35 @@ class ResourceClient(object):
 
         return result
 
+    def delete_all(self, filter, force=False, timeout=-1):
+        """
+            Deletes all resources from the appliance that match the provided filter.
+
+            Args:
+                filter:
+                    A general filter/query string to narrow the list of items deleted.
+                force:
+                    If set to true the operation completes despite any problems with network connectivity or errors
+                    on the resource itself. The default is false.
+                timeout:
+                    Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                    in OneView, just stops waiting for its completion.
+
+            Returns:
+                bool: Indicating if the resources were successfully deleted.
+            """
+        uri = "{}?filter={}&force={}".format(self._uri, quote(filter), force)
+        logger.debug("Delete all resources (uri = %s)" % uri)
+
+        task, body = self._connection.delete(uri)
+
+        if not task:
+            # 204 NO CONTENT
+            # Successful return from a synchronous delete operation.
+            return True
+
+        return self._task_monitor.wait_for_task(task, timeout=timeout)
+
     def delete(self, resource, force=False, timeout=-1, custom_headers=None):
 
         if not resource:

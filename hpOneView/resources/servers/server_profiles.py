@@ -131,6 +131,37 @@ class ServerProfiles(object):
         """
         return self._client.delete(resource=resource, timeout=timeout)
 
+    def delete_all(self, filter, timeout=-1, force=False):
+        """
+        Deletes all Server Profile objects from the appliance that match the provided filter. Filters are supported
+        for the following profile attributes only - name, description, serialnumber, uuid, mactype, wwntype,
+        serialnumbertype, status and state.
+
+        Examples:
+            Some examples of accepted values for filter variable:
+
+            Remove all profiles that match the name "Exchange Server":
+            "name='Exchange Server'"
+
+            Remove all profiles that have the word "Database" in its name:
+            "name matches'%25Database%25'"
+
+        The filter function here operates very similar to the function defined for GET Server Profiles. It allows
+        for both actual and partial matches of data in the profile. Any requests that wish to use a wildcard match
+        must include a %25 as illustrated in the example. This is how that character is encoded for transmission to
+        the appliance.
+
+        Args:
+            filter (dict): Object to delete.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
+
+        Returns:
+            bool: Indicating if the server profile was successfully deleted.
+        """
+        return self._client.delete_all(filter=filter, force=force, timeout=timeout)
+
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
         Gets a list of server profile based on optional sorting and filtering, and constrained by start and

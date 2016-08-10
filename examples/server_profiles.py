@@ -212,3 +212,14 @@ print("The server profile was successfully deleted.")
 
 # Delete the created server profile template
 oneview_client.server_profile_templates.delete(basic_server_template)
+
+# Delete all server profile (filtering)
+print("\nRemove all profiles that match the name 'Profile fake'")
+# Create a new profile to delete
+oneview_client.server_profiles.create(dict(
+    name="Profile fake",
+    serverHardwareTypeUri=server_hardware_type_uri,
+    enclosureGroupUri=enclosure_group_uri
+))
+oneview_client.server_profiles.delete_all(filter="name='Profile fake'")
+print("The server profiles were successfully deleted.")
