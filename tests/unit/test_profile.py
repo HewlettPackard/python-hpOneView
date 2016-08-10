@@ -84,10 +84,10 @@ class ProfilesTest(unittest.TestCase):
             sht, 'RAID0', False, False, 2)
         self.assertIsNotNone(local_storage)
         self.assertEqual(
-            {'controllers': {'slotNumber': '0', 'logicalDrives': [
+            {'controllers': [{'slotNumber': '0', 'logicalDrives': [
                              {'driveTechnology': None, 'driveName': None, 'raidLevel': 'RAID0', 'bootable': False,
                               'numPhysicalDrives': 2}], 'importConfiguration': True, 'mode': 'RAID',
-                             'initialize': False, 'managed': True}},
+                'initialize': False, 'managed': True}]},
             local_storage)
 
     def test_make_local_storage_with_dl(self):
