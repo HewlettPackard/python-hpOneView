@@ -81,19 +81,20 @@ class ProfilesTest(unittest.TestCase):
     def test_make_local_storage_with_bl(self):
         sht = self.build_gen8_bl_sht()
         local_storage = self.profile.make_local_storage_dict(
-            sht, 'RAID0', False, False, 2)
+            sht, 'RAID0', False, False, 2, 'Operating System')
         self.assertIsNotNone(local_storage)
         self.assertEqual(
             {'controllers': [{'slotNumber': '0', 'logicalDrives': [
-                             {'driveTechnology': None, 'driveName': None, 'raidLevel': 'RAID0', 'bootable': False,
-                              'numPhysicalDrives': 2}], 'importConfiguration': True, 'mode': 'RAID',
-                'initialize': False, 'managed': True}]},
+                             {'driveTechnology': None, 'driveName': 'Operating System', 'raidLevel': 'RAID0',
+                              'bootable': False, 'numPhysicalDrives': 2}], 'importConfiguration': True,
+                'mode': 'RAID', 'initialize': False, 'managed': True}]},
             local_storage)
 
     def test_make_local_storage_with_dl(self):
         sht = self.build_dl_sht()
         try:
-            self.profile.make_local_storage_dict(sht, 'RAID0', False, False, 2)
+            self.profile.make_local_storage_dict(
+                sht, 'RAID0', False, False, 2, 'Operating System')
         except HPOneViewInvalidResource as hp_exception:
             self.assertEqual(
                 hp_exception.args[0], 'Local storage management is not supported on DL servers')
@@ -104,7 +105,8 @@ class ProfilesTest(unittest.TestCase):
         sht = self.build_gen8_bl_sht()
         sht.pop('model', None)
         try:
-            self.profile.make_local_storage_dict(sht, 'RAID0', False, False, 2)
+            self.profile.make_local_storage_dict(
+                sht, 'RAID0', False, False, 2, 'Operating System')
         except HPOneViewInvalidResource as hp_exception:
             self.assertEqual(
                 hp_exception.args[0], 'Error, can not retrieve server model')
