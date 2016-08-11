@@ -324,6 +324,9 @@ def main():
     targets in the UEFI Boot Order list will not be modified, and any new
     network boot targets will be added to the end of the list using the
     System ROM's default policy.''')
+    parser.add_argument('-dn', dest='driveName', required=False,
+                        help='''
+        The name of the logical drive.''')
     parser.add_argument('-rl', dest='raidlevel', required=False,
                         choices=['NONE', 'RAID0', 'RAID1'],
                         help='''
@@ -428,7 +431,7 @@ def main():
 
     fw_settings = profile.make_firmware_dict(sts, args.baseline)
     local_storage = profile.make_local_storage_dict(sht, args.raidlevel, args.lboot,
-                            args.init_storage, args.physnum)
+                            args.init_storage, args.physnum, args.driveName)
     bios = profile.make_bios_dict(args.bios_list)
     define_profile(con, srv, args.affinity, args.name, args.desc, server, sht,
                    boot, bootmode, fw_settings, args.hide_flexnics,

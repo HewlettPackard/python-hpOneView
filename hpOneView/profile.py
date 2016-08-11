@@ -81,7 +81,7 @@ def make_firmware_dict(settings, baseline):
     return fw_settings
 
 
-def make_local_storage_dict(sht, raidlevel, lboot, init_storage, num):
+def make_local_storage_dict(sht, raidlevel, lboot, init_storage, num, drive_name):
     """
     Create a local storage dictionary for use in defining either a server
     profile or server profile template.
@@ -103,7 +103,7 @@ def make_local_storage_dict(sht, raidlevel, lboot, init_storage, num):
 
         drives = []
         drives.append(make_LogicalDriveV3(bootable=lboot,
-                                          driveName=None,
+                                          driveName=drive_name,
                                           driveTechnology=None,
                                           numPhysicalDrives=num,
                                           raidLevel=raidlevel))
