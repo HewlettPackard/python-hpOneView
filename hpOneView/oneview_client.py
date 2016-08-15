@@ -22,7 +22,7 @@
 ###
 """
 oneview_client.py
-~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 This module implements a common client for HPE OneView REST API
 """
@@ -139,13 +139,13 @@ class OneViewClient(object):
     @classmethod
     def from_json_file(cls, file_name):
         """
-        Construct OneViewClient using a json file
+        Construct OneViewClient using a json file.
 
         Args:
-            file_name: json full path
+            file_name: json full path.
 
-        Returns: OneViewClient
-
+        Returns:
+            OneViewClient:
         """
         with open(file_name) as json_data:
             config = json.load(json_data)
@@ -157,7 +157,6 @@ class OneViewClient(object):
         Set proxy if needed
         Args:
             config: Config dict
-
         """
         if "proxy" in config and config["proxy"]:
             proxy = config["proxy"]
@@ -169,10 +168,22 @@ class OneViewClient(object):
 
     @property
     def connection(self):
+        """
+        Gets the underlying HPE OneView connection used by the OneViewClient.
+
+        Returns:
+            connection:
+        """
         return self.__connection
 
     @property
     def connections(self):
+        """
+        Gets the Connections API client.
+
+        Returns:
+            Connections:
+        """
         if not self.__connections:
             self.__connections = Connections(
                 self.__connection)
@@ -180,6 +191,12 @@ class OneViewClient(object):
 
     @property
     def connection_templates(self):
+        """
+        Gets the ConnectionTemplates API client.
+
+        Returns:
+            ConnectionTemplates:
+        """
         if not self.__connection_templates:
             self.__connection_templates = ConnectionTemplates(
                 self.__connection)
@@ -187,42 +204,84 @@ class OneViewClient(object):
 
     @property
     def fc_networks(self):
+        """
+        Gets the FcNetworks API client.
+
+        Returns:
+            FcNetworks:
+        """
         if not self.__fc_networks:
             self.__fc_networks = FcNetworks(self.__connection)
         return self.__fc_networks
 
     @property
     def fcoe_networks(self):
+        """
+        Gets the FcoeNetworks API client.
+
+        Returns:
+            FcoeNetworks:
+        """
         if not self.__fcoe_networks:
             self.__fcoe_networks = FcoeNetworks(self.__connection)
         return self.__fcoe_networks
 
     @property
     def ethernet_networks(self):
+        """
+        Gets the EthernetNetworks API client.
+
+        Returns:
+            EthernetNetworks:
+        """
         if not self.__ethernet_networks:
             self.__ethernet_networks = EthernetNetworks(self.__connection)
         return self.__ethernet_networks
 
     @property
     def fabrics(self):
+        """
+        Gets the Fabrics API client.
+
+        Returns:
+            Fabrics:
+        """
         if not self.__fabrics:
             self.__fabrics = Fabrics(self.__connection)
         return self.__fabrics
 
     @property
     def network_sets(self):
+        """
+        Gets the NetworkSets API client.
+
+        Returns:
+            NetworkSets:
+        """
         if not self.__network_sets:
             self.__network_sets = NetworkSets(self.__connection)
         return self.__network_sets
 
     @property
     def server_hardware(self):
+        """
+        Gets the ServerHardware API client.
+
+        Returns:
+            ServerHardware:
+        """
         if not self.__server_hardware:
             self.__server_hardware = ServerHardware(self.__connection)
         return self.__server_hardware
 
     @property
     def server_hardware_types(self):
+        """
+        Gets the ServerHardwareTypes API client.
+
+        Returns:
+            ServerHardwareTypes:
+        """
         if not self.__server_hardware_types:
             self.__server_hardware_types = ServerHardwareTypes(
                 self.__connection)
@@ -230,6 +289,12 @@ class OneViewClient(object):
 
     @property
     def id_pools_vsn_ranges(self):
+        """
+        Gets the IdPoolsVsnRanges API client.
+
+        Returns:
+            IdPoolsVsnRanges:
+        """
         if not self.__id_pools_vsn_ranges:
             self.__id_pools_vsn_ranges = IdPoolsVsnRanges(
                 self.__connection)
@@ -237,6 +302,12 @@ class OneViewClient(object):
 
     @property
     def id_pools_vmac_ranges(self):
+        """
+        Gets the IdPoolsVmacRanges API client.
+
+        Returns:
+            IdPoolsVmacRanges:
+        """
         if not self.__id_pools_vmac_ranges:
             self.__id_pools_vmac_ranges = IdPoolsVmacRanges(
                 self.__connection)
@@ -244,6 +315,12 @@ class OneViewClient(object):
 
     @property
     def id_pools_vwwn_ranges(self):
+        """
+        Gets the IdPoolsVwwnRanges API client.
+
+        Returns:
+            IdPoolsVwwnRanges:
+        """
         if not self.__id_pools_vwwn_ranges:
             self.__id_pools_vwwn_ranges = IdPoolsVwwnRanges(
                 self.__connection)
@@ -251,18 +328,36 @@ class OneViewClient(object):
 
     @property
     def switches(self):
+        """
+        Gets the Switches API client.
+
+        Returns:
+            Switches:
+        """
         if not self.__switches:
             self.__switches = Switches(self.__connection)
         return self.__switches
 
     @property
     def switch_types(self):
+        """
+        Gets the SwitchTypes API client.
+
+        Returns:
+            SwitchTypes:
+        """
         if not self.__switch_types:
             self.__switch_types = SwitchTypes(self.__connection)
         return self.__switch_types
 
     @property
     def logical_switch_groups(self):
+        """
+        Gets the LogicalSwitchGroups API client.
+
+        Returns:
+            LogicalSwitchGroups:
+        """
         if not self.__logical_switch_groups:
             self.__logical_switch_groups = LogicalSwitchGroups(
                 self.__connection)
@@ -270,54 +365,108 @@ class OneViewClient(object):
 
     @property
     def tasks(self):
+        """
+        Gets the Tasks API client.
+
+        Returns:
+            Tasks:
+        """
         if not self.__tasks:
             self.__tasks = Tasks(self.__connection)
         return self.__tasks
 
     @property
     def enclosure_groups(self):
+        """
+        Gets the EnclosureGroups API client.
+
+        Returns:
+            EnclosureGroups:
+        """
         if not self.__enclosure_groups:
             self.__enclosure_groups = EnclosureGroups(self.__connection)
         return self.__enclosure_groups
 
     @property
     def enclosures(self):
+        """
+        Gets the Enclosures API client.
+
+        Returns:
+            Enclosures:
+        """
         if not self.__enclosures:
             self.__enclosures = Enclosures(self.__connection)
         return self.__enclosures
 
     @property
     def logical_enclosures(self):
+        """
+        Gets the LogicalEnclosures API client.
+
+        Returns:
+            LogicalEnclosures:
+        """
         if not self.__logical_enclosures:
             self.__logical_enclosures = LogicalEnclosures(self.__connection)
         return self.__logical_enclosures
 
     @property
     def metric_streaming(self):
+        """
+        Gets the MetricStreaming API client.
+
+        Returns:
+            MetricStreaming:
+        """
         if not self.__metric_streaming:
             self.__metric_streaming = MetricStreaming(self.__connection)
         return self.__metric_streaming
 
     @property
     def interconnects(self):
+        """
+        Gets the Interconnects API client.
+
+        Returns:
+            Interconnects:
+        """
         if not self.__interconnects:
             self.__interconnects = Interconnects(self.__connection)
         return self.__interconnects
 
     @property
     def interconnect_types(self):
+        """
+        Gets the InterconnectTypes API client.
+
+        Returns:
+            InterconnectTypes:
+        """
         if not self.__interconnect_types:
             self.__interconnect_types = InterconnectTypes(self.__connection)
         return self.__interconnect_types
 
     @property
     def interconnect_link_topologies(self):
+        """
+        Gets the InterconnectLinkTopologies API client.
+
+        Returns:
+            InterconnectLinkTopologies:
+        """
         if not self.__interconnect_link_topologies:
             self.__interconnect_link_topologies = InterconnectLinkTopologies(self.__connection)
         return self.__interconnect_link_topologies
 
     @property
     def logical_interconnect_groups(self):
+        """
+        Gets the LogicalInterconnectGroups API client.
+
+        Returns:
+            LogicalInterconnectGroups:
+        """
         if not self.__logical_interconnect_groups:
             self.__logical_interconnect_groups = LogicalInterconnectGroups(
                 self.__connection)
@@ -325,6 +474,12 @@ class OneViewClient(object):
 
     @property
     def logical_interconnects(self):
+        """
+        Gets the LogicalInterconnects API client.
+
+        Returns:
+            LogicalInterconnects:
+        """
         if not self.__logical_interconnects:
             self.__logical_interconnects = LogicalInterconnects(
                 self.__connection)
@@ -332,6 +487,12 @@ class OneViewClient(object):
 
     @property
     def logical_downlinks(self):
+        """
+        Gets the LogicalDownlinks API client.
+
+        Returns:
+            LogicalDownlinks:
+        """
         if not self.__logical_downlinks:
             self.__logical_downlinks = LogicalDownlinks(
                 self.__connection)
@@ -339,84 +500,168 @@ class OneViewClient(object):
 
     @property
     def power_devices(self):
+        """
+        Gets the PowerDevices API client.
+
+        Returns:
+            PowerDevices:
+        """
         if not self.__power_devices:
             self.__power_devices = PowerDevices(self.__connection)
         return self.__power_devices
 
     @property
     def racks(self):
+        """
+        Gets the Racks API client.
+
+        Returns:
+            Racks:
+        """
         if not self.__racks:
             self.__racks = Racks(self.__connection)
         return self.__racks
 
     @property
     def san_managers(self):
+        """
+        Gets the SanManagers API client.
+
+        Returns:
+            SanManagers:
+        """
         if not self.__san_managers:
             self.__san_managers = SanManagers(self.__connection)
         return self.__san_managers
 
     @property
     def endpoints(self):
+        """
+        Gets the Endpoints API client.
+
+        Returns:
+            Endpoints:
+        """
         if not self.__endpoints:
             self.__endpoints = Endpoints(self.__connection)
         return self.__endpoints
 
     @property
     def server_profiles(self):
+        """
+        Gets the ServerProfiles API client.
+
+        Returns:
+            ServerProfiles:
+        """
         if not self.__server_profiles:
             self.__server_profiles = ServerProfiles(self.__connection)
         return self.__server_profiles
 
     @property
     def server_profile_templates(self):
+        """
+        Gets the ServerProfileTemplate API client.
+
+        Returns:
+            ServerProfileTemplate:
+        """
         if not self.__server_profile_templates:
             self.__server_profile_templates = ServerProfileTemplate(self.__connection)
         return self.__server_profile_templates
 
     @property
     def storage_systems(self):
+        """
+        Gets the StorageSystems API client.
+
+        Returns:
+            StorageSystems:
+        """
         if not self.__storage_systems:
             self.__storage_systems = StorageSystems(self.__connection)
         return self.__storage_systems
 
     @property
     def storage_pools(self):
+        """
+        Gets the StoragePools API client.
+
+        Returns:
+            StoragePools:
+        """
         if not self.__storage_pools:
             self.__storage_pools = StoragePools(self.__connection)
         return self.__storage_pools
 
     @property
     def storage_volume_templates(self):
+        """
+        Gets the StorageVolumeTemplates API client.
+
+        Returns:
+            StorageVolumeTemplates:
+        """
         if not self.__storage_volume_templates:
             self.__storage_volume_templates = StorageVolumeTemplates(self.__connection)
         return self.__storage_volume_templates
 
     @property
     def storage_volume_attachments(self):
+        """
+        Gets the StorageVolumeAttachments API client.
+
+        Returns:
+            StorageVolumeAttachments:
+        """
         if not self.__storage_volume_attachments:
             self.__storage_volume_attachments = StorageVolumeAttachments(self.__connection)
         return self.__storage_volume_attachments
 
     @property
     def firmware_drivers(self):
+        """
+        Gets the FirmwareDrivers API client.
+
+        Returns:
+            FirmwareDrivers:
+        """
         if not self.__firmware_drivers:
             self.__firmware_drivers = FirmwareDrivers(self.__connection)
         return self.__firmware_drivers
 
     @property
     def firmware_bundles(self):
+        """
+        Gets the FirmwareBundles API client.
+
+        Returns:
+            FirmwareBundles:
+        """
         if not self.__firmware_bundles:
             self.__firmware_bundles = FirmwareBundles(self.__connection)
         return self.__firmware_bundles
 
     @property
     def uplink_sets(self):
+        """
+        Gets the UplinkSets API client.
+
+        Returns:
+            UplinkSets:
+        """
         if not self.__uplink_sets:
             self.__uplink_sets = UplinkSets(self.__connection)
         return self.__uplink_sets
 
     @property
     def volumes(self):
+        """
+        Gets the Volumes API client.
+
+        Returns:
+            Volumes:
+        """
         if not self.__volumes:
             self.__volumes = Volumes(self.__connection)
         return self.__volumes
