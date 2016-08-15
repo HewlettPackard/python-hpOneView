@@ -138,3 +138,31 @@ class SanManagersTest(TestCase):
 
         self._resource.update(resource=manager, id_or_uri=uri)
         mock_update.assert_called_once_with(resource=manager, uri=uri)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_remove_called_once(self, mock_delete):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._resource.remove(id, timeout=-1)
+
+        mock_delete.assert_called_once_with(id, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_by_name_should_return_san_manager_when_found(self, mock_get_all):
+        mock_get_all.return_value = [
+            {"name": "172.18.15.1", "uri": "/rest/fc-sans/device-managers/1"},
+            {"name": "172.18.15.2", "uri": "/rest/fc-sans/device-managers/2"}
+        ]
+        san_manager = self._resource.get_by_name("172.18.15.2")
+        expected_result = {"name": "172.18.15.2", "uri": "/rest/fc-sans/device-managers/2"}
+
+        self.assertEqual(san_manager, expected_result)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_by_name_should_return_null_when_not_found(self, mock_get_all):
+        mock_get_all.return_value = [
+            {"name": "172.18.15.1", "uri": "/rest/fc-sans/device-managers/1"},
+            {"name": "172.18.15.2", "uri": "/rest/fc-sans/device-managers/2"}
+        ]
+        san_manager = self._resource.get_by_name("172.18.15.3")
+
+        self.assertIsNone(san_manager)

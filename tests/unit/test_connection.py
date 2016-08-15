@@ -322,7 +322,7 @@ class ConnectionTest(unittest.TestCase):
 
         self.connection.delete('/path')
 
-        mock_request.assert_called_once_with('DELETE', '/path', json.dumps(''), self.default_headers)
+        mock_request.assert_called_once_with('DELETE', '/path', json.dumps({}), self.default_headers)
 
     @mock.patch.object(HTTPSConnection, 'request')
     @mock.patch.object(HTTPSConnection, 'getresponse')
@@ -332,7 +332,7 @@ class ConnectionTest(unittest.TestCase):
 
         self.connection.delete('/path')
 
-        expected_calls = [call('DELETE', '/path', json.dumps(''), self.default_headers),
+        expected_calls = [call('DELETE', '/path', json.dumps({}), self.default_headers),
                           call('GET', '/task/uri', '', self.default_headers)]
         self.assertEqual(expected_calls, mock_request.call_args_list)
 

@@ -36,7 +36,7 @@ config = {
     }
 }
 
-# # To run this sample you must define a the following resources for a Brocade Network Advisor
+# # To run this sample you must define the following resources for a Brocade Network Advisor
 manager_host = None
 manager_port = None
 manager_username = None
@@ -101,3 +101,12 @@ print("Get all SAN managers")
 san_managers = oneview_client.san_managers.get_all()
 for manager in san_managers:
     print("   '{name}' at uri: {uri}".format(**manager))
+
+# Filter by name
+print("Get a SAN Manager by name")
+san_managers_by_name = oneview_client.san_managers.get_by_name(manager_host)
+pprint(san_managers_by_name)
+
+# Delete the SAN Manager previously created
+oneview_client.san_managers.remove(san_manager_brocade)
+print("The SAN Manager was deleted successfully.")
