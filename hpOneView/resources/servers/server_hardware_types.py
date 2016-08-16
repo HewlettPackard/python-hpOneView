@@ -74,24 +74,25 @@ class ServerHardwareTypes(object):
         Get the server hardware type resource with the specified id or uri.
 
         Args:
-            id_or_uri: Could be either the server hardware type id or uri
+            id_or_uri: Could be either the server hardware type id or uri.
 
         Returns:
-            dict: The logical interconnect group
+            dict: The logical interconnect group.
         """
         return self._client.get(id_or_uri)
 
     def update(self, resource, uri=None, timeout=-1):
         """
         Updates one or more attributes for a server hardware type resource.
+
         Args:
-            resource (dict): Object to update
+            resource (dict): Object to update.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            dict: Updated server hardware type
+            dict: Updated server hardware type.
 
         """
         return self._client.update(resource, uri, timeout=timeout)
@@ -111,21 +112,22 @@ class ServerHardwareTypes(object):
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            dict: Details of associated resource
+            bool: Indicating if the resource was successfully deleted.
 
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
     def get_by(self, field, value):
         """
-        Get all server hardware types that match the filter
-        The search is case insensitive
+        Get all server hardware types that match the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
-            list: A list of server hardware type.
+            list: A list of server hardware types.
         """
         return self._client.get_by(field, value)

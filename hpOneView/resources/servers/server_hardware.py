@@ -21,10 +21,11 @@
 # THE SOFTWARE.
 ###
 
+from __future__ import absolute_import
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
-from __future__ import absolute_import
+
 from future import standard_library
 
 standard_library.install_aliases()
@@ -50,26 +51,26 @@ class ServerHardware(object):
         Retrieves historical utilization data for the specified resource, metrics, and time span.
 
         Args:
-            id: resource identification
+            id: Resource identification.
             fields:
                 Name of the metric(s) to be retrieved in the format METRIC[,METRIC]...
 
+                If unspecified, all metrics supported are returned.
+
                 Server hardware supports the following utilization metrics:
 
-                AmbientTemperature
-                    Inlet air temperature in degrees Celsius during this sample interval.
-                AveragePower
-                    Average power consumption in Watts during this sample interval.
-                PeakPower
-                    Peak power consumption in Watts during this sample interval.
-                PowerCap
-                    Dynamic power cap setting on the server hardware in Watts during this sample interval.
-                CpuUtilization
-                    CPU utilization of all CPUs in percent during this sample interval.
-                CpuAverageFreq
-                    Average CPU frequency in Mhz during this sample interval.
-
-                If unspecified, all metrics supported are returned.
+                    AmbientTemperature
+                        Inlet air temperature in degrees Celsius during this sample interval.
+                    AveragePower
+                        Average power consumption in Watts during this sample interval.
+                    PeakPower
+                        Peak power consumption in Watts during this sample interval.
+                    PowerCap
+                        Dynamic power cap setting on the server hardware in Watts during this sample interval.
+                    CpuUtilization
+                        CPU utilization of all CPUs in percent during this sample interval.
+                    CpuAverageFreq
+                        Average CPU frequency in Mhz during this sample interval.
 
             filter:
                 Provides an expression of the requested time range of data. One condition (startDate/endDate) is
@@ -123,8 +124,8 @@ class ServerHardware(object):
                     5-minute sample value data during the day. Samples at this resolution are retained up to three
                     years.
 
-        Returns: dict
-
+        Returns:
+            dict
         """
 
         return self._client.get_utilization(id, fields=fields, filter=filter, refresh=refresh, view=view)
@@ -159,23 +160,23 @@ class ServerHardware(object):
         Adds a rack-mount server for management by the appliance. This API initiates the asynchronous addition of
         supported server models. Note: servers in an enclosure are added by adding the enclosure resource. This is
         only supported on appliances which support rack mounted servers.
+
         Args:
-            resource (dict): Object to create
-            timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+            information (dict): Object to create
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
             dict: Created rack mount server.
-
         """
         return self._client.create(information, timeout=timeout)
 
     def get(self, id_or_uri):
         """
-        Gets a server hardware resource by ID or by uri
+        Gets a server hardware resource by ID or by uri.
+
         Args:
-            id_or_uri: Could be either the server hardware resource id or uri
+            id_or_uri: Could be either the server hardware resource id or uri.
 
         Returns:
             dict: The server hardware resource
@@ -184,35 +185,38 @@ class ServerHardware(object):
 
     def get_by(self, field, value):
         """
-        Get all server hardware that match the filter
-        The search is case insensitive
+        Get all server hardware that match the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
-        Returns: dict
-
+        Returns:
+            dict
         """
         return self._client.get_by(field, value)
 
     def remove(self, resource, force=False, timeout=-1):
         """
-        Removes the rack-server with the specified URI. Note: This operation is only supported on appliances which
-        support rack mounted servers.
+        Removes the rack-server with the specified URI.
+
+        Note:
+            This operation is only supported on appliances which support rack mounted servers.
 
         Args:
-            resource (dict): object to delete
+            resource (dict):
+                Object to delete.
             force (bool):
-                 If set to true the operation completes despite any problems with
-                 network connectivity or errors on the resource itself. The default is false.
+                If set to true the operation completes despite any problems with
+                network connectivity or errors on the resource itself. The default is false.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            dict: Details of associated resource
-
+            bool: Indicating if the resource was successfully removed.
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
@@ -221,10 +225,10 @@ class ServerHardware(object):
         Gets the list of BIOS/UEFI values currently set on the physical server.
 
         Args:
-            id_or_uri: Could be either the server hardware resource id or uri
+            id_or_uri: Could be either the server hardware resource id or uri.
 
         Returns:
-            dict of BIOS/UEFI values
+            dict: Dictionary of BIOS/UEFI values.
         """
         uri = self._client.build_uri(id_or_uri) + "/bios"
         return self._client.get(uri)
@@ -235,10 +239,10 @@ class ServerHardware(object):
         maximum power, location & dimensions, ...) of the server hardware resource.
 
         Args:
-            id_or_uri: Could be either the server hardware resource id or uri
+            id_or_uri: Could be either the server hardware resource id or uri.
 
         Returns:
-            dict: environmental configuration settings
+            dict: Environmental configuration settings.
         """
         uri = self._client.build_uri(id_or_uri) + "/environmentalConfiguration"
         return self._client.get(uri)
@@ -250,12 +254,11 @@ class ServerHardware(object):
         Args:
             id_or_uri: Could be either the server hardware resource id or uri
             configuration: configuration
-            timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            dict: environmental configuration settings
+            dict: Environmental configuration settings.
         """
         uri = self._client.build_uri(id_or_uri) + "/environmentalConfiguration"
         return self._client.update(configuration, uri, timeout=timeout)
@@ -267,7 +270,7 @@ class ServerHardware(object):
         this is not supported on G7/iLO3 or earlier servers.
 
         Args:
-            id_or_uri: Could be either the server hardware resource id or uri
+            id_or_uri: Could be either the server hardware resource id or uri.
 
         Returns:
             URL
@@ -282,7 +285,7 @@ class ServerHardware(object):
         will prompt for credentials. Note, this is not supported on G7/iLO3 or earlier servers.
 
         Args:
-            id_or_uri: Could be either the server hardware resource id or uri
+            id_or_uri: Could be either the server hardware resource id or uri.
 
         Returns:
             URL
@@ -296,12 +299,13 @@ class ServerHardware(object):
         manage the server.
 
         Args:
-            id_or_uri: Could be either the server hardware resource id or uri
+            id_or_uri:
+                Could be either the server hardware resource id or uri.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
         Returns:
-            resource
+            Resource
         """
         uri = self._client.build_uri(id_or_uri) + "/mpFirmwareVersion"
         return self._client.update_with_zero_body(uri, timeout)
@@ -313,12 +317,11 @@ class ServerHardware(object):
         Args:
             id_or_uri: Could be either the server hardware resource id or uri
             configuration: configuration
-            timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            resource
+            Resource
         """
         uri = self._client.build_uri(id_or_uri) + "/powerState"
         return self._client.update(configuration, uri, timeout=timeout)
@@ -330,12 +333,11 @@ class ServerHardware(object):
         Args:
             id_or_uri: Could be either the server hardware resource id or uri
             configuration: configuration
-            timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            resource
+            Resource
         """
         uri = self._client.build_uri(id_or_uri) + "/refreshState"
         return self._client.update(configuration, uri=uri, timeout=timeout)
@@ -348,7 +350,7 @@ class ServerHardware(object):
         is supported only on Windows clients.
 
         Args:
-            id_or_uri: Could be either the server hardware resource id or uri
+            id_or_uri: Could be either the server hardware resource id or uri.
 
         Returns:
             URL

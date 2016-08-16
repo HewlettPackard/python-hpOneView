@@ -78,18 +78,20 @@ class LogicalSwitchGroups(object):
 
     def get(self, id_or_uri):
         """
-        Gets a logical switch group by ID or by uri
+        Gets a logical switch group by ID or by uri.
+
         Args:
-            id_or_uri: Could be either the logical switch group id or the logical switch group uri
+            id_or_uri: Could be either the logical switch group id or the logical switch group uri.
 
         Returns:
-            dict: The logical switch group
+            dict: The logical switch group.
         """
         return self._client.get(id_or_uri)
 
     def create(self, resource, timeout=-1):
         """
         Creates a logical switch group.
+
         Args:
             resource (dict): Object to create
             timeout:
@@ -98,7 +100,6 @@ class LogicalSwitchGroups(object):
 
         Returns:
             dict: Created logical switch group.
-
         """
         data = self.__default_values.copy()
         data.update(resource)
@@ -107,6 +108,7 @@ class LogicalSwitchGroups(object):
     def update(self, resource, timeout=-1):
         """
         Updates a logical switch group.
+
         Args:
             resource (dict): Object to update
             timeout:
@@ -115,7 +117,6 @@ class LogicalSwitchGroups(object):
 
         Returns:
             dict: Updated logical switch group.
-
         """
         data = self.__default_values.copy()
         data.update(resource)
@@ -126,7 +127,7 @@ class LogicalSwitchGroups(object):
         Deletes a logical switch group.
 
         Args:
-            resource (dict): object to delete
+            resource (dict): object to delete.
             force (bool):
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
@@ -135,19 +136,20 @@ class LogicalSwitchGroups(object):
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            boolean
+            bool: Indicating if the resource was successfully deleted.
 
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
     def get_by(self, field, value):
         """
-        Get all Logical switch groups that match the filter
-        The search is case insensitive
+        Get all Logical switch groups that match the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
             list: A list of logical switch groups that match the filter.

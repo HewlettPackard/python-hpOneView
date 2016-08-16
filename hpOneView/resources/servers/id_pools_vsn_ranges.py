@@ -21,10 +21,11 @@
 # THE SOFTWARE.
 ###
 
+from __future__ import absolute_import
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
-from __future__ import absolute_import
+
 from future import standard_library
 
 standard_library.install_aliases()
@@ -40,6 +41,10 @@ from hpOneView.resources.servers.id_pools_ranges import IdPoolsRanges
 
 
 class IdPoolsVsnRanges(IdPoolsRanges):
+    """
+    The ID pools virtual serial number (vSN) ranges resource provides APIs for managing vSN ranges. A vSN may be
+    requested, used, and returned. Once returned, the vSN is reclaimed by the range and available for reuse.
+    """
     URI = '/rest/id-pools/vsn/ranges'
 
     def __init__(self, con):

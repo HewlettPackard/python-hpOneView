@@ -66,12 +66,14 @@ class TaskMonitor(object):
 
     def wait_for_task(self, task, timeout=-1):
         """
-        Wait for task execution and return associated resource
+        Wait for task execution and return associated resource.
+
         Args:
             task: task dict
             timeout: timeout in seconds
 
-        Returns: associated resource when creating or updating; True when deleting
+        Returns:
+            Associated resource when creating or updating; True when deleting.
         """
         if not task:
             raise HPOneViewUnknownType(MSG_INVALID_TASK)
@@ -134,15 +136,14 @@ class TaskMonitor(object):
 
     def is_task_running(self, task):
         """
-            Check if a task is running according: TASK_PENDING_STATES ['New', 'Starting',
-            'Pending', 'Running', 'Suspended', 'Stopping']
+        Check if a task is running according: TASK_PENDING_STATES ['New', 'Starting',
+        'Pending', 'Running', 'Suspended', 'Stopping']
 
         Args:
             task: task dict
 
         Returns:
-            True when is in TASK_PENDING_STATES; False when not
-
+            True when is in TASK_PENDING_STATES; False when not.
         """
         if 'uri' in task:
             task = self.get(task)
@@ -152,14 +153,13 @@ class TaskMonitor(object):
 
     def get(self, task):
         """
-        Retrieve a task by its uri
+        Retrieve a task by its uri.
 
         Args:
-            task: task dict, must have 'uri' key
+            task: task dict, must have 'uri' key.
 
         Returns:
             task dict
-
         """
 
         task = self._connection.get(task['uri'])
@@ -167,7 +167,7 @@ class TaskMonitor(object):
 
     def get_associated_resource(self, task):
         """
-        Retrieve a resource associated to a task
+        Retrieve a resource associated to a task.
 
         Args:
             task: task dict

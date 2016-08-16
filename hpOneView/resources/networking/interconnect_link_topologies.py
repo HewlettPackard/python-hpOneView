@@ -41,9 +41,7 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class InterconnectLinkTopologies(object):
-    """
-    This class only supported for synergy enclosures
-    """
+    """This class is only supported for synergy enclosures."""
 
     URI = '/rest/interconnect-link-topologies'
 
@@ -54,6 +52,7 @@ class InterconnectLinkTopologies(object):
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
         Gets a paginated collection of all the interconnect link topologies based on the specified parameters.
+
         Filters can be used in the URL to control the number of interconnect link topologies that are returned.
         With no filters specified, the API returns all interconnect link toplogies.
 
@@ -74,33 +73,33 @@ class InterconnectLinkTopologies(object):
                 on create time, with the oldest entry first.
 
         Returns:
-            list: A list of interconnect link topologies
+            list: A list of interconnect link topologies.
 
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
     def get(self, id_or_uri):
         """
-        Gets an interconnect link topology by ID or by uri
+        Gets an interconnect link topology by ID or by uri.
+
         Args:
-            id_or_uri: Could be either the interconnect type id or the interconnect type uri
+            id_or_uri: Could be either the interconnect type id or the interconnect type uri.
 
         Returns:
-            dict: The interconnect link topology
+            dict: The interconnect link topology.
         """
         return self._client.get(id_or_uri)
 
     def get_by(self, field, value):
         """
-        Get all interconnect link topologies that match the filter
+        Get all interconnect link topologies that match the filter.
         The search is case insensitive
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
-            list: A list of interconnect link topologies
-
+            list: A list of interconnect link topologies.
         """
         return self._client.get_by(field, value)

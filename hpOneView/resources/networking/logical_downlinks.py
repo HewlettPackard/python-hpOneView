@@ -73,23 +73,25 @@ class LogicalDownlinks(object):
 
     def get(self, id_or_uri):
         """
-        Gets a logical downlink by ID or by uri
+        Gets a logical downlink by ID or by uri.
+
         Args:
-            id_or_uri: Could be either the logical downlink id or the logical downlink uri
+            id_or_uri: Could be either the logical downlink id or the logical downlink uri.
 
         Returns:
-            dict: The logical downlink
+            dict: The logical downlink.
         """
         return self._client.get(id_or_uri)
 
     def get_by(self, field, value):
         """
-        Get all logical downlinks that match the filter
-        The search is case insensitive
+        Get all logical downlinks that match the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
             list: A list of logical downlinks.
@@ -116,8 +118,8 @@ class LogicalDownlinks(object):
                 The sort order of the returned data set. By default, the sort order is based
                 on create time, with the oldest entry first.
 
-        Returns: dict
-
+        Returns:
+            dict
         """
         without_ethernet_client = ResourceClient(
             self._connection, "/rest/logical-downlinks/withoutEthernet")
@@ -125,11 +127,13 @@ class LogicalDownlinks(object):
 
     def get_without_ethernet(self, id):
         """
-        Gets the logical downlink with the specified ID without ethernet
-        Args:
-            id: ID of logical downlink
+        Gets the logical downlink with the specified ID without ethernet.
 
-        Returns: dict
+        Args:
+            id: ID of logical downlink.
+
+        Returns:
+            dict
         """
         uri = "/rest/logical-downlinks/%s/withoutEthernet" % (id)
         return self._client.get(uri)

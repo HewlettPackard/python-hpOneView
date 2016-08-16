@@ -82,13 +82,13 @@ class LogicalInterconnects(object):
 
     def get(self, id_or_uri):
         """
-        Gets a logical interconnect by ID or by uri
+        Gets a logical interconnect by ID or by uri.
 
         Args:
-            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri
+            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.
 
         Returns:
-            dict: The logical interconnect
+            dict: The logical interconnect.
         """
         return self._client.get(id_or_uri)
 
@@ -97,9 +97,10 @@ class LogicalInterconnects(object):
         Gets a logical interconnect by name.
 
         Args:
-            name: Name of the logical interconnect
+            name: Name of the logical interconnect.
 
-        Returns: Logical Interconnect
+        Returns:
+            dict: Logical Interconnect.
         """
         logical_interconnects = self._client.get_all()
         result = [x for x in logical_interconnects if x['name'] == name]
@@ -121,7 +122,8 @@ class LogicalInterconnects(object):
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: Logical Interconnect
+        Returns:
+            dict: Logical Interconnect.
         """
         uri = self._client.build_uri(id_or_uri) + "/compliance"
         return self._client.update_with_zero_body(uri, timeout=timeout)
@@ -138,7 +140,8 @@ class LogicalInterconnects(object):
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: Logical Interconnect
+        Returns:
+            dict: Logical Interconnect.
         """
         uri = self._client.build_uri(id_or_uri) + "/ethernetSettings"
         return self._client.update(configuration, uri=uri, force=force, timeout=timeout)
@@ -155,7 +158,8 @@ class LogicalInterconnects(object):
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: Logical Interconnect
+        Returns:
+            dict: Logical Interconnect.
         """
         uri = self._client.build_uri(id_or_uri) + "/internalNetworks"
         return self._client.update(network_uri_list, uri=uri, force=force, timeout=timeout)
@@ -187,7 +191,8 @@ class LogicalInterconnects(object):
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: Logical Interconnect
+        Returns:
+            dict: Logical Interconnect
         """
         data = settings.copy()
         if 'type' not in data:
@@ -207,7 +212,8 @@ class LogicalInterconnects(object):
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: Logical Interconnect
+        Returns:
+            dict: Logical Interconnect.
         """
         uri = self._client.build_uri(id_or_uri) + "/configuration"
         return self._client.update_with_zero_body(uri=uri, timeout=timeout)
@@ -217,10 +223,10 @@ class LogicalInterconnects(object):
         Gets the SNMP configuration for a logical interconnect.
 
         Args:
-            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri
+            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri.
 
         Returns:
-            dict: SNMP configuration
+            dict: SNMP configuration.
         """
         uri = self._client.build_uri(id_or_uri) + self.SNMP_CONFIGURATION_PATH
         return self._client.get(uri)
@@ -231,11 +237,11 @@ class LogicalInterconnects(object):
         applied to all managed interconnects.
 
         Args:
-            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri
-            configuration: snmp configuration
+            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.
+            configuration: snmp configuration.
 
         Returns:
-            dict: snmp configuration
+            dict: snmp configuration.
         """
         data = configuration.copy()
         if 'type' not in data:
@@ -251,10 +257,10 @@ class LogicalInterconnects(object):
         and must not currently be used for stacking.
 
         Args:
-            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri
+            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri.
 
         Returns:
-            dict: Collection of uplink ports
+            dict: Collection of uplink ports.
         """
         uri = self._client.build_uri(id_or_uri) + "/unassignedUplinkPortsForPortMonitor"
         return self._client.get_collection(uri)
@@ -264,10 +270,9 @@ class LogicalInterconnects(object):
         Gets the port monitor configuration of a logical interconnect.
 
         Args:
-            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri
-
+            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.
         Returns:
-            dict: port monitor configuration
+            dict: Port monitor configuration.
         """
         uri = self._client.build_uri(id_or_uri) + self.PORT_MONITOR_PATH
         return self._client.get(uri)
@@ -277,11 +282,11 @@ class LogicalInterconnects(object):
         Updates the port monitor configuration of a logical interconnect.
 
         Args:
-            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri
-            resource: port monitor configuration
+            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.
+            resource: Port monitor configuration.
 
         Returns:
-            dict: port monitor configuration
+            dict: Port monitor configuration.
         """
         data = resource.copy()
         if 'type' not in data:
@@ -295,10 +300,10 @@ class LogicalInterconnects(object):
         Gets the telemetry configuration of a logical interconnect.
 
         Args:
-            telemetry_configuration_uri: Telemetry Configuration URI
+            telemetry_configuration_uri: Telemetry Configuration URI.
 
         Returns:
-            dict: Telemetry configuration
+            dict: Telemetry configuration.
 
         """
         return self._client.get(telemetry_configuration_uri)
@@ -307,16 +312,18 @@ class LogicalInterconnects(object):
         """
         Creates an interconnect at the given location.
 
-        WARN: It does not create the LOGICAL INTERCONNECT itself.
-        It will fail if no interconnect is already present on the specified position.
+        Warning:
+            It does not create the LOGICAL INTERCONNECT itself.
+            It will fail if no interconnect is already present on the specified position.
 
         Args:
-            location_entries: dictionary with location entries
+            location_entries (dict): Dictionary with location entries.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: Created interconnect.
+        Returns:
+            dict: Created interconnect.
         """
         return self._client.create(location_entries, uri=self.locations_uri, timeout=timeout)
 
@@ -324,8 +331,9 @@ class LogicalInterconnects(object):
         """
         Deletes an interconnect from a location.
 
-        WARN: This won't delete the LOGICAL INTERCONNECT itself, and may cause inconsistency between the enclosure
-        and Logical Interconnect Group.
+        Warning:
+            This won't delete the LOGICAL INTERCONNECT itself, and may cause inconsistency between the enclosure
+            and Logical Interconnect Group.
 
         Args:
             enclosure_uri: URI of the Enclosure
@@ -334,7 +342,8 @@ class LogicalInterconnects(object):
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: bool: indicating if the interconnect was successfully deleted.
+        Returns:
+            bool: Indicating if the interconnect was successfully deleted.
         """
         uri = "{path}?location=Enclosure:{enclosure_uri},Bay:{bay}".format(path=self.LOCATIONS_PATH,
                                                                            enclosure_uri=enclosure_uri,
@@ -346,10 +355,10 @@ class LogicalInterconnects(object):
         Gets the installed firmware for a logical interconnect.
 
         Args:
-            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri
+            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.
 
         Returns:
-            dict: LIFirmware
+            dict: LIFirmware.
         """
         firmware_uri = self.__build_firmware_uri(id_or_uri)
         return self._client.get(firmware_uri)
@@ -360,8 +369,12 @@ class LogicalInterconnects(object):
         update are Stage (uploads firmware to the interconnect), Activate (installs firmware on the interconnect)
         and Update (which does a Stage and Activate in a sequential manner).
 
+        Args:
+            firmware_information: Options to install firmware to a logical interconnect.
+            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.
+
         Returns:
-            dict:
+            dict
         """
         firmware_uri = self.__build_firmware_uri(id_or_uri)
         return self._client.update(firmware_information, firmware_uri)
@@ -397,7 +410,7 @@ class LogicalInterconnects(object):
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
                 OneView, just stops waiting for its completion.
 
-        Returns: Interconnect Forwarding Information Base DataInfo
+        Returns: Interconnect Forwarding Information Base DataInfo.
         """
         uri = self._client.build_uri(id_or_uri) + self.FORWARDING_INFORMATION_PATH
         return self._client.create_with_zero_body(uri=uri, timeout=timeout)
@@ -411,7 +424,7 @@ class LogicalInterconnects(object):
                 Could be either the logical interconnect id or the logical interconnect uri.
 
         Returns:
-            dict: QoS Configuration
+            dict: QoS Configuration.
         """
         uri = self._client.build_uri(id_or_uri) + self.QOS_AGGREGATED_CONFIGURATION
         return self._client.get(uri)
@@ -425,9 +438,12 @@ class LogicalInterconnects(object):
                 Could be either the logical interconnect id or the logical interconnect uri.
             qos_configuration:
                 QOS configuration.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+                OneView, just stops waiting for its completion.
 
         Returns:
-            dict: Logical Interconnect
+            dict: Logical Interconnect.
         """
         uri = self._client.build_uri(id_or_uri) + self.QOS_AGGREGATED_CONFIGURATION
         return self._client.update(qos_configuration, uri=uri, timeout=timeout)

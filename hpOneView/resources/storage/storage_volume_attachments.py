@@ -49,7 +49,8 @@ class StorageVolumeAttachments(object):
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a list of volume attachment resources
+        Gets a list of volume attachment resources.
+
         Args:
             start:
                 The first item to return, using 0-based indexing.
@@ -64,6 +65,7 @@ class StorageVolumeAttachments(object):
             sort:
                 The sort order of the returned data set. By default, the sort order is based
                 on create time, with the oldest entry first.
+
         Returns:
             list: Volume attachment resources.
         """
@@ -71,9 +73,9 @@ class StorageVolumeAttachments(object):
 
     def get_extra_unmanaged_storage_volumes(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets the list of extra unmanaged storage volumes
+        Gets the list of extra unmanaged storage volumes.
+
         Args:
-            alertFixType
             start:
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
@@ -87,8 +89,9 @@ class StorageVolumeAttachments(object):
             sort:
                 The sort order of the returned data set. By default, the sort order is based
                 on create time, with the oldest entry first.
+
         Returns:
-            list: extra unmanaged storage volumes
+            list: Extra unmanaged storage volumes.
         """
         uri = self.URI + "/repair?alertFixType=ExtraUnmanagedStorageVolumes"
         return self._client.get(uri)
@@ -96,13 +99,15 @@ class StorageVolumeAttachments(object):
     def remove_extra_presentations(self, resource, timeout=-1):
         """
         Removes extra presentations from a specified server profile.
+
         Args:
-            resource (dict): Object to create
+            resource (dict):
+                Object to create
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
         Returns:
-            dict: associated storage attachment resource
+            dict: Associated storage attachment resource.
         """
         uri = self.URI + "/repair"
         custom_headers = {'Accept-Language': 'en_US'}
@@ -110,12 +115,14 @@ class StorageVolumeAttachments(object):
 
     def get_paths(self, id_or_uri, path_id_or_uri=''):
         """
-        Gets all paths or a specific attachment path for the specified volume attachment
+        Gets all paths or a specific attachment path for the specified volume attachment.
+
         Args:
-            id_or_uri: Could be either the volume attachment id or the volume attachment uri
-            port_id_or_uri: Could be either the path id or the path uri
+            id_or_uri: Could be either the volume attachment id or the volume attachment uri.
+            path_id_or_uri: Could be either the path id or the path uri.
+
         Returns:
-            dict: path(s)
+            dict: Path(s).
         """
         if path_id_or_uri:
             uri = self._client.build_uri(path_id_or_uri)
@@ -130,9 +137,11 @@ class StorageVolumeAttachments(object):
 
     def get(self, id_or_uri):
         """
-        Gets a volume attachment by id or uri
+        Gets a volume attachment by id or uri.
+
         Args:
-            id_or_uri: Could be either the volume attachment id or the volume attachment uri
+            id_or_uri: Could be either the volume attachment id or the volume attachment uri.
+
         Returns:
             dict: volume attachment
         """
@@ -140,11 +149,14 @@ class StorageVolumeAttachments(object):
 
     def get_by(self, field, value):
         """
-        Get all storage systems that match the filter
-        The search is case insensitive
+        Get all storage systems that match the filter.
+
+        The search is case insensitive.
+
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
+
         Returns:
             list: List of volume attachments.
         """

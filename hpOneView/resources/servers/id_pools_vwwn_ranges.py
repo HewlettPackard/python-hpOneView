@@ -21,10 +21,11 @@
 # THE SOFTWARE.
 ###
 
+from __future__ import absolute_import
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
-from __future__ import absolute_import
+
 from future import standard_library
 
 standard_library.install_aliases()
@@ -40,6 +41,11 @@ from hpOneView.resources.servers.id_pools_ranges import IdPoolsRanges
 
 
 class IdPoolsVwwnRanges(IdPoolsRanges):
+    """
+    The ID pools virtual world wide name (vWWN) ranges resource provides REST APIs to manage ID pools vWWN ranges.
+    A vWWN may be requested, used, and returned. Once returned, the vWWN is reclaimed by the range and available for
+    reuse.
+    """
     URI = '/rest/id-pools/vwwn/ranges'
 
     def __init__(self, con):

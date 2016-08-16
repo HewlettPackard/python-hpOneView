@@ -50,6 +50,7 @@ class StorageVolumeTemplates(object):
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
         Gets a list of storage volume templates.
+
         Args:
             start:
                 The first item to return, using 0-based indexing.
@@ -64,6 +65,7 @@ class StorageVolumeTemplates(object):
             sort:
                 The sort order of the returned data set. By default, the sort order is based
                 on create time, with the oldest entry first.
+
         Returns:
             list: A list of storage volume templates.
         """
@@ -71,23 +73,28 @@ class StorageVolumeTemplates(object):
 
     def create(self, resource, timeout=-1):
         """
-        Creates a new storage volume template
+        Creates a new storage volume template.
+
         Args:
-            resource (dict): Object to create
+            resource (dict):
+                Object to create.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
+
         Returns:
-            dict: Created storage volume template
+            dict: Created storage volume template.
         """
         custom_headers = {'Accept-Language': 'en_US'}
         return self._client.create(resource, timeout=timeout, custom_headers=custom_headers)
 
     def get(self, id_or_uri):
         """
-        Gets the specified storage volume template resource by ID or by uri
+        Gets the specified storage volume template resource by ID or by uri.
+
         Args:
-            id_or_uri: Could be either the storage volume template id or the storage volume template uri
+            id_or_uri: Could be either the storage volume template id or the storage volume template uri.
+
         Returns:
             dict: The storage volume template
         """
@@ -98,17 +105,20 @@ class StorageVolumeTemplates(object):
         Gets the storage volume templates that are available on the specified networks based on the storage system
         port's expected network connectivity. If there are no storage volume templates that meets the specified
         connectivity criteria an empty collection will be returned.
+
         Returns:
-            list: storage volume templates
+            list: Storage volume templates.
         """
         uri = self.URI + "/connectable-volume-templates"
         return self._client.get(uri)
 
     def delete(self, resource, force=False, timeout=-1):
         """
-        Deletes the specified storage volume template
+        Deletes the specified storage volume template.
+
         Args:
-            resource (dict): object to remove
+            resource (dict):
+                Object to remove.
             force (bool):
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
@@ -116,19 +126,22 @@ class StorageVolumeTemplates(object):
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
         Returns:
-            boolean: task completion
+            bool: Indicating if the resource was successfully deleted.
         """
         custom_headers = {'Accept-Language': 'en_US'}
         return self._client.delete(resource, force=force, timeout=timeout, custom_headers=custom_headers)
 
     def update(self, resource, timeout=-1):
         """
-        Updates a storage volume template
+        Updates a storage volume template.
+
         Args:
-            resource (dict): Object to update
+            resource (dict):
+                Object to update
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
+
         Returns:
             dict: Updated storage volume system
         """
@@ -137,11 +150,14 @@ class StorageVolumeTemplates(object):
 
     def get_by(self, field, value):
         """
-        Get all storage volume templates that match the filter
-        The search is case insensitive
+        Get all storage volume templates that match the filter.
+
+        The search is case insensitive.
+
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
+
         Returns:
             list: A list of storage volume templates that match the filter.
         """

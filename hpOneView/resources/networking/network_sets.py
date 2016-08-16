@@ -78,6 +78,7 @@ class NetworkSets(object):
     def delete(self, resource, force=False, timeout=-1):
         """
         Deletes a network set.
+
         Any deployed connections that are using the network are placed in the 'Failed' state.
 
         Args:
@@ -88,18 +89,20 @@ class NetworkSets(object):
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: task
-
+        Returns:
+            bool: Indicating if the resource was successfully deleted.
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
     def get(self, id):
         """
-        Gets the network set with the specified ID
-        Args:
-            id: ID of network set
+        Gets the network set with the specified ID.
 
-        Returns: dict
+        Args:
+            id: ID of network set.
+
+        Returns:
+            dict: Network set.
         """
         return self._client.get(id)
 
@@ -108,12 +111,11 @@ class NetworkSets(object):
         Creates a network set.
 
         Args:
-            resource: dict object to create
+            resource (dict): Object to create.
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns: Created resource.
-
         """
         data = self.__default_values.copy()
         data.update(resource)
@@ -124,12 +126,12 @@ class NetworkSets(object):
         Updates a network set.
 
         Args:
-            resource: dict object to update
+            resource (dict): Object to update.
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: Updated resource.
-
+        Returns:
+            dict: Updated resource.
         """
         data = self.__default_values.copy()
         data.update(resource)
@@ -137,12 +139,13 @@ class NetworkSets(object):
 
     def get_by(self, field, value):
         """
-        Get all network sets that match the filter
-        The search is case insensitive
+        Get all network sets that match the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
             list: A list of Network sets.
@@ -170,7 +173,7 @@ class NetworkSets(object):
                 on create time, with the oldest entry first.
 
         Returns:
-            list: A list of network sets without ethernet.
+            list: List of network sets, excluding Ethernet networks.
         """
         without_ethernet_client = ResourceClient(
             self._connection, "/rest/network-sets/withoutEthernet")
@@ -178,11 +181,13 @@ class NetworkSets(object):
 
     def get_without_ethernet(self, id):
         """
-        Gets the network set with the specified ID without ethernet
-        Args:
-            id: ID of network set
+        Gets the network set with the specified ID without ethernet.
 
-        Returns: dict
+        Args:
+            id: ID of network set.
+
+        Returns:
+            dict: Network set excluding Ethernet networks.
         """
         uri = "/rest/network-sets/%s/withoutEthernet" % (id)
         return self._client.get(uri)

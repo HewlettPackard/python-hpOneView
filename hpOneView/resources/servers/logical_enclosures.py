@@ -51,6 +51,7 @@ class LogicalEnclosures(object):
         Returns a list of logical enclosures matching the specified filter. A maximum of 40 logical enclosures are
         returned to the caller. Additional calls can be made to retrieve any other logical enclosures matching the
         filter. Valid filter parameters include attributes of a Logical Enclosure resource.
+
         Args:
             start:
                 The first item to return, using 0-based indexing.
@@ -73,12 +74,13 @@ class LogicalEnclosures(object):
 
     def get_by(self, field, value):
         """
-        Get all logical enclosures that match the filter
-        The search is case insensitive
+        Get all logical enclosures that match the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
             list: A list of logical enclosures.
@@ -87,21 +89,25 @@ class LogicalEnclosures(object):
 
     def get_by_name(self, name):
         """
-        Retrieve a resource by his name
-        Args:
-            name: resource name
+        Retrieve a resource by his name.
 
-        Returns: dict
+        Args:
+            name: Resource name.
+
+        Returns:
+            dict: Logical enclosure.
         """
         return self._client.get_by_name(name=name)
 
     def get(self, id_or_uri):
         """
         Returns the logical enclosure with the specified ID, if it exists.
-        Args:
-            id: ID or URI of logical enclosure
 
-        Returns: (dict) logical enclosure
+        Args:
+            id_or_uri: ID or URI of logical enclosure.
+
+        Returns:
+            dict: Logical enclosure.
         """
         return self._client.get(id_or_uri)
 
@@ -110,10 +116,10 @@ class LogicalEnclosures(object):
         Updates the given logical enclosure that is passed in. The fields that can be updated on the logical enclosure
         itself include its name and configuration script. When the script is updated on the logical enclosure, the
         configuration script runs on all enclosures in the logical enclosure.
+
         Args:
             resource (dict): Object to update
-            timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns: (dict) Updated logical enclosure
@@ -132,9 +138,10 @@ class LogicalEnclosures(object):
             path: Path
             value: Value
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-            in OneView, just stops waiting for its completion.
+                in OneView, just stops waiting for its completion.
 
-        Returns: (dict) Updated logical enclosure
+        Returns:
+            dict: Updated logical enclosure.
         """
         return self._client.patch(id_or_uri, operation, path, value, timeout=timeout)
 
@@ -149,19 +156,21 @@ class LogicalEnclosures(object):
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: (dict) logical enclosure
+        Returns:
+            dict: Logical enclosure.
         """
         uri = self._client.build_uri(id_or_uri) + "/configuration"
         return self._client.update_with_zero_body(uri, timeout=timeout)
 
     def get_script(self, id_or_uri):
         """
-        Gets the configuration script of the logical enclosure by id or uri
+        Gets the configuration script of the logical enclosure by id or uri.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
+            id_or_uri: Could be either the resource id or the resource uri.
 
-        Return: configuration script
+        Return:
+            Configuration script.
         """
         uri = self._client.build_uri(id_or_uri) + "/script"
         return self._client.get(uri)
@@ -172,12 +181,13 @@ class LogicalEnclosures(object):
         the specified ID.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
-            information: updated script
+            id_or_uri: Could be either the resource id or the resource uri.
+            information: Updated script.
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Return: configuration script
+        Return:
+            Configuration script.
         """
         uri = self._client.build_uri(id_or_uri) + "/script"
         return self._client.update(information, uri=uri, timeout=timeout)
@@ -189,13 +199,13 @@ class LogicalEnclosures(object):
         appliance support dump content.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
-            information (dict): information to generate support dump
+            id_or_uri: Could be either the resource id or the resource uri.
+            information (dict): Information to generate support dump.
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: (dict) support dump
-
+        Returns:
+            dict: Support dump.
         """
         uri = self._client.build_uri(id_or_uri) + "/support-dumps"
         return self._client.create(information, uri=uri, timeout=timeout)
@@ -206,11 +216,12 @@ class LogicalEnclosures(object):
         in the Inconsistent state.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
+            id_or_uri: Could be either the resource id or the resource uri.
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: (dict) logical enclosure
+        Returns:
+            dict: Logical enclosure.
         """
         uri = self._client.build_uri(id_or_uri) + "/updateFromGroup"
         return self._client.update_with_zero_body(uri=uri, timeout=timeout)

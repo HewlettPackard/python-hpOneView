@@ -53,24 +53,29 @@ class PowerDevices(object):
         of an HPE iPDU.
 
         Args:
-            id: The power device id
+            id:
+                The power device id.
             fields:
-                Name of the metric(s) to be retrieved in the format METRIC[,METRIC]... Power delivery devices support
-                the following utilization metrics:
-                AveragePower
-                    Average power consumption in Watts during this sample interval.
-                PeakPower
-                    Peak power consumption in Watts during this sample interval.
-                If unspecified, all metrics supported are returned.
+                Name of the metric(s) to be retrieved in the format METRIC[,METRIC]...If unspecified, all metrics
+                supported are returned. Power delivery devices support the following utilization metrics:
+
+                    * AveragePower
+                        Average power consumption in Watts during this sample interval.
+                    * PeakPower
+                        Peak power consumption in Watts during this sample interval.
+
             filter:
                 Filters should be in the format FILTER_NAME=VALUE[,FILTER_NAME=VALUE]...
+
                 E.g.: 'startDate=2016-05-30T11:20:44.541Z,endDate=2016-05-30T19:20:44.541Z'
-                startDate
+
+                startDate:
                     Start date of requested starting time range in ISO 8601 format. If omitted, the startDate is
                     determined by the endDate minus 24 hours.
-                endDate
+                endDate:
                     End date of requested starting time range in ISO 8601 format. When omitted the endDate includes the
                     latest data sample available.
+
                 If an excessive number of samples would otherwise be returned, the results will be segmented. The caller
                 is responsible for comparing the returned sliceStartTime with the requested startTime in the response.
                 If the sliceStartTime is greater than the oldestSampleTime and the requested start time, the caller is
@@ -84,24 +89,24 @@ class PowerDevices(object):
                 missing samples.
 
             refresh:
-                 Specifies that if necessary an additional request will be queued to obtain the most recent utilization
-                  data from the enclosure. The response will not include any refreshed data. To track the availability
-                  of the newly collected data, monitor the TaskResource identified by the refreshTaskUri property in
-                  the response. If null, no refresh was queued.
+                Specifies that if necessary an additional request will be queued to obtain the most recent utilization
+                data from the enclosure. The response will not include any refreshed data. To track the availability
+                of the newly collected data, monitor the TaskResource identified by the refreshTaskUri property in
+                the response. If null, no refresh was queued.
             view:
-                 Specifies the resolution interval length of the samples to be retrieved. This is reflected in the
-                 resolution in the returned response. Utilization data is automatically purged to stay within storage
-                 space constraints. Supported views are listed below.
+                Specifies the resolution interval length of the samples to be retrieved. This is reflected in the
+                resolution in the returned response. Utilization data is automatically purged to stay within storage
+                space constraints. Supported views are listed below.
 
                 native (DEFAULT)
                     Resolution of the samples returned will be one sample for each 5-minute time period. This is the
                     default view and matches the resolution of the data returned by the enclosure. Samples at this
-                     resolution are retained up to one year.
+                    resolution are retained up to one year.
                 hour
                     Resolution of the samples returned will be one sample for each 60-minute time period. Samples are
-                     calculated by averaging the available 5-minute data samples that occurred within the hour, except
-                      for PeakPower which is calculated by reporting the peak observed 5-minute sample value data during
-                       the hour. Samples at this resolution are retained up to three years.
+                    calculated by averaging the available 5-minute data samples that occurred within the hour, except
+                    for PeakPower which is calculated by reporting the peak observed 5-minute sample value data during
+                    the hour. Samples at this resolution are retained up to three years.
                 day
                     Resolution of the samples returned will be one sample for each 24-hour time period. One day is a
                     24-hour period that starts at midnight GMT regardless of the time zone in which the appliance or
@@ -110,7 +115,7 @@ class PowerDevices(object):
                     5-minute sample value data during the day. Samples at this resolution are retained up to three
                     years.
 
-            Returns:
-                dict: Utilization data
-            """
+        Returns:
+            dict: Utilization data.
+        """
         return self._client.get_utilization(id, fields, filter, refresh, view)

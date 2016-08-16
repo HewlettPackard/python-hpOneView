@@ -54,12 +54,11 @@ class IdPoolsRanges(object):
 
         Args:
             resource (dict): Object to create
-            timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            dict: Created range
+            dict: Created range.
         """
         return self._client.create(resource, timeout=timeout)
 
@@ -71,10 +70,10 @@ class IdPoolsRanges(object):
         range.
 
         Args:
-            id_or_uri: Could be either the range id or uri
+            id_or_uri: Could be either the range id or uri.
 
         Returns:
-            dict: range
+            dict: Range
         """
         return self._client.get(id_or_uri)
 
@@ -83,15 +82,13 @@ class IdPoolsRanges(object):
         Enables or disables a range.
 
         Args:
-            information (dict): information to update.
-            id_or_uri: id or uri of range
-            timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+            information (dict): Information to update.
+            id_or_uri: Id or uri of range.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            dict: Updated resource
-
+            dict: Updated resource.
         """
 
         uri = self._client.build_uri(id_or_uri)
@@ -103,16 +100,17 @@ class IdPoolsRanges(object):
         Deletes range.
 
         Args:
-            resource (dict): object to delete
+            resource (dict):
+                Object to delete
             force (bool):
-                 If set to true the operation completes despite any problems with
-                 network connectivity or errors on the resource itself. The default is false.
+                If set to true the operation completes despite any problems with
+                network connectivity or errors on the resource itself. The default is false.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            dict: Details of associated resource
+            bool: Indicating if the resource was successfully deleted.
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
@@ -121,7 +119,8 @@ class IdPoolsRanges(object):
         Gets all fragments that have been allocated in range.
 
         Args:
-            id_or_uri: id or uri of range
+            id_or_uri:
+                Id or uri of range
             count:
                  The number of resources to return. A count of -1 requests all the items. The actual number of items in
                  the response may differ from the requested count if the sum of start and count exceed the total number
@@ -131,8 +130,7 @@ class IdPoolsRanges(object):
                 first available item.
 
         Returns:
-            list: A list with IDs
-
+            list: A list with IDs.
         """
         uri = self._client.build_uri(id_or_uri) + \
             "/allocated-fragments?start={0}&count={1}".format(start, count)
@@ -147,13 +145,14 @@ class IdPoolsRanges(object):
         Args:
             information (dict):
                 Information to update. Can result in system specified IDs or the system reserving user-specified IDs.
-            id_or_uri: id or uri of vSN range
+            id_or_uri:
+                id or uri of vSN range.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: (dict) allocator
-
+        Returns:
+            dict: Allocator
         """
         uri = self._client.build_uri(id_or_uri) + "/allocator"
 
@@ -168,14 +167,14 @@ class IdPoolsRanges(object):
         Args:
             information (dict):
                 The list of IDs to be collected
-            id_or_uri: id or uri of range
+            id_or_uri:
+                Id or uri of range
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
             dict: collector containing list of collected IDs successfully collected.
-
         """
         uri = self._client.build_uri(id_or_uri) + "/collector"
 
@@ -186,7 +185,8 @@ class IdPoolsRanges(object):
         Gets all the free fragments in a vSN range.
 
         Args:
-            id_or_uri: id or uri of range
+            id_or_uri:
+                Id or uri of range
             count:
                  The number of resources to return. A count of -1 requests all the items. The actual number of items in
                  the response may differ from the requested count if the sum of start and count exceed the total number
@@ -195,8 +195,8 @@ class IdPoolsRanges(object):
                 The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
                 first available item.
 
-        Returns: the list of IDs
-
+        Returns:
+            The list of IDs.
         """
         uri = self._client.build_uri(
             id_or_uri) + "/free-fragments?start={0}&count={1}".format(start, count)

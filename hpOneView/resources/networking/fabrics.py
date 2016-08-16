@@ -50,6 +50,7 @@ class Fabrics(object):
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
         Gets a paginated collection of all fabrics based on the specified parameters.
+
         Filters can be used in the URL to control the number of fabrics that are returned.
         With no filters specified, the API returns all supported fabrics.
 
@@ -75,22 +76,25 @@ class Fabrics(object):
 
     def get(self, id):
         """
-        Gets the fabric with the specified ID
-        Args:
-            id: ID of fabric
+        Gets the fabric with the specified ID.
 
-        Returns: dict
+        Args:
+            id: ID of fabric.
+
+        Returns:
+            dict: The fabric.
         """
         return self._client.get(id)
 
     def get_by(self, field, value):
         """
-        Get all fabrics that match the filter
-        The search is case insensitive
+        Get all fabrics that match the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
             list: A list of fabrics.

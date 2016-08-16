@@ -73,12 +73,13 @@ class Enclosures(object):
 
     def get_by(self, field, value):
         """
-        Get all Enclosures that matches the filter
-        The search is case insensitive
+        Get all Enclosures that matches the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
             list: A list of Enclosures.
@@ -91,9 +92,12 @@ class Enclosures(object):
         it to claim/configure the enclosure and add its components to the appliance.
 
         Args:
-            resource: enclosure information
+            information: Enclosure information to add.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
-        Returns: Enclosure.
+        Returns:
+            dict: Enclosure.
 
         """
         return self._client.create(information, timeout=timeout)
@@ -101,16 +105,19 @@ class Enclosures(object):
     def get(self, id_or_uri):
         """
         Returns the enclosure with the specified ID, if it exists.
-        Args:
-            id: ID or URI of Enclosure
 
-        Returns: dict
+        Args:
+            id_or_uri: ID or URI of the Enclosure.
+
+        Returns:
+            dict: Enclosure.
         """
         return self._client.get(id_or_uri)
 
     def patch(self, id_or_uri, operation, path, value, timeout=-1):
         """
         Uses the PATCH to update a resource for a given enclosure.
+
         Only one operation can be performed in each PATCH call.
 
         Args:
@@ -121,7 +128,8 @@ class Enclosures(object):
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: Updated resource. When blocking=False, returns the task.
+        Returns:
+            dict: Updated resource.
         """
         return self._client.patch(id_or_uri, operation, path, value, timeout=timeout)
 
@@ -129,6 +137,7 @@ class Enclosures(object):
         """
         Removes and unconfigures the specified enclosure from the appliance. All components of the enclosure (e.g.
         blades and interconnects) are unconfigured/removed as part of this process.
+
         If the force option is set to "true" then any errors encountered as part of unconfiguring the enclosure or its
         components are ignored and the enclosure is removed regardless of any errors that occur.
 
@@ -140,8 +149,8 @@ class Enclosures(object):
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: Result status
-
+        Returns:
+            bool: Indicating if the resource was successfully removed.
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
@@ -152,11 +161,12 @@ class Enclosures(object):
         track the progress of the operation.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
+            id_or_uri: Could be either the resource id or the resource uri.
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: Enclosure
+        Returns:
+            Enclosure
         """
         uri = self._client.build_uri(id_or_uri) + "/configuration"
         return self._client.update_with_zero_body(uri, timeout=timeout)
@@ -164,26 +174,29 @@ class Enclosures(object):
     def get_environmental_configuration(self, id_or_uri):
         """
         Gets the settings that describe the environmental configuration (supported feature set, calibrated minimum &
-        maximum power, location & dimensions, ...) of the enclosure resource
+        maximum power, location & dimensions, ...) of the enclosure resource.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
+            id_or_uri: Could be either the resource id or the resource uri.
 
-        Return: Settings that describe the environmental configuration
+        Returns:
+            Settings that describe the environmental configuration.
         """
         uri = self._client.build_uri(id_or_uri) + '/environmentalConfiguration'
         return self._client.get(uri)
 
     def update_environmental_configuration(self, id_or_uri, configuration, timeout=-1):
         """
-        Sets the calibrated max power of an unmanaged or unsupported enclosure
+        Sets the calibrated max power of an unmanaged or unsupported enclosure.
+
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
+            id_or_uri: Could be either the resource id or the resource uri.
             configuration: Configuration
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Return: Settings that describe the environmental configuration
+        Returns:
+            Settings that describe the environmental configuration.
         """
         uri = self._client.build_uri(id_or_uri) + '/environmentalConfiguration'
         return self._client.update(configuration, uri=uri, timeout=timeout)
@@ -202,19 +215,21 @@ class Enclosures(object):
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Return: Enclosure
+        Returns:
+            Enclosure
         """
         uri = self._client.build_uri(id_or_uri) + "/refreshState"
         return self._client.update(configuration, uri=uri, timeout=timeout)
 
     def get_script(self, id_or_uri):
         """
-        Gets the script of the enclosure
+        Gets the script of the enclosure.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
+            id_or_uri: Could be either the resource id or the resource uri.
 
-        Return: Enclosure script
+        Returns:
+            Enclosure script.
         """
         uri = self._client.build_uri(id_or_uri) + "/script"
         return self._client.get(uri)
@@ -225,10 +240,11 @@ class Enclosures(object):
         log in to the enclosure without providing credentials. This API is currently only supported by C7000 enclosures.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
+            id_or_uri: Could be either the resource id or the resource uri.
             role: Role
 
-        Return: SSO (Single Sign-On) URL parameters
+        Returns:
+            SSO (Single Sign-On) URL parameters.
         """
         uri = self._client.build_uri(id_or_uri) + "/sso?role=%s" % role
         return self._client.get(uri)
@@ -238,29 +254,29 @@ class Enclosures(object):
         Retrieves historical utilization data for the specified enclosure, metrics, and time span.
 
         Args:
-            id: Could be either the resource id or the resource uri
-            fields:
-                 Name of the metric(s) to be retrieved in the format METRIC[,METRIC]... Enclosures support the following
-                  utilization metrics:
-
-                AmbientTemperature
-                    Inlet air temperature in degrees Celsius during this sample interval.
-                AveragePower
-                    Average power consumption in Watts during this sample interval.
-                PeakPower
-                    Peak power consumption in Watts during this sample interval.
-                PowerCap
-                    Dynamic power cap setting on the server hardware in Watts during this sample interval.
-                DeratedCapacity
-                    Enclosure dynamic power cap derated capacity setting in Watts during this sample interval.
-                RatedCapacity
-                    Enclosure dynamic power cap rated capacity setting in Watts during this sample interval.
+            id_or_uri: Could be either the resource id or the resource uri.
+            fields: Name of the metric(s) to be retrieved in the format METRIC[,METRIC]...
 
                 If unspecified, all metrics supported are returned.
+
+                Enclosures support the following utilization metrics:
+                   AmbientTemperature
+                       Inlet air temperature in degrees Celsius during this sample interval.
+                   AveragePower
+                       Average power consumption in Watts during this sample interval.
+                   PeakPower
+                       Peak power consumption in Watts during this sample interval.
+                   PowerCap
+                       Dynamic power cap setting on the server hardware in Watts during this sample interval.
+                   DeratedCapacity
+                       Enclosure dynamic power cap derated capacity setting in Watts during this sample interval.
+                   RatedCapacity
+                       Enclosure dynamic power cap rated capacity setting in Watts during this sample interval.
+
             filter:
-                 Provides an expression of the requested time range of data. One condition (startDate/endDate) is
-                  specified per filter specification as described below. The condition must be specified via the
-                  equals (=) operator.
+                Provides an expression of the requested time range of data. One condition (startDate/endDate) is
+                specified per filter specification as described below. The condition must be specified via the
+                equals (=) operator.
 
                 startDate
                     Start date of requested starting time range in ISO 8601 format (2016-05-31T07:20:00.000Z).
@@ -294,12 +310,12 @@ class Enclosures(object):
                 native (DEFAULT)
                     Resolution of the samples returned will be one sample for each 5-minute time period. This is the
                     default view and matches the resolution of the data returned by the enclosure. Samples at this
-                     resolution are retained up to one year.
+                    resolution are retained up to one year.
                 hour
                     Resolution of the samples returned will be one sample for each 60-minute time period. Samples are
-                     calculated by averaging the available 5-minute data samples that occurred within the hour, except
-                      for PeakPower which is calculated by reporting the peak observed 5-minute sample value data during
-                       the hour. Samples at this resolution are retained up to three years.
+                    calculated by averaging the available 5-minute data samples that occurred within the hour, except
+                    for PeakPower which is calculated by reporting the peak observed 5-minute sample value data during
+                    the hour. Samples at this resolution are retained up to three years.
                 day
                     Resolution of the samples returned will be one sample for each 24-hour time period. One day is a
                     24-hour period that starts at midnight GMT regardless of the time zone in which the appliance or
@@ -308,8 +324,7 @@ class Enclosures(object):
                     5-minute sample value data during the day. Samples at this resolution are retained up to three
                     years.
 
-        Returns: dict
-
+        Returns:
+            dict
         """
-
         return self._client.get_utilization(id_or_uri, fields=fields, filter=filter, refresh=refresh, view=view)

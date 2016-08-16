@@ -49,8 +49,7 @@ class Connections(object):
     def get_all(self, start=0, count=-1, filter='', sort='', view='', fields=''):
         """
         Gets a paginated collection of connections based on optional sorting and filtering,
-        and constrained by start and count parameters. Supported filters:
-        /rest/connections?filter="interconnectUri=xxxx"
+        and constrained by start and count parameters.
 
         Args:
             start:
@@ -80,12 +79,13 @@ class Connections(object):
 
     def get_by(self, field, value):
         """
-        Get all connections that match the filter
-        The search is case insensitive
+        Get all connections that match the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
             list: A list of connections.
@@ -95,9 +95,11 @@ class Connections(object):
     def get(self, id_or_uri):
         """
         Returns the connection with the specified ID or uri.
+
         Args:
             id: ID or URI of connection
 
-        Returns: dict
+        Returns:
+            dict
         """
         return self._client.get(id_or_uri)

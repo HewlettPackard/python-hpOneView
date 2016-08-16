@@ -84,13 +84,15 @@ class Volumes(object):
         Args:
             id_or_uri: Could be either the volume id or the volume uri.
 
-        Returns: Managed volume.
+        Returns:
+            Managed volume.
         """
         return self._client.get(id_or_uri)
 
     def get_by(self, field, value):
         """
         Get all managed volumes that matches the given filter.
+
         The search is case insensitive.
 
         Args:
@@ -108,8 +110,6 @@ class Volumes(object):
 
         It's possible to create the volume in 6 different ways:
 
-          It's possible to create the volume in 6 different ways:
-
           1) Common = Storage System + Storage Pool
           2) Template = Storage Volume Template
           3) Common with snapshots = Storage System + Storage Pool + Snapshot Pool
@@ -120,7 +120,8 @@ class Volumes(object):
           NOTE: The 4) and 5) are for adding a volume for management, it do not create new volumes.
 
         Args:
-            resource: dict object to create
+            resource (dict):
+                Object to create
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stop waiting for its completion.
@@ -137,7 +138,7 @@ class Volumes(object):
         Reverts a volume to the specified snapshot.
 
         Args:
-            resource: dict object to update
+            resource (dict): Object to update.
             force:
                 If set to true the operation completes despite any problems with network connectivity or errors on
                 the resource itself. The default is false.
@@ -145,7 +146,8 @@ class Volumes(object):
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stop waiting for its completion.
 
-        Returns: Updated resource.
+        Returns:
+            Updated resource.
         """
         return self._client.update(resource, timeout=timeout, force=force)
 
@@ -154,7 +156,8 @@ class Volumes(object):
         Deletes a managed volume.
 
         Args:
-            resource: dict object to delete
+            resource (dict):
+                Object to delete.
             force:
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
@@ -188,7 +191,7 @@ class Volumes(object):
 
         Args:
             volume_id_or_uri:
-                Could be either the volume id or the volume uri
+                Could be either the volume id or the volume uri.
             start:
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
@@ -204,25 +207,26 @@ class Volumes(object):
                 on create time, with the oldest entry first.
 
         Returns:
-            list: A list of snapshots
+            list: A list of snapshots.
         """
         uri = self.__build_volume_snapshot_uri(volume_id_or_uri)
         return self._client.get_all(start, count, filter=filter, sort=sort, uri=uri)
 
     def create_snapshot(self, volume_id_or_uri, snapshot, timeout=-1):
         """
-        Creates a snapshot for the volume specified
+        Creates a snapshot for the volume specified.
+
         Args:
             volume_id_or_uri:
                 Could be either the volume id or the volume uri
-            snapshot (dict): Object to create
+            snapshot (dict):
+                Object to create
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
                 OneView, just stops waiting for its completion.
 
         Returns:
-            dict: Storage Volume
-
+            dict: Storage Volume.
         """
         uri = self.__build_volume_snapshot_uri(volume_id_or_uri)
         data = self.__snapshot_default_values.copy()
@@ -231,16 +235,17 @@ class Volumes(object):
 
     def get_snapshot(self, snapshot_id_or_uri, volume_id_or_uri=None):
         """
-        Gets a snapshot of a volume
+        Gets a snapshot of a volume.
+
         Args:
             volume_id_or_uri:
                 Could be either the volume id or the volume uri. It is optional if is passed a snapshot uri,
-                but required if passed a snapshot id
+                but required if passed a snapshot id.
             snapshot_id_or_uri:
-                Could be either the snapshot id or the snapshot uri
+                Could be either the snapshot id or the snapshot uri.
 
         Returns:
-            dict: The snapshot
+            dict: The snapshot.
         """
         uri = self.__build_volume_snapshot_uri(volume_id_or_uri, snapshot_id_or_uri)
         return self._client.get(uri)
@@ -250,7 +255,7 @@ class Volumes(object):
         Deletes a snapshot from OneView and storage system.
 
         Args:
-            resource (dict): object to remove
+            resource (dict): Object to remove.
             force (bool):
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
@@ -259,24 +264,24 @@ class Volumes(object):
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            dict: Details of associated volume
+            dict: Details of associated volume.
 
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
     def get_snapshot_by(self, volume_id_or_uri, field, value):
         """
-        Get all snapshots that match the filter
-        The search is case insensitive
+        Get all snapshots that match the filter.
+
+        The search is case insensitive.
 
         Args:
-            volume_id_or_uri: Could be either the volume id or the volume uri
-            field: field name to filter
-            value: value to filter
+            volume_id_or_uri: Could be either the volume id or the volume uri.
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
-            list: snapshots
-
+            list: Snapshots
         """
         uri = self.__build_volume_snapshot_uri(volume_id_or_uri)
         return self._client.get_by(field, value, uri=uri)
@@ -334,9 +339,8 @@ class Volumes(object):
         network connectivity.
 
         A volume is attachable if it satisfies either of the following conditions:
-
-        - The volume is shareable
-        - The volume not shareable and not attached.
+            * The volume is shareable
+            * The volume not shareable and not attached.
 
         Args:
             start:

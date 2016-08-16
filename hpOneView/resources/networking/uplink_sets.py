@@ -57,6 +57,7 @@ class UplinkSets(object):
         """
         Gets a paginated list of uplink sets based on optional sorting and filtering, and constrained by start and
         count parameters.
+
         Filters can be used in the URL to control the number of uplink sets that are returned.
         With no filters specified, the API returns all uplink sets.
 
@@ -82,24 +83,25 @@ class UplinkSets(object):
 
     def get(self, id_or_uri):
         """
-        Gets an uplink set with the specified ID
+        Gets an uplink set with the specified ID.
+
         Args:
-            id_or_uri:
-                Could be either the uplink set id or the uplink set uri
+            id_or_uri: Could be either the uplink set id or the uplink set uri.
 
         Returns:
-            dict: The uplink set
+            dict: The uplink set.
         """
         return self._client.get(id_or_uri)
 
     def get_by(self, field, value):
         """
-        Get all uplink sets that match the filter
-        The search is case insensitive
+        Get all uplink sets that match the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
             list: Uplink sets
@@ -112,14 +114,13 @@ class UplinkSets(object):
         Creates an uplink set.
 
         Args:
-            resource: dict object to create
+            resource (dict): Object to create.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
                 OneView, just stops waiting for its completion.
 
         Returns:
             dict: Created resource.
-
         """
         data = self.__default_values.copy()
         data.update(resource)
@@ -130,14 +131,13 @@ class UplinkSets(object):
         Updates an uplink set.
 
         Args:
-            resource (dict): Resource to update
+            resource (dict): Resource to update.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
                 OneView, just stops waiting for its completion.
 
         Returns:
             dict: Updated resource.
-
         """
         data = self.__default_values.copy()
         data.update(resource)
@@ -149,7 +149,7 @@ class UplinkSets(object):
         deployed and using the FC network will be placed into a 'Failed' state.
 
         Args:
-            resource: Resource to delete or the resource ID
+            resource: Resource to delete or the resource ID.
             force:
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
@@ -158,20 +158,19 @@ class UplinkSets(object):
                 OneView, just stops waiting for its completion.
 
             Returns:
-                bool: True if successfully deleted
-
+                bool: True if successfully deleted.
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
     def get_ethernet_networks(self, id_or_uri):
         """
-        Gets a list of associated ethernet networks of an uplink set
+        Gets a list of associated ethernet networks of an uplink set.
+
         Args:
-            id_or_uri:
-                Could be either the uplink set id or the uplink set uri
+            id_or_uri: Could be either the uplink set id or the uplink set uri.
 
         Returns:
-            list: Associated ethernet networks
+            list: Associated ethernet networks.
         """
         uplink = self.get(id_or_uri)
         network_uris = uplink.get('networkUris')
@@ -183,29 +182,31 @@ class UplinkSets(object):
 
     def add_ethernet_networks(self, id_or_uri, ethernet_id_or_uris):
         """
-        Adds existing ethernet networks to an uplink set
+        Adds existing ethernet networks to an uplink set.
+
         Args:
             id_or_uri:
-                Could be either the uplink set id or the uplink set uri
+                Could be either the uplink set id or the uplink set uri.
             ethernet_id_or_uris:
-                Could be either one or more ethernet network id or ethernet network uri
+                Could be either one or more ethernet network id or ethernet network uri.
 
         Returns:
-            dict: The updated uplink set
+            dict: The updated uplink set.
         """
         return self.__set_ethernet_uris(id_or_uri, ethernet_id_or_uris, operation="add")
 
     def remove_ethernet_networks(self, id_or_uri, ethernet_id_or_uris):
         """
-        Remove existing ethernet networks of an uplink set
+        Remove existing ethernet networks of an uplink set.
+
         Args:
             id_or_uri:
-                Could be either the uplink set id or the uplink set uri
+                Could be either the uplink set id or the uplink set uri.
             ethernet_id_or_uris:
-                Could be either one or more ethernet network id or ethernet network uri
+                Could be either one or more ethernet network id or ethernet network uri.
 
         Returns:
-            dict: The updated uplink set
+            dict: The updated uplink set.
         """
         return self.__set_ethernet_uris(id_or_uri, ethernet_id_or_uris, operation="remove")
 
