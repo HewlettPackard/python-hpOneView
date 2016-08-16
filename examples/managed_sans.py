@@ -37,6 +37,8 @@ config = {
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
+imported_san = None
+internally_managed_san = None
 
 # Get all, with defaults
 print("Get all Managed SANs")
@@ -45,15 +47,58 @@ managed_sans = oneview_client.managed_sans.get_all()
 if managed_sans:
     for managed_san in managed_sans:
         print('  Name: {name} - Manager: {deviceManagerName}'.format(**managed_san))
+        if managed_san['imported']:
+            imported_san = managed_san
+        else:
+            internally_managed_san = managed_san
 
     # Get all, with defaults
     print("Get a Managed SANs by Name")
-    managed_san_by_id = oneview_client.managed_sans.get_by_name(managed_sans[0]['name'])
+    managed_san_by_id = oneview_client.managed_sans.get_by_name(managed_san['name'])
     pprint(managed_san_by_id)
 
     # Get all, with defaults
-    print("Get a Managed SANs by URI")
-    managed_san_by_uri = oneview_client.managed_sans.get(managed_sans[0]['uri'])
+    print("Get a Managed SAN by URI")
+    managed_san_by_uri = oneview_client.managed_sans.get(managed_san['uri'])
     pprint(managed_san_by_uri)
+
+    if internally_managed_san:
+        # Update the Managed SAN's publicAttributes
+        print("Update the Internally Managed SAN's publicAttributes")
+        public_attributes = {
+            "publicAttributes": [{
+                "name": "MetaSan",
+                "value": "Neon SAN",
+                "valueType": "String",
+                "valueFormat": "None"
+            }]
+        }
+        san_response_update_attr = oneview_client.managed_sans.update(internally_managed_san['uri'], public_attributes)
+        pprint(san_response_update_attr)
+
+        # Update the Managed SAN's policy
+        print("Update the Internally Managed SAN's policy")
+        policy = {
+            "sanPolicy": {
+                "zoningPolicy": "SingleInitiatorAllTargets",
+                "zoneNameFormat": "{hostName}_{initiatorWwn}",
+                "enableAliasing": True,
+                "initiatorNameFormat": "{hostName}_{initiatorWwn}",
+                "targetNameFormat": "{storageSystemName}_{targetName}",
+                "targetGroupNameFormat": "{storageSystemName}_{targetGroupName}"
+            }
+        }
+        san_response_police_update = oneview_client.managed_sans.update(internally_managed_san['uri'], policy)
+        pprint(san_response_police_update)
+
+    if imported_san:
+        # Refresh the Managed SAN
+        print("Refresh the Imported Managed SAN")
+        refresh_config = {
+            "refreshState": "RefreshPending"
+        }
+        san_response_refresh = oneview_client.managed_sans.update(imported_san['uri'], refresh_config)
+        pprint(san_response_refresh)
+
 else:
     print("No Managed SANs found.")

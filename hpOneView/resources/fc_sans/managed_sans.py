@@ -96,3 +96,26 @@ class ManagedSANs(object):
             dict: The Managed SAN resource.
         """
         return self._client.get(id_or_uri=id_or_uri)
+
+    def update(self, id_or_uri, data, timeout=-1):
+        """
+        Updates a Managed SAN.
+
+        It's possible:
+        - Refresh the Managed SAN.
+        - Updating the Managed SAN's publicAttributes.
+        - Updating the Managed SAN's policy.
+
+        Args:
+            id_or_uri: Could be either the Managed SAN resource id or uri.
+            data: dict object to update
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stop waiting for its completion.
+
+        Returns:
+            dict: SanResponse
+
+        """
+        uri = self._client.build_uri(id_or_uri)
+        return self._client.update(data, uri=uri, timeout=timeout)

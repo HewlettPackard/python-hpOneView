@@ -73,3 +73,21 @@ class SanManagersTest(TestCase):
 
         self._resource.get(id)
         mock_get.assert_called_once_with(id_or_uri=id)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_with_uri(self, mock_update):
+        uri = "/rest/fc-sans/managed-sans/d1d"
+        data = {"attributes": "values"}
+
+        self._resource.update(uri, data)
+
+        mock_update.assert_called_once_with(data, timeout=-1, uri=uri)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_with_id(self, mock_update):
+        uri = "/rest/fc-sans/managed-sans/d1d"
+        data = {"attributes": "values"}
+
+        self._resource.update("d1d", data)
+
+        mock_update.assert_called_once_with(data, timeout=-1, uri=uri)
