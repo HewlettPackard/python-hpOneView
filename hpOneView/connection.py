@@ -283,7 +283,7 @@ class connection(object):
         return members
 
     def delete(self, uri, custom_headers=None):
-        return self.__do_rest_call('DELETE', uri, '', custom_headers=custom_headers)
+        return self.__do_rest_call('DELETE', uri, {}, custom_headers=custom_headers)
 
     def put(self, uri, body, custom_headers=None):
         return self.__do_rest_call('PUT', uri, body, custom_headers=custom_headers)

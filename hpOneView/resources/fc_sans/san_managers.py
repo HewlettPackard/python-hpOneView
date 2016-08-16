@@ -142,3 +142,32 @@ class SanManagers(object):
             return provider['defaultConnectionInfo']
         else:
             return {}
+
+    def remove(self, resource, timeout=-1):
+        """
+        Removes a registered SAN Manager.
+
+        Args:
+            resource: dict object to delete.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
+
+        Returns:
+            bool:
+        """
+        return self._client.delete(resource, timeout=timeout)
+
+    def get_by_name(self, name):
+        """
+        Gets a SAN Manager by name.
+
+        Args:
+            name: Name of the SAN Manager
+
+        Returns:
+            dict: SAN Manager.
+        """
+        san_managers = self._client.get_all()
+        result = [x for x in san_managers if x['name'] == name]
+        return result[0] if result else None
