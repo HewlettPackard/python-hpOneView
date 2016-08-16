@@ -70,6 +70,7 @@ from hpOneView.resources.networking.interconnect_link_topologies import Intercon
 from hpOneView.resources.networking.logical_downlinks import LogicalDownlinks
 from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.facilities.racks import Racks
+from hpOneView.resources.fc_sans.managed_sans import ManagedSANs
 from hpOneView.resources.fc_sans.san_managers import SanManagers
 from hpOneView.resources.fc_sans.endpoints import Endpoints
 from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
@@ -134,6 +135,7 @@ class OneViewClient(object):
         self.__firmware_bundles = None
         self.__uplink_sets = None
         self.__volumes = None
+        self.__managed_sans = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -665,3 +667,15 @@ class OneViewClient(object):
         if not self.__volumes:
             self.__volumes = Volumes(self.__connection)
         return self.__volumes
+
+    @property
+    def managed_sans(self):
+        """
+        Gets the Managed SANs API client.
+
+        Returns:
+            ManagedSANs:
+        """
+        if not self.__managed_sans:
+            self.__managed_sans = ManagedSANs(self.__connection)
+        return self.__managed_sans

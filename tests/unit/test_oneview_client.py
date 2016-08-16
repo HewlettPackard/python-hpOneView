@@ -31,6 +31,7 @@ from hpOneView.oneview_client import OneViewClient
 from hpOneView.resources.data_services.metric_streaming import MetricStreaming
 from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.facilities.racks import Racks
+from hpOneView.resources.fc_sans.managed_sans import ManagedSANs
 from hpOneView.resources.fc_sans.san_managers import SanManagers
 from hpOneView.resources.fc_sans.endpoints import Endpoints
 from hpOneView.resources.networking.fc_networks import FcNetworks
@@ -402,3 +403,10 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_server_profiles(self):
         server_profiles = self._oneview.server_profiles
         self.assertEqual(server_profiles, self._oneview.server_profiles)
+
+    def test_managed_sans_has_right_type(self):
+        self.assertIsInstance(self._oneview.managed_sans, ManagedSANs)
+
+    def test_lazy_loading_managed_sans(self):
+        managed_sans = self._oneview.managed_sans
+        self.assertEqual(managed_sans, self._oneview.managed_sans)
