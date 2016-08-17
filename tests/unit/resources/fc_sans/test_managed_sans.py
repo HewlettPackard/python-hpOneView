@@ -32,7 +32,7 @@ from hpOneView.resources.fc_sans.managed_sans import ManagedSANs
 TIMEOUT = -1
 
 
-class SanManagersTest(TestCase):
+class ManagedSANsTest(TestCase):
     def setUp(self):
         host = '127.0.0.1'
         http_connection = connection(host)
@@ -49,19 +49,19 @@ class SanManagersTest(TestCase):
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_by_name_should_return_san_manager_when_found(self, mock_get_all):
         mock_get_all.return_value = [
-            {"name": "SAN1_0", "uri": "/rest/fc-sans/managed-sans/d1d"},
-            {"name": "SAN1_1", "uri": "/rest/fc-sans/managed-sans/sc5"}
+            {"name": "SAN1_0", "uri": "/rest/fc-sans/managed-sans/280FF951-F007-478F-AC29-E4655FC76DDC"},
+            {"name": "SAN1_1", "uri": "/rest/fc-sans/managed-sans/6fee02f3-b7c7-42bd-a528-04341e16bad6"}
         ]
         managed_san = self._resource.get_by_name("SAN1_1")
 
-        expected_result = {"name": "SAN1_1", "uri": "/rest/fc-sans/managed-sans/sc5"}
+        expected_result = {"name": "SAN1_1", "uri": "/rest/fc-sans/managed-sans/6fee02f3-b7c7-42bd-a528-04341e16bad6"}
         self.assertEqual(managed_san, expected_result)
 
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_by_name_should_return_null_when_not_found(self, mock_get_all):
         mock_get_all.return_value = [
-            {"name": "SAN1_0", "uri": "/rest/fc-sans/managed-sans/d1d"},
-            {"name": "SAN1_1", "uri": "/rest/fc-sans/managed-sans/sc5"}
+            {"name": "SAN1_0", "uri": "/rest/fc-sans/managed-sans/280FF951-F007-478F-AC29-E4655FC76DDC"},
+            {"name": "SAN1_1", "uri": "/rest/fc-sans/managed-sans/6fee02f3-b7c7-42bd-a528-04341e16bad6"}
         ]
         managed_san = self._resource.get_by_name("SAN1_3")
 
@@ -69,14 +69,14 @@ class SanManagersTest(TestCase):
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_by_id(self, mock_get):
-        id = "6fee02f3-b7c7-42bd-a528-04341e16bad6"
+        id = "280FF951-F007-478F-AC29-E4655FC76DDC"
 
         self._resource.get(id)
         mock_get.assert_called_once_with(id_or_uri=id)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_with_uri(self, mock_update):
-        uri = "/rest/fc-sans/managed-sans/d1d"
+        uri = "/rest/fc-sans/managed-sans/280FF951-F007-478F-AC29-E4655FC76DDC"
         data = {"attributes": "values"}
 
         self._resource.update(uri, data)
@@ -85,9 +85,44 @@ class SanManagersTest(TestCase):
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_with_id(self, mock_update):
-        uri = "/rest/fc-sans/managed-sans/d1d"
+        uri = "/rest/fc-sans/managed-sans/280FF951-F007-478F-AC29-E4655FC76DDC"
         data = {"attributes": "values"}
 
-        self._resource.update("d1d", data)
+        self._resource.update("280FF951-F007-478F-AC29-E4655FC76DDC", data)
 
         mock_update.assert_called_once_with(data, timeout=-1, uri=uri)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_endpoints_called_once(self, mock_get_all):
+        filter = 'name=TestName'
+        sort = 'name:ascending'
+        managed_san_id = '280FF951-F007-478F-AC29-E4655FC76DDC'
+        uri = '/rest/fc-sans/managed-sans/280FF951-F007-478F-AC29-E4655FC76DDC/endpoints/'
+
+        self._resource.get_endpoints(managed_san_id, 2, 500, filter, sort)
+        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort, uri=uri)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_endpoints_called_once_with_default(self, mock_get_all):
+        managed_san_id = '280FF951-F007-478F-AC29-E4655FC76DDC'
+        uri = '/rest/fc-sans/managed-sans/280FF951-F007-478F-AC29-E4655FC76DDC/endpoints/'
+        self._resource.get_endpoints(managed_san_id)
+        mock_get_all.assert_called_once_with(0, -1, filter='', sort='', uri=uri)
+
+    @mock.patch.object(ResourceClient, 'create_with_zero_body')
+    def test_create_endpoints_csv_file_called_once_when_id_provided(self, mock_create_with_zero_body):
+        id = '280FF951-F007-478F-AC29-E4655FC76DDC'
+
+        self._resource.create_endpoints_csv_file(id)
+
+        expected_uri = '/rest/fc-sans/managed-sans/280FF951-F007-478F-AC29-E4655FC76DDC/endpoints/'
+        mock_create_with_zero_body.assert_called_once_with(uri=expected_uri, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'create_with_zero_body')
+    def test_create_endpoints_csv_file_called_once_when_uri_provided(self, mock_create_with_zero_body):
+        uri = "/rest/fc-sans/managed-sans/280FF951-F007-478F-AC29-E4655FC76DDC"
+
+        self._resource.create_endpoints_csv_file(uri)
+
+        expected_uri = '/rest/fc-sans/managed-sans/280FF951-F007-478F-AC29-E4655FC76DDC/endpoints/'
+        mock_create_with_zero_body.assert_called_once_with(uri=expected_uri, timeout=-1)

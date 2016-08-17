@@ -52,12 +52,12 @@ if managed_sans:
         else:
             internally_managed_san = managed_san
 
-    # Get all, with defaults
-    print("Get a Managed SANs by Name")
-    managed_san_by_id = oneview_client.managed_sans.get_by_name(managed_san['name'])
-    pprint(managed_san_by_id)
+    # Get a Managed SAN by name
+    print("Get a Managed SAN by name")
+    managed_san_by_name = oneview_client.managed_sans.get_by_name(managed_san['name'])
+    pprint(managed_san_by_name)
 
-    # Get all, with defaults
+    # Get a Managed SAN by URI
     print("Get a Managed SAN by URI")
     managed_san_by_uri = oneview_client.managed_sans.get(managed_san['uri'])
     pprint(managed_san_by_uri)
@@ -99,6 +99,16 @@ if managed_sans:
         }
         san_response_refresh = oneview_client.managed_sans.update(imported_san['uri'], refresh_config)
         pprint(san_response_refresh)
+
+        # Create a SAN endpoints CSV file
+        print("Create a SAN endpoints CSV file")
+        csv_file_response = oneview_client.managed_sans.create_endpoints_csv_file(imported_san['uri'])
+        pprint(csv_file_response)
+
+        # Retrieve the endpoints for a SAN
+        print("Get the list of endpoints in the Imported Managed SAN")
+        endpoints = oneview_client.managed_sans.get_endpoints(imported_san['uri'])
+        pprint(endpoints)
 
 else:
     print("No Managed SANs found.")

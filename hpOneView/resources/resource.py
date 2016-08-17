@@ -306,7 +306,7 @@ class ResourceClient(object):
 
         logger.debug('Create with zero body (uri = %s)' % uri)
 
-        return self.__do_post(uri, None, timeout, custom_headers)
+        return self.__do_post(uri, {}, timeout, custom_headers)
 
     def create(self, resource, uri=None, timeout=-1, custom_headers=None):
         """

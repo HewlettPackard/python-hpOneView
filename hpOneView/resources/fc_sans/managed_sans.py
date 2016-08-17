@@ -57,7 +57,7 @@ class ManagedSANs(object):
             count:
                 The number of resources to return. A count of -1 requests all the items. The actual number of items in
                 the response may differ from the requested count if the sum of start and count exceed the total number
-                of items, or if returning the requested number of items would take too long
+                of items.
             query:
                 A general query string to narrow the list of resources returned.
                 The default is no query - all resources are returned.
@@ -67,7 +67,6 @@ class ManagedSANs(object):
 
         Returns:
             list: A list of Managed SANs
-
         """
         return self._client.get_all(start=start, count=count, query=query, sort=sort)
 
@@ -102,9 +101,9 @@ class ManagedSANs(object):
         Updates a Managed SAN.
 
         It's possible:
-        - Refresh the Managed SAN.
-        - Updating the Managed SAN's publicAttributes.
-        - Updating the Managed SAN's policy.
+            - Refresh the Managed SAN.
+            - Updating the Managed SAN's publicAttributes.
+            - Updating the Managed SAN's policy.
 
         Args:
             id_or_uri: Could be either the Managed SAN resource id or uri.
@@ -115,7 +114,50 @@ class ManagedSANs(object):
 
         Returns:
             dict: SanResponse
-
         """
         uri = self._client.build_uri(id_or_uri)
         return self._client.update(data, uri=uri, timeout=timeout)
+
+    def get_endpoints(self, managed_san_id_or_uri, start=0, count=-1, filter='', sort=''):
+        """
+        Gets a list of endpoints in a SAN identified by ID.
+
+        Args:
+            managed_san_id_or_uri:
+                Could be either the Managed SAN id or uri
+            start:
+                The first item to return, using 0-based indexing.
+                If not specified, the default is 0 - start with the first available item.
+            count:
+                The number of resources to return. A count of -1 requests all the items.
+                The actual number of items in the response may differ from the requested
+                count if the sum of start and count exceed the total number of items.
+            filter:
+                A general filter/query string to narrow the list of items returned. The
+                default is no filter - all resources are returned.
+            sort:
+                The sort order of the returned data set. By default, the sort order is based
+                on create time, with the oldest entry first.
+
+        Returns:
+            list: A list of endpoints.
+        """
+        uri = self._client.build_uri(managed_san_id_or_uri) + "/endpoints/"
+        return self._client.get_all(start, count, filter=filter, sort=sort, uri=uri)
+
+    def create_endpoints_csv_file(self, managed_san_id_or_uri, timeout=-1):
+        """
+        Creates an endpoints CSV file for a SAN.
+
+        Args:
+            managed_san_id_or_uri:
+                Could be either the Managed SAN id or uri.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+                OneView, just stops waiting for its completion.
+
+        Returns:
+            dict: Endpoint CSV File Response.
+        """
+        uri = self._client.build_uri(managed_san_id_or_uri) + '/endpoints/'
+        return self._client.create_with_zero_body(uri=uri, timeout=timeout)
