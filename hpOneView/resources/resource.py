@@ -74,7 +74,8 @@ class ResourceClient(object):
         The use of optional parameters for OneView 2.0 is described at:
         http://h17007.www1.hpe.com/docs/enterprise/servers/oneview2.0/cic-api/en/api-docs/current/index.html
 
-        NOTE: Single quote - "'" - inside a query parameter is not supported by OneView API.
+        Note:
+            Single quote - "'" - inside a query parameter is not supported by OneView API.
 
         Args:
             start:
@@ -134,21 +135,21 @@ class ResourceClient(object):
 
     def delete_all(self, filter, force=False, timeout=-1):
         """
-            Deletes all resources from the appliance that match the provided filter.
+        Deletes all resources from the appliance that match the provided filter.
 
-            Args:
-                filter:
-                    A general filter/query string to narrow the list of items deleted.
-                force:
-                    If set to true the operation completes despite any problems with network connectivity or errors
-                    on the resource itself. The default is false.
-                timeout:
-                    Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                    in OneView, just stops waiting for its completion.
+        Args:
+            filter:
+                A general filter/query string to narrow the list of items deleted.
+            force:
+                If set to true the operation completes despite any problems with network connectivity or errors
+                on the resource itself. The default is false.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
 
-            Returns:
-                bool: Indicating if the resources were successfully deleted.
-            """
+        Returns:
+            bool: Indicating if the resources were successfully deleted.
+        """
         uri = "{}?filter={}&force={}".format(self._uri, quote(filter), force)
         logger.debug("Delete all resources (uri = %s)" % uri)
 
@@ -201,9 +202,10 @@ class ResourceClient(object):
     def get(self, id_or_uri):
         """
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
+            id_or_uri: Could be either the resource id or the resource uri.
+
         Returns:
-             The requested resource
+             The requested resource.
         """
         uri = self.build_uri(id_or_uri)
         logger.debug('Get resource (uri = %s, ID = %s)' %
@@ -247,7 +249,8 @@ class ResourceClient(object):
             custom_headers:
                 Allows set specific HTTP headers.
 
-        Returns: Updated resource.
+        Returns:
+            Updated resource.
         """
         logger.debug('Update with zero length body (uri = %s)' % uri)
 
@@ -269,7 +272,8 @@ class ResourceClient(object):
             custom_headers:
                 Allows set specific HTTP headers.
 
-        Returns: Updated resource.
+        Returns:
+            Updated resource.
         """
         if not resource:
             logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
@@ -299,7 +303,8 @@ class ResourceClient(object):
             custom_headers:
                 Allows set specific HTTP headers.
 
-        Returns: Created resource.
+        Returns:
+            Created resource.
         """
         if not uri:
             uri = self._uri
@@ -321,7 +326,8 @@ class ResourceClient(object):
             custom_headers:
                 Allows set specific HTTP headers.
 
-        Returns: Created resource.
+        Returns:
+            Created resource.
         """
         if not resource:
             logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
@@ -338,6 +344,7 @@ class ResourceClient(object):
     def patch(self, id_or_uri, operation, path, value, timeout=-1, custom_headers=None):
         """
         Uses the PATCH to update a resource.
+
         Only one operation can be performed in each PATCH call.
 
         Args:
@@ -348,7 +355,8 @@ class ResourceClient(object):
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: Updated resource.
+        Returns:
+            Updated resource.
         """
         uri = self.build_uri(id_or_uri)
 
@@ -365,15 +373,17 @@ class ResourceClient(object):
 
     def get_by(self, field, value, uri=None):
         """
-        This function uses get_all passing a filter
-        The search is case insensitive
+        This function uses get_all passing a filter.
+
+        The search is case insensitive.
+
         Args:
-            field: field name to filter
-            value: value to filter
-            uri: resource uri
+            field: Field name to filter.
+            value: Value to filter.
+            uri: Resource uri.
 
-        Returns: dict
-
+        Returns:
+            dict
         """
         if not field:
             logger.exception(RESOURCE_CLIENT_INVALID_FIELD)
@@ -391,11 +401,13 @@ class ResourceClient(object):
 
     def get_by_name(self, name):
         """
-        Retrieve a resource by his name
-        Args:
-            name: resource name
+        Retrieve a resource by his name.
 
-        Returns: dict
+        Args:
+            name: Resource name.
+
+        Returns:
+            dict
         """
         result = self.get_by('name', name)
         if not result:
@@ -408,7 +420,8 @@ class ResourceClient(object):
         Retrieves historical utilization data for the specified resource, metrics, and time span.
 
         Args:
-            id_or_uri: resource identification
+            id_or_uri:
+                Resource identification
             fields:
                 Name of the supported metric(s) to be retrieved in the format METRIC[,METRIC]...
                 If unspecified, all metrics supported are returned.
@@ -464,8 +477,8 @@ class ResourceClient(object):
                     5-minute sample value data during the day. Samples at this resolution are retained up to three
                     years.
 
-        Returns: dict
-
+        Returns:
+            dict
         """
 
         if not id_or_uri:

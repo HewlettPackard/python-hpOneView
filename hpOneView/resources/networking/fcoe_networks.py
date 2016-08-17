@@ -53,7 +53,7 @@ class FcoeNetworks(object):
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
         Gets a paginated collection of FCoE networks. The collection is based on optional sorting and filtering, and
-        constrained by start and count parameters
+        constrained by start and count parameters.
 
         Args:
             start:
@@ -81,7 +81,7 @@ class FcoeNetworks(object):
 
         Args:
             resource(str, dict):
-                Accept either the resource id  or the entire resource
+                Accept either the resource id  or the entire resource.
             force:
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
@@ -89,26 +89,28 @@ class FcoeNetworks(object):
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            bool:
+            bool: Indicating if the resource was successfully deleted.
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
     def get(self, id):
         """
         Gets a FCoE network.
-        Args:
-            id: ID of FCoE network
 
-        Returns: dict
+        Args:
+            id: ID of FCoE network.
+
+        Returns:
+            dict: FCoE network.
         """
         return self._client.get(id)
 
     def create(self, resource, timeout=-1):
         """
-        Create FCoE network
+        Creates FCoE network.
 
         Args:
-            resource: dict object to create
+            resource (dict): Object to create.
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
@@ -120,14 +122,15 @@ class FcoeNetworks(object):
 
     def update(self, resource, timeout=-1):
         """
-        Updates a FCoE network
+        Updates a FCoE network.
 
         Args:
-            resource (dict): Resource to update
+            resource (dict): Resource to update.
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: Updated resource.
+        Returns:
+            dict: Updated resource.
         """
         data = self.__default_values.copy()
         data.update(resource)
@@ -135,12 +138,13 @@ class FcoeNetworks(object):
 
     def get_by(self, field, value):
         """
-        Get all FCoE networks that matches the filter
-        The search is case insensitive
+        Get all FCoE networks that matches the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
             list: A list of FCoE networks.

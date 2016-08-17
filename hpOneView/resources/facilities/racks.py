@@ -50,12 +50,13 @@ class Racks(object):
     def get_all(self, start=0, count=-1, filter='', query='', sort=''):
         """
         Gets a set of rack resources according to the specified parameters. Filters can be used to get a specific set
-        of racks. With no filters specified, the API returns a potentially paginated list of all the racks
-        subject to start/count/sort parameters.
+        of racks. With no filters specified, the API returns a potentially paginated list of all the racks subject
+        to start/count/sort parameters.
 
         Args:
             start:
                 The first item to return, using 0-based indexing.
+
                 If not specified, the default is 0 - start with the first available item.
             count:
                 The number of resources to return. A count of -1 requests all the items.
@@ -72,19 +73,20 @@ class Racks(object):
                 The sort order of the returned data set. By default, the sort order is based
                 on create time, with the oldest entry first.
 
-        Returns: list of racks
+        Returns:
+            list: List of racks.
         """
         return self._client.get_all(start, count, filter=filter, sort=sort, query=query)
 
     def get(self, id_or_uri):
         """
-        Gets a rack with the specified ID or URI
+        Gets a rack with the specified ID or URI.
         Args:
             id_or_uri:
-                Could be either the rack id or the rack uri
+                Could be either the rack id or the rack uri.
 
         Returns:
-            dict: The rack
+            dict: The rack.
         """
         return self._client.get(id_or_uri)
 
@@ -93,25 +95,26 @@ class Racks(object):
         Retrieves the topology information for the rack resource specified by id or uri.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
+            id_or_uri: Could be either the resource id or the resource uri.
 
         Return:
-            dict: device topology
+            dict: Device topology.
         """
         uri = self._client.build_uri(id_or_uri) + "/deviceTopology"
         return self._client.get(uri)
 
     def get_by(self, field, value):
         """
-        Get all racks that match the filter
-        The search is case insensitive
+        Get all racks that match the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
-            dict: rack
+            list: List of racks.
 
         """
         return self._client.get_by(field, value)
@@ -121,14 +124,15 @@ class Racks(object):
         Removes the specified rack.
 
         Args:
-            resource: dict object to remove
+            resource (dict): Object to remove.
             force:
-                 If set to true the operation completes despite any problems with
-                 network connectivity or errors on the resource itself. The default is false.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                 If set to true the operation completes despite any problems with network connectivity or errors on the
+                 resource itself. The default is false.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: Result status
+        Returns: Result status.
 
         """
         return self._client.delete(resource, force=force, timeout=timeout)
@@ -141,12 +145,12 @@ class Racks(object):
         identify this particular resource.
 
         Args:
-            resource: rack information
+            information: Rack information
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            dict: added rack.
+            dict: Added rack.
 
         """
         return self._client.create(information, timeout=timeout)
@@ -157,14 +161,14 @@ class Racks(object):
         are reset to their respective default values. The id and uuid properties are required and cannot be changed.
         To update existing racks first perform a get() request to retrieve the current properties, update the desired
         properties, and then update() the request body containing the new representation of the resource.
+
         Args:
-            resource (dict): Object to update
-            timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+            resource (dict): Object to update.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            dict: Updated rack
+            dict: Updated rack.
 
         """
         return self._client.update(resource, timeout=timeout)

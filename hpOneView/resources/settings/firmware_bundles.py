@@ -61,13 +61,11 @@ class FirmwareBundles(object):
 
         Args:
             file_path: Full path to firmware.
-            timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
           dict: Information about the updated firmware bundle.
-
         """
         upload_file_name = os.path.basename(file_path)
         response, body = self._connection.post_multipart(self.URI, None, file_path, upload_file_name)

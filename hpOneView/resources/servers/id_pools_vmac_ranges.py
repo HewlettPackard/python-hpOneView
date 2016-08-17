@@ -40,6 +40,10 @@ from hpOneView.resources.servers.id_pools_ranges import IdPoolsRanges
 
 
 class IdPoolsVmacRanges(IdPoolsRanges):
+    """
+    The ID pools virtual MAC (vMAC) ranges resource provides APIs for managing vMAC ranges. A vMAC can be requested,
+    used, and returned. Once returned, the vMAC is reclaimed by the range and is available for reuse.
+    """
     URI = '/rest/id-pools/vmac/ranges'
 
     def __init__(self, con):

@@ -50,7 +50,7 @@ class SanManagers(object):
 
     def get_all(self, start=0, count=-1, query='', sort=''):
         """
-        Retrieves the list of registered SAN Managers
+        Retrieves the list of registered SAN Managers.
 
         Args:
             start:
@@ -68,14 +68,14 @@ class SanManagers(object):
                 on create time, with the oldest entry first.
 
         Returns:
-            list: A list of SAN managers
+            list: A list of SAN managers.
 
         """
         return self._client.get_all(start=start, count=count, query=query, sort=sort)
 
     def get(self, id_or_uri):
         """
-        Retrieves a single registered SAN Manager by id or uri
+        Retrieves a single registered SAN Manager by id or uri.
 
         Args:
             id_or_uri: Could be either the SAN Manager resource id or uri.
@@ -87,7 +87,7 @@ class SanManagers(object):
 
     def update(self, resource, id_or_uri):
         """
-        Updates a registered Device Manager
+        Updates a registered Device Manager.
 
         Args:
             id_or_uri: Could be either the Device manager id or uri.
@@ -100,27 +100,27 @@ class SanManagers(object):
 
     def add(self, resource, provider_uri_or_id, timeout=-1):
         """
-        Adds a Device Manager under the specified provider
+        Adds a Device Manager under the specified provider.
 
         Args:
-            resource: dict object to add
-            provider_uri_or_id: id or uri of provider
+            resource (dict): Object to add.
+            provider_uri_or_id: Id or uri of provider.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stop waiting for its completion.
 
         Returns:
-            dict: Added SAN Manager
+            dict: Added SAN Manager.
         """
         uri = self._provider_client.build_uri(provider_uri_or_id) + "/device-managers"
         return self._client.create(resource=resource, uri=uri, timeout=timeout)
 
     def get_provider_uri(self, provider_name):
         """
-        Gets uri for a specific provider
+        Gets uri for a specific provider.
 
         Args:
-            name: Name of the provider
+            provider_name: Name of the provider.
 
         Returns:
             uri
@@ -129,13 +129,13 @@ class SanManagers(object):
 
     def get_default_connection_info(self, provider_name):
         """
-        Gets default connection info for a specific provider
+        Gets default connection info for a specific provider.
 
         Args:
-            name: Name of the provider
+            provider_name: Name of the provider.
 
         Returns:
-            dict: default connection information
+            dict: Default connection information.
         """
         provider = self._provider_client.get_by_name(provider_name)
         if provider:
@@ -148,13 +148,13 @@ class SanManagers(object):
         Removes a registered SAN Manager.
 
         Args:
-            resource: dict object to delete.
+            resource (dict): Object to delete.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            bool:
+            bool: Indicating if the resource was successfully removed.
         """
         return self._client.delete(resource, timeout=timeout)
 

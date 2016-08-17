@@ -63,6 +63,7 @@ class FcNetworks(object):
                 If not specified, the default is 0 - start with the first available item.
             count:
                 The number of resources to return. A count of -1 requests all the items.
+
                 The actual number of items in the response may differ from the requested
                 count if the sum of start and count exceed the total number of items.
             filter:
@@ -92,18 +93,20 @@ class FcNetworks(object):
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            bool:
+            bool: Indicating if the resource was successfully deleted.
 
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
     def get(self, id):
         """
-        Gets the Fibre Channel network with the specified ID
-        Args:
-            id: ID of Fibre Channel network
+        Gets the Fibre Channel network with the specified ID.
 
-        Returns: dict
+        Args:
+            id: ID of Fibre Channel network.
+
+        Returns:
+            dict: The Fibre Channel network.
         """
         return self._client.get(id)
 
@@ -112,12 +115,13 @@ class FcNetworks(object):
         Creates a Fibre Channel network.
 
         Args:
-            resource: dict object to create
+            resource (dict): Object to create.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stop waiting for its completion.
 
-        Returns: Created resource.
+        Returns:
+            dict: Created resource.
 
         """
         data = self.__default_values.copy()
@@ -129,12 +133,13 @@ class FcNetworks(object):
         Updates a Fibre Channel network.
 
         Args:
-            resource: dict object to update
+            resource (dict): Object to update.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stop waiting for its completion.
 
-        Returns: Updated resource.
+        Returns:
+            dict: Updated resource.
 
         """
         data = self.__default_values.copy()
@@ -143,12 +148,13 @@ class FcNetworks(object):
 
     def get_by(self, field, value):
         """
-        Get all Fibre Channel networks that matches the filter
-        The search is case insensitive
+        Get all Fibre Channel networks that matches the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
             list: A list of Fibre Channel networks.

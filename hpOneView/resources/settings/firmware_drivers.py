@@ -76,14 +76,15 @@ class FirmwareDrivers(object):
         """
         Gets the list of firmware baseline resources managed by the appliance. Optional parameters can be used to
         filter the list of resources returned.
-        The search is case insensitive
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
-            list: list of firmware baseline resources.
+            list: List of firmware baseline resources.
         """
         firmwares = self.get_all()
         matches = []
@@ -96,11 +97,12 @@ class FirmwareDrivers(object):
         """
         Gets the individual firmware baseline resource for the given URI. Note that the view
         parameter is not currently supported.
+
         Args:
-            id: ID or URI of firmware baseline resource
+            id: ID or URI of firmware baseline resource.
 
         Returns:
-            dict: firmware baseline resource
+            dict: Firmware baseline resource.
         """
         return self._client.get(id_or_uri)
 
@@ -110,14 +112,13 @@ class FirmwareDrivers(object):
         resource will be deleted even if it is assigned to devices.
 
         Args:
-            resource: dict object to delete
-            force:
-                If set to true the operation completes despite any problems with
+            resource (dict): Object to delete
+            force: If set to true the operation completes despite any problems with
                 network connectivity or errors on the resource itself. The default is false.
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            bool:
+            bool: Indicating if the resource was successfully deleted.
         """
         return self._client.delete(resource, force=force, timeout=timeout)

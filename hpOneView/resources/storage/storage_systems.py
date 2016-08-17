@@ -79,15 +79,15 @@ class StorageSystems(object):
         "Connected" state and will not yet be available for further operations. Users are required to perform a PUT API
         on the storage system resource to complete the management of the storage system resource. An asynchronous task
         will be created as a result of this API call to discover available domains, target ports, and storage pools.
+
         Args:
-            resource (dict): Object to create
+            resource (dict): Object to create.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
             dict: Created storage system.
-
         """
         return self._client.create(resource, timeout=timeout)
 
@@ -96,7 +96,7 @@ class StorageSystems(object):
         Gets the list of supported host types.
 
         Returns:
-            list: host types
+            list: Host types.
         """
         uri = self.URI + "/host-types"
         return self._client.get(uri)
@@ -108,21 +108,22 @@ class StorageSystems(object):
         attributes only - name, domain, deviceSpeed, deviceType, supprtedRAIDLevel, status and state.
 
         Args:
-            id_or_uri: Could be either the storage system id (serial number) or the storage system uri
+            id_or_uri: Could be either the storage system id (serial number) or the storage system uri.
         Returns:
-            dict: host types
+            dict: Host types.
         """
         uri = self._client.build_uri(id_or_uri) + "/storage-pools"
         return self._client.get(uri)
 
     def get(self, id_or_uri):
         """
-        Gets the specified storage system resource by ID or by uri
+        Gets the specified storage system resource by ID or by uri.
+
         Args:
-            id_or_uri: Could be either the storage system id or the storage system uri
+            id_or_uri: Could be either the storage system id or the storage system uri.
 
         Returns:
-            dict: The storage system
+            dict: The storage system.
         """
         return self._client.get(id_or_uri)
 
@@ -133,8 +134,10 @@ class StorageSystems(object):
         This method can be used to update storage system credentials, storage system attributes or to request a refresh
         of storage system. For updating credentials, users are allowed to update IP/hostname, username, and password.
         To request a refresh of a storage system user must set the "refreshState" attribute to RefreshPending state.
+
         Args:
-            resource (dict): Object to update
+            resource (dict):
+                Object to update.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
@@ -146,10 +149,11 @@ class StorageSystems(object):
 
     def remove(self, resource, force=False, timeout=-1):
         """
-        Removes the storage system from OneView
+        Removes the storage system from OneView.
 
         Args:
-            resource (dict): object to delete
+            resource (dict):
+                Object to delete
             force (bool):
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
@@ -158,21 +162,20 @@ class StorageSystems(object):
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            dict: Details of associated resource
-
+            dict: Details of associated resource.
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
     def get_managed_ports(self, id_or_uri, port_id_or_uri=''):
         """
-        Gets all ports or a specific managed target port for the specified storage system
+        Gets all ports or a specific managed target port for the specified storage system.
 
         Args:
-            id_or_uri: Could be either the storage system id or the storage system uri
-            port_id_or_uri: Could be either the port id or the port uri
+            id_or_uri: Could be either the storage system id or the storage system uri.
+            port_id_or_uri: Could be either the port id or the port uri.
 
         Returns:
-            dict: managed ports
+            dict: Managed ports.
         """
         if port_id_or_uri:
             uri = self._client.build_uri(port_id_or_uri)
@@ -187,12 +190,13 @@ class StorageSystems(object):
 
     def get_by(self, field, value):
         """
-        Get all storage systems that match the filter
-        The search is case insensitive
+        Get all storage systems that match the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            Field: field name to filter.
+            Value: value to filter.
 
         Returns:
             list: A list of storage systems.
@@ -201,21 +205,25 @@ class StorageSystems(object):
 
     def get_by_name(self, name):
         """
-        Retrieve a resource by its name
-        Args:
-            name: resource name
+        Retrieve a resource by its name.
 
-        Returns: dict
+        Args:
+            name: Resource name.
+
+        Returns:
+            dict
         """
         return self._client.get_by_name(name=name)
 
     def get_by_ip_hostname(self, ip_hostname):
         """
-        Retrieve a storage system by its IP
-        Args:
-            ip_hostname: storage system IP or hostname
+        Retrieve a storage system by its IP.
 
-        Returns: dict
+        Args:
+            ip_hostname: Storage system IP or hostname.
+
+        Returns:
+            dict
         """
         resources = self._client.get_all()
 

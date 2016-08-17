@@ -49,11 +49,12 @@ class Tasks(object):
 
     def get(self, id_or_uri):
         """
-        Retrieve a task by its uri
+        Retrieve a task by its uri.
         Args:
             id_or_uri: task id (or uri)
 
-        Returns: dict
+        Returns:
+            dict: The task.
 
         """
 
@@ -62,9 +63,12 @@ class Tasks(object):
 
     def get_all(self, start=0, count=-1, fields='', filter='', query='', sort='', view=''):
         """
-        Gets all the tasks based upon filters provided. Note: filters are optional.
-        Args:
+        Gets all the tasks based upon filters provided.
 
+        Note:
+            Filters are optional.
+
+        Args:
             start:
                  The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
                  first available item.

@@ -50,6 +50,7 @@ class SwitchTypes(object):
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
         Gets a paginated collection of all the switch types based on the specified parameters.
+
         Filters can be used in the URL to control the number of switch types that are returned.
         With no filters specified, the API returns all supported switch types.
 
@@ -75,22 +76,25 @@ class SwitchTypes(object):
 
     def get(self, id):
         """
-        Gets the switch type with the specified ID
-        Args:
-            id: ID of switch type
+        Gets the switch type with the specified ID.
 
-        Returns: dict
+        Args:
+            id: ID of switch type.
+
+        Returns:
+            dict: Switch Type.
         """
         return self._client.get(id)
 
     def get_by(self, field, value):
         """
-        Get all switch types that match the filter
-        The search is case insensitive
+        Get all switch types that match the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
             list: A list of switch types.

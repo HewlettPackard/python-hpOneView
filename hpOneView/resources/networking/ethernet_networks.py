@@ -59,6 +59,7 @@ class EthernetNetworks(object):
         Args:
             start:
                 The first item to return, using 0-based indexing.
+
                 If not specified, the default is 0 - start with the first available item.
             count:
                 The number of resources to return. A count of -1 requests all the items.
@@ -79,6 +80,7 @@ class EthernetNetworks(object):
     def delete(self, resource, force=False, timeout=-1):
         """
         Deletes an Ethernet network.
+
         Any deployed connections that are using the network are placed in the 'Failed' state.
 
         Args:
@@ -91,19 +93,20 @@ class EthernetNetworks(object):
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            bool:
+            bool: Indicating if the resource was successfully deleted.
 
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
     def get(self, id_or_uri):
         """
-        Gets the Ethernet network
+        Gets the Ethernet network.
+
         Args:
-            id_or_uri: ID or uri of Ethernet network
+            id_or_uri: ID or uri of Ethernet network.
 
         Returns:
-            dict: The ethernet network
+            dict: The ethernet network.
         """
         return self._client.get(id_or_uri)
 
@@ -112,12 +115,13 @@ class EthernetNetworks(object):
         Creates an Ethernet network.
 
         Args:
-            resource: dict object to create
+            resource (dict): Object to create.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: Created resource.
+        Returns:
+            dict: Created resource.
 
         """
         data = self.__default_values.copy()
@@ -129,12 +133,13 @@ class EthernetNetworks(object):
         Creates bulk Ethernet networks.
 
         Args:
-            resource: dict object to create
+            resource (dict): Specifications to create in bulk.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: created resources
+        Returns:
+            list: List of created Ethernet Networks.
 
         """
         data = {"type": "bulk-ethernet-network"}
@@ -146,20 +151,16 @@ class EthernetNetworks(object):
 
     def get_range(self, name_prefix, vlan_id_range):
         """
-        Gets a list of Ethernet Networks that match the 'given name_prefix' and the 'vlan_id_range'
+        Gets a list of Ethernet Networks that match the 'given name_prefix' and the 'vlan_id_range'.
 
         Examples:
+            >>> enet.get_range('Enet_name', '1-2,5')
+                # The result contains the ethernet network with names:
+                ['Enet_name_1', 'Enet_name_2', 'Enet_name_5']
 
-            For name_prefix equals to 'Enet_name' and vlan_id_range equals to '1-2,5', it is expected that
-            the result contains the ethernet network with names:
-                * Enet_name_1
-                * Enet_name_2
-                * Enet_name_5
-
-            For name_prefix equals to 'Enet_name' and vlan_id_range equals to '2', it is expected that
-            the result contains the ethernet network with names:
-                * Enet_name_1
-                * Enet_name_2
+            >>> enet.get_range('Enet_name', '2')
+                # The result contains the ethernet network with names:
+                ['Enet_name_1', 'Enet_name_2']
 
         Args:
             name_prefix: The Ethernet Network prefix
@@ -182,10 +183,17 @@ class EthernetNetworks(object):
     def dissociate_values_or_ranges(self, vlan_id_range):
         """
         Build a list of vlan ids given a combination of ranges and/or values
+
         Examples:
-            * vlan_id_range = '1-2,5' => [1, 2, 5]
-            * vlan_id_range = '5' => [1, 2, 3, 4, 5]
-            * vlan_id_range = '4-5,7-8' => [4, 5, 7, 8]
+            >>> enet.dissociate_values_or_ranges('1-2,5')
+                [1, 2, 5]
+
+            >>> enet.dissociate_values_or_ranges('5')
+                [1, 2, 3, 4, 5]
+
+            >>> enet.dissociate_values_or_ranges('4-5,7-8')
+                [4, 5, 7, 8]
+
         Args:
             vlan_id_range: A combination of values or ranges. For example '1-10,50,51,500-700'.
 
@@ -248,7 +256,7 @@ class EthernetNetworks(object):
             id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri
 
         Returns:
-            dict: URIs
+            list: URIs of the associated profiles.
 
         """
         uri = self._client.build_uri(id_or_uri) + "/associatedProfiles"
@@ -262,7 +270,7 @@ class EthernetNetworks(object):
             id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri
 
         Returns:
-            dict: URIs
+            list: URIs of the associated uplink sets.
 
         """
         uri = self._client.build_uri(id_or_uri) + "/associatedUplinkGroups"

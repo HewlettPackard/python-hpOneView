@@ -43,10 +43,12 @@ class MetricStreaming(object):
     """
     Metrics can be relayed from OneView for managed resources at a specified interval. The following steps can be
     followed to enable the metric relay in OneView:
-    Get the list of resource types and metrics which can be configured for live streaming
-    Configure the live metric stream in OneView
-    Receive the stream of metric on MSMB
-    The list below describes the structure of message relayed to MSMB
+
+        * Get the list of resource types and metrics which can be configured for live streaming
+        * Configure the live metric stream in OneView
+        * Receive the stream of metric on MSMB
+
+    The list below describes the structure of message relayed to MSMB:
         startTime (str):
             The starting time of the metric collection.
         sampleIntervalInSeconds (int):
@@ -81,6 +83,9 @@ class MetricStreaming(object):
     def get_capability(self):
         """
         Fetches the list of resource types and supported metrics that OneView is capable of relaying.
+
+        Returns:
+            list: List of resource types and supported metrics.
         """
         return self._client.get(self.URI + "/capability")
 
@@ -89,7 +94,7 @@ class MetricStreaming(object):
         Fetches the current configuration for which metrics are being relayed.
 
         Returns:
-            list: List of objects which contain frequency, sample interval and source type for each resource-type
+            list: List of objects which contain frequency, sample interval and source type for each resource-type.
 
         """
         return self._client.get(self.URI + "/configuration")
@@ -103,19 +108,8 @@ class MetricStreaming(object):
                 Dictionary with a list of objects which contain frequency, sample interval and source type for each
                 resource-type.
 
-            Example:
-             {
-                "sourceTypeList": [
-                    {
-                        "sourceType": "/rest/power-devices",
-                        "sampleIntervalInSeconds": "300",
-                        "frequencyOfRelayInSeconds": "3600"
-                    }
-                ]
-            }
-
         Returns:
-            dict: The current configuration for which metrics are being relayed
+            dict: The current configuration for which metrics are being relayed.
 
         """
         return self._client.update(configuration, uri=self.URI + "/configuration")

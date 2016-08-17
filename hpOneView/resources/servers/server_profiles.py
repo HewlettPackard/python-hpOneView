@@ -51,20 +51,18 @@ class ServerProfiles(object):
 
     def create(self, resource, timeout=-1):
         """
-         Creates a server profile using the information provided in the resource parameter. Connection requests can be
-         one of the following types - port auto, auto and explicit. An explicit request is where the request includes
-         the adapter, port and flexNic. An auto request is where none of the three are specified and a port auto
-         request is where just the adapter and port are specified.
+        Creates a server profile using the information provided in the resource parameter. Connection requests can be
+        one of the following types - port auto, auto and explicit. An explicit request is where the request includes
+        the adapter, port and flexNic. An auto request is where none of the three are specified and a port auto
+        request is where just the adapter and port are specified.
 
         Args:
-            resource: dict object to create
-            timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+            resource (dict): Object to create.
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stop waiting for its completion.
 
         Returns:
             dict: Created server profile.
-
         """
         data = self.__default_values.copy()
         data.update(resource)
@@ -94,11 +92,10 @@ class ServerProfiles(object):
     def patch(self, id_or_uri, operation, path, value, timeout=-1):
         """
         Performs a specific patch operation for the given server profile.
+
         The supported operation is:
             Update the server profile from the server profile template.
-                Operation: replace
-                Path: /templateCompliance
-                Value: Compliant
+                Operation: replace | Path: /templateCompliance | Value: Compliant
 
         Args:
             id_or_uri:
@@ -122,8 +119,7 @@ class ServerProfiles(object):
 
         Args:
             resource (dict): Object to delete.
-            timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
@@ -138,13 +134,11 @@ class ServerProfiles(object):
         serialnumbertype, status and state.
 
         Examples:
-            Some examples of accepted values for filter variable:
+            >>> server_profile_client.delete_all(filter="name='Exchange Server'")
+            # Remove all profiles that match the name "Exchange Server"
 
-            Remove all profiles that match the name "Exchange Server":
-            "name='Exchange Server'"
-
-            Remove all profiles that have the word "Database" in its name:
-            "name matches'%25Database%25'"
+            >>> server_profile_client.delete_all(filter="name matches'%25Database%25'")
+            # Remove all profiles that have the word "Database" in its name
 
         The filter function here operates very similar to the function defined for GET Server Profiles. It allows
         for both actual and partial matches of data in the profile. Any requests that wish to use a wildcard match
@@ -153,8 +147,7 @@ class ServerProfiles(object):
 
         Args:
             filter (dict): Object to delete.
-            timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
@@ -192,7 +185,6 @@ class ServerProfiles(object):
 
         Returns:
             list: A list of server profiles.
-
         """
         return self._client.get_all(start=start, count=count, filter=filter, sort=sort)
 
@@ -211,11 +203,12 @@ class ServerProfiles(object):
     def get_by(self, field, value):
         """
         Get all server profile that matches a specified filter.
+
         The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
             list: A list of server profiles.
@@ -247,6 +240,7 @@ class ServerProfiles(object):
         """
         Gets the preview of manual and automatic updates required to make the server profile
         consistent with its template.
+
         Args:
             id_or_uri: Could be either the server profile resource id or uri.
 
@@ -282,7 +276,7 @@ class ServerProfiles(object):
             id_or_uri: Could be either the server profile resource id or uri.
 
         Returns:
-            dict: Server Profile Health
+            dict: Server Profile Health.
         """
         uri = self._client.build_uri(id_or_uri) + '/messages'
         return self._client.get(uri)
@@ -307,7 +301,7 @@ class ServerProfiles(object):
                 The URI of the server hardware associated with the resource.
 
         Returns:
-            dict: Server Profile
+            dict: Server Profile.
         """
         uri = self.__build_uri_with_query_string(kwargs, '/transformation', id_or_uri)
         return self._client.get(uri)
@@ -317,23 +311,25 @@ class ServerProfiles(object):
         Retrieves the list of Ethernet networks, Fibre Channel networks and network sets that are available to a
         server profile along with their respective ports.
 
-         Args:
-            enclosureGroupUri (str):
-                The URI of the enclosure group associated with the resource.
-            functionType (str):
-                The FunctionType (Ethernet or FibreChannel) to filter the list of networks returned.
-            serverHardwareTypeUri (str):
-                The URI of the server hardware type associated with the resource.
-            serverHardwareUri (str):
-                The URI of the server hardware associated with the resource.
-            view (str):
-                Return a specific subset of the attributes of the resource or collection, by specifying the name of a
-                predefined view. The default view is expand - show all attributes of the resource and all elements of
-                collections of resources.
+        Args:
+           enclosureGroupUri (str):
+               The URI of the enclosure group associated with the resource.
+           functionType (str):
+               The FunctionType (Ethernet or FibreChannel) to filter the list of networks returned.
+           serverHardwareTypeUri (str):
+               The URI of the server hardware type associated with the resource.
+           serverHardwareUri (str):
+               The URI of the server hardware associated with the resource.
+           view (str):
+               Return a specific subset of the attributes of the resource or collection, by specifying the name of a
+               predefined view. The default view is expand - show all attributes of the resource and all elements of
+               collections of resources.
 
-                Values:
-                    Ethernet - Specifies that the connection is to an Ethernet network or a network set.
-                    FibreChannel - Specifies that the connection is to a Fibre Channel network.
+               Values:
+                   Ethernet
+                       Specifies that the connection is to an Ethernet network or a network set.
+                   FibreChannel
+                       Specifies that the connection is to a Fibre Channel network.
 
         Returns:
             list: Available networks.
@@ -345,13 +341,13 @@ class ServerProfiles(object):
         """
         Retrieves the list of available servers.
 
-         Args:
-            enclosureGroupUri (str):
-                The URI of the enclosure group associated with the resource.
-            serverHardwareTypeUri (str):
-                The URI of the server hardware type associated with the resource.
-            profileUri (str):
-                The URI of the server profile resource.
+        Args:
+           enclosureGroupUri (str):
+               The URI of the enclosure group associated with the resource.
+           serverHardwareTypeUri (str):
+               The URI of the server hardware type associated with the resource.
+           profileUri (str):
+               The URI of the server profile resource.
 
         Returns:
             list: Available servers.
@@ -364,13 +360,13 @@ class ServerProfiles(object):
         Retrieve a specific storage system and its associated volumes that are available to the server profile based
         on the given server hardware type and enclosure group.
 
-         Args:
-            enclosureGroupUri (str):
-                The URI of the enclosure group associated with the resource.
-            serverHardwareTypeUri (str):
-                The URI of the server hardware type associated with the resource.
-            storageSystemId (str):
-                The storage system ID associated with the resource.
+        Args:
+           enclosureGroupUri (str):
+               The URI of the enclosure group associated with the resource.
+           serverHardwareTypeUri (str):
+               The URI of the server hardware type associated with the resource.
+           storageSystemId (str):
+               The storage system ID associated with the resource.
 
         Returns:
             dict: Available storage system.
@@ -383,25 +379,24 @@ class ServerProfiles(object):
         Retrieves the list of the storage systems and their associated volumes that are available to the server profile
         based on the given server hardware type and enclosure group.
 
-         Args:
-            count:
-                The number of resources to return. A count of -1 requests all the items. The actual number of items in
-                 the response may differ from the requested count if the sum of start and count exceed the total
-                 number of items, or if returning the requested number of items would take too long.
-            start:
-                The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
-                first available item.
-            filter:
-                A general filter/query string to narrow the list of items returned. The default is no filter - all
-                resources are returned.
-            sort:
-                The sort order of the returned data set. By default, the sort order is based on create time, with the
-                oldest entry first.
-            enclosureGroupUri (str):
-                The URI of the enclosure group associated with the resource.
-            serverHardwareTypeUri (str):
-                The URI of the server hardware type associated with the resource.
-
+        Args:
+           count:
+               The number of resources to return. A count of -1 requests all the items. The actual number of items in
+               the response may differ from the requested count if the sum of start and count exceed the total
+               number of items, or if returning the requested number of items would take too long.
+           start:
+               The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
+               first available item.
+           filter:
+               A general filter/query string to narrow the list of items returned. The default is no filter - all
+               resources are returned.
+           sort:
+               The sort order of the returned data set. By default, the sort order is based on create time, with the
+               oldest entry first.
+           enclosureGroupUri (str):
+               The URI of the enclosure group associated with the resource.
+           serverHardwareTypeUri (str):
+               The URI of the server hardware type associated with the resource.
 
         Returns:
             list: Available storage systems.
@@ -414,17 +409,16 @@ class ServerProfiles(object):
         Retrieves a list of the target servers and empty device bays that are available for assignment to the server
         profile.
 
-         Args:
-
-            enclosureGroupUri (str):
-                The URI of the enclosure group associated with the resource.
-            serverHardwareTypeUri (str):
-                The URI of the server hardware type associated with the resource.
-            profileUri (str):
-                The URI of the server profile associated with the resource
+        Args:
+           enclosureGroupUri (str):
+               The URI of the enclosure group associated with the resource.
+           serverHardwareTypeUri (str):
+               The URI of the server hardware type associated with the resource.
+           profileUri (str):
+               The URI of the server profile associated with the resource
 
         Returns:
-            list:???
+            list: List of available servers and bays.
         """
         uri = self.__build_uri_with_query_string(kwargs, '/available-targets')
         return self._client.get(uri)

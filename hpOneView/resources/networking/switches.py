@@ -49,12 +49,14 @@ class Switches(object):
 
     def get_statistics(self, id_or_uri, port_name=''):
         """
-        Gets statistics for a switch
+        Gets statistics for a switch.
+
         Args:
-            id: ID of switch
+            id_or_uri: Could be either the switch id or the switch uri.
             port_name: switch port number (optional)
 
-        Returns: dict
+        Returns:
+            dict
         """
         uri = self._client.build_uri(id_or_uri) + "/statistics"
 
@@ -89,21 +91,22 @@ class Switches(object):
 
     def get(self, id_or_uri):
         """
-        Gets a switch by ID or by uri
+        Gets a switch by ID or by uri.
+
         Args:
-            id_or_uri: Could be either the switch ID or uri
+            id_or_uri: Could be either the switch ID or uri.
 
         Returns:
-            dict: switch
+            dict: Switch
         """
         return self._client.get(id_or_uri)
 
     def delete(self, resource, force=False, timeout=-1):
         """
-        Deletes a migrated switch
+        Deletes a migrated switch.
 
         Args:
-            resource (dict): object to delete
+            resource (dict): Object to delete.
             force (bool):
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
@@ -112,8 +115,7 @@ class Switches(object):
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            dict: Details of associated resource
-
+            bool: Indicating if the resource was successfully deleted.
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
@@ -132,8 +134,9 @@ class Switches(object):
 
     def get_by(self, field, value):
         """
-        Get all switches that match the filter
-        The search is case insensitive
+        Get all switches that match the filter.
+
+        The search is case insensitive.
 
         Args:
             field: field name to filter

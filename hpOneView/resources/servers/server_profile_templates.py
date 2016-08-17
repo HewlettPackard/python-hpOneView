@@ -82,26 +82,27 @@ class ServerProfileTemplate(object):
 
     def get(self, id_or_uri):
         """
-        Gets a server profile template resource by ID or by uri
+        Gets a server profile template resource by ID or by uri.
+
         Args:
-            id_or_uri: Could be either the server profile template resource id or uri
+            id_or_uri: Could be either the server profile template resource id or uri.
 
         Returns:
-            dict: The server profile template resource
+            dict: The server profile template resource.
         """
         return self._client.get(id_or_uri=id_or_uri)
 
     def get_by(self, field, value):
         """
-        Get all server profile templates that matches a specified filter
-        The search is case insensitive
+        Get all server profile templates that matches a specified filter.
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
-            list: A list of server profile templates
+            list: A list of server profile templates.
         """
         return self._client.get_by(field, value)
 
@@ -110,10 +111,10 @@ class ServerProfileTemplate(object):
         Gets a server profile template by name.
 
         Args:
-            name: Name of the server profile template
+            name: Name of the server profile template.
 
         Returns:
-            dict: The server profile template resource
+            dict: The server profile template resource.
         """
         return self._client.get_by_name(name)
 
@@ -122,12 +123,13 @@ class ServerProfileTemplate(object):
          Creates a server profile template.
 
         Args:
-            resource: dict object to create
+            resource (dict): Object to create.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stop waiting for its completion.
 
-        Returns: Created resource.
+        Returns:
+            dict: Created resource.
 
         """
         data = self.__default_values.copy()
@@ -147,11 +149,11 @@ class ServerProfileTemplate(object):
         only when their associated parent is used.
 
         Args:
-            id_or_uri: Could be either the template id or the template uri
-            resource (dict): object to update
+            id_or_uri: Could be either the template id or the template uri.
+            resource (dict): Object to update.
 
         Returns:
-            dict: The server profile template resource
+            dict: The server profile template resource.
         """
         data = self.__default_values.copy()
         data.update(resource)
@@ -162,13 +164,13 @@ class ServerProfileTemplate(object):
         Deletes a server profile template object from the appliance based on its profile template UUID.
 
         Args:
-            resource: dict object to delete
+            resource: Object to delete.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            bool:
+            bool: Indicating if the resource was successfully deleted.
         """
         return self._client.delete(resource=resource, timeout=timeout)
 
@@ -181,10 +183,10 @@ class ServerProfileTemplate(object):
          used for the POST https://{appl}/rest/server-profiles/ API.
 
         Args:
-            id_or_uri: Could be either the server profile template resource id or uri
+            id_or_uri: Could be either the server profile template resource id or uri.
 
         Returns:
-            dict: The server profile resource
+            dict: The server profile resource.
         """
         uri = self._client.build_uri(id_or_uri) + "/new-profile"
         return self._client.get(id_or_uri=uri)

@@ -74,12 +74,13 @@ class EnclosureGroups(object):
 
     def get(self, id_or_uri):
         """
-        Gets a enclosure group by ID or by uri
+        Gets a enclosure group by ID or by uri.
+
         Args:
-            id_or_uri: Could be either the enclosure group id or the enclosure group uri
+            id_or_uri: Could be either the enclosure group id or the enclosure group uri.
 
         Returns:
-            dict: enclosure group
+            dict: Enclosure Group
         """
         return self._client.get(id_or_uri)
 
@@ -88,7 +89,7 @@ class EnclosureGroups(object):
         Gets the configuration script of the enclosure-group resource with the specified URI.
 
         Returns:
-            dict:
+            dict: Configuration script.
         """
 
         uri = self._client.build_uri(id_or_uri) + "/script"
@@ -97,12 +98,13 @@ class EnclosureGroups(object):
 
     def get_by(self, field, value):
         """
-        Get all enclosure groups that matches the filter
-        The search is case insensitive
+        Get all enclosure groups that matches the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
             list: A list of enclosure groups.
@@ -111,17 +113,18 @@ class EnclosureGroups(object):
 
     def create(self, resource, timeout=-1):
         """
-         Creates an enclosure group. An interconnect bay mapping must be provided for each
-          of the interconnect bays in the enclosure. For this release, the same logical
-          interconnect group must be provided for each interconnect bay mapping.
+        Creates an enclosure group. An interconnect bay mapping must be provided for each
+        of the interconnect bays in the enclosure. For this release, the same logical
+        interconnect group must be provided for each interconnect bay mapping.
+
         Args:
-            resource (dict): Object to create
+            resource (dict): Object to create.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            dict: Created enclosure group
+            dict: Created enclosure group.
         """
         data = self.__default_values.copy()
         data.update(resource)
@@ -129,17 +132,17 @@ class EnclosureGroups(object):
 
     def delete(self, resource, timeout=-1):
         """
-         Deletes an enclosure group. An enclosure group cannot be deleted if any enclosures
-         are currently part of that enclosure group.
+        Deletes an enclosure group. An enclosure group cannot be deleted if any enclosures
+        are currently part of that enclosure group.
 
         Args:
-            resource (dict): object to delete
+            resource (dict): Object to delete.
             timeout:
                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            boolean: True when success
+            bool: Indicating if the resource was successfully deleted.
 
         """
         return self._client.delete(resource, timeout=timeout)
@@ -147,6 +150,7 @@ class EnclosureGroups(object):
     def update(self, resource, timeout=-1):
         """
         Updates an enclosure group with new attributes.
+
         Args:
             resource (dict): Object to update
             timeout:
@@ -164,13 +168,13 @@ class EnclosureGroups(object):
     def update_script(self, id_or_uri, script_body):
         """
         Updates the configuration script of the enclosure-group with the specified URI.
+
         Args:
-            id_or_uri: id or resource uri
-            script_body:  configuration script
+            id_or_uri: Resource id or resource uri.
+            script_body:  Configuration script.
 
         Returns:
-            dict: Updated enclosure group
-
+            dict: Updated enclosure group.
         """
         uri = self._client.build_uri(id_or_uri) + "/script"
 

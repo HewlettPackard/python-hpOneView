@@ -48,7 +48,7 @@ class Endpoints(object):
 
     def get_all(self, start=0, count=-1, query='', sort=''):
         """
-       Retrieves the list of endpoints known by the appliance
+        Retrieves the list of endpoints known by the appliance.
 
         Args:
             start:
@@ -66,7 +66,6 @@ class Endpoints(object):
                 on create time, with the oldest entry first.
 
         Returns:
-            list: endpoints
-
+            list: The endpoints known by the appliance.
         """
         return self._client.get_all(start=start, count=count, query=query, sort=sort)

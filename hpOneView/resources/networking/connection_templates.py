@@ -52,6 +52,7 @@ class ConnectionTemplates(object):
         Gets a paginated collection of all connection templates based on the specified
         parameters. Filters can be used in the URL to control the number of connection
         templates that are returned.
+
         With no filters specified, the API returns all connection templates.
 
         Args:
@@ -76,22 +77,24 @@ class ConnectionTemplates(object):
 
     def get(self, id):
         """
-        Gets the connection template with the specified ID
+        Gets the connection template with the specified ID.
         Args:
-            id: ID of connection template
+            id: ID of connection template.
 
-        Returns: dict
+        Returns:
+            dict:
         """
         return self._client.get(id)
 
     def get_by(self, field, value):
         """
-        Get all connection templates that match the filter
-        The search is case insensitive
+        Get all connection templates that match the filter.
+
+        The search is case insensitive.
 
         Args:
-            field: field name to filter
-            value: value to filter
+            field: Field name to filter.
+            value: Value to filter.
 
         Returns:
             list: A list of connection templates.
@@ -103,12 +106,8 @@ class ConnectionTemplates(object):
         Get the default network connection template. This is the default connection template used
         for construction of networks. Its value is copied when a new connection template is made.
 
-        Args:
-            field: field name to filter
-            value: value to filter
-
-        Returns: dict
-
+        Returns:
+            dict:
         """
         uri = self.URI + "/defaultConnectionTemplate"
         return self._client.get(uri)
@@ -118,13 +117,13 @@ class ConnectionTemplates(object):
         Updates connection template.
 
         Args:
-            resource: dict object to update
+            resource (dict): Object to update.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+                OneView, just stops waiting for its completion.
 
-        Returns: Updated resource. When blocking=False, returns the task.
-
+        Returns:
+            dict: Updated resource.
         """
         data = {}
         data.update(resource)
