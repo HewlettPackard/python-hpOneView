@@ -47,6 +47,7 @@ __status__ = 'Development'
 from hpOneView.common import uri
 from hpOneView.activity import activity
 
+
 class metrics(object):
     def __init__(self, con):
         self._con = con
