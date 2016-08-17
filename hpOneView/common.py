@@ -189,6 +189,11 @@ uri = {
     'managed-sans': '/rest/fc-sans/managed-sans',
     'providers': '/rest/fc-sans/providers',
     # ------------------------------------
+    # Metrcs
+    # ------------------------------------
+    'metricsCapabilities': '/rest/metrics/capability',
+    'metricsConfiguration': '/rest/metrics/configuration',
+    # ------------------------------------
     # Uncategorized
     # ------------------------------------
     'unmanaged-devices': '/rest/unmanaged-devices',
