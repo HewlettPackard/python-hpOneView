@@ -293,3 +293,20 @@ class TaskMonitorTest(unittest.TestCase):
     def test_get(self, mock_get):
         self.task_monitor.get({"uri": "an uri"})
         mock_get.assert_called_once_with("an uri")
+
+    @mock.patch.object(TaskMonitor, 'is_task_running')
+    @mock.patch.object(TaskMonitor, 'get')
+    def test_get_completed_task(self, mock_get, mock_is_running):
+        task = {"uri": "uri",
+                "type": "TaskResourceV2",
+                "name": "Create unexpected zoning report'",
+                "taskState": "Completed",
+                "taskOutput": []
+                }
+
+        mock_is_running.return_value = False
+        mock_get.return_value = task
+
+        response = self.task_monitor.get_completed_task(task.copy())
+
+        self.assertEqual(task, response)
