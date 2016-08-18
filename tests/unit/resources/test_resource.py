@@ -422,7 +422,7 @@ class ResourceTest(unittest.TestCase):
                                                    timeout=-1)
 
         mock_post.assert_called_once_with(
-            "/rest/enclosures/09USE133E5H4/configuration", None, custom_headers=None)
+            "/rest/enclosures/09USE133E5H4/configuration", {}, custom_headers=None)
 
     @mock.patch.object(connection, 'post')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
