@@ -78,6 +78,7 @@ class ConnectionTemplates(object):
     def get(self, id):
         """
         Gets the connection template with the specified ID.
+
         Args:
             id: ID of connection template.
 
