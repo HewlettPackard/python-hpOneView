@@ -126,3 +126,21 @@ class ManagedSANsTest(TestCase):
 
         expected_uri = '/rest/fc-sans/managed-sans/280FF951-F007-478F-AC29-E4655FC76DDC/endpoints/'
         mock_create_with_zero_body.assert_called_once_with(uri=expected_uri, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'create_report')
+    def test_create_issues_report_called_once_when_id_provided(self, mock_create_report):
+        id = '280FF951-F007-478F-AC29-E4655FC76DDC'
+
+        self._resource.create_issues_report(id)
+
+        expected_uri = '/rest/fc-sans/managed-sans/280FF951-F007-478F-AC29-E4655FC76DDC/issues/'
+        mock_create_report.assert_called_once_with(uri=expected_uri, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'create_report')
+    def test_create_issues_report_called_once_when_uri_provided(self, mock_create_report):
+        uri = "/rest/fc-sans/managed-sans/280FF951-F007-478F-AC29-E4655FC76DDC"
+
+        self._resource.create_issues_report(uri)
+
+        expected_uri = '/rest/fc-sans/managed-sans/280FF951-F007-478F-AC29-E4655FC76DDC/issues/'
+        mock_create_report.assert_called_once_with(uri=expected_uri, timeout=-1)

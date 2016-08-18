@@ -161,3 +161,20 @@ class ManagedSANs(object):
         """
         uri = self._client.build_uri(managed_san_id_or_uri) + '/endpoints/'
         return self._client.create_with_zero_body(uri=uri, timeout=timeout)
+
+    def create_issues_report(self, managed_san_id_or_uri, timeout=-1):
+        """
+        Creates an unexpected zoning report for a SAN.
+
+        Args:
+            managed_san_id_or_uri:
+                Could be either the Managed SAN id or uri.
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+                OneView, just stops waiting for its completion.
+
+        Returns:
+            list: A list of FCIssueResponse dict.
+        """
+        uri = self._client.build_uri(managed_san_id_or_uri) + '/issues/'
+        return self._client.create_report(uri=uri, timeout=timeout)
