@@ -27,8 +27,9 @@ import mock
 from mock import call
 
 from hpOneView.connection import connection
-from hpOneView.exceptions import HPOneViewUnknownType
-from hpOneView.resources.resource import ResourceClient, RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor
+from hpOneView.exceptions import HPOneViewUnknownType, HPOneViewException
+from hpOneView.resources.resource import ResourceClient, RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor, \
+    RESOURCE_CLIENT_TASK_EXPECTED
 
 
 class FakeResource(object):
@@ -774,5 +775,75 @@ class ResourceTest(unittest.TestCase):
             self.resource_client.build_uri('/rest/')
         except HPOneViewUnknownType as exception:
             self.assertEqual(UNRECOGNIZED_URI, exception.args[0])
+        else:
+            self.fail("Expected Exception was not raised")
+
+    @mock.patch.object(connection, 'post')
+    @mock.patch.object(TaskMonitor, 'get_completed_task')
+    def test_create_report_should_do_post_request(self, mock_get_completed_task, mock_post):
+        task_with_output = self.task.copy()
+        task_with_output['taskOutput'] = []
+
+        mock_post.return_value = self.task, {}
+        mock_get_completed_task.return_value = task_with_output
+
+        self.resource_client.create_report("/rest/path/create-report")
+
+        mock_post.assert_called_once_with("/rest/path/create-report", {})
+
+    @mock.patch.object(connection, 'post')
+    @mock.patch.object(TaskMonitor, 'get_completed_task')
+    def test_create_report_should_wait_task_completion(self, mock_get_completed_task, mock_post):
+        task_with_output = self.task.copy()
+        task_with_output['taskOutput'] = []
+
+        mock_post.return_value = self.task, {}
+        mock_get_completed_task.return_value = task_with_output
+
+        self.resource_client.create_report("/rest/path/create-report", timeout=60)
+
+        mock_get_completed_task.assert_called_once_with({"task": "task"}, 60)
+
+    @mock.patch.object(connection, 'post')
+    @mock.patch.object(TaskMonitor, 'get_completed_task')
+    def test_create_report_should_return_output_list_when_results(self, mock_get_completed_task, mock_post):
+        task_output = [
+            {"type": "FCIssueResponseV2", "created": "2015-03-24T15: 32: 50.889Z"},
+            {"type": "FCIssueResponseV2", "created": "2015-03-13T14: 10: 50.322Z"}
+        ]
+        task_with_output = self.task.copy()
+        task_with_output['taskOutput'] = task_output
+
+        mock_post.return_value = self.task, {}
+        mock_get_completed_task.return_value = task_with_output
+
+        result = self.resource_client.create_report("/rest/path/create-report")
+
+        self.assertEqual(result, task_output)
+
+    @mock.patch.object(connection, 'post')
+    @mock.patch.object(TaskMonitor, 'get_completed_task')
+    def test_create_report_should_return_empty_list_when_output_is_empty(self, mock_get_completed_task, mock_post):
+        task_with_output = self.task.copy()
+        task_with_output['taskOutput'] = []
+
+        mock_post.return_value = self.task, {}
+        mock_get_completed_task.return_value = task_with_output
+
+        result = self.resource_client.create_report("/rest/path/create-report")
+
+        self.assertEqual(result, [])
+
+    @mock.patch.object(connection, 'post')
+    def test_create_report_should_raise_exception_when_not_task(self, mock_post):
+        task_with_output = self.task.copy()
+        task_with_output['taskOutput'] = []
+
+        mock_post.return_value = None, {}
+
+        try:
+            self.resource_client.create_report("/rest/path/create-report")
+        except HPOneViewException as exception:
+            self.assertEqual(RESOURCE_CLIENT_TASK_EXPECTED, exception.args[0])
         else:
             self.fail("Expected Exception was not raised")
