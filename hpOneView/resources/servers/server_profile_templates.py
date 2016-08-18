@@ -120,7 +120,7 @@ class ServerProfileTemplate(object):
 
     def create(self, resource, timeout=-1):
         """
-         Creates a server profile template.
+        Creates a server profile template.
 
         Args:
             resource (dict): Object to create.
@@ -176,11 +176,11 @@ class ServerProfileTemplate(object):
 
     def get_new_profile(self, id_or_uri):
         """
-         A profile object will be returned with the configuration based on this template. Specify the profile name and
-         server hardware to assign. If template has any fibre channel connection which is specified as bootable but no
-         boot target was defined, that connection will be instantiated as a non-bootable connection. So modify that
-         connection to change it to bootable and to specify the boot target. This profile object can subsequently be
-         used for the POST https://{appl}/rest/server-profiles/ API.
+        A profile object will be returned with the configuration based on this template. Specify the profile name and
+        server hardware to assign. If template has any fibre channel connection which is specified as bootable but no
+        boot target was defined, that connection will be instantiated as a non-bootable connection. So modify that
+        connection to change it to bootable and to specify the boot target. This profile object can subsequently be
+        used for the POST https://{appl}/rest/server-profiles/ API.
 
         Args:
             id_or_uri: Could be either the server profile template resource id or uri.

@@ -50,6 +50,7 @@ class Tasks(object):
     def get(self, id_or_uri):
         """
         Retrieve a task by its uri.
+
         Args:
             id_or_uri: task id (or uri)
 

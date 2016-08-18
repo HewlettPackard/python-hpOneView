@@ -81,6 +81,7 @@ class Racks(object):
     def get(self, id_or_uri):
         """
         Gets a rack with the specified ID or URI.
+
         Args:
             id_or_uri:
                 Could be either the rack id or the rack uri.

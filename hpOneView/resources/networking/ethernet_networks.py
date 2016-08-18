@@ -59,7 +59,6 @@ class EthernetNetworks(object):
         Args:
             start:
                 The first item to return, using 0-based indexing.
-
                 If not specified, the default is 0 - start with the first available item.
             count:
                 The number of resources to return. A count of -1 requests all the items.
