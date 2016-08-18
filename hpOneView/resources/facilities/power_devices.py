@@ -266,7 +266,8 @@ class PowerDevices(object):
         of an HPE iPDU.
 
         Args:
-            id_or_uri: The power device id or the resource uri
+            id_or_uri:
+                The power device id or the resource uri
             fields:
                 Name of the metric(s) to be retrieved in the format METRIC[,METRIC]...If unspecified, all metrics
                 supported are returned. Power delivery devices support the following utilization metrics:
@@ -327,9 +328,9 @@ class PowerDevices(object):
                     5-minute sample value data during the day. Samples at this resolution are retained up to three
                     years.
 
-            Returns:
-                dict: Utilization data
-            """
+        Returns:
+            dict: Utilization data
+        """
 
         return self._client.get_utilization(id_or_uri, fields, filter, refresh, view)
 
