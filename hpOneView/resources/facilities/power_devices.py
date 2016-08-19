@@ -60,8 +60,7 @@ class PowerDevices(object):
             count:
                 The number of resources to return. A count of -1 requests all the items.
                 The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items, or
-                if returning the requested number of items would take too long.
+                count if the sum of start and count exceed the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
                 default is no filter - all resources are returned.
@@ -72,13 +71,15 @@ class PowerDevices(object):
                 The sort order of the returned data set. By default, the sort order is based
                 on create time, with the oldest entry first.
 
-        Returns: list of power devices
+        Returns:
+             list of power devices
         """
         return self._client.get_all(start, count, filter=filter, sort=sort, query=query)
 
     def get(self, id_or_uri):
         """
         Gets a single power delivery device resource based upon its uri or id.
+
         Args:
             id_or_uri:
                 Could be either the power device id or the uri
@@ -92,14 +93,13 @@ class PowerDevices(object):
         """
         Adds a power delivery device resource based upon the attributes specified. Use this method to create a
         representation of power delivery devices that provide power to other resources but cannot otherwise be
-        discovered by the management appliance. All attributes without default values must be specified in the POST
-        body. The response contains the power delivery device resource as added to the appliance with default and
-        assigned properties expanded. The id and uri are assigned by the management appliance and are used to uniquely
-        identify this particular resource.
+        discovered by the management appliance.
 
         Args:
-            resource: power device information
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+            information:
+                power device information
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
         Returns:
@@ -110,8 +110,7 @@ class PowerDevices(object):
     def remove(self, resource, force=False, timeout=-1):
         """
         Deletes the set of power-devices according to the specified parameters. A filter is required to identify the
-        set of resources to be deleted. The actual deletion will proceed asynchronously. Use the returned task resource
-        to track the completion and any errors that may occur.
+        set of resources to be deleted.
 
         Args:
             resource: dict object to remove
@@ -121,7 +120,8 @@ class PowerDevices(object):
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: Result status
+        Returns:
+             bool: operation success
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
@@ -147,8 +147,8 @@ class PowerDevices(object):
         """
         Updates the resource for the specified {id}. The properties that are omitted (not included as part of the the
         request body) are reset to their respective default values. The id and uuid properties are required and cannot
-        be changed. To update existing {rest-resource} first perform a GET request to retrieve the current properties,
-        update the desired properties, and then PUT the request body containing the new representation of the resource.
+        be changed.
+
         Args:
             resource (dict): Object to update
             timeout:
@@ -157,7 +157,6 @@ class PowerDevices(object):
 
         Returns:
             dict: Updated power device
-
         """
         return self._client.update(resource, timeout=timeout)
 
@@ -172,7 +171,7 @@ class PowerDevices(object):
 
         Returns:
             str: The power state
-            """
+        """
         uri = self._client.build_uri(id_or_uri) + "/powerState"
         return self._client.get(uri)
 
@@ -188,7 +187,7 @@ class PowerDevices(object):
 
         Returns:
             str: The power state
-            """
+        """
         uri = self._client.build_uri(id_or_uri) + "/powerState"
         return self._client.update(power_state, uri)
 
@@ -204,7 +203,7 @@ class PowerDevices(object):
 
         Returns:
             str: The power state
-            """
+        """
         uri = self._client.build_uri(id_or_uri) + "/refreshState"
         return self._client.update(refresh_state_data, uri=uri)
 
@@ -220,7 +219,8 @@ class PowerDevices(object):
             timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
                 in OneView, just stops waiting for its completion.
 
-        Returns: Result status
+        Returns:
+            bool: operation success
         """
         uri = self._client.build_uri(resource['uri']) + "/synchronous"
         remove_resource = {'uri': uri}
@@ -238,7 +238,7 @@ class PowerDevices(object):
 
         Returns:
             str: unit identification (UID) state
-            """
+        """
         uri = self._client.build_uri(id_or_uri) + "/uidState"
         return self._client.get(uri)
 
@@ -256,7 +256,7 @@ class PowerDevices(object):
 
         Returns:
             str: The UID state
-            """
+        """
         uri = self._client.build_uri(id_or_uri) + "/uidState"
         return self._client.update(refresh_state_data, uri)
 
@@ -345,6 +345,5 @@ class PowerDevices(object):
 
         Returns:
             dict: rack
-
         """
         return self._client.get_by(field, value)

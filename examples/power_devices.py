@@ -46,9 +46,9 @@ power_device_information = {
 }
 
 power_device_information_ipdu = {
-    "hostname": "172.18.8.12",
-    "username": "",
-    "password": ""
+    "hostname": config['power_device_hostname'],
+    "username": config['power_device_username'],
+    "password": config['power_device_password'],
 }
 
 # Add a Power Device
