@@ -59,7 +59,7 @@ class SanManagers(object):
             count:
                 The number of resources to return. A count of -1 requests all the items. The actual number of items in
                 the response may differ from the requested count if the sum of start and count exceed the total number
-                of items, or if returning the requested number of items would take too long
+                of items.
             query:
                 A general query string to narrow the list of resources returned.
                 The default is no query - all resources are returned.

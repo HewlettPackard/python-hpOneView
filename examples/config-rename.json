@@ -15,5 +15,8 @@
   "server_password": "",
   "storage_system_hostname": "",
   "storage_system_username": "",
-  "storage_system_password": ""
+  "storage_system_password": "",
+  "power_device_hostname": "",
+  "power_device_username": "",
+  "power_device_password": ""
 }

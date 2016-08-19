@@ -352,7 +352,12 @@ class connection(object):
         if resp.status >= 400:
             raise HPOneViewException(body)
         elif resp.status == 202:
-            task = self.get(resp.getheader('Location'))
+            location = resp.getheader('Location')
+            if location:
+                task = self.get(location)
+            else:
+                task = body
+
             return task, body
         return None, body
 
