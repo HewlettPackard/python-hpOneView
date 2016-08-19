@@ -75,10 +75,37 @@ class TaskMonitor(object):
         Returns:
             Associated resource when creating or updating; True when deleting.
         """
+        self.__wait_task_completion(task, timeout)
+
+        task = self.get(task)
+
+        logger.debug("Waiting for task. Percentage complete: " + str(task.get('computedPercentComplete')))
+        logger.debug("Waiting for task. Task state: " + str(task.get('taskState')))
+
+        task_response = self.__get_task_response(task)
+        logger.debug('Task completed')
+        return task_response
+
+    def get_completed_task(self, task, timeout=-1):
+        """
+        Waits until the task is completed and returns the task resource.
+
+        Args:
+            task: TaskResource
+            timeout: Timeout in seconds
+
+        Returns:
+            dict: TaskResource
+        """
+        self.__wait_task_completion(task, timeout)
+
+        return self.get(task)
+
+    def __wait_task_completion(self, task, timeout):
         if not task:
             raise HPOneViewUnknownType(MSG_INVALID_TASK)
 
-        logger.debug('Waiting for task')
+        logger.debug('Waiting for task completion...')
 
         # gets current cpu second for timeout
         start_time = self.get_current_seconds()
@@ -95,15 +122,6 @@ class TaskMonitor(object):
             time.sleep(i)
             if (timeout != UNLIMITED_TIMEOUT) and (start_time + timeout < self.get_current_seconds()):
                 raise HPOneViewTimeout(MSG_TIMEOUT % str(timeout))
-
-        task = self.get(task)
-
-        logger.debug("Waiting for task. Percentage complete: " + str(task.get('computedPercentComplete')))
-        logger.debug("Waiting for task. Task state: " + str(task.get('taskState')))
-
-        task_response = self.__get_task_response(task)
-        logger.debug('Task completed')
-        return task_response
 
     def __get_task_response(self, task):
         if task['taskState'] in TASK_ERROR_STATES and task['taskState'] != 'Warning':

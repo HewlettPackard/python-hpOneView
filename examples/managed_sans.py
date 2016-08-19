@@ -46,7 +46,7 @@ managed_sans = oneview_client.managed_sans.get_all()
 
 if managed_sans:
     for managed_san in managed_sans:
-        print('  Name: {name} - Manager: {deviceManagerName}'.format(**managed_san))
+        print('  Name: {name} - Manager: {deviceManagerName} - Imported: {imported}'.format(**managed_san))
         if managed_san['imported']:
             imported_san = managed_san
         else:
@@ -109,6 +109,11 @@ if managed_sans:
         print("Get the list of endpoints in the Imported Managed SAN")
         endpoints = oneview_client.managed_sans.get_endpoints(imported_san['uri'])
         pprint(endpoints)
+
+        # Create an unexpected zoning report
+        print("Create an unexpected zoning report")
+        issues_response = oneview_client.managed_sans.create_issues_report(imported_san['uri'])
+        pprint(issues_response)
 
 else:
     print("No Managed SANs found.")

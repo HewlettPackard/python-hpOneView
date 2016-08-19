@@ -40,13 +40,14 @@ __status__ = 'Development'
 import logging
 from urllib.parse import quote
 from hpOneView.resources.task_monitor import TaskMonitor
-from hpOneView.exceptions import HPOneViewUnknownType
+from hpOneView.exceptions import HPOneViewUnknownType, HPOneViewException
 
 RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED = 'Resource was not provided'
 RESOURCE_CLIENT_INVALID_FIELD = 'Invalid field was provided'
 RESOURCE_CLIENT_INVALID_ID = 'Invalid id was provided'
 RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE = 'Unknown object type'
 UNRECOGNIZED_URI = 'Unrecognized URI for this resource'
+RESOURCE_CLIENT_TASK_EXPECTED = "Failed: Expected a TaskResponse."
 
 logger = logging.getLogger(__name__)
 
@@ -504,6 +505,29 @@ class ResourceClient(object):
         uri = "{0}/utilization{1}".format(self.build_uri(id_or_uri), query)
 
         return self._connection.get(uri)
+
+    def create_report(self, uri, timeout=-1):
+        """
+        Creates a report and returns the output.
+
+        Args:
+            uri: URI
+            timeout:
+                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                in OneView, just stops waiting for its completion.
+
+        Returns:
+            list:
+        """
+        logger.debug('Creating Report (uri = %s)'.format(uri))
+        task, _ = self._connection.post(uri, {})
+
+        if not task:
+            raise HPOneViewException(RESOURCE_CLIENT_TASK_EXPECTED)
+
+        task = self._task_monitor.get_completed_task(task, timeout)
+
+        return task['taskOutput']
 
     def build_uri(self, id_or_uri):
         if not id_or_uri:
