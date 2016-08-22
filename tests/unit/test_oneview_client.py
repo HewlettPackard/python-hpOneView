@@ -44,6 +44,7 @@ from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGr
 from hpOneView.resources.networking.uplink_sets import UplinkSets
 from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
 from hpOneView.resources.servers.server_profiles import ServerProfiles
+from hpOneView.resources.uncategorized.unmanaged_devices import UnmanagedDevices
 from hpOneView.resources.storage.storage_volume_attachments import StorageVolumeAttachments
 from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTemplates
 from hpOneView.resources.storage.volumes import Volumes
@@ -373,6 +374,9 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_uplink_sets(self):
         copy_uplink_sets = self._oneview.uplink_sets
         self.assertEqual(copy_uplink_sets, self._oneview.uplink_sets)
+
+    def test_unmanaged_devices_has_right_type(self):
+        self.assertIsInstance(self._oneview.unmanaged_devices, UnmanagedDevices)
 
     def test_volumes_has_right_type(self):
         self.assertIsInstance(self._oneview.volumes, Volumes)

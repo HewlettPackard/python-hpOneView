@@ -344,6 +344,6 @@ class PowerDevices(object):
             value: value to filter
 
         Returns:
-            dict: rack
+            dict: power devices
         """
         return self._client.get_by(field, value)
