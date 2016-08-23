@@ -82,7 +82,7 @@ class UnmanagedDevices(object):
 
         Args:
             id_or_uri:
-                Could be either the power device id or the uri
+                Could be either the Unmanaged Device id or the uri
 
         Returns:
             dict: The Unmanaged Device
@@ -103,31 +103,52 @@ class UnmanagedDevices(object):
                 in OneView, just stops waiting for its completion.
 
         Returns:
-            dict: added Unmanaged Devices.
+            dict: Added Unmanaged Device
         """
         return self._client.create(information, timeout=timeout)
 
     def remove(self, resource, force=False, timeout=-1):
         """
-        Deletes the set of unmanaged-devices according to the specified parameters. A filter is required to identify
-        the set of resources to be deleted.
+        Deletes the resource specified.
 
         Args:
-            resource: dict object to remove
+            resource:
+                 Dict object to remove
             force:
                  If set to true the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout:
+                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                 in OneView, just stops waiting for its completion.
 
         Returns:
              bool: operation success
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
+    def remove_all(self, filter, force=False, timeout=-1):
+        """
+        Deletes the set of unmanaged-devices according to the specified parameters. A filter is required to identify
+        the set of resources to be deleted.
+
+        Args:
+            filter:
+                 A general filter/query string to narrow the list of items that will be removed.
+            force:
+                 If set to true the operation completes despite any problems with
+                 network connectivity or errors on the resource itself. The default is false.
+            timeout:
+                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                 in OneView, just stops waiting for its completion.
+
+        Returns:
+             bool: operation success
+        """
+        return self._client.delete_all(filter=filter, force=force, timeout=timeout)
+
     def update(self, resource, timeout=-1):
         """
-        Updates the resource for the specified {id}. The properties that are omitted (not included as part of the the
+        Updates the resource for the specified. The properties that are omitted (not included as part of the the
         request body) are reset to their respective default values. The id and uuid properties are required and cannot
         be changed.
 
@@ -149,7 +170,7 @@ class UnmanagedDevices(object):
 
         Args:
             id_or_uri:
-                Could be either the power device id or the uri
+                Could be either the Unmanaged Device id or the uri
 
         Returns:
             dict:

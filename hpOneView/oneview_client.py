@@ -520,7 +520,7 @@ class OneViewClient(object):
         Gets the Unmanaged Devices API client.
 
         Returns:
-            Unmanaged Devices:
+            UnmanagedDevices:
         """
         if not self.__unmanaged_devices:
             self.__unmanaged_devices = UnmanagedDevices(self.__connection)

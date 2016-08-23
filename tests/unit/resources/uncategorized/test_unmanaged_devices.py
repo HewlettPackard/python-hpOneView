@@ -114,6 +114,13 @@ class UnmanagedDevicesTest(TestCase):
 
         mock_delete.assert_called_once_with(id, force=False, timeout=-1)
 
+    @mock.patch.object(ResourceClient, 'delete_all')
+    def test_remove_all_called_once_with_defaults(self, mock_delete):
+        filter = "name matches '%'"
+        self._unmanaged_devices.remove_all(filter)
+
+        mock_delete.assert_called_once_with(filter=filter, force=False, timeout=-1)
+
     @mock.patch.object(ResourceClient, 'get')
     def test_get_environmental_configuration_called_once(self, mock_get):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'

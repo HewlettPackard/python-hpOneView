@@ -58,7 +58,7 @@ unmanaged_device['name'] = "New Unmanaged Device Name"
 unmanaged_device = oneview_client.unmanaged_devices.update(unmanaged_device)
 print('Unmanaged Device "{name}" updated successfully\n'.format(**unmanaged_device))
 
-# Get all switches
+# Get all Unmanaged Devices
 print("Get all Unmanaged Devices:")
 unmanaged_devices_all = oneview_client.unmanaged_devices.get_all()
 for unm_dev in unmanaged_devices_all:
@@ -72,3 +72,8 @@ pprint(env_config)
 # Remove added unmanaged device
 oneview_client.unmanaged_devices.remove(unmanaged_device_added)
 print("Successfully removed the unmanaged device")
+
+# Add another unmanaged device and remove all
+unmanaged_device_added = oneview_client.unmanaged_devices.add(unmanaged_device_information)
+oneview_client.unmanaged_devices.remove_all("name matches '%'")
+print("Successfully removed all the unmanaged device")
