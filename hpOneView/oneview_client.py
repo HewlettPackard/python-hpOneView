@@ -67,6 +67,7 @@ from hpOneView.resources.servers.id_pools_vwwn_ranges import IdPoolsVwwnRanges
 from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.interconnect_types import InterconnectTypes
 from hpOneView.resources.networking.interconnect_link_topologies import InterconnectLinkTopologies
+from hpOneView.resources.uncategorized.unmanaged_devices import UnmanagedDevices
 from hpOneView.resources.networking.logical_downlinks import LogicalDownlinks
 from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.facilities.racks import Racks
@@ -118,6 +119,7 @@ class OneViewClient(object):
         self.__interconnect_types = None
         self.__interconnect_link_topologies = None
         self.__power_devices = None
+        self.__unmanaged_devices = None
         self.__racks = None
         self.__san_managers = None
         self.__endpoints = None
@@ -511,6 +513,18 @@ class OneViewClient(object):
         if not self.__power_devices:
             self.__power_devices = PowerDevices(self.__connection)
         return self.__power_devices
+
+    @property
+    def unmanaged_devices(self):
+        """
+        Gets the Unmanaged Devices API client.
+
+        Returns:
+            UnmanagedDevices:
+        """
+        if not self.__unmanaged_devices:
+            self.__unmanaged_devices = UnmanagedDevices(self.__connection)
+        return self.__unmanaged_devices
 
     @property
     def racks(self):
