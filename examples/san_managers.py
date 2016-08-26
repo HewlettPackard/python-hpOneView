@@ -75,7 +75,7 @@ options = {
             'value': manager_password
         },
         {
-            'name': 'UseSl',
+            'name': 'UseSsl',
             'value': True
         }
     ]
