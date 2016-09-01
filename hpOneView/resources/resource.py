@@ -574,16 +574,22 @@ class ResourceClient(object):
 
     def __do_requests_to_getall(self, uri, count):
         items = []
-        request_needed = True
 
-        while request_needed:
+        while uri:
             logger.debug('Making HTTP request to get all resources. Uri: {0}'.format(uri))
             response = self._connection.get(uri)
             members = self.__get_members(response)
-            uri = response.get('nextPageUri')
             items += members
+
             logger.debug("Response getAll: nextPageUri = {0}, members list length: {1}".format(uri, str(len(members))))
-            request_needed = uri and not len(members) == 0 and (len(items) < count or count == -1)
+            uri = self.__get_next_page(response)
 
         logger.debug('Total # of members found = {0}'.format(str(len(items))))
         return items
+
+    def __get_next_page(self, response):
+        next_page_is_empty = response.get('nextPageUri') is None
+        has_different_next_page = not response.get('uri') == response.get('nextPageUri')
+        has_next_page = not next_page_is_empty and has_different_next_page
+
+        return response.get('nextPageUri') if has_next_page else None

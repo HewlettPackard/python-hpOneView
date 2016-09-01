@@ -175,6 +175,22 @@ class ResourceTest(unittest.TestCase):
         self.assertSequenceEqual(result, expected_items)
 
     @mock.patch.object(connection, 'get')
+    def test_get_all_should_stop_requests_when_next_page_is_equal_to_current_page(self, mock_get):
+        uri = '/rest/testuri?start=0&count=-1'
+        members = [{'id': '1'}, {'id': '2'}, {'id': '3'}]
+
+        mock_get.return_value = {
+            'nextPageUri': uri,
+            'members': members,
+            'uri': uri
+        }
+
+        result = self.resource_client.get_all()
+
+        self.assertSequenceEqual(result, members)
+        mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(connection, 'get')
     def test_get_all_should_return_empty_list_when_response_has_no_items(self, mock_get):
         mock_get.return_value = {'nextPageUri': None, 'members': []}
 

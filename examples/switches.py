@@ -34,6 +34,10 @@ config = {
     }
 }
 
+# provide info about your switch here
+switch_id = "8205fc25-af81-4834-881b-c7954afa94a9"
+switch_uri = "/rest/switches/" + switch_id
+
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
@@ -42,8 +46,7 @@ oneview_client = OneViewClient(config)
 # Get Statistics
 print("Get a switch statistics")
 try:
-    switch_statistics = oneview_client.switches.get_statistics(
-        "30c04831-169e-4618-86b2-7a46310ebaea")
+    switch_statistics = oneview_client.switches.get_statistics(switch_uri)
     pprint(switch_statistics)
 except HPOneViewException as e:
     print(e.msg['message'])
@@ -51,10 +54,7 @@ except HPOneViewException as e:
 # Get Statistics with port_name
 print("Get a switch statistics with portName")
 try:
-    switch_statistics = oneview_client.switches.get_statistics(
-        "30c04831-169e-4618-86b2-7a46310ebaea", "1.2")
-    switch_statistics = oneview_client.switches.get_statistics(
-        "30c04831-169e-4618-86b2-7a46310ebaea", "1.2")
+    switch_statistics = oneview_client.switches.get_statistics(switch_uri, "1.2")
     pprint(switch_statistics)
 except HPOneViewException as e:
     print(e.msg['message'])
@@ -67,8 +67,7 @@ pprint(switches_all)
 # Get switch by id
 try:
     print("Get switch by id")
-    switch_by_id = oneview_client.switches.get(
-        "30c04831-169e-4618-86b2-7a46310ebaea")
+    switch_by_id = oneview_client.switches.get(switch_id)
     pprint(switch_by_id)
 except HPOneViewException as e:
     print(e.msg['message'])
@@ -76,8 +75,7 @@ except HPOneViewException as e:
 # Get a switch by uri
 try:
     print("Get switch by uri")
-    switch_by_uri = oneview_client.switches.get(
-        "/rest/switches/30c04831-169e-4618-86b2-7a46310ebaea")
+    switch_by_uri = oneview_client.switches.get(switch_uri)
     pprint(switch_by_uri)
 except HPOneViewException as e:
     print(e.msg['message'])
@@ -85,8 +83,7 @@ except HPOneViewException as e:
 # Get environmental configuration of switch by id
 try:
     print("Get environmental configuration of switch by id")
-    switch_by_id = oneview_client.switches.get_environmental_configuration(
-        "30c04831-169e-4618-86b2-7a46310ebaea")
+    switch_by_id = oneview_client.switches.get_environmental_configuration(switch_id)
     pprint(switch_by_id)
 except HPOneViewException as e:
     print(e.msg['message'])
@@ -94,8 +91,7 @@ except HPOneViewException as e:
 # Get environmental configuration of switch by uri
 try:
     print("Get environmental configuration of switch by uri")
-    switch_by_uri = oneview_client.switches.get_environmental_configuration(
-        "/rest/switches/30c04831-169e-4618-86b2-7a46310ebaea")
+    switch_by_uri = oneview_client.switches.get_environmental_configuration(switch_uri)
     pprint(switch_by_uri)
 except HPOneViewException as e:
     print(e.msg['message'])
@@ -103,8 +99,7 @@ except HPOneViewException as e:
 # Get switch by rackName
 try:
     print("Get switch by rack name")
-    switch_by_rack_name = oneview_client.switches.get_by(
-        "rackName", "Test Name")
+    switch_by_rack_name = oneview_client.switches.get_by("rackName", "Test Name")
     pprint(switch_by_rack_name)
 except HPOneViewException as e:
     print(e.msg['message'])
