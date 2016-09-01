@@ -60,6 +60,7 @@ from hpOneView.security import *
 from hpOneView.settings import *
 from hpOneView.exceptions import *
 from hpOneView.search import *
+from hpOneView.metrics import *
 from hpOneView.storage import *
 from hpOneView.fcsans import *
 from hpOneView.facilities import *
