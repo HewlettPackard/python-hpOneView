@@ -77,6 +77,7 @@ from hpOneView.resources.fc_sans.endpoints import Endpoints
 from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
 from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
 from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGroups
+from hpOneView.resources.networking.logical_switches import LogicalSwitches
 from hpOneView.resources.servers.server_profiles import ServerProfiles
 from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
 from hpOneView.resources.storage.storage_systems import StorageSystems
@@ -126,6 +127,7 @@ class OneViewClient(object):
         self.__logical_interconnects = None
         self.__logical_interconnect_groups = None
         self.__logical_switch_groups = None
+        self.__logical_switches = None
         self.__logical_downlinks = None
         self.__server_profiles = None
         self.__server_profile_templates = None
@@ -363,9 +365,20 @@ class OneViewClient(object):
             LogicalSwitchGroups:
         """
         if not self.__logical_switch_groups:
-            self.__logical_switch_groups = LogicalSwitchGroups(
-                self.__connection)
+            self.__logical_switch_groups = LogicalSwitchGroups(self.__connection)
         return self.__logical_switch_groups
+
+    @property
+    def logical_switches(self):
+        """
+        Gets the LogicalSwitches API client.
+
+        Returns:
+            LogicalSwitches:
+        """
+        if not self.__logical_switches:
+            self.__logical_switches = LogicalSwitches(self.__connection)
+        return self.__logical_switches
 
     @property
     def tasks(self):
