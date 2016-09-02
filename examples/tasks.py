@@ -54,5 +54,5 @@ except HPOneViewException as e:
 
 # Get a tree of tasks with specified filter
 print("Get a tree of tasks")
-tasks = oneview_client.tasks.get_all(filter="\"taskState='Completed'\"", view="tree")
+tasks = oneview_client.tasks.get_all(filter="\"taskState='Completed'\"", view="tree", count=10)
 pprint(tasks)

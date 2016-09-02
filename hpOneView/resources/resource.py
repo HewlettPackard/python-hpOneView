@@ -572,7 +572,7 @@ class ResourceClient(object):
 
         return self._task_monitor.wait_for_task(task, timeout)
 
-    def __do_requests_to_getall(self, uri, count):
+    def __do_requests_to_getall(self, uri, requested_count):
         items = []
 
         while uri:
@@ -582,14 +582,17 @@ class ResourceClient(object):
             items += members
 
             logger.debug("Response getAll: nextPageUri = {0}, members list length: {1}".format(uri, str(len(members))))
-            uri = self.__get_next_page(response)
+            uri = self.__get_next_page(response, items, requested_count)
 
         logger.debug('Total # of members found = {0}'.format(str(len(items))))
         return items
 
-    def __get_next_page(self, response):
+    def __get_next_page(self, response, items, requested_count):
         next_page_is_empty = response.get('nextPageUri') is None
         has_different_next_page = not response.get('uri') == response.get('nextPageUri')
         has_next_page = not next_page_is_empty and has_different_next_page
+
+        if len(items) >= requested_count and requested_count != -1:
+            return None
 
         return response.get('nextPageUri') if has_next_page else None
