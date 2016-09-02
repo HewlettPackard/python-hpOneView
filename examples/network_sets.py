@@ -65,7 +65,7 @@ oneview_client = OneViewClient(config)
 # Create two Ethernet networks
 ethernet_network1 = oneview_client.ethernet_networks.create(options_ethernet1)
 ethernet_network2 = oneview_client.ethernet_networks.create(options_ethernet2)
-print("Created ethernet-networks successfully.\n  uri = '%s'/n and '%s'" %
+print("Created ethernet-networks successfully.\n  uri = '%s' and \n\t'%s'" %
       (ethernet_network1['uri'], ethernet_network2['uri']))
 
 # create Network set containing Ethernet networks
@@ -85,8 +85,7 @@ print("Found network set by name: '%s'.\n  uri = '%s'" %
 # Get network set without Ethernet networks
 try:
     print("Get network-set without Ethernet:")
-    net_set_without_ethernet = oneview_client.network_sets.get_without_ethernet(
-        'b884a466-3a87-41da-b875-b1793ab90b9a')
+    net_set_without_ethernet = oneview_client.network_sets.get_without_ethernet(network_set['uri'])
     pprint(net_set_without_ethernet)
 except HPOneViewException as e:
     print(e.msg['message'])

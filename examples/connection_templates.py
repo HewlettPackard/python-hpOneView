@@ -39,6 +39,10 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
+# The name and ID of an existent Connection Template must be set to run this example
+connection_template_name = 'defaultConnectionTemplate'
+connection_template_id = '63b9a696-8c68-4e59-876d-148b1b925709'
+
 # Get all connection templates
 print("Get all connection templates")
 con_templates = oneview_client.connection_templates.get_all()
@@ -46,8 +50,7 @@ pprint(con_templates)
 
 # Get all sorting by name descending
 print("Get all connection templates sorting by name")
-con_templates_sorted = oneview_client.connection_templates.get_all(
-    sort='name:descending')
+con_templates_sorted = oneview_client.connection_templates.get_all(sort='name:descending')
 pprint(con_templates_sorted)
 
 # Get default template
@@ -58,8 +61,7 @@ pprint(con_template_default)
 # Get by name
 try:
     print("Get a connection_template by name")
-    con_template_byname = oneview_client.connection_templates.get_by(
-        'name', 'name-1428677812-1465588045762')[0]
+    con_template_byname = oneview_client.connection_templates.get_by('name', connection_template_name)[0]
     pprint(con_template_byname)
 except HPOneViewException as e:
     print(e.msg['message'])
@@ -67,8 +69,7 @@ except HPOneViewException as e:
 # Get by Id and update name
 try:
     print("Get a connection template by id")
-    con_template_byid = oneview_client.connection_templates.get(
-        '12aa10e3-693d-45f9-8512-2e9f0dd94c2c')
+    con_template_byid = oneview_client.connection_templates.get(connection_template_id)
     pprint(con_template_byid)
     print("Update name of connection template")
     con_template_byid['name'] = "renamed"

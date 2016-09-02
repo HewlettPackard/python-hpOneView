@@ -179,15 +179,15 @@ class NetworkSets(object):
             self._connection, "/rest/network-sets/withoutEthernet")
         return without_ethernet_client.get_all(start, count, filter=filter, sort=sort)
 
-    def get_without_ethernet(self, id):
+    def get_without_ethernet(self, id_or_uri):
         """
-        Gets the network set with the specified ID without ethernet.
+        Gets the network set with the specified ID or URI without ethernet.
 
         Args:
-            id: ID of network set.
+            id_or_uri: Could be either the Network Set ID or URI.
 
         Returns:
             dict: Network set excluding Ethernet networks.
         """
-        uri = "/rest/network-sets/%s/withoutEthernet" % (id)
+        uri = self._client.build_uri(id_or_uri) + "/withoutEthernet"
         return self._client.get(uri)

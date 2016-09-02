@@ -39,11 +39,13 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
+# An existent Logical Downlink ID is required to run this example
+logical_downlink_id = '246c3202-f4c8-4c92-9266-5e7b01c0598e'
+
 # Get logical downlink by id
 try:
     print("Get logical downlink by id")
-    log_downlink = oneview_client.logical_downlinks.get(
-        '03c9618e-f7b6-4fe8-8b59-2b4442f88238')
+    log_downlink = oneview_client.logical_downlinks.get(logical_downlink_id)
     pprint(log_downlink)
 except HPOneViewException as e:
     print(e.msg['message'])
@@ -51,8 +53,7 @@ except HPOneViewException as e:
 # Get logical downlink by id without Ethernet networks
 try:
     print("Get logical downlink by id without Ethernet networks")
-    log_downlink_without_ethernet = oneview_client.logical_downlinks.get_without_ethernet(
-        '03c9618e-f7b6-4fe8-8b59-2b4442f88238')
+    log_downlink_without_ethernet = oneview_client.logical_downlinks.get_without_ethernet(logical_downlink_id)
     pprint(log_downlink_without_ethernet)
 except HPOneViewException as e:
     print(e.msg['message'])

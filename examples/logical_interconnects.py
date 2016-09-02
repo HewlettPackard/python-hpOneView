@@ -214,7 +214,7 @@ pprint(qos)
 # Update the QOS aggregated configuration
 try:
     print("Update QoS aggregated settings on the logical interconnect")
-    qos['activeQosConfig']['configType'] = 'CustomNoFCoE'
+    qos['activeQosConfig']['configType'] = 'Passthrough'
     li = oneview_client.logical_interconnects.update_qos_aggregated_configuration(logical_interconnect['uri'], qos)
     pprint(li['qosConfiguration'])
 except HPOneViewException as e:
