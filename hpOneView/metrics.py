@@ -53,7 +53,7 @@ class metrics(object):
         self._con = con
         self._activity = activity(con)
 
-    def get_metrics_capabilty(self):
+    def get_metrics_capability(self):
         body = self._con.get(uri['metricsCapabilities'])
         return body
 
@@ -61,9 +61,9 @@ class metrics(object):
         body = self._con.get(uri['metricsConfiguration'])
         return body
 
-    def set_metrics_configuration(self, MetricsConfig, blocking=True,
+    def set_metrics_configuration(self, metrics_config, blocking=True,
                                   verbose=False):
-        task, body = self._con.put(uri['metricsConfiguration'], MetricsConfig)
+        task, body = self._con.put(uri['metricsConfiguration'], metrics_config)
         if blocking is True:
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
             return body
