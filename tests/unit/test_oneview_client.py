@@ -40,6 +40,7 @@ from hpOneView.resources.networking.interconnect_link_topologies import Intercon
 from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
 from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
+from hpOneView.resources.networking.logical_switches import LogicalSwitches
 from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGroups
 from hpOneView.resources.networking.uplink_sets import UplinkSets
 from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
@@ -334,6 +335,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_logical_switch_groups(self):
         logical_switch_groups = self._oneview.logical_switch_groups
         self.assertEqual(logical_switch_groups, self._oneview.logical_switch_groups)
+
+    def test_logical_switches_has_right_type(self):
+        self.assertIsInstance(self._oneview.logical_switches, LogicalSwitches)
+
+    def test_lazy_loading_logical_switches(self):
+        logical_switches = self._oneview.logical_switches
+        self.assertEqual(logical_switches, self._oneview.logical_switches)
 
     def test_logical_interconnects_has_right_type(self):
         self.assertIsInstance(self._oneview.logical_interconnects, LogicalInterconnects)
