@@ -158,7 +158,7 @@ class ResourceTest(unittest.TestCase):
         self.assertSequenceEqual(result, expected_items)
 
     @mock.patch.object(connection, 'get')
-    def test_get_all_with_count_should_return_all_items_when_response_paginated(self, mock_get):
+    def test_get_all_should_limit_results_to_requested_count_when_response_is_paginated(self, mock_get):
         uri_list = ['/rest/testuri?start=0&count=15',
                     '/rest/testuri?start=3&count=3',
                     '/rest/testuri?start=6&count=1']
@@ -173,6 +173,26 @@ class ResourceTest(unittest.TestCase):
 
         expected_items = [{'id': '1'}, {'id': '2'}, {'id': '3'}, {'id': '4'}, {'id': '5'}, {'id': '6'}, {'id': '7'}]
         self.assertSequenceEqual(result, expected_items)
+
+    @mock.patch.object(connection, 'get')
+    def test_get_all_should_stop_requests_when_requested_count_reached(self, mock_get):
+        """
+        In this case, the user provides a maximum number of results to be returned but for pagination purposes, a
+        nextPageUri is returned by OneView.
+        """
+        uri_list = ['/rest/testuri?start=0&count=3',
+                    '/rest/testuri?start=3&count=3',
+                    '/rest/testuri?start=6&count=3']
+
+        results = [{'nextPageUri': uri_list[1], 'members': [{'id': '1'}, {'id': '2'}, {'id': '3'}]},
+                   {'nextPageUri': uri_list[2], 'members': [{'id': '4'}, {'id': '5'}, {'id': '6'}]},
+                   {'nextPageUri': None, 'members': [{'id': '7'}, {'id': '8'}]}]
+
+        mock_get.side_effect = results
+
+        self.resource_client.get_all(count=3)
+
+        mock_get.assert_called_once_with(uri_list[0])
 
     @mock.patch.object(connection, 'get')
     def test_get_all_should_stop_requests_when_next_page_is_equal_to_current_page(self, mock_get):
