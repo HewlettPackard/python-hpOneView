@@ -24,7 +24,6 @@
 from pprint import pprint
 
 from config_loader import try_load_from_file
-from hpOneView.exceptions import HPOneViewException
 from hpOneView.oneview_client import OneViewClient
 
 config = {
@@ -57,9 +56,6 @@ options_bulk = {
     },
     "type": "bulk-ethernet-network"
 }
-
-# To run the get by id and get associated uplink group examples you must define an ethernet network id
-ethernet_network_id = ''
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
@@ -114,28 +110,21 @@ ethernet_nets_limited = oneview_client.ethernet_networks.get_all(0, 10)
 for net in ethernet_nets_limited:
     print("   '{name}' at uri: '{uri}'".format(**net))
 
-# Get by Id
-try:
-    print("\nGet an ethernet-network by id")
-    ethernet_nets_byid = oneview_client.ethernet_networks.get(ethernet_network_id)
-    pprint(ethernet_nets_byid)
-except HPOneViewException as e:
-    print(e.msg['message'])
+ethernet_network_uri = ethernet_network['uri']
 
 # Get by Uri
 print("\nGet an ethernet-network by uri")
-ethernet_nets_by_uri = oneview_client.ethernet_networks.get(
-    ethernet_network['uri'])
+ethernet_nets_by_uri = oneview_client.ethernet_networks.get(ethernet_network_uri)
 pprint(ethernet_nets_by_uri)
 
 # Get URIs of associated profiles
 print("\nGet associated profiles uri(s)")
-associated_profiles = oneview_client.ethernet_networks.get_associated_profiles(ethernet_network_id)
+associated_profiles = oneview_client.ethernet_networks.get_associated_profiles(ethernet_network_uri)
 pprint(associated_profiles)
 
 # Get URIs of uplink port group
 print("\nGet uplink port group uri(s)")
-uplink_group_uris = oneview_client.ethernet_networks.get_associated_uplink_groups(ethernet_network_id)
+uplink_group_uris = oneview_client.ethernet_networks.get_associated_uplink_groups(ethernet_network_uri)
 pprint(uplink_group_uris)
 
 # Get the associated uplink set resources

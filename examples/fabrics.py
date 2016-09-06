@@ -36,7 +36,7 @@ config = {
 }
 
 # To run this example you must to defined here a fabric id
-fabric_id = ''
+fabric_id = '02ad4295-6f9c-4bfb-b040-0bd54b71aee'
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
