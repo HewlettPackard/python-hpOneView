@@ -76,10 +76,8 @@ pprint(logical_enclosure)
 
 # Get logical enclosure by name
 try:
-    logical_enclosure_by_name = oneview_client.logical_enclosures.get_by(
-        'name', 'Encl1')[0]
-    print("Got logical enclosure by name '{}'\n   uri: '{}'".format(
-        logical_enclosure_by_name['name'], logical_enclosure_by_name['uri']))
+    logical_enclosure_by_name = oneview_client.logical_enclosures.get_by('name', logical_enclosure['name'])[0]
+    print("Got logical enclosure by name '{name}'\n   uri: '{uri}'".format(**logical_enclosure_by_name))
 except HPOneViewException as e:
     print(e.msg['message'])
 
