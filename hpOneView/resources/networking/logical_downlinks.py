@@ -125,15 +125,15 @@ class LogicalDownlinks(object):
             self._connection, "/rest/logical-downlinks/withoutEthernet")
         return without_ethernet_client.get_all(start, count, filter=filter, sort=sort)
 
-    def get_without_ethernet(self, id):
+    def get_without_ethernet(self, id_or_uri):
         """
         Gets the logical downlink with the specified ID without ethernet.
 
         Args:
-            id: ID of logical downlink.
+            id_or_uri: Could be either the logical downlink id or the logical downlink uri.
 
         Returns:
             dict
         """
-        uri = "/rest/logical-downlinks/%s/withoutEthernet" % (id)
+        uri = self._client.build_uri(id_or_uri) + "/withoutEthernet"
         return self._client.get(uri)
