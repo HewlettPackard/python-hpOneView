@@ -126,17 +126,20 @@ class TaskMonitor(object):
     def __get_task_response(self, task):
         if task['taskState'] in TASK_ERROR_STATES and task['taskState'] != 'Warning':
             msg = None
+            error_code = None
             if 'taskErrors' in task and len(task['taskErrors']) > 0:
                 err = task['taskErrors'][0]
                 if 'message' in err:
                     msg = err['message']
 
+                error_code = err.get('errorCode')
+
             if msg:
-                raise HPOneViewTaskError(msg)
+                raise HPOneViewTaskError(msg, error_code)
             elif 'taskStatus' in task and task['taskStatus']:
-                raise HPOneViewTaskError(task['taskStatus'])
+                raise HPOneViewTaskError(task['taskStatus'], error_code)
             else:
-                raise HPOneViewTaskError(MSG_UNKNOWN_EXCEPTION)
+                raise HPOneViewTaskError(MSG_UNKNOWN_EXCEPTION, error_code)
 
         deleted_resource = (task['name'] == 'Delete' or task['name'] == 'Remove')
 
