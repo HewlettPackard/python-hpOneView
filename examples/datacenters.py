@@ -63,7 +63,7 @@ print('Get Data Center device by name: {name}\n'.format(**datacenter))
 
 # Get the Data Center visual content
 print("Getting the Data Center visual content...")
-datacenter_visual_content = oneview_client.datacenters.get_visualContent(datacenter['uri'])
+datacenter_visual_content = oneview_client.datacenters.get_visual_content(datacenter['uri'])
 pprint(datacenter_visual_content)
 
 # Remove added Data Center
@@ -72,5 +72,5 @@ print("\nSuccessfully removed the data center")
 
 # Add a data center again and call Remove All
 datacenter_added = oneview_client.datacenters.add(datacenter_information)
-oneview_client.datacenters.remove_all("name matches '%'")
+oneview_client.datacenters.remove_all(filter="name matches '%'")
 print("\nSuccessfully removed all data centers")

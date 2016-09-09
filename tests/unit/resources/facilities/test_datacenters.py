@@ -66,14 +66,14 @@ class DatacenterTest(TestCase):
     def test_get_visual_content_called_once_when_datacenter_uri_provided(self, mock_get):
         datacenter_uri = "/rest/datacenters/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
         uri = "/rest/datacenters/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/visualContent"
-        self._datacenters.get_visualContent(datacenter_uri)
+        self._datacenters.get_visual_content(datacenter_uri)
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_visual_content_called_once_when_datacenter_id_provided(self, mock_get):
         datacenter_id = "f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
         uri = "/rest/datacenters/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/visualContent"
-        self._datacenters.get_visualContent(datacenter_id)
+        self._datacenters.get_visual_content(datacenter_id)
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(ResourceClient, 'get_by')

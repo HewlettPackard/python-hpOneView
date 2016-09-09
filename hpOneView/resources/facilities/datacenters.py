@@ -30,7 +30,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'Racks'
+__title__ = 'Datacenters'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP'
 __license__ = 'MIT'
@@ -71,7 +71,7 @@ class Datacenters(object):
                 on create time, with the oldest entry first.
 
         Returns:
-            list: List of racks.
+            list: List of data centers.
         """
         return self._client.get_all(start, count, filter=filter, sort=sort, query=query)
 
@@ -88,7 +88,7 @@ class Datacenters(object):
         """
         return self._client.get(id_or_uri)
 
-    def get_visualContent(self, id_or_uri):
+    def get_visual_content(self, id_or_uri):
         """
         Gets a list of visual content objects describing each rack within the data center. The response aggregates data
         center and rack data with a specified metric (peak24HourTemp) to provide simplified access to display data for
