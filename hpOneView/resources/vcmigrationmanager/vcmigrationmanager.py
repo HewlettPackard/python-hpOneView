@@ -45,8 +45,14 @@ class VcMigrationManager(object):
         self._connection = connection
         self._client = ResourceClient(connection, self.URI)
 
-    def create_compatibility_report(self, enclosureInformation, timeout=-1)
+    def create_compatibility_report(self, enclosureInformation, timeout=-1):
 		"""
 		"""
 		
 		return self._client.create(enclosureInformation, timeout)
+	
+	def get_compatibility_report(self, id_or_uri):
+		"""
+		"""
+		
+		return self._client.get(id_or_uri)
