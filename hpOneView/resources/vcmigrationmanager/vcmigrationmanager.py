@@ -72,3 +72,9 @@ class VcMigrationManager(object):
 		complete_uri=self._client.build_uri(id_or_uri)
 	
 		return self._client.update(migrationInformation, uri=complete_uri, timeout=timeout)
+
+	def delete(self, id, timeout=-1):
+		"""
+		"""
+		
+		return self._client.delete(id, timeout=timeout)
