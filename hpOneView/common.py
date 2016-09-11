@@ -1630,7 +1630,7 @@ def make_alertMap_dict(notes, etag, state='Active', user='None',
         'eTag': etag
     }
 
-def make_migration_information(oaIpAddress, oaUsername, oaPassword, vcmUsername, vcmPassword, iloLicenseType='OneView'):
+def make_migration_information(oaIpAddress, oaUsername, oaPassword, vcmUsername, vcmPassword, iloLicenseType='OneView', enclosureGroupUri=None):
 	return 
 	{
 		'credentials':
@@ -1640,13 +1640,12 @@ def make_migration_information(oaIpAddress, oaUsername, oaPassword, vcmUsername,
 			'oaPassword': oaPassword,
 			'vcmUsername': vcmUsername,
 			'vcmPassword': vcmPassword,
-			'vcmIpAddress': null,
 			'type': 'EnclosureCredentials'
 		},
 		'iloLicenseType': iloLicenseType,
-		'enclosureGroupUri': None,
-		'type': "migratable-vc-domains",
-		'category': "migratable-vc-domains"
+		'enclosureGroupUri': enclosureGroupUri,
+		'type': 'migratable-vc-domains',
+		'category': 'migratable-vc-domains'
 	}
 
 

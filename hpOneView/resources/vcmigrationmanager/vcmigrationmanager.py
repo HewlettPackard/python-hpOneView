@@ -49,7 +49,7 @@ class VcMigrationManager(object):
 		"""
 		"""
 		
-		return self._client.create(migrationInformation, timeout)
+		return self._client.create(migrationInformation, timeout=timeout)
 	
 	def get_compatibility_report(self, id_or_uri):
 		"""
@@ -57,8 +57,18 @@ class VcMigrationManager(object):
 		
 		return self._client.get(id_or_uri)
 	
-	def migrate(self, id_or_uri):
+	def migrate(self, id_or_uri, timeout=-1):
 		"""
 		"""
+		
+		migrationInformation =
+		{
+			'migrationState': 'Migrated',
+			'type': 'migratable-vc-domains',
+			'category': 'migratable-vc-domains'
+		}
+		
+		#call build_uri manually since .update(...) doesn't do it and the URI is not to be included in the body when requesting a migration
+		complete_uri=self._client.build_uri(id_or_uri)
 	
-		#.put()
+		return self._client.update(migrationInformation, uri=complete_uri, timeout=timeout)
