@@ -1,0 +1,305 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hpOneView.resources.data_services package &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> HPE OneView Python SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">hpOneView.resources.data_services package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.data_services.metric_streaming">hpOneView.resources.data_services.metric_streaming module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.data_services">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">HPE OneView Python SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>hpOneView.resources.data_services package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/hpOneView.resources.data_services.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="hponeview-resources-data-services-package">
+<h1>hpOneView.resources.data_services package<a class="headerlink" href="#hponeview-resources-data-services-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-hpOneView.resources.data_services.metric_streaming">
+<span id="hponeview-resources-data-services-metric-streaming-module"></span><h2>hpOneView.resources.data_services.metric_streaming module<a class="headerlink" href="#module-hpOneView.resources.data_services.metric_streaming" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.data_services.metric_streaming.MetricStreaming">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.data_services.metric_streaming.</code><code class="descname">MetricStreaming</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/data_services/metric_streaming.html#MetricStreaming"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.data_services.metric_streaming.MetricStreaming" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Metrics can be relayed from OneView for managed resources at a specified interval. The following steps can be
+followed to enable the metric relay in OneView:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Get the list of resource types and metrics which can be configured for live streaming</li>
+<li>Configure the live metric stream in OneView</li>
+<li>Receive the stream of metric on MSMB</li>
+</ul>
+</div></blockquote>
+<dl class="docutils">
+<dt>The list below describes the structure of message relayed to MSMB:</dt>
+<dd><dl class="first last docutils">
+<dt>startTime (str):</dt>
+<dd>The starting time of the metric collection.</dd>
+<dt>sampleIntervalInSeconds (int):</dt>
+<dd>The starting time of the metric collection.</dd>
+<dt>numberOfSamples (int):</dt>
+<dd>Number of samples in the list for each metric type.</dd>
+<dt>resourceType (str):</dt>
+<dd>Identifies the category of resource. The supported devices are server-hardware, enclosures and power-devices</dd>
+<dt>resourceDataList (list):</dt>
+<dd>Metric sample list</dd>
+<dt>uri (str):</dt>
+<dd>Canonical URI of the resource</dd>
+<dt>category (str):</dt>
+<dd>Identifies the category of resource. The supported devices are server-hardware, enclosures and power-devices</dd>
+<dt>created (timestamp):</dt>
+<dd>Date and time when the resource was created</dd>
+<dt>modified (timestamp):</dt>
+<dd>Date and time when the resource was last modified</dd>
+<dt>eTag (str):</dt>
+<dd>Entity tag/version ID of the resource, the same value that is returned in the ETag header on a GET of the
+resource</dd>
+<dt>type (str):</dt>
+<dd>Uniquely identifies the type of the JSON object</dd>
+</dl>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="hpOneView.resources.data_services.metric_streaming.MetricStreaming.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/metrics'</em><a class="headerlink" href="#hpOneView.resources.data_services.metric_streaming.MetricStreaming.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.data_services.metric_streaming.MetricStreaming.get_capability">
+<code class="descname">get_capability</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/data_services/metric_streaming.html#MetricStreaming.get_capability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.data_services.metric_streaming.MetricStreaming.get_capability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches the list of resource types and supported metrics that OneView is capable of relaying.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of resource types and supported metrics.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.data_services.metric_streaming.MetricStreaming.get_configuration">
+<code class="descname">get_configuration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/data_services/metric_streaming.html#MetricStreaming.get_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.data_services.metric_streaming.MetricStreaming.get_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches the current configuration for which metrics are being relayed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of objects which contain frequency, sample interval and source type for each resource-type.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.data_services.metric_streaming.MetricStreaming.update_configuration">
+<code class="descname">update_configuration</code><span class="sig-paren">(</span><em>configuration</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/data_services/metric_streaming.html#MetricStreaming.update_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.data_services.metric_streaming.MetricStreaming.update_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the metrics configuration with the new values. Overwrites the existing configuration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>configuration</strong> (<em>dict</em>) &#8211; Dictionary with a list of objects which contain frequency, sample interval and source type for each
+resource-type.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The current configuration for which metrics are being relayed.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hpOneView.resources.data_services">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-hpOneView.resources.data_services" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Hewlett Packard Enterprise.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

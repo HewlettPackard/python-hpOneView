@@ -1,0 +1,1303 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hpOneView package &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> HPE OneView Python SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">hpOneView package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-hpOneView.connection">hpOneView.connection module</a><ul>
+<li><a class="reference internal" href="#connection-py">connection.py</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hpOneView.exceptions">hpOneView.exceptions module</a><ul>
+<li><a class="reference internal" href="#exceptions-py">exceptions.py</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hpOneView.metrics">hpOneView.metrics module</a><ul>
+<li><a class="reference internal" href="#metrics-py">metrics.py</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hpOneView.oneview_client">hpOneView.oneview_client module</a><ul>
+<li><a class="reference internal" href="#oneview-client-py">oneview_client.py</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-hpOneView">Module contents</a><ul>
+<li><a class="reference internal" href="#hpe-oneview-library">HPE OneView Library</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">HPE OneView Python SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>hpOneView package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/hpOneView.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="hponeview-package">
+<h1>hpOneView package<a class="headerlink" href="#hponeview-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="hpOneView.resources.html">hpOneView.resources package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hpOneView.resources.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hpOneView.resources.activity.html">hpOneView.resources.activity package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.activity.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.activity.html#module-hpOneView.resources.activity.tasks">hpOneView.resources.activity.tasks module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.activity.html#module-hpOneView.resources.activity">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hpOneView.resources.data_services.html">hpOneView.resources.data_services package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.data_services.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.data_services.html#module-hpOneView.resources.data_services.metric_streaming">hpOneView.resources.data_services.metric_streaming module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.data_services.html#module-hpOneView.resources.data_services">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hpOneView.resources.facilities.html">hpOneView.resources.facilities package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.facilities.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.facilities.html#module-hpOneView.resources.facilities.power_devices">hpOneView.resources.facilities.power_devices module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.facilities.html#module-hpOneView.resources.facilities.racks">hpOneView.resources.facilities.racks module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.facilities.html#module-hpOneView.resources.facilities">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hpOneView.resources.fc_sans.html">hpOneView.resources.fc_sans package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.fc_sans.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.fc_sans.html#module-hpOneView.resources.fc_sans.endpoints">hpOneView.resources.fc_sans.endpoints module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.fc_sans.html#module-hpOneView.resources.fc_sans.managed_sans">hpOneView.resources.fc_sans.managed_sans module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.fc_sans.html#module-hpOneView.resources.fc_sans.san_managers">hpOneView.resources.fc_sans.san_managers module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.fc_sans.html#module-hpOneView.resources.fc_sans">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hpOneView.resources.networking.html">hpOneView.resources.networking package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.connection_templates">hpOneView.resources.networking.connection_templates module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.ethernet_networks">hpOneView.resources.networking.ethernet_networks module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.fabrics">hpOneView.resources.networking.fabrics module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.fc_networks">hpOneView.resources.networking.fc_networks module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.fcoe_networks">hpOneView.resources.networking.fcoe_networks module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.interconnect_link_topologies">hpOneView.resources.networking.interconnect_link_topologies module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.interconnect_types">hpOneView.resources.networking.interconnect_types module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.interconnects">hpOneView.resources.networking.interconnects module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.logical_downlinks">hpOneView.resources.networking.logical_downlinks module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.logical_interconnect_groups">hpOneView.resources.networking.logical_interconnect_groups module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.logical_interconnects">hpOneView.resources.networking.logical_interconnects module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.logical_switch_groups">hpOneView.resources.networking.logical_switch_groups module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.logical_switches">hpOneView.resources.networking.logical_switches module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.network_sets">hpOneView.resources.networking.network_sets module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.switch_types">hpOneView.resources.networking.switch_types module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.switches">hpOneView.resources.networking.switches module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking.uplink_sets">hpOneView.resources.networking.uplink_sets module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.networking.html#module-hpOneView.resources.networking">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hpOneView.resources.servers.html">hpOneView.resources.servers package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.connections">hpOneView.resources.servers.connections module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.enclosure_groups">hpOneView.resources.servers.enclosure_groups module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.enclosures">hpOneView.resources.servers.enclosures module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.id_pools_ranges">hpOneView.resources.servers.id_pools_ranges module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.id_pools_vmac_ranges">hpOneView.resources.servers.id_pools_vmac_ranges module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.id_pools_vsn_ranges">hpOneView.resources.servers.id_pools_vsn_ranges module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.id_pools_vwwn_ranges">hpOneView.resources.servers.id_pools_vwwn_ranges module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.logical_enclosures">hpOneView.resources.servers.logical_enclosures module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.server_hardware">hpOneView.resources.servers.server_hardware module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.server_hardware_types">hpOneView.resources.servers.server_hardware_types module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.server_profile_templates">hpOneView.resources.servers.server_profile_templates module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.server_profiles">hpOneView.resources.servers.server_profiles module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hpOneView.resources.settings.html">hpOneView.resources.settings package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.settings.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.settings.html#module-hpOneView.resources.settings.firmware_bundles">hpOneView.resources.settings.firmware_bundles module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.settings.html#module-hpOneView.resources.settings.firmware_drivers">hpOneView.resources.settings.firmware_drivers module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.settings.html#module-hpOneView.resources.settings">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hpOneView.resources.storage.html">hpOneView.resources.storage package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.storage.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.storage.html#module-hpOneView.resources.storage.storage_pools">hpOneView.resources.storage.storage_pools module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.storage.html#module-hpOneView.resources.storage.storage_systems">hpOneView.resources.storage.storage_systems module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.storage.html#module-hpOneView.resources.storage.storage_volume_attachments">hpOneView.resources.storage.storage_volume_attachments module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.storage.html#module-hpOneView.resources.storage.storage_volume_templates">hpOneView.resources.storage.storage_volume_templates module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.storage.html#module-hpOneView.resources.storage.volumes">hpOneView.resources.storage.volumes module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.storage.html#module-hpOneView.resources.storage">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hpOneView.resources.uncategorized.html">hpOneView.resources.uncategorized package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.uncategorized.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.uncategorized.html#module-hpOneView.resources.uncategorized.unmanaged_devices">hpOneView.resources.uncategorized.unmanaged_devices module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.uncategorized.html#module-hpOneView.resources.uncategorized">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hpOneView.resources.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hpOneView.resources.html#module-hpOneView.resources.resource">hpOneView.resources.resource module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hpOneView.resources.html#module-hpOneView.resources.task_monitor">hpOneView.resources.task_monitor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hpOneView.resources.html#module-hpOneView.resources">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-hpOneView.connection">
+<span id="hponeview-connection-module"></span><h2>hpOneView.connection module<a class="headerlink" href="#module-hpOneView.connection" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="connection-py">
+<h3>connection.py<a class="headerlink" href="#connection-py" title="Permalink to this headline">¶</a></h3>
+<p>This module maintains communication with the appliance</p>
+<dl class="class">
+<dt id="hpOneView.connection.connection">
+<em class="property">class </em><code class="descclassname">hpOneView.connection.</code><code class="descname">connection</code><span class="sig-paren">(</span><em>applianceIp</em>, <em>api_version=200</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="hpOneView.connection.connection.change_initial_password">
+<code class="descname">change_initial_password</code><span class="sig-paren">(</span><em>newPassword</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.change_initial_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.change_initial_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.conditional_post">
+<code class="descname">conditional_post</code><span class="sig-paren">(</span><em>uri</em>, <em>body</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.conditional_post"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.conditional_post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>uri</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.do_http">
+<code class="descname">do_http</code><span class="sig-paren">(</span><em>method</em>, <em>path</em>, <em>body</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.do_http"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.do_http" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.encode_multipart_formdata">
+<code class="descname">encode_multipart_formdata</code><span class="sig-paren">(</span><em>fields</em>, <em>files</em>, <em>baseName</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.encode_multipart_formdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.encode_multipart_formdata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fields is a sequence of (name, value) elements for regular form fields.
+files is a sequence of (name, filename, value) elements for data
+to be uploaded as files</p>
+<p>Returns: (content_type, body) ready for httplib.HTTP instance</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.getFirstPage">
+<code class="descname">getFirstPage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.getFirstPage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.getFirstPage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.getLastPage">
+<code class="descname">getLastPage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.getLastPage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.getLastPage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.getNextPage">
+<code class="descname">getNextPage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.getNextPage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.getNextPage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.getPrevPage">
+<code class="descname">getPrevPage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.getPrevPage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.getPrevPage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.get_by_uri">
+<code class="descname">get_by_uri</code><span class="sig-paren">(</span><em>xuri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.get_by_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.get_by_uri" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.get_connection">
+<code class="descname">get_connection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.get_connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.get_connection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.get_entities_byfield">
+<code class="descname">get_entities_byfield</code><span class="sig-paren">(</span><em>uri</em>, <em>field</em>, <em>value</em>, <em>count=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.get_entities_byfield"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.get_entities_byfield" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.get_entities_byrange">
+<code class="descname">get_entities_byrange</code><span class="sig-paren">(</span><em>uri</em>, <em>field</em>, <em>xmin</em>, <em>xmax</em>, <em>count=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.get_entities_byrange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.get_entities_byrange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.get_entity_byfield">
+<code class="descname">get_entity_byfield</code><span class="sig-paren">(</span><em>uri</em>, <em>field</em>, <em>value</em>, <em>count=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.get_entity_byfield"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.get_entity_byfield" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.get_eula_status">
+<code class="descname">get_eula_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.get_eula_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.get_eula_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.get_host">
+<code class="descname">get_host</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.get_host"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.get_host" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.get_session">
+<code class="descname">get_session</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.get_session"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.get_session" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.get_session_id">
+<code class="descname">get_session_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.get_session_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.get_session_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.login">
+<code class="descname">login</code><span class="sig-paren">(</span><em>cred</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.login"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.login" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.logout">
+<code class="descname">logout</code><span class="sig-paren">(</span><em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.logout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.logout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.make_url">
+<code class="descname">make_url</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.make_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.make_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.patch">
+<code class="descname">patch</code><span class="sig-paren">(</span><em>uri</em>, <em>body</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.patch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.post">
+<code class="descname">post</code><span class="sig-paren">(</span><em>uri</em>, <em>body</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.post"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.post_multipart">
+<code class="descname">post_multipart</code><span class="sig-paren">(</span><em>uri</em>, <em>fields</em>, <em>files</em>, <em>baseName</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.post_multipart"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.post_multipart" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.put">
+<code class="descname">put</code><span class="sig-paren">(</span><em>uri</em>, <em>body</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.put"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.put" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.set_eula">
+<code class="descname">set_eula</code><span class="sig-paren">(</span><em>supportAccess=u'yes'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.set_eula"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.set_eula" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.set_proxy">
+<code class="descname">set_proxy</code><span class="sig-paren">(</span><em>proxyHost</em>, <em>proxyPort</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.set_proxy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.set_proxy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.set_trusted_ssl_bundle">
+<code class="descname">set_trusted_ssl_bundle</code><span class="sig-paren">(</span><em>sslBundle</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.set_trusted_ssl_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.set_trusted_ssl_bundle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.validateVersion">
+<code class="descname">validateVersion</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.validateVersion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.validateVersion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-hpOneView.exceptions">
+<span id="hponeview-exceptions-module"></span><h2>hpOneView.exceptions module<a class="headerlink" href="#module-hpOneView.exceptions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exceptions-py">
+<h3>exceptions.py<a class="headerlink" href="#exceptions-py" title="Permalink to this headline">¶</a></h3>
+<p>This module implements exceptions HPE OneView REST API</p>
+<dl class="exception">
+<dt id="hpOneView.exceptions.HPOneViewException">
+<em class="property">exception </em><code class="descclassname">hpOneView.exceptions.</code><code class="descname">HPOneViewException</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/exceptions.html#HPOneViewException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.exceptions.HPOneViewException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="hpOneView.exceptions.HPOneViewInvalidResource">
+<em class="property">exception </em><code class="descclassname">hpOneView.exceptions.</code><code class="descname">HPOneViewInvalidResource</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/exceptions.html#HPOneViewInvalidResource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.exceptions.HPOneViewInvalidResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hpOneView.exceptions.HPOneViewException" title="hpOneView.exceptions.HPOneViewException"><code class="xref py py-class docutils literal"><span class="pre">hpOneView.exceptions.HPOneViewException</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="hpOneView.exceptions.HPOneViewTaskError">
+<em class="property">exception </em><code class="descclassname">hpOneView.exceptions.</code><code class="descname">HPOneViewTaskError</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/exceptions.html#HPOneViewTaskError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.exceptions.HPOneViewTaskError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hpOneView.exceptions.HPOneViewException" title="hpOneView.exceptions.HPOneViewException"><code class="xref py py-class docutils literal"><span class="pre">hpOneView.exceptions.HPOneViewException</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="hpOneView.exceptions.HPOneViewTimeout">
+<em class="property">exception </em><code class="descclassname">hpOneView.exceptions.</code><code class="descname">HPOneViewTimeout</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/exceptions.html#HPOneViewTimeout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.exceptions.HPOneViewTimeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hpOneView.exceptions.HPOneViewException" title="hpOneView.exceptions.HPOneViewException"><code class="xref py py-class docutils literal"><span class="pre">hpOneView.exceptions.HPOneViewException</span></code></a></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="hpOneView.exceptions.HPOneViewUnknownType">
+<em class="property">exception </em><code class="descclassname">hpOneView.exceptions.</code><code class="descname">HPOneViewUnknownType</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/exceptions.html#HPOneViewUnknownType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.exceptions.HPOneViewUnknownType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hpOneView.exceptions.HPOneViewException" title="hpOneView.exceptions.HPOneViewException"><code class="xref py py-class docutils literal"><span class="pre">hpOneView.exceptions.HPOneViewException</span></code></a></p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-hpOneView.metrics">
+<span id="hponeview-metrics-module"></span><h2>hpOneView.metrics module<a class="headerlink" href="#module-hpOneView.metrics" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="metrics-py">
+<h3>metrics.py<a class="headerlink" href="#metrics-py" title="Permalink to this headline">¶</a></h3>
+<p>This module implements configurguring the OneView MSMB</p>
+<dl class="class">
+<dt id="hpOneView.metrics.metrics">
+<em class="property">class </em><code class="descclassname">hpOneView.metrics.</code><code class="descname">metrics</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/metrics.html#metrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.metrics.metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="hpOneView.metrics.metrics.get_metrics_capability">
+<code class="descname">get_metrics_capability</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/metrics.html#metrics.get_metrics_capability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.metrics.metrics.get_metrics_capability" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.metrics.metrics.get_metrics_configuration">
+<code class="descname">get_metrics_configuration</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/metrics.html#metrics.get_metrics_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.metrics.metrics.get_metrics_configuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.metrics.metrics.set_metrics_configuration">
+<code class="descname">set_metrics_configuration</code><span class="sig-paren">(</span><em>metrics_config</em>, <em>blocking=True</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/metrics.html#metrics.set_metrics_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.metrics.metrics.set_metrics_configuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-hpOneView.oneview_client">
+<span id="hponeview-oneview-client-module"></span><h2>hpOneView.oneview_client module<a class="headerlink" href="#module-hpOneView.oneview_client" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="oneview-client-py">
+<h3>oneview_client.py<a class="headerlink" href="#oneview-client-py" title="Permalink to this headline">¶</a></h3>
+<p>This module implements a common client for HPE OneView REST API</p>
+<dl class="class">
+<dt id="hpOneView.oneview_client.OneViewClient">
+<em class="property">class </em><code class="descclassname">hpOneView.oneview_client.</code><code class="descname">OneViewClient</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/oneview_client.html#OneViewClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.connection">
+<code class="descname">connection</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the underlying HPE OneView connection used by the OneViewClient.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#module-hpOneView.connection" title="hpOneView.connection">connection</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.connection_templates">
+<code class="descname">connection_templates</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.connection_templates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the ConnectionTemplates API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.connection_templates.ConnectionTemplates" title="hpOneView.resources.networking.connection_templates.ConnectionTemplates">ConnectionTemplates</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.connections">
+<code class="descname">connections</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.connections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Connections API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.connections.Connections" title="hpOneView.resources.servers.connections.Connections">Connections</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.enclosure_groups">
+<code class="descname">enclosure_groups</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.enclosure_groups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the EnclosureGroups API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.enclosure_groups.EnclosureGroups" title="hpOneView.resources.servers.enclosure_groups.EnclosureGroups">EnclosureGroups</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.enclosures">
+<code class="descname">enclosures</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.enclosures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Enclosures API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures" title="hpOneView.resources.servers.enclosures.Enclosures">Enclosures</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.endpoints">
+<code class="descname">endpoints</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.endpoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Endpoints API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.fc_sans.html#hpOneView.resources.fc_sans.endpoints.Endpoints" title="hpOneView.resources.fc_sans.endpoints.Endpoints">Endpoints</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.ethernet_networks">
+<code class="descname">ethernet_networks</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.ethernet_networks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the EthernetNetworks API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.ethernet_networks.EthernetNetworks" title="hpOneView.resources.networking.ethernet_networks.EthernetNetworks">EthernetNetworks</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.fabrics">
+<code class="descname">fabrics</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.fabrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Fabrics API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.fabrics.Fabrics" title="hpOneView.resources.networking.fabrics.Fabrics">Fabrics</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.fc_networks">
+<code class="descname">fc_networks</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.fc_networks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the FcNetworks API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.fc_networks.FcNetworks" title="hpOneView.resources.networking.fc_networks.FcNetworks">FcNetworks</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.fcoe_networks">
+<code class="descname">fcoe_networks</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.fcoe_networks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the FcoeNetworks API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.fcoe_networks.FcoeNetworks" title="hpOneView.resources.networking.fcoe_networks.FcoeNetworks">FcoeNetworks</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.firmware_bundles">
+<code class="descname">firmware_bundles</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.firmware_bundles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the FirmwareBundles API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.settings.html#hpOneView.resources.settings.firmware_bundles.FirmwareBundles" title="hpOneView.resources.settings.firmware_bundles.FirmwareBundles">FirmwareBundles</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.firmware_drivers">
+<code class="descname">firmware_drivers</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.firmware_drivers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the FirmwareDrivers API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.settings.html#hpOneView.resources.settings.firmware_drivers.FirmwareDrivers" title="hpOneView.resources.settings.firmware_drivers.FirmwareDrivers">FirmwareDrivers</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="hpOneView.oneview_client.OneViewClient.from_json_file">
+<em class="property">classmethod </em><code class="descname">from_json_file</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/oneview_client.html#OneViewClient.from_json_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.from_json_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct OneViewClient using a json file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_name</strong> &#8211; json full path.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#hpOneView.oneview_client.OneViewClient" title="hpOneView.oneview_client.OneViewClient">OneViewClient</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.id_pools_vmac_ranges">
+<code class="descname">id_pools_vmac_ranges</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.id_pools_vmac_ranges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the IdPoolsVmacRanges API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.id_pools_vmac_ranges.IdPoolsVmacRanges" title="hpOneView.resources.servers.id_pools_vmac_ranges.IdPoolsVmacRanges">IdPoolsVmacRanges</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.id_pools_vsn_ranges">
+<code class="descname">id_pools_vsn_ranges</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.id_pools_vsn_ranges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the IdPoolsVsnRanges API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.id_pools_vsn_ranges.IdPoolsVsnRanges" title="hpOneView.resources.servers.id_pools_vsn_ranges.IdPoolsVsnRanges">IdPoolsVsnRanges</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.id_pools_vwwn_ranges">
+<code class="descname">id_pools_vwwn_ranges</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.id_pools_vwwn_ranges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the IdPoolsVwwnRanges API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.id_pools_vwwn_ranges.IdPoolsVwwnRanges" title="hpOneView.resources.servers.id_pools_vwwn_ranges.IdPoolsVwwnRanges">IdPoolsVwwnRanges</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.interconnect_link_topologies">
+<code class="descname">interconnect_link_topologies</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.interconnect_link_topologies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the InterconnectLinkTopologies API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.interconnect_link_topologies.InterconnectLinkTopologies" title="hpOneView.resources.networking.interconnect_link_topologies.InterconnectLinkTopologies">InterconnectLinkTopologies</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.interconnect_types">
+<code class="descname">interconnect_types</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.interconnect_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the InterconnectTypes API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.interconnect_types.InterconnectTypes" title="hpOneView.resources.networking.interconnect_types.InterconnectTypes">InterconnectTypes</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.interconnects">
+<code class="descname">interconnects</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.interconnects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Interconnects API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.interconnects.Interconnects" title="hpOneView.resources.networking.interconnects.Interconnects">Interconnects</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.logical_downlinks">
+<code class="descname">logical_downlinks</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.logical_downlinks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the LogicalDownlinks API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.logical_downlinks.LogicalDownlinks" title="hpOneView.resources.networking.logical_downlinks.LogicalDownlinks">LogicalDownlinks</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.logical_enclosures">
+<code class="descname">logical_enclosures</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.logical_enclosures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the LogicalEnclosures API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.logical_enclosures.LogicalEnclosures" title="hpOneView.resources.servers.logical_enclosures.LogicalEnclosures">LogicalEnclosures</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.logical_interconnect_groups">
+<code class="descname">logical_interconnect_groups</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.logical_interconnect_groups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the LogicalInterconnectGroups API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups" title="hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups">LogicalInterconnectGroups</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.logical_interconnects">
+<code class="descname">logical_interconnects</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.logical_interconnects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the LogicalInterconnects API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects" title="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects">LogicalInterconnects</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.logical_switch_groups">
+<code class="descname">logical_switch_groups</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.logical_switch_groups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the LogicalSwitchGroups API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups" title="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups">LogicalSwitchGroups</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.logical_switches">
+<code class="descname">logical_switches</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.logical_switches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the LogicalSwitches API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.logical_switches.LogicalSwitches" title="hpOneView.resources.networking.logical_switches.LogicalSwitches">LogicalSwitches</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.managed_sans">
+<code class="descname">managed_sans</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.managed_sans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Managed SANs API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.fc_sans.html#hpOneView.resources.fc_sans.managed_sans.ManagedSANs" title="hpOneView.resources.fc_sans.managed_sans.ManagedSANs">ManagedSANs</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.metric_streaming">
+<code class="descname">metric_streaming</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.metric_streaming" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the MetricStreaming API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.data_services.html#hpOneView.resources.data_services.metric_streaming.MetricStreaming" title="hpOneView.resources.data_services.metric_streaming.MetricStreaming">MetricStreaming</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.network_sets">
+<code class="descname">network_sets</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.network_sets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the NetworkSets API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.network_sets.NetworkSets" title="hpOneView.resources.networking.network_sets.NetworkSets">NetworkSets</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.power_devices">
+<code class="descname">power_devices</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.power_devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the PowerDevices API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.facilities.html#hpOneView.resources.facilities.power_devices.PowerDevices" title="hpOneView.resources.facilities.power_devices.PowerDevices">PowerDevices</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.racks">
+<code class="descname">racks</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.racks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Racks API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.facilities.html#hpOneView.resources.facilities.racks.Racks" title="hpOneView.resources.facilities.racks.Racks">Racks</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.san_managers">
+<code class="descname">san_managers</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.san_managers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the SanManagers API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.fc_sans.html#hpOneView.resources.fc_sans.san_managers.SanManagers" title="hpOneView.resources.fc_sans.san_managers.SanManagers">SanManagers</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.server_hardware">
+<code class="descname">server_hardware</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.server_hardware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the ServerHardware API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware" title="hpOneView.resources.servers.server_hardware.ServerHardware">ServerHardware</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.server_hardware_types">
+<code class="descname">server_hardware_types</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.server_hardware_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the ServerHardwareTypes API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes" title="hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes">ServerHardwareTypes</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.server_profile_templates">
+<code class="descname">server_profile_templates</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.server_profile_templates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the ServerProfileTemplate API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate" title="hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate">ServerProfileTemplate</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.server_profiles">
+<code class="descname">server_profiles</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.server_profiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the ServerProfiles API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles" title="hpOneView.resources.servers.server_profiles.ServerProfiles">ServerProfiles</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.storage_pools">
+<code class="descname">storage_pools</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.storage_pools" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the StoragePools API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.storage.html#hpOneView.resources.storage.storage_pools.StoragePools" title="hpOneView.resources.storage.storage_pools.StoragePools">StoragePools</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.storage_systems">
+<code class="descname">storage_systems</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.storage_systems" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the StorageSystems API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.storage.html#hpOneView.resources.storage.storage_systems.StorageSystems" title="hpOneView.resources.storage.storage_systems.StorageSystems">StorageSystems</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.storage_volume_attachments">
+<code class="descname">storage_volume_attachments</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.storage_volume_attachments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the StorageVolumeAttachments API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.storage.html#hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments" title="hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments">StorageVolumeAttachments</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.storage_volume_templates">
+<code class="descname">storage_volume_templates</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.storage_volume_templates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the StorageVolumeTemplates API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.storage.html#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates" title="hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates">StorageVolumeTemplates</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.switch_types">
+<code class="descname">switch_types</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.switch_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the SwitchTypes API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.switch_types.SwitchTypes" title="hpOneView.resources.networking.switch_types.SwitchTypes">SwitchTypes</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.switches">
+<code class="descname">switches</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.switches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Switches API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.switches.Switches" title="hpOneView.resources.networking.switches.Switches">Switches</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.tasks">
+<code class="descname">tasks</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.tasks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Tasks API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.activity.html#hpOneView.resources.activity.tasks.Tasks" title="hpOneView.resources.activity.tasks.Tasks">Tasks</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.unmanaged_devices">
+<code class="descname">unmanaged_devices</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.unmanaged_devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Unmanaged Devices API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.uncategorized.html#hpOneView.resources.uncategorized.unmanaged_devices.UnmanagedDevices" title="hpOneView.resources.uncategorized.unmanaged_devices.UnmanagedDevices">UnmanagedDevices</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.uplink_sets">
+<code class="descname">uplink_sets</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.uplink_sets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the UplinkSets API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.uplink_sets.UplinkSets" title="hpOneView.resources.networking.uplink_sets.UplinkSets">UplinkSets</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.volumes">
+<code class="descname">volumes</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.volumes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Volumes API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.storage.html#hpOneView.resources.storage.volumes.Volumes" title="hpOneView.resources.storage.volumes.Volumes">Volumes</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-hpOneView">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-hpOneView" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="hpe-oneview-library">
+<h3>HPE OneView Library<a class="headerlink" href="#hpe-oneview-library" title="Permalink to this headline">¶</a></h3>
+<p>hpOneView is a library for interfacing with HPE OneView Management Appliance.</p>
+<dl class="function">
+<dt id="hpOneView.main">
+<code class="descclassname">hpOneView.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Hewlett Packard Enterprise.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

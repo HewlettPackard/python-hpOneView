@@ -1,0 +1,353 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hpOneView.resources.storage.storage_volume_templates &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="hpOneView" href="../../../hpOneView.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> HPE OneView Python SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">HPE OneView Python SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+          <li><a href="../../../hpOneView.html">hpOneView</a> &raquo;</li>
+      
+    <li>hpOneView.resources.storage.storage_volume_templates</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hpOneView.resources.storage.storage_volume_templates</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">###</span>
+<span class="c1"># (C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP</span>
+<span class="c1">#</span>
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1"># The above copyright notice and this permission notice shall be included in</span>
+<span class="c1"># all copies or substantial portions of the Software.</span>
+<span class="c1">#</span>
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN</span>
+<span class="c1"># THE SOFTWARE.</span>
+<span class="c1">###</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+
+<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
+
+<span class="n">__title__</span> <span class="o">=</span> <span class="s1">&#39;storage-volume-templates&#39;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s1">&#39;(C) Copyright (2012-2016) Hewlett Packard Enterprise &#39;</span> \
+                <span class="s1">&#39; Development LP&#39;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s1">&#39;MIT&#39;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s1">&#39;Development&#39;</span>
+
+<span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">ResourceClient</span>
+
+
+<div class="viewcode-block" id="StorageVolumeTemplates"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates">[docs]</a><span class="k">class</span> <span class="nc">StorageVolumeTemplates</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/storage-volume-templates&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
+
+<div class="viewcode-block" id="StorageVolumeTemplates.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets a list of storage volume templates.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start:</span>
+<span class="sd">                The first item to return, using 0-based indexing.</span>
+<span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
+<span class="sd">            count:</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all the items.</span>
+<span class="sd">                The actual number of items in the response may differ from the requested</span>
+<span class="sd">                count if the sum of start and count exceed the total number of items.</span>
+<span class="sd">            filter:</span>
+<span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
+<span class="sd">                default is no filter - all resources are returned.</span>
+<span class="sd">            sort:</span>
+<span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
+<span class="sd">                on create time, with the oldest entry first.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of storage volume templates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StorageVolumeTemplates.create"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a new storage volume template.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resource (dict):</span>
+<span class="sd">                Object to create.</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Created storage volume template.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">custom_headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">:</span> <span class="s1">&#39;en_US&#39;</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StorageVolumeTemplates.get"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the specified storage volume template resource by ID or by uri.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the storage volume template id or the storage volume template uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: The storage volume template</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StorageVolumeTemplates.get_connectable_volume_templates"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get_connectable_volume_templates">[docs]</a>    <span class="k">def</span> <span class="nf">get_connectable_volume_templates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the storage volume templates that are available on the specified networks based on the storage system</span>
+<span class="sd">        port&#39;s expected network connectivity. If there are no storage volume templates that meets the specified</span>
+<span class="sd">        connectivity criteria an empty collection will be returned.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: Storage volume templates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/connectable-volume-templates&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StorageVolumeTemplates.delete"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deletes the specified storage volume template.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resource (dict):</span>
+<span class="sd">                Object to remove.</span>
+<span class="sd">            force (bool):</span>
+<span class="sd">                 If set to true the operation completes despite any problems with</span>
+<span class="sd">                 network connectivity or errors on the resource itself. The default is false.</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Indicating if the resource was successfully deleted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">custom_headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">:</span> <span class="s1">&#39;en_US&#39;</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StorageVolumeTemplates.update"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates a storage volume template.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resource (dict):</span>
+<span class="sd">                Object to update</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Updated storage volume system</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">custom_headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Accept-Language&#39;</span><span class="p">:</span> <span class="s1">&#39;en_US&#39;</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StorageVolumeTemplates.get_by"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all storage volume templates that match the filter.</span>
+
+<span class="sd">        The search is case insensitive.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            field: Field name to filter.</span>
+<span class="sd">            value: Value to filter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of storage volume templates that match the filter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Hewlett Packard Enterprise.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+hpOneView.resources.uncategorized package
+=========================================
+
+Submodules
+----------
+
+hpOneView.resources.uncategorized.unmanaged_devices module
+----------------------------------------------------------
+
+.. automodule:: hpOneView.resources.uncategorized.unmanaged_devices
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: hpOneView.resources.uncategorized
+    :members:
+    :undoc-members:
+    :show-inheritance:

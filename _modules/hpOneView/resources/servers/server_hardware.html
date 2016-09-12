@@ -1,0 +1,548 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hpOneView.resources.servers.server_hardware &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="hpOneView" href="../../../hpOneView.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> HPE OneView Python SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">HPE OneView Python SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+          <li><a href="../../../hpOneView.html">hpOneView</a> &raquo;</li>
+      
+    <li>hpOneView.resources.servers.server_hardware</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hpOneView.resources.servers.server_hardware</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">###</span>
+<span class="c1"># (C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP</span>
+<span class="c1">#</span>
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1"># The above copyright notice and this permission notice shall be included in</span>
+<span class="c1"># all copies or substantial portions of the Software.</span>
+<span class="c1">#</span>
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN</span>
+<span class="c1"># THE SOFTWARE.</span>
+<span class="c1">###</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+
+<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
+
+<span class="n">__title__</span> <span class="o">=</span> <span class="s1">&#39;server-hardware&#39;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s1">&#39;(C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP&#39;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s1">&#39;MIT&#39;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s1">&#39;Development&#39;</span>
+
+<span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">ResourceClient</span>
+
+
+<div class="viewcode-block" id="ServerHardware"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware">[docs]</a><span class="k">class</span> <span class="nc">ServerHardware</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/server-hardware&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ServerHardware.get_utilization"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get_utilization">[docs]</a>    <span class="k">def</span> <span class="nf">get_utilization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">refresh</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves historical utilization data for the specified resource, metrics, and time span.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id: Resource identification.</span>
+<span class="sd">            fields:</span>
+<span class="sd">                Name of the metric(s) to be retrieved in the format METRIC[,METRIC]...</span>
+
+<span class="sd">                If unspecified, all metrics supported are returned.</span>
+
+<span class="sd">                Server hardware supports the following utilization metrics:</span>
+
+<span class="sd">                    AmbientTemperature</span>
+<span class="sd">                        Inlet air temperature in degrees Celsius during this sample interval.</span>
+<span class="sd">                    AveragePower</span>
+<span class="sd">                        Average power consumption in Watts during this sample interval.</span>
+<span class="sd">                    PeakPower</span>
+<span class="sd">                        Peak power consumption in Watts during this sample interval.</span>
+<span class="sd">                    PowerCap</span>
+<span class="sd">                        Dynamic power cap setting on the server hardware in Watts during this sample interval.</span>
+<span class="sd">                    CpuUtilization</span>
+<span class="sd">                        CPU utilization of all CPUs in percent during this sample interval.</span>
+<span class="sd">                    CpuAverageFreq</span>
+<span class="sd">                        Average CPU frequency in Mhz during this sample interval.</span>
+
+<span class="sd">            filter:</span>
+<span class="sd">                Provides an expression of the requested time range of data. One condition (startDate/endDate) is</span>
+<span class="sd">                specified per filter specification as described below. The condition must be specified via the</span>
+<span class="sd">                equals (=) operator.</span>
+
+<span class="sd">                startDate</span>
+<span class="sd">                    Start date of requested starting time range in ISO 8601 format. If omitted, the startDate is</span>
+<span class="sd">                    determined by the endDate minus 24 hours.</span>
+<span class="sd">                endDate</span>
+<span class="sd">                    End date of requested starting time range in ISO 8601 format. When omitted the endDate includes</span>
+<span class="sd">                    the latest data sample available.</span>
+
+<span class="sd">                If an excessive number of samples would otherwise be returned, the results will be segmented. The</span>
+<span class="sd">                caller is responsible for comparing the returned sliceStartTime with the requested startTime in the</span>
+<span class="sd">                response. If the sliceStartTime is greater than the oldestSampleTime and the requested start time,</span>
+<span class="sd">                the caller is responsible for repeating the request with endTime set to sliceStartTime to obtain the</span>
+<span class="sd">                next segment. This process is repeated until the full data set is retrieved.</span>
+
+<span class="sd">                If the resource has no data, the UtilizationData is still returned, but will contain no samples and</span>
+<span class="sd">                sliceStartTime/sliceEndTime will be equal. oldestSampleTime/newestSampleTime will still be set</span>
+<span class="sd">                appropriately (null if no data is available). If the filter just does not happen to overlap the data</span>
+<span class="sd">                that a resource does have, then the metric history service will return null sample values for any</span>
+<span class="sd">                missing samples.</span>
+
+<span class="sd">            refresh:</span>
+<span class="sd">                Specifies that if necessary an additional request will be queued to obtain the most recent</span>
+<span class="sd">                utilization data from the iLO. The response will not include any refreshed data. To track the</span>
+<span class="sd">                availability of the newly collected data, monitor the TaskResource identified by the refreshTaskUri</span>
+<span class="sd">                property in the response. If null, no refresh was queued.</span>
+
+<span class="sd">            view:</span>
+<span class="sd">                Specifies the resolution interval length of the samples to be retrieved. This is reflected in the</span>
+<span class="sd">                resolution in the returned response. Utilization data is automatically purged to stay within storage</span>
+<span class="sd">                space constraints. Supported views are listed below.</span>
+
+<span class="sd">                native</span>
+<span class="sd">                    Resolution of the samples returned will be one sample for each 5-minute time period. This is the</span>
+<span class="sd">                    default view and matches the resolution of the data returned by the iLO. Samples at this resolution</span>
+<span class="sd">                    are retained up to one year.</span>
+<span class="sd">                hour</span>
+<span class="sd">                    Resolution of the samples returned will be one sample for each 60-minute time period. Samples are</span>
+<span class="sd">                    calculated by averaging the available 5-minute data samples that occurred within the hour, except</span>
+<span class="sd">                    for PeakPower which is calculated by reporting the peak observed 5-minute sample value data during</span>
+<span class="sd">                    the hour. Samples at this resolution are retained up to three years.</span>
+<span class="sd">                day</span>
+<span class="sd">                    Resolution of the samples returned will be one sample for each 24-hour time period. One day is a</span>
+<span class="sd">                    24-hour period that starts at midnight GMT regardless of the time zone in which the appliance or</span>
+<span class="sd">                    client is located. Samples are calculated by averaging the available 5-minute data samples that</span>
+<span class="sd">                    occurred during the day, except for PeakPower which is calculated by reporting the peak observed</span>
+<span class="sd">                    5-minute sample value data during the day. Samples at this resolution are retained up to three</span>
+<span class="sd">                    years.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_utilization</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">refresh</span><span class="o">=</span><span class="n">refresh</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets a list of server hardware resources. Returns a list of resources based on optional sorting and filtering,</span>
+<span class="sd">        and constrained by start and count parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start:</span>
+<span class="sd">                The first item to return, using 0-based indexing.</span>
+<span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
+<span class="sd">            count:</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all the items.</span>
+<span class="sd">                The actual number of items in the response may differ from the requested</span>
+<span class="sd">                count if the sum of start and count exceed the total number of items.</span>
+<span class="sd">            filter:</span>
+<span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
+<span class="sd">                default is no filter - all resources are returned.</span>
+<span class="sd">            sort:</span>
+<span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
+<span class="sd">                on create time, with the oldest entry first.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of server hardware resources.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.add"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">information</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a rack-mount server for management by the appliance. This API initiates the asynchronous addition of</span>
+<span class="sd">        supported server models. Note: servers in an enclosure are added by adding the enclosure resource. This is</span>
+<span class="sd">        only supported on appliances which support rack mounted servers.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            information (dict): Object to create</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Created rack mount server.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">information</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.get"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets a server hardware resource by ID or by uri.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: The server hardware resource</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.get_by"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all server hardware that match the filter.</span>
+
+<span class="sd">        The search is case insensitive.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            field: Field name to filter.</span>
+<span class="sd">            value: Value to filter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.remove"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes the rack-server with the specified URI.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This operation is only supported on appliances which support rack mounted servers.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resource (dict):</span>
+<span class="sd">                Object to delete.</span>
+<span class="sd">            force (bool):</span>
+<span class="sd">                If set to true the operation completes despite any problems with</span>
+<span class="sd">                network connectivity or errors on the resource itself. The default is false.</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Indicating if the resource was successfully removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.get_bios"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get_bios">[docs]</a>    <span class="k">def</span> <span class="nf">get_bios</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the list of BIOS/UEFI values currently set on the physical server.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Dictionary of BIOS/UEFI values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/bios&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.get_environmental_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get_environmental_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">get_environmental_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the settings that describe the environmental configuration (supported feature set, calibrated minimum &amp;</span>
+<span class="sd">        maximum power, location &amp; dimensions, ...) of the server hardware resource.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Environmental configuration settings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/environmentalConfiguration&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.update_environmental_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.update_environmental_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">update_environmental_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the calibrated max power of an unmanaged or unsupported server hardware resource.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri</span>
+<span class="sd">            configuration: configuration</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Environmental configuration settings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/environmentalConfiguration&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.get_ilo_sso_url"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get_ilo_sso_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_ilo_sso_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the URL to launch a Single Sign-On (SSO) session for the iLO web interface. If the server hardware is</span>
+<span class="sd">        unsupported, the resulting URL will not use SSO and the iLO web interface will prompt for credentials. Note,</span>
+<span class="sd">        this is not supported on G7/iLO3 or earlier servers.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            URL</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/iloSsoUrl&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.get_java_remote_console_url"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get_java_remote_console_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_java_remote_console_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a Single Sign-On (SSO) session for the iLO Java Applet console and returns the URL to launch it.</span>
+<span class="sd">        If the server hardware is unmanaged or unsupported, the resulting URL will not use SSO and the iLO Java Applet</span>
+<span class="sd">        will prompt for credentials. Note, this is not supported on G7/iLO3 or earlier servers.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            URL</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/javaRemoteConsoleUrl&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.update_mp_firware_version"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.update_mp_firware_version">[docs]</a>    <span class="k">def</span> <span class="nf">update_mp_firware_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the iLO firmware on a physical server to a minimum ILO firmware version required by OneView to</span>
+<span class="sd">        manage the server.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri:</span>
+<span class="sd">                Could be either the server hardware resource id or uri.</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Resource</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/mpFirmwareVersion&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update_with_zero_body</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.update_power_state"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.update_power_state">[docs]</a>    <span class="k">def</span> <span class="nf">update_power_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Refreshes the server hardware to fix configuration issues.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri</span>
+<span class="sd">            configuration: configuration</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Resource</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/powerState&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.refresh_state"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.refresh_state">[docs]</a>    <span class="k">def</span> <span class="nf">refresh_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Refreshes the server hardware to fix configuration issues.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri</span>
+<span class="sd">            configuration: configuration</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Resource</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/refreshState&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.get_remote_console_url"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get_remote_console_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_remote_console_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a Single Sign-On (SSO) session for the iLO Integrated Remote Console Application (IRC) and returns the</span>
+<span class="sd">        URL to launch it. If the server hardware is unmanaged or unsupported, the resulting URL will not use SSO and the</span>
+<span class="sd">        IRC application will prompt for credentials. Use of this URL requires a previous installation of the iLO IRC and</span>
+<span class="sd">        is supported only on Windows clients.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            URL</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/remoteConsoleUrl&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Hewlett Packard Enterprise.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,897 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hpOneView.oneview_client &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="hpOneView" href="../hpOneView.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> HPE OneView Python SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">HPE OneView Python SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+          <li><a href="../hpOneView.html">hpOneView</a> &raquo;</li>
+      
+    <li>hpOneView.oneview_client</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hpOneView.oneview_client</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">###</span>
+<span class="c1"># (C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP</span>
+<span class="c1">#</span>
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1"># The above copyright notice and this permission notice shall be included in</span>
+<span class="c1"># all copies or substantial portions of the Software.</span>
+<span class="c1">#</span>
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN</span>
+<span class="c1"># THE SOFTWARE.</span>
+<span class="c1">###</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">oneview_client.py</span>
+<span class="sd">~~~~~~~~~~~~~~~~~~</span>
+
+<span class="sd">This module implements a common client for HPE OneView REST API</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+
+<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
+
+<span class="n">__title__</span> <span class="o">=</span> <span class="s1">&#39;OneViewClient&#39;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s1">&#39;(C) Copyright (2012-2016) Hewlett Packard Enterprise &#39;</span> \
+                <span class="s1">&#39; Development LP&#39;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s1">&#39;MIT&#39;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s1">&#39;Development&#39;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">hpOneView.connection</span> <span class="k">import</span> <span class="n">connection</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.connections</span> <span class="k">import</span> <span class="n">Connections</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.fc_networks</span> <span class="k">import</span> <span class="n">FcNetworks</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.fcoe_networks</span> <span class="k">import</span> <span class="n">FcoeNetworks</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.ethernet_networks</span> <span class="k">import</span> <span class="n">EthernetNetworks</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.connection_templates</span> <span class="k">import</span> <span class="n">ConnectionTemplates</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.fabrics</span> <span class="k">import</span> <span class="n">Fabrics</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.network_sets</span> <span class="k">import</span> <span class="n">NetworkSets</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.data_services.metric_streaming</span> <span class="k">import</span> <span class="n">MetricStreaming</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.switches</span> <span class="k">import</span> <span class="n">Switches</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.switch_types</span> <span class="k">import</span> <span class="n">SwitchTypes</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.activity.tasks</span> <span class="k">import</span> <span class="n">Tasks</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.enclosures</span> <span class="k">import</span> <span class="n">Enclosures</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.logical_enclosures</span> <span class="k">import</span> <span class="n">LogicalEnclosures</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.enclosure_groups</span> <span class="k">import</span> <span class="n">EnclosureGroups</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.server_hardware</span> <span class="k">import</span> <span class="n">ServerHardware</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.server_hardware_types</span> <span class="k">import</span> <span class="n">ServerHardwareTypes</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.id_pools_vsn_ranges</span> <span class="k">import</span> <span class="n">IdPoolsVsnRanges</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.id_pools_vmac_ranges</span> <span class="k">import</span> <span class="n">IdPoolsVmacRanges</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.id_pools_vwwn_ranges</span> <span class="k">import</span> <span class="n">IdPoolsVwwnRanges</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.interconnects</span> <span class="k">import</span> <span class="n">Interconnects</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.interconnect_types</span> <span class="k">import</span> <span class="n">InterconnectTypes</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.interconnect_link_topologies</span> <span class="k">import</span> <span class="n">InterconnectLinkTopologies</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.uncategorized.unmanaged_devices</span> <span class="k">import</span> <span class="n">UnmanagedDevices</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.logical_downlinks</span> <span class="k">import</span> <span class="n">LogicalDownlinks</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.facilities.power_devices</span> <span class="k">import</span> <span class="n">PowerDevices</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.facilities.racks</span> <span class="k">import</span> <span class="n">Racks</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.fc_sans.managed_sans</span> <span class="k">import</span> <span class="n">ManagedSANs</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.fc_sans.san_managers</span> <span class="k">import</span> <span class="n">SanManagers</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.fc_sans.endpoints</span> <span class="k">import</span> <span class="n">Endpoints</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.logical_interconnects</span> <span class="k">import</span> <span class="n">LogicalInterconnects</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.logical_interconnect_groups</span> <span class="k">import</span> <span class="n">LogicalInterconnectGroups</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.logical_switch_groups</span> <span class="k">import</span> <span class="n">LogicalSwitchGroups</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.logical_switches</span> <span class="k">import</span> <span class="n">LogicalSwitches</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.server_profiles</span> <span class="k">import</span> <span class="n">ServerProfiles</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.server_profile_templates</span> <span class="k">import</span> <span class="n">ServerProfileTemplate</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.storage.storage_systems</span> <span class="k">import</span> <span class="n">StorageSystems</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.storage.storage_pools</span> <span class="k">import</span> <span class="n">StoragePools</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.storage.storage_volume_templates</span> <span class="k">import</span> <span class="n">StorageVolumeTemplates</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.storage.storage_volume_attachments</span> <span class="k">import</span> <span class="n">StorageVolumeAttachments</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.settings.firmware_drivers</span> <span class="k">import</span> <span class="n">FirmwareDrivers</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.settings.firmware_bundles</span> <span class="k">import</span> <span class="n">FirmwareBundles</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.storage.volumes</span> <span class="k">import</span> <span class="n">Volumes</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.networking.uplink_sets</span> <span class="k">import</span> <span class="n">UplinkSets</span>
+
+<span class="n">ONEVIEW_CLIENT_INVALID_PROXY</span> <span class="o">=</span> <span class="s1">&#39;Invalid Proxy format&#39;</span>
+
+
+<div class="viewcode-block" id="OneViewClient"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.oneview_client.OneViewClient">[docs]</a><span class="k">class</span> <span class="nc">OneViewClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span> <span class="o">=</span> <span class="n">connection</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;ip&quot;</span><span class="p">],</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;api_version&#39;</span><span class="p">,</span> <span class="mi">200</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__set_proxy</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;credentials&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__connections</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__connection_templates</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__fc_networks</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__fcoe_networks</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ethernet_networks</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__fabrics</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__network_sets</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__switches</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__switch_types</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__tasks</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__enclosures</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__logical_enclosures</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__enclosure_groups</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__metric_streaming</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__server_hardware</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__server_hardware_types</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vsn_ranges</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vmac_ranges</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vwwn_ranges</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__interconnects</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__interconnect_types</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__interconnect_link_topologies</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__power_devices</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__unmanaged_devices</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__racks</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__san_managers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__endpoints</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__logical_interconnects</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__logical_interconnect_groups</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__logical_switch_groups</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__logical_switches</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__logical_downlinks</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__server_profiles</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__server_profile_templates</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__storage_systems</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__storage_pools</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__storage_volume_templates</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__storage_volume_attachments</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__firmware_drivers</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__firmware_bundles</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__uplink_sets</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__volumes</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__managed_sans</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># TODO: Implement: con.set_trusted_ssl_bundle(args.cert)</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="OneViewClient.from_json_file"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.oneview_client.OneViewClient.from_json_file">[docs]</a>    <span class="k">def</span> <span class="nf">from_json_file</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct OneViewClient using a json file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            file_name: json full path.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OneViewClient:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_data</span><span class="p">:</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__set_proxy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set proxy if needed</span>
+<span class="sd">        Args:</span>
+<span class="sd">            config: Config dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;proxy&quot;</span> <span class="ow">in</span> <span class="n">config</span> <span class="ow">and</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;proxy&quot;</span><span class="p">]:</span>
+            <span class="n">proxy</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;proxy&quot;</span><span class="p">]</span>
+            <span class="n">splitted</span> <span class="o">=</span> <span class="n">proxy</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">splitted</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">ONEVIEW_CLIENT_INVALID_PROXY</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">set_proxy</span><span class="p">(</span><span class="n">splitted</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">splitted</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the underlying HPE OneView connection used by the OneViewClient.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            connection:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">connections</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Connections API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Connections:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__connections</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__connections</span> <span class="o">=</span> <span class="n">Connections</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__connections</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">connection_templates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the ConnectionTemplates API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ConnectionTemplates:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__connection_templates</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__connection_templates</span> <span class="o">=</span> <span class="n">ConnectionTemplates</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__connection_templates</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fc_networks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the FcNetworks API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            FcNetworks:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fc_networks</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__fc_networks</span> <span class="o">=</span> <span class="n">FcNetworks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fc_networks</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fcoe_networks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the FcoeNetworks API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            FcoeNetworks:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fcoe_networks</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__fcoe_networks</span> <span class="o">=</span> <span class="n">FcoeNetworks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fcoe_networks</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ethernet_networks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the EthernetNetworks API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            EthernetNetworks:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ethernet_networks</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__ethernet_networks</span> <span class="o">=</span> <span class="n">EthernetNetworks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ethernet_networks</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fabrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Fabrics API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Fabrics:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fabrics</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__fabrics</span> <span class="o">=</span> <span class="n">Fabrics</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fabrics</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">network_sets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the NetworkSets API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            NetworkSets:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__network_sets</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__network_sets</span> <span class="o">=</span> <span class="n">NetworkSets</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__network_sets</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">server_hardware</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the ServerHardware API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ServerHardware:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__server_hardware</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__server_hardware</span> <span class="o">=</span> <span class="n">ServerHardware</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__server_hardware</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">server_hardware_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the ServerHardwareTypes API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ServerHardwareTypes:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__server_hardware_types</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__server_hardware_types</span> <span class="o">=</span> <span class="n">ServerHardwareTypes</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__server_hardware_types</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">id_pools_vsn_ranges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the IdPoolsVsnRanges API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            IdPoolsVsnRanges:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vsn_ranges</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vsn_ranges</span> <span class="o">=</span> <span class="n">IdPoolsVsnRanges</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vsn_ranges</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">id_pools_vmac_ranges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the IdPoolsVmacRanges API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            IdPoolsVmacRanges:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vmac_ranges</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vmac_ranges</span> <span class="o">=</span> <span class="n">IdPoolsVmacRanges</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vmac_ranges</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">id_pools_vwwn_ranges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the IdPoolsVwwnRanges API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            IdPoolsVwwnRanges:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vwwn_ranges</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vwwn_ranges</span> <span class="o">=</span> <span class="n">IdPoolsVwwnRanges</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vwwn_ranges</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">switches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Switches API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Switches:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__switches</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__switches</span> <span class="o">=</span> <span class="n">Switches</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__switches</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">switch_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the SwitchTypes API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SwitchTypes:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__switch_types</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__switch_types</span> <span class="o">=</span> <span class="n">SwitchTypes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__switch_types</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">logical_switch_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the LogicalSwitchGroups API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            LogicalSwitchGroups:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__logical_switch_groups</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logical_switch_groups</span> <span class="o">=</span> <span class="n">LogicalSwitchGroups</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__logical_switch_groups</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">logical_switches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the LogicalSwitches API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            LogicalSwitches:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__logical_switches</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logical_switches</span> <span class="o">=</span> <span class="n">LogicalSwitches</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__logical_switches</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Tasks API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tasks:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tasks</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__tasks</span> <span class="o">=</span> <span class="n">Tasks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__tasks</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">enclosure_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the EnclosureGroups API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            EnclosureGroups:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__enclosure_groups</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__enclosure_groups</span> <span class="o">=</span> <span class="n">EnclosureGroups</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__enclosure_groups</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">enclosures</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Enclosures API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Enclosures:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__enclosures</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__enclosures</span> <span class="o">=</span> <span class="n">Enclosures</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__enclosures</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">logical_enclosures</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the LogicalEnclosures API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            LogicalEnclosures:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__logical_enclosures</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logical_enclosures</span> <span class="o">=</span> <span class="n">LogicalEnclosures</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__logical_enclosures</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">metric_streaming</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the MetricStreaming API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            MetricStreaming:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__metric_streaming</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__metric_streaming</span> <span class="o">=</span> <span class="n">MetricStreaming</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__metric_streaming</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">interconnects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Interconnects API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Interconnects:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__interconnects</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__interconnects</span> <span class="o">=</span> <span class="n">Interconnects</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__interconnects</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">interconnect_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the InterconnectTypes API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            InterconnectTypes:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__interconnect_types</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__interconnect_types</span> <span class="o">=</span> <span class="n">InterconnectTypes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__interconnect_types</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">interconnect_link_topologies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the InterconnectLinkTopologies API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            InterconnectLinkTopologies:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__interconnect_link_topologies</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__interconnect_link_topologies</span> <span class="o">=</span> <span class="n">InterconnectLinkTopologies</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__interconnect_link_topologies</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">logical_interconnect_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the LogicalInterconnectGroups API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            LogicalInterconnectGroups:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__logical_interconnect_groups</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logical_interconnect_groups</span> <span class="o">=</span> <span class="n">LogicalInterconnectGroups</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__logical_interconnect_groups</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">logical_interconnects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the LogicalInterconnects API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            LogicalInterconnects:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__logical_interconnects</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logical_interconnects</span> <span class="o">=</span> <span class="n">LogicalInterconnects</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__logical_interconnects</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">logical_downlinks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the LogicalDownlinks API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            LogicalDownlinks:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__logical_downlinks</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__logical_downlinks</span> <span class="o">=</span> <span class="n">LogicalDownlinks</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__logical_downlinks</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">power_devices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the PowerDevices API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            PowerDevices:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__power_devices</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__power_devices</span> <span class="o">=</span> <span class="n">PowerDevices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__power_devices</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">unmanaged_devices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Unmanaged Devices API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            UnmanagedDevices:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__unmanaged_devices</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__unmanaged_devices</span> <span class="o">=</span> <span class="n">UnmanagedDevices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__unmanaged_devices</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">racks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Racks API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Racks:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__racks</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__racks</span> <span class="o">=</span> <span class="n">Racks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__racks</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">san_managers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the SanManagers API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SanManagers:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__san_managers</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__san_managers</span> <span class="o">=</span> <span class="n">SanManagers</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__san_managers</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">endpoints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Endpoints API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Endpoints:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__endpoints</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__endpoints</span> <span class="o">=</span> <span class="n">Endpoints</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__endpoints</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">server_profiles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the ServerProfiles API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ServerProfiles:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__server_profiles</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__server_profiles</span> <span class="o">=</span> <span class="n">ServerProfiles</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__server_profiles</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">server_profile_templates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the ServerProfileTemplate API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ServerProfileTemplate:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__server_profile_templates</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__server_profile_templates</span> <span class="o">=</span> <span class="n">ServerProfileTemplate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__server_profile_templates</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">storage_systems</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the StorageSystems API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            StorageSystems:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__storage_systems</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__storage_systems</span> <span class="o">=</span> <span class="n">StorageSystems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__storage_systems</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">storage_pools</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the StoragePools API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            StoragePools:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__storage_pools</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__storage_pools</span> <span class="o">=</span> <span class="n">StoragePools</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__storage_pools</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">storage_volume_templates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the StorageVolumeTemplates API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            StorageVolumeTemplates:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__storage_volume_templates</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__storage_volume_templates</span> <span class="o">=</span> <span class="n">StorageVolumeTemplates</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__storage_volume_templates</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">storage_volume_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the StorageVolumeAttachments API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            StorageVolumeAttachments:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__storage_volume_attachments</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__storage_volume_attachments</span> <span class="o">=</span> <span class="n">StorageVolumeAttachments</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__storage_volume_attachments</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">firmware_drivers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the FirmwareDrivers API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            FirmwareDrivers:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__firmware_drivers</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__firmware_drivers</span> <span class="o">=</span> <span class="n">FirmwareDrivers</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__firmware_drivers</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">firmware_bundles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the FirmwareBundles API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            FirmwareBundles:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__firmware_bundles</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__firmware_bundles</span> <span class="o">=</span> <span class="n">FirmwareBundles</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__firmware_bundles</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uplink_sets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the UplinkSets API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            UplinkSets:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__uplink_sets</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__uplink_sets</span> <span class="o">=</span> <span class="n">UplinkSets</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__uplink_sets</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">volumes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Volumes API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Volumes:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__volumes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__volumes</span> <span class="o">=</span> <span class="n">Volumes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__volumes</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">managed_sans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Managed SANs API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ManagedSANs:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__managed_sans</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__managed_sans</span> <span class="o">=</span> <span class="n">ManagedSANs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__managed_sans</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Hewlett Packard Enterprise.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

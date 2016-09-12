@@ -1,0 +1,641 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hpOneView.resources.networking.logical_interconnects &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="hpOneView" href="../../../hpOneView.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> HPE OneView Python SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">HPE OneView Python SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+          <li><a href="../../../hpOneView.html">hpOneView</a> &raquo;</li>
+      
+    <li>hpOneView.resources.networking.logical_interconnects</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hpOneView.resources.networking.logical_interconnects</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">###</span>
+<span class="c1"># (C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP</span>
+<span class="c1">#</span>
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1"># The above copyright notice and this permission notice shall be included in</span>
+<span class="c1"># all copies or substantial portions of the Software.</span>
+<span class="c1">#</span>
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN</span>
+<span class="c1"># THE SOFTWARE.</span>
+<span class="c1">###</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+
+<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
+
+<span class="n">__title__</span> <span class="o">=</span> <span class="s1">&#39;Logical Interconnects&#39;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s1">&#39;(C) Copyright (2012-2016) Hewlett Packard Enterprise &#39;</span> \
+                <span class="s1">&#39; Development LP&#39;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s1">&#39;MIT&#39;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s1">&#39;Development&#39;</span>
+
+<span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">ResourceClient</span>
+
+
+<div class="viewcode-block" id="LogicalInterconnects"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects">[docs]</a><span class="k">class</span> <span class="nc">LogicalInterconnects</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/logical-interconnects&#39;</span>
+    <span class="n">FIRMWARE_PATH</span> <span class="o">=</span> <span class="s2">&quot;/firmware&quot;</span>
+    <span class="n">SNMP_CONFIGURATION_PATH</span> <span class="o">=</span> <span class="s2">&quot;/snmp-configuration&quot;</span>
+    <span class="n">PORT_MONITOR_PATH</span> <span class="o">=</span> <span class="s2">&quot;/port-monitor&quot;</span>
+    <span class="n">LOCATIONS_PATH</span> <span class="o">=</span> <span class="s2">&quot;/locations/interconnects&quot;</span>
+    <span class="n">FORWARDING_INFORMATION_PATH</span> <span class="o">=</span> <span class="s2">&quot;/forwarding-information-base&quot;</span>
+    <span class="n">QOS_AGGREGATED_CONFIGURATION</span> <span class="o">=</span> <span class="s2">&quot;/qos-aggregated-configuration&quot;</span>
+    <span class="n">locations_uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{uri}{locations}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">URI</span><span class="p">,</span> <span class="n">locations</span><span class="o">=</span><span class="n">LOCATIONS_PATH</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LogicalInterconnects.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets a list of logical interconnects based on optional sorting and filtering, and constrained by start</span>
+<span class="sd">        and count parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start:</span>
+<span class="sd">                The first item to return, using 0-based indexing.</span>
+<span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
+<span class="sd">            count:</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all the items.</span>
+<span class="sd">                The actual number of items in the response may differ from the requested</span>
+<span class="sd">                count if the sum of start and count exceed the total number of items.</span>
+<span class="sd">            filter:</span>
+<span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
+<span class="sd">                default is no filter - all resources are returned.</span>
+<span class="sd">            sort:</span>
+<span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
+<span class="sd">                on create time, with the oldest entry first.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of logical interconnects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.get"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets a logical interconnect by ID or by uri.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: The logical interconnect.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.get_by_name"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets a logical interconnect by name.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: Name of the logical interconnect.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Logical Interconnect.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logical_interconnects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">logical_interconnects</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">name</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">result</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.update_compliance"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_compliance">[docs]</a>    <span class="k">def</span> <span class="nf">update_compliance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns logical interconnects to a consistent state. The current logical interconnect state is</span>
+<span class="sd">        compared to the associated logical interconnect group.</span>
+
+<span class="sd">        Any differences identified are corrected, bringing the logical interconnect back to a consistent</span>
+<span class="sd">        state. Changes are asynchronously applied to all managed interconnects. Note that if the changes detected</span>
+<span class="sd">        involve differences in the interconnect map between the logical interconnect group and the logical interconnect,</span>
+<span class="sd">        the process of bringing the logical interconnect back to a consistent state may involve automatically removing</span>
+<span class="sd">        existing interconnects from management and/or adding new interconnects for management.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the resource id or the resource uri</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Logical Interconnect.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/compliance&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update_with_zero_body</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.update_ethernet_settings"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_ethernet_settings">[docs]</a>    <span class="k">def</span> <span class="nf">update_ethernet_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the Ethernet interconnect settings for the logical interconnect.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the resource id or the resource uri</span>
+<span class="sd">            configuration:  Ethernet interconnect settings.</span>
+<span class="sd">            force: If set to true the operation completes despite any problems with network connectivity or errors</span>
+<span class="sd">                on the resource itself. The default is false.</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Logical Interconnect.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/ethernetSettings&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.update_internal_networks"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_internal_networks">[docs]</a>    <span class="k">def</span> <span class="nf">update_internal_networks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">network_uri_list</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates internal networks on the logical interconnect.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the resource id or the resource uri</span>
+<span class="sd">            network_uri_list: List of Ethernet network uris.</span>
+<span class="sd">            force: If set to true the operation completes despite any problems with network connectivity or errors</span>
+<span class="sd">                on the resource itself. The default is false.</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Logical Interconnect.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/internalNetworks&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">network_uri_list</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.get_internal_vlans"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_internal_vlans">[docs]</a>    <span class="k">def</span> <span class="nf">get_internal_vlans</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the internal VLAN IDs for the provisioned networks on a logical interconnect.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Collection of URIs</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/internalVlans&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.update_settings"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_settings">[docs]</a>    <span class="k">def</span> <span class="nf">update_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates interconnect settings on the logical interconnect. Changes to interconnect settings are asynchronously</span>
+<span class="sd">        applied to all managed interconnects.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the resource id or the resource uri</span>
+<span class="sd">            settings: Interconnect settings</span>
+<span class="sd">            force: If set to true the operation completes despite any problems with network connectivity or errors</span>
+<span class="sd">                on the resource itself. The default is false.</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Logical Interconnect</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;type&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;InterconnectSettingsV3&#39;</span>
+        <span class="k">if</span> <span class="s1">&#39;ethernetSettings&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="s1">&#39;type&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ethernetSettings&#39;</span><span class="p">]:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ethernetSettings&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;EthernetInterconnectSettingsV3&#39;</span>
+
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/settings&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.update_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">update_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Asynchronously applies or re-applies the logical interconnect configuration to all managed interconnects.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the resource id or the resource uri</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Logical Interconnect.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/configuration&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update_with_zero_body</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.get_snmp_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_snmp_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">get_snmp_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the SNMP configuration for a logical interconnect.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: SNMP configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">SNMP_CONFIGURATION_PATH</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.update_snmp_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_snmp_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">update_snmp_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the SNMP configuration of a logical interconnect. Changes to the SNMP configuration are asynchronously</span>
+<span class="sd">        applied to all managed interconnects.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.</span>
+<span class="sd">            configuration: snmp configuration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: snmp configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;type&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;snmp-configuration&#39;</span>
+
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">SNMP_CONFIGURATION_PATH</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.get_unassigned_uplink_ports"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_unassigned_uplink_ports">[docs]</a>    <span class="k">def</span> <span class="nf">get_unassigned_uplink_ports</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets a collection of uplink ports from the member interconnects which are eligible for assignment to an</span>
+<span class="sd">        analyzer port. To be eligible a port must be a valid uplink, must not be a member of an existing uplink set</span>
+<span class="sd">        and must not currently be used for stacking.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Collection of uplink ports.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/unassignedUplinkPortsForPortMonitor&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.get_port_monitor"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_port_monitor">[docs]</a>    <span class="k">def</span> <span class="nf">get_port_monitor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the port monitor configuration of a logical interconnect.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Port monitor configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">PORT_MONITOR_PATH</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.update_port_monitor"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_port_monitor">[docs]</a>    <span class="k">def</span> <span class="nf">update_port_monitor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the port monitor configuration of a logical interconnect.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.</span>
+<span class="sd">            resource: Port monitor configuration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Port monitor configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;type&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;port-monitor&#39;</span>
+
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">PORT_MONITOR_PATH</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.get_telemetry_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_telemetry_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">get_telemetry_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">telemetry_configuration_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the telemetry configuration of a logical interconnect.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            telemetry_configuration_uri: Telemetry Configuration URI.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Telemetry configuration.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">telemetry_configuration_uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.create_interconnect"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.create_interconnect">[docs]</a>    <span class="k">def</span> <span class="nf">create_interconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location_entries</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an interconnect at the given location.</span>
+
+<span class="sd">        Warning:</span>
+<span class="sd">            It does not create the LOGICAL INTERCONNECT itself.</span>
+<span class="sd">            It will fail if no interconnect is already present on the specified position.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            location_entries (dict): Dictionary with location entries.</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Created interconnect.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">location_entries</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">locations_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.delete_interconnect"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.delete_interconnect">[docs]</a>    <span class="k">def</span> <span class="nf">delete_interconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enclosure_uri</span><span class="p">,</span> <span class="n">bay</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deletes an interconnect from a location.</span>
+
+<span class="sd">        Warning:</span>
+<span class="sd">            This won&#39;t delete the LOGICAL INTERCONNECT itself, and may cause inconsistency between the enclosure</span>
+<span class="sd">            and Logical Interconnect Group.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            enclosure_uri: URI of the Enclosure</span>
+<span class="sd">            bay: Bay</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Indicating if the interconnect was successfully deleted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{path}</span><span class="s2">?location=Enclosure:</span><span class="si">{enclosure_uri}</span><span class="s2">,Bay:</span><span class="si">{bay}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">LOCATIONS_PATH</span><span class="p">,</span>
+                                                                           <span class="n">enclosure_uri</span><span class="o">=</span><span class="n">enclosure_uri</span><span class="p">,</span>
+                                                                           <span class="n">bay</span><span class="o">=</span><span class="n">bay</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.get_firmware"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_firmware">[docs]</a>    <span class="k">def</span> <span class="nf">get_firmware</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the installed firmware for a logical interconnect.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: LIFirmware.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">firmware_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_firmware_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">firmware_uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.install_firmware"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.install_firmware">[docs]</a>    <span class="k">def</span> <span class="nf">install_firmware</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">firmware_information</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Installs firmware to a logical interconnect. The three operations that are supported for the firmware</span>
+<span class="sd">        update are Stage (uploads firmware to the interconnect), Activate (installs firmware on the interconnect)</span>
+<span class="sd">        and Update (which does a Stage and Activate in a sequential manner).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            firmware_information: Options to install firmware to a logical interconnect.</span>
+<span class="sd">            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">firmware_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_firmware_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">firmware_information</span><span class="p">,</span> <span class="n">firmware_uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.get_forwarding_information_base"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_forwarding_information_base">[docs]</a>    <span class="k">def</span> <span class="nf">get_forwarding_information_base</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the forwarding information base data for a logical interconnect. Maximum of 100 entries is returned.</span>
+<span class="sd">        Optional filtering criteria may be specified.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri:</span>
+<span class="sd">                Could be either the logical interconnect id or the logical interconnect uri.</span>
+<span class="sd">            filter:</span>
+<span class="sd">                Filtering criteria may be specified using supported attributes: interconnectUri, macAddress,</span>
+<span class="sd">                internalVlan, externalVlan, and supported relation = (Equals). macAddress is 12 hexadecimal digits with</span>
+<span class="sd">                a colon between each pair of digits.(upper or lower case).</span>
+<span class="sd">                The default is no filter - all resources are returned.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A set of interconnect MAC address entries.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">FORWARDING_INFORMATION_PATH</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.create_forwarding_information_base"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.create_forwarding_information_base">[docs]</a>    <span class="k">def</span> <span class="nf">create_forwarding_information_base</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates the forwarding information base dump file for a logical interconnect.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri:</span>
+<span class="sd">                Could be either the logical interconnect id or the logical interconnect uri.</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in</span>
+<span class="sd">                OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns: Interconnect Forwarding Information Base DataInfo.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">FORWARDING_INFORMATION_PATH</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create_with_zero_body</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.get_qos_aggregated_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_qos_aggregated_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">get_qos_aggregated_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the QoS aggregated configuration for the logical interconnect.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri:</span>
+<span class="sd">                Could be either the logical interconnect id or the logical interconnect uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: QoS Configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">QOS_AGGREGATED_CONFIGURATION</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.update_qos_aggregated_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_qos_aggregated_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">update_qos_aggregated_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">qos_configuration</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the QoS aggregated configuration for the logical interconnect.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri:</span>
+<span class="sd">                Could be either the logical interconnect id or the logical interconnect uri.</span>
+<span class="sd">            qos_configuration:</span>
+<span class="sd">                QOS configuration.</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in</span>
+<span class="sd">                OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Logical Interconnect.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">QOS_AGGREGATED_CONFIGURATION</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">qos_configuration</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__build_firmware_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">FIRMWARE_PATH</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Hewlett Packard Enterprise.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

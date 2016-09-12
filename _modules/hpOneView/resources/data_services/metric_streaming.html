@@ -1,0 +1,304 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hpOneView.resources.data_services.metric_streaming &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="hpOneView" href="../../../hpOneView.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> HPE OneView Python SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">HPE OneView Python SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+          <li><a href="../../../hpOneView.html">hpOneView</a> &raquo;</li>
+      
+    <li>hpOneView.resources.data_services.metric_streaming</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hpOneView.resources.data_services.metric_streaming</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">###</span>
+<span class="c1"># (C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP</span>
+<span class="c1">#</span>
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1"># The above copyright notice and this permission notice shall be included in</span>
+<span class="c1"># all copies or substantial portions of the Software.</span>
+<span class="c1">#</span>
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN</span>
+<span class="c1"># THE SOFTWARE.</span>
+<span class="c1">###</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+
+<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
+
+<span class="n">__title__</span> <span class="o">=</span> <span class="s1">&#39;Metrics&#39;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s1">&#39;(C) Copyright (2012-2015) Hewlett Packard Enterprise Development LP&#39;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s1">&#39;MIT&#39;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s1">&#39;Development&#39;</span>
+
+<span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">ResourceClient</span>
+
+
+<div class="viewcode-block" id="MetricStreaming"><a class="viewcode-back" href="../../../../hpOneView.resources.data_services.html#hpOneView.resources.data_services.metric_streaming.MetricStreaming">[docs]</a><span class="k">class</span> <span class="nc">MetricStreaming</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Metrics can be relayed from OneView for managed resources at a specified interval. The following steps can be</span>
+<span class="sd">    followed to enable the metric relay in OneView:</span>
+
+<span class="sd">        * Get the list of resource types and metrics which can be configured for live streaming</span>
+<span class="sd">        * Configure the live metric stream in OneView</span>
+<span class="sd">        * Receive the stream of metric on MSMB</span>
+
+<span class="sd">    The list below describes the structure of message relayed to MSMB:</span>
+<span class="sd">        startTime (str):</span>
+<span class="sd">            The starting time of the metric collection.</span>
+<span class="sd">        sampleIntervalInSeconds (int):</span>
+<span class="sd">            The starting time of the metric collection.</span>
+<span class="sd">        numberOfSamples (int):</span>
+<span class="sd">            Number of samples in the list for each metric type.</span>
+<span class="sd">        resourceType (str):</span>
+<span class="sd">            Identifies the category of resource. The supported devices are server-hardware, enclosures and power-devices</span>
+<span class="sd">        resourceDataList (list):</span>
+<span class="sd">            Metric sample list</span>
+<span class="sd">        uri (str):</span>
+<span class="sd">            Canonical URI of the resource</span>
+<span class="sd">        category (str):</span>
+<span class="sd">            Identifies the category of resource. The supported devices are server-hardware, enclosures and power-devices</span>
+<span class="sd">        created (timestamp):</span>
+<span class="sd">            Date and time when the resource was created</span>
+<span class="sd">        modified (timestamp):</span>
+<span class="sd">            Date and time when the resource was last modified</span>
+<span class="sd">        eTag (str):</span>
+<span class="sd">            Entity tag/version ID of the resource, the same value that is returned in the ETag header on a GET of the</span>
+<span class="sd">            resource</span>
+<span class="sd">        type (str):</span>
+<span class="sd">            Uniquely identifies the type of the JSON object</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/metrics&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MetricStreaming.get_capability"><a class="viewcode-back" href="../../../../hpOneView.resources.data_services.html#hpOneView.resources.data_services.metric_streaming.MetricStreaming.get_capability">[docs]</a>    <span class="k">def</span> <span class="nf">get_capability</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetches the list of resource types and supported metrics that OneView is capable of relaying.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: List of resource types and supported metrics.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/capability&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetricStreaming.get_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.data_services.html#hpOneView.resources.data_services.metric_streaming.MetricStreaming.get_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">get_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fetches the current configuration for which metrics are being relayed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: List of objects which contain frequency, sample interval and source type for each resource-type.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/configuration&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetricStreaming.update_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.data_services.html#hpOneView.resources.data_services.metric_streaming.MetricStreaming.update_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">update_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the metrics configuration with the new values. Overwrites the existing configuration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            configuration (dict):</span>
+<span class="sd">                Dictionary with a list of objects which contain frequency, sample interval and source type for each</span>
+<span class="sd">                resource-type.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: The current configuration for which metrics are being relayed.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/configuration&quot;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Hewlett Packard Enterprise.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

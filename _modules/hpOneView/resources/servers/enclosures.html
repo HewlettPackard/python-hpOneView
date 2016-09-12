@@ -1,0 +1,519 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hpOneView.resources.servers.enclosures &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="hpOneView" href="../../../hpOneView.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> HPE OneView Python SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">HPE OneView Python SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+          <li><a href="../../../hpOneView.html">hpOneView</a> &raquo;</li>
+      
+    <li>hpOneView.resources.servers.enclosures</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hpOneView.resources.servers.enclosures</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">###</span>
+<span class="c1"># (C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP</span>
+<span class="c1">#</span>
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1"># The above copyright notice and this permission notice shall be included in</span>
+<span class="c1"># all copies or substantial portions of the Software.</span>
+<span class="c1">#</span>
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN</span>
+<span class="c1"># THE SOFTWARE.</span>
+<span class="c1">###</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+
+<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
+
+<span class="n">__title__</span> <span class="o">=</span> <span class="s1">&#39;enclosures&#39;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s1">&#39;(C) Copyright (2012-2016) Hewlett Packard Enterprise &#39;</span> \
+                <span class="s1">&#39; Development LP&#39;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s1">&#39;MIT&#39;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s1">&#39;Development&#39;</span>
+
+<span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">ResourceClient</span>
+
+
+<div class="viewcode-block" id="Enclosures"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures">[docs]</a><span class="k">class</span> <span class="nc">Enclosures</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/enclosures&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Enclosures.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets a paginated collection of Enclosures. The collection is based on optional sorting and filtering, and</span>
+<span class="sd">        constrained by start and count parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start:</span>
+<span class="sd">                The first item to return, using 0-based indexing.</span>
+<span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
+<span class="sd">            count:</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all the items.</span>
+<span class="sd">                The actual number of items in the response may differ from the requested</span>
+<span class="sd">                count if the sum of start and count exceed the total number of items.</span>
+<span class="sd">            filter:</span>
+<span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
+<span class="sd">                default is no filter - all resources are returned.</span>
+<span class="sd">            sort:</span>
+<span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
+<span class="sd">                on create time, with the oldest entry first.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of Enclosures.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Enclosures.get_by"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures.get_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all Enclosures that matches the filter.</span>
+
+<span class="sd">        The search is case insensitive.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            field: Field name to filter.</span>
+<span class="sd">            value: Value to filter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of Enclosures.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Enclosures.add"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">information</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes information about an enclosure (e.g. IP address, username, password) and uses</span>
+<span class="sd">        it to claim/configure the enclosure and add its components to the appliance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            information: Enclosure information to add.</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Enclosure.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">information</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Enclosures.get"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the enclosure with the specified ID, if it exists.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: ID or URI of the Enclosure.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Enclosure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Enclosures.patch"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures.patch">[docs]</a>    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Uses the PATCH to update a resource for a given enclosure.</span>
+
+<span class="sd">        Only one operation can be performed in each PATCH call.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the resource id or the resource uri</span>
+<span class="sd">            operation: Patch operation</span>
+<span class="sd">            path: Path</span>
+<span class="sd">            value: Value</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Updated resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Enclosures.remove"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes and unconfigures the specified enclosure from the appliance. All components of the enclosure (e.g.</span>
+<span class="sd">        blades and interconnects) are unconfigured/removed as part of this process.</span>
+
+<span class="sd">        If the force option is set to &quot;true&quot; then any errors encountered as part of unconfiguring the enclosure or its</span>
+<span class="sd">        components are ignored and the enclosure is removed regardless of any errors that occur.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resource: dict object to delete</span>
+<span class="sd">            force:</span>
+<span class="sd">                 If set to true the operation completes despite any problems with</span>
+<span class="sd">                 network connectivity or errors on the resource itself. The default is false.</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Indicating if the resource was successfully removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Enclosures.update_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures.update_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">update_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reapplies the appliance&#39;s configuration on the enclosure. This includes running the same configure steps</span>
+<span class="sd">        that were performed as part of the enclosure add. A task is returned to the caller which can be used to</span>
+<span class="sd">        track the progress of the operation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the resource id or the resource uri.</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Enclosure</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/configuration&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update_with_zero_body</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Enclosures.get_environmental_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures.get_environmental_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">get_environmental_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the settings that describe the environmental configuration (supported feature set, calibrated minimum &amp;</span>
+<span class="sd">        maximum power, location &amp; dimensions, ...) of the enclosure resource.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the resource id or the resource uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Settings that describe the environmental configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/environmentalConfiguration&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Enclosures.update_environmental_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures.update_environmental_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">update_environmental_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the calibrated max power of an unmanaged or unsupported enclosure.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the resource id or the resource uri.</span>
+<span class="sd">            configuration: Configuration</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Settings that describe the environmental configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/environmentalConfiguration&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Enclosures.refresh_state"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures.refresh_state">[docs]</a>    <span class="k">def</span> <span class="nf">refresh_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Refreshes the enclosure along with all of its components, including interconnects and servers. Any new</span>
+<span class="sd">        hardware is added and any hardware that is no longer present within the enclosure is removed. The</span>
+<span class="sd">        &quot;refreshStateConfig&quot; passed in must have the &quot;refreshState&quot; field set to &quot;Refreshing&quot; and optionally</span>
+<span class="sd">        provide information to re-claim the enclosure (e.g. IP address, user name, password, etc.). A task is</span>
+<span class="sd">        returned to the caller which can be used to track the progress of the operation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the resource id or the resource uri</span>
+<span class="sd">            configuration: Configuration</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Enclosure</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/refreshState&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Enclosures.get_script"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures.get_script">[docs]</a>    <span class="k">def</span> <span class="nf">get_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the script of the enclosure.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the resource id or the resource uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Enclosure script.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/script&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Enclosures.get_sso"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures.get_sso">[docs]</a>    <span class="k">def</span> <span class="nf">get_sso</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">role</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Builds the SSO (Single Sign-On) URL parameters for the specified enclosure. This allows the user to</span>
+<span class="sd">        log in to the enclosure without providing credentials. This API is currently only supported by C7000 enclosures.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the resource id or the resource uri.</span>
+<span class="sd">            role: Role</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SSO (Single Sign-On) URL parameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/sso?role=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">role</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Enclosures.get_utilization"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures.get_utilization">[docs]</a>    <span class="k">def</span> <span class="nf">get_utilization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">refresh</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves historical utilization data for the specified enclosure, metrics, and time span.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the resource id or the resource uri.</span>
+<span class="sd">            fields: Name of the metric(s) to be retrieved in the format METRIC[,METRIC]...</span>
+
+<span class="sd">                If unspecified, all metrics supported are returned.</span>
+
+<span class="sd">                Enclosures support the following utilization metrics:</span>
+<span class="sd">                   AmbientTemperature</span>
+<span class="sd">                       Inlet air temperature in degrees Celsius during this sample interval.</span>
+<span class="sd">                   AveragePower</span>
+<span class="sd">                       Average power consumption in Watts during this sample interval.</span>
+<span class="sd">                   PeakPower</span>
+<span class="sd">                       Peak power consumption in Watts during this sample interval.</span>
+<span class="sd">                   PowerCap</span>
+<span class="sd">                       Dynamic power cap setting on the server hardware in Watts during this sample interval.</span>
+<span class="sd">                   DeratedCapacity</span>
+<span class="sd">                       Enclosure dynamic power cap derated capacity setting in Watts during this sample interval.</span>
+<span class="sd">                   RatedCapacity</span>
+<span class="sd">                       Enclosure dynamic power cap rated capacity setting in Watts during this sample interval.</span>
+
+<span class="sd">            filter:</span>
+<span class="sd">                Provides an expression of the requested time range of data. One condition (startDate/endDate) is</span>
+<span class="sd">                specified per filter specification as described below. The condition must be specified via the</span>
+<span class="sd">                equals (=) operator.</span>
+
+<span class="sd">                startDate</span>
+<span class="sd">                    Start date of requested starting time range in ISO 8601 format (2016-05-31T07:20:00.000Z).</span>
+<span class="sd">                    If omitted, the startDate is determined by the endDate minus 24 hours.</span>
+<span class="sd">                endDate</span>
+<span class="sd">                    End date of requested starting time range in ISO 8601 format. When omitted the endDate includes the</span>
+<span class="sd">                    latest data sample available.</span>
+
+<span class="sd">                If an excessive number of samples would otherwise be returned, the results will be segmented. The caller</span>
+<span class="sd">                is responsible for comparing the returned sliceStartTime with the requested startTime in the response.</span>
+<span class="sd">                If the sliceStartTime is greater than the oldestSampleTime and the requested start time, the caller is</span>
+<span class="sd">                responsible for repeating the request with endTime set to sliceStartTime to obtain the next segment.</span>
+<span class="sd">                This process is repeated until the full data set is retrieved.</span>
+
+<span class="sd">                If the resource has no data, the UtilizationData is still returned, but will contain no samples and</span>
+<span class="sd">                sliceStartTime/sliceEndTime will be equal. oldestSampleTime/newestSampleTime will still be set</span>
+<span class="sd">                appropriately (null if no data is available). If the filter just does not happen to overlap the data</span>
+<span class="sd">                that a resource does have, then the metric history service will return null sample values for any</span>
+<span class="sd">                missing samples.</span>
+
+<span class="sd">            refresh:</span>
+<span class="sd">                 Specifies that if necessary an additional request will be queued to obtain the most recent utilization</span>
+<span class="sd">                  data from the enclosure. The response will not include any refreshed data. To track the availability</span>
+<span class="sd">                  of the newly collected data, monitor the TaskResource identified by the refreshTaskUri property in</span>
+<span class="sd">                  the response. If null, no refresh was queued.</span>
+<span class="sd">            view:</span>
+<span class="sd">                 Specifies the resolution interval length of the samples to be retrieved. This is reflected in the</span>
+<span class="sd">                 resolution in the returned response. Utilization data is automatically purged to stay within storage</span>
+<span class="sd">                 space constraints. Supported views are listed below.</span>
+
+<span class="sd">                native (DEFAULT)</span>
+<span class="sd">                    Resolution of the samples returned will be one sample for each 5-minute time period. This is the</span>
+<span class="sd">                    default view and matches the resolution of the data returned by the enclosure. Samples at this</span>
+<span class="sd">                    resolution are retained up to one year.</span>
+<span class="sd">                hour</span>
+<span class="sd">                    Resolution of the samples returned will be one sample for each 60-minute time period. Samples are</span>
+<span class="sd">                    calculated by averaging the available 5-minute data samples that occurred within the hour, except</span>
+<span class="sd">                    for PeakPower which is calculated by reporting the peak observed 5-minute sample value data during</span>
+<span class="sd">                    the hour. Samples at this resolution are retained up to three years.</span>
+<span class="sd">                day</span>
+<span class="sd">                    Resolution of the samples returned will be one sample for each 24-hour time period. One day is a</span>
+<span class="sd">                    24-hour period that starts at midnight GMT regardless of the time zone in which the appliance or</span>
+<span class="sd">                    client is located. Samples are calculated by averaging the available 5-minute data samples that</span>
+<span class="sd">                    occurred during the day, except for PeakPower which is calculated by reporting the peak observed</span>
+<span class="sd">                    5-minute sample value data during the day. Samples at this resolution are retained up to three</span>
+<span class="sd">                    years.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_utilization</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">refresh</span><span class="o">=</span><span class="n">refresh</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Hewlett Packard Enterprise.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

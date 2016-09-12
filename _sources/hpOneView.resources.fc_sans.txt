@@ -1,0 +1,38 @@
+hpOneView.resources.fc_sans package
+===================================
+
+Submodules
+----------
+
+hpOneView.resources.fc_sans.endpoints module
+--------------------------------------------
+
+.. automodule:: hpOneView.resources.fc_sans.endpoints
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+hpOneView.resources.fc_sans.managed_sans module
+-----------------------------------------------
+
+.. automodule:: hpOneView.resources.fc_sans.managed_sans
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+hpOneView.resources.fc_sans.san_managers module
+-----------------------------------------------
+
+.. automodule:: hpOneView.resources.fc_sans.san_managers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: hpOneView.resources.fc_sans
+    :members:
+    :undoc-members:
+    :show-inheritance:

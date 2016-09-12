@@ -1,0 +1,621 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hpOneView.resources.servers.server_profiles &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="../../../../index.html"/>
+        <link rel="up" title="hpOneView" href="../../../hpOneView.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> HPE OneView Python SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">HPE OneView Python SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+          <li><a href="../../../hpOneView.html">hpOneView</a> &raquo;</li>
+      
+    <li>hpOneView.resources.servers.server_profiles</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hpOneView.resources.servers.server_profiles</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">###</span>
+<span class="c1"># (C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP</span>
+<span class="c1">#</span>
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1"># The above copyright notice and this permission notice shall be included in</span>
+<span class="c1"># all copies or substantial portions of the Software.</span>
+<span class="c1">#</span>
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN</span>
+<span class="c1"># THE SOFTWARE.</span>
+<span class="c1">###</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+
+<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
+
+<span class="n">__title__</span> <span class="o">=</span> <span class="s1">&#39;server-profile-template&#39;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s1">&#39;(C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP&#39;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s1">&#39;MIT&#39;</span>
+<span class="n">__status__</span> <span class="o">=</span> <span class="s1">&#39;Development&#39;</span>
+
+<span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">ResourceClient</span>
+
+
+<div class="viewcode-block" id="ServerProfiles"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles">[docs]</a><span class="k">class</span> <span class="nc">ServerProfiles</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/server-profiles&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__default_values</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;ServerProfileV5&#39;</span>
+        <span class="p">}</span>
+
+<div class="viewcode-block" id="ServerProfiles.create"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a server profile using the information provided in the resource parameter. Connection requests can be</span>
+<span class="sd">        one of the following types - port auto, auto and explicit. An explicit request is where the request includes</span>
+<span class="sd">        the adapter, port and flexNic. An auto request is where none of the three are specified and a port auto</span>
+<span class="sd">        request is where just the adapter and port are specified.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resource (dict): Object to create.</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stop waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Created server profile.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default_values</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.update"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Allows a server profile object to have its configuration modified. These modifications can be as simple as a</span>
+<span class="sd">        name or description change or much more complex changes around the assigned server and networking configuration.</span>
+<span class="sd">        It should be noted that selection of a virtual or physical MAC or Serial Number is not mutable once a profile</span>
+<span class="sd">        has been created, and attempts to change those elements will not be applied to the target profile. Connection</span>
+<span class="sd">        requests can be one of the following types - port Auto, auto and explicit. An explicit request is where the</span>
+<span class="sd">        request portId parameter includes the adapter, port and flexNic. An auto request is where portId is set to</span>
+<span class="sd">        &quot;Auto&quot; and a port auto request is where just the portId parameter includes just the adapter and port.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the server profile id or the server profile uri.</span>
+<span class="sd">            resource (dict): Object to update.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: The server profile resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default_values</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">id_or_uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.patch"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.patch">[docs]</a>    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs a specific patch operation for the given server profile.</span>
+
+<span class="sd">        The supported operation is:</span>
+<span class="sd">            Update the server profile from the server profile template.</span>
+<span class="sd">                Operation: replace | Path: /templateCompliance | Value: Compliant</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri:</span>
+<span class="sd">                Could be either the server profile id or the server profile uri</span>
+<span class="sd">            operation:</span>
+<span class="sd">                The type of operation: one of &quot;add&quot;, &quot;copy&quot;, &quot;move&quot;, &quot;remove&quot;, &quot;replace&quot;, or &quot;test&quot;.</span>
+<span class="sd">            path:</span>
+<span class="sd">                The JSON path the operation is to use. The exact meaning depends on the type of operation.</span>
+<span class="sd">            value:</span>
+<span class="sd">                The value to add or replace for &quot;add&quot; and &quot;replace&quot; operations, or the value to compare against</span>
+<span class="sd">                for a &quot;test&quot; operation. Not used by &quot;copy&quot;, &quot;move&quot;, or &quot;remove&quot;.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Server profile resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.delete"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deletes a server profile object from the appliance based on its server profile UUID.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resource (dict): Object to delete.</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Indicating if the server profile was successfully deleted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.delete_all"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.delete_all">[docs]</a>    <span class="k">def</span> <span class="nf">delete_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deletes all Server Profile objects from the appliance that match the provided filter. Filters are supported</span>
+<span class="sd">        for the following profile attributes only - name, description, serialnumber, uuid, mactype, wwntype,</span>
+<span class="sd">        serialnumbertype, status and state.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; server_profile_client.delete_all(filter=&quot;name=&#39;Exchange Server&#39;&quot;)</span>
+<span class="sd">            # Remove all profiles that match the name &quot;Exchange Server&quot;</span>
+
+<span class="sd">            &gt;&gt;&gt; server_profile_client.delete_all(filter=&quot;name matches&#39;%25Database%25&#39;&quot;)</span>
+<span class="sd">            # Remove all profiles that have the word &quot;Database&quot; in its name</span>
+
+<span class="sd">        The filter function here operates very similar to the function defined for GET Server Profiles. It allows</span>
+<span class="sd">        for both actual and partial matches of data in the profile. Any requests that wish to use a wildcard match</span>
+<span class="sd">        must include a %25 as illustrated in the example. This is how that character is encoded for transmission to</span>
+<span class="sd">        the appliance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filter (dict): Object to delete.</span>
+<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Indicating if the server profile was successfully deleted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">delete_all</span><span class="p">(</span><span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets a list of server profile based on optional sorting and filtering, and constrained by start and</span>
+<span class="sd">        count parameters.</span>
+<span class="sd">        Gets a list of server profiles based on optional sorting and filtering, and constrained by start and count</span>
+<span class="sd">        parameters. Providing a -1 for the count parameter will restrict the result set size to 64 server profiles.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start:</span>
+<span class="sd">                The first item to return, using 0-based indexing.</span>
+<span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
+<span class="sd">            count:</span>
+<span class="sd">                The number of resources to return.</span>
+<span class="sd">                Providing a -1 for the count parameter will restrict the result set size to 64 server profile</span>
+<span class="sd">                templates. The maximum number of profile templates is restricted to 256, i.e., if user requests more</span>
+<span class="sd">                than 256, this will be internally limited to 256.</span>
+<span class="sd">                The actual number of items in the response may differ from the</span>
+<span class="sd">                requested count if the sum of start and count exceed the total number of items, or if returning the</span>
+<span class="sd">                requested number of items would take too long.</span>
+<span class="sd">            filter:</span>
+<span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
+<span class="sd">                default is no filter - all resources are returned.</span>
+<span class="sd">                Filters are supported for the name, description, serialNumber, uuid, affinity, macType, wwnType,</span>
+<span class="sd">                serialNumberType, serverProfileTemplateUri, templateCompliance, status and state attributes.</span>
+<span class="sd">            sort:</span>
+<span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
+<span class="sd">                on create time, with the oldest entry first.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of server profiles.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.get"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves a server profile managed by the appliance by ID or by uri.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the server profile resource id or uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: The server profile resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="o">=</span><span class="n">id_or_uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.get_by"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.get_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all server profile that matches a specified filter.</span>
+
+<span class="sd">        The search is case insensitive.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            field: Field name to filter.</span>
+<span class="sd">            value: Value to filter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of server profiles.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.get_by_name"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.get_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets a server profile by name.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: Name of the server profile.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: The server profile resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_by_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.get_schema"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.get_schema">[docs]</a>    <span class="k">def</span> <span class="nf">get_schema</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates the ServerProfile schema.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: The server profile schema.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_schema</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.get_compliance_preview"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.get_compliance_preview">[docs]</a>    <span class="k">def</span> <span class="nf">get_compliance_preview</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the preview of manual and automatic updates required to make the server profile</span>
+<span class="sd">        consistent with its template.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the server profile resource id or uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Server profile compliance preview.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/compliance-preview&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.get_profile_ports"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.get_profile_ports">[docs]</a>    <span class="k">def</span> <span class="nf">get_profile_ports</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the port model associated with a server or server hardware type and enclosure group.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            enclosureGroupUri (str):</span>
+<span class="sd">                The URI of the enclosure group associated with the resource.</span>
+<span class="sd">            serverHardwareTypeUri (str):</span>
+<span class="sd">                The URI of the server hardware type associated with the resource.</span>
+<span class="sd">            serverHardwareUri (str):</span>
+<span class="sd">                The URI of the server hardware associated with the resource.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Profile port.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_uri_with_query_string</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="s1">&#39;/profile-ports&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.get_messages"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.get_messages">[docs]</a>    <span class="k">def</span> <span class="nf">get_messages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve the error or status messages associated with the specified profile.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Could be either the server profile resource id or uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Server Profile Health.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/messages&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.get_transformation"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.get_transformation">[docs]</a>    <span class="k">def</span> <span class="nf">get_transformation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transforms an existing profile by supplying a new server hardware type and/or enclosure group. A profile</span>
+<span class="sd">        will be returned with a new configuration based on the capabilities of the supplied server hardware type</span>
+<span class="sd">        and/or enclosure group. All deployed connections will have their port assignment set to &#39;Auto&#39;.</span>
+<span class="sd">        Re-selection of the server hardware may also be required. The new profile can subsequently be used for update</span>
+<span class="sd">        the server profile but is not guaranteed to pass validation. Any incompatibilities will be flagged when the</span>
+<span class="sd">        transformed server profile is submitted.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri:</span>
+<span class="sd">                Could be either the server profile resource id or uri.</span>
+<span class="sd">            enclosureGroupUri (str):</span>
+<span class="sd">                The URI of the enclosure group associated with the resource.</span>
+<span class="sd">            serverHardwareTypeUri (str):</span>
+<span class="sd">                The URI of the server hardware type associated with the resource.</span>
+<span class="sd">            serverHardwareUri (str):</span>
+<span class="sd">                The URI of the server hardware associated with the resource.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Server Profile.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_uri_with_query_string</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="s1">&#39;/transformation&#39;</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.get_available_networks"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.get_available_networks">[docs]</a>    <span class="k">def</span> <span class="nf">get_available_networks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the list of Ethernet networks, Fibre Channel networks and network sets that are available to a</span>
+<span class="sd">        server profile along with their respective ports.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">           enclosureGroupUri (str):</span>
+<span class="sd">               The URI of the enclosure group associated with the resource.</span>
+<span class="sd">           functionType (str):</span>
+<span class="sd">               The FunctionType (Ethernet or FibreChannel) to filter the list of networks returned.</span>
+<span class="sd">           serverHardwareTypeUri (str):</span>
+<span class="sd">               The URI of the server hardware type associated with the resource.</span>
+<span class="sd">           serverHardwareUri (str):</span>
+<span class="sd">               The URI of the server hardware associated with the resource.</span>
+<span class="sd">           view (str):</span>
+<span class="sd">               Return a specific subset of the attributes of the resource or collection, by specifying the name of a</span>
+<span class="sd">               predefined view. The default view is expand - show all attributes of the resource and all elements of</span>
+<span class="sd">               collections of resources.</span>
+
+<span class="sd">               Values:</span>
+<span class="sd">                   Ethernet</span>
+<span class="sd">                       Specifies that the connection is to an Ethernet network or a network set.</span>
+<span class="sd">                   FibreChannel</span>
+<span class="sd">                       Specifies that the connection is to a Fibre Channel network.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: Available networks.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_uri_with_query_string</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="s1">&#39;/available-networks&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.get_available_servers"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.get_available_servers">[docs]</a>    <span class="k">def</span> <span class="nf">get_available_servers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the list of available servers.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">           enclosureGroupUri (str):</span>
+<span class="sd">               The URI of the enclosure group associated with the resource.</span>
+<span class="sd">           serverHardwareTypeUri (str):</span>
+<span class="sd">               The URI of the server hardware type associated with the resource.</span>
+<span class="sd">           profileUri (str):</span>
+<span class="sd">               The URI of the server profile resource.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: Available servers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_uri_with_query_string</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="s1">&#39;/available-servers&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.get_available_storage_system"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.get_available_storage_system">[docs]</a>    <span class="k">def</span> <span class="nf">get_available_storage_system</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve a specific storage system and its associated volumes that are available to the server profile based</span>
+<span class="sd">        on the given server hardware type and enclosure group.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">           enclosureGroupUri (str):</span>
+<span class="sd">               The URI of the enclosure group associated with the resource.</span>
+<span class="sd">           serverHardwareTypeUri (str):</span>
+<span class="sd">               The URI of the server hardware type associated with the resource.</span>
+<span class="sd">           storageSystemId (str):</span>
+<span class="sd">               The storage system ID associated with the resource.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Available storage system.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_uri_with_query_string</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="s1">&#39;/available-storage-system&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.get_available_storage_systems"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.get_available_storage_systems">[docs]</a>    <span class="k">def</span> <span class="nf">get_available_storage_systems</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the list of the storage systems and their associated volumes that are available to the server profile</span>
+<span class="sd">        based on the given server hardware type and enclosure group.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">           count:</span>
+<span class="sd">               The number of resources to return. A count of -1 requests all the items. The actual number of items in</span>
+<span class="sd">               the response may differ from the requested count if the sum of start and count exceed the total</span>
+<span class="sd">               number of items.</span>
+<span class="sd">           start:</span>
+<span class="sd">               The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the</span>
+<span class="sd">               first available item.</span>
+<span class="sd">           filter:</span>
+<span class="sd">               A general filter/query string to narrow the list of items returned. The default is no filter - all</span>
+<span class="sd">               resources are returned.</span>
+<span class="sd">           sort:</span>
+<span class="sd">               The sort order of the returned data set. By default, the sort order is based on create time, with the</span>
+<span class="sd">               oldest entry first.</span>
+<span class="sd">           enclosureGroupUri (str):</span>
+<span class="sd">               The URI of the enclosure group associated with the resource.</span>
+<span class="sd">           serverHardwareTypeUri (str):</span>
+<span class="sd">               The URI of the server hardware type associated with the resource.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: Available storage systems.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_uri_with_query_string</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="s1">&#39;/available-storage-systems&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfiles.get_available_targets"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.get_available_targets">[docs]</a>    <span class="k">def</span> <span class="nf">get_available_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves a list of the target servers and empty device bays that are available for assignment to the server</span>
+<span class="sd">        profile.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">           enclosureGroupUri (str):</span>
+<span class="sd">               The URI of the enclosure group associated with the resource.</span>
+<span class="sd">           serverHardwareTypeUri (str):</span>
+<span class="sd">               The URI of the server hardware type associated with the resource.</span>
+<span class="sd">           profileUri (str):</span>
+<span class="sd">               The URI of the server profile associated with the resource</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: List of available servers and bays.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_uri_with_query_string</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="s1">&#39;/available-targets&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__build_uri_with_query_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">sufix_path</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span>
+        <span class="k">if</span> <span class="n">id_or_uri</span><span class="p">:</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span>
+
+        <span class="n">query_string</span> <span class="o">=</span> <span class="s1">&#39;&amp;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">uri</span> <span class="o">+</span> <span class="n">sufix_path</span> <span class="o">+</span> <span class="s1">&#39;?&#39;</span> <span class="o">+</span> <span class="n">query_string</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Hewlett Packard Enterprise.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
