@@ -10,7 +10,7 @@
 *.egg
 *.egg-info
 dist
-build
+build/*
 eggs
 parts
 bin
@@ -55,3 +55,9 @@ env
 
 #Global configuration to run examples
 examples/config.json
+
+#sphinx generated files
+docs/build/*
+docs/source/*
+!docs/source/conf.py
+!docs/source/index.rst
