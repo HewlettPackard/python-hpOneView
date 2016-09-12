@@ -50,7 +50,7 @@ try:
     tasks = oneview_client.tasks.get("36BD6806-71CD-4F1B-AA12-5E3E67379659")
     pprint(tasks)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get a tree of tasks with specified filter
 print("Get a tree of tasks")

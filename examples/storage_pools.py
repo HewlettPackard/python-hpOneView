@@ -109,7 +109,7 @@ try:
         storage_pool_by_id['name'], storage_pool_by_id['uri']))
     pprint(storage_pool_by_id)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Remove storage pool
 if storage_pool_add:

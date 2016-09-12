@@ -57,7 +57,7 @@ try:
         'e28949fa-8681-433d-9808-a9146feb8048')
     pprint(interconnect_types_byid, depth=1)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get by name
 try:
@@ -66,4 +66,4 @@ try:
         'name', 'HP VC Flex-10 Enet Module')[0]
     pprint(interconnect_type_byname, depth=1)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)

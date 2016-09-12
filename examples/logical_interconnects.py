@@ -140,7 +140,7 @@ try:
     interconnect_snmp = logical_interconnect['snmpConfiguration']
     print("  Updated SNMP configuration at uri: {uri}\n  with 'enabled': '{enabled}'".format(**interconnect_snmp))
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get a collection of uplink ports from the member interconnects which are eligible for assignment to an analyzer port
 print("Get a collection of uplink ports from the member interconnects which are eligible for assignment to "
@@ -162,7 +162,7 @@ try:
     print("  Updated port monitor at uri: {uri}\n  with 'enablePortMonitor': '{enablePortMonitor}'".format(
         **monitor_configuration))
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get the telemetry configuration of the logical interconnect
 print("Get the telemetry configuration of the logical interconnect")
@@ -218,4 +218,4 @@ try:
     li = oneview_client.logical_interconnects.update_qos_aggregated_configuration(logical_interconnect['uri'], qos)
     pprint(li['qosConfiguration'])
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)

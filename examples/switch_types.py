@@ -57,7 +57,7 @@ try:
         'deb37db8-7822-4adb-8c1d-0c34d2fc11ca')
     pprint(switch_types_byid, depth=1)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get by name
 print("Get a switch_types by name")

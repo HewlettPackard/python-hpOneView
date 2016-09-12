@@ -58,7 +58,7 @@ try:
         server_hardware_id)
     pprint(server_utilization)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get Statistics specifying parameters
 print("Get server-hardware statistics specifying parameters")
@@ -69,7 +69,7 @@ try:
                                                                         view='day')
     pprint(server_utilization)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get list of all server hardware resources
 print("Get list of all server hardware resources")
@@ -100,7 +100,7 @@ try:
         server_hardware_id)
     pprint(bios)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get the settings that describe the environmental configuration of server
 print(
@@ -119,7 +119,7 @@ try:
     server_updated_encConf = oneview_client.server_hardware.update_environmental_configuration(configuration,
                                                                                                server_hardware_id)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get URL to launch SSO session for iLO web interface
 ilo_sso_url = oneview_client.server_hardware.get_ilo_sso_url(server['uri'])
@@ -146,7 +146,7 @@ try:
     server_power = oneview_client.server_hardware.update_power_state(configuration, server_hardware_id)
     print("Successfully changed the power state of server '{name}' to '{powerState}'".format(**server_power))
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Refresh server state
 try:
@@ -157,7 +157,7 @@ try:
     print("Successfully refreshed the state of the server at:\n   'uri': '{}'".format(
         server_refresh['uri']))
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get URL to launch SSO session for iLO Integrated Remote Console
 # Application (IRC)

@@ -129,7 +129,7 @@ try:
     successfully_collected_ids = oneview_client.id_pools_vwwn_ranges.collect(
         information, vwwn_range['uri'])
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Disable a vwwn range
 information = {
