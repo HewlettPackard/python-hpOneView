@@ -83,6 +83,7 @@
                 <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">hpOneView.resources.facilities package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.facilities.datacenters">hpOneView.resources.facilities.datacenters module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.facilities.power_devices">hpOneView.resources.facilities.power_devices module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.facilities.racks">hpOneView.resources.facilities.racks module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.facilities">Module contents</a></li>
@@ -136,6 +137,218 @@
 <h1>hpOneView.resources.facilities package<a class="headerlink" href="#hponeview-resources-facilities-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-hpOneView.resources.facilities.datacenters">
+<span id="hponeview-resources-facilities-datacenters-module"></span><h2>hpOneView.resources.facilities.datacenters module<a class="headerlink" href="#module-hpOneView.resources.facilities.datacenters" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.facilities.datacenters.Datacenters">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.facilities.datacenters.</code><code class="descname">Datacenters</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/facilities/datacenters.html#Datacenters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.facilities.datacenters.Datacenters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="hpOneView.resources.facilities.datacenters.Datacenters.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/datacenters'</em><a class="headerlink" href="#hpOneView.resources.facilities.datacenters.Datacenters.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.facilities.datacenters.Datacenters.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>information</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/facilities/datacenters.html#Datacenters.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.facilities.datacenters.Datacenters.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a data center resource based upon the attributes specified.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>information</strong> &#8211; Data center information</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+in OneView, just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Added data center.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.facilities.datacenters.Datacenters.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/facilities/datacenters.html#Datacenters.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.facilities.datacenters.Datacenters.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a single data center resource based upon its ID or URI.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the data center id or the data center uri.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The data center.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.facilities.datacenters.Datacenters.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/facilities/datacenters.html#Datacenters.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.facilities.datacenters.Datacenters.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a set of data center resources according to the specified parameters. Filters can be used to get a specific
+set of data centers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> &#8211; <p>The first item to return, using 0-based indexing.</p>
+<p>If not specified, the default is 0 - start with the first available item.</p>
+</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
+The actual number of items in the response may differ from the requested
+count if the sum of start and count exceed the total number of items.</li>
+<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
+default is no filter - all resources are returned.</li>
+<li><strong>query</strong> &#8211; A general query string to narrow the list of resources returned. The default
+is no query - all resources are returned.</li>
+<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+on create time, with the oldest entry first.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">List of data centers.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.facilities.datacenters.Datacenters.get_by">
+<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/facilities/datacenters.html#Datacenters.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.facilities.datacenters.Datacenters.get_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all data centers that match the filter.</p>
+<p>The search is case insensitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>field</strong> &#8211; Field name to filter.</li>
+<li><strong>value</strong> &#8211; Value to filter.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">List of data centers.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.facilities.datacenters.Datacenters.get_visual_content">
+<code class="descname">get_visual_content</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/facilities/datacenters.html#Datacenters.get_visual_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.facilities.datacenters.Datacenters.get_visual_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list of visual content objects describing each rack within the data center. The response aggregates data
+center and rack data with a specified metric (peak24HourTemp) to provide simplified access to display data for
+the data center.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of visual content objects.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.facilities.datacenters.Datacenters.remove">
+<code class="descname">remove</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/facilities/datacenters.html#Datacenters.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.facilities.datacenters.Datacenters.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes the resource specified.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to remove.</li>
+<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with network connectivity or errors on the
+resource itself. The default is false.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+in OneView, just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Returns: Result status.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.facilities.datacenters.Datacenters.remove_all">
+<code class="descname">remove_all</code><span class="sig-paren">(</span><em>filter</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/facilities/datacenters.html#Datacenters.remove_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.facilities.datacenters.Datacenters.remove_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes the set of datacenters according to the specified parameters. A filter is required to identify the set
+of resources to be deleted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items that will be removed.</li>
+<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with
+network connectivity or errors on the resource itself. The default is false.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+in OneView, just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">operation success</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.facilities.datacenters.Datacenters.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/facilities/datacenters.html#Datacenters.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.facilities.datacenters.Datacenters.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the specified data center resource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+in OneView, just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated data center.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-hpOneView.resources.facilities.power_devices">
 <span id="hponeview-resources-facilities-power-devices-module"></span><h2>hpOneView.resources.facilities.power_devices module<a class="headerlink" href="#module-hpOneView.resources.facilities.power_devices" title="Permalink to this headline">¶</a></h2>
