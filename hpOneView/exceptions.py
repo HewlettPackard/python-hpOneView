@@ -11,6 +11,7 @@ from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
 from future import standard_library
+
 standard_library.install_aliases()
 
 __title__ = 'exceptions'
@@ -19,6 +20,7 @@ __copyright__ = '(C) Copyright (2012-2015) Hewlett Packard Enterprise ' \
                 ' Development LP'
 __license__ = 'MIT'
 __status__ = 'Development'
+
 
 ###
 # (C) Copyright (2012-2015) Hewlett Packard Enterprise Development LP
@@ -44,7 +46,6 @@ __status__ = 'Development'
 
 
 class HPOneViewException(Exception):
-
     def __init__(self, msg):
         self.msg = msg
         Exception.__init__(self, msg)
@@ -55,7 +56,9 @@ class HPOneViewInvalidResource(HPOneViewException):
 
 
 class HPOneViewTaskError(HPOneViewException):
-    pass
+    def __init__(self, msg, error_code=None):
+        super(HPOneViewTaskError, self).__init__(msg)
+        self.error_code = error_code
 
 
 class HPOneViewUnknownType(HPOneViewException):

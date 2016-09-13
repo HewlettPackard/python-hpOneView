@@ -188,8 +188,28 @@ class TaskMonitorTest(unittest.TestCase):
             self.task_monitor.wait_for_task(task.copy())
         except HPOneViewTaskError as e:
             self.assertEqual("Error Message", e.msg)
+            self.assertEqual(None, e.error_code)
         else:
-            self.fail()
+            self.fail("Expected exception not raised")
+
+    @mock.patch.object(TaskMonitor, 'is_task_running')
+    @mock.patch.object(TaskMonitor, 'get')
+    def test_wait_for_task_with_error_message_and_error_code(self, mock_get, mock_is_running):
+
+        task = {"uri": "uri",
+                "taskState": "Error",
+                "taskErrors": [{"message": "Error Message", "errorCode": "ProfileAlreadyExistsInServer"}]}
+
+        mock_is_running.return_value = False
+        mock_get.return_value = task
+
+        try:
+            self.task_monitor.wait_for_task(task.copy())
+        except HPOneViewTaskError as e:
+            self.assertEqual("Error Message", e.msg)
+            self.assertEqual("ProfileAlreadyExistsInServer", e.error_code)
+        else:
+            self.fail("Expected exception not raised")
 
     def test_wait_for_task_empty(self):
         try:
