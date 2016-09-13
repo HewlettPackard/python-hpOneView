@@ -75,17 +75,17 @@ class ConnectionTemplates(object):
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
-    def get(self, id):
+    def get(self, id_or_uri):
         """
-        Gets the connection template with the specified ID.
+        Gets the connection template with the specified ID or URI.
 
         Args:
-            id: ID of connection template.
+            id_or_uri: ID or URI of connection template.
 
         Returns:
-            dict:
+            dict: the connection template
         """
-        return self._client.get(id)
+        return self._client.get(id_or_uri)
 
     def get_by(self, field, value):
         """

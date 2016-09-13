@@ -126,6 +126,14 @@ class SanManagersTest(TestCase):
         mock_get_by_name.assert_called_once_with(provider_name)
 
     @mock.patch.object(ResourceClient, 'get_by_name')
+    def test_get_default_connection_info_with_empty_provider(self, mock_get_by_name):
+        provider_name = "Brocade Network Advisor"
+        mock_get_by_name.return_value = None
+        provider = self._resource.get_default_connection_info(provider_name)
+        self.assertFalse(provider)
+        mock_get_by_name.assert_called_once_with(provider_name)
+
+    @mock.patch.object(ResourceClient, 'get_by_name')
     def test_get_provider_uri(self, mock_get_by_name):
         provider_name = "Brocade Network Advisor"
         self._resource.get_provider_uri(provider_name)
