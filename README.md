@@ -46,7 +46,7 @@ Coming soon
 API Implementation
 ------------------
 
-Status listing of the HPE OneView REST interfaces that have been implemented in the Python library so far is hosted in the [Wiki section](https://github.com/HewlettPackard/python-hpOneView/wiki/API-Implementation) 
+Status listing of the HPE OneView REST interfaces that have been implemented in the Python library so far is hosted in the [Wiki section](https://github.com/HewlettPackard/python-hpOneView/wiki/API-Implementation)
 
 
 Logging
@@ -54,3 +54,20 @@ Logging
 
 This module uses Python’s Standard Library logging module. An example of how to configure logging was provided on ```/examples/logger.py ```.
 To see more configuration options, look at [configuring logging](https://docs.python.org/3/howto/logging.html#configuring-logging)
+
+Configuration
+-------------
+
+After installing the Python SDK you need to create a file with OneView setting the OneView connection properties before running the examples or developing your own scripts. You can find an example of this file accessing the
+[OneView configuration sample]( https://github.com/HewlettPackard/python-hpOneView/blob/master/examples/config-rename.json).
+
+### Proxy
+
+If you want to configure a proxy, you just need to set this line in the configuration file:
+```json
+{
+  ...
+  "proxy": "<proxy_host>:<proxy_port>"
+  ...
+}
+```
