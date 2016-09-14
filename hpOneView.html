@@ -436,13 +436,26 @@ to be uploaded as files</p>
 <p>This module implements exceptions HPE OneView REST API</p>
 <dl class="exception">
 <dt id="hpOneView.exceptions.HPOneViewException">
-<em class="property">exception </em><code class="descclassname">hpOneView.exceptions.</code><code class="descname">HPOneViewException</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/exceptions.html#HPOneViewException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.exceptions.HPOneViewException" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="descclassname">hpOneView.exceptions.</code><code class="descname">HPOneViewException</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/exceptions.html#HPOneViewException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.exceptions.HPOneViewException" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+<p>OneView base Exception.</p>
+<dl class="attribute">
+<dt id="hpOneView.exceptions.HPOneViewException.msg">
+<code class="descname">msg</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewException.msg" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; Exception message.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.exceptions.HPOneViewException.oneview_response">
+<code class="descname">oneview_response</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewException.oneview_response" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict</em> &#8211; OneView rest response.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="exception">
 <dt id="hpOneView.exceptions.HPOneViewInvalidResource">
-<em class="property">exception </em><code class="descclassname">hpOneView.exceptions.</code><code class="descname">HPOneViewInvalidResource</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/exceptions.html#HPOneViewInvalidResource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.exceptions.HPOneViewInvalidResource" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="descclassname">hpOneView.exceptions.</code><code class="descname">HPOneViewInvalidResource</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/exceptions.html#HPOneViewInvalidResource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.exceptions.HPOneViewInvalidResource" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#hpOneView.exceptions.HPOneViewException" title="hpOneView.exceptions.HPOneViewException"><code class="xref py py-class docutils literal"><span class="pre">hpOneView.exceptions.HPOneViewException</span></code></a></p>
 </dd></dl>
 
@@ -454,13 +467,13 @@ to be uploaded as files</p>
 
 <dl class="exception">
 <dt id="hpOneView.exceptions.HPOneViewTimeout">
-<em class="property">exception </em><code class="descclassname">hpOneView.exceptions.</code><code class="descname">HPOneViewTimeout</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/exceptions.html#HPOneViewTimeout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.exceptions.HPOneViewTimeout" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="descclassname">hpOneView.exceptions.</code><code class="descname">HPOneViewTimeout</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/exceptions.html#HPOneViewTimeout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.exceptions.HPOneViewTimeout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#hpOneView.exceptions.HPOneViewException" title="hpOneView.exceptions.HPOneViewException"><code class="xref py py-class docutils literal"><span class="pre">hpOneView.exceptions.HPOneViewException</span></code></a></p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="hpOneView.exceptions.HPOneViewUnknownType">
-<em class="property">exception </em><code class="descclassname">hpOneView.exceptions.</code><code class="descname">HPOneViewUnknownType</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/exceptions.html#HPOneViewUnknownType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.exceptions.HPOneViewUnknownType" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="descclassname">hpOneView.exceptions.</code><code class="descname">HPOneViewUnknownType</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/exceptions.html#HPOneViewUnknownType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.exceptions.HPOneViewUnknownType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#hpOneView.exceptions.HPOneViewException" title="hpOneView.exceptions.HPOneViewException"><code class="xref py py-class docutils literal"><span class="pre">hpOneView.exceptions.HPOneViewException</span></code></a></p>
 </dd></dl>
 
