@@ -56,15 +56,15 @@ class Enclosures(object):
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items.
-                The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items.
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: A list of Enclosures.
@@ -73,9 +73,9 @@ class Enclosures(object):
 
     def get_by(self, field, value):
         """
-        Get all Enclosures that matches the filter.
+        Gets all Enclosures that match the filter.
 
-        The search is case insensitive.
+        The search is case-insensitive.
 
         Args:
             field: Field name to filter.
@@ -88,13 +88,13 @@ class Enclosures(object):
 
     def add(self, information, timeout=-1):
         """
-        Takes information about an enclosure (e.g. IP address, username, password) and uses
+        Takes information about an enclosure (for example: IP address, username, password) and uses
         it to claim/configure the enclosure and add its components to the appliance.
 
         Args:
             information: Enclosure information to add.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Enclosure.
@@ -121,12 +121,12 @@ class Enclosures(object):
         Only one operation can be performed in each PATCH call.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
+            id_or_uri: Can be either the resource ID or the resource URI.
             operation: Patch operation
             path: Path
             value: Value
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Updated resource.
@@ -135,35 +135,34 @@ class Enclosures(object):
 
     def remove(self, resource, force=False, timeout=-1):
         """
-        Removes and unconfigures the specified enclosure from the appliance. All components of the enclosure (e.g.
-        blades and interconnects) are unconfigured/removed as part of this process.
+        Removes and unconfigures the specified enclosure from the appliance. All components of the enclosure (for
+        example: blades and interconnects) are unconfigured/removed as part of this process.
 
-        If the force option is set to "true" then any errors encountered as part of unconfiguring the enclosure or its
+        If the force option is set to "true", then any errors encountered as part of unconfiguring the enclosure or its
         components are ignored and the enclosure is removed regardless of any errors that occur.
 
         Args:
-            resource: dict object to delete
+            resource: Dict object to delete;
             force:
-                 If set to true the operation completes despite any problems with
+                 If set to true, the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
-            bool: Indicating if the resource was successfully removed.
+            bool: Indicates if the resource was successfully removed.
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
     def update_configuration(self, id_or_uri, timeout=-1):
         """
         Reapplies the appliance's configuration on the enclosure. This includes running the same configure steps
-        that were performed as part of the enclosure add. A task is returned to the caller which can be used to
-        track the progress of the operation.
+        that were performed as part of the enclosure add.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            id_or_uri: Can be either the resource ID or the resource URI.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             Enclosure
@@ -177,7 +176,7 @@ class Enclosures(object):
         maximum power, location & dimensions, ...) of the enclosure resource.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri.
+            id_or_uri: Can be either the resource ID or the resource URI.
 
         Returns:
             Settings that describe the environmental configuration.
@@ -190,10 +189,10 @@ class Enclosures(object):
         Sets the calibrated max power of an unmanaged or unsupported enclosure.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri.
+            id_or_uri: Can be either the resource ID or the resource URI.
             configuration: Configuration
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             Settings that describe the environmental configuration.
@@ -205,15 +204,14 @@ class Enclosures(object):
         """
         Refreshes the enclosure along with all of its components, including interconnects and servers. Any new
         hardware is added and any hardware that is no longer present within the enclosure is removed. The
-        "refreshStateConfig" passed in must have the "refreshState" field set to "Refreshing" and optionally
-        provide information to re-claim the enclosure (e.g. IP address, user name, password, etc.). A task is
-        returned to the caller which can be used to track the progress of the operation.
+        configuration dict must have the "refreshState" field set to "Refreshing" and optionally
+        provide information to re-claim the enclosure (for example: IP address, user name, password, etc.).
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
+            id_or_uri: Can be either the resource ID or the resource URI.
             configuration: Configuration
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             Enclosure
@@ -226,7 +224,7 @@ class Enclosures(object):
         Gets the script of the enclosure.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri.
+            id_or_uri: Can be either the resource ID or the resource URI.
 
         Returns:
             Enclosure script.
@@ -240,7 +238,7 @@ class Enclosures(object):
         log in to the enclosure without providing credentials. This API is currently only supported by C7000 enclosures.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri.
+            id_or_uri: Can be either the resource ID or the resource URI.
             role: Role
 
         Returns:
@@ -254,8 +252,8 @@ class Enclosures(object):
         Retrieves historical utilization data for the specified enclosure, metrics, and time span.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri.
-            fields: Name of the metric(s) to be retrieved in the format METRIC[,METRIC]...
+            id_or_uri: Can be either the resource ID or the resource URI.
+            fields: Name of the metrics to be retrieved in the format METRIC[,METRIC]...
 
                 If unspecified, all metrics supported are returned.
 
@@ -314,13 +312,13 @@ class Enclosures(object):
                 hour
                     Resolution of the samples returned will be one sample for each 60-minute time period. Samples are
                     calculated by averaging the available 5-minute data samples that occurred within the hour, except
-                    for PeakPower which is calculated by reporting the peak observed 5-minute sample value data during
+                    for PeakPower, which is calculated by reporting the peak observed 5-minute sample value data during
                     the hour. Samples at this resolution are retained up to three years.
                 day
                     Resolution of the samples returned will be one sample for each 24-hour time period. One day is a
-                    24-hour period that starts at midnight GMT regardless of the time zone in which the appliance or
+                    24-hour period that starts at midnight GMT, regardless of the time zone in which the appliance or
                     client is located. Samples are calculated by averaging the available 5-minute data samples that
-                    occurred during the day, except for PeakPower which is calculated by reporting the peak observed
+                    occurred during the day, except for PeakPower, which is calculated by reporting the peak observed
                     5-minute sample value data during the day. Samples at this resolution are retained up to three
                     years.
 

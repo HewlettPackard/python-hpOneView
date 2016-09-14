@@ -51,14 +51,11 @@ class ServerProfiles(object):
 
     def create(self, resource, timeout=-1):
         """
-        Creates a server profile using the information provided in the resource parameter. Connection requests can be
-        one of the following types - port auto, auto and explicit. An explicit request is where the request includes
-        the adapter, port and flexNic. An auto request is where none of the three are specified and a port auto
-        request is where just the adapter and port are specified.
+        Creates a server profile using the information provided in the resource parameter.
 
         Args:
             resource (dict): Object to create.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView, just stop waiting for its completion.
 
         Returns:
@@ -70,16 +67,10 @@ class ServerProfiles(object):
 
     def update(self, resource, id_or_uri):
         """
-        Allows a server profile object to have its configuration modified. These modifications can be as simple as a
-        name or description change or much more complex changes around the assigned server and networking configuration.
-        It should be noted that selection of a virtual or physical MAC or Serial Number is not mutable once a profile
-        has been created, and attempts to change those elements will not be applied to the target profile. Connection
-        requests can be one of the following types - port Auto, auto and explicit. An explicit request is where the
-        request portId parameter includes the adapter, port and flexNic. An auto request is where portId is set to
-        "Auto" and a port auto request is where just the portId parameter includes just the adapter and port.
+        Allows the configuration of a server profile object to be modified.
 
         Args:
-            id_or_uri: Could be either the server profile id or the server profile uri.
+            id_or_uri: Can be either the server profile id or the server profile uri.
             resource (dict): Object to update.
 
         Returns:
@@ -99,7 +90,7 @@ class ServerProfiles(object):
 
         Args:
             id_or_uri:
-                Could be either the server profile id or the server profile uri
+                Can be either the server profile id or the server profile uri
             operation:
                 The type of operation: one of "add", "copy", "move", "remove", "replace", or "test".
             path:
@@ -119,19 +110,20 @@ class ServerProfiles(object):
 
         Args:
             resource (dict): Object to delete.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
-            bool: Indicating if the server profile was successfully deleted.
+            bool: Indicates whether the server profile was successfully deleted.
         """
         return self._client.delete(resource=resource, timeout=timeout)
 
     def delete_all(self, filter, timeout=-1, force=False):
         """
-        Deletes all Server Profile objects from the appliance that match the provided filter. Filters are supported
-        for the following profile attributes only - name, description, serialnumber, uuid, mactype, wwntype,
-        serialnumbertype, status and state.
+        Deletes all Server Profile objects from the appliance that match the provided filter.
+        Filters are supported only for the following profile attributes:  name, description, serialnumber, uuid,
+        mactype, wwntype, serialnumbertype, status and state.
+
 
         Examples:
             >>> server_profile_client.delete_all(filter="name='Exchange Server'")
@@ -141,26 +133,24 @@ class ServerProfiles(object):
             # Remove all profiles that have the word "Database" in its name
 
         The filter function here operates very similar to the function defined for GET Server Profiles. It allows
-        for both actual and partial matches of data in the profile. Any requests that wish to use a wildcard match
-        must include a %25 as illustrated in the example. This is how that character is encoded for transmission to
-        the appliance.
+        for both actual and partial matches of data in the profile. Any requests that use a wildcard match
+        must include a %25 as illustrated in the previous example. This is how you encode that character for
+        transmission to the appliance.
 
         Args:
             filter (dict): Object to delete.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
-            bool: Indicating if the server profile was successfully deleted.
+            bool: Indicates whether the server profile was successfully deleted.
         """
         return self._client.delete_all(filter=filter, force=force, timeout=timeout)
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a list of server profile based on optional sorting and filtering, and constrained by start and
+        Gets a list of server profile based on optional sorting and filtering and is constrained by start and
         count parameters.
-        Gets a list of server profiles based on optional sorting and filtering, and constrained by start and count
-        parameters. Providing a -1 for the count parameter will restrict the result set size to 64 server profiles.
 
         Args:
             start:
@@ -169,19 +159,19 @@ class ServerProfiles(object):
             count:
                 The number of resources to return.
                 Providing a -1 for the count parameter will restrict the result set size to 64 server profile
-                templates. The maximum number of profile templates is restricted to 256, i.e., if user requests more
+                templates. The maximum number of profile templates is restricted to 256, that is, if user requests more
                 than 256, this will be internally limited to 256.
-                The actual number of items in the response may differ from the
-                requested count if the sum of start and count exceed the total number of items, or if returning the
+                The actual number of items in the response might differ from the
+                requested count if the sum of start and count exceeds the total number of items, or if returning the
                 requested number of items would take too long.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
                 Filters are supported for the name, description, serialNumber, uuid, affinity, macType, wwnType,
                 serialNumberType, serverProfileTemplateUri, templateCompliance, status and state attributes.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: A list of server profiles.
@@ -190,10 +180,10 @@ class ServerProfiles(object):
 
     def get(self, id_or_uri):
         """
-        Retrieves a server profile managed by the appliance by ID or by uri.
+        Retrieves a server profile managed by the appliance by ID or by URI.
 
         Args:
-            id_or_uri: Could be either the server profile resource id or uri.
+            id_or_uri: Can be either the server profile resource ID or URI.
 
         Returns:
             dict: The server profile resource.
@@ -202,9 +192,9 @@ class ServerProfiles(object):
 
     def get_by(self, field, value):
         """
-        Get all server profile that matches a specified filter.
+        Gets all server profile that match a specified filter.
 
-        The search is case insensitive.
+        The search is case-insensitive.
 
         Args:
             field: Field name to filter.
@@ -229,7 +219,7 @@ class ServerProfiles(object):
 
     def get_schema(self):
         """
-        Generates the ServerProfile schema.
+        Generates the Server Profile schema.
 
         Returns:
             dict: The server profile schema.
@@ -242,7 +232,7 @@ class ServerProfiles(object):
         consistent with its template.
 
         Args:
-            id_or_uri: Could be either the server profile resource id or uri.
+            id_or_uri: Can be either the server profile resource ID or URI.
 
         Returns:
             dict: Server profile compliance preview.
@@ -270,10 +260,10 @@ class ServerProfiles(object):
 
     def get_messages(self, id_or_uri):
         """
-        Retrieve the error or status messages associated with the specified profile.
+        Retrieves the error or status messages associated with the specified profile.
 
         Args:
-            id_or_uri: Could be either the server profile resource id or uri.
+            id_or_uri: Can be either the server profile resource ID or URI.
 
         Returns:
             dict: Server Profile Health.
@@ -283,16 +273,17 @@ class ServerProfiles(object):
 
     def get_transformation(self, id_or_uri, **kwargs):
         """
-        Transforms an existing profile by supplying a new server hardware type and/or enclosure group. A profile
-        will be returned with a new configuration based on the capabilities of the supplied server hardware type
-        and/or enclosure group. All deployed connections will have their port assignment set to 'Auto'.
-        Re-selection of the server hardware may also be required. The new profile can subsequently be used for update
-        the server profile but is not guaranteed to pass validation. Any incompatibilities will be flagged when the
+
+        Transforms an existing profile by supplying a new server hardware type or enclosure group or both.
+        A profile will be returned with a new configuration based on the capabilities of the supplied server hardware
+        type or enclosure group or both. The port assignment for all deployed connections will be set to Auto.
+        Re-selection of the server hardware may also be required. The new profile can subsequently be used for updating
+        the server profile, but passing validation is not guaranteed. Any incompatibilities will be flagged when the
         transformed server profile is submitted.
 
         Args:
             id_or_uri:
-                Could be either the server profile resource id or uri.
+                Can be either the server profile resource ID or URI.
             enclosureGroupUri (str):
                 The URI of the enclosure group associated with the resource.
             serverHardwareTypeUri (str):
@@ -308,8 +299,8 @@ class ServerProfiles(object):
 
     def get_available_networks(self, **kwargs):
         """
-        Retrieves the list of Ethernet networks, Fibre Channel networks and network sets that are available to a
-        server profile along with their respective ports.
+        Retrieves the list of Ethernet networks, Fiber Channel networks, and network sets that are available to a
+        server profile, along with their respective ports.
 
         Args:
            enclosureGroupUri (str):
@@ -321,9 +312,9 @@ class ServerProfiles(object):
            serverHardwareUri (str):
                The URI of the server hardware associated with the resource.
            view (str):
-               Return a specific subset of the attributes of the resource or collection, by specifying the name of a
-               predefined view. The default view is expand - show all attributes of the resource and all elements of
-               collections of resources.
+               Returns a specific subset of the attributes of the resource or collection, by specifying the name of a
+               predefined view. The default view is expand (show all attributes of the resource and all elements of
+               collections of resources).
 
                Values:
                    Ethernet
@@ -357,7 +348,7 @@ class ServerProfiles(object):
 
     def get_available_storage_system(self, **kwargs):
         """
-        Retrieve a specific storage system and its associated volumes that are available to the server profile based
+        Retrieves a specific storage system and its associated volumes available to the server profile based
         on the given server hardware type and enclosure group.
 
         Args:
@@ -376,19 +367,19 @@ class ServerProfiles(object):
 
     def get_available_storage_systems(self, start=0, count=-1, filter='', sort='', **kwargs):
         """
-        Retrieves the list of the storage systems and their associated volumes that are available to the server profile
+        Retrieves the list of the storage systems and their associated volumes available to the server profile
         based on the given server hardware type and enclosure group.
 
         Args:
            count:
-               The number of resources to return. A count of -1 requests all the items. The actual number of items in
+               The number of resources to return. A count of -1 requests all items. The actual number of items in
                the response may differ from the requested count if the sum of start and count exceed the total
                number of items.
            start:
                The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
                first available item.
            filter:
-               A general filter/query string to narrow the list of items returned. The default is no filter - all
+               A general filter/query string to narrow the list of items returned. The default is no filter; all
                resources are returned.
            sort:
                The sort order of the returned data set. By default, the sort order is based on create time, with the
@@ -415,7 +406,7 @@ class ServerProfiles(object):
            serverHardwareTypeUri (str):
                The URI of the server hardware type associated with the resource.
            profileUri (str):
-               The URI of the server profile associated with the resource
+               The URI of the server profile associated with the resource.
 
         Returns:
             list: List of available servers and bays.

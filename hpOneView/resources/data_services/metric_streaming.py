@@ -52,26 +52,27 @@ class MetricStreaming(object):
         startTime (str):
             The starting time of the metric collection.
         sampleIntervalInSeconds (int):
-            The starting time of the metric collection.
+            Interval between samples.
         numberOfSamples (int):
             Number of samples in the list for each metric type.
         resourceType (str):
-            Identifies the category of resource. The supported devices are server-hardware, enclosures and power-devices
+            Identifies the resource type.
         resourceDataList (list):
-            Metric sample list
+            Metric sample list.
         uri (str):
-            Canonical URI of the resource
+            Canonical URI of the resource.
         category (str):
-            Identifies the category of resource. The supported devices are server-hardware, enclosures and power-devices
+            Identifies the category of resource. The supported devices are server-hardware, enclosures, and
+            power-devices.
         created (timestamp):
-            Date and time when the resource was created
+            Date and time when the resource was created.
         modified (timestamp):
-            Date and time when the resource was last modified
+            Date and time when the resource was last modified.
         eTag (str):
             Entity tag/version ID of the resource, the same value that is returned in the ETag header on a GET of the
-            resource
+            resource.
         type (str):
-            Uniquely identifies the type of the JSON object
+            Uniquely identifies the type of the JSON object.
 
     """
     URI = '/rest/metrics'
@@ -94,7 +95,7 @@ class MetricStreaming(object):
         Fetches the current configuration for which metrics are being relayed.
 
         Returns:
-            list: List of objects which contain frequency, sample interval and source type for each resource-type.
+            list: List of objects which contain frequency, sample interval, and source type for each resource-type.
 
         """
         return self._client.get(self.URI + "/configuration")
@@ -105,7 +106,7 @@ class MetricStreaming(object):
 
         Args:
             configuration (dict):
-                Dictionary with a list of objects which contain frequency, sample interval and source type for each
+                Dictionary with a list of objects which contain frequency, sample interval, and source type for each
                 resource-type.
 
         Returns:

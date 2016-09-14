@@ -52,7 +52,7 @@ class Switches(object):
         Gets statistics for a switch.
 
         Args:
-            id_or_uri: Could be either the switch id or the switch uri.
+            id_or_uri: Can be either the switch id or the switch uri.
             port_name: switch port number (optional)
 
         Returns:
@@ -74,15 +74,15 @@ class Switches(object):
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items.
-                The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items.
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: A list of rack switches.
@@ -91,10 +91,10 @@ class Switches(object):
 
     def get(self, id_or_uri):
         """
-        Gets a switch by ID or by uri.
+        Gets a switch by ID or by URI.
 
         Args:
-            id_or_uri: Could be either the switch ID or uri.
+            id_or_uri: Can be either the switch ID or URI.
 
         Returns:
             dict: Switch
@@ -108,14 +108,14 @@ class Switches(object):
         Args:
             resource (dict): Object to delete.
             force (bool):
-                 If set to true the operation completes despite any problems with
+                 If set to true, the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
-            bool: Indicating if the resource was successfully deleted.
+            bool: Indicates if the resource was successfully deleted.
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
@@ -124,7 +124,7 @@ class Switches(object):
         Gets the environmental configuration for a switch.
 
         Args:
-            id_or_uri: Could be either the resource id or uri
+            id_or_uri: Can be either the resource ID or URI.
 
         Returns:
             dict: environmental configuration
@@ -134,9 +134,9 @@ class Switches(object):
 
     def get_by(self, field, value):
         """
-        Get all switches that match the filter.
+        Gets all switches that match the filter.
 
-        The search is case insensitive.
+        The search is case-insensitive.
 
         Args:
             field: field name to filter

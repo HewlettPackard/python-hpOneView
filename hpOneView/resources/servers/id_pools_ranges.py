@@ -48,14 +48,14 @@ class IdPoolsRanges(object):
         """
         Creates range.
 
-        A range can be one of two types based upon the range category specified: Generated or Custom. The Generated
+        A range can be one of two types based on the specified range category: Generated or Custom. The Generated
         range type automatically assigns start and end addresses to the range. The Custom range type requires a start
         address to be specified. The end address may also be specified but is optional.
 
         Args:
             resource (dict): Object to create
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Created range.
@@ -70,7 +70,7 @@ class IdPoolsRanges(object):
         range.
 
         Args:
-            id_or_uri: Could be either the range id or uri.
+            id_or_uri: Can be either the range ID or URI.
 
         Returns:
             dict: Range
@@ -83,9 +83,9 @@ class IdPoolsRanges(object):
 
         Args:
             information (dict): Information to update.
-            id_or_uri: Id or uri of range.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            id_or_uri: ID or URI of range.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Updated resource.
@@ -103,14 +103,14 @@ class IdPoolsRanges(object):
             resource (dict):
                 Object to delete
             force (bool):
-                If set to true the operation completes despite any problems with
+                If set to true, the operation completes despite any problems with
                 network connectivity or errors on the resource itself. The default is false.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
-            bool: Indicating if the resource was successfully deleted.
+            bool: Indicates if the resource was successfully deleted.
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
@@ -120,9 +120,9 @@ class IdPoolsRanges(object):
 
         Args:
             id_or_uri:
-                Id or uri of range
+                ID or URI of range.
             count:
-                 The number of resources to return. A count of -1 requests all the items. The actual number of items in
+                 The number of resources to return. A count of -1 requests all items. The actual number of items in
                  the response may differ from the requested count if the sum of start and count exceed the total number
                  of items.
             start:
@@ -146,10 +146,10 @@ class IdPoolsRanges(object):
             information (dict):
                 Information to update. Can result in system specified IDs or the system reserving user-specified IDs.
             id_or_uri:
-                id or uri of vSN range.
+                ID or URI of vSN range.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Allocator
@@ -168,13 +168,13 @@ class IdPoolsRanges(object):
             information (dict):
                 The list of IDs to be collected
             id_or_uri:
-                Id or uri of range
+                ID or URI of range
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
-            dict: collector containing list of collected IDs successfully collected.
+            dict: Collector containing list of collected IDs successfully collected.
         """
         uri = self._client.build_uri(id_or_uri) + "/collector"
 
@@ -182,13 +182,13 @@ class IdPoolsRanges(object):
 
     def get_free_fragments(self, id_or_uri, count=-1, start=0):
         """
-        Gets all the free fragments in a vSN range.
+        Gets all free fragments in a vSN range.
 
         Args:
             id_or_uri:
-                Id or uri of range
+                ID or URI of range.
             count:
-                 The number of resources to return. A count of -1 requests all the items. The actual number of items in
+                 The number of resources to return. A count of -1 requests all items. The actual number of items in
                  the response may differ from the requested count if the sum of start and count exceed the total number
                  of items.
             start:
@@ -196,7 +196,7 @@ class IdPoolsRanges(object):
                 first available item.
 
         Returns:
-            The list of IDs.
+            list: The list of IDs.
         """
         uri = self._client.build_uri(
             id_or_uri) + "/free-fragments?start={0}&count={1}".format(start, count)

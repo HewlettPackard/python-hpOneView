@@ -57,7 +57,7 @@ class LogicalInterconnects(object):
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a list of logical interconnects based on optional sorting and filtering, and constrained by start
+        Gets a list of logical interconnects based on optional sorting and filtering and is constrained by start
         and count parameters.
 
         Args:
@@ -65,15 +65,15 @@ class LogicalInterconnects(object):
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items.
-                The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items.
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: A list of logical interconnects.
@@ -82,10 +82,10 @@ class LogicalInterconnects(object):
 
     def get(self, id_or_uri):
         """
-        Gets a logical interconnect by ID or by uri.
+        Gets a logical interconnect by ID or by URI.
 
         Args:
-            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.
+            id_or_uri: Can be either the logical interconnect id or the logical interconnect uri.
 
         Returns:
             dict: The logical interconnect.
@@ -114,13 +114,13 @@ class LogicalInterconnects(object):
         Any differences identified are corrected, bringing the logical interconnect back to a consistent
         state. Changes are asynchronously applied to all managed interconnects. Note that if the changes detected
         involve differences in the interconnect map between the logical interconnect group and the logical interconnect,
-        the process of bringing the logical interconnect back to a consistent state may involve automatically removing
+        the process of bringing the logical interconnect back to a consistent state might involve automatically removing
         existing interconnects from management and/or adding new interconnects for management.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            id_or_uri: Can be either the resource ID or the resource URI.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Logical Interconnect.
@@ -133,12 +133,12 @@ class LogicalInterconnects(object):
         Updates the Ethernet interconnect settings for the logical interconnect.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
+            id_or_uri: Can be either the resource ID or the resource URI.
             configuration:  Ethernet interconnect settings.
-            force: If set to true the operation completes despite any problems with network connectivity or errors
+            force: If set to true, the operation completes despite any problems with network connectivity or errors
                 on the resource itself. The default is false.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Logical Interconnect.
@@ -151,12 +151,12 @@ class LogicalInterconnects(object):
         Updates internal networks on the logical interconnect.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
+            id_or_uri: Can be either the resource ID or the resource URI.
             network_uri_list: List of Ethernet network uris.
-            force: If set to true the operation completes despite any problems with network connectivity or errors
+            force: If set to true, the operation completes despite any problems with network connectivity or errors
                 on the resource itself. The default is false.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Logical Interconnect.
@@ -169,7 +169,7 @@ class LogicalInterconnects(object):
         Gets the internal VLAN IDs for the provisioned networks on a logical interconnect.
 
         Args:
-            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri
+            id_or_uri: Can be either the logical interconnect group id or the logical interconnect group uri
 
         Returns:
             dict: Collection of URIs
@@ -184,12 +184,12 @@ class LogicalInterconnects(object):
         applied to all managed interconnects.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
+            id_or_uri: Can be either the resource ID or the resource URI.
             settings: Interconnect settings
-            force: If set to true the operation completes despite any problems with network connectivity or errors
+            force: If set to true, the operation completes despite any problems with network connectivity or errors
                 on the resource itself. The default is false.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Logical Interconnect
@@ -208,9 +208,9 @@ class LogicalInterconnects(object):
         Asynchronously applies or re-applies the logical interconnect configuration to all managed interconnects.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            id_or_uri: Can be either the resource ID or the resource URI.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Logical Interconnect.
@@ -223,7 +223,7 @@ class LogicalInterconnects(object):
         Gets the SNMP configuration for a logical interconnect.
 
         Args:
-            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri.
+            id_or_uri: Can be either the logical interconnect group id or the logical interconnect group uri.
 
         Returns:
             dict: SNMP configuration.
@@ -237,7 +237,7 @@ class LogicalInterconnects(object):
         applied to all managed interconnects.
 
         Args:
-            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.
+            id_or_uri: Can be either the logical interconnect id or the logical interconnect uri.
             configuration: snmp configuration.
 
         Returns:
@@ -253,11 +253,11 @@ class LogicalInterconnects(object):
     def get_unassigned_uplink_ports(self, id_or_uri):
         """
         Gets a collection of uplink ports from the member interconnects which are eligible for assignment to an
-        analyzer port. To be eligible a port must be a valid uplink, must not be a member of an existing uplink set
+        analyzer port. To be eligible, a port must be a valid uplink, must not be a member of an existing uplink set,
         and must not currently be used for stacking.
 
         Args:
-            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri.
+            id_or_uri: Can be either the logical interconnect group id or the logical interconnect group uri.
 
         Returns:
             dict: Collection of uplink ports.
@@ -270,7 +270,7 @@ class LogicalInterconnects(object):
         Gets the port monitor configuration of a logical interconnect.
 
         Args:
-            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.
+            id_or_uri: Can be either the logical interconnect id or the logical interconnect uri.
         Returns:
             dict: Port monitor configuration.
         """
@@ -282,7 +282,7 @@ class LogicalInterconnects(object):
         Updates the port monitor configuration of a logical interconnect.
 
         Args:
-            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.
+            id_or_uri: Can be either the logical interconnect id or the logical interconnect uri.
             resource: Port monitor configuration.
 
         Returns:
@@ -319,8 +319,8 @@ class LogicalInterconnects(object):
         Args:
             location_entries (dict): Dictionary with location entries.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Created interconnect.
@@ -332,15 +332,15 @@ class LogicalInterconnects(object):
         Deletes an interconnect from a location.
 
         Warning:
-            This won't delete the LOGICAL INTERCONNECT itself, and may cause inconsistency between the enclosure
+            This won't delete the LOGICAL INTERCONNECT itself and might cause inconsistency between the enclosure
             and Logical Interconnect Group.
 
         Args:
             enclosure_uri: URI of the Enclosure
             bay: Bay
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             bool: Indicating if the interconnect was successfully deleted.
@@ -355,7 +355,7 @@ class LogicalInterconnects(object):
         Gets the installed firmware for a logical interconnect.
 
         Args:
-            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.
+            id_or_uri: Can be either the logical interconnect id or the logical interconnect uri.
 
         Returns:
             dict: LIFirmware.
@@ -366,12 +366,12 @@ class LogicalInterconnects(object):
     def install_firmware(self, firmware_information, id_or_uri):
         """
         Installs firmware to a logical interconnect. The three operations that are supported for the firmware
-        update are Stage (uploads firmware to the interconnect), Activate (installs firmware on the interconnect)
+        update are Stage (uploads firmware to the interconnect), Activate (installs firmware on the interconnect),
         and Update (which does a Stage and Activate in a sequential manner).
 
         Args:
             firmware_information: Options to install firmware to a logical interconnect.
-            id_or_uri: Could be either the logical interconnect id or the logical interconnect uri.
+            id_or_uri: Can be either the logical interconnect id or the logical interconnect uri.
 
         Returns:
             dict
@@ -381,17 +381,17 @@ class LogicalInterconnects(object):
 
     def get_forwarding_information_base(self, id_or_uri, filter=''):
         """
-        Gets the forwarding information base data for a logical interconnect. Maximum of 100 entries is returned.
-        Optional filtering criteria may be specified.
+        Gets the forwarding information base data for a logical interconnect. A maximum of 100 entries is returned.
+        Optional filtering criteria might be specified.
 
         Args:
             id_or_uri:
-                Could be either the logical interconnect id or the logical interconnect uri.
+                Can be either the logical interconnect id or the logical interconnect uri.
             filter:
                 Filtering criteria may be specified using supported attributes: interconnectUri, macAddress,
                 internalVlan, externalVlan, and supported relation = (Equals). macAddress is 12 hexadecimal digits with
-                a colon between each pair of digits.(upper or lower case).
-                The default is no filter - all resources are returned.
+                a colon between each pair of digits (upper case or lower case).
+                The default is no filter; all resources are returned.
 
         Returns:
             list: A set of interconnect MAC address entries.
@@ -405,9 +405,9 @@ class LogicalInterconnects(object):
 
         Args:
             id_or_uri:
-                Could be either the logical interconnect id or the logical interconnect uri.
+                Can be either the logical interconnect id or the logical interconnect uri.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
                 OneView, just stops waiting for its completion.
 
         Returns: Interconnect Forwarding Information Base DataInfo.
@@ -421,7 +421,7 @@ class LogicalInterconnects(object):
 
         Args:
             id_or_uri:
-                Could be either the logical interconnect id or the logical interconnect uri.
+                Can be either the logical interconnect id or the logical interconnect uri.
 
         Returns:
             dict: QoS Configuration.
@@ -435,11 +435,11 @@ class LogicalInterconnects(object):
 
         Args:
             id_or_uri:
-                Could be either the logical interconnect id or the logical interconnect uri.
+                Can be either the logical interconnect id or the logical interconnect uri.
             qos_configuration:
                 QOS configuration.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
                 OneView, just stops waiting for its completion.
 
         Returns:

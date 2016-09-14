@@ -53,23 +53,22 @@ class Interconnects(object):
         """
         Gets a paginated collection of interconnects that includes the ports.
 
-        In order to avoid a timeout on busy systems, the recommended maximum
-        value of count is 2.
+        To avoid a timeout on busy systems, the recommended maximum value of count is 2.
 
         Args:
             start:
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items.
-                The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items.
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: A list of interconnects.
@@ -104,7 +103,7 @@ class Interconnects(object):
             subport_number (int): The subport.
 
         Returns:
-             dict: The statistics for the interconnect that matches id, port_name and subport_number.
+             dict: The statistics for the interconnect that matches id, port_name, and subport_number.
         """
         uri = self._client.build_uri(id_or_uri) + "/statistics/{0}/subport/{1}".format(port_name, subport_number)
         return self._client.get(uri)
@@ -125,10 +124,10 @@ class Interconnects(object):
 
     def get(self, id_or_uri):
         """
-        Gets the Interconnect by ID or by uri.
+        Gets the Interconnect by ID or by URI.
 
         Args:
-            id_or_uri: Could be either the interconnect id or the interconnect uri.
+            id_or_uri: Can be either the interconnect id or the interconnect uri.
 
         Returns:
             dict
@@ -137,8 +136,8 @@ class Interconnects(object):
 
     def get_by(self, field, value):
         """
-        Gets all interconnects that matches the filter
-        The search is case insensitive
+        Gets all interconnects that match the filter
+        The search is case-insensitive
 
         Args:
             field: Field name to filter.
@@ -165,21 +164,21 @@ class Interconnects(object):
         """
         Performs a specific patch operation for the given interconnect.
 
-        There are a limited set of interconnect properties which may be changed.
-        They are: 'powerState', 'uidState', 'deviceResetState'.
+        There is a limited set of interconnect properties which might be changed.
+        They are: 'powerState', 'uidState', and 'deviceResetState'.
 
         If the interconnect supports the operation, the operation is performed and
         a task is returned through which the results are reported.
 
         Args:
             id_or_uri:
-                Could be either the interconnect id or the interconnect uri
+                Can be either the interconnect id or the interconnect uri
             operation:
                 The type of operation: one of "add", "copy", "move", "remove", "replace", or "test".
             path:
                 The JSON path the operation is to use. The exact meaning depends on the type of operation.
             value:
-                The value to add or replace for "add" and "replace" operations, or the value to compare against
+                The value to add or replace for "add" and "replace" operations or the value to compare against
                 for a "test" operation. Not used by "copy", "move", or "remove".
 
         Returns:
@@ -192,10 +191,10 @@ class Interconnects(object):
         Updates an interconnect port.
 
         Args:
-            id_or_uri: Could be either the interconnect id or the interconnect uri.
+            id_or_uri: Can be either the interconnect id or the interconnect uri.
             port_information (dict): object to update
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: The interconnect.
@@ -209,10 +208,10 @@ class Interconnects(object):
         Updates the interconnect ports.
 
         Args:
-            id_or_uri: Could be either the interconnect id or the interconnect uri.
+            id_or_uri: Can be either the interconnect id or the interconnect uri.
             ports (list): Ports to update.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: The interconnect.
@@ -235,9 +234,9 @@ class Interconnects(object):
         Cause port protection to be reset on all the interconnects of the logical interconnect that matches ID.
 
         Args:
-            id_or_uri: Could be either the interconnect id or the interconnect uri.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            id_or_uri: Can be either the interconnect id or the interconnect uri.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: The interconnect.
