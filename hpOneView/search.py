@@ -4,7 +4,10 @@
 search.py
 ~~~~~~~~~~~~
 
-This module implements search HPE OneView REST API
+This module implements search HPE OneView REST API.
+
+It has been deprecated and will be removed soon. We strongly recommend to use the OneViewClient class instead.
+See more details at: https://github.com/HewlettPackard/python-hpOneView#OneViewClient
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -45,6 +48,14 @@ __status__ = 'Development'
 ###
 
 from hpOneView.common import get_members, uri
+from warnings import warn
+
+
+def deprecated(func):
+    def wrapper(*args, **kwargs):
+        warn("Module search is deprecated, use OneViewClient class instead", DeprecationWarning)
+        return func(*args, **kwargs)
+    return wrapper
 
 
 class search(object):
@@ -54,6 +65,7 @@ class search(object):
     ###########################################################################
     # Get Resources
     ###########################################################################
+    @deprecated
     def get_resources(self, query=''):
         if type(query) is dict:
             sQuery = ''
@@ -64,6 +76,7 @@ class search(object):
         body = self._con.get(uri['resource'] + '?' + sQuery)
         return get_members(body)
 
+    @deprecated
     def get_associations(self, query=''):
         if type(query) is dict:
             sQuery = ''
@@ -74,6 +87,7 @@ class search(object):
         body = self._con.get(uri['association'] + '?' + sQuery)
         return get_members(body)
 
+    @deprecated
     def get_trees(self, query=''):
         if type(query) is dict:
             sQuery = ''
@@ -84,6 +98,7 @@ class search(object):
         body = self._con.get(uri['tree'] + '?' + sQuery)
         return get_members(body)
 
+    @deprecated
     def get_search_suggestions(self, query):
         if type(query) is dict:
             sQuery = ''

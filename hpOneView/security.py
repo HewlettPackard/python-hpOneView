@@ -4,7 +4,10 @@
 security.py
 ~~~~~~~~~~~~
 
-This module implements Settings HPE OneView REST API
+This module implements Settings HPE OneView REST API.
+
+It has been deprecated and will be removed soon. We strongly recommend to use the OneViewClient class instead.
+See more details at: https://github.com/HewlettPackard/python-hpOneView#OneViewClient
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -46,6 +49,14 @@ __status__ = 'Development'
 
 
 from hpOneView.common import get_members, uri, make_user_dict
+from warnings import warn
+
+
+def deprecated(func):
+    def wrapper(*args, **kwargs):
+        warn("Module security is deprecated, use OneViewClient class instead", DeprecationWarning)
+        return func(*args, **kwargs)
+    return wrapper
 
 
 class security(object):
@@ -55,18 +66,22 @@ class security(object):
     ###########################################################################
     # User management and Roles
     ###########################################################################
+    @deprecated
     def get_users(self):
         body = self._con.get(uri['users'])
         return get_members(body)
 
+    @deprecated
     def get_user(self, user):
         body = self._con.get(uri['users'] + '/' + user)
         return body
 
+    @deprecated
     def get_user_roles(self, user):
         body = self._con.get(uri['userRole'] + '/' + user)
         return get_members(body)
 
+    @deprecated
     def set_user_roles(self, user, roles):
         request = []
         for role in roles:
@@ -76,12 +91,14 @@ class security(object):
                                    '/roles?multiResource=true', request)
         return body
 
+    @deprecated
     def set_user_role(self, user, role):
         request = {'type': 'RoleNameDtoV2', 'roleName': role}
         task, body = self._con.put(uri['users'] + '/' + user +
                                    '/roles?multiResource=true', [request])
         return body
 
+    @deprecated
     def create_user(self, name, password, enabled=True, fullName='',
                     emailAddress='', officePhone='', mobilePhone='',
                     roles=['Infrastructure administrator']):
@@ -91,14 +108,17 @@ class security(object):
         task, body = self._con.post(uri['users'], usr)
         return body
 
+    @deprecated
     def delete_user(self, user):
         task, body = self._con.delete(uri['users'] + '/' + user)
         return body
 
+    @deprecated
     def update_user(self, updateUser):
         task, body = self._con.put(uri['users'], updateUser)
         return body
 
+    @deprecated
     def get_roles(self):
         body = self._con.get(uri['roles'])
         return get_members(body)
@@ -106,49 +126,60 @@ class security(object):
     ###########################################################################
     # Certificates
     ###########################################################################
+    @deprecated
     def get_certs(self):
         body = self._con.get(uri['certificates'])
         return body
 
+    @deprecated
     def get_cert_https(self):
         body = self._con.get(uri['cert-https'])
         return body
 
+    @deprecated
     def get_cert_ca(self):
         body = self._con.get(uri['ca'])
         return body
 
+    @deprecated
     def get_cert_ca_crl(self):
         body = self._con.get(uri['crl'])
         return body
 
+    @deprecated
     def gen_rabbitmq_internal_signed_ca(self):
         request = {'type': 'RabbitMqClientCertV2', 'commonName': 'default'}
         task, body = self._con.post(uri['rabbitmq'], request)
         return body
 
+    @deprecated
     def gen_rabbitmq_self_signed_ca(self):
         request = {'type': 'RabbitMqClientCertV2', 'commonName': 'any',
                    'signedCert': False}
         task, body = self._con.post(uri['rabbitmq'], request)
         return body
 
+    @deprecated
     def get_rabbitmq_kp(self, alias='default'):
         body = self._con.get(uri['rabbitmq-kp'] + '/' + alias)
         return body
 
+    @deprecated
     def get_rabbitmq_ca(self, alias='default'):
         body = self._con.get(uri['rabbitmq'] + '/' + alias)
         return body
 
+    @deprecated
     def get_active_user_sessions(self):
         body = self._con.get(uri['activeSessions'])
         return body
 
+    @deprecated
     def get_category_actions(self):
         body = self._con.get(uri['category-actions'])
         return body
 
+    @deprecated
     def get_role_category_actions(self):
         body = self._con.get(uri['role-category-actions'])
         return body

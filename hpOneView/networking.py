@@ -4,7 +4,10 @@
 networking.py
 ~~~~~~~~~~~~
 
-This module implements Settings HPE OneView REST API
+This module implements Settings HPE OneView REST API.
+
+It has been deprecated and will be removed soon. We strongly recommend to use the OneViewClient class instead.
+See more details at: https://github.com/HewlettPackard/python-hpOneView#OneViewClient
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -50,6 +53,14 @@ from hpOneView.common import uri, get_members, make_enet_settings, \
     make_network_set, make_Bandwidth, make_ethernet_networkV3, make_fc_networkV2
 from hpOneView.activity import activity
 from hpOneView.exceptions import HPOneViewException, HPOneViewInvalidResource
+from warnings import warn
+
+
+def deprecated(func):
+    def wrapper(*args, **kwargs):
+        warn("Module networking is deprecated, use OneViewClient class instead", DeprecationWarning)
+        return func(*args, **kwargs)
+    return wrapper
 
 
 class networking(object):
@@ -60,15 +71,18 @@ class networking(object):
     ###########################################################################
     # Logical Interconnect Group
     ###########################################################################
+    @deprecated
     def get_lig_default_settings(self):
         """ Gets default settings for a logical interconnect group."""
         return self._con.get(uri['lig'] + '/defaultSettings')
 
+    @deprecated
     def get_lig_settings(self, id):
         """ Gets the interconnect settings for a logical interconnect group."""
         lig_settings_uri = uri['lig'] + '/{id}/settings'
         return self._con.get(lig_settings_uri.format(id=id))
 
+    @deprecated
     def update_settings_from_default(self, settings={}):
         if not settings:
             settings = make_enet_settings('__NoName__')
@@ -80,6 +94,7 @@ class networking(object):
                 settings[key] = default[key]
         return settings
 
+    @deprecated
     def create_lig(self, lig, blocking=True, verbose=False):
         task, body = self._con.post(uri['lig'], lig)
         task, entity = self._activity.make_task_entity_tuple(task)
@@ -87,32 +102,39 @@ class networking(object):
             task = self._activity.wait4task(task, verbose=verbose)
         return entity
 
+    @deprecated
     def update_lig(self, lig, blocking=True, verbose=False):
         task, body = self._con.put(lig['uri'], lig)
         if blocking is True:
             task = self._activity.wait4task(task, verbose=verbose)
         return task
 
+    @deprecated
     def delete_lig(self, lig, blocking=True, verbose=False):
         task, body = self._con.delete(lig['uri'])
         if blocking is True:
             task = self._activity.wait4task(task, verbose=verbose)
         return task
 
+    @deprecated
     def get_ligs(self):
         return get_members(self._con.get(uri['lig']))
 
+    @deprecated
     def get_lig_by_name(self, ligname):
         return self._con.get_entity_byfield(uri['lig'], 'name', ligname)
 
+    @deprecated
     def get_lig_by_id(self, id):
         """ Gets a logical interconnect group."""
         return self._con.get(uri['lig'] + '/' + id)
 
+    @deprecated
     def get_lig_schema(self):
         """ Gets the JSON schema for the logical interconnect group."""
         return self._con.get(uri['lig'] + '/schema')
 
+    @deprecated
     def get_interconnect_types(self):
         # get all the supported interconnect types
         resp = get_members(self._con.get(uri['ictype']))
@@ -121,6 +143,7 @@ class networking(object):
     ###########################################################################
     # Logical Interconnects
     ###########################################################################
+    @deprecated
     def get_lis(self, filter=''):
         """
         This function is deprecated, use
@@ -147,6 +170,7 @@ class networking(object):
         """
         return get_members(self._con.get(uri['li'] + filter))
 
+    @deprecated
     def correct_lis(self, uris, blocking=True, verbose=False):
         """ Returns logical interconnects to a consistent state.
 
@@ -166,6 +190,7 @@ class networking(object):
             task = self._activity.wait4task(task, verbose=verbose)
         return task
 
+    @deprecated
     def create_li(self, location_entries, blocking=True, verbose=False):
         """"
         This function is deprecated, use
@@ -188,6 +213,7 @@ class networking(object):
             task = self._activity.wait4task(task, verbose=verbose)
         return task
 
+    @deprecated
     def delete_li(self, location, blocking=True, verbose=False):
         """
         This function is deprecated, use
@@ -207,10 +233,12 @@ class networking(object):
             task = self._activity.wait4task(task, verbose=verbose)
         return task
 
+    @deprecated
     def get_li_schema(self):
         """ Gets the JSON schema for the logical interconnect."""
         return self._con.get(uri['li'] + '/schema')
 
+    @deprecated
     def get_li_by_id(self, id):
         """
         This function is deprecated, use
@@ -219,6 +247,7 @@ class networking(object):
         Gets a logical interconnect."""
         return self._con.get(uri['li'] + '/' + id)
 
+    @deprecated
     def correct_li_by_id(self, id, blocking=True, verbose=False):
         """
         This function is deprecated, use
@@ -242,6 +271,7 @@ class networking(object):
             task = self._activity.wait4task(task, verbose=verbose)
         return task
 
+    @deprecated
     def update_ethernet_interconnected_settings(self, id, settings,
                                                 blocking=True, verbose=False):
         """
@@ -281,6 +311,7 @@ class networking(object):
             task = self._activity.wait4task(task, verbose=verbose)
         return task
 
+    @deprecated
     def get_li_firmware(self, id):
         """
         This function is deprecated, use
@@ -293,9 +324,11 @@ class networking(object):
     ###########################################################################
     # Connection Templates
     ###########################################################################
+    @deprecated
     def get_connection_templates(self):
         return get_members(self._con.get(uri['ct']))
 
+    @deprecated
     def update_net_ctvalues(self, xnet, bw={}):
         if not bw:
             return
@@ -310,6 +343,7 @@ class networking(object):
     ###########################################################################
     # NetworkSets
     ###########################################################################
+    @deprecated
     def create_networkset(self, name, networkUris=[], typicalBandwidth=2500,
                           maximumBandwidth=10000, blocking=True,
                           verbose=False):
@@ -349,18 +383,21 @@ class networking(object):
                 task = self._activity.wait4task(task, tout=60, verbose=verbose)
             return entity
 
+    @deprecated
     def delete_networkset(self, networkset, blocking=True, verbose=False):
         task, body = self._con.delete(networkset['uri'])
         if blocking is True:
             task = self._activity.wait4task(task, verbose=verbose)
         return task
 
+    @deprecated
     def get_networksets(self):
         return get_members(self._con.get(uri['nset']))
 
     ###########################################################################
     # Networks
     ###########################################################################
+    @deprecated
     def create_enet_networks(self, prefix, vid_start, vid_count, bw={}):
         enet_list = []
         try:
@@ -380,6 +417,7 @@ class networking(object):
             raise HPOneViewException('Could not create one or more networks')
         return enet_list
 
+    @deprecated
     def create_enet_network(self, name, description=None,
                             ethernetNetworkType=None, purpose='General',
                             privateNetwork=False, smartLink=True, vlanId=0,
@@ -448,6 +486,7 @@ class networking(object):
             task = self._activity.wait4task(task, tout=60, verbose=verbose)
         return entity
 
+    @deprecated
     def create_fc_network(self, name, autoLoginRedistribution=True,
                           description=None, fabricType='FabricAttach',
                           linkStabilityTime=30, managedSanUri=None,
@@ -504,6 +543,7 @@ class networking(object):
             task = self._activity.wait4task(task, tout=60, verbose=verbose)
         return entity
 
+    @deprecated
     def create_network(self, uri, xnet, bw={}, verbose=False):
         # throws an exception if there is an error
         body = self._con.conditional_post(uri, xnet)
@@ -516,10 +556,12 @@ class networking(object):
             self.update_net_ctvalues(entity, bw)
             return task, entity
 
+    @deprecated
     def update_network(self, xnet):
         task, body = self._con.put(xnet['uri'], xnet)
         return self._activity.make_task_entity_tuple(task)
 
+    @deprecated
     def delete_network(self, xnet, blocking=True, verbose=False):
         """
         Deprecated function, use: OneViewClient(config).fc_networks.delete()
@@ -531,6 +573,7 @@ class networking(object):
             task = self._activity.wait4task(task, verbose=verbose)
         return task
 
+    @deprecated
     def get_enet_networks(self):
         # TODO remove the evil use/hack of the large count default. The OneView
         # API documents that count=-1 should return everything but it is not
@@ -538,6 +581,7 @@ class networking(object):
         return get_members(self._con.get(uri['enet'] +
                                          '?start=0&count=9999999'))
 
+    @deprecated
     def get_fc_networks(self):
         """
         Deprecated function, use: OneViewClient(config).fc_networks.get_all()
@@ -550,9 +594,11 @@ class networking(object):
     ###########################################################################
     # Uplink Sets
     ###########################################################################
+    @deprecated
     def get_uplink_sets(self):
         return get_members(self._con.get(uri['uplink-sets']))
 
+    @deprecated
     def delete_uplink_set(self, uplink_set, blocking=True, verbose=False):
         task, body = self._con.delete(uplink_set['uri'])
         if blocking is True:
@@ -562,6 +608,7 @@ class networking(object):
     ###########################################################################
     # Logical Downlinks
     ###########################################################################
+    @deprecated
     def get_logical_downlinks(self, filter=''):
         """ Gets a list of logical downlinks.
 
@@ -585,6 +632,7 @@ class networking(object):
         downlinks_uri = uri['ld'] + filter
         return self._con.get(downlinks_uri)
 
+    @deprecated
     def get_logical_downlinks_schema(self):
         """ Gets the JSON schema for the logical downlink.
 
@@ -592,6 +640,7 @@ class networking(object):
         """
         return self._con.get(uri['ld'] + '/schema')
 
+    @deprecated
     def get_logical_downlinks_without_ethernet(self, filter=''):
         """ Gets a list of logical downlinks, except existing Ethernet networks.
 
@@ -616,6 +665,7 @@ class networking(object):
         downlinks_uri = uri['ld'] + '/withoutEthernet' + filter
         return self._con.get(downlinks_uri)
 
+    @deprecated
     def get_logical_downlink(self, id):
         """ Gets a logical downlink
 
@@ -626,6 +676,7 @@ class networking(object):
         """
         return self._con.get(uri['ld'] + '/' + id)
 
+    @deprecated
     def get_logical_downlink_without_ethernet(self, id):
         """ Gets a logical downlink excluding any existing Ethernet networks.
 
@@ -640,12 +691,15 @@ class networking(object):
     ###########################################################################
     # Interconnects
     ###########################################################################
+    @deprecated
     def get_interconnects(self):
         return get_members(self._con.get(uri['ic']))
 
+    @deprecated
     def get_enet_network_by_name(self, nwname):
         return self._con.get_entity_byfield(uri['enet'], 'name', nwname)
 
+    @deprecated
     def get_fc_network_by_name(self, nwname):
         return self._con.get_entity_byfield(uri['fcnet'], 'name', nwname)
 

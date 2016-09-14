@@ -4,7 +4,10 @@
 profile.py
 ~~~~~~~~~~~~
 This module implements some common helper functions for building a server profile
-and server profile template in OneView
+and server profile template in OneView.
+
+It has been deprecated and will be removed soon. We strongly recommend to use the OneViewClient class instead.
+See more details at: https://github.com/HewlettPackard/python-hpOneView#OneViewClient
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -51,8 +54,17 @@ __status__ = 'Development'
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 ###
+from warnings import warn
 
 
+def deprecated(func):
+    def wrapper(*args, **kwargs):
+        warn("Module profile is deprecated, use OneViewClient class instead", DeprecationWarning)
+        return func(*args, **kwargs)
+    return wrapper
+
+
+@deprecated
 def make_firmware_dict(settings, baseline):
     """
     Create a firmware settings dictionary for use in defining either a server
@@ -81,6 +93,7 @@ def make_firmware_dict(settings, baseline):
     return fw_settings
 
 
+@deprecated
 def make_local_storage_dict(sht, raidlevel, lboot, init_storage, num, drive_name):
     """
     Create a local storage dictionary for use in defining either a server
@@ -120,6 +133,7 @@ def make_local_storage_dict(sht, raidlevel, lboot, init_storage, num, drive_name
     return None
 
 
+@deprecated
 def __get_boot_settings_dict_capabilities(sht):
     if 'capabilities' in sht and 'bootCapabilities' in sht:
         if 'ManageBootOrder' not in sht['capabilities']:
@@ -130,6 +144,7 @@ def __get_boot_settings_dict_capabilities(sht):
         raise HPOneViewInvalidResource('Error, can not retrieve server boot capabilities')
 
 
+@deprecated
 def __get_boot_settings_dict_mode(sht):
     if 'model' in sht:
         model = sht['model']
@@ -138,6 +153,7 @@ def __get_boot_settings_dict_mode(sht):
         raise HPOneViewInvalidResource('Error: Can not identify server hardware type model')
 
 
+@deprecated
 def __validate_allowed_boot(allowed_boot, boot_order):
     # The FibreChannelHba boot option is not exposed to the user
     if 'FibreChannelHba' in allowed_boot:
@@ -157,6 +173,7 @@ def __validate_allowed_boot(allowed_boot, boot_order):
         raise HPOneViewInvalidResource(msg=message)
 
 
+@deprecated
 def __get_boot_settings_dict_boot_mode(gen9, boot_mode, pxe):
     # bootmode can not be set for Gen 7 & 8
     bootmode = None
@@ -168,6 +185,7 @@ def __get_boot_settings_dict_boot_mode(gen9, boot_mode, pxe):
     return bootmode
 
 
+@deprecated
 def make_boot_settings_dict(srv, sht, disable_manage_boot, boot_order, boot_mode, pxe):
     """
     Create boot settings and boot mode dictionaries for use in defining either a server
@@ -219,6 +237,7 @@ def make_boot_settings_dict(srv, sht, disable_manage_boot, boot_order, boot_mode
     return boot, bootmode
 
 
+@deprecated
 def make_bios_dict(bios_list):
     '''
     Create a bios dictionary for use in defining either a server

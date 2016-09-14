@@ -4,7 +4,11 @@
 activity.py
 ~~~~~~~~~~~~
 
-This module implements the Activity HPE OneView REST API
+
+This module implements the Activity HPE OneView REST API.
+
+It has been deprecated and will be removed soon. We strongly recommend to use the OneViewClient class instead.
+See more details at: https://github.com/HewlettPackard/python-hpOneView#OneViewClient
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -50,6 +54,14 @@ import time  # For sleep
 from hpOneView.common import uri, get_members
 from hpOneView.exceptions import HPOneViewInvalidResource, HPOneViewException, HPOneViewUnknownType, \
     HPOneViewTaskError, HPOneViewTimeout
+from warnings import warn
+
+
+def deprecated(func):
+    def wrapper(*args, **kwargs):
+        warn("Module activity is deprecated, use OneViewClient class instead", DeprecationWarning, stacklevel=2)
+        return func(*args, **kwargs)
+    return wrapper
 
 TaskErrorStates = ['Error', 'Warning', 'Terminated', 'Killed']
 TaskCompletedStates = ['Error', 'Warning', 'Completed', 'Terminated', 'Killed']
@@ -64,6 +76,7 @@ class activity(object):
     # Tasks
     ###########################################################################
     #
+    @deprecated
     def get_task_associated_resource(self, task):
         if not task:
             return {}
@@ -81,6 +94,7 @@ class activity(object):
                                            ' version')
         return tmp
 
+    @deprecated
     def make_task_entity_tuple(self, obj):
         task = {}
         entity = {}
@@ -112,6 +126,7 @@ class activity(object):
 
         return task, entity
 
+    @deprecated
     def is_task_running(self, task):
         global TaskPendingStates
         if 'uri' in task:
@@ -120,6 +135,7 @@ class activity(object):
                 return True
         return False
 
+    @deprecated
     def wait4task(self, task, tout=60, verbose=False):
         count = 0
         if task is None:
@@ -146,6 +162,7 @@ class activity(object):
                 raise HPOneViewTaskError('Unknown Exception')
         return task
 
+    @deprecated
     def wait4tasks(self, tasks, tout=60, verbose=False):
         running = list(filter(self.is_task_running, tasks[:]))
         count = 0
@@ -160,12 +177,14 @@ class activity(object):
                 raise HPOneViewTimeout('Waited 60 seconds for task to complete'
                                        ', aborting')
 
+    @deprecated
     def get_tasks(self):
         return get_members(self._con.get(uri['task']))
 
     ###########################################################################
     # Alerts
     ###########################################################################
+    @deprecated
     def get_alerts(self, AlertState='All'):
         if AlertState == 'All':
             # TODO remove the evil use/hack of the large count default. The OneView
@@ -178,12 +197,15 @@ class activity(object):
                                                    'alertState',
                                                    AlertState, count=9999999))
 
+    @deprecated
     def delete_alert(self, alert):
         self._con.delete(alert['uri'])
 
+    @deprecated
     def delete_alerts(self):
         self._con.delete(uri['alerts'])
 
+    @deprecated
     def update_alert(self, alert, alertMap):
         task, moddedAlert = self._con.put(alert['uri'], alertMap)
         return moddedAlert
@@ -191,14 +213,17 @@ class activity(object):
     ###########################################################################
     # Audit Logs
     ###########################################################################
+    @deprecated
     def get_audit_logs(self, query=''):
         body = self._con.get(uri['audit-logs'] + '?' + query)
         return get_members(body)
 
+    @deprecated
     def create_audit_log(self, auditLogRecord):
         self._con.post(uri['audit-logs'], auditLogRecord)
         return
 
+    @deprecated
     def download_audit_logs(self, filename):
         body = self._con.get(uri['audit-logs-download'])
         f = open(filename, 'wb')
@@ -209,10 +234,12 @@ class activity(object):
     ###########################################################################
     # Events
     ###########################################################################
+    @deprecated
     def get_events(self, query=''):
         body = self._con.get(uri['events'] + '?' + query)
         return get_members(body)
 
+    @deprecated
     def create_event(self, eventRecord):
         self._con.post(uri['events'], eventRecord)
         return

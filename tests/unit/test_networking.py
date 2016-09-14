@@ -23,6 +23,7 @@
 import mock
 import unittest
 import uuid
+import warnings
 
 from hpOneView.common import uri
 from hpOneView.connection import connection
@@ -35,6 +36,7 @@ class NetworkingTest(unittest.TestCase):
         self.host = 'http://1.2.3.4'
         self.connection = connection(self.host)
         self.networking = networking(self.connection)
+        warnings.filterwarnings('ignore')
 
     @mock.patch.object(connection, 'get')
     def test_get_lig_default_settings(self, mock_get):
