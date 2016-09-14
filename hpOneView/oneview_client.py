@@ -172,7 +172,9 @@ class OneViewClient(object):
             if len(splitted) != 2:
                 raise ValueError(ONEVIEW_CLIENT_INVALID_PROXY)
 
-            self.__connection.set_proxy(splitted[0], splitted[1])
+            proxy_host = splitted[0]
+            proxy_port = int(splitted[1])
+            self.__connection.set_proxy(proxy_host, proxy_port)
 
     @property
     def connection(self):
