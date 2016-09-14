@@ -51,7 +51,7 @@ try:
     cons_interconnectUri = oneview_client.connections.get_all(filter=filter)
     pprint(cons_interconnectUri)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get first 10 connections, sorted by name
 print("Get first 10 connections, sorting by name")
@@ -65,7 +65,7 @@ try:
         'name', "name981375475-1465399560370")
     pprint(con_byName)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 
 # Get by Uri
@@ -75,4 +75,4 @@ try:
         '/rest/connections/58ffb307-3087-4c9d-8574-44e8a79e0d6e')
     pprint(con_byUri)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)

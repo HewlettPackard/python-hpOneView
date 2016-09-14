@@ -84,7 +84,7 @@ try:
     lig_byid = oneview_client.logical_interconnect_groups.get('f0a0a113-ec97-41b4-83ce-d7c92b900e7c')
     pprint(lig_byid)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get by uri
 try:
@@ -92,7 +92,7 @@ try:
     lig_byuri = oneview_client.logical_interconnect_groups.get(created_lig["uri"])
     pprint(lig_byuri)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get default settings
 print("Get the default interconnect settings for a logical interconnect group")

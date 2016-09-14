@@ -48,7 +48,7 @@ try:
     log_downlink = oneview_client.logical_downlinks.get(logical_downlink_id)
     pprint(log_downlink)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get logical downlink by id without Ethernet networks
 try:
@@ -56,7 +56,7 @@ try:
     log_downlink_without_ethernet = oneview_client.logical_downlinks.get_without_ethernet(logical_downlink_id)
     pprint(log_downlink_without_ethernet)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get all logical downlinks
 print("Get all logical downlinks")

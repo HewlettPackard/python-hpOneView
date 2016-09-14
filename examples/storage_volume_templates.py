@@ -125,7 +125,7 @@ try:
     volume_template_byid = oneview_client.storage_volume_templates.get(template_id)
     print("   Found '{name}' at uri: {uri}".format(**volume_template_byid))
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get storage volume template by uri
 print("Get storage volume template by uri: '{uri}'".format(**volume_template))

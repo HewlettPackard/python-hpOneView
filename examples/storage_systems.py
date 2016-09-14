@@ -73,7 +73,7 @@ try:
     print("Managed storage pool '{}' at uri: '{}'".format(storage_system[
           'managedPools'][0]['name'], storage_system['managedPools'][0]['uri']))
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get all managed storage systems
 print("Get all managed storage systems")
@@ -111,7 +111,7 @@ try:
     print("Got storage system by id 'TXQ1010307' at uri '{}'".format(
         storage_system_by_id['uri']))
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Add managed ports
 ports_to_manage = []
@@ -159,7 +159,7 @@ try:
     print("   '{}' at uri: {}".format(
         managed_port_by_id['name'], managed_port_by_id['uri']))
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Remove storage system
 print("Remove storage system")

@@ -58,7 +58,7 @@ try:
         '/rest/server-hardware-types/9410638A-2691-4F40-9098-6585F252C31F')
     pprint(server_hardware_type_byuri, depth=2)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get by Id and update
 try:
@@ -74,7 +74,7 @@ try:
     print("Server Hardware type '{}' updated: \n 'description': '{}'".format(
         server_hardware_type_updated['name'], server_hardware_type_updated['description']))
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get by ID and delete server hardware type
 try:
@@ -84,4 +84,4 @@ try:
     oneview_client.server_hardware_types.delete(server_hardware_type_delete)
     print("successfully deleted Server Hardware Type")
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)

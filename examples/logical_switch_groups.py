@@ -118,7 +118,7 @@ try:
     lsg_byid = oneview_client.logical_switch_groups.get(lsg_id)
     print("   Found logical switch group '{name}' by id at uri '{uri}'".format(**lsg_byid))
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get by uri
 try:
@@ -126,7 +126,7 @@ try:
     lsg_byuri = oneview_client.logical_switch_groups.get(created_lsg["uri"])
     print("   Found logical switch group '{name}' by uri '{uri}'".format(**lsg_byuri))
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Delete a logical switch group
 print("Delete the created logical switch group")

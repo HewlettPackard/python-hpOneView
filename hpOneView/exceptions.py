@@ -43,12 +43,30 @@ __status__ = 'Development'
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 ###
+from past.builtins import basestring
 
 
 class HPOneViewException(Exception):
-    def __init__(self, msg):
-        self.msg = msg
-        Exception.__init__(self, msg)
+    """
+    OneView base Exception.
+
+    Attributes:
+       msg (str): Exception message.
+       oneview_response (dict): OneView rest response.
+   """
+
+    def __init__(self, data):
+        self.msg = None
+        self.oneview_response = None
+
+        if isinstance(data, basestring):
+            self.msg = data
+        else:
+            self.oneview_response = data
+            if data and isinstance(data, dict):
+                self.msg = data.get('message')
+
+        Exception.__init__(self, self.msg)
 
 
 class HPOneViewInvalidResource(HPOneViewException):

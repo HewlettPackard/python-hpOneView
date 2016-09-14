@@ -59,7 +59,7 @@ try:
     fabrics_byid = oneview_client.fabrics.get(fabric_id)
     pprint(fabrics_byid)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get by name
 print("\nGet a fabrics by name")
