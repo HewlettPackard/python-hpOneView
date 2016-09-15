@@ -4,7 +4,7 @@
 profile.py
 ~~~~~~~~~~~~
 This module implements some common helper functions for building a server profile
-and server profile template in OneView
+and server profile template in OneView.
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -51,8 +51,6 @@ __status__ = 'Development'
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 ###
-
-
 def make_firmware_dict(settings, baseline):
     """
     Create a firmware settings dictionary for use in defining either a server

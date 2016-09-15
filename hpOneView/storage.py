@@ -4,7 +4,10 @@
 storage.py
 ~~~~~~~~~~~~
 
-This module implements settings HPE OneView REST API
+This module implements settings HPE OneView REST API.
+
+It has been deprecated and will be removed soon. We strongly recommend to use the OneViewClient class instead.
+See more details at: https://github.com/HewlettPackard/python-hpOneView/tree/master/hpOneView/README.md
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -46,6 +49,14 @@ __status__ = 'Development'
 
 from hpOneView.common import uri, make_storage_vol_templateV3, make_storage_volume, get_members
 from hpOneView.activity import activity
+from warnings import warn
+
+
+def deprecated(func):
+    def wrapper(*args, **kwargs):
+        warn("Module storage is deprecated, use OneViewClient class instead", DeprecationWarning)
+        return func(*args, **kwargs)
+    return wrapper
 
 
 class storage(object):
@@ -53,6 +64,7 @@ class storage(object):
         self._con = con
         self._activity = activity(con)
 
+    @deprecated
     def add_storage_system(self, host, user, passwd, blocking=True,
                            verbose=False):
         request = {'ip_hostname': host,
@@ -63,6 +75,7 @@ class storage(object):
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
         return body
 
+    @deprecated
     def update_storage_system(self, StorageSystem, blocking=True,
                               verbose=False):
         task, body = self._con.put(StorageSystem['uri'], StorageSystem)
@@ -71,20 +84,24 @@ class storage(object):
             return body
         return task
 
+    @deprecated
     def remove_storage_system(self, system, blocking=True, verbose=False):
         task, body = self._con.delete(system['uri'])
         if blocking is True:
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
         return task
 
+    @deprecated
     def get_storage_systems(self):
         body = get_members(self._con.get(uri['storage-systems']))
         return body
 
+    @deprecated
     def get_storage_pools(self):
         body = self._con.get(uri['storage-pools'])
         return body
 
+    @deprecated
     def add_storage_pool(self, name, storageSystemUri, blocking=True,
                          verbose=False):
         request = {'storageSystemUri': storageSystemUri,
@@ -101,6 +118,7 @@ class storage(object):
     # Temporarly modify the headers passed for POST and DELTE on storage volume
     # templates in order to work around a bug. Without these headers the call
     # cause a NullPointerException on the appliance and a 400 gets returned.
+    @deprecated
     def add_storage_volume_template(self, name, capacity, shareable, storagePoolUri, state='Normal',
                                     description='', provisionType='Thin', verbose=False):
         ori_headers = self._con._headers
@@ -120,6 +138,7 @@ class storage(object):
     # Temporarly modify the headers passed for POST and DELTE on storage volume
     # templates in order to work around a bug. Without these headers the call
     # cause a NullPointerException on the appliance and a 400 gets returned.
+    @deprecated
     def remove_storage_volume_template(self, volTemplate, blocking=True,
                                        verbose=False):
         ori_headers = self._con._headers
@@ -131,10 +150,12 @@ class storage(object):
             return body
         return task
 
+    @deprecated
     def get_attachable_volumes(self):
         body = self._con.get(uri['attachable-volumes'])
         return body
 
+    @deprecated
     def get_storage_volume_templates(self):
         body = self._con.get(uri['vol-templates'])
         return body

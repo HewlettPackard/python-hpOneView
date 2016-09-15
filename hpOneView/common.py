@@ -4,7 +4,10 @@
 common.py
 ~~~~~~~~~~~~
 
-This module implements the common and helper functions for the OneView REST API
+This module implements the common and helper functions for the OneView REST API.
+
+It has been deprecated and will be removed soon. We strongly recommend to use the OneViewClient class instead.
+See more details at: https://github.com/HewlettPackard/python-hpOneView/tree/master/hpOneView/README.md
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -44,6 +47,14 @@ __status__ = 'Development'
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 ###
+from warnings import warn
+
+
+def deprecated(func):
+    def wrapper(*args, **kwargs):
+        warn("Module common is deprecated, use OneViewClient class instead", DeprecationWarning)
+        return func(*args, **kwargs)
+    return wrapper
 
 
 # Looking for a switch type, using filters:
@@ -203,6 +214,7 @@ uri = {
 ############################################################################
 # Utility to print resource to standard output
 ############################################################################
+@deprecated
 def print_entity(entity):
     if not entity:
         return
@@ -218,6 +230,7 @@ def print_entity(entity):
         print(('\t', entity))
 
 
+@deprecated
 def print_task_tuple(entities):
     print('Task/Entity Tuples:')
     for indx, (task, entity) in enumerate(entities):
@@ -233,6 +246,7 @@ def print_task_tuple(entities):
             print('\tResource: n/a')
 
 
+@deprecated
 def get_members(mlist):
     if not mlist:
         return []
@@ -241,6 +255,7 @@ def get_members(mlist):
     return mlist['members']
 
 
+@deprecated
 def get_member(mlist):
     if not mlist:
         return None
@@ -252,6 +267,7 @@ def get_member(mlist):
 ############################################################################
 # Create default Resource Instances
 ############################################################################
+@deprecated
 def make_user_dict(name, password, enabled, fullName, emailAddress,
                    officePhone, mobilePhone, roles=[]):
     return {
@@ -266,6 +282,7 @@ def make_user_dict(name, password, enabled, fullName, emailAddress,
         'roles': roles}
 
 
+@deprecated
 def make_Bandwidth(typicalBandwidth=2500, maximumBandwidth=10000):
     """ Create an Bandwidth dictionary
 
@@ -287,6 +304,7 @@ def make_Bandwidth(typicalBandwidth=2500, maximumBandwidth=10000):
             }
 
 
+@deprecated
 def make_network_set(name, networkUris=[]):
     """ Create an network-set dictionary
 
@@ -309,6 +327,7 @@ def make_network_set(name, networkUris=[]):
         'connectionTemplateUri': None}
 
 
+@deprecated
 def make_ethernet_networkV3(name, description=None, ethernetNetworkType=None,
                             purpose='General', privateNetwork=False,
                             smartLink=True, vlanId=0):
@@ -364,6 +383,7 @@ def make_ethernet_networkV3(name, description=None, ethernetNetworkType=None,
         'privateNetwork': privateNetwork}
 
 
+@deprecated
 def make_fc_networkV2(name, autoLoginRedistribution=True, description=None,
                       fabricType='FabricAttach', linkStabilityTime=30,
                       managedSanUri=None):
@@ -403,6 +423,7 @@ def make_fc_networkV2(name, autoLoginRedistribution=True, description=None,
         'managedSanUri': managedSanUri}
 
 
+@deprecated
 def make_interconnect_map_template():
     return {
         'interconnectMapEntryTemplates':
@@ -415,6 +436,7 @@ def make_interconnect_map_template():
     }
 
 
+@deprecated
 def make_enet_settings(name,
                        enableIgmpSnooping=False,
                        igmpIdleTimeoutInterval=260,
@@ -434,6 +456,7 @@ def make_enet_settings(name,
     }
 
 
+@deprecated
 def make_storage_vol_templateV3(name,
                                 capacity,
                                 shareable,
@@ -458,6 +481,7 @@ def make_storage_vol_templateV3(name,
     }
 
 
+@deprecated
 def make_storage_volume(name,
                         capacity,
                         shareable,
@@ -476,6 +500,7 @@ def make_storage_volume(name,
     }
 
 
+@deprecated
 def make_connectionInfo_dict(hostname, port, user, passwd, ssl=True):
     return {'connectionInfo': [
         {'name': 'Host',
@@ -491,6 +516,7 @@ def make_connectionInfo_dict(hostname, port, user, passwd, ssl=True):
     }
 
 
+@deprecated
 def make_LogicalInterconnectGroupV2(name, ethernetSettings=[]):
     return {
         'name': name,
@@ -505,6 +531,7 @@ def make_LogicalInterconnectGroupV2(name, ethernetSettings=[]):
     }
 
 
+@deprecated
 def make_LogicalInterconnectGroupV3(name, ethernetSettings=[],
                                     enclosureType='C7000'):
     return {
@@ -520,6 +547,7 @@ def make_LogicalInterconnectGroupV3(name, ethernetSettings=[],
     }
 
 
+@deprecated
 def make_EthernetSettingsV2(enableFastMacCacheFailover=True,
                             enableIgmpSnooping=False,
                             enableNetworkLoopProtection=True,
@@ -537,6 +565,7 @@ def make_EthernetSettingsV2(enableFastMacCacheFailover=True,
     }
 
 
+@deprecated
 def make_EthernetSettingsV3(enableFastMacCacheFailover=True,
                             enableIgmpSnooping=False,
                             enableNetworkLoopProtection=True,
@@ -555,6 +584,7 @@ def make_EthernetSettingsV3(enableFastMacCacheFailover=True,
     }
 
 
+@deprecated
 def make_trapdestinations_dict(trapDestination,
                                communityString='public',
                                enetTrapCategories=['Other',
@@ -581,6 +611,7 @@ def make_trapdestinations_dict(trapDestination,
     }
 
 
+@deprecated
 def make_snmpconfiguration_dict(enabled=False,
                                 readCommunity='public',
                                 snmpAccess=[],
@@ -595,6 +626,7 @@ def make_snmpconfiguration_dict(enabled=False,
     }
 
 
+@deprecated
 def set_iobay_occupancy(switchMap, bays, stype):
     for location in switchMap['interconnectMapEntryTemplates']:
         entries = location['logicalLocation']['locationEntries']
@@ -602,6 +634,7 @@ def set_iobay_occupancy(switchMap, bays, stype):
             location['permittedInterconnectTypeUri'] = stype
 
 
+@deprecated
 def get_iobay_entry(interconnectMap, bay):
     if not interconnectMap:
         return
@@ -613,6 +646,7 @@ def get_iobay_entry(interconnectMap, bay):
                     return iobay_entry
 
 
+@deprecated
 def make_UplinkSetGroupV2(name,
                           ethernetNetworkType='Tagged',
                           lacpTimer='Long',
@@ -643,6 +677,7 @@ def make_UplinkSetGroupV2(name,
     raise Exception('networkType must be Ethernet or FibreChannel.')
 
 
+@deprecated
 def make_port_config_info(enclosure, bay, port, speed='Auto'):
     return {'logicalLocation': {
         'locationEntries':
@@ -654,6 +689,7 @@ def make_port_config_info(enclosure, bay, port, speed='Auto'):
     }
 
 
+@deprecated
 def make_EnclosureGroupV200(associatedLIGs, name,
                             powerMode='RedundantPowerSupply'):
     """ Create an EnclosureGroupV200 dictionary
@@ -710,6 +746,7 @@ def make_EnclosureGroupV200(associatedLIGs, name,
     }
 
 
+@deprecated
 def make_enclosure_dict(host, user, passwd, egroup, state="",
                         licenseIntent='OneView',
                         firmwareBaseLineUri=None, force=False, forcefw=False):
@@ -726,6 +763,7 @@ def make_enclosure_dict(host, user, passwd, egroup, state="",
         'licensingIntent': licenseIntent}
 
 
+@deprecated
 def make_monitored_enclosure_dict(host, user, passwd, state='Monitored',
                                   licenseIntent='OneViewStandard', force=False):
     return {
@@ -737,6 +775,7 @@ def make_monitored_enclosure_dict(host, user, passwd, state='Monitored',
         'licensingIntent': licenseIntent}
 
 
+@deprecated
 def make_storage_system_dict(mdom, udom, mports, uports):
     return {
         'type': 'StorageSystem',
@@ -747,6 +786,7 @@ def make_storage_system_dict(mdom, udom, mports, uports):
     }
 
 
+@deprecated
 def make_ProfileConnectionV4(cid, name, networkUri, profileTemplateConnection,
                              connectionBoot=None, functionType='Ethernet',
                              mac=None, macType='Virtual', portId='Auto',
@@ -855,6 +895,7 @@ def make_ProfileConnectionV4(cid, name, networkUri, profileTemplateConnection,
         }
 
 
+@deprecated
 def make_ConnectionBoot(priority='Primary',
                         arrayWwpn=None,
                         lun=None):
@@ -886,6 +927,7 @@ def make_ConnectionBoot(priority='Primary',
             'targets': make_BootTarget(arrayWwpn, lun)}
 
 
+@deprecated
 def make_BootTarget(arrayWwpn=None, lun=None):
     """ Create a BootTarget dictionary
 
@@ -904,6 +946,7 @@ def make_BootTarget(arrayWwpn=None, lun=None):
              'lun': lun}]
 
 
+@deprecated
 def make_ServerProfileTemplateV1(name=None,
                                  description=None,
                                  serverProfileDescription=None,
@@ -974,6 +1017,7 @@ def make_ServerProfileTemplateV1(name=None,
     }
 
 
+@deprecated
 def make_ServerProfileV5(affinity='Bay',
                          biosSettings=None,
                          bootSettings=None,
@@ -1123,6 +1167,7 @@ def make_FirmwareSettingsV3(firmwareUri,
             }
 
 
+@deprecated
 def make_BiosSettings(manageBios=True, overriddenSettings=[]):
     return {'manageBios': manageBios,
             'overriddenSettings': overriddenSettings
@@ -1255,6 +1300,7 @@ def make_LogicalDriveV3(bootable, driveName, driveTechnology,
             }
 
 
+@deprecated
 def make_SanStorageV3(hostOSType, manageSanStorage, volumeAttachments):
     """ Create a SanStorageV3 dictionary
 
@@ -1276,6 +1322,7 @@ def make_SanStorageV3(hostOSType, manageSanStorage, volumeAttachments):
             }
 
 
+@deprecated
 def make_VolumeAttachmentV2(lun=None,
                             lunType='Auto',
                             permanent=False,
@@ -1352,6 +1399,7 @@ def make_VolumeAttachmentV2(lun=None,
     return volAttach
 
 
+@deprecated
 def make_ephemeral_volume_dict(lun, lunType, volumeUri, volumeStoragePoolUri,
                                volumeStorageSystemUri, storagePaths,
                                permanent=True, volumeId=None):
@@ -1365,6 +1413,7 @@ def make_ephemeral_volume_dict(lun, lunType, volumeUri, volumeStoragePoolUri,
             }
 
 
+@deprecated
 def make_StoragePathV2(connectionId=None, isEnabled=True,
                        storageTargetType='Auto', storageTargets=[]):
     """ Create a StoragePathV2 dictionary
@@ -1401,16 +1450,19 @@ def make_StoragePathV2(connectionId=None, isEnabled=True,
             }
 
 
+@deprecated
 def make_powerstate_dict(state, control):
     return {'powerState': state,
             'powerControl': control}
 
 
+@deprecated
 def make_server_type_dict(name, description):
     return {'name': name,
             'description': description}
 
 
+@deprecated
 def make_ls_firmware_dict(action, sppUri, force='true'):
     return {'command': action, 'sppUri': sppUri, 'force': force}
 
@@ -1419,10 +1471,12 @@ def make_ls_firmware_dict(action, sppUri, force='true'):
 #    return self._get_members(self.get(uri))
 
 
+@deprecated
 def make_eula_dict(supportAccess):
     return {'supportAccess': supportAccess}
 
 
+@deprecated
 def make_initial_password_change_dict(userName, oldPassword, newPassword):
     return {
         'userName': userName,
@@ -1430,6 +1484,7 @@ def make_initial_password_change_dict(userName, oldPassword, newPassword):
         'newPassword': newPassword}
 
 
+@deprecated
 def make_appliance_network_config_dict(hostName,
                                        macAddress,
                                        newApp1Ipv4Addr=None,
@@ -1466,6 +1521,7 @@ def make_appliance_network_config_dict(hostName,
     raise Exception('ipv4Type must be STATIC or DHCP.')
 
 
+@deprecated
 def make_audit_log_dict(dateTimeStamp='',
                         componentId='',
                         organizationId='',
@@ -1494,6 +1550,7 @@ def make_audit_log_dict(dateTimeStamp='',
         'msg': msg}
 
 
+@deprecated
 def make_event_dict(severity='Unknown',
                     description='',
                     eventTypeID='',
@@ -1510,6 +1567,7 @@ def make_event_dict(severity='Unknown',
         'urgency': urgency}
 
 
+@deprecated
 def make_event_detail_dict(eventItemName='',
                            eventItemValue=''):
     return {
@@ -1517,6 +1575,7 @@ def make_event_detail_dict(eventItemName='',
         'eventItemValue': eventItemValue}
 
 
+@deprecated
 def make_user_modify_dict(userName,
                           password=None,
                           currentPassword=None,
@@ -1548,6 +1607,7 @@ def make_user_modify_dict(userName,
     return userDict
 
 
+@deprecated
 def make_update_alert_dict(alertState=None,
                            assignedToUser=None,
                            eTag=None):
@@ -1561,6 +1621,7 @@ def make_update_alert_dict(alertState=None,
     return alertDict
 
 
+@deprecated
 def make_server_dict(hostname,
                      username,
                      password,
@@ -1576,6 +1637,7 @@ def make_server_dict(hostname,
         'configurationState': configurationState}
 
 
+@deprecated
 def make_rack_dict(name, sn, thermal, height, depth, width, uheight):
     return {
         'name': name,
@@ -1587,6 +1649,7 @@ def make_rack_dict(name, sn, thermal, height, depth, width, uheight):
         'uHeight': uheight}
 
 
+@deprecated
 def make_datacenter_dict(name, coolingCapacity, coolingMultiplier, currency,
                          costPerKilowattHour, defaultPowerLineVoltage,
                          width, depth, deratingType, deratingPercentage):
@@ -1604,6 +1667,7 @@ def make_datacenter_dict(name, coolingCapacity, coolingMultiplier, currency,
         'contents': []}
 
 
+@deprecated
 def make_powerdevice_dict(name, deviceType, feedIdentifier, lineVoltage,
                           model, partNumber, phaseType, ratedCapacity,
                           serialNumber):
@@ -1619,6 +1683,7 @@ def make_powerdevice_dict(name, deviceType, feedIdentifier, lineVoltage,
         'serialNumber': serialNumber}
 
 
+@deprecated
 def make_alertMap_dict(notes, etag, state='Active', user='None',
                        urgency='None'):
     return {
