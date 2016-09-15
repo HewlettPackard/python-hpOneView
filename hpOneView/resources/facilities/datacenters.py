@@ -57,18 +57,18 @@ class Datacenters(object):
 
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items.
-                The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items.
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
             query:
                  A general query string to narrow the list of resources returned. The default
                  is no query - all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: List of data centers.
@@ -81,7 +81,7 @@ class Datacenters(object):
 
         Args:
             id_or_uri:
-                Could be either the data center id or the data center uri.
+                Can be either the data center id or the data center uri.
 
         Returns:
             dict: The data center.
@@ -95,19 +95,19 @@ class Datacenters(object):
         the data center.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri.
+            id_or_uri: Can be either the resource ID or the resource URI.
 
         Return:
-            list: list of visual content objects.
+            list: List of visual content objects.
         """
         uri = self._client.build_uri(id_or_uri) + "/visualContent"
         return self._client.get(uri)
 
     def get_by(self, field, value):
         """
-        Get all data centers that match the filter.
+        Gets all data centers that match the filter.
 
-        The search is case insensitive.
+        The search is case-insensitive.
 
         Args:
             field: Field name to filter.
@@ -126,11 +126,11 @@ class Datacenters(object):
         Args:
             resource (dict): Object to remove.
             force:
-                 If set to true the operation completes despite any problems with network connectivity or errors on the
+                 If set to true, the operation completes despite any problems with network connectivity or errors on the
                  resource itself. The default is false.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns: Result status.
         """
@@ -142,8 +142,8 @@ class Datacenters(object):
 
         Args:
             information: Data center information
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Added data center.
@@ -156,8 +156,8 @@ class Datacenters(object):
 
         Args:
             resource (dict): Object to update.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Updated data center.
@@ -173,11 +173,11 @@ class Datacenters(object):
             filter:
                  A general filter/query string to narrow the list of items that will be removed.
             force:
-                 If set to true the operation completes despite any problems with
+                 If set to true, the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
             timeout:
-                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                 in OneView, just stops waiting for its completion.
+                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                 in OneView; it just stops waiting for its completion.
 
         Returns:
              bool: operation success

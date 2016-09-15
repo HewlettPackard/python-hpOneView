@@ -49,7 +49,7 @@ class FirmwareDrivers(object):
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a paginated collection of Firware Drivers. The collection is based on optional sorting and filtering, and
+        Gets a paginated collection of Firmware Drivers. The collection is based on optional sorting and filtering, and
         constrained by start and count parameters.
 
         Args:
@@ -57,15 +57,15 @@ class FirmwareDrivers(object):
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items.
-                The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items.
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: list of firmware baseline resources.
@@ -77,7 +77,7 @@ class FirmwareDrivers(object):
         Gets the list of firmware baseline resources managed by the appliance. Optional parameters can be used to
         filter the list of resources returned.
 
-        The search is case insensitive.
+        The search is case-insensitive.
 
         Args:
             field: Field name to filter.
@@ -95,8 +95,7 @@ class FirmwareDrivers(object):
 
     def get(self, id_or_uri):
         """
-        Gets the individual firmware baseline resource for the given URI. Note that the view
-        parameter is not currently supported.
+        Gets the individual firmware baseline resource for the given URI.
 
         Args:
             id: ID or URI of firmware baseline resource.
@@ -108,17 +107,17 @@ class FirmwareDrivers(object):
 
     def delete(self, resource, force=False, timeout=-1):
         """
-        Delete the firmware baseline resource with the specified id. If force is set to true, the firmware baseline
+        Delete the firmware baseline resource with the specified ID. If force is set to true, the firmware baseline
         resource will be deleted even if it is assigned to devices.
 
         Args:
             resource (dict): Object to delete
-            force: If set to true the operation completes despite any problems with
+            force: If set to true, the operation completes despite any problems with
                 network connectivity or errors on the resource itself. The default is false.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
-            bool: Indicating if the resource was successfully deleted.
+            bool: Indicates if the resource was successfully deleted.
         """
         return self._client.delete(resource, force=force, timeout=timeout)

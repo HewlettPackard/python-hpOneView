@@ -61,8 +61,8 @@ class FirmwareBundles(object):
 
         Args:
             file_path: Full path to firmware.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
           dict: Information about the updated firmware bundle.

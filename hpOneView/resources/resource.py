@@ -66,10 +66,10 @@ class ResourceClient(object):
         """
         Gets all items according with the given arguments.
 
-        More than one request can be send to get the items, regardless the query parameter 'count', since the actual
-        number of items in the response may differ from the requested count. Some types of resource has a limited
+        More than one request can be send to get the items, regardless the query parameter 'count', because the actual
+        number of items in the response might differ from the requested count. Some types of resource have a limited
         number of items returned on each call. For those resources, additional calls are made to the API to retrieve
-        any other items matching the given filter. The actual number of items can also diverge from the requested call
+        any other items matching the given filter. The actual number of items can also differ from the requested call
         if the requested number of items would take too long.
 
         The use of optional parameters for OneView 2.0 is described at:
@@ -83,22 +83,22 @@ class ResourceClient(object):
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items (default).
+                The number of resources to return. A count of -1 requests all items (default).
             filter:
-                A general filter/query string to narrow the list of items returned. The default is no filter - all
+                A general filter/query string to narrow the list of items returned. The default is no filter; all
                 resources are returned.
             query:
                 A single query parameter can do what would take multiple parameters or multiple GET requests using
                 filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.
             sort:
-                The sort order of the returned data set. By default, the sort order is based on create time, with the
+                The sort order of the returned data set. By default, the sort order is based on create time with the
                 oldest entry first.
             view:
                 Returns a specific subset of the attributes of the resource or collection by specifying the name of a
-                predefined view. The default view is expand (show all attributes of the resource, and all elements of
-                collections or resources).
+                predefined view. The default view is expand (show all attributes of the resource and all elements of
+                the collections or resources).
             fields:
-                Nome of the fields.
+                Name of the fields.
             uri:
                 A specific URI (optional)
 
@@ -142,14 +142,14 @@ class ResourceClient(object):
             filter:
                 A general filter/query string to narrow the list of items deleted.
             force:
-                If set to true the operation completes despite any problems with network connectivity or errors
+                If set to true, the operation completes despite any problems with network connectivity or errors
                 on the resource itself. The default is false.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
-            bool: Indicating if the resources were successfully deleted.
+            bool: Indicates if the resources were successfully deleted.
         """
         uri = "{}?filter={}&force={}".format(self._uri, quote(filter), force)
         logger.debug("Delete all resources (uri = %s)" % uri)
@@ -203,7 +203,7 @@ class ResourceClient(object):
     def get(self, id_or_uri):
         """
         Args:
-            id_or_uri: Could be either the resource id or the resource uri.
+            id_or_uri: Can be either the resource ID or the resource URI.
 
         Returns:
              The requested resource.
@@ -223,7 +223,7 @@ class ResourceClient(object):
         Optional filtering criteria may be specified.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri.
+            id_or_uri: Can be either the resource ID or the resource URI.
             filter: General filter/query string.
 
         Returns:
@@ -239,14 +239,14 @@ class ResourceClient(object):
 
     def update_with_zero_body(self, uri, timeout=-1, custom_headers=None):
         """
-        Makes a PUT request to update a resource, when no request body is required.
+        Makes a PUT request to update a resource when no request body is required.
 
         Args:
             uri:
-                Could be either the resource id or the resource uri.
+                Can be either the resource ID or the resource URI.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
             custom_headers:
                 Allows set specific HTTP headers.
 
@@ -259,17 +259,17 @@ class ResourceClient(object):
 
     def update(self, resource, uri=None, force=False, timeout=-1, custom_headers=None):
         """
-        Makes a PUT request to update a resource, when a request body is required.
+        Makes a PUT request to update a resource when a request body is required.
 
         Args:
             uri:
-                Could be either the resource id or the resource uri.
+                Can be either the resource ID or the resource URI.
             force:
-                If set to true the operation completes despite any problems with network connectivity or errors
+                If set to true, the operation completes despite any problems with network connectivity or errors
                 on the resource itself. The default is false.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
             custom_headers:
                 Allows set specific HTTP headers.
 
@@ -293,14 +293,14 @@ class ResourceClient(object):
 
     def create_with_zero_body(self, uri=None, timeout=-1, custom_headers=None):
         """
-        Makes a POST request to create a resource, when no request body is required.
+        Makes a POST request to create a resource when no request body is required.
 
         Args:
             uri:
-                Could be either the resource id or the resource uri.
+                Can be either the resource ID or the resource URI.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
             custom_headers:
                 Allows set specific HTTP headers.
 
@@ -316,14 +316,14 @@ class ResourceClient(object):
 
     def create(self, resource, uri=None, timeout=-1, custom_headers=None):
         """
-        Makes a POST request to create a resource, when a request body is required.
+        Makes a POST request to create a resource when a request body is required.
 
         Args:
             uri:
-                Could be either the resource id or the resource uri.
+                Can be either the resource ID or the resource URI.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
             custom_headers:
                 Allows set specific HTTP headers.
 
@@ -349,12 +349,12 @@ class ResourceClient(object):
         Only one operation can be performed in each PATCH call.
 
         Args:
-            id_or_uri: Could be either the resource id or the resource uri
+            id_or_uri: Can be either the resource ID or the resource URI.
             operation: Patch operation
             path: Path
             value: Value
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             Updated resource.
@@ -376,7 +376,7 @@ class ResourceClient(object):
         """
         This function uses get_all passing a filter.
 
-        The search is case insensitive.
+        The search is case-insensitive.
 
         Args:
             field: Field name to filter.
@@ -402,7 +402,7 @@ class ResourceClient(object):
 
     def get_by_name(self, name):
         """
-        Retrieve a resource by his name.
+        Retrieve a resource by its name.
 
         Args:
             name: Resource name.
@@ -435,7 +435,7 @@ class ResourceClient(object):
                     Start date of requested starting time range in ISO 8601 format. If omitted, the startDate is
                     determined by the endDate minus 24 hours.
                 endDate
-                    End date of requested starting time range in ISO 8601 format. When omitted the endDate includes
+                    End date of requested starting time range in ISO 8601 format. When omitted, the endDate includes
                     the latest data sample available.
 
                 If an excessive number of samples would otherwise be returned, the results will be segmented. The
@@ -444,14 +444,14 @@ class ResourceClient(object):
                 the caller is responsible for repeating the request with endTime set to sliceStartTime to obtain the
                 next segment. This process is repeated until the full data set is retrieved.
 
-                If the resource has no data, the UtilizationData is still returned, but will contain no samples and
+                If the resource has no data, the UtilizationData is still returned but will contain no samples and
                 sliceStartTime/sliceEndTime will be equal. oldestSampleTime/newestSampleTime will still be set
-                appropriately (null if no data is available). If the filter just does not happen to overlap the data
-                that a resource does have, then the metric history service will return null sample values for any
+                appropriately (null if no data is available). If the filter does not happen to overlap the data
+                that a resource has, then the metric history service will return null sample values for any
                 missing samples.
 
             refresh:
-                Specifies that if necessary an additional request will be queued to obtain the most recent
+                Specifies that if necessary, an additional request will be queued to obtain the most recent
                 utilization data from the iLO. The response will not include any refreshed data. To track the
                 availability of the newly collected data, monitor the TaskResource identified by the refreshTaskUri
                 property in the response. If null, no refresh was queued.
@@ -459,7 +459,7 @@ class ResourceClient(object):
             view:
                 Specifies the resolution interval length of the samples to be retrieved. This is reflected in the
                 resolution in the returned response. Utilization data is automatically purged to stay within storage
-                space constraints. Supported views are listed below.
+                space constraints. Supported views are listed below:
 
                 native
                     Resolution of the samples returned will be one sample for each 5-minute time period. This is the
@@ -513,8 +513,8 @@ class ResourceClient(object):
         Args:
             uri: URI
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             list:

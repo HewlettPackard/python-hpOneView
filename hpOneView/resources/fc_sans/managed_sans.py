@@ -55,7 +55,7 @@ class ManagedSANs(object):
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items. The actual number of items in
+                The number of resources to return. A count of -1 requests all items. The actual number of items in
                 the response may differ from the requested count if the sum of start and count exceed the total number
                 of items.
             query:
@@ -63,7 +63,7 @@ class ManagedSANs(object):
                 The default is no query - all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: A list of Managed SANs
@@ -86,10 +86,10 @@ class ManagedSANs(object):
 
     def get(self, id_or_uri):
         """
-        Retrieves a single Managed SAN by id or uri
+        Retrieves a single Managed SAN by ID or URI.
 
         Args:
-            id_or_uri: Could be either the Managed SAN resource id or uri.
+            id_or_uri: Can be either the Managed SAN resource ID or URI.
 
         Returns:
             dict: The Managed SAN resource.
@@ -106,10 +106,10 @@ class ManagedSANs(object):
             - Updating the Managed SAN's policy.
 
         Args:
-            id_or_uri: Could be either the Managed SAN resource id or uri.
+            id_or_uri: Can be either the Managed SAN resource ID or URI.
             data: dict object to update
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView, just stop waiting for its completion.
 
         Returns:
@@ -124,20 +124,20 @@ class ManagedSANs(object):
 
         Args:
             managed_san_id_or_uri:
-                Could be either the Managed SAN id or uri
+                Can be either the Managed SAN ID or URI.
             start:
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items.
-                The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items.
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: A list of endpoints.
@@ -151,9 +151,9 @@ class ManagedSANs(object):
 
         Args:
             managed_san_id_or_uri:
-                Could be either the Managed SAN id or uri.
+                Can be either the Managed SAN ID or URI.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
                 OneView, just stops waiting for its completion.
 
         Returns:
@@ -168,9 +168,9 @@ class ManagedSANs(object):
 
         Args:
             managed_san_id_or_uri:
-                Could be either the Managed SAN id or uri.
+                Can be either the Managed SAN ID or URI.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
                 OneView, just stops waiting for its completion.
 
         Returns:

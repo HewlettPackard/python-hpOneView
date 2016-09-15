@@ -157,14 +157,14 @@ class TaskMonitor(object):
 
     def is_task_running(self, task):
         """
-        Check if a task is running according: TASK_PENDING_STATES ['New', 'Starting',
+        Check if a task is running according to: TASK_PENDING_STATES ['New', 'Starting',
         'Pending', 'Running', 'Suspended', 'Stopping']
 
         Args:
             task: task dict
 
         Returns:
-            True when is in TASK_PENDING_STATES; False when not.
+            True when in TASK_PENDING_STATES; False when not.
         """
         if 'uri' in task:
             task = self.get(task)
@@ -188,7 +188,7 @@ class TaskMonitor(object):
 
     def get_associated_resource(self, task):
         """
-        Retrieve a resource associated to a task.
+        Retrieve a resource associated with a task.
 
         Args:
             task: task dict

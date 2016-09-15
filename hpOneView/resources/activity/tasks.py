@@ -74,24 +74,24 @@ class Tasks(object):
                  The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
                  first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items. The actual number of items in
+                The number of resources to return. A count of -1 requests all items. The actual number of items in
                 the response may differ from the requested count if the sum of start and count exceed the total number
                 of items.
             fields:
                  Specifies which fields should be returned in the result set.
             filter:
-                 A general filter/query string to narrow the list of items returned. The default is no filter - all
+                 A general filter/query string to narrow the list of items returned. The default is no filter; all
                  resources are returned.
             query:
-                 A general query string to narrow the list of resources returned. The default is no query - all
-                 resources are returned.
+                 A general query string to narrow the list of resources returned. The default is no query (all
+                 resources are returned).
             sort:
                 The sort order of the returned data set. By default, the sort order is based on create time, with the
                 oldest entry first.
             view:
-                 Return a specific subset of the attributes of the resource or collection, by specifying the name of a
-                 predefined view. The default view is expand - show all attributes of the resource and all elements of
-                 collections of resources.
+                 Returns a specific subset of the attributes of the resource or collection, by specifying the name of a
+                 predefined view. The default view is expand (show all attributes of the resource and all elements of
+                 collections of resources).
 
         Returns:
             list: A list of tasks.

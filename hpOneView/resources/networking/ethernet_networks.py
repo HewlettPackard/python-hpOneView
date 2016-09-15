@@ -53,23 +53,23 @@ class EthernetNetworks(object):
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a paginated collection of Ethernet networks. The collection is based on optional sorting and filtering,
-        and constrained by start and count parameters.
+        Gets a paginated collection of Ethernet networks. The collection is based on optional sorting and filtering
+        and is constrained by start and count parameters.
 
         Args:
             start:
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items.
-                The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items.
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: A list of ethernet networks.
@@ -85,14 +85,14 @@ class EthernetNetworks(object):
         Args:
             resource: dict object to delete
             force:
-                 If set to true the operation completes despite any problems with
+                 If set to true, the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
-            bool: Indicating if the resource was successfully deleted.
+            bool: Indicates if the resource was successfully deleted.
 
         """
         return self._client.delete(resource, force=force, timeout=timeout)
@@ -102,7 +102,7 @@ class EthernetNetworks(object):
         Gets the Ethernet network.
 
         Args:
-            id_or_uri: ID or uri of Ethernet network.
+            id_or_uri: ID or URI of Ethernet network.
 
         Returns:
             dict: The ethernet network.
@@ -116,8 +116,8 @@ class EthernetNetworks(object):
         Args:
             resource (dict): Object to create.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Created resource.
@@ -134,8 +134,8 @@ class EthernetNetworks(object):
         Args:
             resource (dict): Specifications to create in bulk.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             list: List of created Ethernet Networks.
@@ -163,7 +163,7 @@ class EthernetNetworks(object):
 
         Args:
             name_prefix: The Ethernet Network prefix
-            vlan_id_range: A combination of values or ranges to be retrieved. For example '1-10,50,51,500-700'.
+            vlan_id_range: A combination of values or ranges to be retrieved. For example, '1-10,50,51,500-700'.
 
         Returns:
             list: A list of Ethernet Networks.
@@ -194,7 +194,7 @@ class EthernetNetworks(object):
                 [4, 5, 7, 8]
 
         Args:
-            vlan_id_range: A combination of values or ranges. For example '1-10,50,51,500-700'.
+            vlan_id_range: A combination of values or ranges. For example, '1-10,50,51,500-700'.
 
         Returns:
             list: vlan ids
@@ -223,8 +223,8 @@ class EthernetNetworks(object):
         Args:
             resource: dict object to update
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns: Updated resource.
 
@@ -235,8 +235,8 @@ class EthernetNetworks(object):
 
     def get_by(self, field, value):
         """
-        Get all Ethernet networks that matches the filter
-        The search is case insensitive
+        Gets all Ethernet networks that match the filter.
+        The search is case-insensitive.
 
         Args:
             field: field name to filter
@@ -252,7 +252,7 @@ class EthernetNetworks(object):
         Gets the URIs of profiles which are using an Ethernet network.
 
         Args:
-            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri
+            id_or_uri: Can be either the logical interconnect group id or the logical interconnect group uri
 
         Returns:
             list: URIs of the associated profiles.
@@ -266,7 +266,7 @@ class EthernetNetworks(object):
         Gets the uplink sets which are using an Ethernet network.
 
         Args:
-            id_or_uri: Could be either the logical interconnect group id or the logical interconnect group uri
+            id_or_uri: Can be either the logical interconnect group id or the logical interconnect group uri
 
         Returns:
             list: URIs of the associated uplink sets.
