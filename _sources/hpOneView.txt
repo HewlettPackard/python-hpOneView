@@ -27,14 +27,6 @@ hpOneView.exceptions module
     :undoc-members:
     :show-inheritance:
 
-hpOneView.metrics module
-------------------------
-
-.. automodule:: hpOneView.metrics
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 hpOneView.oneview_client module
 -------------------------------
 
