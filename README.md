@@ -43,7 +43,7 @@ Coming soon.
 
 ## API Implementation
 
-Status listing of the HPE OneView REST interfaces that have been implemented in the Python library so far is hosted in the [Wiki section](https://github.com/HewlettPackard/python-hpOneView/wiki/HPE-OneView-API-Version-200-Implementation-Status).
+A status of the HPE OneView REST interfaces that have been implemented in this Python library can be found in the [Wiki section](https://github.com/HewlettPackard/python-hpOneView/wiki/HPE-OneView-API-Version-200-Implementation-Status).
 
 
 ## Logging
@@ -58,10 +58,10 @@ More information about the logging configuration can be found in the Python Docu
 
 Connection properties for accessing the OneView appliance can be set in a JSON file.
 
-Before running the samples or your own scrips, you must create the file.
+Before running the samples or your own scrips, you must create the JSON file.
 An example can be found at: [OneView configuration sample](examples/config-rename.json).
 
-Once you have created the file, you can initialize the OneViewClient:
+Once you have created the JSON file, you can initialize the OneViewClient:
 
 ```python
 oneview_client = OneViewClient.from_json_file('/path/config.json')
@@ -89,7 +89,7 @@ oneview_client = OneViewClient(config)
 
 ### Proxy
 
-If your environment requires a proxy, define the proxy property in the JSON file using the following syntax:
+If your environment requires a proxy, define the proxy properties in the JSON file using the following syntax:
 
 ```json
   "proxy": "<proxy_host>:<proxy_port>"
@@ -108,7 +108,7 @@ This feedback is crucial for us to deliver a useful product. Do not assume that 
 
 ## Testing
 
-We've already packaged everything you need to do to check if the code is good.
+We've already packaged everything you need to do to check if the code is passing the tests.
 The tox script wraps the unit tests execution against Python 2 and 3, flake8 validation, and the test coverage report generation.
 
 Run the following command:
