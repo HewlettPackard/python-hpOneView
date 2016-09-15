@@ -1,7 +1,6 @@
 [![Build Status](https://travis-ci.org/HewlettPackard/python-hpOneView.svg?branch=master)](https://travis-ci.org/HewlettPackard/python-hpOneView)
 
-HPE OneView SDK for Python
-===========================
+# HPE OneView SDK for Python
 
 This library provides a pure Python interface to the HPE OneView REST APIs.
 
@@ -10,12 +9,11 @@ by the way you expect to work, with a single integrated view of your IT
 infrastructure.
 
 The HPE OneView Python library depends on the
-[Python-Future](http://python-future.org/index.htm)  library to provide Python
-2/3 compatibility.  This will be installed automatically if you use the installation
+[Python-Future](http://python-future.org/index.htm) library to provide Python
+2/3 compatibility. This will be installed automatically if you use the installation
 methods described below.
 
-Installation
-------------
+## Installation
 
 ### From source
 
@@ -40,34 +38,81 @@ Both of these installation methods work if you are using virtualenv, which you s
 
 ### From Pypi
 
-Coming soon
+Coming soon.
 
 
-API Implementation
-------------------
+## API Implementation
 
-Status listing of the HPE OneView REST interfaces that have been implemented in the Python library so far is hosted in the [Wiki section](https://github.com/HewlettPackard/python-hpOneView/wiki/HPE-OneView-API-Version-200-Implementation-Status)
+A status of the HPE OneView REST interfaces that have been implemented in this Python library can be found in the [Wiki section](https://github.com/HewlettPackard/python-hpOneView/wiki/HPE-OneView-API-Version-200-Implementation-Status).
 
 
-Logging
--------
+## Logging
 
-This module uses Python’s Standard Library logging module. An example of how to configure logging was provided on ```/examples/logger.py ```.
-To see more configuration options, look at [configuring logging](https://docs.python.org/3/howto/logging.html#configuring-logging)
+This module uses Python’s Standard Library logging module. An example of how to configure logging is provided on [```/examples/logger.py```](/examples/logger.py).
 
-Configuration
--------------
+More information about the logging configuration can be found in the Python Documentation.
 
-After installing the Python SDK you need to create a file with OneView setting the OneView connection properties before running the examples or developing your own scripts. You can find an example of this file accessing the
-[OneView configuration sample]( https://github.com/HewlettPackard/python-hpOneView/blob/master/examples/config-rename.json).
+## Configuration
+
+### JSON
+
+Connection properties for accessing the OneView appliance can be set in a JSON file.
+
+Before running the samples or your own scrips, you must create the JSON file.
+An example can be found at: [OneView configuration sample](examples/config-rename.json).
+
+Once you have created the JSON file, you can initialize the OneViewClient:
+
+```python
+oneview_client = OneViewClient.from_json_file('/path/config.json')
+```
+
+:lock: Tip: Check the file permissions because the password is stored in clear-text.
+
+### Dictionary
+
+You can also set the configuration using a dictionary:
+
+```python
+config = {
+    "ip": "172.16.102.82",
+    "credentials": {
+        "userName": "username",
+        "password": "password"
+    }
+}
+
+oneview_client = OneViewClient(config)
+```
+
+:lock: Tip: Check the file permissions because the password is stored in clear-text.
 
 ### Proxy
 
-If you want to configure a proxy, you just need to set this line in the configuration file:
+If your environment requires a proxy, define the proxy properties in the JSON file using the following syntax:
+
 ```json
-{
-  ...
   "proxy": "<proxy_host>:<proxy_port>"
-  ...
-}
+```
+
+## Contributing and feature requests
+
+**Contributing:** You know the drill. Fork it, branch it, change it, commit it, and pull-request it.
+We are passionate about improving this project, and glad to accept help to make it better. However, keep the following in mind:
+
+ - You must sign a Contributor License Agreement first. Contact one of the authors (from Hewlett Packard Enterprise) for details and the CLA.
+ - We reserve the right to reject changes that we feel do not fit the scope of this project, so for feature additions, please open an issue to discuss your ideas before doing the work.
+
+**Feature Requests:** If you have a need that is not met by the current implementation, please let us know (via a new issue).
+This feedback is crucial for us to deliver a useful product. Do not assume that we have already thought of everything, because we assure you that is not the case.
+
+## Testing
+
+We've already packaged everything you need to do to check if the code is passing the tests.
+The tox script wraps the unit tests execution against Python 2 and 3, flake8 validation, and the test coverage report generation.
+
+Run the following command:
+
+```
+$ tox
 ```
