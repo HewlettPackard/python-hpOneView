@@ -24,7 +24,6 @@ import json
 import unittest
 
 import mock
-import warnings
 
 import hpOneView.profile as profile
 from hpOneView.connection import connection
@@ -43,7 +42,6 @@ class ProfilesTest(unittest.TestCase):
         self.settings = settings(self.connection)
         self.servers = servers(self.connection)
         self.profile = profile
-        warnings.filterwarnings('ignore')
 
     @mock.patch.object(settings, 'get_spps')
     def test_make_firmware_exists(self, mock_get_spps):

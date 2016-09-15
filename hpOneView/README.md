@@ -7,7 +7,6 @@ They are no longer updated and are going to be removed in future releases of the
 * fcsans.py
 * metrics.py
 * networking.py
-* profile.py
 * search.py
 * security.py
 * servers.py

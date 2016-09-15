@@ -1131,7 +1131,6 @@ def make_ServerProfileV5(affinity='Bay',
     }
 
 
-@deprecated
 def make_FirmwareSettingsV3(firmwareUri,
                             firmwareInstallType,
                             manageFirmware=True,
@@ -1175,7 +1174,6 @@ def make_BiosSettings(manageBios=True, overriddenSettings=[]):
             }
 
 
-@deprecated
 def make_BootSettings(order, manageBoot=False):
     """ Create a BootSettings dictionary for use with ServerProfileV5
 
@@ -1194,7 +1192,6 @@ def make_BootSettings(order, manageBoot=False):
             }
 
 
-@deprecated
 def make_BootModeSetting(manageMode, mode, pxeBootPolicy):
     """ Create a BootModeSetting dictionary (only with Gen9 and newer)
 
@@ -1226,7 +1223,6 @@ def make_BootModeSetting(manageMode, mode, pxeBootPolicy):
             }
 
 
-@deprecated
 def make_LocalStorageSettingsV3(controllers):
     """ Create a LocalStorageSettingsV3 dictionary
 
@@ -1239,7 +1235,6 @@ def make_LocalStorageSettingsV3(controllers):
     return {'controllers': controllers}
 
 
-@deprecated
 def make_LocalStorageEmbeddedController(importConfiguration, initialize,
                                         LogicalDrives, managed, mode,
                                         slotNumber='0'):
@@ -1274,7 +1269,6 @@ def make_LocalStorageEmbeddedController(importConfiguration, initialize,
             }
 
 
-@deprecated
 def make_LogicalDriveV3(bootable, driveName, driveTechnology,
                         numPhysicalDrives, raidLevel):
     """ Create a LocalDriveV3 dictionary
