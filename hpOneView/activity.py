@@ -8,7 +8,7 @@ activity.py
 This module implements the Activity HPE OneView REST API.
 
 It has been deprecated and will be removed soon. We strongly recommend to use the OneViewClient class instead.
-See more details at: https://github.com/HewlettPackard/python-hpOneView#OneViewClient
+See more details at: https://github.com/HewlettPackard/python-hpOneView/tree/master/hpOneView/README.md
 """
 from __future__ import absolute_import
 from __future__ import division
