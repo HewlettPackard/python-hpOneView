@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.task_monitor &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  <title>hpOneView.resources.task_monitor &mdash; HPE OneView Python SDK 2.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="HPE OneView Python SDK 2.0 documentation" href="../../../index.html"/>
         <link rel="up" title="hpOneView" href="../../hpOneView.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0
+                2.0
               </div>
             
           
@@ -286,14 +286,14 @@
 
 <div class="viewcode-block" id="TaskMonitor.is_task_running"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.task_monitor.TaskMonitor.is_task_running">[docs]</a>    <span class="k">def</span> <span class="nf">is_task_running</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Check if a task is running according: TASK_PENDING_STATES [&#39;New&#39;, &#39;Starting&#39;,</span>
+<span class="sd">        Check if a task is running according to: TASK_PENDING_STATES [&#39;New&#39;, &#39;Starting&#39;,</span>
 <span class="sd">        &#39;Pending&#39;, &#39;Running&#39;, &#39;Suspended&#39;, &#39;Stopping&#39;]</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            task: task dict</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            True when is in TASK_PENDING_STATES; False when not.</span>
+<span class="sd">            True when in TASK_PENDING_STATES; False when not.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s1">&#39;uri&#39;</span> <span class="ow">in</span> <span class="n">task</span><span class="p">:</span>
             <span class="n">task</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
@@ -317,7 +317,7 @@
 
 <div class="viewcode-block" id="TaskMonitor.get_associated_resource"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.task_monitor.TaskMonitor.get_associated_resource">[docs]</a>    <span class="k">def</span> <span class="nf">get_associated_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Retrieve a resource associated to a task.</span>
+<span class="sd">        Retrieve a resource associated with a task.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            task: task dict</span>
@@ -363,7 +363,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Hewlett Packard Enterprise.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
 
     </p>
   </div> 
@@ -384,7 +384,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0',
+            VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.settings package &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  <title>hpOneView.resources.settings package &mdash; HPE OneView Python SDK 2.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="index.html"/> 
+    <link rel="top" title="HPE OneView Python SDK 2.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0
+                2.0
               </div>
             
           
@@ -160,8 +160,8 @@ For the successful upload of a hotfix, ensure its original name and extension ar
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>file_path</strong> &#8211; Full path to firmware.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -192,7 +192,7 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.settings.firmware_drivers.FirmwareDrivers.delete">
 <code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/firmware_drivers.html#FirmwareDrivers.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.firmware_drivers.FirmwareDrivers.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete the firmware baseline resource with the specified id. If force is set to true, the firmware baseline
+<dd><p>Delete the firmware baseline resource with the specified ID. If force is set to true, the firmware baseline
 resource will be deleted even if it is assigned to devices.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -200,14 +200,14 @@ resource will be deleted even if it is assigned to devices.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to delete</li>
-<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the resource was successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -220,8 +220,7 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.settings.firmware_drivers.FirmwareDrivers.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/firmware_drivers.html#FirmwareDrivers.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.firmware_drivers.FirmwareDrivers.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the individual firmware baseline resource for the given URI. Note that the view
-parameter is not currently supported.</p>
+<dd><p>Gets the individual firmware baseline resource for the given URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -239,7 +238,7 @@ parameter is not currently supported.</p>
 <dl class="method">
 <dt id="hpOneView.resources.settings.firmware_drivers.FirmwareDrivers.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/firmware_drivers.html#FirmwareDrivers.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.firmware_drivers.FirmwareDrivers.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a paginated collection of Firware Drivers. The collection is based on optional sorting and filtering, and
+<dd><p>Gets a paginated collection of Firmware Drivers. The collection is based on optional sorting and filtering, and
 constrained by start and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -248,13 +247,13 @@ constrained by start and count parameters.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -273,7 +272,7 @@ on create time, with the oldest entry first.</li>
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/firmware_drivers.html#FirmwareDrivers.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.firmware_drivers.FirmwareDrivers.get_by" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the list of firmware baseline resources managed by the appliance. Optional parameters can be used to
 filter the list of resources returned.</p>
-<p>The search is case insensitive.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -312,7 +311,7 @@ filter the list of resources returned.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Hewlett Packard Enterprise.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
 
     </p>
   </div> 
@@ -333,7 +332,7 @@ filter the list of resources returned.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

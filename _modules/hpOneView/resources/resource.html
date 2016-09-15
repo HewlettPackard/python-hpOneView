@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.resource &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  <title>hpOneView.resources.resource &mdash; HPE OneView Python SDK 2.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="HPE OneView Python SDK 2.0 documentation" href="../../../index.html"/>
         <link rel="up" title="hpOneView" href="../../hpOneView.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0
+                2.0
               </div>
             
           
@@ -195,10 +195,10 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets all items according with the given arguments.</span>
 
-<span class="sd">        More than one request can be send to get the items, regardless the query parameter &#39;count&#39;, since the actual</span>
-<span class="sd">        number of items in the response may differ from the requested count. Some types of resource has a limited</span>
+<span class="sd">        More than one request can be send to get the items, regardless the query parameter &#39;count&#39;, because the actual</span>
+<span class="sd">        number of items in the response might differ from the requested count. Some types of resource have a limited</span>
 <span class="sd">        number of items returned on each call. For those resources, additional calls are made to the API to retrieve</span>
-<span class="sd">        any other items matching the given filter. The actual number of items can also diverge from the requested call</span>
+<span class="sd">        any other items matching the given filter. The actual number of items can also differ from the requested call</span>
 <span class="sd">        if the requested number of items would take too long.</span>
 
 <span class="sd">        The use of optional parameters for OneView 2.0 is described at:</span>
@@ -212,22 +212,22 @@
 <span class="sd">                The first item to return, using 0-based indexing.</span>
 <span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
 <span class="sd">            count:</span>
-<span class="sd">                The number of resources to return. A count of -1 requests all the items (default).</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all items (default).</span>
 <span class="sd">            filter:</span>
-<span class="sd">                A general filter/query string to narrow the list of items returned. The default is no filter - all</span>
+<span class="sd">                A general filter/query string to narrow the list of items returned. The default is no filter; all</span>
 <span class="sd">                resources are returned.</span>
 <span class="sd">            query:</span>
 <span class="sd">                A single query parameter can do what would take multiple parameters or multiple GET requests using</span>
 <span class="sd">                filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.</span>
 <span class="sd">            sort:</span>
-<span class="sd">                The sort order of the returned data set. By default, the sort order is based on create time, with the</span>
+<span class="sd">                The sort order of the returned data set. By default, the sort order is based on create time with the</span>
 <span class="sd">                oldest entry first.</span>
 <span class="sd">            view:</span>
 <span class="sd">                Returns a specific subset of the attributes of the resource or collection by specifying the name of a</span>
-<span class="sd">                predefined view. The default view is expand (show all attributes of the resource, and all elements of</span>
-<span class="sd">                collections or resources).</span>
+<span class="sd">                predefined view. The default view is expand (show all attributes of the resource and all elements of</span>
+<span class="sd">                the collections or resources).</span>
 <span class="sd">            fields:</span>
-<span class="sd">                Nome of the fields.</span>
+<span class="sd">                Name of the fields.</span>
 <span class="sd">            uri:</span>
 <span class="sd">                A specific URI (optional)</span>
 
@@ -271,14 +271,14 @@
 <span class="sd">            filter:</span>
 <span class="sd">                A general filter/query string to narrow the list of items deleted.</span>
 <span class="sd">            force:</span>
-<span class="sd">                If set to true the operation completes despite any problems with network connectivity or errors</span>
+<span class="sd">                If set to true, the operation completes despite any problems with network connectivity or errors</span>
 <span class="sd">                on the resource itself. The default is false.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            bool: Indicating if the resources were successfully deleted.</span>
+<span class="sd">            bool: Indicates if the resources were successfully deleted.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">?filter=</span><span class="si">{}</span><span class="s2">&amp;force=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_uri</span><span class="p">,</span> <span class="n">quote</span><span class="p">(</span><span class="nb">filter</span><span class="p">),</span> <span class="n">force</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Delete all resources (uri = </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">uri</span><span class="p">)</span>
@@ -332,7 +332,7 @@
 <div class="viewcode-block" id="ResourceClient.get"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceClient.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the resource id or the resource uri.</span>
+<span class="sd">            id_or_uri: Can be either the resource ID or the resource URI.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">             The requested resource.</span>
@@ -352,7 +352,7 @@
 <span class="sd">        Optional filtering criteria may be specified.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the resource id or the resource uri.</span>
+<span class="sd">            id_or_uri: Can be either the resource ID or the resource URI.</span>
 <span class="sd">            filter: General filter/query string.</span>
 
 <span class="sd">        Returns:</span>
@@ -368,14 +368,14 @@
 
 <div class="viewcode-block" id="ResourceClient.update_with_zero_body"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceClient.update_with_zero_body">[docs]</a>    <span class="k">def</span> <span class="nf">update_with_zero_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Makes a PUT request to update a resource, when no request body is required.</span>
+<span class="sd">        Makes a PUT request to update a resource when no request body is required.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            uri:</span>
-<span class="sd">                Could be either the resource id or the resource uri.</span>
+<span class="sd">                Can be either the resource ID or the resource URI.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 <span class="sd">            custom_headers:</span>
 <span class="sd">                Allows set specific HTTP headers.</span>
 
@@ -388,17 +388,17 @@
 
 <div class="viewcode-block" id="ResourceClient.update"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceClient.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Makes a PUT request to update a resource, when a request body is required.</span>
+<span class="sd">        Makes a PUT request to update a resource when a request body is required.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            uri:</span>
-<span class="sd">                Could be either the resource id or the resource uri.</span>
+<span class="sd">                Can be either the resource ID or the resource URI.</span>
 <span class="sd">            force:</span>
-<span class="sd">                If set to true the operation completes despite any problems with network connectivity or errors</span>
+<span class="sd">                If set to true, the operation completes despite any problems with network connectivity or errors</span>
 <span class="sd">                on the resource itself. The default is false.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 <span class="sd">            custom_headers:</span>
 <span class="sd">                Allows set specific HTTP headers.</span>
 
@@ -422,14 +422,14 @@
 
 <div class="viewcode-block" id="ResourceClient.create_with_zero_body"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceClient.create_with_zero_body">[docs]</a>    <span class="k">def</span> <span class="nf">create_with_zero_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Makes a POST request to create a resource, when no request body is required.</span>
+<span class="sd">        Makes a POST request to create a resource when no request body is required.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            uri:</span>
-<span class="sd">                Could be either the resource id or the resource uri.</span>
+<span class="sd">                Can be either the resource ID or the resource URI.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 <span class="sd">            custom_headers:</span>
 <span class="sd">                Allows set specific HTTP headers.</span>
 
@@ -445,14 +445,14 @@
 
 <div class="viewcode-block" id="ResourceClient.create"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceClient.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Makes a POST request to create a resource, when a request body is required.</span>
+<span class="sd">        Makes a POST request to create a resource when a request body is required.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            uri:</span>
-<span class="sd">                Could be either the resource id or the resource uri.</span>
+<span class="sd">                Can be either the resource ID or the resource URI.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 <span class="sd">            custom_headers:</span>
 <span class="sd">                Allows set specific HTTP headers.</span>
 
@@ -478,12 +478,12 @@
 <span class="sd">        Only one operation can be performed in each PATCH call.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the resource id or the resource uri</span>
+<span class="sd">            id_or_uri: Can be either the resource ID or the resource URI.</span>
 <span class="sd">            operation: Patch operation</span>
 <span class="sd">            path: Path</span>
 <span class="sd">            value: Value</span>
-<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Updated resource.</span>
@@ -505,7 +505,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function uses get_all passing a filter.</span>
 
-<span class="sd">        The search is case insensitive.</span>
+<span class="sd">        The search is case-insensitive.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            field: Field name to filter.</span>
@@ -531,7 +531,7 @@
 
 <div class="viewcode-block" id="ResourceClient.get_by_name"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceClient.get_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Retrieve a resource by his name.</span>
+<span class="sd">        Retrieve a resource by its name.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            name: Resource name.</span>
@@ -564,7 +564,7 @@
 <span class="sd">                    Start date of requested starting time range in ISO 8601 format. If omitted, the startDate is</span>
 <span class="sd">                    determined by the endDate minus 24 hours.</span>
 <span class="sd">                endDate</span>
-<span class="sd">                    End date of requested starting time range in ISO 8601 format. When omitted the endDate includes</span>
+<span class="sd">                    End date of requested starting time range in ISO 8601 format. When omitted, the endDate includes</span>
 <span class="sd">                    the latest data sample available.</span>
 
 <span class="sd">                If an excessive number of samples would otherwise be returned, the results will be segmented. The</span>
@@ -573,14 +573,14 @@
 <span class="sd">                the caller is responsible for repeating the request with endTime set to sliceStartTime to obtain the</span>
 <span class="sd">                next segment. This process is repeated until the full data set is retrieved.</span>
 
-<span class="sd">                If the resource has no data, the UtilizationData is still returned, but will contain no samples and</span>
+<span class="sd">                If the resource has no data, the UtilizationData is still returned but will contain no samples and</span>
 <span class="sd">                sliceStartTime/sliceEndTime will be equal. oldestSampleTime/newestSampleTime will still be set</span>
-<span class="sd">                appropriately (null if no data is available). If the filter just does not happen to overlap the data</span>
-<span class="sd">                that a resource does have, then the metric history service will return null sample values for any</span>
+<span class="sd">                appropriately (null if no data is available). If the filter does not happen to overlap the data</span>
+<span class="sd">                that a resource has, then the metric history service will return null sample values for any</span>
 <span class="sd">                missing samples.</span>
 
 <span class="sd">            refresh:</span>
-<span class="sd">                Specifies that if necessary an additional request will be queued to obtain the most recent</span>
+<span class="sd">                Specifies that if necessary, an additional request will be queued to obtain the most recent</span>
 <span class="sd">                utilization data from the iLO. The response will not include any refreshed data. To track the</span>
 <span class="sd">                availability of the newly collected data, monitor the TaskResource identified by the refreshTaskUri</span>
 <span class="sd">                property in the response. If null, no refresh was queued.</span>
@@ -588,7 +588,7 @@
 <span class="sd">            view:</span>
 <span class="sd">                Specifies the resolution interval length of the samples to be retrieved. This is reflected in the</span>
 <span class="sd">                resolution in the returned response. Utilization data is automatically purged to stay within storage</span>
-<span class="sd">                space constraints. Supported views are listed below.</span>
+<span class="sd">                space constraints. Supported views are listed below:</span>
 
 <span class="sd">                native</span>
 <span class="sd">                    Resolution of the samples returned will be one sample for each 5-minute time period. This is the</span>
@@ -642,8 +642,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            uri: URI</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list:</span>
@@ -736,7 +736,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Hewlett Packard Enterprise.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
 
     </p>
   </div> 
@@ -757,7 +757,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'1.0',
+            VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

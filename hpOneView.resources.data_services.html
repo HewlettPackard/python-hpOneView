@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.data_services package &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  <title>hpOneView.resources.data_services package &mdash; HPE OneView Python SDK 2.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="index.html"/> 
+    <link rel="top" title="HPE OneView Python SDK 2.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0
+                2.0
               </div>
             
           
@@ -157,26 +157,27 @@ followed to enable the metric relay in OneView:</p>
 <dt>startTime (str):</dt>
 <dd>The starting time of the metric collection.</dd>
 <dt>sampleIntervalInSeconds (int):</dt>
-<dd>The starting time of the metric collection.</dd>
+<dd>Interval between samples.</dd>
 <dt>numberOfSamples (int):</dt>
 <dd>Number of samples in the list for each metric type.</dd>
 <dt>resourceType (str):</dt>
-<dd>Identifies the category of resource. The supported devices are server-hardware, enclosures and power-devices</dd>
+<dd>Identifies the resource type.</dd>
 <dt>resourceDataList (list):</dt>
-<dd>Metric sample list</dd>
+<dd>Metric sample list.</dd>
 <dt>uri (str):</dt>
-<dd>Canonical URI of the resource</dd>
+<dd>Canonical URI of the resource.</dd>
 <dt>category (str):</dt>
-<dd>Identifies the category of resource. The supported devices are server-hardware, enclosures and power-devices</dd>
+<dd>Identifies the category of resource. The supported devices are server-hardware, enclosures, and
+power-devices.</dd>
 <dt>created (timestamp):</dt>
-<dd>Date and time when the resource was created</dd>
+<dd>Date and time when the resource was created.</dd>
 <dt>modified (timestamp):</dt>
-<dd>Date and time when the resource was last modified</dd>
+<dd>Date and time when the resource was last modified.</dd>
 <dt>eTag (str):</dt>
 <dd>Entity tag/version ID of the resource, the same value that is returned in the ETag header on a GET of the
-resource</dd>
+resource.</dd>
 <dt>type (str):</dt>
-<dd>Uniquely identifies the type of the JSON object</dd>
+<dd>Uniquely identifies the type of the JSON object.</dd>
 </dl>
 </dd>
 </dl>
@@ -209,7 +210,7 @@ resource</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of objects which contain frequency, sample interval and source type for each resource-type.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of objects which contain frequency, sample interval, and source type for each resource-type.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
@@ -225,7 +226,7 @@ resource</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>configuration</strong> (<em>dict</em>) &#8211; Dictionary with a list of objects which contain frequency, sample interval and source type for each
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>configuration</strong> (<em>dict</em>) &#8211; Dictionary with a list of objects which contain frequency, sample interval, and source type for each
 resource-type.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The current configuration for which metrics are being relayed.</td>
@@ -254,7 +255,7 @@ resource-type.</td>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Hewlett Packard Enterprise.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
 
     </p>
   </div> 
@@ -275,7 +276,7 @@ resource-type.</td>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

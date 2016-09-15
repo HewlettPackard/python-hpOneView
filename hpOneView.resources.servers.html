@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.servers package &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  <title>hpOneView.resources.servers package &mdash; HPE OneView Python SDK 2.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="index.html"/> 
+    <link rel="top" title="HPE OneView Python SDK 2.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0
+                2.0
               </div>
             
           
@@ -161,7 +161,7 @@
 <dl class="method">
 <dt id="hpOneView.resources.servers.connections.Connections.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/connections.html#Connections.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.connections.Connections.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the connection with the specified ID or uri.</p>
+<dd><p>Returns the connection with the specified ID or URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -186,17 +186,17 @@ and constrained by start and count parameters.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 <li><strong>fields</strong> &#8211; Specifies which fields should be returned in the result set.</li>
-<li><strong>view</strong> &#8211; Return a specific subset of the attributes of the resource or collection, by
-specifying the name of a predefined view. The default view is expand - show
-all attributes of the resource and all elements of collections of resources.</li>
+<li><strong>view</strong> &#8211; Returns a specific subset of the attributes of the resource or collection, by
+specifying the name of a predefined view. The default view is expand (show
+all attributes of the resource and all elements of collections of resources).</li>
 </ul>
 </td>
 </tr>
@@ -213,8 +213,8 @@ all attributes of the resource and all elements of collections of resources.</li
 <dl class="method">
 <dt id="hpOneView.resources.servers.connections.Connections.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/connections.html#Connections.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.connections.Connections.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all connections that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all connections that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -261,8 +261,8 @@ interconnect group must be provided for each interconnect bay mapping.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -287,12 +287,12 @@ are currently part of that enclosure group.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to delete.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the resource was successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -305,14 +305,14 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.enclosure_groups.EnclosureGroups.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosure_groups.html#EnclosureGroups.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosure_groups.EnclosureGroups.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a enclosure group by ID or by uri.</p>
+<dd><p>Gets an enclosure group by ID or by URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the enclosure group id or the enclosure group uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the enclosure group ID or the enclosure group URI.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Enclosure Group</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Enclosure group.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
@@ -331,13 +331,13 @@ in OneView, just stops waiting for its completion.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -354,8 +354,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.enclosure_groups.EnclosureGroups.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosure_groups.html#EnclosureGroups.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosure_groups.EnclosureGroups.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all enclosure groups that matches the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all enclosure groups that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -402,8 +402,8 @@ on create time, with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -458,7 +458,7 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.add">
 <code class="descname">add</code><span class="sig-paren">(</span><em>information</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.add" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes information about an enclosure (e.g. IP address, username, password) and uses
+<dd><p>Takes information about an enclosure (for example: IP address, username, password) and uses
 it to claim/configure the enclosure and add its components to the appliance.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -466,8 +466,8 @@ it to claim/configure the enclosure and add its components to the appliance.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>information</strong> &#8211; Enclosure information to add.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -511,13 +511,13 @@ constrained by start and count parameters.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -534,8 +534,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all Enclosures that matches the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all Enclosures that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -565,7 +565,7 @@ maximum power, location &amp; dimensions, ...) of the enclosure resource.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Settings that describe the environmental configuration.</td>
 </tr>
@@ -581,7 +581,7 @@ maximum power, location &amp; dimensions, ...) of the enclosure resource.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Enclosure script.</td>
 </tr>
@@ -599,7 +599,7 @@ log in to the enclosure without providing credentials. This API is currently onl
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
 <li><strong>role</strong> &#8211; Role</li>
 </ul>
 </td>
@@ -620,8 +620,8 @@ log in to the enclosure without providing credentials. This API is currently onl
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri.</li>
-<li><strong>fields</strong> &#8211; <p>Name of the metric(s) to be retrieved in the format METRIC[,METRIC]...</p>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
+<li><strong>fields</strong> &#8211; <p>Name of the metrics to be retrieved in the format METRIC[,METRIC]...</p>
 <p>If unspecified, all metrics supported are returned.</p>
 <dl class="docutils">
 <dt>Enclosures support the following utilization metrics:</dt>
@@ -682,13 +682,13 @@ resolution are retained up to one year.</dd>
 <dt>hour</dt>
 <dd>Resolution of the samples returned will be one sample for each 60-minute time period. Samples are
 calculated by averaging the available 5-minute data samples that occurred within the hour, except
-for PeakPower which is calculated by reporting the peak observed 5-minute sample value data during
+for PeakPower, which is calculated by reporting the peak observed 5-minute sample value data during
 the hour. Samples at this resolution are retained up to three years.</dd>
 <dt>day</dt>
 <dd>Resolution of the samples returned will be one sample for each 24-hour time period. One day is a
-24-hour period that starts at midnight GMT regardless of the time zone in which the appliance or
+24-hour period that starts at midnight GMT, regardless of the time zone in which the appliance or
 client is located. Samples are calculated by averaging the available 5-minute data samples that
-occurred during the day, except for PeakPower which is calculated by reporting the peak observed
+occurred during the day, except for PeakPower, which is calculated by reporting the peak observed
 5-minute sample value data during the day. Samples at this resolution are retained up to three
 years.</dd>
 </dl>
@@ -713,12 +713,12 @@ years.</dd>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
 <li><strong>operation</strong> &#8211; Patch operation</li>
 <li><strong>path</strong> &#8211; Path</li>
 <li><strong>value</strong> &#8211; Value</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -737,18 +737,17 @@ in OneView, just stops waiting for its completion.</li>
 <code class="descname">refresh_state</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>configuration</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.refresh_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.refresh_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Refreshes the enclosure along with all of its components, including interconnects and servers. Any new
 hardware is added and any hardware that is no longer present within the enclosure is removed. The
-&#8220;refreshStateConfig&#8221; passed in must have the &#8220;refreshState&#8221; field set to &#8220;Refreshing&#8221; and optionally
-provide information to re-claim the enclosure (e.g. IP address, user name, password, etc.). A task is
-returned to the caller which can be used to track the progress of the operation.</p>
+configuration dict must have the &#8220;refreshState&#8221; field set to &#8220;Refreshing&#8221; and optionally
+provide information to re-claim the enclosure (for example: IP address, user name, password, etc.).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
 <li><strong>configuration</strong> &#8211; Configuration</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -762,24 +761,24 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.remove">
 <code class="descname">remove</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.remove" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes and unconfigures the specified enclosure from the appliance. All components of the enclosure (e.g.
-blades and interconnects) are unconfigured/removed as part of this process.</p>
-<p>If the force option is set to &#8220;true&#8221; then any errors encountered as part of unconfiguring the enclosure or its
+<dd><p>Removes and unconfigures the specified enclosure from the appliance. All components of the enclosure (for
+example: blades and interconnects) are unconfigured/removed as part of this process.</p>
+<p>If the force option is set to &#8220;true&#8221;, then any errors encountered as part of unconfiguring the enclosure or its
 components are ignored and the enclosure is removed regardless of any errors that occur.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> &#8211; dict object to delete</li>
-<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with
+<li><strong>resource</strong> &#8211; Dict object to delete;</li>
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the resource was successfully removed.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully removed.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -793,16 +792,15 @@ in OneView, just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.update_configuration">
 <code class="descname">update_configuration</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.update_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.update_configuration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reapplies the appliance&#8217;s configuration on the enclosure. This includes running the same configure steps
-that were performed as part of the enclosure add. A task is returned to the caller which can be used to
-track the progress of the operation.</p>
+that were performed as part of the enclosure add.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -822,10 +820,10 @@ in OneView, just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
 <li><strong>configuration</strong> &#8211; Configuration</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -856,9 +854,9 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>information</strong> (<em>dict</em>) &#8211; Information to update. Can result in system specified IDs or the system reserving user-specified IDs.</li>
-<li><strong>id_or_uri</strong> &#8211; id or uri of vSN range.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>id_or_uri</strong> &#8211; ID or URI of vSN range.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -883,13 +881,13 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>information</strong> (<em>dict</em>) &#8211; The list of IDs to be collected</li>
-<li><strong>id_or_uri</strong> &#8211; Id or uri of range</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>id_or_uri</strong> &#8211; ID or URI of range</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">collector containing list of collected IDs successfully collected.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Collector containing list of collected IDs successfully collected.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
@@ -903,7 +901,7 @@ in OneView, just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges.create">
 <code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_ranges.html#IdPoolsRanges.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates range.</p>
-<p>A range can be one of two types based upon the range category specified: Generated or Custom. The Generated
+<p>A range can be one of two types based on the specified range category: Generated or Custom. The Generated
 range type automatically assigns start and end addresses to the range. The Custom range type requires a start
 address to be specified. The end address may also be specified but is optional.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -912,8 +910,8 @@ address to be specified. The end address may also be specified but is optional.<
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -937,14 +935,14 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to delete</li>
-<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the resource was successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -964,9 +962,9 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>information</strong> (<em>dict</em>) &#8211; Information to update.</li>
-<li><strong>id_or_uri</strong> &#8211; Id or uri of range.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>id_or_uri</strong> &#8211; ID or URI of range.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -990,7 +988,7 @@ range.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the range id or uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the range ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Range</td>
 </tr>
@@ -1009,8 +1007,8 @@ range.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Id or uri of range</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items. The actual number of items in
+<li><strong>id_or_uri</strong> &#8211; ID or URI of range.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items. The actual number of items in
 the response may differ from the requested count if the sum of start and count exceed the total number
 of items.</li>
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
@@ -1031,14 +1029,14 @@ first available item.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges.get_free_fragments">
 <code class="descname">get_free_fragments</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>count=-1</em>, <em>start=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_ranges.html#IdPoolsRanges.get_free_fragments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges.get_free_fragments" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all the free fragments in a vSN range.</p>
+<dd><p>Gets all free fragments in a vSN range.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Id or uri of range</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items. The actual number of items in
+<li><strong>id_or_uri</strong> &#8211; ID or URI of range.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items. The actual number of items in
 the response may differ from the requested count if the sum of start and count exceed the total number
 of items.</li>
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
@@ -1046,7 +1044,10 @@ first available item.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The list of IDs.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The list of IDs.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
 </td>
 </tr>
 </tbody>
@@ -1127,10 +1128,10 @@ appliance support dump content.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
 <li><strong>information</strong> (<em>dict</em>) &#8211; Information to generate support dump.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1147,7 +1148,7 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/logical_enclosures.html#LogicalEnclosures.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the logical enclosure with the specified ID, if it exists.</p>
+<dd><p>Returns the logical enclosure, if it exists, with the specified ID.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1175,13 +1176,13 @@ filter. Valid filter parameters include attributes of a Logical Enclosure resour
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -1198,8 +1199,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/logical_enclosures.html#LogicalEnclosures.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all logical enclosures that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all logical enclosures that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1223,7 +1224,7 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.get_by_name">
 <code class="descname">get_by_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/logical_enclosures.html#LogicalEnclosures.get_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.get_by_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieve a resource by his name.</p>
+<dd><p>Retrieves a resource by its name.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1241,14 +1242,16 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.get_script">
 <code class="descname">get_script</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/logical_enclosures.html#LogicalEnclosures.get_script"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.get_script" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the configuration script of the logical enclosure by id or uri.</p>
+<dd><p>Gets the configuration script of the logical enclosure by ID or URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Configuration script.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
 </tr>
 </tbody>
 </table>
@@ -1257,19 +1260,19 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.patch">
 <code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/logical_enclosures.html#LogicalEnclosures.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.patch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates the given logical enclosure&#8217;s attributes that are passed in. The PATCH operation is a partial update of
-the resource. The support operation in this context is the firmware update.</p>
+<dd><p>Updates the given logical enclosure&#8217;s attributes that are passed in the parameters. The PATCH operation
+partially updates the resource. The support operation in this context is the firmware update.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
 <li><strong>operation</strong> &#8211; Patch operation</li>
 <li><strong>path</strong> &#8211; Path</li>
 <li><strong>value</strong> &#8211; Value</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1287,7 +1290,7 @@ in OneView, just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/logical_enclosures.html#LogicalEnclosures.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the given logical enclosure that is passed in. The fields that can be updated on the logical enclosure
-itself include its name and configuration script. When the script is updated on the logical enclosure, the
+itself include name and configuration script. When the script is updated on the logical enclosure, the
 configuration script runs on all enclosures in the logical enclosure.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1295,30 +1298,29 @@ configuration script runs on all enclosures in the logical enclosure.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<p>Returns: (dict) Updated logical enclosure</p>
+<p>Returns: (dict) Updated logical enclosure.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.update_configuration">
 <code class="descname">update_configuration</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/logical_enclosures.html#LogicalEnclosures.update_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.update_configuration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reapplies the appliance&#8217;s configuration on enclosures for the logical enclosure by ID or uri. This includes
-running the same configure steps that were performed as part of the enclosure add. A task is returned to the
-caller which can be used to track the progress of the operation.</p>
+<dd><p>Reapplies the appliance&#8217;s configuration on enclosures for the logical enclosure by ID or URI. This includes
+running the same configure steps that were performed as part of the enclosure add.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1342,9 +1344,9 @@ in the Inconsistent state.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1368,10 +1370,10 @@ the specified ID.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
 <li><strong>information</strong> &#8211; Updated script.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1399,21 +1401,22 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.add">
 <code class="descname">add</code><span class="sig-paren">(</span><em>information</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.add" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a rack-mount server for management by the appliance. This API initiates the asynchronous addition of
-supported server models. Note: servers in an enclosure are added by adding the enclosure resource. This is
-only supported on appliances which support rack mounted servers.</p>
+<dd><p>Adds a rackmount server for management by the appliance. This API initiates the asynchronous addition of
+supported server models.</p>
+<p>Note: Servers in an enclosure are added by adding the enclosure resource. This is
+only supported on appliances that support rackmounted servers.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>information</strong> (<em>dict</em>) &#8211; Object to create</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created rack mount server.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created rackmount server.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
@@ -1426,12 +1429,12 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a server hardware resource by ID or by uri.</p>
+<dd><p>Gets a server hardware resource by ID or by URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the server hardware resource id or uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the server hardware resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The server hardware resource</td>
 </tr>
@@ -1453,13 +1456,13 @@ and constrained by start and count parameters.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -1481,7 +1484,7 @@ on create time, with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the server hardware resource id or uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the server hardware resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dictionary of BIOS/UEFI values.</td>
 </tr>
@@ -1494,8 +1497,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all server hardware that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all server hardware that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1516,13 +1519,13 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_environmental_configuration">
 <code class="descname">get_environmental_configuration</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_environmental_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_environmental_configuration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the settings that describe the environmental configuration (supported feature set, calibrated minimum &amp;
-maximum power, location &amp; dimensions, ...) of the server hardware resource.</p>
+<dd><p>Gets the settings that describe the environmental configuration (supported feature set, calibrated minimum and
+maximum power, location and dimensions, etc) of the server hardware resource.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the server hardware resource id or uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the server hardware resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Environmental configuration settings.</td>
 </tr>
@@ -1536,13 +1539,13 @@ maximum power, location &amp; dimensions, ...) of the server hardware resource.<
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_ilo_sso_url">
 <code class="descname">get_ilo_sso_url</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_ilo_sso_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_ilo_sso_url" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the URL to launch a Single Sign-On (SSO) session for the iLO web interface. If the server hardware is
-unsupported, the resulting URL will not use SSO and the iLO web interface will prompt for credentials. Note,
-this is not supported on G7/iLO3 or earlier servers.</p>
+unsupported, the resulting URL will not use SSO and the iLO web interface will prompt for credentials.
+This is not supported on G7/iLO3 or earlier servers.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the server hardware resource id or uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the server hardware resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">URL</td>
 </tr>
@@ -1555,12 +1558,12 @@ this is not supported on G7/iLO3 or earlier servers.</p>
 <code class="descname">get_java_remote_console_url</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_java_remote_console_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_java_remote_console_url" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates a Single Sign-On (SSO) session for the iLO Java Applet console and returns the URL to launch it.
 If the server hardware is unmanaged or unsupported, the resulting URL will not use SSO and the iLO Java Applet
-will prompt for credentials. Note, this is not supported on G7/iLO3 or earlier servers.</p>
+will prompt for credentials. This is not supported on G7/iLO3 or earlier servers.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the server hardware resource id or uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the server hardware resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">URL</td>
 </tr>
@@ -1579,7 +1582,7 @@ is supported only on Windows clients.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the server hardware resource id or uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the server hardware resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">URL</td>
 </tr>
@@ -1597,7 +1600,7 @@ is supported only on Windows clients.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>id</strong> &#8211; Resource identification.</li>
-<li><strong>fields</strong> &#8211; <p>Name of the metric(s) to be retrieved in the format METRIC[,METRIC]...</p>
+<li><strong>fields</strong> &#8211; <p>Name of the metrics to be retrieved in the format METRIC[,METRIC]...</p>
 <p>If unspecified, all metrics supported are returned.</p>
 <p>Server hardware supports the following utilization metrics:</p>
 <blockquote>
@@ -1625,7 +1628,7 @@ equals (=) operator.</p>
 <dd>Start date of requested starting time range in ISO 8601 format. If omitted, the startDate is
 determined by the endDate minus 24 hours.</dd>
 <dt>endDate</dt>
-<dd>End date of requested starting time range in ISO 8601 format. When omitted the endDate includes
+<dd>End date of requested starting time range in ISO 8601 format. When omitted, the endDate includes
 the latest data sample available.</dd>
 </dl>
 <p>If an excessive number of samples would otherwise be returned, the results will be segmented. The
@@ -1639,13 +1642,13 @@ appropriately (null if no data is available). If the filter just does not happen
 that a resource does have, then the metric history service will return null sample values for any
 missing samples.</p>
 </li>
-<li><strong>refresh</strong> &#8211; Specifies that if necessary an additional request will be queued to obtain the most recent
+<li><strong>refresh</strong> &#8211; Specifies that, if necessary, an additional request will be queued to obtain the most recent
 utilization data from the iLO. The response will not include any refreshed data. To track the
 availability of the newly collected data, monitor the TaskResource identified by the refreshTaskUri
 property in the response. If null, no refresh was queued.</li>
 <li><strong>view</strong> &#8211; <p>Specifies the resolution interval length of the samples to be retrieved. This is reflected in the
 resolution in the returned response. Utilization data is automatically purged to stay within storage
-space constraints. Supported views are listed below.</p>
+space constraints. See the following supported views.</p>
 <dl class="docutils">
 <dt>native</dt>
 <dd>Resolution of the samples returned will be one sample for each 5-minute time period. This is the
@@ -1654,13 +1657,13 @@ are retained up to one year.</dd>
 <dt>hour</dt>
 <dd>Resolution of the samples returned will be one sample for each 60-minute time period. Samples are
 calculated by averaging the available 5-minute data samples that occurred within the hour, except
-for PeakPower which is calculated by reporting the peak observed 5-minute sample value data during
+for PeakPower, which is calculated by reporting the peak observed 5-minute sample value data during
 the hour. Samples at this resolution are retained up to three years.</dd>
 <dt>day</dt>
 <dd>Resolution of the samples returned will be one sample for each 24-hour time period. One day is a
-24-hour period that starts at midnight GMT regardless of the time zone in which the appliance or
+24-hour period that starts at midnight GMT, regardless of the time zone in which the appliance or
 client is located. Samples are calculated by averaging the available 5-minute data samples that
-occurred during the day, except for PeakPower which is calculated by reporting the peak observed
+occurred during the day, except for PeakPower, which is calculated by reporting the peak observed
 5-minute sample value data during the day. Samples at this resolution are retained up to three
 years.</dd>
 </dl>
@@ -1684,10 +1687,10 @@ years.</dd>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the server hardware resource id or uri</li>
-<li><strong>configuration</strong> &#8211; configuration</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the server hardware resource ID or URI.</li>
+<li><strong>configuration</strong> &#8211; Refresh state configuration.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1701,25 +1704,22 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.remove">
 <code class="descname">remove</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.remove" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes the rack-server with the specified URI.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This operation is only supported on appliances which support rack mounted servers.</p>
-</div>
+<dd><p>Removes the rackserver with the specified URI.
+Note: This operation is only supported on appliances that support rackmounted servers.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to delete.</li>
-<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the resource was successfully removed.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates whether the resource was successfully removed.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -1738,10 +1738,10 @@ in OneView, just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the server hardware resource id or uri</li>
-<li><strong>configuration</strong> &#8211; configuration</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the server hardware resource ID or URI.</li>
+<li><strong>configuration</strong> (<em>dict</em>) &#8211; Environmental configuration.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1765,9 +1765,9 @@ manage the server.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the server hardware resource id or uri.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the server hardware resource ID or URI.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1787,10 +1787,10 @@ in OneView, just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the server hardware resource id or uri</li>
-<li><strong>configuration</strong> &#8211; configuration</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the server hardware resource ID or URI.</li>
+<li><strong>configuration</strong> (<em>dict</em>) &#8211; Power state configuration.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1818,7 +1818,7 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.delete">
 <code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware_types.html#ServerHardwareTypes.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove the server hardware type with the specified URI. A server hardware type cannot be deleted if it
+<dd><p>Removes the server hardware type with the specified URI. A server hardware type cannot be deleted if it
 is associated with a server hardware or server profile resource.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1826,14 +1826,14 @@ is associated with a server hardware or server profile resource.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; object to delete</li>
-<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the resource was successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates whether the resource was successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -1846,12 +1846,12 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware_types.html#ServerHardwareTypes.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the server hardware type resource with the specified id or uri.</p>
+<dd><p>Gets the server hardware type resource with the specified ID or URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the server hardware type id or uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the server hardware type ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The logical interconnect group.</td>
 </tr>
@@ -1864,7 +1864,7 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware_types.html#ServerHardwareTypes.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the list of server hardware type resources defined on the appliance.</p>
+<dd><p>Gets the list of server hardware type resources defined on the appliance.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1872,17 +1872,17 @@ in OneView, just stops waiting for its completion.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of server hardware type.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of server hardware types.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
@@ -1895,8 +1895,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware_types.html#ServerHardwareTypes.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all server hardware types that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all server hardware types that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1927,8 +1927,8 @@ on create time, with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1966,7 +1966,7 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -1991,12 +1991,12 @@ in OneView, just stop waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> &#8211; Object to delete.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the resource was successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates whether the resource was successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -2009,12 +2009,12 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profile_templates.html#ServerProfileTemplate.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a server profile template resource by ID or by uri.</p>
+<dd><p>Gets a server profile template resource by ID or by URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the server profile template resource id or uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the server profile template resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The server profile template resource.</td>
 </tr>
@@ -2027,7 +2027,7 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profile_templates.html#ServerProfileTemplate.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a list of server profile templates based on optional sorting and filtering, and constrained by start and
+<dd><p>Gets a list of server profile templates based on optional sorting and filtering and is constrained by start and
 count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2038,17 +2038,17 @@ count parameters.</p>
 If not specified, the default is 0 - start with the first available item.</li>
 <li><strong>count</strong> &#8211; The number of resources to return.
 Providing a -1 for the count parameter will restrict the result set size to 64 server profile
-templates. The maximum number of profile templates is restricted to 256, i.e., if user requests more
+templates. The maximum number of profile templates is restricted to 256, that is, if user requests more
 than 256, this will be internally limited to 256.
-The actual number of items in the response may differ from the
-requested count if the sum of start and count exceed the total number of items, or if returning the
+The actual number of items in the response might differ from the
+requested count if the sum of start and count exceeds the total number of items, or if returning the
 requested number of items would take too long.</li>
-<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.
+<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The default is no filter; all
+resources are returned.
 Filters are supported for the name, description, affinity, macType, wwnType, serialNumberType, status,
-serverHardwareTypeUri, enclosureGroupUri, firmware.firmwareBaselineUri attributes.</li>
+serverHardwareTypeUri, enclosureGroupUri, and firmware.firmwareBaselineUri attributes.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -2065,8 +2065,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profile_templates.html#ServerProfileTemplate.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all server profile templates that matches a specified filter.
-The search is case insensitive.</p>
+<dd><p>Gets all server profile templates that match a specified filter.
+The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2109,15 +2109,14 @@ The search is case insensitive.</p>
 <dt id="hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.get_new_profile">
 <code class="descname">get_new_profile</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profile_templates.html#ServerProfileTemplate.get_new_profile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.get_new_profile" title="Permalink to this definition">¶</a></dt>
 <dd><p>A profile object will be returned with the configuration based on this template. Specify the profile name and
-server hardware to assign. If template has any fibre channel connection which is specified as bootable but no
+server hardware to assign. If template has any fiber channel connection (which is specified as bootable) but no
 boot target was defined, that connection will be instantiated as a non-bootable connection. So modify that
-connection to change it to bootable and to specify the boot target. This profile object can subsequently be
-used for the POST <a class="reference external" href="https:/">https:/</a>/{appl}/rest/server-profiles/ API.</p>
+connection to change it to bootable and to specify the boot target.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the server profile template resource id or uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the server profile template resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The server profile resource.</td>
 </tr>
@@ -2131,20 +2130,13 @@ used for the POST <a class="reference external" href="https:/">https:/</a>/{appl
 <dt id="hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profile_templates.html#ServerProfileTemplate.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allows a server profile template object to have its configuration modified. These modifications can be as
-simple as a name or description change or much more complex changes around the networking configuration.
-It should be noted that selection of a virtual or physical MAC or Serial Number type is not mutable once a
-profile template has been created, and attempts to change those elements will not be applied to the target
-profile template. Connection requests can be one of the following types - port Auto, auto and explicit.
-An explicit request is where the request portId parameter includes the adapter, port and flexNic. An auto
-request  is where portId is set to &#8220;Auto&#8221; and a port auto request is where just the portId parameter includes
-just the adapter and port. The fields listed as required in the Request Body section need to be specified
-only when their associated parent is used.</p>
+simple as a name or description change or much more complex changes around the networking configuration.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the template id or the template uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the template id or the template uri.</li>
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
 </ul>
 </td>
@@ -2176,17 +2168,14 @@ only when their associated parent is used.</p>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.create">
 <code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.create" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a server profile using the information provided in the resource parameter. Connection requests can be
-one of the following types - port auto, auto and explicit. An explicit request is where the request includes
-the adapter, port and flexNic. An auto request is where none of the three are specified and a port auto
-request is where just the adapter and port are specified.</p>
+<dd><p>Creates a server profile using the information provided in the resource parameter.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -2211,12 +2200,12 @@ in OneView, just stop waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to delete.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the server profile was successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates whether the server profile was successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -2229,9 +2218,9 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.delete_all">
 <code class="descname">delete_all</code><span class="sig-paren">(</span><em>filter</em>, <em>timeout=-1</em>, <em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.delete_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.delete_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deletes all Server Profile objects from the appliance that match the provided filter. Filters are supported
-for the following profile attributes only - name, description, serialnumber, uuid, mactype, wwntype,
-serialnumbertype, status and state.</p>
+<dd><p>Deletes all Server Profile objects from the appliance that match the provided filter.
+Filters are supported only for the following profile attributes:  name, description, serialnumber, uuid,
+mactype, wwntype, serialnumbertype, status and state.</p>
 <p class="rubric">Examples</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">server_profile_client</span><span class="o">.</span><span class="n">delete_all</span><span class="p">(</span><span class="nb">filter</span><span class="o">=</span><span class="s2">&quot;name=&#39;Exchange Server&#39;&quot;</span><span class="p">)</span>
 <span class="go"># Remove all profiles that match the name &quot;Exchange Server&quot;</span>
@@ -2242,21 +2231,21 @@ serialnumbertype, status and state.</p>
 </pre></div>
 </div>
 <p>The filter function here operates very similar to the function defined for GET Server Profiles. It allows
-for both actual and partial matches of data in the profile. Any requests that wish to use a wildcard match
-must include a %25 as illustrated in the example. This is how that character is encoded for transmission to
-the appliance.</p>
+for both actual and partial matches of data in the profile. Any requests that use a wildcard match
+must include a %25 as illustrated in the previous example. This is how you encode that character for
+transmission to the appliance.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>filter</strong> (<em>dict</em>) &#8211; Object to delete.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the server profile was successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates whether the server profile was successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -2269,12 +2258,12 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves a server profile managed by the appliance by ID or by uri.</p>
+<dd><p>Retrieves a server profile managed by the appliance by ID or by URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the server profile resource id or uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the server profile resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The server profile resource.</td>
 </tr>
@@ -2287,10 +2276,8 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a list of server profile based on optional sorting and filtering, and constrained by start and
-count parameters.
-Gets a list of server profiles based on optional sorting and filtering, and constrained by start and count
-parameters. Providing a -1 for the count parameter will restrict the result set size to 64 server profiles.</p>
+<dd><p>Gets a list of server profile based on optional sorting and filtering and is constrained by start and
+count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2300,17 +2287,17 @@ parameters. Providing a -1 for the count parameter will restrict the result set 
 If not specified, the default is 0 - start with the first available item.</li>
 <li><strong>count</strong> &#8211; The number of resources to return.
 Providing a -1 for the count parameter will restrict the result set size to 64 server profile
-templates. The maximum number of profile templates is restricted to 256, i.e., if user requests more
+templates. The maximum number of profile templates is restricted to 256, that is, if user requests more
 than 256, this will be internally limited to 256.
-The actual number of items in the response may differ from the
-requested count if the sum of start and count exceed the total number of items, or if returning the
+The actual number of items in the response might differ from the
+requested count if the sum of start and count exceeds the total number of items, or if returning the
 requested number of items would take too long.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.
+default is no filter; all resources are returned.
 Filters are supported for the name, description, serialNumber, uuid, affinity, macType, wwnType,
 serialNumberType, serverProfileTemplateUri, templateCompliance, status and state attributes.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -2327,8 +2314,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_available_networks">
 <code class="descname">get_available_networks</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_available_networks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_available_networks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves the list of Ethernet networks, Fibre Channel networks and network sets that are available to a
-server profile along with their respective ports.</p>
+<dd><p>Retrieves the list of Ethernet networks, Fiber Channel networks, and network sets that are available to a
+server profile, along with their respective ports.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2338,9 +2325,9 @@ server profile along with their respective ports.</p>
 <li><strong>functionType</strong> (<em>str</em>) &#8211; The FunctionType (Ethernet or FibreChannel) to filter the list of networks returned.</li>
 <li><strong>serverHardwareTypeUri</strong> (<em>str</em>) &#8211; The URI of the server hardware type associated with the resource.</li>
 <li><strong>serverHardwareUri</strong> (<em>str</em>) &#8211; The URI of the server hardware associated with the resource.</li>
-<li><strong>view</strong> (<em>str</em>) &#8211; <p>Return a specific subset of the attributes of the resource or collection, by specifying the name of a
-predefined view. The default view is expand - show all attributes of the resource and all elements of
-collections of resources.</p>
+<li><strong>view</strong> (<em>str</em>) &#8211; <p>Returns a specific subset of the attributes of the resource or collection, by specifying the name of a
+predefined view. The default view is expand (show all attributes of the resource and all elements of
+collections of resources).</p>
 <dl class="docutils">
 <dt>Values:</dt>
 <dd><dl class="first last docutils">
@@ -2393,7 +2380,7 @@ collections of resources.</p>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_available_storage_system">
 <code class="descname">get_available_storage_system</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_available_storage_system"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_available_storage_system" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieve a specific storage system and its associated volumes that are available to the server profile based
+<dd><p>Retrieves a specific storage system and its associated volumes available to the server profile based
 on the given server hardware type and enclosure group.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2419,19 +2406,19 @@ on the given server hardware type and enclosure group.</p>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_available_storage_systems">
 <code class="descname">get_available_storage_systems</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_available_storage_systems"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_available_storage_systems" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves the list of the storage systems and their associated volumes that are available to the server profile
+<dd><p>Retrieves the list of the storage systems and their associated volumes available to the server profile
 based on the given server hardware type and enclosure group.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items. The actual number of items in
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items. The actual number of items in
 the response may differ from the requested count if the sum of start and count exceed the total
 number of items.</li>
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
 first available item.</li>
-<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The default is no filter - all
+<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The default is no filter; all
 resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based on create time, with the
 oldest entry first.</li>
@@ -2462,7 +2449,7 @@ profile.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>enclosureGroupUri</strong> (<em>str</em>) &#8211; The URI of the enclosure group associated with the resource.</li>
 <li><strong>serverHardwareTypeUri</strong> (<em>str</em>) &#8211; The URI of the server hardware type associated with the resource.</li>
-<li><strong>profileUri</strong> (<em>str</em>) &#8211; The URI of the server profile associated with the resource</li>
+<li><strong>profileUri</strong> (<em>str</em>) &#8211; The URI of the server profile associated with the resource.</li>
 </ul>
 </td>
 </tr>
@@ -2479,8 +2466,8 @@ profile.</p>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all server profile that matches a specified filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all server profile that match a specified filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2528,7 +2515,7 @@ consistent with its template.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the server profile resource id or uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the server profile resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Server profile compliance preview.</td>
 </tr>
@@ -2541,12 +2528,12 @@ consistent with its template.</p>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_messages">
 <code class="descname">get_messages</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_messages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_messages" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieve the error or status messages associated with the specified profile.</p>
+<dd><p>Retrieves the error or status messages associated with the specified profile.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the server profile resource id or uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the server profile resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Server Profile Health.</td>
 </tr>
@@ -2584,7 +2571,7 @@ consistent with its template.</p>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_schema">
 <code class="descname">get_schema</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_schema" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates the ServerProfile schema.</p>
+<dd><p>Generates the Server Profile schema.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2600,18 +2587,18 @@ consistent with its template.</p>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_transformation">
 <code class="descname">get_transformation</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_transformation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_transformation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transforms an existing profile by supplying a new server hardware type and/or enclosure group. A profile
-will be returned with a new configuration based on the capabilities of the supplied server hardware type
-and/or enclosure group. All deployed connections will have their port assignment set to &#8216;Auto&#8217;.
-Re-selection of the server hardware may also be required. The new profile can subsequently be used for update
-the server profile but is not guaranteed to pass validation. Any incompatibilities will be flagged when the
+<dd><p>Transforms an existing profile by supplying a new server hardware type or enclosure group or both.
+A profile will be returned with a new configuration based on the capabilities of the supplied server hardware
+type or enclosure group or both. The port assignment for all deployed connections will be set to Auto.
+Re-selection of the server hardware may also be required. The new profile can subsequently be used for updating
+the server profile, but passing validation is not guaranteed. Any incompatibilities will be flagged when the
 transformed server profile is submitted.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the server profile resource id or uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the server profile resource ID or URI.</li>
 <li><strong>enclosureGroupUri</strong> (<em>str</em>) &#8211; The URI of the enclosure group associated with the resource.</li>
 <li><strong>serverHardwareTypeUri</strong> (<em>str</em>) &#8211; The URI of the server hardware type associated with the resource.</li>
 <li><strong>serverHardwareUri</strong> (<em>str</em>) &#8211; The URI of the server hardware associated with the resource.</li>
@@ -2645,7 +2632,7 @@ transformed server profile is submitted.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the server profile id or the server profile uri</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the server profile id or the server profile uri</li>
 <li><strong>operation</strong> &#8211; The type of operation: one of &#8220;add&#8221;, &#8220;copy&#8221;, &#8220;move&#8221;, &#8220;remove&#8221;, &#8220;replace&#8221;, or &#8220;test&#8221;.</li>
 <li><strong>path</strong> &#8211; The JSON path the operation is to use. The exact meaning depends on the type of operation.</li>
 <li><strong>value</strong> &#8211; The value to add or replace for &#8220;add&#8221; and &#8220;replace&#8221; operations, or the value to compare against
@@ -2666,19 +2653,13 @@ for a &#8220;test&#8221; operation. Not used by &#8220;copy&#8221;, &#8220;move&
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Allows a server profile object to have its configuration modified. These modifications can be as simple as a
-name or description change or much more complex changes around the assigned server and networking configuration.
-It should be noted that selection of a virtual or physical MAC or Serial Number is not mutable once a profile
-has been created, and attempts to change those elements will not be applied to the target profile. Connection
-requests can be one of the following types - port Auto, auto and explicit. An explicit request is where the
-request portId parameter includes the adapter, port and flexNic. An auto request is where portId is set to
-&#8220;Auto&#8221; and a port auto request is where just the portId parameter includes just the adapter and port.</p>
+<dd><p>Allows the configuration of a server profile object to be modified.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the server profile id or the server profile uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the server profile id or the server profile uri.</li>
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
 </ul>
 </td>
@@ -2711,7 +2692,7 @@ request portId parameter includes the adapter, port and flexNic. An auto request
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Hewlett Packard Enterprise.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
 
     </p>
   </div> 
@@ -2732,7 +2713,7 @@ request portId parameter includes the adapter, port and flexNic. An auto request
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

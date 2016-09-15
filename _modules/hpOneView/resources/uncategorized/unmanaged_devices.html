@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.uncategorized.unmanaged_devices &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  <title>hpOneView.resources.uncategorized.unmanaged_devices &mdash; HPE OneView Python SDK 2.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="HPE OneView Python SDK 2.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="hpOneView" href="../../../hpOneView.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0
+                2.0
               </div>
             
           
@@ -187,18 +187,18 @@
 <span class="sd">                The first item to return, using 0-based indexing.</span>
 <span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
 <span class="sd">            count:</span>
-<span class="sd">                The number of resources to return. A count of -1 requests all the items.</span>
-<span class="sd">                The actual number of items in the response may differ from the requested</span>
-<span class="sd">                count if the sum of start and count exceed the total number of items.</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
+<span class="sd">                The actual number of items in the response might differ from the requested</span>
+<span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
 <span class="sd">            filter:</span>
 <span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
-<span class="sd">                default is no filter - all resources are returned.</span>
+<span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">            query:</span>
 <span class="sd">                 A general query string to narrow the list of resources returned. The default</span>
 <span class="sd">                 is no query - all resources are returned.</span>
 <span class="sd">            sort:</span>
 <span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
-<span class="sd">                on create time, with the oldest entry first.</span>
+<span class="sd">                on create time with the oldest entry first.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">             list: Unmanaged Devices</span>
@@ -211,7 +211,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            id_or_uri:</span>
-<span class="sd">                Could be either the Unmanaged Device id or the uri</span>
+<span class="sd">                Can be either the Unmanaged Device id or the uri</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: The Unmanaged Device</span>
@@ -228,8 +228,8 @@
 <span class="sd">            information:</span>
 <span class="sd">                Unmanaged Device information</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Added Unmanaged Device</span>
@@ -244,11 +244,11 @@
 <span class="sd">            resource:</span>
 <span class="sd">                 Dict object to remove</span>
 <span class="sd">            force:</span>
-<span class="sd">                 If set to true the operation completes despite any problems with</span>
+<span class="sd">                 If set to true, the operation completes despite any problems with</span>
 <span class="sd">                 network connectivity or errors on the resource itself. The default is false.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                 in OneView, just stops waiting for its completion.</span>
+<span class="sd">                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                 in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">             bool: operation success</span>
@@ -264,11 +264,11 @@
 <span class="sd">            filter:</span>
 <span class="sd">                 A general filter/query string to narrow the list of items that will be removed.</span>
 <span class="sd">            force:</span>
-<span class="sd">                 If set to true the operation completes despite any problems with</span>
+<span class="sd">                 If set to true, the operation completes despite any problems with</span>
 <span class="sd">                 network connectivity or errors on the resource itself. The default is false.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                 Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                 in OneView, just stops waiting for its completion.</span>
+<span class="sd">                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                 in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">             bool: operation success</span>
@@ -284,8 +284,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict): Object to update</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Updated Unmanaged Devices</span>
@@ -299,7 +299,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            id_or_uri:</span>
-<span class="sd">                Could be either the Unmanaged Device id or the uri</span>
+<span class="sd">                Can be either the Unmanaged Device id or the uri</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict:</span>
@@ -310,8 +310,8 @@
 
 <div class="viewcode-block" id="UnmanagedDevices.get_by"><a class="viewcode-back" href="../../../../hpOneView.resources.uncategorized.html#hpOneView.resources.uncategorized.unmanaged_devices.UnmanagedDevices.get_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get all Unmanaged Devices that match the filter</span>
-<span class="sd">        The search is case insensitive</span>
+<span class="sd">        Gets all Unmanaged Devices that match the filter</span>
+<span class="sd">        The search is case-insensitive</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            field: field name to filter</span>
@@ -332,7 +332,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Hewlett Packard Enterprise.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
 
     </p>
   </div> 
@@ -353,7 +353,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'1.0',
+            VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

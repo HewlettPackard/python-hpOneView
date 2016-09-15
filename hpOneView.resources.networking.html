@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.networking package &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  <title>hpOneView.resources.networking package &mdash; HPE OneView Python SDK 2.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="index.html"/> 
+    <link rel="top" title="HPE OneView Python SDK 2.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0
+                2.0
               </div>
             
           
@@ -195,13 +195,13 @@ templates that are returned.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -218,8 +218,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.connection_templates.ConnectionTemplates.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/connection_templates.html#ConnectionTemplates.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.connection_templates.ConnectionTemplates.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all connection templates that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all connection templates that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -243,7 +243,7 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.connection_templates.ConnectionTemplates.get_default">
 <code class="descname">get_default</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/connection_templates.html#ConnectionTemplates.get_default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.connection_templates.ConnectionTemplates.get_default" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the default network connection template. This is the default connection template used
+<dd><p>Gets the default network connection template. This is the default connection template used
 for construction of networks. Its value is copied when a new connection template is made.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -267,7 +267,7 @@ for construction of networks. Its value is copied when a new connection template
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
 OneView, just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -306,8 +306,8 @@ OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -331,8 +331,8 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Specifications to create in bulk.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -357,14 +357,14 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> &#8211; dict object to delete</li>
-<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the resource was successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -395,7 +395,7 @@ in OneView, just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vlan_id_range</strong> &#8211; A combination of values or ranges. For example &#8216;1-10,50,51,500-700&#8217;.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vlan_id_range</strong> &#8211; A combination of values or ranges. For example, &#8216;1-10,50,51,500-700&#8217;.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">vlan ids</td>
 </tr>
@@ -413,7 +413,7 @@ in OneView, just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or uri of Ethernet network.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of Ethernet network.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The ethernet network.</td>
 </tr>
@@ -426,8 +426,8 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a paginated collection of Ethernet networks. The collection is based on optional sorting and filtering,
-and constrained by start and count parameters.</p>
+<dd><p>Gets a paginated collection of Ethernet networks. The collection is based on optional sorting and filtering
+and is constrained by start and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -435,13 +435,13 @@ and constrained by start and count parameters.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -463,7 +463,7 @@ on create time, with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect group id or the logical interconnect group uri</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect group id or the logical interconnect group uri</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">URIs of the associated profiles.</td>
 </tr>
@@ -481,7 +481,7 @@ on create time, with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect group id or the logical interconnect group uri</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect group id or the logical interconnect group uri</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">URIs of the associated uplink sets.</td>
 </tr>
@@ -494,8 +494,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all Ethernet networks that matches the filter
-The search is case insensitive</p>
+<dd><p>Gets all Ethernet networks that match the filter.
+The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -537,7 +537,7 @@ The search is case insensitive</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>name_prefix</strong> &#8211; The Ethernet Network prefix</li>
-<li><strong>vlan_id_range</strong> &#8211; A combination of values or ranges to be retrieved. For example &#8216;1-10,50,51,500-700&#8217;.</li>
+<li><strong>vlan_id_range</strong> &#8211; A combination of values or ranges to be retrieved. For example, &#8216;1-10,50,51,500-700&#8217;.</li>
 </ul>
 </td>
 </tr>
@@ -561,8 +561,8 @@ The search is case insensitive</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>resource</strong> &#8211; dict object to update</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -616,13 +616,13 @@ With no filters specified, the API returns all supported fabrics.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -639,8 +639,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.fabrics.Fabrics.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/fabrics.html#Fabrics.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.fabrics.Fabrics.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all fabrics that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all fabrics that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -685,7 +685,7 @@ on create time, with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -711,14 +711,14 @@ Any deployed connections that are using the network are placed in the &#8216;Fai
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> &#8211; dict object to delete</li>
-<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the resource was successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -750,7 +750,7 @@ in OneView, just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.networking.fc_networks.FcNetworks.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/fc_networks.html#FcNetworks.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.fc_networks.FcNetworks.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a paginated collection of Fibre Channel networks. The collection is based on optional
-sorting and filtering, and constrained by start and count parameters.</p>
+sorting and filtering and is constrained by start and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -758,14 +758,14 @@ sorting and filtering, and constrained by start and count parameters.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; <p>The number of resources to return. A count of -1 requests all the items.</p>
-<p>The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</p>
+<li><strong>count</strong> &#8211; <p>The number of resources to return. A count of -1 requests all items.</p>
+<p>The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</p>
 </li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -782,8 +782,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.fc_networks.FcNetworks.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/fc_networks.html#FcNetworks.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.fc_networks.FcNetworks.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all Fibre Channel networks that matches the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all Fibre Channel networks that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -814,7 +814,7 @@ on create time, with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -853,8 +853,8 @@ in OneView, just stop waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -873,14 +873,14 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>str, dict</em>) &#8211; Accept either the resource id  or the entire resource.</li>
-<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the resource was successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -920,13 +920,13 @@ constrained by start and count parameters.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -943,8 +943,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.fcoe_networks.FcoeNetworks.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/fcoe_networks.html#FcoeNetworks.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.fcoe_networks.FcoeNetworks.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all FCoE networks that matches the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all FCoE networks that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -975,8 +975,8 @@ on create time, with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Resource to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1008,12 +1008,12 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.interconnect_link_topologies.InterconnectLinkTopologies.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnect_link_topologies.html#InterconnectLinkTopologies.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnect_link_topologies.InterconnectLinkTopologies.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets an interconnect link topology by ID or by uri.</p>
+<dd><p>Gets an interconnect link topology by ID or by URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the interconnect type id or the interconnect type uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the interconnect type id or the interconnect type uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The interconnect link topology.</td>
 </tr>
@@ -1036,13 +1036,13 @@ With no filters specified, the API returns all interconnect link toplogies.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -1059,8 +1059,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.interconnect_link_topologies.InterconnectLinkTopologies.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnect_link_topologies.html#InterconnectLinkTopologies.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnect_link_topologies.InterconnectLinkTopologies.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all interconnect link topologies that match the filter.
-The search is case insensitive</p>
+<dd><p>Gets all interconnect link topologies that match the filter.
+The search is case-insensitive</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1098,12 +1098,12 @@ The search is case insensitive</p>
 <dl class="method">
 <dt id="hpOneView.resources.networking.interconnect_types.InterconnectTypes.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnect_types.html#InterconnectTypes.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnect_types.InterconnectTypes.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets an interconnect type by ID or by uri.</p>
+<dd><p>Gets an interconnect type by ID or by URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the interconnect type id or the interconnect type uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the interconnect type id or the interconnect type uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The interconnect type.</td>
 </tr>
@@ -1126,13 +1126,13 @@ With no filters specified, the API returns all interconnect types.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -1149,8 +1149,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.interconnect_types.InterconnectTypes.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnect_types.html#InterconnectTypes.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnect_types.InterconnectTypes.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all interconnect types that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all interconnect types that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1188,12 +1188,12 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.interconnects.Interconnects.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnects.html#Interconnects.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnects.Interconnects.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the Interconnect by ID or by uri.</p>
+<dd><p>Gets the Interconnect by ID or by URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the interconnect id or the interconnect uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the interconnect id or the interconnect uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict</td>
 </tr>
@@ -1205,8 +1205,7 @@ on create time, with the oldest entry first.</li>
 <dt id="hpOneView.resources.networking.interconnects.Interconnects.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnects.html#Interconnects.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnects.Interconnects.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a paginated collection of interconnects that includes the ports.</p>
-<p>In order to avoid a timeout on busy systems, the recommended maximum
-value of count is 2.</p>
+<p>To avoid a timeout on busy systems, the recommended maximum value of count is 2.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1214,13 +1213,13 @@ value of count is 2.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -1237,8 +1236,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.interconnects.Interconnects.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnects.html#Interconnects.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnects.Interconnects.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all interconnects that matches the filter
-The search is case insensitive</p>
+<dd><p>Gets all interconnects that match the filter
+The search is case-insensitive</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1334,7 +1333,7 @@ The search is case insensitive</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The statistics for the interconnect that matches id, port_name and subport_number.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The statistics for the interconnect that matches id, port_name, and subport_number.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
@@ -1348,8 +1347,8 @@ The search is case insensitive</p>
 <dt id="hpOneView.resources.networking.interconnects.Interconnects.patch">
 <code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnects.html#Interconnects.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnects.Interconnects.patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs a specific patch operation for the given interconnect.</p>
-<p>There are a limited set of interconnect properties which may be changed.
-They are: &#8216;powerState&#8217;, &#8216;uidState&#8217;, &#8216;deviceResetState&#8217;.</p>
+<p>There is a limited set of interconnect properties which might be changed.
+They are: &#8216;powerState&#8217;, &#8216;uidState&#8217;, and &#8216;deviceResetState&#8217;.</p>
 <p>If the interconnect supports the operation, the operation is performed and
 a task is returned through which the results are reported.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1357,10 +1356,10 @@ a task is returned through which the results are reported.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the interconnect id or the interconnect uri</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the interconnect id or the interconnect uri</li>
 <li><strong>operation</strong> &#8211; The type of operation: one of &#8220;add&#8221;, &#8220;copy&#8221;, &#8220;move&#8221;, &#8220;remove&#8221;, &#8220;replace&#8221;, or &#8220;test&#8221;.</li>
 <li><strong>path</strong> &#8211; The JSON path the operation is to use. The exact meaning depends on the type of operation.</li>
-<li><strong>value</strong> &#8211; The value to add or replace for &#8220;add&#8221; and &#8220;replace&#8221; operations, or the value to compare against
+<li><strong>value</strong> &#8211; The value to add or replace for &#8220;add&#8221; and &#8220;replace&#8221; operations or the value to compare against
 for a &#8220;test&#8221; operation. Not used by &#8220;copy&#8221;, &#8220;move&#8221;, or &#8220;remove&#8221;.</li>
 </ul>
 </td>
@@ -1382,9 +1381,9 @@ for a &#8220;test&#8221; operation. Not used by &#8220;copy&#8221;, &#8220;move&
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the interconnect id or the interconnect uri.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the interconnect id or the interconnect uri.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1407,10 +1406,10 @@ in OneView, just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the interconnect id or the interconnect uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the interconnect id or the interconnect uri.</li>
 <li><strong>port_information</strong> (<em>dict</em>) &#8211; object to update</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1433,10 +1432,10 @@ in OneView, just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the interconnect id or the interconnect uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the interconnect id or the interconnect uri.</li>
 <li><strong>ports</strong> (<em>list</em>) &#8211; Ports to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1467,12 +1466,12 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.logical_downlinks.LogicalDownlinks.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_downlinks.html#LogicalDownlinks.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_downlinks.LogicalDownlinks.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a logical downlink by ID or by uri.</p>
+<dd><p>Gets a logical downlink by ID or by URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the logical downlink id or the logical downlink uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the logical downlink id or the logical downlink uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The logical downlink.</td>
 </tr>
@@ -1486,7 +1485,7 @@ in OneView, just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.networking.logical_downlinks.LogicalDownlinks.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_downlinks.html#LogicalDownlinks.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_downlinks.LogicalDownlinks.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a paginated collection of logical downlinks. The collection is based on
-optional sorting and filtering, and constrained by start and count parameters.</p>
+optional sorting and filtering and is constrained by start and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1494,13 +1493,13 @@ optional sorting and filtering, and constrained by start and count parameters.</
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -1518,7 +1517,7 @@ on create time, with the oldest entry first.</li>
 <dt id="hpOneView.resources.networking.logical_downlinks.LogicalDownlinks.get_all_without_ethernet">
 <code class="descname">get_all_without_ethernet</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_downlinks.html#LogicalDownlinks.get_all_without_ethernet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_downlinks.LogicalDownlinks.get_all_without_ethernet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a paginated collection of logical downlinks without ethernet. The collection is
-based on optional sorting and filtering, and constrained by start and count parameters.</p>
+based on optional sorting and filtering and is constrained by start and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1526,13 +1525,13 @@ based on optional sorting and filtering, and constrained by start and count para
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -1546,8 +1545,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.logical_downlinks.LogicalDownlinks.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_downlinks.html#LogicalDownlinks.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_downlinks.LogicalDownlinks.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all logical downlinks that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all logical downlinks that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1576,7 +1575,7 @@ on create time, with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the logical downlink id or the logical downlink uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the logical downlink id or the logical downlink uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dict</td>
 </tr>
@@ -1608,8 +1607,8 @@ on create time, with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1633,14 +1632,14 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to delete.</li>
-<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the resource was successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -1653,12 +1652,12 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnect_groups.html#LogicalInterconnectGroups.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a logical interconnect group by ID or by uri.</p>
+<dd><p>Gets a logical interconnect group by ID or by URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect group id or the logical interconnect group uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect group id or the logical interconnect group uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The logical interconnect group.</td>
 </tr>
@@ -1671,7 +1670,7 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnect_groups.html#LogicalInterconnectGroups.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a list of logical interconnect groups based on optional sorting and filtering, and constrained by start
+<dd><p>Gets a list of logical interconnect groups based on optional sorting and filtering and is constrained by start
 and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1680,13 +1679,13 @@ and count parameters.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -1703,8 +1702,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnect_groups.html#LogicalInterconnectGroups.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all Logical interconnect groups that matches the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all Logical interconnect groups that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1749,7 +1748,7 @@ on create time, with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect group id or the logical interconnect group uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect group id or the logical interconnect group uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Interconnect Settings.</td>
 </tr>
@@ -1769,8 +1768,8 @@ on create time, with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1837,8 +1836,8 @@ in OneView, just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect id or the logical interconnect uri.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+<li><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect id or the logical interconnect uri.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
 OneView, just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -1863,8 +1862,8 @@ It will fail if no interconnect is already present on the specified position.</p
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>location_entries</strong> (<em>dict</em>) &#8211; Dictionary with location entries.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1884,7 +1883,7 @@ in OneView, just stops waiting for its completion.</li>
 <dd><p>Deletes an interconnect from a location.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">This won&#8217;t delete the LOGICAL INTERCONNECT itself, and may cause inconsistency between the enclosure
+<p class="last">This won&#8217;t delete the LOGICAL INTERCONNECT itself and might cause inconsistency between the enclosure
 and Logical Interconnect Group.</p>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1894,8 +1893,8 @@ and Logical Interconnect Group.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>enclosure_uri</strong> &#8211; URI of the Enclosure</li>
 <li><strong>bay</strong> &#8211; Bay</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1912,12 +1911,12 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a logical interconnect by ID or by uri.</p>
+<dd><p>Gets a logical interconnect by ID or by URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect id or the logical interconnect uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect id or the logical interconnect uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The logical interconnect.</td>
 </tr>
@@ -1930,7 +1929,7 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a list of logical interconnects based on optional sorting and filtering, and constrained by start
+<dd><p>Gets a list of logical interconnects based on optional sorting and filtering and is constrained by start
 and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1939,13 +1938,13 @@ and count parameters.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -1985,7 +1984,7 @@ on create time, with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect id or the logical interconnect uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect id or the logical interconnect uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">LIFirmware.</td>
 </tr>
@@ -1998,18 +1997,18 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_forwarding_information_base">
 <code class="descname">get_forwarding_information_base</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>filter=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get_forwarding_information_base"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_forwarding_information_base" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the forwarding information base data for a logical interconnect. Maximum of 100 entries is returned.
-Optional filtering criteria may be specified.</p>
+<dd><p>Gets the forwarding information base data for a logical interconnect. A maximum of 100 entries is returned.
+Optional filtering criteria might be specified.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect id or the logical interconnect uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect id or the logical interconnect uri.</li>
 <li><strong>filter</strong> &#8211; Filtering criteria may be specified using supported attributes: interconnectUri, macAddress,
 internalVlan, externalVlan, and supported relation = (Equals). macAddress is 12 hexadecimal digits with
-a colon between each pair of digits.(upper or lower case).
-The default is no filter - all resources are returned.</li>
+a colon between each pair of digits (upper case or lower case).
+The default is no filter; all resources are returned.</li>
 </ul>
 </td>
 </tr>
@@ -2031,7 +2030,7 @@ The default is no filter - all resources are returned.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect group id or the logical interconnect group uri</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect group id or the logical interconnect group uri</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Collection of URIs</td>
 </tr>
@@ -2049,7 +2048,7 @@ The default is no filter - all resources are returned.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect id or the logical interconnect uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect id or the logical interconnect uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Port monitor configuration.</td>
 </tr>
@@ -2067,7 +2066,7 @@ The default is no filter - all resources are returned.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect id or the logical interconnect uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect id or the logical interconnect uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">QoS Configuration.</td>
 </tr>
@@ -2085,7 +2084,7 @@ The default is no filter - all resources are returned.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect group id or the logical interconnect group uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect group id or the logical interconnect group uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">SNMP configuration.</td>
 </tr>
@@ -2117,13 +2116,13 @@ The default is no filter - all resources are returned.</li>
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_unassigned_uplink_ports">
 <code class="descname">get_unassigned_uplink_ports</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get_unassigned_uplink_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_unassigned_uplink_ports" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a collection of uplink ports from the member interconnects which are eligible for assignment to an
-analyzer port. To be eligible a port must be a valid uplink, must not be a member of an existing uplink set
+analyzer port. To be eligible, a port must be a valid uplink, must not be a member of an existing uplink set,
 and must not currently be used for stacking.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect group id or the logical interconnect group uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect group id or the logical interconnect group uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Collection of uplink ports.</td>
 </tr>
@@ -2137,7 +2136,7 @@ and must not currently be used for stacking.</p>
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.install_firmware">
 <code class="descname">install_firmware</code><span class="sig-paren">(</span><em>firmware_information</em>, <em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.install_firmware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.install_firmware" title="Permalink to this definition">¶</a></dt>
 <dd><p>Installs firmware to a logical interconnect. The three operations that are supported for the firmware
-update are Stage (uploads firmware to the interconnect), Activate (installs firmware on the interconnect)
+update are Stage (uploads firmware to the interconnect), Activate (installs firmware on the interconnect),
 and Update (which does a Stage and Activate in a sequential manner).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2145,7 +2144,7 @@ and Update (which does a Stage and Activate in a sequential manner).</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>firmware_information</strong> &#8211; Options to install firmware to a logical interconnect.</li>
-<li><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect id or the logical interconnect uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect id or the logical interconnect uri.</li>
 </ul>
 </td>
 </tr>
@@ -2169,16 +2168,16 @@ compared to the associated logical interconnect group.</p>
 <p>Any differences identified are corrected, bringing the logical interconnect back to a consistent
 state. Changes are asynchronously applied to all managed interconnects. Note that if the changes detected
 involve differences in the interconnect map between the logical interconnect group and the logical interconnect,
-the process of bringing the logical interconnect back to a consistent state may involve automatically removing
+the process of bringing the logical interconnect back to a consistent state might involve automatically removing
 existing interconnects from management and/or adding new interconnects for management.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -2201,9 +2200,9 @@ in OneView, just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -2226,12 +2225,12 @@ in OneView, just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
 <li><strong>configuration</strong> &#8211; Ethernet interconnect settings.</li>
-<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with network connectivity or errors
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with network connectivity or errors
 on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -2254,12 +2253,12 @@ in OneView, just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
 <li><strong>network_uri_list</strong> &#8211; List of Ethernet network uris.</li>
-<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with network connectivity or errors
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with network connectivity or errors
 on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -2282,7 +2281,7 @@ in OneView, just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect id or the logical interconnect uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect id or the logical interconnect uri.</li>
 <li><strong>resource</strong> &#8211; Port monitor configuration.</li>
 </ul>
 </td>
@@ -2306,9 +2305,9 @@ in OneView, just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect id or the logical interconnect uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect id or the logical interconnect uri.</li>
 <li><strong>qos_configuration</strong> &#8211; QOS configuration.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
 OneView, just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -2333,12 +2332,12 @@ applied to all managed interconnects.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
 <li><strong>settings</strong> &#8211; Interconnect settings</li>
-<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with network connectivity or errors
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with network connectivity or errors
 on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -2362,7 +2361,7 @@ applied to all managed interconnects.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the logical interconnect id or the logical interconnect uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect id or the logical interconnect uri.</li>
 <li><strong>configuration</strong> &#8211; snmp configuration.</li>
 </ul>
 </td>
@@ -2401,8 +2400,8 @@ applied to all managed interconnects.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -2426,14 +2425,14 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; object to delete.</li>
-<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the resource was successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -2446,12 +2445,12 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switch_groups.html#LogicalSwitchGroups.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a logical switch group by ID or by uri.</p>
+<dd><p>Gets a logical switch group by ID or by URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the logical switch group id or the logical switch group uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the logical switch group id or the logical switch group uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The logical switch group.</td>
 </tr>
@@ -2464,7 +2463,7 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switch_groups.html#LogicalSwitchGroups.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a list of logical switch groups based on optional sorting and filtering, and constrained by start
+<dd><p>Gets a list of logical switch groups based on optional sorting and filtering and is constrained by start
 and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2473,13 +2472,13 @@ and count parameters.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -2496,8 +2495,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switch_groups.html#LogicalSwitchGroups.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all Logical switch groups that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all Logical switch groups that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2528,8 +2527,8 @@ on create time, with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -2567,7 +2566,7 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -2592,10 +2591,10 @@ in OneView, just stop waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> &#8211; dict object to delete</li>
-<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -2617,7 +2616,7 @@ in OneView, just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the Logical Switch ID or URI</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the Logical Switch ID or URI</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Logical Switch.</td>
 </tr>
@@ -2631,7 +2630,7 @@ in OneView, just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.networking.logical_switches.LogicalSwitches.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switches.html#LogicalSwitches.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switches.LogicalSwitches.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a paginated collection of Logical Switches. The collection is based on optional
-sorting and filtering, and constrained by start and count parameters.</p>
+sorting and filtering and is constrained by start and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2639,14 +2638,14 @@ sorting and filtering, and constrained by start and count parameters.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; <p>The number of resources to return. A count of -1 requests all the items.</p>
-<p>The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</p>
+<li><strong>count</strong> &#8211; <p>The number of resources to return. A count of -1 requests all items.</p>
+<p>The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</p>
 </li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -2663,8 +2662,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.logical_switches.LogicalSwitches.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switches.html#LogicalSwitches.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switches.LogicalSwitches.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all Logical Switches that matches the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all Logical Switches that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2694,8 +2693,8 @@ on create time, with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the Logical Switch ID or URI</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+<li><strong>id_or_uri</strong> &#8211; Can be either the Logical Switch ID or URI</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -2720,7 +2719,7 @@ in OneView, just stop waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -2759,8 +2758,8 @@ in OneView, just stop waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -2780,14 +2779,14 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> &#8211; dict object to delete</li>
-<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the resource was successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -2819,7 +2818,7 @@ in OneView, just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.networking.network_sets.NetworkSets.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/network_sets.html#NetworkSets.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.network_sets.NetworkSets.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a paginated collection of network sets. The collection is based on optional
-sorting and filtering, and constrained by start and count parameters.</p>
+sorting and filtering and is constrained by start and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2827,13 +2826,13 @@ sorting and filtering, and constrained by start and count parameters.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -2851,7 +2850,7 @@ on create time, with the oldest entry first.</li>
 <dt id="hpOneView.resources.networking.network_sets.NetworkSets.get_all_without_ethernet">
 <code class="descname">get_all_without_ethernet</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/network_sets.html#NetworkSets.get_all_without_ethernet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.network_sets.NetworkSets.get_all_without_ethernet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a paginated collection of network sets without ethernet. The collection is based
-on optional sorting and filtering, and constrained by start and count parameters.</p>
+on optional sorting and filtering and is constrained by start and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2859,13 +2858,13 @@ on optional sorting and filtering, and constrained by start and count parameters
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -2882,8 +2881,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.network_sets.NetworkSets.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/network_sets.html#NetworkSets.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.network_sets.NetworkSets.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all network sets that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all network sets that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2912,7 +2911,7 @@ on create time, with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the Network Set ID or URI.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the Network Set ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Network set excluding Ethernet networks.</td>
 </tr>
@@ -2932,8 +2931,8 @@ on create time, with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -2992,13 +2991,13 @@ With no filters specified, the API returns all supported switch types.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -3015,8 +3014,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.switch_types.SwitchTypes.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/switch_types.html#SwitchTypes.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.switch_types.SwitchTypes.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all switch types that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all switch types that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -3061,14 +3060,14 @@ on create time, with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to delete.</li>
-<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the resource was successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -3081,12 +3080,12 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.switches.Switches.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/switches.html#Switches.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.switches.Switches.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a switch by ID or by uri.</p>
+<dd><p>Gets a switch by ID or by URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the switch ID or uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the switch ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Switch</td>
 </tr>
@@ -3107,13 +3106,13 @@ in OneView, just stops waiting for its completion.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -3130,8 +3129,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.switches.Switches.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/switches.html#Switches.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.switches.Switches.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all switches that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all switches that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -3160,7 +3159,7 @@ on create time, with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the resource id or uri</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">environmental configuration</td>
 </tr>
@@ -3179,7 +3178,7 @@ on create time, with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the switch id or the switch uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the switch id or the switch uri.</li>
 <li><strong>port_name</strong> &#8211; switch port number (optional)</li>
 </ul>
 </td>
@@ -3214,7 +3213,7 @@ on create time, with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the uplink set id or the uplink set uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the uplink set id or the uplink set uri.</li>
 <li><strong>ethernet_id_or_uris</strong> &#8211; Could be either one or more ethernet network id or ethernet network uri.</li>
 </ul>
 </td>
@@ -3239,7 +3238,7 @@ on create time, with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
 OneView, just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -3265,9 +3264,9 @@ deployed and using the FC network will be placed into a &#8216;Failed&#8217; sta
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>resource</strong> &#8211; Resource to delete or the resource ID.</li>
-<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
 OneView, just stops waiting for its completion.</li>
 <li><strong>Returns</strong> &#8211; bool: True if successfully deleted.</li>
 </ul>
@@ -3285,7 +3284,7 @@ OneView, just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the uplink set id or the uplink set uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the uplink set id or the uplink set uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The uplink set.</td>
 </tr>
@@ -3298,7 +3297,7 @@ OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/uplink_sets.html#UplinkSets.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a paginated list of uplink sets based on optional sorting and filtering, and constrained by start and
+<dd><p>Gets a paginated list of uplink sets based on optional sorting and filtering and is constrained by start and
 count parameters.</p>
 <p>Filters can be used in the URL to control the number of uplink sets that are returned.
 With no filters specified, the API returns all uplink sets.</p>
@@ -3309,13 +3308,13 @@ With no filters specified, the API returns all uplink sets.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -3332,8 +3331,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/uplink_sets.html#UplinkSets.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all uplink sets that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all uplink sets that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -3362,7 +3361,7 @@ on create time, with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the uplink set id or the uplink set uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the uplink set id or the uplink set uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Associated ethernet networks.</td>
 </tr>
@@ -3381,7 +3380,7 @@ on create time, with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the uplink set id or the uplink set uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the uplink set id or the uplink set uri.</li>
 <li><strong>ethernet_id_or_uris</strong> &#8211; Could be either one or more ethernet network id or ethernet network uri.</li>
 </ul>
 </td>
@@ -3406,7 +3405,7 @@ on create time, with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Resource to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
 OneView, just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -3439,7 +3438,7 @@ OneView, just stops waiting for its completion.</li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Hewlett Packard Enterprise.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
 
     </p>
   </div> 
@@ -3460,7 +3459,7 @@ OneView, just stops waiting for its completion.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

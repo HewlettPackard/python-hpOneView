@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.data_services.metric_streaming &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  <title>hpOneView.resources.data_services.metric_streaming &mdash; HPE OneView Python SDK 2.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="HPE OneView Python SDK 2.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="hpOneView" href="../../../hpOneView.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0
+                2.0
               </div>
             
           
@@ -181,26 +181,27 @@
 <span class="sd">        startTime (str):</span>
 <span class="sd">            The starting time of the metric collection.</span>
 <span class="sd">        sampleIntervalInSeconds (int):</span>
-<span class="sd">            The starting time of the metric collection.</span>
+<span class="sd">            Interval between samples.</span>
 <span class="sd">        numberOfSamples (int):</span>
 <span class="sd">            Number of samples in the list for each metric type.</span>
 <span class="sd">        resourceType (str):</span>
-<span class="sd">            Identifies the category of resource. The supported devices are server-hardware, enclosures and power-devices</span>
+<span class="sd">            Identifies the resource type.</span>
 <span class="sd">        resourceDataList (list):</span>
-<span class="sd">            Metric sample list</span>
+<span class="sd">            Metric sample list.</span>
 <span class="sd">        uri (str):</span>
-<span class="sd">            Canonical URI of the resource</span>
+<span class="sd">            Canonical URI of the resource.</span>
 <span class="sd">        category (str):</span>
-<span class="sd">            Identifies the category of resource. The supported devices are server-hardware, enclosures and power-devices</span>
+<span class="sd">            Identifies the category of resource. The supported devices are server-hardware, enclosures, and</span>
+<span class="sd">            power-devices.</span>
 <span class="sd">        created (timestamp):</span>
-<span class="sd">            Date and time when the resource was created</span>
+<span class="sd">            Date and time when the resource was created.</span>
 <span class="sd">        modified (timestamp):</span>
-<span class="sd">            Date and time when the resource was last modified</span>
+<span class="sd">            Date and time when the resource was last modified.</span>
 <span class="sd">        eTag (str):</span>
 <span class="sd">            Entity tag/version ID of the resource, the same value that is returned in the ETag header on a GET of the</span>
-<span class="sd">            resource</span>
+<span class="sd">            resource.</span>
 <span class="sd">        type (str):</span>
-<span class="sd">            Uniquely identifies the type of the JSON object</span>
+<span class="sd">            Uniquely identifies the type of the JSON object.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/metrics&#39;</span>
@@ -223,7 +224,7 @@
 <span class="sd">        Fetches the current configuration for which metrics are being relayed.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list: List of objects which contain frequency, sample interval and source type for each resource-type.</span>
+<span class="sd">            list: List of objects which contain frequency, sample interval, and source type for each resource-type.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/configuration&quot;</span><span class="p">)</span></div>
@@ -234,7 +235,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            configuration (dict):</span>
-<span class="sd">                Dictionary with a list of objects which contain frequency, sample interval and source type for each</span>
+<span class="sd">                Dictionary with a list of objects which contain frequency, sample interval, and source type for each</span>
 <span class="sd">                resource-type.</span>
 
 <span class="sd">        Returns:</span>
@@ -253,7 +254,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Hewlett Packard Enterprise.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
 
     </p>
   </div> 
@@ -274,7 +275,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'1.0',
+            VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

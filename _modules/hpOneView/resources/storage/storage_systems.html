@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.storage.storage_systems &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  <title>hpOneView.resources.storage.storage_systems &mdash; HPE OneView Python SDK 2.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="HPE OneView Python SDK 2.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="hpOneView" href="../../../hpOneView.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0
+                2.0
               </div>
             
           
@@ -187,15 +187,15 @@
 <span class="sd">                The first item to return, using 0-based indexing.</span>
 <span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
 <span class="sd">            count:</span>
-<span class="sd">                The number of resources to return. A count of -1 requests all the items.</span>
-<span class="sd">                The actual number of items in the response may differ from the requested</span>
-<span class="sd">                count if the sum of start and count exceed the total number of items.</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
+<span class="sd">                The actual number of items in the response might differ from the requested</span>
+<span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
 <span class="sd">            filter:</span>
 <span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
-<span class="sd">                default is no filter - all resources are returned.</span>
+<span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">            sort:</span>
 <span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
-<span class="sd">                on create time, with the oldest entry first.</span>
+<span class="sd">                on create time with the oldest entry first.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of all managed storage systems.</span>
@@ -205,15 +205,15 @@
 <div class="viewcode-block" id="StorageSystems.add"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.storage_systems.StorageSystems.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a storage system for management by the appliance. The storage system resource created will be in a</span>
-<span class="sd">        &quot;Connected&quot; state and will not yet be available for further operations. Users are required to perform a PUT API</span>
+<span class="sd">        Connected state and will not yet be available for further operations. Users are required to perform a PUT API</span>
 <span class="sd">        on the storage system resource to complete the management of the storage system resource. An asynchronous task</span>
 <span class="sd">        will be created as a result of this API call to discover available domains, target ports, and storage pools.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict): Object to create.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Created storage system.</span>
@@ -233,11 +233,10 @@
 <div class="viewcode-block" id="StorageSystems.get_storage_pools"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.storage_systems.StorageSystems.get_storage_pools">[docs]</a>    <span class="k">def</span> <span class="nf">get_storage_pools</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a list of Storage pools. Returns a list of storage pools belonging to the storage system referred by the</span>
-<span class="sd">        Path property parameters--id (serial number) or uri. Filters are supported for the following storage pool</span>
-<span class="sd">        attributes only - name, domain, deviceSpeed, deviceType, supprtedRAIDLevel, status and state.</span>
+<span class="sd">        Path property {ID} parameter or URI.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the storage system id (serial number) or the storage system uri.</span>
+<span class="sd">            id_or_uri: Can be either the storage system ID (serial number) or the storage system URI.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Host types.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -246,10 +245,10 @@
 
 <div class="viewcode-block" id="StorageSystems.get"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.storage_systems.StorageSystems.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets the specified storage system resource by ID or by uri.</span>
+<span class="sd">        Gets the specified storage system resource by ID or by URI.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the storage system id or the storage system uri.</span>
+<span class="sd">            id_or_uri: Can be either the storage system id or the storage system uri.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: The storage system.</span>
@@ -258,18 +257,15 @@
 
 <div class="viewcode-block" id="StorageSystems.update"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.storage_systems.StorageSystems.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Updates the storage system. To complete the action of adding a storage system for management by the appliance,</span>
+<span class="sd">        Updates the storage system. To complete the addition of a storage system for management by the appliance,</span>
 <span class="sd">        this must be called after create() of a storage system.</span>
-<span class="sd">        This method can be used to update storage system credentials, storage system attributes or to request a refresh</span>
-<span class="sd">        of storage system. For updating credentials, users are allowed to update IP/hostname, username, and password.</span>
-<span class="sd">        To request a refresh of a storage system user must set the &quot;refreshState&quot; attribute to RefreshPending state.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict):</span>
 <span class="sd">                Object to update.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Updated storage system.</span>
@@ -284,11 +280,11 @@
 <span class="sd">            resource (dict):</span>
 <span class="sd">                Object to delete</span>
 <span class="sd">            force (bool):</span>
-<span class="sd">                 If set to true the operation completes despite any problems with</span>
+<span class="sd">                 If set to true, the operation completes despite any problems with</span>
 <span class="sd">                 network connectivity or errors on the resource itself. The default is false.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Details of associated resource.</span>
@@ -300,8 +296,8 @@
 <span class="sd">        Gets all ports or a specific managed target port for the specified storage system.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the storage system id or the storage system uri.</span>
-<span class="sd">            port_id_or_uri: Could be either the port id or the port uri.</span>
+<span class="sd">            id_or_uri: Can be either the storage system id or the storage system uri.</span>
+<span class="sd">            port_id_or_uri: Can be either the port id or the port uri.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Managed ports.</span>
@@ -319,9 +315,9 @@
 
 <div class="viewcode-block" id="StorageSystems.get_by"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.storage_systems.StorageSystems.get_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get all storage systems that match the filter.</span>
+<span class="sd">        Gets all storage systems that match the filter.</span>
 
-<span class="sd">        The search is case insensitive.</span>
+<span class="sd">        The search is case-insensitive.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            Field: field name to filter.</span>
@@ -334,7 +330,7 @@
 
 <div class="viewcode-block" id="StorageSystems.get_by_name"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.storage_systems.StorageSystems.get_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Retrieve a resource by its name.</span>
+<span class="sd">        Retrieves a resource by its name.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            name: Resource name.</span>
@@ -373,7 +369,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Hewlett Packard Enterprise.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
 
     </p>
   </div> 
@@ -394,7 +390,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'1.0',
+            VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

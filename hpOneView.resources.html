@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources package &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  <title>hpOneView.resources package &mdash; HPE OneView Python SDK 2.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="index.html"/> 
+    <link rel="top" title="HPE OneView Python SDK 2.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0
+                2.0
               </div>
             
           
@@ -250,15 +250,15 @@
 <dl class="method">
 <dt id="hpOneView.resources.resource.ResourceClient.create">
 <code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>uri=None</em>, <em>timeout=-1</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.create" title="Permalink to this definition">¶</a></dt>
-<dd><p>Makes a POST request to create a resource, when a request body is required.</p>
+<dd><p>Makes a POST request to create a resource when a request body is required.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>uri</strong> &#8211; Could be either the resource id or the resource uri.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 <li><strong>custom_headers</strong> &#8211; Allows set specific HTTP headers.</li>
 </ul>
 </td>
@@ -280,8 +280,8 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>uri</strong> &#8211; URI</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -298,15 +298,15 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.resource.ResourceClient.create_with_zero_body">
 <code class="descname">create_with_zero_body</code><span class="sig-paren">(</span><em>uri=None</em>, <em>timeout=-1</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.create_with_zero_body"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.create_with_zero_body" title="Permalink to this definition">¶</a></dt>
-<dd><p>Makes a POST request to create a resource, when no request body is required.</p>
+<dd><p>Makes a POST request to create a resource when no request body is required.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>uri</strong> &#8211; Could be either the resource id or the resource uri.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 <li><strong>custom_headers</strong> &#8211; Allows set specific HTTP headers.</li>
 </ul>
 </td>
@@ -333,14 +333,14 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items deleted.</li>
-<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with network connectivity or errors
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with network connectivity or errors
 on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the resources were successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resources were successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -357,7 +357,7 @@ in OneView, just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The requested resource.</td>
 </tr>
@@ -369,10 +369,10 @@ in OneView, just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.resource.ResourceClient.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>view=u''</em>, <em>fields=u''</em>, <em>uri=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets all items according with the given arguments.</p>
-<p>More than one request can be send to get the items, regardless the query parameter &#8216;count&#8217;, since the actual
-number of items in the response may differ from the requested count. Some types of resource has a limited
+<p>More than one request can be send to get the items, regardless the query parameter &#8216;count&#8217;, because the actual
+number of items in the response might differ from the requested count. Some types of resource have a limited
 number of items returned on each call. For those resources, additional calls are made to the API to retrieve
-any other items matching the given filter. The actual number of items can also diverge from the requested call
+any other items matching the given filter. The actual number of items can also differ from the requested call
 if the requested number of items would take too long.</p>
 <p>The use of optional parameters for OneView 2.0 is described at:
 <a class="reference external" href="http://h17007.www1.hpe.com/docs/enterprise/servers/oneview2.0/cic-api/en/api-docs/current/index.html">http://h17007.www1.hpe.com/docs/enterprise/servers/oneview2.0/cic-api/en/api-docs/current/index.html</a></p>
@@ -387,17 +387,17 @@ if the requested number of items would take too long.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items (default).</li>
-<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The default is no filter - all
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items (default).</li>
+<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The default is no filter; all
 resources are returned.</li>
 <li><strong>query</strong> &#8211; A single query parameter can do what would take multiple parameters or multiple GET requests using
 filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based on create time, with the
+<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based on create time with the
 oldest entry first.</li>
 <li><strong>view</strong> &#8211; Returns a specific subset of the attributes of the resource or collection by specifying the name of a
-predefined view. The default view is expand (show all attributes of the resource, and all elements of
-collections or resources).</li>
-<li><strong>fields</strong> &#8211; Nome of the fields.</li>
+predefined view. The default view is expand (show all attributes of the resource and all elements of
+the collections or resources).</li>
+<li><strong>fields</strong> &#8211; Name of the fields.</li>
 <li><strong>uri</strong> &#8211; A specific URI (optional)</li>
 </ul>
 </td>
@@ -416,7 +416,7 @@ collections or resources).</li>
 <dt id="hpOneView.resources.resource.ResourceClient.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em>, <em>uri=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.get_by" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function uses get_all passing a filter.</p>
-<p>The search is case insensitive.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -438,7 +438,7 @@ collections or resources).</li>
 <dl class="method">
 <dt id="hpOneView.resources.resource.ResourceClient.get_by_name">
 <code class="descname">get_by_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.get_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.get_by_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieve a resource by his name.</p>
+<dd><p>Retrieve a resource by its name.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -463,7 +463,7 @@ Otherwise, use get_all instead.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
 <li><strong>filter</strong> &#8211; General filter/query string.</li>
 </ul>
 </td>
@@ -499,7 +499,7 @@ E.g.: &#8216;startDate=2016-05-30T11:20:44.541Z,endDate=2016-05-30T19:20:44.541Z
 <dd>Start date of requested starting time range in ISO 8601 format. If omitted, the startDate is
 determined by the endDate minus 24 hours.</dd>
 <dt>endDate</dt>
-<dd>End date of requested starting time range in ISO 8601 format. When omitted the endDate includes
+<dd>End date of requested starting time range in ISO 8601 format. When omitted, the endDate includes
 the latest data sample available.</dd>
 </dl>
 <p>If an excessive number of samples would otherwise be returned, the results will be segmented. The
@@ -507,19 +507,19 @@ caller is responsible for comparing the returned sliceStartTime with the request
 response. If the sliceStartTime is greater than the oldestSampleTime and the requested start time,
 the caller is responsible for repeating the request with endTime set to sliceStartTime to obtain the
 next segment. This process is repeated until the full data set is retrieved.</p>
-<p>If the resource has no data, the UtilizationData is still returned, but will contain no samples and
+<p>If the resource has no data, the UtilizationData is still returned but will contain no samples and
 sliceStartTime/sliceEndTime will be equal. oldestSampleTime/newestSampleTime will still be set
-appropriately (null if no data is available). If the filter just does not happen to overlap the data
-that a resource does have, then the metric history service will return null sample values for any
+appropriately (null if no data is available). If the filter does not happen to overlap the data
+that a resource has, then the metric history service will return null sample values for any
 missing samples.</p>
 </li>
-<li><strong>refresh</strong> &#8211; Specifies that if necessary an additional request will be queued to obtain the most recent
+<li><strong>refresh</strong> &#8211; Specifies that if necessary, an additional request will be queued to obtain the most recent
 utilization data from the iLO. The response will not include any refreshed data. To track the
 availability of the newly collected data, monitor the TaskResource identified by the refreshTaskUri
 property in the response. If null, no refresh was queued.</li>
 <li><strong>view</strong> &#8211; <p>Specifies the resolution interval length of the samples to be retrieved. This is reflected in the
 resolution in the returned response. Utilization data is automatically purged to stay within storage
-space constraints. Supported views are listed below.</p>
+space constraints. Supported views are listed below:</p>
 <dl class="docutils">
 <dt>native</dt>
 <dd>Resolution of the samples returned will be one sample for each 5-minute time period. This is the
@@ -559,12 +559,12 @@ years.</dd>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the resource id or the resource uri</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
 <li><strong>operation</strong> &#8211; Patch operation</li>
 <li><strong>path</strong> &#8211; Path</li>
 <li><strong>value</strong> &#8211; Value</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -578,17 +578,17 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.resource.ResourceClient.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>uri=None</em>, <em>force=False</em>, <em>timeout=-1</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Makes a PUT request to update a resource, when a request body is required.</p>
+<dd><p>Makes a PUT request to update a resource when a request body is required.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>uri</strong> &#8211; Could be either the resource id or the resource uri.</li>
-<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with network connectivity or errors
+<li><strong>uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with network connectivity or errors
 on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 <li><strong>custom_headers</strong> &#8211; Allows set specific HTTP headers.</li>
 </ul>
 </td>
@@ -603,15 +603,15 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.resource.ResourceClient.update_with_zero_body">
 <code class="descname">update_with_zero_body</code><span class="sig-paren">(</span><em>uri</em>, <em>timeout=-1</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.update_with_zero_body"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.update_with_zero_body" title="Permalink to this definition">¶</a></dt>
-<dd><p>Makes a PUT request to update a resource, when no request body is required.</p>
+<dd><p>Makes a PUT request to update a resource when no request body is required.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>uri</strong> &#8211; Could be either the resource id or the resource uri.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 <li><strong>custom_headers</strong> &#8211; Allows set specific HTTP headers.</li>
 </ul>
 </td>
@@ -651,7 +651,7 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.task_monitor.TaskMonitor.get_associated_resource">
 <code class="descname">get_associated_resource</code><span class="sig-paren">(</span><em>task</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/task_monitor.html#TaskMonitor.get_associated_resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.task_monitor.TaskMonitor.get_associated_resource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieve a resource associated to a task.</p>
+<dd><p>Retrieve a resource associated with a task.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -698,7 +698,7 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.task_monitor.TaskMonitor.is_task_running">
 <code class="descname">is_task_running</code><span class="sig-paren">(</span><em>task</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/task_monitor.html#TaskMonitor.is_task_running"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.task_monitor.TaskMonitor.is_task_running" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if a task is running according: TASK_PENDING_STATES [&#8216;New&#8217;, &#8216;Starting&#8217;,
+<dd><p>Check if a task is running according to: TASK_PENDING_STATES [&#8216;New&#8217;, &#8216;Starting&#8217;,
 &#8216;Pending&#8217;, &#8216;Running&#8217;, &#8216;Suspended&#8217;, &#8216;Stopping&#8217;]</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -706,7 +706,7 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task</strong> &#8211; task dict</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True when is in TASK_PENDING_STATES; False when not.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True when in TASK_PENDING_STATES; False when not.</td>
 </tr>
 </tbody>
 </table>
@@ -751,7 +751,7 @@ in OneView, just stops waiting for its completion.</li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Hewlett Packard Enterprise.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
 
     </p>
   </div> 
@@ -772,7 +772,7 @@ in OneView, just stops waiting for its completion.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

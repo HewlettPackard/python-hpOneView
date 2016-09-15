@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.storage.volumes &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  <title>hpOneView.resources.storage.volumes &mdash; HPE OneView Python SDK 2.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="HPE OneView Python SDK 2.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="hpOneView" href="../../../hpOneView.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0
+                2.0
               </div>
             
           
@@ -184,22 +184,22 @@
 <div class="viewcode-block" id="Volumes.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.volumes.Volumes.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a paginated collection of managed volumes. The collection is based on optional</span>
-<span class="sd">        sorting and filtering, and constrained by start and count parameters.</span>
+<span class="sd">        sorting and filtering and is constrained by start and count parameters.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            start:</span>
 <span class="sd">                The first item to return, using 0-based indexing.</span>
 <span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
 <span class="sd">            count:</span>
-<span class="sd">                The number of resources to return. A count of -1 requests all the items.</span>
-<span class="sd">                The actual number of items in the response may differ from the requested</span>
-<span class="sd">                count if the sum of start and count exceed the total number of items.</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
+<span class="sd">                The actual number of items in the response might differ from the requested</span>
+<span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
 <span class="sd">            filter:</span>
 <span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
-<span class="sd">                default is no filter - all resources are returned.</span>
+<span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">            sort:</span>
 <span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
-<span class="sd">                on create time, with the oldest entry first.</span>
+<span class="sd">                on create time with the oldest entry first.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of managed volumes.</span>
@@ -211,7 +211,7 @@
 <span class="sd">        Gets the managed volume.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the volume id or the volume uri.</span>
+<span class="sd">            id_or_uri: Can be either the volume ID or the volume URI.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Managed volume.</span>
@@ -220,9 +220,9 @@
 
 <div class="viewcode-block" id="Volumes.get_by"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.volumes.Volumes.get_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get all managed volumes that matches the given filter.</span>
+<span class="sd">        Gets all managed volumes that matches the given filter.</span>
 
-<span class="sd">        The search is case insensitive.</span>
+<span class="sd">        The search is case-insensitive.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            field: Field name to filter.</span>
@@ -237,7 +237,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates or adds a volume.</span>
 
-<span class="sd">        It&#39;s possible to create the volume in 6 different ways:</span>
+<span class="sd">        There are six different methods to create the volume:</span>
 
 <span class="sd">          1) Common = Storage System + Storage Pool</span>
 <span class="sd">          2) Template = Storage Volume Template</span>
@@ -246,13 +246,13 @@
 <span class="sd">          5) Management by name = Storage System + Storage System Volume Name</span>
 <span class="sd">          6) Snapshot = Snapshot Pool + Storage Pool + Snapshot.</span>
 
-<span class="sd">          NOTE: The 4) and 5) are for adding a volume for management, it do not create new volumes.</span>
+<span class="sd">          NOTE: Use numbers 4 and 5 to add a volume for management; it does not create new volumes.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict):</span>
-<span class="sd">                Object to create</span>
+<span class="sd">                Object to create.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
 <span class="sd">                in OneView, just stop waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
@@ -269,11 +269,11 @@
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict): Object to update.</span>
 <span class="sd">            force:</span>
-<span class="sd">                If set to true the operation completes despite any problems with network connectivity or errors on</span>
+<span class="sd">                If set to true, the operation completes despite any problems with network connectivity or errors on</span>
 <span class="sd">                the resource itself. The default is false.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stop waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Updated resource.</span>
@@ -288,18 +288,18 @@
 <span class="sd">            resource (dict):</span>
 <span class="sd">                Object to delete.</span>
 <span class="sd">            force:</span>
-<span class="sd">                 If set to true the operation completes despite any problems with</span>
+<span class="sd">                 If set to true, the operation completes despite any problems with</span>
 <span class="sd">                 network connectivity or errors on the resource itself. The default is false.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 <span class="sd">            export_only:</span>
-<span class="sd">                By default, volumes will be deleted from OneView and storage system.</span>
-<span class="sd">                To delete the volume only from OneView, you must set its value to True.</span>
-<span class="sd">                Setting its value to False has the same behaviour as the default behaviour.</span>
+<span class="sd">                By default, volumes will be deleted from OneView, and storage system.</span>
+<span class="sd">                To delete the volume from OneView only, you must set its value to True.</span>
+<span class="sd">                Setting its value to False has the same behavior as the default behavior.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            bool: indicating if the volume was successfully deleted.</span>
+<span class="sd">            bool: Indicates if the volume was successfully deleted.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">custom_headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;exportOnly&quot;</span><span class="p">:</span> <span class="n">export_only</span><span class="p">}</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span></div>
@@ -320,20 +320,20 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            volume_id_or_uri:</span>
-<span class="sd">                Could be either the volume id or the volume uri.</span>
+<span class="sd">                Can be either the volume id or the volume uri.</span>
 <span class="sd">            start:</span>
 <span class="sd">                The first item to return, using 0-based indexing.</span>
 <span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
 <span class="sd">            count:</span>
-<span class="sd">                The number of resources to return. A count of -1 requests all the items.</span>
-<span class="sd">                The actual number of items in the response may differ from the requested</span>
-<span class="sd">                count if the sum of start and count exceed the total number of items.</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
+<span class="sd">                The actual number of items in the response might differ from the requested</span>
+<span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
 <span class="sd">            filter:</span>
 <span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
-<span class="sd">                default is no filter - all resources are returned.</span>
+<span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">            sort:</span>
 <span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
-<span class="sd">                on create time, with the oldest entry first.</span>
+<span class="sd">                on create time with the oldest entry first.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of snapshots.</span>
@@ -343,19 +343,19 @@
 
 <div class="viewcode-block" id="Volumes.create_snapshot"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.volumes.Volumes.create_snapshot">[docs]</a>    <span class="k">def</span> <span class="nf">create_snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">volume_id_or_uri</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a snapshot for the volume specified.</span>
+<span class="sd">        Creates a snapshot for the specified volume.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            volume_id_or_uri:</span>
-<span class="sd">                Could be either the volume id or the volume uri</span>
+<span class="sd">                Can be either the volume ID or the volume URI.</span>
 <span class="sd">            snapshot (dict):</span>
-<span class="sd">                Object to create</span>
+<span class="sd">                Object to create.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in</span>
 <span class="sd">                OneView, just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: Storage Volume.</span>
+<span class="sd">            dict: Storage volume.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_volume_snapshot_uri</span><span class="p">(</span><span class="n">volume_id_or_uri</span><span class="p">)</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__snapshot_default_values</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -368,10 +368,10 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            volume_id_or_uri:</span>
-<span class="sd">                Could be either the volume id or the volume uri. It is optional if is passed a snapshot uri,</span>
-<span class="sd">                but required if passed a snapshot id.</span>
+<span class="sd">                Can be either the volume ID or the volume URI. It is optional if it is passed a snapshot URI,</span>
+<span class="sd">                but required if it passed a snapshot ID.</span>
 <span class="sd">            snapshot_id_or_uri:</span>
-<span class="sd">                Could be either the snapshot id or the snapshot uri.</span>
+<span class="sd">                Can be either the snapshot ID or the snapshot URI.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: The snapshot.</span>
@@ -381,16 +381,16 @@
 
 <div class="viewcode-block" id="Volumes.delete_snapshot"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.volumes.Volumes.delete_snapshot">[docs]</a>    <span class="k">def</span> <span class="nf">delete_snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Deletes a snapshot from OneView and storage system.</span>
+<span class="sd">        Deletes a snapshot from OneView and the storage system.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict): Object to remove.</span>
 <span class="sd">            force (bool):</span>
-<span class="sd">                 If set to true the operation completes despite any problems with</span>
+<span class="sd">                 If set to true, the operation completes despite any problems with</span>
 <span class="sd">                 network connectivity or errors on the resource itself. The default is false.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Details of associated volume.</span>
@@ -400,12 +400,12 @@
 
 <div class="viewcode-block" id="Volumes.get_snapshot_by"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.volumes.Volumes.get_snapshot_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_snapshot_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">volume_id_or_uri</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get all snapshots that match the filter.</span>
+<span class="sd">        Gets all snapshots that match the filter.</span>
 
-<span class="sd">        The search is case insensitive.</span>
+<span class="sd">        The search is case-insensitive.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            volume_id_or_uri: Could be either the volume id or the volume uri.</span>
+<span class="sd">            volume_id_or_uri: Can be either the volume id or the volume uri.</span>
 <span class="sd">            field: Field name to filter.</span>
 <span class="sd">            value: Value to filter.</span>
 
@@ -424,15 +424,15 @@
 <span class="sd">                The first item to return, using 0-based indexing.</span>
 <span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
 <span class="sd">            count:</span>
-<span class="sd">                The number of resources to return. A count of -1 requests all the items.</span>
-<span class="sd">                The actual number of items in the response may differ from the requested</span>
-<span class="sd">                count if the sum of start and count exceed the total number of items.</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
+<span class="sd">                The actual number of items in the response might differ from the requested</span>
+<span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
 <span class="sd">            filter:</span>
 <span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
-<span class="sd">                default is no filter - all resources are returned.</span>
+<span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">            sort:</span>
 <span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
-<span class="sd">                on create time, with the oldest entry first.</span>
+<span class="sd">                on create time with the oldest entry first.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of extra managed storage volume paths.</span>
@@ -446,13 +446,13 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            volume_id_or_uri:</span>
-<span class="sd">                Could be either the volume id or the volume uri.</span>
+<span class="sd">                Can be either the volume id or the volume uri.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in</span>
 <span class="sd">                OneView, just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: Storage Volume.</span>
+<span class="sd">            dict: Storage volume.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ExtraManagedStorageVolumePaths&quot;</span><span class="p">,</span>
@@ -468,7 +468,7 @@
 <span class="sd">        network connectivity.</span>
 
 <span class="sd">        A volume is attachable if it satisfies either of the following conditions:</span>
-<span class="sd">            * The volume is shareable</span>
+<span class="sd">            * The volume is shareable.</span>
 <span class="sd">            * The volume not shareable and not attached.</span>
 
 <span class="sd">        Args:</span>
@@ -476,21 +476,21 @@
 <span class="sd">                The first item to return, using 0-based indexing.</span>
 <span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
 <span class="sd">            count:</span>
-<span class="sd">                The number of resources to return. A count of -1 requests all the items.</span>
-<span class="sd">                The actual number of items in the response may differ from the requested</span>
-<span class="sd">                count if the sum of start and count exceed the total number of items.</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
+<span class="sd">                The actual number of items in the response might differ from the requested</span>
+<span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
 <span class="sd">            filter:</span>
 <span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
-<span class="sd">                default is no filter - all resources are returned.</span>
+<span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">            query:</span>
 <span class="sd">                A general query string to narrow the list of resources returned. The default</span>
-<span class="sd">                is no query - all resources are returned.</span>
+<span class="sd">                is no query; all resources are returned.</span>
 <span class="sd">            sort:</span>
 <span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
-<span class="sd">                on create time, with the oldest entry first.</span>
+<span class="sd">                on create time with the oldest entry first.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list: A list of attachable volumes which are managed by the appliance.</span>
+<span class="sd">            list: A list of attachable volumes that the appliance manages.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s1">&#39;/attachable-volumes&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">)</span></div></div>
@@ -505,7 +505,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Hewlett Packard Enterprise.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
 
     </p>
   </div> 
@@ -526,7 +526,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'1.0',
+            VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.networking.logical_downlinks &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  <title>hpOneView.resources.networking.logical_downlinks &mdash; HPE OneView Python SDK 2.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="HPE OneView Python SDK 2.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="hpOneView" href="../../../hpOneView.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0
+                2.0
               </div>
             
           
@@ -178,22 +178,22 @@
 <div class="viewcode-block" id="LogicalDownlinks.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_downlinks.LogicalDownlinks.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a paginated collection of logical downlinks. The collection is based on</span>
-<span class="sd">        optional sorting and filtering, and constrained by start and count parameters.</span>
+<span class="sd">        optional sorting and filtering and is constrained by start and count parameters.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            start:</span>
 <span class="sd">                The first item to return, using 0-based indexing.</span>
 <span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
 <span class="sd">            count:</span>
-<span class="sd">                The number of resources to return. A count of -1 requests all the items.</span>
-<span class="sd">                The actual number of items in the response may differ from the requested</span>
-<span class="sd">                count if the sum of start and count exceed the total number of items.</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
+<span class="sd">                The actual number of items in the response might differ from the requested</span>
+<span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
 <span class="sd">            filter:</span>
 <span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
-<span class="sd">                default is no filter - all resources are returned.</span>
+<span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">            sort:</span>
 <span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
-<span class="sd">                on create time, with the oldest entry first.</span>
+<span class="sd">                on create time with the oldest entry first.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of logical downlinks.</span>
@@ -202,10 +202,10 @@
 
 <div class="viewcode-block" id="LogicalDownlinks.get"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_downlinks.LogicalDownlinks.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets a logical downlink by ID or by uri.</span>
+<span class="sd">        Gets a logical downlink by ID or by URI.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the logical downlink id or the logical downlink uri.</span>
+<span class="sd">            id_or_uri: Can be either the logical downlink id or the logical downlink uri.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: The logical downlink.</span>
@@ -214,9 +214,9 @@
 
 <div class="viewcode-block" id="LogicalDownlinks.get_by"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_downlinks.LogicalDownlinks.get_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get all logical downlinks that match the filter.</span>
+<span class="sd">        Gets all logical downlinks that match the filter.</span>
 
-<span class="sd">        The search is case insensitive.</span>
+<span class="sd">        The search is case-insensitive.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            field: Field name to filter.</span>
@@ -230,22 +230,22 @@
 <div class="viewcode-block" id="LogicalDownlinks.get_all_without_ethernet"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_downlinks.LogicalDownlinks.get_all_without_ethernet">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_without_ethernet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a paginated collection of logical downlinks without ethernet. The collection is</span>
-<span class="sd">        based on optional sorting and filtering, and constrained by start and count parameters.</span>
+<span class="sd">        based on optional sorting and filtering and is constrained by start and count parameters.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            start:</span>
 <span class="sd">                The first item to return, using 0-based indexing.</span>
 <span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
 <span class="sd">            count:</span>
-<span class="sd">                The number of resources to return. A count of -1 requests all the items.</span>
-<span class="sd">                The actual number of items in the response may differ from the requested</span>
-<span class="sd">                count if the sum of start and count exceed the total number of items.</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
+<span class="sd">                The actual number of items in the response might differ from the requested</span>
+<span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
 <span class="sd">            filter:</span>
 <span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
-<span class="sd">                default is no filter - all resources are returned.</span>
+<span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">            sort:</span>
 <span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
-<span class="sd">                on create time, with the oldest entry first.</span>
+<span class="sd">                on create time with the oldest entry first.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict</span>
@@ -259,7 +259,7 @@
 <span class="sd">        Gets the logical downlink with the specified ID without ethernet.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the logical downlink id or the logical downlink uri.</span>
+<span class="sd">            id_or_uri: Can be either the logical downlink id or the logical downlink uri.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict</span>
@@ -277,7 +277,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Hewlett Packard Enterprise.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
 
     </p>
   </div> 
@@ -298,7 +298,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'1.0',
+            VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

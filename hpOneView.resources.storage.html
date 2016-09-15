@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.storage package &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  <title>hpOneView.resources.storage package &mdash; HPE OneView Python SDK 2.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="index.html"/> 
+    <link rel="top" title="HPE OneView Python SDK 2.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                1.0
+                2.0
               </div>
             
           
@@ -161,12 +161,12 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created storage pool</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created storage pool.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
@@ -179,12 +179,12 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_pools.StoragePools.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_pools.html#StoragePools.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_pools.StoragePools.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the specified storage pool resource by ID or by uri.</p>
+<dd><p>Gets the specified storage pool resource by ID or by URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the storage pool id or the storage pool uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the storage pool id or the storage pool uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The storage pool.</td>
 </tr>
@@ -199,7 +199,7 @@ in OneView, just stops waiting for its completion.</li>
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_pools.html#StoragePools.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_pools.StoragePools.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of storage pools. Returns a list of storage pools based on optional sorting and filtering, and
 constrained by start and count parameters. The following storage pool attributes can be used with filtering and
-sorting operation: name, domain, deviceType, deviceSpeed, supportedRAIDLevel, status and state.</p>
+sorting operation: name, domain, deviceType, deviceSpeed, supportedRAIDLevel, status, and state.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -207,13 +207,13 @@ sorting operation: name, domain, deviceType, deviceSpeed, supportedRAIDLevel, st
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -230,8 +230,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_pools.StoragePools.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_pools.html#StoragePools.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_pools.StoragePools.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all storage pools that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all storage pools that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -262,10 +262,10 @@ on create time, with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to remove.</li>
-<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -297,7 +297,7 @@ in OneView, just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.storage.storage_systems.StorageSystems.add">
 <code class="descname">add</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_systems.html#StorageSystems.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_systems.StorageSystems.add" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a storage system for management by the appliance. The storage system resource created will be in a
-&#8220;Connected&#8221; state and will not yet be available for further operations. Users are required to perform a PUT API
+Connected state and will not yet be available for further operations. Users are required to perform a PUT API
 on the storage system resource to complete the management of the storage system resource. An asynchronous task
 will be created as a result of this API call to discover available domains, target ports, and storage pools.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -306,8 +306,8 @@ will be created as a result of this API call to discover available domains, targ
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -324,12 +324,12 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_systems.StorageSystems.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_systems.html#StorageSystems.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_systems.StorageSystems.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the specified storage system resource by ID or by uri.</p>
+<dd><p>Gets the specified storage system resource by ID or by URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the storage system id or the storage system uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the storage system id or the storage system uri.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The storage system.</td>
 </tr>
@@ -352,13 +352,13 @@ operation: name, model, serialNumber, firmware, status, managedDomain, and state
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -375,8 +375,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_systems.StorageSystems.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_systems.html#StorageSystems.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_systems.StorageSystems.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all storage systems that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all storage systems that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -416,7 +416,7 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_systems.StorageSystems.get_by_name">
 <code class="descname">get_by_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_systems.html#StorageSystems.get_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_systems.StorageSystems.get_by_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieve a resource by its name.</p>
+<dd><p>Retrieves a resource by its name.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -454,8 +454,8 @@ on create time, with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the storage system id or the storage system uri.</li>
-<li><strong>port_id_or_uri</strong> &#8211; Could be either the port id or the port uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the storage system id or the storage system uri.</li>
+<li><strong>port_id_or_uri</strong> &#8211; Can be either the port id or the port uri.</li>
 </ul>
 </td>
 </tr>
@@ -473,13 +473,12 @@ on create time, with the oldest entry first.</li>
 <dt id="hpOneView.resources.storage.storage_systems.StorageSystems.get_storage_pools">
 <code class="descname">get_storage_pools</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_systems.html#StorageSystems.get_storage_pools"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_systems.StorageSystems.get_storage_pools" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of Storage pools. Returns a list of storage pools belonging to the storage system referred by the
-Path property parameters&#8211;id (serial number) or uri. Filters are supported for the following storage pool
-attributes only - name, domain, deviceSpeed, deviceType, supprtedRAIDLevel, status and state.</p>
+Path property {ID} parameter or URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the storage system id (serial number) or the storage system uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the storage system ID (serial number) or the storage system URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Host types.</td>
 </tr>
@@ -499,10 +498,10 @@ attributes only - name, domain, deviceSpeed, deviceType, supprtedRAIDLevel, stat
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to delete</li>
-<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -519,19 +518,16 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_systems.StorageSystems.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_systems.html#StorageSystems.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_systems.StorageSystems.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates the storage system. To complete the action of adding a storage system for management by the appliance,
-this must be called after create() of a storage system.
-This method can be used to update storage system credentials, storage system attributes or to request a refresh
-of storage system. For updating credentials, users are allowed to update IP/hostname, username, and password.
-To request a refresh of a storage system user must set the &#8220;refreshState&#8221; attribute to RefreshPending state.</p>
+<dd><p>Updates the storage system. To complete the addition of a storage system for management by the appliance,
+this must be called after create() of a storage system.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -562,12 +558,12 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_attachments.html#StorageVolumeAttachments.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a volume attachment by id or uri.</p>
+<dd><p>Gets a volume attachment by ID or URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the volume attachment id or the volume attachment uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the volume attachment ID or the volume attachment URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">volume attachment</td>
 </tr>
@@ -588,13 +584,13 @@ in OneView, just stops waiting for its completion.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -611,8 +607,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_attachments.html#StorageVolumeAttachments.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all storage systems that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all storage systems that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -644,13 +640,13 @@ on create time, with the oldest entry first.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -673,12 +669,12 @@ on create time, with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Could be either the volume attachment id or the volume attachment uri.</li>
-<li><strong>path_id_or_uri</strong> &#8211; Could be either the path id or the path uri.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the volume attachment id or the volume attachment uri.</li>
+<li><strong>path_id_or_uri</strong> &#8211; Can be either the path id or the path uri.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Path(s).</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Paths.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
@@ -698,8 +694,8 @@ on create time, with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -737,8 +733,8 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -762,14 +758,14 @@ in OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to remove.</li>
-<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicating if the resource was successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -782,12 +778,12 @@ in OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_templates.html#StorageVolumeTemplates.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the specified storage volume template resource by ID or by uri.</p>
+<dd><p>Gets the specified storage volume template resource by ID or by URI.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the storage volume template id or the storage volume template uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the storage volume template ID or the storage volume template URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The storage volume template</td>
 </tr>
@@ -808,13 +804,13 @@ in OneView, just stops waiting for its completion.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -831,8 +827,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_templates.html#StorageVolumeTemplates.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all storage volume templates that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all storage volume templates that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -857,8 +853,8 @@ on create time, with the oldest entry first.</li>
 <dt id="hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get_connectable_volume_templates">
 <code class="descname">get_connectable_volume_templates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_templates.html#StorageVolumeTemplates.get_connectable_volume_templates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get_connectable_volume_templates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the storage volume templates that are available on the specified networks based on the storage system
-port&#8217;s expected network connectivity. If there are no storage volume templates that meets the specified
-connectivity criteria an empty collection will be returned.</p>
+port&#8217;s expected network connectivity. If there are no storage volume templates that meet the specified
+connectivity criteria, an empty collection will be returned.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -880,9 +876,9 @@ connectivity criteria an empty collection will be returned.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -914,7 +910,7 @@ in OneView, just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.storage.volumes.Volumes.create">
 <code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates or adds a volume.</p>
-<p>It&#8217;s possible to create the volume in 6 different ways:</p>
+<p>There are six different methods to create the volume:</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li>Common = Storage System + Storage Pool</li>
@@ -924,15 +920,15 @@ in OneView, just stops waiting for its completion.</li>
 <li>Management by name = Storage System + Storage System Volume Name</li>
 <li>Snapshot = Snapshot Pool + Storage Pool + Snapshot.</li>
 </ol>
-<p>NOTE: The 4) and 5) are for adding a volume for management, it do not create new volumes.</p>
+<p>NOTE: Use numbers 4 and 5 to add a volume for management; it does not create new volumes.</p>
 </div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -950,20 +946,20 @@ in OneView, just stop waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.storage.volumes.Volumes.create_snapshot">
 <code class="descname">create_snapshot</code><span class="sig-paren">(</span><em>volume_id_or_uri</em>, <em>snapshot</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.create_snapshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.create_snapshot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a snapshot for the volume specified.</p>
+<dd><p>Creates a snapshot for the specified volume.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>volume_id_or_uri</strong> &#8211; Could be either the volume id or the volume uri</li>
-<li><strong>snapshot</strong> (<em>dict</em>) &#8211; Object to create</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+<li><strong>volume_id_or_uri</strong> &#8211; Can be either the volume ID or the volume URI.</li>
+<li><strong>snapshot</strong> (<em>dict</em>) &#8211; Object to create.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
 OneView, just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Storage Volume.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Storage volume.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
@@ -983,17 +979,17 @@ OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to delete.</li>
-<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
-<li><strong>export_only</strong> &#8211; By default, volumes will be deleted from OneView and storage system.
-To delete the volume only from OneView, you must set its value to True.
-Setting its value to False has the same behaviour as the default behaviour.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+<li><strong>export_only</strong> &#8211; By default, volumes will be deleted from OneView, and storage system.
+To delete the volume from OneView only, you must set its value to True.
+Setting its value to False has the same behavior as the default behavior.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">indicating if the volume was successfully deleted.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the volume was successfully deleted.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
@@ -1006,17 +1002,17 @@ Setting its value to False has the same behaviour as the default behaviour.</li>
 <dl class="method">
 <dt id="hpOneView.resources.storage.volumes.Volumes.delete_snapshot">
 <code class="descname">delete_snapshot</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.delete_snapshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.delete_snapshot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deletes a snapshot from OneView and storage system.</p>
+<dd><p>Deletes a snapshot from OneView and the storage system.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to remove.</li>
-<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true the operation completes despite any problems with
+<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1038,7 +1034,7 @@ in OneView, just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Could be either the volume id or the volume uri.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the volume ID or the volume URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Managed volume.</td>
 </tr>
@@ -1050,7 +1046,7 @@ in OneView, just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.storage.volumes.Volumes.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a paginated collection of managed volumes. The collection is based on optional
-sorting and filtering, and constrained by start and count parameters.</p>
+sorting and filtering and is constrained by start and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1058,13 +1054,13 @@ sorting and filtering, and constrained by start and count parameters.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -1086,7 +1082,7 @@ network connectivity.</p>
 <dl class="docutils">
 <dt>A volume is attachable if it satisfies either of the following conditions:</dt>
 <dd><ul class="first last simple">
-<li>The volume is shareable</li>
+<li>The volume is shareable.</li>
 <li>The volume not shareable and not attached.</li>
 </ul>
 </dd>
@@ -1098,19 +1094,19 @@ network connectivity.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>query</strong> &#8211; A general query string to narrow the list of resources returned. The default
-is no query - all resources are returned.</li>
+is no query; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of attachable volumes which are managed by the appliance.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of attachable volumes that the appliance manages.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
@@ -1123,8 +1119,8 @@ on create time, with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.resources.storage.volumes.Volumes.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all managed volumes that matches the given filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all managed volumes that matches the given filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1156,13 +1152,13 @@ on create time, with the oldest entry first.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -1185,9 +1181,9 @@ on create time, with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>volume_id_or_uri</strong> &#8211; Could be either the volume id or the volume uri. It is optional if is passed a snapshot uri,
-but required if passed a snapshot id.</li>
-<li><strong>snapshot_id_or_uri</strong> &#8211; Could be either the snapshot id or the snapshot uri.</li>
+<li><strong>volume_id_or_uri</strong> &#8211; Can be either the volume ID or the volume URI. It is optional if it is passed a snapshot URI,
+but required if it passed a snapshot ID.</li>
+<li><strong>snapshot_id_or_uri</strong> &#8211; Can be either the snapshot ID or the snapshot URI.</li>
 </ul>
 </td>
 </tr>
@@ -1204,14 +1200,14 @@ but required if passed a snapshot id.</li>
 <dl class="method">
 <dt id="hpOneView.resources.storage.volumes.Volumes.get_snapshot_by">
 <code class="descname">get_snapshot_by</code><span class="sig-paren">(</span><em>volume_id_or_uri</em>, <em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.get_snapshot_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.get_snapshot_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all snapshots that match the filter.</p>
-<p>The search is case insensitive.</p>
+<dd><p>Gets all snapshots that match the filter.</p>
+<p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>volume_id_or_uri</strong> &#8211; Could be either the volume id or the volume uri.</li>
+<li><strong>volume_id_or_uri</strong> &#8211; Can be either the volume id or the volume uri.</li>
 <li><strong>field</strong> &#8211; Field name to filter.</li>
 <li><strong>value</strong> &#8211; Value to filter.</li>
 </ul>
@@ -1237,16 +1233,16 @@ constrained by start and count parameters.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>volume_id_or_uri</strong> &#8211; Could be either the volume id or the volume uri.</li>
+<li><strong>volume_id_or_uri</strong> &#8211; Can be either the volume id or the volume uri.</li>
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all the items.
-The actual number of items in the response may differ from the requested
-count if the sum of start and count exceed the total number of items.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
 <li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
-default is no filter - all resources are returned.</li>
+default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
-on create time, with the oldest entry first.</li>
+on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
@@ -1269,13 +1265,13 @@ on create time, with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>volume_id_or_uri</strong> &#8211; Could be either the volume id or the volume uri.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in
+<li><strong>volume_id_or_uri</strong> &#8211; Can be either the volume id or the volume uri.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
 OneView, just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Storage Volume.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Storage volume.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
@@ -1296,10 +1292,10 @@ OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>force</strong> &#8211; If set to true the operation completes despite any problems with network connectivity or errors on
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with network connectivity or errors on
 the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-in OneView, just stop waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1328,7 +1324,7 @@ in OneView, just stop waiting for its completion.</li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Hewlett Packard Enterprise.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
 
     </p>
   </div> 
@@ -1349,7 +1345,7 @@ in OneView, just stop waiting for its completion.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

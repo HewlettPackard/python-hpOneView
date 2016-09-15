@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.servers.server_hardware &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  <title>hpOneView.resources.servers.server_hardware &mdash; HPE OneView Python SDK 2.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="HPE OneView Python SDK 2.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="hpOneView" href="../../../hpOneView.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0
+                2.0
               </div>
             
           
@@ -182,7 +182,7 @@
 <span class="sd">        Args:</span>
 <span class="sd">            id: Resource identification.</span>
 <span class="sd">            fields:</span>
-<span class="sd">                Name of the metric(s) to be retrieved in the format METRIC[,METRIC]...</span>
+<span class="sd">                Name of the metrics to be retrieved in the format METRIC[,METRIC]...</span>
 
 <span class="sd">                If unspecified, all metrics supported are returned.</span>
 
@@ -210,7 +210,7 @@
 <span class="sd">                    Start date of requested starting time range in ISO 8601 format. If omitted, the startDate is</span>
 <span class="sd">                    determined by the endDate minus 24 hours.</span>
 <span class="sd">                endDate</span>
-<span class="sd">                    End date of requested starting time range in ISO 8601 format. When omitted the endDate includes</span>
+<span class="sd">                    End date of requested starting time range in ISO 8601 format. When omitted, the endDate includes</span>
 <span class="sd">                    the latest data sample available.</span>
 
 <span class="sd">                If an excessive number of samples would otherwise be returned, the results will be segmented. The</span>
@@ -226,7 +226,7 @@
 <span class="sd">                missing samples.</span>
 
 <span class="sd">            refresh:</span>
-<span class="sd">                Specifies that if necessary an additional request will be queued to obtain the most recent</span>
+<span class="sd">                Specifies that, if necessary, an additional request will be queued to obtain the most recent</span>
 <span class="sd">                utilization data from the iLO. The response will not include any refreshed data. To track the</span>
 <span class="sd">                availability of the newly collected data, monitor the TaskResource identified by the refreshTaskUri</span>
 <span class="sd">                property in the response. If null, no refresh was queued.</span>
@@ -234,7 +234,7 @@
 <span class="sd">            view:</span>
 <span class="sd">                Specifies the resolution interval length of the samples to be retrieved. This is reflected in the</span>
 <span class="sd">                resolution in the returned response. Utilization data is automatically purged to stay within storage</span>
-<span class="sd">                space constraints. Supported views are listed below.</span>
+<span class="sd">                space constraints. See the following supported views.</span>
 
 <span class="sd">                native</span>
 <span class="sd">                    Resolution of the samples returned will be one sample for each 5-minute time period. This is the</span>
@@ -243,13 +243,13 @@
 <span class="sd">                hour</span>
 <span class="sd">                    Resolution of the samples returned will be one sample for each 60-minute time period. Samples are</span>
 <span class="sd">                    calculated by averaging the available 5-minute data samples that occurred within the hour, except</span>
-<span class="sd">                    for PeakPower which is calculated by reporting the peak observed 5-minute sample value data during</span>
+<span class="sd">                    for PeakPower, which is calculated by reporting the peak observed 5-minute sample value data during</span>
 <span class="sd">                    the hour. Samples at this resolution are retained up to three years.</span>
 <span class="sd">                day</span>
 <span class="sd">                    Resolution of the samples returned will be one sample for each 24-hour time period. One day is a</span>
-<span class="sd">                    24-hour period that starts at midnight GMT regardless of the time zone in which the appliance or</span>
+<span class="sd">                    24-hour period that starts at midnight GMT, regardless of the time zone in which the appliance or</span>
 <span class="sd">                    client is located. Samples are calculated by averaging the available 5-minute data samples that</span>
-<span class="sd">                    occurred during the day, except for PeakPower which is calculated by reporting the peak observed</span>
+<span class="sd">                    occurred during the day, except for PeakPower, which is calculated by reporting the peak observed</span>
 <span class="sd">                    5-minute sample value data during the day. Samples at this resolution are retained up to three</span>
 <span class="sd">                    years.</span>
 
@@ -269,15 +269,15 @@
 <span class="sd">                The first item to return, using 0-based indexing.</span>
 <span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
 <span class="sd">            count:</span>
-<span class="sd">                The number of resources to return. A count of -1 requests all the items.</span>
-<span class="sd">                The actual number of items in the response may differ from the requested</span>
-<span class="sd">                count if the sum of start and count exceed the total number of items.</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
+<span class="sd">                The actual number of items in the response might differ from the requested</span>
+<span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
 <span class="sd">            filter:</span>
 <span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
-<span class="sd">                default is no filter - all resources are returned.</span>
+<span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">            sort:</span>
 <span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
-<span class="sd">                on create time, with the oldest entry first.</span>
+<span class="sd">                on create time with the oldest entry first.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of server hardware resources.</span>
@@ -286,26 +286,28 @@
 
 <div class="viewcode-block" id="ServerHardware.add"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">information</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Adds a rack-mount server for management by the appliance. This API initiates the asynchronous addition of</span>
-<span class="sd">        supported server models. Note: servers in an enclosure are added by adding the enclosure resource. This is</span>
-<span class="sd">        only supported on appliances which support rack mounted servers.</span>
+<span class="sd">        Adds a rackmount server for management by the appliance. This API initiates the asynchronous addition of</span>
+<span class="sd">        supported server models.</span>
+
+<span class="sd">        Note: Servers in an enclosure are added by adding the enclosure resource. This is</span>
+<span class="sd">        only supported on appliances that support rackmounted servers.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            information (dict): Object to create</span>
-<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: Created rack mount server.</span>
+<span class="sd">            dict: Created rackmount server.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">information</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ServerHardware.get"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets a server hardware resource by ID or by uri.</span>
+<span class="sd">        Gets a server hardware resource by ID or by URI.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri.</span>
+<span class="sd">            id_or_uri: Can be either the server hardware resource ID or URI.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: The server hardware resource</span>
@@ -314,9 +316,9 @@
 
 <div class="viewcode-block" id="ServerHardware.get_by"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get all server hardware that match the filter.</span>
+<span class="sd">        Gets all server hardware that match the filter.</span>
 
-<span class="sd">        The search is case insensitive.</span>
+<span class="sd">        The search is case-insensitive.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            field: Field name to filter.</span>
@@ -329,23 +331,21 @@
 
 <div class="viewcode-block" id="ServerHardware.remove"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Removes the rack-server with the specified URI.</span>
-
-<span class="sd">        Note:</span>
-<span class="sd">            This operation is only supported on appliances which support rack mounted servers.</span>
+<span class="sd">        Removes the rackserver with the specified URI.</span>
+<span class="sd">        Note: This operation is only supported on appliances that support rackmounted servers.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict):</span>
 <span class="sd">                Object to delete.</span>
 <span class="sd">            force (bool):</span>
-<span class="sd">                If set to true the operation completes despite any problems with</span>
+<span class="sd">                If set to true, the operation completes despite any problems with</span>
 <span class="sd">                network connectivity or errors on the resource itself. The default is false.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            bool: Indicating if the resource was successfully removed.</span>
+<span class="sd">            bool: Indicates whether the resource was successfully removed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
 
@@ -354,7 +354,7 @@
 <span class="sd">        Gets the list of BIOS/UEFI values currently set on the physical server.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri.</span>
+<span class="sd">            id_or_uri: Can be either the server hardware resource ID or URI.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Dictionary of BIOS/UEFI values.</span>
@@ -364,11 +364,11 @@
 
 <div class="viewcode-block" id="ServerHardware.get_environmental_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get_environmental_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">get_environmental_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets the settings that describe the environmental configuration (supported feature set, calibrated minimum &amp;</span>
-<span class="sd">        maximum power, location &amp; dimensions, ...) of the server hardware resource.</span>
+<span class="sd">        Gets the settings that describe the environmental configuration (supported feature set, calibrated minimum and</span>
+<span class="sd">        maximum power, location and dimensions, etc) of the server hardware resource.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri.</span>
+<span class="sd">            id_or_uri: Can be either the server hardware resource ID or URI.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Environmental configuration settings.</span>
@@ -381,10 +381,10 @@
 <span class="sd">        Sets the calibrated max power of an unmanaged or unsupported server hardware resource.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri</span>
-<span class="sd">            configuration: configuration</span>
-<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">            id_or_uri: Can be either the server hardware resource ID or URI.</span>
+<span class="sd">            configuration (dict): Environmental configuration.</span>
+<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Environmental configuration settings.</span>
@@ -395,11 +395,11 @@
 <div class="viewcode-block" id="ServerHardware.get_ilo_sso_url"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get_ilo_sso_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_ilo_sso_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieves the URL to launch a Single Sign-On (SSO) session for the iLO web interface. If the server hardware is</span>
-<span class="sd">        unsupported, the resulting URL will not use SSO and the iLO web interface will prompt for credentials. Note,</span>
-<span class="sd">        this is not supported on G7/iLO3 or earlier servers.</span>
+<span class="sd">        unsupported, the resulting URL will not use SSO and the iLO web interface will prompt for credentials.</span>
+<span class="sd">        This is not supported on G7/iLO3 or earlier servers.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri.</span>
+<span class="sd">            id_or_uri: Can be either the server hardware resource ID or URI.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            URL</span>
@@ -411,10 +411,10 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a Single Sign-On (SSO) session for the iLO Java Applet console and returns the URL to launch it.</span>
 <span class="sd">        If the server hardware is unmanaged or unsupported, the resulting URL will not use SSO and the iLO Java Applet</span>
-<span class="sd">        will prompt for credentials. Note, this is not supported on G7/iLO3 or earlier servers.</span>
+<span class="sd">        will prompt for credentials. This is not supported on G7/iLO3 or earlier servers.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri.</span>
+<span class="sd">            id_or_uri: Can be either the server hardware resource ID or URI.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            URL</span>
@@ -429,10 +429,10 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            id_or_uri:</span>
-<span class="sd">                Could be either the server hardware resource id or uri.</span>
+<span class="sd">                Can be either the server hardware resource ID or URI.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            Resource</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -444,10 +444,10 @@
 <span class="sd">        Refreshes the server hardware to fix configuration issues.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri</span>
-<span class="sd">            configuration: configuration</span>
-<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">            id_or_uri: Can be either the server hardware resource ID or URI.</span>
+<span class="sd">            configuration (dict): Power state configuration.</span>
+<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Resource</span>
@@ -460,10 +460,10 @@
 <span class="sd">        Refreshes the server hardware to fix configuration issues.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri</span>
-<span class="sd">            configuration: configuration</span>
-<span class="sd">            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stops waiting for its completion.</span>
+<span class="sd">            id_or_uri: Can be either the server hardware resource ID or URI.</span>
+<span class="sd">            configuration: Refresh state configuration.</span>
+<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Resource</span>
@@ -479,7 +479,7 @@
 <span class="sd">        is supported only on Windows clients.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the server hardware resource id or uri.</span>
+<span class="sd">            id_or_uri: Can be either the server hardware resource ID or URI.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            URL</span>
@@ -497,7 +497,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Hewlett Packard Enterprise.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
 
     </p>
   </div> 
@@ -518,7 +518,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'1.0',
+            VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

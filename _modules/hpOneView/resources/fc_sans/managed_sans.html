@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.fc_sans.managed_sans &mdash; HPE OneView Python SDK 1.0 documentation</title>
+  <title>hpOneView.resources.fc_sans.managed_sans &mdash; HPE OneView Python SDK 2.0 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
   
 
   
-    <link rel="top" title="HPE OneView Python SDK 1.0 documentation" href="../../../../index.html"/>
+    <link rel="top" title="HPE OneView Python SDK 2.0 documentation" href="../../../../index.html"/>
         <link rel="up" title="hpOneView" href="../../../hpOneView.html"/> 
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0
+                2.0
               </div>
             
           
@@ -184,7 +184,7 @@
 <span class="sd">                The first item to return, using 0-based indexing.</span>
 <span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
 <span class="sd">            count:</span>
-<span class="sd">                The number of resources to return. A count of -1 requests all the items. The actual number of items in</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all items. The actual number of items in</span>
 <span class="sd">                the response may differ from the requested count if the sum of start and count exceed the total number</span>
 <span class="sd">                of items.</span>
 <span class="sd">            query:</span>
@@ -192,7 +192,7 @@
 <span class="sd">                The default is no query - all resources are returned.</span>
 <span class="sd">            sort:</span>
 <span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
-<span class="sd">                on create time, with the oldest entry first.</span>
+<span class="sd">                on create time with the oldest entry first.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of Managed SANs</span>
@@ -215,10 +215,10 @@
 
 <div class="viewcode-block" id="ManagedSANs.get"><a class="viewcode-back" href="../../../../hpOneView.resources.fc_sans.html#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Retrieves a single Managed SAN by id or uri</span>
+<span class="sd">        Retrieves a single Managed SAN by ID or URI.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the Managed SAN resource id or uri.</span>
+<span class="sd">            id_or_uri: Can be either the Managed SAN resource ID or URI.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: The Managed SAN resource.</span>
@@ -235,10 +235,10 @@
 <span class="sd">            - Updating the Managed SAN&#39;s policy.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Could be either the Managed SAN resource id or uri.</span>
+<span class="sd">            id_or_uri: Can be either the Managed SAN resource ID or URI.</span>
 <span class="sd">            data: dict object to update</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
 <span class="sd">                in OneView, just stop waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
@@ -253,20 +253,20 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            managed_san_id_or_uri:</span>
-<span class="sd">                Could be either the Managed SAN id or uri</span>
+<span class="sd">                Can be either the Managed SAN ID or URI.</span>
 <span class="sd">            start:</span>
 <span class="sd">                The first item to return, using 0-based indexing.</span>
 <span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
 <span class="sd">            count:</span>
-<span class="sd">                The number of resources to return. A count of -1 requests all the items.</span>
-<span class="sd">                The actual number of items in the response may differ from the requested</span>
-<span class="sd">                count if the sum of start and count exceed the total number of items.</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
+<span class="sd">                The actual number of items in the response might differ from the requested</span>
+<span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
 <span class="sd">            filter:</span>
 <span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
-<span class="sd">                default is no filter - all resources are returned.</span>
+<span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">            sort:</span>
 <span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
-<span class="sd">                on create time, with the oldest entry first.</span>
+<span class="sd">                on create time with the oldest entry first.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of endpoints.</span>
@@ -280,9 +280,9 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            managed_san_id_or_uri:</span>
-<span class="sd">                Could be either the Managed SAN id or uri.</span>
+<span class="sd">                Can be either the Managed SAN ID or URI.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in</span>
 <span class="sd">                OneView, just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
@@ -297,9 +297,9 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            managed_san_id_or_uri:</span>
-<span class="sd">                Could be either the Managed SAN id or uri.</span>
+<span class="sd">                Can be either the Managed SAN ID or URI.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation in</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in</span>
 <span class="sd">                OneView, just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
@@ -318,7 +318,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, Hewlett Packard Enterprise.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
 
     </p>
   </div> 
@@ -339,7 +339,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'1.0',
+            VERSION:'2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
