@@ -38,13 +38,19 @@ Both of these installation methods work if you are using virtualenv, which you s
 
 ### From Pypi
 
-Coming soon.
+```bash
+$ pip install hpOneView
+```
 
 
 ## API Implementation
 
 A status of the HPE OneView REST interfaces that have been implemented in this Python library can be found in the [Wiki section](https://github.com/HewlettPackard/python-hpOneView/wiki/HPE-OneView-API-Version-200-Implementation-Status).
 
+
+## SDK Documentation
+
+The latest version of the SDK documentation can be found in the [SDK Documentation section] (https://hewlettpackard.github.io/python-hpOneView/index.html).
 
 ## Logging
 
