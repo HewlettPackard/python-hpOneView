@@ -47,34 +47,62 @@ class VcMigrationManager(object):
 
     def test_compatibility(self, migrationInformation, timeout=-1):
         """
+        Creates a migration report for an enclosure with a Virtual Connect domain.
+
+        Args:
+           migrationInformation: A dict specifying the enclosure, OA username, OA password, VCM username, and VCM password among other things.  Use hpOneView.common.make_migration_information to easily create this dict.
+           timeout: Timeout in seconds.  Waits for task completion by default.  The timeout does not abort the task in OneView; just stops waiting for its completion.
+
+        Returns: dict: a migration report.
         """
-        
+
         return self._client.create(migrationInformation, timeout=timeout)
-    
+
     def get_migration_report(self, id_or_uri):
         """
+        Returns a migration report that has previously been generated.
+
+        Args:
+            id_or_uri: ID or URI of the migration report.
+
+        Returns: dict: a migration report.
         """
-        
+
         return self._client.get(id_or_uri)
-    
+
     def migrate(self, id_or_uri, timeout=-1):
         """
+        Initiates a migration of an enclosure specified by the ID or URI of a migration report.
+
+        Args:
+            id_or_uri: ID or URI of the migration report.
+            timeout: Timeout in seconds.  Waits for task completion by default.  The timeout does not abort the task in OneView; just stops waiting for its completion.
+
+        Returns: dict: a migration report.
         """
-        
+
+        #create the special payload to tell the VC Migration Manager to migrate the VC domain
         migrationInformation = \
         {
             'migrationState': 'Migrated',
             'type': 'migratable-vc-domains',
             'category': 'migratable-vc-domains'
         }
-        
+
         #call build_uri manually since .update(...) doesn't do it and the URI is not to be included in the body when requesting a migration
-        complete_uri=self._client.build_uri(id_or_uri)
-    
+        complete_uri = self._client.build_uri(id_or_uri)
+
         return self._client.update(migrationInformation, uri=complete_uri, timeout=timeout)
 
     def delete(self, id_or_uri, timeout=-1):
         """
+        Deletes a migration report.
+
+        Args:
+           id_or_uri: ID or URI of the migration report.
+            timeout: Timeout in seconds.  Waits for task completion by default.  The timeout does not abort the task in OneView; just stops waiting for its completion.
+
+        Returns: bool: Indicating if the migration report was successfully deleted.
         """
-        
+
         return self._client.delete(id_or_uri, timeout=timeout)

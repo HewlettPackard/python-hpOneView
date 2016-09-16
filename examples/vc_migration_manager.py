@@ -23,7 +23,6 @@
 
 from hpOneView.oneview_client import OneViewClient
 from hpOneView.common import make_migration_information
-from hpOneView.common import make_migration_information
 from hpOneView.common import print_entity
 from hpOneView.exceptions import HPOneViewTaskError
 from config_loader import try_load_from_file
@@ -34,18 +33,18 @@ ssl.PROTOCOL_TLSv1_2=ssl.PROTOCOL_TLSv1
 
 config = \
 {
-	"ip": "172.16.102.59",
-	"credentials":
-	{
-		"userName": "Administrator",
-		"password": ""
-	},
-	"enclosure_hostname": "172.178.209.32",
-	"enclosure_username": "Administrator",
-	"enclosure_password": "",
-	"vcmUsername": "Administrator",
-	"vcmPassword": "",
-	"enclosure_group_uri": None
+    "ip": "172.16.102.59",
+    "credentials":
+    {
+        "userName": "Administrator",
+        "password": ""
+    },
+    "enclosure_hostname": "172.178.209.32",
+    "enclosure_username": "Administrator",
+    "enclosure_password": "",
+    "vcmUsername": "Administrator",
+    "vcmPassword": "",
+    "enclosure_group_uri": None
 }
 
 pp = PrettyPrinter()
@@ -77,7 +76,7 @@ try:
     compatibility_report = oneview_client.vc_migration_manager.migrate(compatibility_report['uri'])
     print("Complete.  Migration state afterward is '%s'." % compatibility_report['migrationState'])
 except HPOneViewTaskError:
-	print("Failure.  The enclosure failed to migrate.  Perhaps there was a critical issue that was unresolved before migrating?")
+    print("Failure.  The enclosure failed to migrate.  Perhaps there was a critical issue that was unresolved before migrating?")
 
 #One now may decide to delete the compatibility report if they so choose
 print("Deleting the compatibility report for '%s'." % compatibility_report['credentials']['oaIpAddress'])
