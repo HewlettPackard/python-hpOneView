@@ -54,6 +54,7 @@ def deprecated(func):
     def wrapper(*args, **kwargs):
         warn("Module common is deprecated, use OneViewClient class instead", DeprecationWarning)
         return func(*args, **kwargs)
+
     return wrapper
 
 
@@ -1741,7 +1742,7 @@ def resource_compare(resource1, resource2):
             if not resource_compare_list(resource1[key], resource2[key]):
                 # if different, stops here
                 return False
-        elif str(resource1[key]) != str(resource2[key]):
+        elif standardize_value(resource1[key]) != standardize_value(resource2[key]):
             # different value
             return False
 
@@ -1782,12 +1783,30 @@ def resource_compare_list(resource1, resource2):
             # recursive call
             if not resource_compare_list(val, resource2[i]):
                 return False
-        elif str(val) != str(resource2[i]):
+        elif standardize_value(val) != standardize_value(resource2[i]):
             # value is different
             return False
 
     # no differences found
     return True
+
+
+def standardize_value(value):
+    """
+    Convert value to string to enhance the comparison.
+
+    Args:
+        value: Any object type.
+
+    Returns:
+        str: Converted value.
+    """
+    if isinstance(value, float) and value.is_integer():
+        # Workaround to avoid erroneous comparison between int and float
+        # Removes zero from integer floats
+        value = int(value)
+
+    return str(value)
 
 
 def transform_list_to_dict(list):
