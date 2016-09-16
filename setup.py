@@ -26,10 +26,12 @@ from setuptools import find_packages
 from setuptools import setup
 
 setup(name='hpOneView',
-      version='0.1',
+      version='2.0.0',
       description='HPE OneView Python Library',
-      url='http://www.hpe.com/info/oneviewcommunity',
+      url='https://github.com/HewlettPackard/python-hpOneView',
       author='Hewlett Packard Enterprise Development LP',
+      author_email = 'oneview-pythonsdk@hpe.com',
       license='MIT',
       packages=find_packages(exclude=['examples*', 'tests*']),
+      keywords=['oneview'],
       install_requires=['future>=0.15.2'])
