@@ -130,7 +130,7 @@ class ProfilesTest(unittest.TestCase):
                 servers, sht, True, boot_order, 'BIOS', 'Auto')
         except HPOneViewInvalidResource as hp_exception:
             self.assertEqual(
-                hp_exception.args[0], 'Error: bootMode cannot be disabled on BL servers')
+                hp_exception.msg, 'Error: bootMode cannot be disabled on BL servers')
         else:
             self.fail("Expected Exception")
 

@@ -2,9 +2,9 @@
 
 """
 connection.py
-~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
-This module maintains communication with the appliance
+This module maintains communication with the appliance.
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -179,7 +179,7 @@ class connection(object):
     def encode_multipart_formdata(self, fields, files, baseName, verbose=False):
         """
         Fields is a sequence of (name, value) elements for regular form fields.
-        files is a sequence of (name, filename, value) elements for data
+        Files is a sequence of (name, filename, value) elements for data
         to be uploaded as files
 
         Returns: (content_type, body) ready for httplib.HTTP instance

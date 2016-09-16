@@ -4,7 +4,7 @@
 profile.py
 ~~~~~~~~~~~~
 This module implements some common helper functions for building a server profile
-and server profile template in OneView
+and server profile template in OneView.
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -51,8 +51,6 @@ __status__ = 'Development'
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 ###
-
-
 def make_firmware_dict(settings, baseline):
     """
     Create a firmware settings dictionary for use in defining either a server
@@ -71,7 +69,7 @@ def make_firmware_dict(settings, baseline):
                 uri = spp['uri']
         if not uri:
             message = 'ERROR: Locating Firmware Baseline SPP\n Baseline: "%s" can not be located' % baseline
-            raise HPOneViewInvalidResource(msg=message)
+            raise HPOneViewInvalidResource(message)
 
     if uri:
         fw_settings = make_FirmwareSettingsV3(uri, 'FirmwareOnly', True, False)
@@ -146,7 +144,7 @@ def __validate_allowed_boot(allowed_boot, boot_order):
     if len(boot_order) != len(allowed_boot):
         message = 'Error: All supported boot options are required. The supported options are: ' + \
                   ('; '.join(allowed_boot))
-        raise HPOneViewInvalidResource(msg=message)
+        raise HPOneViewInvalidResource(message)
 
     # Error if the users submitted and boot option that is
     # not supported by the server hardware type
@@ -154,7 +152,7 @@ def __validate_allowed_boot(allowed_boot, boot_order):
     if diff:
         message = 'Error: "' + ', '.join(diff) + '" are not supported boot options for this server hardware ' \
                                                  'type. The supported options are: ' + '; '.join(allowed_boot)
-        raise HPOneViewInvalidResource(msg=message)
+        raise HPOneViewInvalidResource(message)
 
 
 def __get_boot_settings_dict_boot_mode(gen9, boot_mode, pxe):

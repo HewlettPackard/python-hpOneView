@@ -50,7 +50,7 @@ class ServerProfileTemplate(object):
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a list of server profile templates based on optional sorting and filtering, and constrained by start and
+        Gets a list of server profile templates based on optional sorting and filtering and is constrained by start and
         count parameters.
 
         Args:
@@ -60,19 +60,19 @@ class ServerProfileTemplate(object):
             count:
                 The number of resources to return.
                 Providing a -1 for the count parameter will restrict the result set size to 64 server profile
-                templates. The maximum number of profile templates is restricted to 256, i.e., if user requests more
+                templates. The maximum number of profile templates is restricted to 256, that is, if user requests more
                 than 256, this will be internally limited to 256.
-                The actual number of items in the response may differ from the
-                requested count if the sum of start and count exceed the total number of items, or if returning the
+                The actual number of items in the response might differ from the
+                requested count if the sum of start and count exceeds the total number of items, or if returning the
                 requested number of items would take too long.
             filter:
-                A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                A general filter/query string to narrow the list of items returned. The default is no filter; all
+                resources are returned.
                 Filters are supported for the name, description, affinity, macType, wwnType, serialNumberType, status,
-                serverHardwareTypeUri, enclosureGroupUri, firmware.firmwareBaselineUri attributes.
+                serverHardwareTypeUri, enclosureGroupUri, and firmware.firmwareBaselineUri attributes.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: A list of server profile templates.
@@ -82,10 +82,10 @@ class ServerProfileTemplate(object):
 
     def get(self, id_or_uri):
         """
-        Gets a server profile template resource by ID or by uri.
+        Gets a server profile template resource by ID or by URI.
 
         Args:
-            id_or_uri: Could be either the server profile template resource id or uri.
+            id_or_uri: Can be either the server profile template resource ID or URI.
 
         Returns:
             dict: The server profile template resource.
@@ -94,8 +94,8 @@ class ServerProfileTemplate(object):
 
     def get_by(self, field, value):
         """
-        Get all server profile templates that matches a specified filter.
-        The search is case insensitive.
+        Gets all server profile templates that match a specified filter.
+        The search is case-insensitive.
 
         Args:
             field: Field name to filter.
@@ -125,7 +125,7 @@ class ServerProfileTemplate(object):
         Args:
             resource (dict): Object to create.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView, just stop waiting for its completion.
 
         Returns:
@@ -140,16 +140,9 @@ class ServerProfileTemplate(object):
         """
         Allows a server profile template object to have its configuration modified. These modifications can be as
         simple as a name or description change or much more complex changes around the networking configuration.
-        It should be noted that selection of a virtual or physical MAC or Serial Number type is not mutable once a
-        profile template has been created, and attempts to change those elements will not be applied to the target
-        profile template. Connection requests can be one of the following types - port Auto, auto and explicit.
-        An explicit request is where the request portId parameter includes the adapter, port and flexNic. An auto
-        request  is where portId is set to "Auto" and a port auto request is where just the portId parameter includes
-        just the adapter and port. The fields listed as required in the Request Body section need to be specified
-        only when their associated parent is used.
 
         Args:
-            id_or_uri: Could be either the template id or the template uri.
+            id_or_uri: Can be either the template id or the template uri.
             resource (dict): Object to update.
 
         Returns:
@@ -166,24 +159,23 @@ class ServerProfileTemplate(object):
         Args:
             resource: Object to delete.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
-            bool: Indicating if the resource was successfully deleted.
+            bool: Indicates whether the resource was successfully deleted.
         """
         return self._client.delete(resource=resource, timeout=timeout)
 
     def get_new_profile(self, id_or_uri):
         """
         A profile object will be returned with the configuration based on this template. Specify the profile name and
-        server hardware to assign. If template has any fibre channel connection which is specified as bootable but no
+        server hardware to assign. If template has any fiber channel connection (which is specified as bootable) but no
         boot target was defined, that connection will be instantiated as a non-bootable connection. So modify that
-        connection to change it to bootable and to specify the boot target. This profile object can subsequently be
-        used for the POST https://{appl}/rest/server-profiles/ API.
+        connection to change it to bootable and to specify the boot target.
 
         Args:
-            id_or_uri: Could be either the server profile template resource id or uri.
+            id_or_uri: Can be either the server profile template resource ID or URI.
 
         Returns:
             dict: The server profile resource.

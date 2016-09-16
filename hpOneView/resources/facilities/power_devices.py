@@ -58,18 +58,18 @@ class PowerDevices(object):
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items.
-                The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items.
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
             query:
                  A general query string to narrow the list of resources returned. The default
                  is no query - all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
              list of power devices
@@ -82,7 +82,7 @@ class PowerDevices(object):
 
         Args:
             id_or_uri:
-                Could be either the power device id or the uri
+                Can be either the power device id or the uri
 
         Returns:
             dict: The power device
@@ -99,8 +99,8 @@ class PowerDevices(object):
             information:
                 power device information
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: added power device.
@@ -115,10 +115,10 @@ class PowerDevices(object):
         Args:
             resource: dict object to remove
             force:
-                 If set to true the operation completes despite any problems with
+                 If set to true, the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
              bool: operation success
@@ -134,8 +134,8 @@ class PowerDevices(object):
 
         Args:
             resource: power device information
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: added power device.
@@ -152,8 +152,8 @@ class PowerDevices(object):
         Args:
             resource (dict): Object to update
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Updated power device
@@ -167,7 +167,7 @@ class PowerDevices(object):
 
         Args:
             id_or_uri:
-                Could be either the power device id or the uri
+                Can be either the power device id or the uri
 
         Returns:
             str: The power state
@@ -181,7 +181,7 @@ class PowerDevices(object):
 
         Args:
             id_or_uri:
-                Could be either the power device id or the uri
+                Can be either the power device id or the uri
             power_state:
                 {"powerState":"On|Off"}
 
@@ -197,7 +197,7 @@ class PowerDevices(object):
 
         Args:
             id_or_uri:
-                Could be either the power device id or the uri
+                Can be either the power device id or the uri
             refresh_state_data:
                 Power device refresh request
 
@@ -214,10 +214,10 @@ class PowerDevices(object):
         Args:
             resource: dict object to remove
             force:
-                 If set to true the operation completes despite any problems with
+                 If set to true, the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             bool: operation success
@@ -234,7 +234,7 @@ class PowerDevices(object):
 
         Args:
             id_or_uri:
-                Could be either the power device id or the uri
+                Can be either the power device id or the uri
 
         Returns:
             str: unit identification (UID) state
@@ -250,7 +250,7 @@ class PowerDevices(object):
 
         Args:
             id_or_uri:
-                Could be either the power device id or the uri
+                Can be either the power device id or the uri
             refresh_state_data:
                 Power device refresh request
 
@@ -262,7 +262,7 @@ class PowerDevices(object):
 
     def get_utilization(self, id_or_uri, fields=None, filter=None, refresh=False, view=None):
         """
-        Retrieves historical utilization data for the specified metrics, and time span. The device must be a component
+        Retrieves historical utilization data for the specified metrics and time span. The device must be a component
         of an HPE iPDU.
 
         Args:
@@ -278,9 +278,9 @@ class PowerDevices(object):
                         Peak power consumption in Watts during this sample interval.
 
             filter:
-                Filters should be in the format FILTER_NAME=VALUE[,FILTER_NAME=VALUE]...
+                Filters should be in the format: FILTER_NAME=VALUE[,FILTER_NAME=VALUE]...
 
-                E.g.: 'startDate=2016-05-30T11:20:44.541Z,endDate=2016-05-30T19:20:44.541Z'
+                For Example: 'startDate=2016-05-30T11:20:44.541Z,endDate=2016-05-30T19:20:44.541Z'
 
                 startDate:
                     Start date of requested starting time range in ISO 8601 format. If omitted, the startDate is
@@ -297,19 +297,19 @@ class PowerDevices(object):
 
                 If the resource has no data, the UtilizationData is still returned, but will contain no samples and
                 sliceStartTime/sliceEndTime will be equal. oldestSampleTime/newestSampleTime will still be set
-                appropriately (null if no data is available). If the filter just does not happen to overlap the data
+                appropriately (null if no data is available). If the filter does not happen to overlap the data
                 that a resource does have, then the metric history service will return null sample values for any
                 missing samples.
 
             refresh:
-                Specifies that if necessary an additional request will be queued to obtain the most recent utilization
+                Specifies that if necessary, an additional request will be queued to obtain the most recent utilization
                 data from the enclosure. The response will not include any refreshed data. To track the availability
                 of the newly collected data, monitor the TaskResource identified by the refreshTaskUri property in
                 the response. If null, no refresh was queued.
             view:
                 Specifies the resolution interval length of the samples to be retrieved. This is reflected in the
                 resolution in the returned response. Utilization data is automatically purged to stay within storage
-                space constraints. Supported views are listed below.
+                space constraints. Supported views are listed below:
 
                 native (DEFAULT)
                     Resolution of the samples returned will be one sample for each 5-minute time period. This is the
@@ -336,8 +336,8 @@ class PowerDevices(object):
 
     def get_by(self, field, value):
         """
-        Get all power devices that match the filter
-        The search is case insensitive
+        Gets all power devices that match the filter
+        The search is case-insensitive
 
         Args:
             field: field name to filter

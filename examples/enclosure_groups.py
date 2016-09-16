@@ -110,7 +110,7 @@ try:
     eg_byid = oneview_client.enclosure_groups.get('54184fae-42d5-4248-a732-cfe5115f7857')
     pprint(eg_byid)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get by uri
 try:
@@ -118,7 +118,7 @@ try:
     eg_byuri = oneview_client.enclosure_groups.get(egs[0]["uri"])
     pprint(eg_byuri)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Update an Enclosure Group Script
 print("Update an Enclosure Group Script")
@@ -132,7 +132,7 @@ try:
     script = oneview_client.enclosure_groups.get_script(egs[0]["uri"])
     print(script)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Delete an Enclosure Group
 print("Delete the created Enclosure Group")

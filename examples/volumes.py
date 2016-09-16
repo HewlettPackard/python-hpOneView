@@ -150,7 +150,7 @@ try:
     snapshot = oneview_client.volumes.get_snapshot(snapshot_uri, volume_uri)
     pprint(snapshot)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get a paginated list of snapshot resources sorting by name ascending
 print("\nGet a list of the first 10 snapshots")

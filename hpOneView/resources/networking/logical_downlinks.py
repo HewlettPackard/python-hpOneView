@@ -49,22 +49,22 @@ class LogicalDownlinks(object):
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
         Gets a paginated collection of logical downlinks. The collection is based on
-        optional sorting and filtering, and constrained by start and count parameters.
+        optional sorting and filtering and is constrained by start and count parameters.
 
         Args:
             start:
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items.
-                The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items.
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: A list of logical downlinks.
@@ -73,10 +73,10 @@ class LogicalDownlinks(object):
 
     def get(self, id_or_uri):
         """
-        Gets a logical downlink by ID or by uri.
+        Gets a logical downlink by ID or by URI.
 
         Args:
-            id_or_uri: Could be either the logical downlink id or the logical downlink uri.
+            id_or_uri: Can be either the logical downlink id or the logical downlink uri.
 
         Returns:
             dict: The logical downlink.
@@ -85,9 +85,9 @@ class LogicalDownlinks(object):
 
     def get_by(self, field, value):
         """
-        Get all logical downlinks that match the filter.
+        Gets all logical downlinks that match the filter.
 
-        The search is case insensitive.
+        The search is case-insensitive.
 
         Args:
             field: Field name to filter.
@@ -101,22 +101,22 @@ class LogicalDownlinks(object):
     def get_all_without_ethernet(self, start=0, count=-1, filter='', sort=''):
         """
         Gets a paginated collection of logical downlinks without ethernet. The collection is
-        based on optional sorting and filtering, and constrained by start and count parameters.
+        based on optional sorting and filtering and is constrained by start and count parameters.
 
         Args:
             start:
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items.
-                The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items.
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             dict
@@ -125,15 +125,15 @@ class LogicalDownlinks(object):
             self._connection, "/rest/logical-downlinks/withoutEthernet")
         return without_ethernet_client.get_all(start, count, filter=filter, sort=sort)
 
-    def get_without_ethernet(self, id):
+    def get_without_ethernet(self, id_or_uri):
         """
         Gets the logical downlink with the specified ID without ethernet.
 
         Args:
-            id: ID of logical downlink.
+            id_or_uri: Can be either the logical downlink id or the logical downlink uri.
 
         Returns:
             dict
         """
-        uri = "/rest/logical-downlinks/%s/withoutEthernet" % (id)
+        uri = self._client.build_uri(id_or_uri) + "/withoutEthernet"
         return self._client.get(uri)

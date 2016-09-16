@@ -128,7 +128,7 @@ try:
     successfully_collected_ids = oneview_client.id_pools_vmac_ranges.collect(
         information, vmac_range['uri'])
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Disable a vmac range
 information = {

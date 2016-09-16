@@ -86,7 +86,7 @@ try:
     fc_nets_byid = oneview_client.fc_networks.get('3518be0e-17c1-4189-8f81-83f3724f6155')
     pprint(fc_nets_byid)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get by Uri
 print("Get a fc-network by uri")

@@ -57,7 +57,7 @@ class SanManagers(object):
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items. The actual number of items in
+                The number of resources to return. A count of -1 requests all items. The actual number of items in
                 the response may differ from the requested count if the sum of start and count exceed the total number
                 of items.
             query:
@@ -65,7 +65,7 @@ class SanManagers(object):
                 The default is no query - all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: A list of SAN managers.
@@ -75,10 +75,10 @@ class SanManagers(object):
 
     def get(self, id_or_uri):
         """
-        Retrieves a single registered SAN Manager by id or uri.
+        Retrieves a single registered SAN Manager by ID or URI.
 
         Args:
-            id_or_uri: Could be either the SAN Manager resource id or uri.
+            id_or_uri: Can be either the SAN Manager resource ID or URI.
 
         Returns:
             dict: The SAN Manager resource.
@@ -90,7 +90,7 @@ class SanManagers(object):
         Updates a registered Device Manager.
 
         Args:
-            id_or_uri: Could be either the Device manager id or uri.
+            id_or_uri: Can be either the Device managerID or URI.
             resource (dict): Object to update.
 
         Returns:
@@ -104,9 +104,9 @@ class SanManagers(object):
 
         Args:
             resource (dict): Object to add.
-            provider_uri_or_id: Id or uri of provider.
+            provider_uri_or_id: ID or URI of provider.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView, just stop waiting for its completion.
 
         Returns:
@@ -150,11 +150,11 @@ class SanManagers(object):
         Args:
             resource (dict): Object to delete.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
-            bool: Indicating if the resource was successfully removed.
+            bool: Indicates if the resource was successfully removed.
         """
         return self._client.delete(resource, timeout=timeout)
 

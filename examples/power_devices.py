@@ -99,7 +99,7 @@ try:
     power_devices_utilization = oneview_client.power_devices.get_utilization(power_device[0]['uri'])
     pprint(power_devices_utilization)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get power device utilization specifying parameters
 print("Get power device statistics with parameters")
@@ -111,7 +111,7 @@ try:
         view='hour')
     pprint(power_devices_utilization)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Remove added power devices
 oneview_client.power_devices.remove(ipdu)

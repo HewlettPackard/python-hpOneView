@@ -18,5 +18,6 @@
   "storage_system_password": "",
   "power_device_hostname": "",
   "power_device_username": "",
-  "power_device_password": ""
+  "power_device_password": "",
+  "proxy": "<proxy_host>:<proxy_port>"
 }

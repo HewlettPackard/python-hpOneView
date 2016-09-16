@@ -4,7 +4,10 @@
 metrics.py
 ~~~~~~~~~~~~
 
-This module implements configurguring the OneView MSMB
+This module implements configurguring the OneView MSMB.
+
+It has been deprecated and will be removed soon. We strongly recommend to use the OneViewClient class instead.
+See more details at: https://github.com/HewlettPackard/python-hpOneView/tree/master/hpOneView/README.md
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -46,6 +49,14 @@ __status__ = 'Development'
 
 from hpOneView.common import uri
 from hpOneView.activity import activity
+from warnings import warn
+
+
+def deprecated(func):
+    def wrapper(*args, **kwargs):
+        warn("Module metrics is deprecated, use OneViewClient class instead", DeprecationWarning)
+        return func(*args, **kwargs)
+    return wrapper
 
 
 class metrics(object):
@@ -53,14 +64,17 @@ class metrics(object):
         self._con = con
         self._activity = activity(con)
 
+    @deprecated
     def get_metrics_capability(self):
         body = self._con.get(uri['metricsCapabilities'])
         return body
 
+    @deprecated
     def get_metrics_configuration(self):
         body = self._con.get(uri['metricsConfiguration'])
         return body
 
+    @deprecated
     def set_metrics_configuration(self, metrics_config, blocking=True,
                                   verbose=False):
         task, body = self._con.put(uri['metricsConfiguration'], metrics_config)

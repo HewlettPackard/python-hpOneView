@@ -24,7 +24,7 @@
 oneview_client.py
 ~~~~~~~~~~~~~~~~~~
 
-This module implements a common client for HPE OneView REST API
+This module implements a common client for HPE OneView REST API.
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -71,6 +71,7 @@ from hpOneView.resources.uncategorized.unmanaged_devices import UnmanagedDevices
 from hpOneView.resources.networking.logical_downlinks import LogicalDownlinks
 from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.facilities.racks import Racks
+from hpOneView.resources.facilities.datacenters import Datacenters
 from hpOneView.resources.fc_sans.managed_sans import ManagedSANs
 from hpOneView.resources.fc_sans.san_managers import SanManagers
 from hpOneView.resources.fc_sans.endpoints import Endpoints
@@ -123,6 +124,7 @@ class OneViewClient(object):
         self.__power_devices = None
         self.__unmanaged_devices = None
         self.__racks = None
+        self.__datacenters = None
         self.__san_managers = None
         self.__endpoints = None
         self.__logical_interconnects = None
@@ -172,7 +174,9 @@ class OneViewClient(object):
             if len(splitted) != 2:
                 raise ValueError(ONEVIEW_CLIENT_INVALID_PROXY)
 
-            self.__connection.set_proxy(splitted[0], splitted[1])
+            proxy_host = splitted[0]
+            proxy_port = int(splitted[1])
+            self.__connection.set_proxy(proxy_host, proxy_port)
 
     @property
     def connection(self):
@@ -257,6 +261,18 @@ class OneViewClient(object):
         if not self.__fabrics:
             self.__fabrics = Fabrics(self.__connection)
         return self.__fabrics
+
+    @property
+    def datacenters(self):
+        """
+        Gets the Datacenters API client.
+
+        Returns:
+            Datacenters:
+        """
+        if not self.__datacenters:
+            self.__datacenters = Datacenters(self.__connection)
+        return self.__datacenters
 
     @property
     def network_sets(self):

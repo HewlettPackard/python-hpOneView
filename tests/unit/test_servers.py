@@ -23,6 +23,7 @@
 import mock
 import unittest
 import json
+import warnings
 
 from hpOneView.common import make_server_dict
 from hpOneView.common import make_ServerProfileTemplateV1
@@ -41,6 +42,7 @@ class ServersTest(unittest.TestCase):
         self.connection = connection(self.host)
         self.servers = servers(self.connection)
         self.activity = activity(self.connection)
+        warnings.filterwarnings('ignore')
 
     @mock.patch.object(connection, 'get')
     def test_get_connections(self, mock_get):

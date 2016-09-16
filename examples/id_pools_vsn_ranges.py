@@ -128,7 +128,7 @@ try:
     successfully_collected_ids = oneview_client.id_pools_vsn_ranges.collect(
         information, vsn_range['uri'])
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Disable a vsn range
 information = {

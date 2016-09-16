@@ -31,7 +31,6 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class LogicalInterconnectsTest(unittest.TestCase):
-
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -282,7 +281,6 @@ class LogicalInterconnectsTest(unittest.TestCase):
             "snmpAccess": [
                 "10.0.0.0/24"
             ],
-            "type": "snmp-configuration",
             "trapDestinations": [{
                 "enetTrapCategories": [
                     "PortStatus"
@@ -306,6 +304,8 @@ class LogicalInterconnectsTest(unittest.TestCase):
         port_monitor_rest_call = configuration.copy()
 
         self._logical_interconnect.update_snmp_configuration(logical_interconnect_uri, configuration)
+
+        port_monitor_rest_call['type'] = 'snmp-configuration'
 
         mock_update.assert_called_once_with(port_monitor_rest_call, uri=uri_rest_call, timeout=-1)
 
@@ -395,14 +395,14 @@ class LogicalInterconnectsTest(unittest.TestCase):
                 "portMonitorConfigInfo": "AnalyzerPort"
             },
             "enablePortMonitor": True,
-            "type": "port-monitor",
+
             "monitoredPorts": [{
                 "portUri": "/rest/interconnects/76ad8f4b-b01b-d2ac31295c19/ports/76ad8f4b-6f13:X1",
                 "portMonitorConfigInfo": "MonitoredBoth"
             }]
         }
         port_monitor_rest_call = monitor_data.copy()
-
+        port_monitor_rest_call['type'] = 'port-monitor'
         self._logical_interconnect.update_port_monitor(logical_interconnect_uri, monitor_data)
 
         mock_update.assert_called_once_with(port_monitor_rest_call, uri=uri_rest_call, timeout=-1)

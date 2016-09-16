@@ -4,7 +4,10 @@
 uncategorized.py
 ~~~~~~~~~~~~
 
-This module implements settings HPE OneView REST API
+This module implements settings HPE OneView REST API.
+
+It has been deprecated and will be removed soon. We strongly recommend to use the OneViewClient class instead.
+See more details at: https://github.com/HewlettPackard/python-hpOneView/tree/master/hpOneView/README.md
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -46,6 +49,14 @@ __status__ = 'Development'
 
 from hpOneView.common import uri
 from hpOneView.activity import activity
+from warnings import warn
+
+
+def deprecated(func):
+    def wrapper(*args, **kwargs):
+        warn("Module uncategorized is deprecated, use OneViewClient class instead", DeprecationWarning)
+        return func(*args, **kwargs)
+    return wrapper
 
 
 class uncategorized(object):
@@ -53,6 +64,7 @@ class uncategorized(object):
         self._con = con
         self._activity = activity(con)
 
+    @deprecated
     def get_unmanaged_devices(self):
         body = self._con.get(uri['unmanaged-devices'])
         return body

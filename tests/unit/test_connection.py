@@ -50,7 +50,8 @@ class ConnectionTest(unittest.TestCase):
             'Accept-Language': 'en_US'
         }
         self.request_body = {"request body": "content"}
-        self.response_body = {"response body": "content"}
+        self.response_body = {"response body": "content",
+                              "message": "An error occurred."}
         self.dumped_request_body = json.dumps(self.request_body.copy())
         self.expected_response_body = self.response_body.copy()
 
@@ -135,7 +136,7 @@ class ConnectionTest(unittest.TestCase):
         try:
             self.connection.post('/path', self.request_body)
         except HPOneViewException as e:
-            self.assertEqual(e.msg, self.expected_response_body)
+            self.assertEqual(e.oneview_response, self.expected_response_body)
         else:
             self.fail()
 
@@ -148,7 +149,7 @@ class ConnectionTest(unittest.TestCase):
         try:
             self.connection.post('/path', self.request_body)
         except HPOneViewException as e:
-            self.assertEqual(e.msg, self.expected_response_body)
+            self.assertEqual(e.oneview_response, self.expected_response_body)
         else:
             self.fail()
 
@@ -216,7 +217,7 @@ class ConnectionTest(unittest.TestCase):
         try:
             self.connection.put('/path', self.request_body)
         except HPOneViewException as e:
-            self.assertEqual(e.msg, self.expected_response_body)
+            self.assertEqual(e.oneview_response, self.expected_response_body)
         else:
             self.fail()
 
@@ -229,7 +230,7 @@ class ConnectionTest(unittest.TestCase):
         try:
             self.connection.put('/path', self.request_body)
         except HPOneViewException as e:
-            self.assertEqual(e.msg, self.expected_response_body)
+            self.assertEqual(e.oneview_response, self.expected_response_body)
         else:
             self.fail()
 
@@ -297,7 +298,7 @@ class ConnectionTest(unittest.TestCase):
         try:
             self.connection.patch('/path', self.request_body)
         except HPOneViewException as e:
-            self.assertEqual(e.msg, self.expected_response_body)
+            self.assertEqual(e.oneview_response, self.expected_response_body)
         else:
             self.fail()
 
@@ -310,7 +311,7 @@ class ConnectionTest(unittest.TestCase):
         try:
             self.connection.patch('/path', self.request_body)
         except HPOneViewException as e:
-            self.assertEqual(e.msg, self.expected_response_body)
+            self.assertEqual(e.oneview_response, self.expected_response_body)
         else:
             self.fail()
 
@@ -378,7 +379,7 @@ class ConnectionTest(unittest.TestCase):
         try:
             self.connection.delete('/path')
         except HPOneViewException as e:
-            self.assertEqual(e.msg, self.expected_response_body)
+            self.assertEqual(e.oneview_response, self.expected_response_body)
         else:
             self.fail()
 
@@ -391,6 +392,6 @@ class ConnectionTest(unittest.TestCase):
         try:
             self.connection.delete('/path', self.request_body)
         except HPOneViewException as e:
-            self.assertEqual(e.msg, self.expected_response_body)
+            self.assertEqual(e.oneview_response, self.expected_response_body)
         else:
             self.fail()

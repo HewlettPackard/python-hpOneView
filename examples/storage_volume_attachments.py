@@ -60,7 +60,7 @@ try:
     for attachment in volume_attachments_filtered:
         print("   'hostName': '{hostName}' at uri: '{uri}'".format(**attachment))
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get the list of extra unmanaged storage volumes
 print("Get the list of extra unmanaged storage volumes")
@@ -77,7 +77,7 @@ try:
     oneview_client.storage_volume_attachments.remove_extra_presentations(info)
     print("   Done.")
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get storage volume attachment by id
 try:
@@ -85,7 +85,7 @@ try:
     volume_attachment_byid = oneview_client.storage_volume_attachments.get(attachment_id)
     print("   Found '{hostName}' at uri: {uri}".format(**volume_attachment_byid))
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 if volume_attachments:
     # Get storage volume attachment by uri
@@ -112,4 +112,4 @@ try:
     path_byid = oneview_client.storage_volume_attachments.get_paths(attachment_id, path_id)
     pprint(path_byid)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)

@@ -56,15 +56,15 @@ class StorageVolumeAttachments(object):
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items.
-                The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items.
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: Volume attachment resources.
@@ -80,15 +80,15 @@ class StorageVolumeAttachments(object):
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items.
-                The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items.
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: Extra unmanaged storage volumes.
@@ -104,8 +104,8 @@ class StorageVolumeAttachments(object):
             resource (dict):
                 Object to create
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
         Returns:
             dict: Associated storage attachment resource.
         """
@@ -118,11 +118,11 @@ class StorageVolumeAttachments(object):
         Gets all paths or a specific attachment path for the specified volume attachment.
 
         Args:
-            id_or_uri: Could be either the volume attachment id or the volume attachment uri.
-            path_id_or_uri: Could be either the path id or the path uri.
+            id_or_uri: Can be either the volume attachment id or the volume attachment uri.
+            path_id_or_uri: Can be either the path id or the path uri.
 
         Returns:
-            dict: Path(s).
+            dict: Paths.
         """
         if path_id_or_uri:
             uri = self._client.build_uri(path_id_or_uri)
@@ -137,10 +137,10 @@ class StorageVolumeAttachments(object):
 
     def get(self, id_or_uri):
         """
-        Gets a volume attachment by id or uri.
+        Gets a volume attachment by ID or URI.
 
         Args:
-            id_or_uri: Could be either the volume attachment id or the volume attachment uri.
+            id_or_uri: Can be either the volume attachment ID or the volume attachment URI.
 
         Returns:
             dict: volume attachment
@@ -149,9 +149,9 @@ class StorageVolumeAttachments(object):
 
     def get_by(self, field, value):
         """
-        Get all storage systems that match the filter.
+        Gets all storage systems that match the filter.
 
-        The search is case insensitive.
+        The search is case-insensitive.
 
         Args:
             field: Field name to filter.

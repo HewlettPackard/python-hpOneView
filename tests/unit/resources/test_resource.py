@@ -463,6 +463,16 @@ class ResourceTest(unittest.TestCase):
 
     @mock.patch.object(connection, 'post')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
+    def test_create_with_zero_body_called_once_without_uri(self, mock_wait4task, mock_post):
+        mock_post.return_value = self.task, self.task
+        mock_wait4task.return_value = self.task
+        self.resource_client.create_with_zero_body(timeout=-1)
+
+        mock_post.assert_called_once_with(
+            '/rest/testuri', {}, custom_headers=None)
+
+    @mock.patch.object(connection, 'post')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
     def test_create_with_zero_body_and_custom_headers(self, mock_wait4task, mock_post):
         mock_post.return_value = self.task, self.task
         mock_wait4task.return_value = self.task

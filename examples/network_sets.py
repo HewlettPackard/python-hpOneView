@@ -88,7 +88,7 @@ try:
     net_set_without_ethernet = oneview_client.network_sets.get_without_ethernet(network_set['uri'])
     pprint(net_set_without_ethernet)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Update name of recently created network set
 network_set['name'] = 'OneViewSDK Test Network Set Re-named'

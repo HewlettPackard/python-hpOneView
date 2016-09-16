@@ -4,7 +4,10 @@
 facilities.py
 ~~~~~~~~~~~~
 
-This module implements settings HPE OneView REST API
+This module implements settings HPE OneView REST API.
+
+It has been deprecated and will be removed soon. We strongly recommend to use the OneViewClient class instead.
+See more details at: https://github.com/HewlettPackard/python-hpOneView/tree/master/hpOneView/README.md
 """
 from __future__ import absolute_import
 from __future__ import division
@@ -46,6 +49,14 @@ __status__ = 'Development'
 
 from hpOneView.common import uri
 from hpOneView.activity import activity
+from warnings import warn
+
+
+def deprecated(func):
+    def wrapper(*args, **kwargs):
+        warn("Module facilities is deprecated, use OneViewClient class instead", DeprecationWarning)
+        return func(*args, **kwargs)
+    return wrapper
 
 
 class facilities(object):
@@ -53,18 +64,22 @@ class facilities(object):
         self._con = con
         self._activity = activity(con)
 
+    @deprecated
     def get_datacenters(self):
         body = self._con.get(uri['datacenters'])
         return body
 
+    @deprecated
     def get_powerdevices(self):
         body = self._con.get(uri['powerDevices'])
         return body
 
+    @deprecated
     def get_racks(self):
         body = self._con.get(uri['racks'])
         return body
 
+    @deprecated
     def delete_datacenter(self, datacenter, force=False, blocking=True,
                           verbose=False):
         if force:
@@ -75,6 +90,7 @@ class facilities(object):
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
         return task
 
+    @deprecated
     def delete_rack(self, rack, force=False, blocking=True,
                     verbose=False):
         if force:
@@ -85,6 +101,7 @@ class facilities(object):
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
         return task
 
+    @deprecated
     def delete_powerdevice(self, powerdevice, force=False, blocking=True,
                            verbose=False):
         if force:
@@ -95,6 +112,7 @@ class facilities(object):
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
         return task
 
+    @deprecated
     def add_datacenter(self, datacenter, blocking=True, verbose=False):
         task, body = self._con.post(uri['datacenters'], datacenter)
         if blocking is True:
@@ -107,6 +125,7 @@ class facilities(object):
             return body
         return task
 
+    @deprecated
     def add_rack(self, rack, blocking=True, verbose=False):
         task, body = self._con.post(uri['racks'], rack)
         if blocking is True:
@@ -119,6 +138,7 @@ class facilities(object):
             return body
         return task
 
+    @deprecated
     def add_powerdevice(self, powerdevice, blocking=True, verbose=False):
         task, body = self._con.post(uri['powerDevices'], powerdevice)
         if blocking is True:
@@ -131,6 +151,7 @@ class facilities(object):
             return body
         return task
 
+    @deprecated
     def add_iPDU(self, host, user, passwd, blocking=True, verbose=False):
         request = {'hostname': host,
                    'username': user,
@@ -145,5 +166,3 @@ class facilities(object):
                     return powerdevice
             return body
         return task
-
-# vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:

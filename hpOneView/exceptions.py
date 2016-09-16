@@ -2,15 +2,16 @@
 
 """
 exceptions.py
-~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
-This module implements exceptions HPE OneView REST API
+This module implements exceptions of the HPE OneView REST API.
 """
 from __future__ import unicode_literals
 from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
 from future import standard_library
+
 standard_library.install_aliases()
 
 __title__ = 'exceptions'
@@ -19,6 +20,7 @@ __copyright__ = '(C) Copyright (2012-2015) Hewlett Packard Enterprise ' \
                 ' Development LP'
 __license__ = 'MIT'
 __status__ = 'Development'
+
 
 ###
 # (C) Copyright (2012-2015) Hewlett Packard Enterprise Development LP
@@ -41,13 +43,30 @@ __status__ = 'Development'
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 ###
+from past.builtins import basestring
 
 
 class HPOneViewException(Exception):
+    """
+    OneView base Exception.
 
-    def __init__(self, msg):
-        self.msg = msg
-        Exception.__init__(self, msg)
+    Attributes:
+       msg (str): Exception message.
+       oneview_response (dict): OneView rest response.
+   """
+
+    def __init__(self, data):
+        self.msg = None
+        self.oneview_response = None
+
+        if isinstance(data, basestring):
+            self.msg = data
+        else:
+            self.oneview_response = data
+            if data and isinstance(data, dict):
+                self.msg = data.get('message')
+
+        Exception.__init__(self, self.msg)
 
 
 class HPOneViewInvalidResource(HPOneViewException):
@@ -55,7 +74,9 @@ class HPOneViewInvalidResource(HPOneViewException):
 
 
 class HPOneViewTaskError(HPOneViewException):
-    pass
+    def __init__(self, msg, error_code=None):
+        super(HPOneViewTaskError, self).__init__(msg)
+        self.error_code = error_code
 
 
 class HPOneViewUnknownType(HPOneViewException):

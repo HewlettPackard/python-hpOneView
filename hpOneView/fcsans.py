@@ -4,7 +4,10 @@
 fcsans.py
 ~~~~~~~~~~~~
 
-This module implements settings HPE OneView REST API
+This module implements settings HPE OneView REST API.
+
+It has been deprecated and will be removed soon. We strongly recommend to use the OneViewClient class instead.
+See more details at: https://github.com/HewlettPackard/python-hpOneView/tree/master/hpOneView/README.md
 """
 from __future__ import unicode_literals
 from __future__ import print_function
@@ -44,6 +47,14 @@ __status__ = 'Development'
 
 from hpOneView.common import uri, get_members
 from hpOneView.activity import activity
+from warnings import warn
+
+
+def deprecated(func):
+    def wrapper(*args, **kwargs):
+        warn("Module fcsans is deprecated, use OneViewClient class instead", DeprecationWarning)
+        return func(*args, **kwargs)
+    return wrapper
 
 
 class fcsans(object):
@@ -52,24 +63,29 @@ class fcsans(object):
         self._con = con
         self._activity = activity(con)
 
+    @deprecated
     def get_device_managers(self):
         body = self._con.get(uri['device-managers'])
         return body
 
+    @deprecated
     def get_managed_sans(self):
         body = self._con.get(uri['managed-sans'])
         return body
 
+    @deprecated
     def get_providers(self):
         body = get_members(self._con.get(uri['providers']))
         return body
 
+    @deprecated
     def remove_device_manager(self, manager, blocking=True, verbose=False):
         task, body = self._con.delete(manager['uri'])
         if blocking is True:
             task = self._activity.wait4task(task, tout=600, verbose=verbose)
         return task
 
+    @deprecated
     def add_device_manager(self, providerUri, connInfo, blocking=True,
                            verbose=False):
         task, body = self._con.post(providerUri, connInfo)

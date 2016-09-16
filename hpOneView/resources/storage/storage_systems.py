@@ -58,15 +58,15 @@ class StorageSystems(object):
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items.
-                The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items.
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: A list of all managed storage systems.
@@ -76,15 +76,15 @@ class StorageSystems(object):
     def add(self, resource, timeout=-1):
         """
         Adds a storage system for management by the appliance. The storage system resource created will be in a
-        "Connected" state and will not yet be available for further operations. Users are required to perform a PUT API
+        Connected state and will not yet be available for further operations. Users are required to perform a PUT API
         on the storage system resource to complete the management of the storage system resource. An asynchronous task
         will be created as a result of this API call to discover available domains, target ports, and storage pools.
 
         Args:
             resource (dict): Object to create.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Created storage system.
@@ -104,11 +104,10 @@ class StorageSystems(object):
     def get_storage_pools(self, id_or_uri):
         """
         Gets a list of Storage pools. Returns a list of storage pools belonging to the storage system referred by the
-        Path property parameters--id (serial number) or uri. Filters are supported for the following storage pool
-        attributes only - name, domain, deviceSpeed, deviceType, supprtedRAIDLevel, status and state.
+        Path property {ID} parameter or URI.
 
         Args:
-            id_or_uri: Could be either the storage system id (serial number) or the storage system uri.
+            id_or_uri: Can be either the storage system ID (serial number) or the storage system URI.
         Returns:
             dict: Host types.
         """
@@ -117,10 +116,10 @@ class StorageSystems(object):
 
     def get(self, id_or_uri):
         """
-        Gets the specified storage system resource by ID or by uri.
+        Gets the specified storage system resource by ID or by URI.
 
         Args:
-            id_or_uri: Could be either the storage system id or the storage system uri.
+            id_or_uri: Can be either the storage system id or the storage system uri.
 
         Returns:
             dict: The storage system.
@@ -129,18 +128,15 @@ class StorageSystems(object):
 
     def update(self, resource, timeout=-1):
         """
-        Updates the storage system. To complete the action of adding a storage system for management by the appliance,
+        Updates the storage system. To complete the addition of a storage system for management by the appliance,
         this must be called after create() of a storage system.
-        This method can be used to update storage system credentials, storage system attributes or to request a refresh
-        of storage system. For updating credentials, users are allowed to update IP/hostname, username, and password.
-        To request a refresh of a storage system user must set the "refreshState" attribute to RefreshPending state.
 
         Args:
             resource (dict):
                 Object to update.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Updated storage system.
@@ -155,11 +151,11 @@ class StorageSystems(object):
             resource (dict):
                 Object to delete
             force (bool):
-                 If set to true the operation completes despite any problems with
+                 If set to true, the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Details of associated resource.
@@ -171,8 +167,8 @@ class StorageSystems(object):
         Gets all ports or a specific managed target port for the specified storage system.
 
         Args:
-            id_or_uri: Could be either the storage system id or the storage system uri.
-            port_id_or_uri: Could be either the port id or the port uri.
+            id_or_uri: Can be either the storage system id or the storage system uri.
+            port_id_or_uri: Can be either the port id or the port uri.
 
         Returns:
             dict: Managed ports.
@@ -190,9 +186,9 @@ class StorageSystems(object):
 
     def get_by(self, field, value):
         """
-        Get all storage systems that match the filter.
+        Gets all storage systems that match the filter.
 
-        The search is case insensitive.
+        The search is case-insensitive.
 
         Args:
             Field: field name to filter.
@@ -205,7 +201,7 @@ class StorageSystems(object):
 
     def get_by_name(self, name):
         """
-        Retrieve a resource by its name.
+        Retrieves a resource by its name.
 
         Args:
             name: Resource name.

@@ -53,7 +53,7 @@ class ServerHardware(object):
         Args:
             id: Resource identification.
             fields:
-                Name of the metric(s) to be retrieved in the format METRIC[,METRIC]...
+                Name of the metrics to be retrieved in the format METRIC[,METRIC]...
 
                 If unspecified, all metrics supported are returned.
 
@@ -81,7 +81,7 @@ class ServerHardware(object):
                     Start date of requested starting time range in ISO 8601 format. If omitted, the startDate is
                     determined by the endDate minus 24 hours.
                 endDate
-                    End date of requested starting time range in ISO 8601 format. When omitted the endDate includes
+                    End date of requested starting time range in ISO 8601 format. When omitted, the endDate includes
                     the latest data sample available.
 
                 If an excessive number of samples would otherwise be returned, the results will be segmented. The
@@ -97,7 +97,7 @@ class ServerHardware(object):
                 missing samples.
 
             refresh:
-                Specifies that if necessary an additional request will be queued to obtain the most recent
+                Specifies that, if necessary, an additional request will be queued to obtain the most recent
                 utilization data from the iLO. The response will not include any refreshed data. To track the
                 availability of the newly collected data, monitor the TaskResource identified by the refreshTaskUri
                 property in the response. If null, no refresh was queued.
@@ -105,7 +105,7 @@ class ServerHardware(object):
             view:
                 Specifies the resolution interval length of the samples to be retrieved. This is reflected in the
                 resolution in the returned response. Utilization data is automatically purged to stay within storage
-                space constraints. Supported views are listed below.
+                space constraints. See the following supported views.
 
                 native
                     Resolution of the samples returned will be one sample for each 5-minute time period. This is the
@@ -114,13 +114,13 @@ class ServerHardware(object):
                 hour
                     Resolution of the samples returned will be one sample for each 60-minute time period. Samples are
                     calculated by averaging the available 5-minute data samples that occurred within the hour, except
-                    for PeakPower which is calculated by reporting the peak observed 5-minute sample value data during
+                    for PeakPower, which is calculated by reporting the peak observed 5-minute sample value data during
                     the hour. Samples at this resolution are retained up to three years.
                 day
                     Resolution of the samples returned will be one sample for each 24-hour time period. One day is a
-                    24-hour period that starts at midnight GMT regardless of the time zone in which the appliance or
+                    24-hour period that starts at midnight GMT, regardless of the time zone in which the appliance or
                     client is located. Samples are calculated by averaging the available 5-minute data samples that
-                    occurred during the day, except for PeakPower which is calculated by reporting the peak observed
+                    occurred during the day, except for PeakPower, which is calculated by reporting the peak observed
                     5-minute sample value data during the day. Samples at this resolution are retained up to three
                     years.
 
@@ -140,15 +140,15 @@ class ServerHardware(object):
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items.
-                The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items.
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: A list of server hardware resources.
@@ -157,26 +157,28 @@ class ServerHardware(object):
 
     def add(self, information, timeout=-1):
         """
-        Adds a rack-mount server for management by the appliance. This API initiates the asynchronous addition of
-        supported server models. Note: servers in an enclosure are added by adding the enclosure resource. This is
-        only supported on appliances which support rack mounted servers.
+        Adds a rackmount server for management by the appliance. This API initiates the asynchronous addition of
+        supported server models.
+
+        Note: Servers in an enclosure are added by adding the enclosure resource. This is
+        only supported on appliances that support rackmounted servers.
 
         Args:
             information (dict): Object to create
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
-            dict: Created rack mount server.
+            dict: Created rackmount server.
         """
         return self._client.create(information, timeout=timeout)
 
     def get(self, id_or_uri):
         """
-        Gets a server hardware resource by ID or by uri.
+        Gets a server hardware resource by ID or by URI.
 
         Args:
-            id_or_uri: Could be either the server hardware resource id or uri.
+            id_or_uri: Can be either the server hardware resource ID or URI.
 
         Returns:
             dict: The server hardware resource
@@ -185,9 +187,9 @@ class ServerHardware(object):
 
     def get_by(self, field, value):
         """
-        Get all server hardware that match the filter.
+        Gets all server hardware that match the filter.
 
-        The search is case insensitive.
+        The search is case-insensitive.
 
         Args:
             field: Field name to filter.
@@ -200,23 +202,21 @@ class ServerHardware(object):
 
     def remove(self, resource, force=False, timeout=-1):
         """
-        Removes the rack-server with the specified URI.
-
-        Note:
-            This operation is only supported on appliances which support rack mounted servers.
+        Removes the rackserver with the specified URI.
+        Note: This operation is only supported on appliances that support rackmounted servers.
 
         Args:
             resource (dict):
                 Object to delete.
             force (bool):
-                If set to true the operation completes despite any problems with
+                If set to true, the operation completes despite any problems with
                 network connectivity or errors on the resource itself. The default is false.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
-            bool: Indicating if the resource was successfully removed.
+            bool: Indicates whether the resource was successfully removed.
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
@@ -225,7 +225,7 @@ class ServerHardware(object):
         Gets the list of BIOS/UEFI values currently set on the physical server.
 
         Args:
-            id_or_uri: Could be either the server hardware resource id or uri.
+            id_or_uri: Can be either the server hardware resource ID or URI.
 
         Returns:
             dict: Dictionary of BIOS/UEFI values.
@@ -235,11 +235,11 @@ class ServerHardware(object):
 
     def get_environmental_configuration(self, id_or_uri):
         """
-        Gets the settings that describe the environmental configuration (supported feature set, calibrated minimum &
-        maximum power, location & dimensions, ...) of the server hardware resource.
+        Gets the settings that describe the environmental configuration (supported feature set, calibrated minimum and
+        maximum power, location and dimensions, etc) of the server hardware resource.
 
         Args:
-            id_or_uri: Could be either the server hardware resource id or uri.
+            id_or_uri: Can be either the server hardware resource ID or URI.
 
         Returns:
             dict: Environmental configuration settings.
@@ -252,10 +252,10 @@ class ServerHardware(object):
         Sets the calibrated max power of an unmanaged or unsupported server hardware resource.
 
         Args:
-            id_or_uri: Could be either the server hardware resource id or uri
-            configuration: configuration
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            id_or_uri: Can be either the server hardware resource ID or URI.
+            configuration (dict): Environmental configuration.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Environmental configuration settings.
@@ -266,11 +266,11 @@ class ServerHardware(object):
     def get_ilo_sso_url(self, id_or_uri):
         """
         Retrieves the URL to launch a Single Sign-On (SSO) session for the iLO web interface. If the server hardware is
-        unsupported, the resulting URL will not use SSO and the iLO web interface will prompt for credentials. Note,
-        this is not supported on G7/iLO3 or earlier servers.
+        unsupported, the resulting URL will not use SSO and the iLO web interface will prompt for credentials.
+        This is not supported on G7/iLO3 or earlier servers.
 
         Args:
-            id_or_uri: Could be either the server hardware resource id or uri.
+            id_or_uri: Can be either the server hardware resource ID or URI.
 
         Returns:
             URL
@@ -282,10 +282,10 @@ class ServerHardware(object):
         """
         Generates a Single Sign-On (SSO) session for the iLO Java Applet console and returns the URL to launch it.
         If the server hardware is unmanaged or unsupported, the resulting URL will not use SSO and the iLO Java Applet
-        will prompt for credentials. Note, this is not supported on G7/iLO3 or earlier servers.
+        will prompt for credentials. This is not supported on G7/iLO3 or earlier servers.
 
         Args:
-            id_or_uri: Could be either the server hardware resource id or uri.
+            id_or_uri: Can be either the server hardware resource ID or URI.
 
         Returns:
             URL
@@ -300,10 +300,10 @@ class ServerHardware(object):
 
         Args:
             id_or_uri:
-                Could be either the server hardware resource id or uri.
+                Can be either the server hardware resource ID or URI.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
         Returns:
             Resource
         """
@@ -315,10 +315,10 @@ class ServerHardware(object):
         Refreshes the server hardware to fix configuration issues.
 
         Args:
-            id_or_uri: Could be either the server hardware resource id or uri
-            configuration: configuration
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            id_or_uri: Can be either the server hardware resource ID or URI.
+            configuration (dict): Power state configuration.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             Resource
@@ -331,10 +331,10 @@ class ServerHardware(object):
         Refreshes the server hardware to fix configuration issues.
 
         Args:
-            id_or_uri: Could be either the server hardware resource id or uri
-            configuration: configuration
-            timeout: Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+            id_or_uri: Can be either the server hardware resource ID or URI.
+            configuration: Refresh state configuration.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             Resource
@@ -350,7 +350,7 @@ class ServerHardware(object):
         is supported only on Windows clients.
 
         Args:
-            id_or_uri: Could be either the server hardware resource id or uri.
+            id_or_uri: Can be either the server hardware resource ID or URI.
 
         Returns:
             URL

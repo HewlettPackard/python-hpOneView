@@ -64,7 +64,7 @@ try:
     con_template_byname = oneview_client.connection_templates.get_by('name', connection_template_name)[0]
     pprint(con_template_byname)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get by Id and update name
 try:
@@ -79,4 +79,4 @@ try:
           (con_template_byid['uri']))
     print("  with attribute {'name': '%s'}" % con_template_byid['name'])
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)

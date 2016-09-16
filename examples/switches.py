@@ -49,7 +49,7 @@ try:
     switch_statistics = oneview_client.switches.get_statistics(switch_uri)
     pprint(switch_statistics)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get Statistics with port_name
 print("Get a switch statistics with portName")
@@ -57,7 +57,7 @@ try:
     switch_statistics = oneview_client.switches.get_statistics(switch_uri, "1.2")
     pprint(switch_statistics)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get all switches
 print("Get all switches in domain")
@@ -70,7 +70,7 @@ try:
     switch_by_id = oneview_client.switches.get(switch_id)
     pprint(switch_by_id)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get a switch by uri
 try:
@@ -78,7 +78,7 @@ try:
     switch_by_uri = oneview_client.switches.get(switch_uri)
     pprint(switch_by_uri)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get environmental configuration of switch by id
 try:
@@ -86,7 +86,7 @@ try:
     switch_by_id = oneview_client.switches.get_environmental_configuration(switch_id)
     pprint(switch_by_id)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get environmental configuration of switch by uri
 try:
@@ -94,7 +94,7 @@ try:
     switch_by_uri = oneview_client.switches.get_environmental_configuration(switch_uri)
     pprint(switch_by_uri)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get switch by rackName
 try:
@@ -102,4 +102,4 @@ try:
     switch_by_rack_name = oneview_client.switches.get_by("rackName", "Test Name")
     pprint(switch_by_rack_name)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)

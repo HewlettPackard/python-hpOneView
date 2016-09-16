@@ -65,7 +65,7 @@ try:
     print("Got logical enclosure '{}' by id: 'acb17b89-6724-4602-818a-1ee20ed4ec60'\n   uri: '{}'".format(
         logical_enclosure_by_id['name'], logical_enclosure_by_id['uri']))
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get logical enclosure by uri
 logical_enclosure = oneview_client.logical_enclosures.get(
@@ -79,7 +79,7 @@ try:
     logical_enclosure_by_name = oneview_client.logical_enclosures.get_by('name', logical_enclosure['name'])[0]
     print("Got logical enclosure by name '{name}'\n   uri: '{uri}'".format(**logical_enclosure_by_name))
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Update configuration
 print("Reapply the appliance's configuration to the logical enclosure")
@@ -88,7 +88,7 @@ try:
         logical_enclosure['uri'])
     print("   Done.")
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # update and get script
 print("Update script")
@@ -116,7 +116,7 @@ try:
         logical_enclosure['uri'])
     print("   Done")
 except HPOneViewException as e:
-    print("  %s" % e.msg['message'])
+    print("  %s" % e.msg)
 
 # Get all logical enclosures
 print("Get all logical enclosures")

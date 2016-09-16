@@ -51,22 +51,22 @@ class StoragePools(object):
         """
         Gets a list of storage pools. Returns a list of storage pools based on optional sorting and filtering, and
         constrained by start and count parameters. The following storage pool attributes can be used with filtering and
-        sorting operation: name, domain, deviceType, deviceSpeed, supportedRAIDLevel, status and state.
+        sorting operation: name, domain, deviceType, deviceSpeed, supportedRAIDLevel, status, and state.
 
         Args:
             start:
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
             count:
-                The number of resources to return. A count of -1 requests all the items.
-                The actual number of items in the response may differ from the requested
-                count if the sum of start and count exceed the total number of items.
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
             filter:
                 A general filter/query string to narrow the list of items returned. The
-                default is no filter - all resources are returned.
+                default is no filter; all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
-                on create time, with the oldest entry first.
+                on create time with the oldest entry first.
 
         Returns:
             list: A list of storage pools.
@@ -81,21 +81,21 @@ class StoragePools(object):
             resource (dict):
                 Object to create
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
-            dict: Created storage pool
+            dict: Created storage pool.
 
         """
         return self._client.create(resource, timeout=timeout)
 
     def get(self, id_or_uri):
         """
-        Gets the specified storage pool resource by ID or by uri.
+        Gets the specified storage pool resource by ID or by URI.
 
         Args:
-            id_or_uri: Could be either the storage pool id or the storage pool uri.
+            id_or_uri: Can be either the storage pool id or the storage pool uri.
 
         Returns:
             dict: The storage pool.
@@ -110,11 +110,11 @@ class StoragePools(object):
             resource (dict):
                 Object to remove.
             force (bool):
-                 If set to true the operation completes despite any problems with
+                 If set to true, the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
             timeout:
-                Timeout in seconds. Wait task completion by default. The timeout does not abort the operation
-                in OneView, just stops waiting for its completion.
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: Details of associated resource.
@@ -124,9 +124,9 @@ class StoragePools(object):
 
     def get_by(self, field, value):
         """
-        Get all storage pools that match the filter.
+        Gets all storage pools that match the filter.
 
-        The search is case insensitive.
+        The search is case-insensitive.
 
         Args:
             field: Field name to filter.

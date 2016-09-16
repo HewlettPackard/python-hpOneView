@@ -85,7 +85,7 @@ try:
     fcoe_nets_byid = oneview_client.fcoe_networks.get('452cf2a8-e5a0-4b9c-9961-0dc6deb80d01')
     pprint(fcoe_nets_byid)
 except HPOneViewException as e:
-    print(e.msg['message'])
+    print(e.msg)
 
 # Get by Uri
 print("Get a fcoe-network by uri")
