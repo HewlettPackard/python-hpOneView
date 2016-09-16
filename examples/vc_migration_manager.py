@@ -28,8 +28,6 @@ from hpOneView.exceptions import HPOneViewTaskError
 from config_loader import try_load_from_file
 from pprint import PrettyPrinter
 
-import ssl
-ssl.PROTOCOL_TLSv1_2=ssl.PROTOCOL_TLSv1
 
 config = \
 {
