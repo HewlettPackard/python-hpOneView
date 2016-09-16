@@ -1631,22 +1631,22 @@ def make_alertMap_dict(notes, etag, state='Active', user='None',
     }
 
 def make_migration_information(oaIpAddress, oaUsername, oaPassword, vcmUsername, vcmPassword, iloLicenseType='OneView', enclosureGroupUri=None):
-	return 
-	{
-		'credentials':
-		{
-			'oaIpAddress': oaIpAddress,
-			'oaUsername': oaUsername,
-			'oaPassword': oaPassword,
-			'vcmUsername': vcmUsername,
-			'vcmPassword': vcmPassword,
-			'type': 'EnclosureCredentials'
-		},
-		'iloLicenseType': iloLicenseType,
-		'enclosureGroupUri': enclosureGroupUri,
-		'type': 'migratable-vc-domains',
-		'category': 'migratable-vc-domains'
-	}
+    return \
+    {
+        'credentials':
+        {
+            'oaIpAddress': oaIpAddress,
+            'oaUsername': oaUsername,
+            'oaPassword': oaPassword,
+            'vcmUsername': vcmUsername,
+            'vcmPassword': vcmPassword,
+            'type': 'EnclosureCredentials'
+        },
+        'iloLicenseType': iloLicenseType,
+        'enclosureGroupUri': enclosureGroupUri,
+        'type': 'migratable-vc-domains',
+        'category': 'migratable-vc-domains'
+    }
 
 
 class pages(object):

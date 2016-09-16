@@ -30,7 +30,7 @@ from future import standard_library
 standard_library.install_aliases()
 
 __title__ = 'vcmigrationmanager'
-__version__ = '0.0.1'
+__version__ = '1.0.0'
 __copyright__ = '(C) Copyright (2016) Hewlett Packard Enterprise Development LP'
 __license__ = 'MIT'
 __status__ = 'Development'
@@ -45,36 +45,36 @@ class VcMigrationManager(object):
         self._connection = connection
         self._client = ResourceClient(connection, self.URI)
 
-    def create_compatibility_report(self, migrationInformation, timeout=-1):
-		"""
-		"""
-		
-		return self._client.create(migrationInformation, timeout=timeout)
-	
-	def get_compatibility_report(self, id_or_uri):
-		"""
-		"""
-		
-		return self._client.get(id_or_uri)
-	
-	def migrate(self, id_or_uri, timeout=-1):
-		"""
-		"""
-		
-		migrationInformation =
-		{
-			'migrationState': 'Migrated',
-			'type': 'migratable-vc-domains',
-			'category': 'migratable-vc-domains'
-		}
-		
-		#call build_uri manually since .update(...) doesn't do it and the URI is not to be included in the body when requesting a migration
-		complete_uri=self._client.build_uri(id_or_uri)
-	
-		return self._client.update(migrationInformation, uri=complete_uri, timeout=timeout)
+    def test_compatibility(self, migrationInformation, timeout=-1):
+        """
+        """
+        
+        return self._client.create(migrationInformation, timeout=timeout)
+    
+    def get_migration_report(self, id_or_uri):
+        """
+        """
+        
+        return self._client.get(id_or_uri)
+    
+    def migrate(self, id_or_uri, timeout=-1):
+        """
+        """
+        
+        migrationInformation = \
+        {
+            'migrationState': 'Migrated',
+            'type': 'migratable-vc-domains',
+            'category': 'migratable-vc-domains'
+        }
+        
+        #call build_uri manually since .update(...) doesn't do it and the URI is not to be included in the body when requesting a migration
+        complete_uri=self._client.build_uri(id_or_uri)
+    
+        return self._client.update(migrationInformation, uri=complete_uri, timeout=timeout)
 
-	def delete(self, id, timeout=-1):
-		"""
-		"""
-		
-		return self._client.delete(id, timeout=timeout)
+    def delete(self, id_or_uri, timeout=-1):
+        """
+        """
+        
+        return self._client.delete(id_or_uri, timeout=timeout)
