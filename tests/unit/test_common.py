@@ -195,6 +195,54 @@ class ResourceCompareTest(unittest.TestCase):
                           'tree': 3,
                           'two': True})
 
+    def test_comparison_with_int_and_float(self):
+        dict1 = {
+            "name": "name",
+            "lvalue": int(10)
+        }
+
+        dict2 = {
+            "name": "name",
+            "lvalue": float(10)
+        }
+        self.assertTrue(resource_compare(dict1, dict2))
+
+    def test_comparison_with_str_and_integer_float(self):
+        dict1 = {
+            "name": "name",
+            "lvalue": '10'
+        }
+
+        dict2 = {
+            "name": "name",
+            "lvalue": float(10)
+        }
+        self.assertTrue(resource_compare(dict1, dict2))
+
+    def test_comparison_with_str_and_float(self):
+        dict1 = {
+            "name": "name",
+            "lvalue": '10.1'
+        }
+
+        dict2 = {
+            "name": "name",
+            "lvalue": float(10.1)
+        }
+        self.assertTrue(resource_compare(dict1, dict2))
+
+    def test_comparison_with_different_float_values(self):
+        dict1 = {
+            "name": "name",
+            "lvalue": 10.2
+        }
+
+        dict2 = {
+            "name": "name",
+            "lvalue": float(10.1)
+        }
+        self.assertFalse(resource_compare(dict1, dict2))
+
 
 if __name__ == '__main__':
     unittest.main()
