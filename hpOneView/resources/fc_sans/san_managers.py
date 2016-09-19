@@ -90,8 +90,8 @@ class SanManagers(object):
         Updates a registered Device Manager.
 
         Args:
-            id_or_uri: Can be either the Device managerID or URI.
             resource (dict): Object to update.
+            id_or_uri: Can be either the Device manager ID or URI.
 
         Returns:
             dict: The device manager resource.
@@ -170,4 +170,18 @@ class SanManagers(object):
         """
         san_managers = self._client.get_all()
         result = [x for x in san_managers if x['name'] == name]
+        return result[0] if result else None
+
+    def get_by_provider_display_name(self, provider_display_name):
+        """
+        Gets a SAN Manager by provider display name.
+
+        Args:
+            provider_display_name: Name of the Provider Display Name
+
+        Returns:
+            dict: SAN Manager.
+        """
+        san_managers = self._client.get_all()
+        result = [x for x in san_managers if x['providerDisplayName'] == provider_display_name]
         return result[0] if result else None
