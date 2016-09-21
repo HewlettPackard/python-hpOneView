@@ -174,3 +174,25 @@ class SanManagersTest(TestCase):
         san_manager = self._resource.get_by_name("172.18.15.3")
 
         self.assertIsNone(san_manager)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_by_provider_display_name_should_return_san_manager_when_found(self, mock_get_all):
+        existent_san_managers = [
+            {"providerDisplayName": "Brocade Network Advisor 1", "uri": "/rest/fc-sans/device-managers/1"},
+            {"providerDisplayName": "Brocade Network Advisor 2", "uri": "/rest/fc-sans/device-managers/2"}
+        ]
+        mock_get_all.return_value = existent_san_managers
+        san_manager = self._resource.get_by_provider_display_name("Brocade Network Advisor 2")
+
+        self.assertEqual(san_manager, existent_san_managers[1])
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_by_provider_display_name_should_return_null_when_not_found(self, mock_get_all):
+        existent_san_managers = [
+            {"providerDisplayName": "Brocade Network Advisor 1", "uri": "/rest/fc-sans/device-managers/1"},
+            {"providerDisplayName": "Brocade Network Advisor 2", "uri": "/rest/fc-sans/device-managers/2"}
+        ]
+        mock_get_all.return_value = existent_san_managers
+        san_manager = self._resource.get_by_provider_display_name("Brocade Network Advisor 3")
+
+        self.assertIsNone(san_manager)
