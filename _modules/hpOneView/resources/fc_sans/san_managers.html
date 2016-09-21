@@ -219,8 +219,8 @@
 <span class="sd">        Updates a registered Device Manager.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the Device managerID or URI.</span>
 <span class="sd">            resource (dict): Object to update.</span>
+<span class="sd">            id_or_uri: Can be either the Device manager ID or URI.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: The device manager resource.</span>
@@ -299,6 +299,20 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">san_managers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">()</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">san_managers</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">name</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">result</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="SanManagers.get_by_provider_display_name"><a class="viewcode-back" href="../../../../hpOneView.resources.fc_sans.html#hpOneView.resources.fc_sans.san_managers.SanManagers.get_by_provider_display_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_by_provider_display_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">provider_display_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets a SAN Manager by provider display name.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            provider_display_name: Name of the Provider Display Name</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: SAN Manager.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">san_managers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">san_managers</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;providerDisplayName&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">provider_display_name</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">result</span> <span class="k">else</span> <span class="kc">None</span></div></div>
 </pre></div>
 

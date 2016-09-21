@@ -491,6 +491,24 @@ on create time with the oldest entry first.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.fc_sans.san_managers.SanManagers.get_by_provider_display_name">
+<code class="descname">get_by_provider_display_name</code><span class="sig-paren">(</span><em>provider_display_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/san_managers.html#SanManagers.get_by_provider_display_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.san_managers.SanManagers.get_by_provider_display_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a SAN Manager by provider display name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>provider_display_name</strong> &#8211; Name of the Provider Display Name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">SAN Manager.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.fc_sans.san_managers.SanManagers.get_default_connection_info">
 <code class="descname">get_default_connection_info</code><span class="sig-paren">(</span><em>provider_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/san_managers.html#SanManagers.get_default_connection_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.san_managers.SanManagers.get_default_connection_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets default connection info for a specific provider.</p>
@@ -558,8 +576,8 @@ in OneView; it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Can be either the Device managerID or URI.</li>
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the Device manager ID or URI.</li>
 </ul>
 </td>
 </tr>
