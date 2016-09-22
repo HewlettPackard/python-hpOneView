@@ -141,7 +141,7 @@ class TaskMonitor(object):
             else:
                 raise HPOneViewTaskError(MSG_UNKNOWN_EXCEPTION, error_code)
 
-        deleted_resource = (task['name'] == 'Delete' or task['name'] == 'Remove')
+        deleted_resource = task['name'] in ['Delete', 'Remove', 'Delete server hardware type']
 
         if 'type' in task and task['type'].startswith('Task') and 'name' in task and not deleted_resource:
             # get associated resource when is not a delete task
