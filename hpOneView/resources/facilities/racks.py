@@ -62,7 +62,7 @@ class Racks(object):
                 The number of resources to return. A count of -1 requests all items.
                 The actual number of items in the response might differ from the requested
                 count if the sum of start and count exceeds the total number of items.
-            filter:
+            filter (list or str):
                 A general filter/query string to narrow the list of items returned. The
                 default is no filter; all resources are returned.
             query:

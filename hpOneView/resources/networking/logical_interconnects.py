@@ -68,7 +68,7 @@ class LogicalInterconnects(object):
                 The number of resources to return. A count of -1 requests all items.
                 The actual number of items in the response might differ from the requested
                 count if the sum of start and count exceeds the total number of items.
-            filter:
+            filter (list or str):
                 A general filter/query string to narrow the list of items returned. The
                 default is no filter; all resources are returned.
             sort:
@@ -387,7 +387,7 @@ class LogicalInterconnects(object):
         Args:
             id_or_uri:
                 Can be either the logical interconnect id or the logical interconnect uri.
-            filter:
+            filter (list or str):
                 Filtering criteria may be specified using supported attributes: interconnectUri, macAddress,
                 internalVlan, externalVlan, and supported relation = (Equals). macAddress is 12 hexadecimal digits with
                 a colon between each pair of digits (upper case or lower case).

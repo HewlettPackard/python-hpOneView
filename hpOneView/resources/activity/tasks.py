@@ -79,7 +79,7 @@ class Tasks(object):
                 of items.
             fields:
                  Specifies which fields should be returned in the result set.
-            filter:
+            filter (list or str):
                  A general filter/query string to narrow the list of items returned. The default is no filter; all
                  resources are returned.
             query:
