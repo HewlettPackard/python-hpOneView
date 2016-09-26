@@ -94,7 +94,7 @@ class StorageVolumeAttachments(object):
             list: Extra unmanaged storage volumes.
         """
         uri = self.URI + "/repair?alertFixType=ExtraUnmanagedStorageVolumes"
-        return self._client.get(uri)
+        return self._client.get_all(start=start, count=count, filter=filter, sort=sort, uri=uri)
 
     def remove_extra_presentations(self, resource, timeout=-1):
         """
