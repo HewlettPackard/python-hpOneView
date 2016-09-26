@@ -74,17 +74,17 @@ class SwitchTypes(object):
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
-    def get(self, id):
+    def get(self, id_or_uri):
         """
         Gets the switch type with the specified ID.
 
         Args:
-            id: ID of switch type.
+            id_or_uri: ID or URI of switch type.
 
         Returns:
             dict: Switch Type.
         """
-        return self._client.get(id)
+        return self._client.get(id_or_uri)
 
     def get_by(self, field, value):
         """
