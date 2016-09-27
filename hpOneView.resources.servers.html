@@ -189,7 +189,7 @@ If not specified, the default is 0 - start with the first available item.</li>
 <li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
 The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
@@ -334,7 +334,7 @@ If not specified, the default is 0 - start with the first available item.</li>
 <li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
 The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
@@ -514,7 +514,7 @@ If not specified, the default is 0 - start with the first available item.</li>
 <li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
 The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
@@ -642,7 +642,7 @@ log in to the enclosure without providing credentials. This API is currently onl
 </dd>
 </dl>
 </li>
-<li><strong>filter</strong> &#8211; <p>Provides an expression of the requested time range of data. One condition (startDate/endDate) is
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; <p>Provides an expression of the requested time range of data. One condition (startDate/endDate) is
 specified per filter specification as described below. The condition must be specified via the
 equals (=) operator.</p>
 <dl class="docutils">
@@ -1179,7 +1179,7 @@ If not specified, the default is 0 - start with the first available item.</li>
 <li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
 The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
@@ -1459,7 +1459,7 @@ If not specified, the default is 0 - start with the first available item.</li>
 <li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
 The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
@@ -1620,7 +1620,7 @@ is supported only on Windows clients.</p>
 </dl>
 </div></blockquote>
 </li>
-<li><strong>filter</strong> &#8211; <p>Provides an expression of the requested time range of data. One condition (startDate/endDate) is
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; <p>Provides an expression of the requested time range of data. One condition (startDate/endDate) is
 specified per filter specification as described below. The condition must be specified via the
 equals (=) operator.</p>
 <dl class="docutils">
@@ -1875,7 +1875,7 @@ If not specified, the default is 0 - start with the first available item.</li>
 <li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
 The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
@@ -2043,7 +2043,7 @@ than 256, this will be internally limited to 256.
 The actual number of items in the response might differ from the
 requested count if the sum of start and count exceeds the total number of items, or if returning the
 requested number of items would take too long.</li>
-<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The default is no filter; all
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The default is no filter; all
 resources are returned.
 Filters are supported for the name, description, affinity, macType, wwnType, serialNumberType, status,
 serverHardwareTypeUri, enclosureGroupUri, and firmware.firmwareBaselineUri attributes.</li>
@@ -2292,7 +2292,7 @@ than 256, this will be internally limited to 256.
 The actual number of items in the response might differ from the
 requested count if the sum of start and count exceeds the total number of items, or if returning the
 requested number of items would take too long.</li>
-<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.
 Filters are supported for the name, description, serialNumber, uuid, affinity, macType, wwnType,
 serialNumberType, serverProfileTemplateUri, templateCompliance, status and state attributes.</li>
@@ -2418,7 +2418,7 @@ the response may differ from the requested count if the sum of start and count e
 number of items.</li>
 <li><strong>start</strong> &#8211; The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
 first available item.</li>
-<li><strong>filter</strong> &#8211; A general filter/query string to narrow the list of items returned. The default is no filter; all
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The default is no filter; all
 resources are returned.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based on create time, with the
 oldest entry first.</li>

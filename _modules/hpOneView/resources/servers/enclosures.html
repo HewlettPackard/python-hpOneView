@@ -188,7 +188,7 @@
 <span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
 <span class="sd">                The actual number of items in the response might differ from the requested</span>
 <span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
-<span class="sd">            filter:</span>
+<span class="sd">            filter (list or str):</span>
 <span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
 <span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">            sort:</span>
@@ -400,7 +400,7 @@
 <span class="sd">                   RatedCapacity</span>
 <span class="sd">                       Enclosure dynamic power cap rated capacity setting in Watts during this sample interval.</span>
 
-<span class="sd">            filter:</span>
+<span class="sd">            filter (list or str):</span>
 <span class="sd">                Provides an expression of the requested time range of data. One condition (startDate/endDate) is</span>
 <span class="sd">                specified per filter specification as described below. The condition must be specified via the</span>
 <span class="sd">                equals (=) operator.</span>

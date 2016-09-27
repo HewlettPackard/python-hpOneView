@@ -190,7 +190,7 @@
 <span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
 <span class="sd">                The actual number of items in the response might differ from the requested</span>
 <span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
-<span class="sd">            filter:</span>
+<span class="sd">            filter (list or str):</span>
 <span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
 <span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">            query:</span>
@@ -406,7 +406,7 @@
 <span class="sd">                    * PeakPower</span>
 <span class="sd">                        Peak power consumption in Watts during this sample interval.</span>
 
-<span class="sd">            filter:</span>
+<span class="sd">            filter (list or str):</span>
 <span class="sd">                Filters should be in the format: FILTER_NAME=VALUE[,FILTER_NAME=VALUE]...</span>
 
 <span class="sd">                For Example: &#39;startDate=2016-05-30T11:20:44.541Z,endDate=2016-05-30T19:20:44.541Z&#39;</span>

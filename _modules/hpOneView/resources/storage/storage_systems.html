@@ -190,7 +190,7 @@
 <span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
 <span class="sd">                The actual number of items in the response might differ from the requested</span>
 <span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
-<span class="sd">            filter:</span>
+<span class="sd">            filter (list or str):</span>
 <span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
 <span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">            sort:</span>
@@ -305,8 +305,7 @@
         <span class="k">if</span> <span class="n">port_id_or_uri</span><span class="p">:</span>
             <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">port_id_or_uri</span><span class="p">)</span>
             <span class="k">if</span> <span class="s2">&quot;/managedPorts&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">uri</span><span class="p">:</span>
-                <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span>
-                    <span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/managedPorts&quot;</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">port_id_or_uri</span>
+                <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/managedPorts&quot;</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">port_id_or_uri</span>
 
         <span class="k">else</span><span class="p">:</span>
             <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/managedPorts&quot;</span>

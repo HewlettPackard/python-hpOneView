@@ -213,9 +213,9 @@
 <span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
 <span class="sd">            count:</span>
 <span class="sd">                The number of resources to return. A count of -1 requests all items (default).</span>
-<span class="sd">            filter:</span>
-<span class="sd">                A general filter/query string to narrow the list of items returned. The default is no filter; all</span>
-<span class="sd">                resources are returned.</span>
+<span class="sd">            filter (list or str):</span>
+<span class="sd">                A general filter/query string to narrow the list of items returned. The default is no</span>
+<span class="sd">                filter; all resources are returned.</span>
 <span class="sd">            query:</span>
 <span class="sd">                A single query parameter can do what would take multiple parameters or multiple GET requests using</span>
 <span class="sd">                filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.</span>
@@ -235,7 +235,7 @@
 <span class="sd">            list: A list of items matching the specified filter.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">filter</span><span class="p">:</span>
-            <span class="nb">filter</span> <span class="o">=</span> <span class="s2">&quot;&amp;filter=&quot;</span> <span class="o">+</span> <span class="n">quote</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
+            <span class="nb">filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__make_query_filter</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">query</span><span class="p">:</span>
             <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&amp;query=&quot;</span> <span class="o">+</span> <span class="n">quote</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
@@ -353,13 +353,14 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            id_or_uri: Can be either the resource ID or the resource URI.</span>
-<span class="sd">            filter: General filter/query string.</span>
+<span class="sd">            filter (list or str): General filter/query string.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">             Collection of the requested resource.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">filter</span><span class="p">:</span>
-            <span class="nb">filter</span> <span class="o">=</span> <span class="s2">&quot;?filter=&quot;</span> <span class="o">+</span> <span class="n">quote</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
+            <span class="nb">filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__make_query_filter</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
+            <span class="nb">filter</span> <span class="o">=</span> <span class="s2">&quot;?&quot;</span> <span class="o">+</span> <span class="nb">filter</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
         <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{uri}{filter}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">),</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">)</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Get resource collection (uri = </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">uri</span><span class="p">)</span>
@@ -556,7 +557,7 @@
 <span class="sd">                Name of the supported metric(s) to be retrieved in the format METRIC[,METRIC]...</span>
 <span class="sd">                If unspecified, all metrics supported are returned.</span>
 
-<span class="sd">            filter:</span>
+<span class="sd">            filter (list or str):</span>
 <span class="sd">                Filters should be in the format FILTER_NAME=VALUE[,FILTER_NAME=VALUE]...</span>
 <span class="sd">                E.g.: &#39;startDate=2016-05-30T11:20:44.541Z,endDate=2016-05-30T19:20:44.541Z&#39;</span>
 
@@ -674,9 +675,12 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Get by uri : unrecognized uri: (</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">HPOneViewUnknownType</span><span class="p">(</span><span class="n">UNRECOGNIZED_URI</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__make_query_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">):</span>
-        <span class="n">filters</span> <span class="o">=</span> <span class="nb">filter</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
-        <span class="n">formated_filter</span> <span class="o">=</span> <span class="s2">&quot;&amp;filter=&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">quote</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filters</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__make_query_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">formated_filter</span> <span class="o">=</span> <span class="s2">&quot;&amp;filter=&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">quote</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filters</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">formated_filter</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="s2">&quot;&amp;filter=&quot;</span> <span class="o">+</span> <span class="n">formated_filter</span>
 
     <span class="k">def</span> <span class="nf">__get_members</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mlist</span><span class="p">):</span>
