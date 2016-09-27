@@ -31,7 +31,6 @@ from hpOneView.exceptions import HPOneViewException
 
 
 class ExceptionHandlerTest(unittest.TestCase):
-
     @mock.patch.object(traceback, 'print_exception')
     @mock.patch.object(logging, 'error')
     def test_should_log_message(self, mock_logging_error, mock_traceback):
@@ -52,3 +51,25 @@ class ExceptionHandlerTest(unittest.TestCase):
         handle_exceptions(exception.__class__, exception, traceback_ex, mock_logging_error)
 
         mock_traceback.assert_called_once_with(exception.__class__, exception, traceback_ex)
+
+    @mock.patch.object(traceback, 'print_exception')
+    @mock.patch.object(logging, 'error')
+    def test_should_log_oneview_reponse(self, mock_logging_error, mock_traceback):
+        message = {"msg": "test message"}
+        exception = HPOneViewException(message)
+        traceback_ex = None
+        handle_exceptions(exception.__class__, exception, traceback_ex, mock_logging_error)
+
+        log_message = "Uncaught Exception: HPOneViewException with message: \n{'msg': 'test message'}"
+        mock_logging_error.error.assert_called_once_with(log_message)
+
+    @mock.patch.object(traceback, 'print_exception')
+    @mock.patch.object(logging, 'error')
+    def test_should_log_python_exceptino(self, mock_logging_error, mock_traceback):
+        message = "test message"
+        exception = Exception(message)
+        traceback_ex = None
+        handle_exceptions(exception.__class__, exception, traceback_ex, mock_logging_error)
+
+        log_message = "Uncaught Exception: Exception with message: test message"
+        mock_logging_error.error.assert_called_once_with(log_message)
