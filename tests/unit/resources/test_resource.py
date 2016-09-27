@@ -323,6 +323,14 @@ class ResourceTest(unittest.TestCase):
         mock_get.assert_called_once_with(self.URI + "/12345?filter=name%3Dname")
 
     @mock.patch.object(connection, 'get')
+    def test_get_collection_with_multiple_filters(self, mock_get):
+        mock_get.return_value = {}
+
+        self.resource_client.get_collection('12345', ['name1=one', 'name2=two', 'name=three'])
+
+        mock_get.assert_called_once_with(self.URI + "/12345?filter=name1%3Done&filter=name2%3Dtwo&filter=name%3Dthree")
+
+    @mock.patch.object(connection, 'get')
     def test_get_collection_should_return_list(self, mock_get):
         mock_get.return_value = {"members": [{"key": "value"}, {"key": "value"}]}
 
@@ -742,8 +750,10 @@ class ResourceTest(unittest.TestCase):
         self.resource_client.get_utilization(
             '09USE7335NW3',
             fields='AmbientTemperature,AveragePower,PeakPower',
-            filter='startDate=2016-05-30T03:29:42.361Z,endDate=2016-05-31T03:29:42.361Z',
-            refresh=True, view='day')
+            filter=['startDate=2016-05-30T03:29:42.361Z',
+                    'endDate=2016-05-31T03:29:42.361Z'],
+            refresh=True,
+            view='day')
 
         expected_uri = '/rest/testuri/09USE7335NW3/utilization' \
                        '?filter=startDate%3D2016-05-30T03%3A29%3A42.361Z' \

@@ -61,7 +61,7 @@ class StorageSystems(object):
                 The number of resources to return. A count of -1 requests all items.
                 The actual number of items in the response might differ from the requested
                 count if the sum of start and count exceeds the total number of items.
-            filter:
+            filter (list or str):
                 A general filter/query string to narrow the list of items returned. The
                 default is no filter; all resources are returned.
             sort:
@@ -176,8 +176,7 @@ class StorageSystems(object):
         if port_id_or_uri:
             uri = self._client.build_uri(port_id_or_uri)
             if "/managedPorts" not in uri:
-                uri = self._client.build_uri(
-                    id_or_uri) + "/managedPorts" + "/" + port_id_or_uri
+                uri = self._client.build_uri(id_or_uri) + "/managedPorts" + "/" + port_id_or_uri
 
         else:
             uri = self._client.build_uri(id_or_uri) + "/managedPorts"

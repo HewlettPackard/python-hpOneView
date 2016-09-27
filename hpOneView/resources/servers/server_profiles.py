@@ -164,7 +164,7 @@ class ServerProfiles(object):
                 The actual number of items in the response might differ from the
                 requested count if the sum of start and count exceeds the total number of items, or if returning the
                 requested number of items would take too long.
-            filter:
+            filter (list or str):
                 A general filter/query string to narrow the list of items returned. The
                 default is no filter; all resources are returned.
                 Filters are supported for the name, description, serialNumber, uuid, affinity, macType, wwnType,
@@ -378,7 +378,7 @@ class ServerProfiles(object):
            start:
                The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
                first available item.
-           filter:
+           filter (list or str):
                A general filter/query string to narrow the list of items returned. The default is no filter; all
                resources are returned.
            sort:

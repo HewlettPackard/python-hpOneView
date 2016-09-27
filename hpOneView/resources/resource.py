@@ -84,9 +84,9 @@ class ResourceClient(object):
                 If not specified, the default is 0 - start with the first available item.
             count:
                 The number of resources to return. A count of -1 requests all items (default).
-            filter:
-                A general filter/query string to narrow the list of items returned. The default is no filter; all
-                resources are returned.
+            filter (list or str):
+                A general filter/query string to narrow the list of items returned. The default is no
+                filter; all resources are returned.
             query:
                 A single query parameter can do what would take multiple parameters or multiple GET requests using
                 filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.
@@ -106,7 +106,7 @@ class ResourceClient(object):
             list: A list of items matching the specified filter.
         """
         if filter:
-            filter = "&filter=" + quote(filter)
+            filter = self.__make_query_filter(filter)
 
         if query:
             query = "&query=" + quote(query)
@@ -224,13 +224,14 @@ class ResourceClient(object):
 
         Args:
             id_or_uri: Can be either the resource ID or the resource URI.
-            filter: General filter/query string.
+            filter (list or str): General filter/query string.
 
         Returns:
              Collection of the requested resource.
         """
         if filter:
-            filter = "?filter=" + quote(filter)
+            filter = self.__make_query_filter(filter)
+            filter = "?" + filter[1:]
 
         uri = "{uri}{filter}".format(uri=self.build_uri(id_or_uri), filter=filter)
         logger.debug('Get resource collection (uri = %s)' % uri)
@@ -427,7 +428,7 @@ class ResourceClient(object):
                 Name of the supported metric(s) to be retrieved in the format METRIC[,METRIC]...
                 If unspecified, all metrics supported are returned.
 
-            filter:
+            filter (list or str):
                 Filters should be in the format FILTER_NAME=VALUE[,FILTER_NAME=VALUE]...
                 E.g.: 'startDate=2016-05-30T11:20:44.541Z,endDate=2016-05-30T19:20:44.541Z'
 
@@ -545,9 +546,12 @@ class ResourceClient(object):
             logger.exception('Get by uri : unrecognized uri: (%s)' % path)
             raise HPOneViewUnknownType(UNRECOGNIZED_URI)
 
-    def __make_query_filter(self, filter):
-        filters = filter.split(",")
-        formated_filter = "&filter=".join(quote(f) for f in filters)
+    def __make_query_filter(self, filters):
+        if isinstance(filters, list):
+            formated_filter = "&filter=".join(quote(f) for f in filters)
+        else:
+            formated_filter = quote(filters)
+
         return "&filter=" + formated_filter
 
     def __get_members(self, mlist):
