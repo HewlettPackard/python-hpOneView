@@ -1592,14 +1592,14 @@ is supported only on Windows clients.</p>
 
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_utilization">
-<code class="descname">get_utilization</code><span class="sig-paren">(</span><em>id</em>, <em>fields=None</em>, <em>filter=None</em>, <em>refresh=False</em>, <em>view=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_utilization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_utilization" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_utilization</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>fields=None</em>, <em>filter=None</em>, <em>refresh=False</em>, <em>view=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_utilization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_utilization" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves historical utilization data for the specified resource, metrics, and time span.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id</strong> &#8211; Resource identification.</li>
+<li><strong>id_or_uri</strong> &#8211; Resource identification or URI.</li>
 <li><strong>fields</strong> &#8211; <p>Name of the metrics to be retrieved in the format METRIC[,METRIC]...</p>
 <p>If unspecified, all metrics supported are returned.</p>
 <p>Server hardware supports the following utilization metrics:</p>
