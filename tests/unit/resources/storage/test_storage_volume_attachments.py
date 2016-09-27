@@ -31,7 +31,6 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class StorageVolumeAttachmentsTest(unittest.TestCase):
-
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -63,13 +62,13 @@ class StorageVolumeAttachmentsTest(unittest.TestCase):
         self._storage_volume_attachments.get(storage_volume_attachments_uri)
         mock_get.assert_called_once_with(storage_volume_attachments_uri)
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceClient, 'get_all')
     def test_get_extra_unmanaged_storage_volumes_called_once(self, mock_get):
         storage_volume_attachments_host_types_uri = \
             "/rest/storage-volume-attachments/repair?alertFixType=ExtraUnmanagedStorageVolumes"
         self._storage_volume_attachments.get_extra_unmanaged_storage_volumes()
-        mock_get.assert_called_once_with(
-            storage_volume_attachments_host_types_uri)
+        mock_get.assert_called_once_with(start=0, count=-1, filter='', sort='',
+                                         uri=storage_volume_attachments_host_types_uri)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_paths_called_once_with_uri(self, mock_get):
@@ -91,8 +90,8 @@ class StorageVolumeAttachmentsTest(unittest.TestCase):
     def test_get_paths_called_once_with_uri_and_path_id(self, mock_get):
         storage_volume_attachments_uri = "/rest/storage-volume-attachments/4C259D33-0195-4374-9DA9-51FE443E2408"
         path_id = "C862833E-907C-4124-8841-BDC75444CF76"
-        storage_volume_attachments_paths_uri = "/rest/storage-volume-attachments/" \
-            "4C259D33-0195-4374-9DA9-51FE443E2408/paths/C862833E-907C-4124-8841-BDC75444CF76"
+        storage_volume_attachments_paths_uri = "/rest/storage-volume-attachments/4C259D33-0195-4374-9DA9-51FE443E2408" \
+                                               "/paths/C862833E-907C-4124-8841-BDC75444CF76"
         self._storage_volume_attachments.get_paths(storage_volume_attachments_uri, path_id)
         mock_get.assert_called_once_with(storage_volume_attachments_paths_uri)
 
@@ -100,8 +99,8 @@ class StorageVolumeAttachmentsTest(unittest.TestCase):
     def test_get_paths_called_once_with_id_and_path_id(self, mock_get):
         storage_volume_attachments_id = "4C259D33-0195-4374-9DA9-51FE443E2408"
         path_id = "C862833E-907C-4124-8841-BDC75444CF76"
-        storage_volume_attachments_paths_uri = "/rest/storage-volume-attachments/" \
-            "4C259D33-0195-4374-9DA9-51FE443E2408/paths/C862833E-907C-4124-8841-BDC75444CF76"
+        storage_volume_attachments_paths_uri = "/rest/storage-volume-attachments/4C259D33-0195-4374-9DA9-51FE443E2408" \
+                                               "/paths/C862833E-907C-4124-8841-BDC75444CF76"
         self._storage_volume_attachments.get_paths(storage_volume_attachments_id, path_id)
         mock_get.assert_called_once_with(storage_volume_attachments_paths_uri)
 
@@ -109,9 +108,9 @@ class StorageVolumeAttachmentsTest(unittest.TestCase):
     def test_get_paths_called_once_with_uri_and_path_uri(self, mock_get):
         storage_volume_attachments_uri = "/rest/storage-volume-attachments/4C259D33-0195-4374-9DA9-51FE443E2408"
         path_uri = "/rest/storage-volume-attachments/4C259D33-0195-4374-9DA9-51FE443E2408" \
-            "/paths/C862833E-907C-4124-8841-BDC75444CF76"
-        storage_volume_attachments_paths_uri = "/rest/storage-volume-attachments" \
-            "/4C259D33-0195-4374-9DA9-51FE443E2408/paths/C862833E-907C-4124-8841-BDC75444CF76"
+                   "/paths/C862833E-907C-4124-8841-BDC75444CF76"
+        storage_volume_attachments_paths_uri = "/rest/storage-volume-attachments/4C259D33-0195-4374-9DA9-51FE443E2408" \
+                                               "/paths/C862833E-907C-4124-8841-BDC75444CF76"
         self._storage_volume_attachments.get_paths(storage_volume_attachments_uri, path_uri)
         mock_get.assert_called_once_with(storage_volume_attachments_paths_uri)
 
@@ -119,9 +118,9 @@ class StorageVolumeAttachmentsTest(unittest.TestCase):
     def test_get_paths_called_once_with_id_and_path_uri(self, mock_get):
         storage_volume_attachments_id = "4C259D33-0195-4374-9DA9-51FE443E2408"
         path_uri = "/rest/storage-volume-attachments/4C259D33-0195-4374-9DA9-51FE443E2408/paths/" \
-            "C862833E-907C-4124-8841-BDC75444CF76"
-        storage_volume_attachments_paths_uri = "/rest/storage-volume-attachments/" \
-            "4C259D33-0195-4374-9DA9-51FE443E2408/paths/C862833E-907C-4124-8841-BDC75444CF76"
+                   "C862833E-907C-4124-8841-BDC75444CF76"
+        storage_volume_attachments_paths_uri = "/rest/storage-volume-attachments/4C259D33-0195-4374-9DA9-51FE443E2408" \
+                                               "/paths/C862833E-907C-4124-8841-BDC75444CF76"
         self._storage_volume_attachments.get_paths(storage_volume_attachments_id, path_uri)
         mock_get.assert_called_once_with(storage_volume_attachments_paths_uri)
 
