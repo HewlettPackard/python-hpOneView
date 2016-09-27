@@ -93,17 +93,17 @@ class FcoeNetworks(object):
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
-    def get(self, id):
+    def get(self, id_or_uri):
         """
         Gets a FCoE network.
 
         Args:
-            id: ID of FCoE network.
+            id_or_uri: ID or URI of FCoE network.
 
         Returns:
             dict: FCoE network.
         """
-        return self._client.get(id)
+        return self._client.get(id_or_uri)
 
     def create(self, resource, timeout=-1):
         """

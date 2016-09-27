@@ -46,12 +46,12 @@ class ServerHardware(object):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
 
-    def get_utilization(self, id, fields=None, filter=None, refresh=False, view=None):
+    def get_utilization(self, id_or_uri, fields=None, filter=None, refresh=False, view=None):
         """
         Retrieves historical utilization data for the specified resource, metrics, and time span.
 
         Args:
-            id: Resource identification.
+            id_or_uri: Resource identification or URI.
             fields:
                 Name of the metrics to be retrieved in the format METRIC[,METRIC]...
 
@@ -128,7 +128,7 @@ class ServerHardware(object):
             dict
         """
 
-        return self._client.get_utilization(id, fields=fields, filter=filter, refresh=refresh, view=view)
+        return self._client.get_utilization(id_or_uri, fields=fields, filter=filter, refresh=refresh, view=view)
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """

@@ -74,17 +74,17 @@ class Fabrics(object):
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
-    def get(self, id):
+    def get(self, id_or_uri):
         """
         Gets the fabric with the specified ID.
 
         Args:
-            id: ID of fabric.
+            id_or_uri: ID or URI of fabric.
 
         Returns:
             dict: The fabric.
         """
-        return self._client.get(id)
+        return self._client.get(id_or_uri)
 
     def get_by(self, field, value):
         """

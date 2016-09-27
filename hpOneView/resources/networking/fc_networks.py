@@ -98,17 +98,17 @@ class FcNetworks(object):
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
-    def get(self, id):
+    def get(self, id_or_uri):
         """
         Gets the Fibre Channel network with the specified ID.
 
         Args:
-            id: ID of Fibre Channel network.
+            id_or_uri: ID or URI of Fibre Channel network.
 
         Returns:
             dict: The Fibre Channel network.
         """
-        return self._client.get(id)
+        return self._client.get(id_or_uri)
 
     def create(self, resource, timeout=-1):
         """

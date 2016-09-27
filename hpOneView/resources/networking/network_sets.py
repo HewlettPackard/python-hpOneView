@@ -94,17 +94,17 @@ class NetworkSets(object):
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
-    def get(self, id):
+    def get(self, id_or_uri):
         """
         Gets the network set with the specified ID.
 
         Args:
-            id: ID of network set.
+            id_or_uri: ID or URI of network set.
 
         Returns:
             dict: Network set.
         """
-        return self._client.get(id)
+        return self._client.get(id_or_uri)
 
     def create(self, resource, timeout=-1):
         """
