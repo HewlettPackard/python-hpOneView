@@ -65,7 +65,7 @@ class ExceptionHandlerTest(unittest.TestCase):
 
     @mock.patch.object(traceback, 'print_exception')
     @mock.patch.object(logging, 'error')
-    def test_should_log_python_exceptino(self, mock_logging_error, mock_traceback):
+    def test_should_log_python_exception(self, mock_logging_error, mock_traceback):
         message = "test message"
         exception = Exception(message)
         traceback_ex = None
