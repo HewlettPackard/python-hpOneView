@@ -22,7 +22,7 @@
 ###
 import unittest
 
-from hpOneView.exceptions import HPOneViewException, HPOneViewInvalidResource
+from hpOneView.exceptions import HPOneViewException, HPOneViewInvalidResource, HPOneViewUnknownType, HPOneViewTaskError
 
 
 class ExceptionsTest(unittest.TestCase):
@@ -31,33 +31,54 @@ class ExceptionsTest(unittest.TestCase):
         self.assertEqual(exception.msg, "A message string")
         self.assertEqual(exception.oneview_response, None)
         self.assertEqual(exception.args[0], "A message string")
+        self.assertEqual(len(exception.args), 1)
 
     def test_exception_constructor_with_valid_dict(self):
         exception = HPOneViewException({'message': "A message string"})
         self.assertEqual(exception.msg, "A message string")
         self.assertEqual(exception.oneview_response, {'message': "A message string"})
         self.assertEqual(exception.args[0], "A message string")
+        self.assertEqual(exception.args[1], {'message': 'A message string'})
 
     def test_exception_constructor_with_invalid_dict(self):
         exception = HPOneViewException({'msg': "A message string"})
         self.assertEqual(exception.msg, None)
         self.assertEqual(exception.oneview_response, {'msg': "A message string"})
         self.assertEqual(exception.args[0], None)
+        self.assertEqual(exception.args[1], {'msg': "A message string"})
 
     def test_exception_constructor_with_invalid_type(self):
-        exception = HPOneViewException(['msg', "A message string"])
+        exception = HPOneViewException(['List, item 1', "List, item 2: A message string"])
         self.assertEqual(exception.msg, None)
-        self.assertEqual(exception.oneview_response, ['msg', "A message string"])
+        self.assertEqual(exception.oneview_response, ['List, item 1', "List, item 2: A message string"])
         self.assertEqual(exception.args[0], None)
+        self.assertEqual(exception.args[1], ['List, item 1', "List, item 2: A message string"])
 
     def test_invalid_resource_exception_inheritance(self):
         exception = HPOneViewInvalidResource({'message': "A message string"})
         self.assertEqual(exception.msg, "A message string")
         self.assertEqual(exception.oneview_response, {'message': "A message string"})
         self.assertEqual(exception.args[0], "A message string")
+        self.assertEqual(exception.args[1], {'message': 'A message string'})
+
+    def test_unknown_type_exception_inheritance_with_string(self):
+        exception = HPOneViewUnknownType("A message string")
+        self.assertEqual(exception.msg, "A message string")
+        self.assertEqual(exception.oneview_response, None)
+        self.assertEqual(exception.args[0], "A message string")
+        self.assertEqual(len(exception.args), 1)
 
     def test_exception_constructor_with_unicode(self):
         exception = HPOneViewException(u"A message string")
         self.assertEqual(exception.msg, "A message string")
         self.assertEqual(exception.oneview_response, None)
         self.assertEqual(exception.args[0], "A message string")
+        self.assertEqual(len(exception.args), 1)
+
+    def test_task_error_constructor_with_string(self):
+        exception = HPOneViewTaskError("A message string", 100)
+        self.assertEqual(exception.msg, "A message string")
+        self.assertEqual(exception.oneview_response, None)
+        self.assertEqual(exception.args[0], "A message string")
+        self.assertEqual(len(exception.args), 1)
+        self.assertEqual(exception.error_code, 100)

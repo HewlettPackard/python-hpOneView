@@ -21,7 +21,6 @@ __copyright__ = '(C) Copyright (2012-2015) Hewlett Packard Enterprise ' \
 __license__ = 'MIT'
 __status__ = 'Development'
 
-
 ###
 # (C) Copyright (2012-2015) Hewlett Packard Enterprise Development LP
 #
@@ -63,10 +62,14 @@ class HPOneViewException(Exception):
             self.msg = data
         else:
             self.oneview_response = data
+
             if data and isinstance(data, dict):
                 self.msg = data.get('message')
 
-        Exception.__init__(self, self.msg)
+        if self.oneview_response:
+            Exception.__init__(self, self.msg, self.oneview_response)
+        else:
+            Exception.__init__(self, self.msg)
 
 
 class HPOneViewInvalidResource(HPOneViewException):
