@@ -50,8 +50,11 @@ class VcMigrationManager(object):
         Creates a migration report for an enclosure with a Virtual Connect domain.
 
         Args:
-           migrationInformation: A dict specifying the enclosure, OA username, OA password, VCM username, and VCM password among other things.  Use hpOneView.common.make_migration_information to easily create this dict.
-           timeout: Timeout in seconds.  Waits for task completion by default.  The timeout does not abort the task in OneView; just stops waiting for its completion.
+           migrationInformation: A dict specifying the enclosure, OA username, OA password, VCM username, and VCM
+               password among other things.  Use hpOneView.common.make_migration_information to easily create this
+               dict.
+           timeout: Timeout in seconds.  Waits for task completion by default.  The timeout does not abort the task in
+               OneView; just stops waiting for its completion.
 
         Returns: dict: a migration report.
         """
@@ -76,20 +79,21 @@ class VcMigrationManager(object):
 
         Args:
             id_or_uri: ID or URI of the migration report.
-            timeout: Timeout in seconds.  Waits for task completion by default.  The timeout does not abort the task in OneView; just stops waiting for its completion.
+            timeout: Timeout in seconds.  Waits for task completion by default.  The timeout does not abort the task in
+                OneView; just stops waiting for its completion.
 
         Returns: dict: a migration report.
         """
 
-        #create the special payload to tell the VC Migration Manager to migrate the VC domain
-        migrationInformation = \
-        {
+        # create the special payload to tell the VC Migration Manager to migrate the VC domain
+        migrationInformation = {
             'migrationState': 'Migrated',
             'type': 'migratable-vc-domains',
             'category': 'migratable-vc-domains'
         }
 
-        #call build_uri manually since .update(...) doesn't do it and the URI is not to be included in the body when requesting a migration
+        # call build_uri manually since .update(...) doesn't do it and the URI is not to be included in the body when
+        # requesting a migration
         complete_uri = self._client.build_uri(id_or_uri)
 
         return self._client.update(migrationInformation, uri=complete_uri, timeout=timeout)
@@ -100,7 +104,8 @@ class VcMigrationManager(object):
 
         Args:
            id_or_uri: ID or URI of the migration report.
-            timeout: Timeout in seconds.  Waits for task completion by default.  The timeout does not abort the task in OneView; just stops waiting for its completion.
+            timeout: Timeout in seconds.  Waits for task completion by default.  The timeout does not abort the task in
+                OneView; just stops waiting for its completion.
 
         Returns: bool: Indicating if the migration report was successfully deleted.
         """

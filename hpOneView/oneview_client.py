@@ -724,7 +724,7 @@ class OneViewClient(object):
         if not self.__managed_sans:
             self.__managed_sans = ManagedSANs(self.__connection)
         return self.__managed_sans
-    
+
     @property
     def vc_migration_manager(self):
         """

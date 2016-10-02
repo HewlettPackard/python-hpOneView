@@ -1695,11 +1695,11 @@ def make_alertMap_dict(notes, etag, state='Active', user='None',
         'eTag': etag
     }
 
-def make_migration_information(oaIpAddress, oaUsername, oaPassword, vcmUsername, vcmPassword, iloLicenseType='OneView', enclosureGroupUri=None):
-    return \
-    {
-        'credentials':
-        {
+
+def make_migration_information(oaIpAddress, oaUsername, oaPassword, vcmUsername, vcmPassword, iloLicenseType='OneView',
+                               enclosureGroupUri=None):
+    return {
+        'credentials': {
             'oaIpAddress': oaIpAddress,
             'oaUsername': oaUsername,
             'oaPassword': oaPassword,

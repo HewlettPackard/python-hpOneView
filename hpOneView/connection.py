@@ -361,7 +361,7 @@ class connection(object):
             return task, body
 
         if 'category' in body and body['category'] == 'tasks':
-           return body, body
+            return body, body
 
         return None, body
 
