@@ -57,10 +57,11 @@ class ResourceClient(object):
     This class implements common functions for HpOneView API rest
     """
 
-    def __init__(self, con, uri):
+    def __init__(self, con, uri, default_values={}):
         self._connection = con
         self._uri = uri
         self._task_monitor = TaskMonitor(con)
+        self._default_values = default_values
 
     def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None):
         """
@@ -290,7 +291,9 @@ class ResourceClient(object):
         if force:
             uri += '?force=True'
 
-        return self.__do_put(uri, resource, timeout, custom_headers)
+        data = self.__merge_default_values(resource)
+
+        return self.__do_put(uri, data, timeout, custom_headers)
 
     def create_with_zero_body(self, uri=None, timeout=-1, custom_headers=None):
         """
@@ -341,7 +344,9 @@ class ResourceClient(object):
         logger.debug('Create (uri = %s, resource = %s)' %
                      (uri, str(resource)))
 
-        return self.__do_post(uri, resource, timeout, custom_headers)
+        data = self.__merge_default_values(resource)
+
+        return self.__do_post(uri, data, timeout, custom_headers)
 
     def patch(self, id_or_uri, operation, path, value, timeout=-1, custom_headers=None):
         """
@@ -600,3 +605,9 @@ class ResourceClient(object):
             return None
 
         return response.get('nextPageUri') if has_next_page else None
+
+    def __merge_default_values(self, resource):
+        api_version = str(self._connection._apiVersion)
+        data = self._default_values.get(api_version, {}).copy()
+        data.update(resource)
+        return data

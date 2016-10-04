@@ -68,7 +68,7 @@ class connection(object):
         self._session = None
         self._host = applianceIp
         self._cred = None
-        self._apiVersion = api_version
+        self._apiVersion = int(api_version)
         self._headers = {
             'X-API-Version': self._apiVersion,
             'Accept': 'application/json',

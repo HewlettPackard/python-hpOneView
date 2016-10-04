@@ -39,14 +39,17 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class ServerProfileTemplate(object):
+
     URI = '/rest/server-profile-templates'
+
+    DEFAULT_VALUES = {
+        '200': {'type': 'ServerProfileTemplateV1'},
+        '300': {'type': 'ServerProfileTemplateV2'}
+    }
 
     def __init__(self, con):
         self._connection = con
-        self._client = ResourceClient(con, self.URI)
-        self.__default_values = {
-            'type': 'ServerProfileTemplateV1'
-        }
+        self._client = ResourceClient(con, self.URI, self.DEFAULT_VALUES)
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
@@ -132,9 +135,7 @@ class ServerProfileTemplate(object):
             dict: Created resource.
 
         """
-        data = self.__default_values.copy()
-        data.update(resource)
-        return self._client.create(resource=data, timeout=timeout)
+        return self._client.create(resource=resource, timeout=timeout)
 
     def update(self, resource, id_or_uri):
         """
@@ -148,9 +149,7 @@ class ServerProfileTemplate(object):
         Returns:
             dict: The server profile template resource.
         """
-        data = self.__default_values.copy()
-        data.update(resource)
-        return self._client.update(resource=data, uri=id_or_uri)
+        return self._client.update(resource=resource, uri=id_or_uri)
 
     def delete(self, resource, timeout=-1):
         """
