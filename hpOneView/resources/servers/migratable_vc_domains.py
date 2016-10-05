@@ -29,7 +29,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'vcmigrationmanager'
+__title__ = 'migratablevcdomains'
 __version__ = '1.0.0'
 __copyright__ = '(C) Copyright (2016) Hewlett Packard Enterprise Development LP'
 __license__ = 'MIT'
@@ -38,12 +38,30 @@ __status__ = 'Development'
 from hpOneView.resources.resource import ResourceClient
 
 
-class VcMigrationManager(object):
+class MigratableVcDomains(object):
     URI = '/rest/migratable-vc-domains'
 
     def __init__(self, connection):
         self._connection = connection
         self._client = ResourceClient(connection, self.URI)
+
+    @staticmethod
+    def make_migration_information(oaIpAddress, oaUsername, oaPassword, vcmUsername, vcmPassword,
+                                   iloLicenseType='OneView', enclosureGroupUri=None):
+        return {
+            'credentials': {
+                'oaIpAddress': oaIpAddress,
+                'oaUsername': oaUsername,
+                'oaPassword': oaPassword,
+                'vcmUsername': vcmUsername,
+                'vcmPassword': vcmPassword,
+                'type': 'EnclosureCredentials'
+            },
+            'iloLicenseType': iloLicenseType,
+            'enclosureGroupUri': enclosureGroupUri,
+            'type': 'migratable-vc-domains',
+            'category': 'migratable-vc-domains'
+        }
 
     def test_compatibility(self, migrationInformation, timeout=-1):
         """
@@ -103,7 +121,7 @@ class VcMigrationManager(object):
         Deletes a migration report.
 
         Args:
-           id_or_uri: ID or URI of the migration report.
+            id_or_uri: ID or URI of the migration report.
             timeout: Timeout in seconds.  Waits for task completion by default.  The timeout does not abort the task in
                 OneView; just stops waiting for its completion.
 

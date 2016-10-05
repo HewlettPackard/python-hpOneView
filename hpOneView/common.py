@@ -207,8 +207,7 @@ uri = {
     # ------------------------------------
     # Uncategorized
     # ------------------------------------
-    'unmanaged-devices': '/rest/unmanaged-devices',
-    'vc-migration-manager': '/rest/migratable-vc-domains'
+    'unmanaged-devices': '/rest/unmanaged-devices'
 }
 
 
@@ -1693,24 +1692,6 @@ def make_alertMap_dict(notes, etag, state='Active', user='None',
         'alertUrgency': urgency,
         'notes': notes,
         'eTag': etag
-    }
-
-
-def make_migration_information(oaIpAddress, oaUsername, oaPassword, vcmUsername, vcmPassword, iloLicenseType='OneView',
-                               enclosureGroupUri=None):
-    return {
-        'credentials': {
-            'oaIpAddress': oaIpAddress,
-            'oaUsername': oaUsername,
-            'oaPassword': oaPassword,
-            'vcmUsername': vcmUsername,
-            'vcmPassword': vcmPassword,
-            'type': 'EnclosureCredentials'
-        },
-        'iloLicenseType': iloLicenseType,
-        'enclosureGroupUri': enclosureGroupUri,
-        'type': 'migratable-vc-domains',
-        'category': 'migratable-vc-domains'
     }
 
 

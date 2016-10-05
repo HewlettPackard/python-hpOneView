@@ -89,7 +89,7 @@ from hpOneView.resources.settings.firmware_drivers import FirmwareDrivers
 from hpOneView.resources.settings.firmware_bundles import FirmwareBundles
 from hpOneView.resources.storage.volumes import Volumes
 from hpOneView.resources.networking.uplink_sets import UplinkSets
-from hpOneView.resources.vcmigrationmanager.vcmigrationmanager import VcMigrationManager
+from hpOneView.resources.servers.migratable_vc_domains import MigratableVcDomains
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
@@ -143,7 +143,7 @@ class OneViewClient(object):
         self.__uplink_sets = None
         self.__volumes = None
         self.__managed_sans = None
-        self.__vcmigrationmanager = None
+        self.__migratable_vc_domains = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -726,13 +726,13 @@ class OneViewClient(object):
         return self.__managed_sans
 
     @property
-    def vc_migration_manager(self):
+    def migratable_vc_domains(self):
         """
         Gets the VC Migration Manager API client.
 
         Returns:
             VcMigrationManager:
         """
-        if not self.__vcmigrationmanager:
-            self.__vcmigrationmanager = VcMigrationManager(self.__connection)
-        return self.__vcmigrationmanager
+        if not self.__migratable_vc_domains:
+            self.__migratable_vc_domains = MigratableVcDomains(self.__connection)
+        return self.__migratable_vc_domains

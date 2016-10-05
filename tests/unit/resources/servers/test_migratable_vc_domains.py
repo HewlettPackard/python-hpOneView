@@ -26,23 +26,23 @@ from unittest import TestCase
 import mock
 
 from hpOneView.connection import connection
-from hpOneView.resources.vcmigrationmanager.vcmigrationmanager import VcMigrationManager
+from hpOneView.resources.servers.migratable_vc_domains import MigratableVcDomains
 from hpOneView.resources.resource import ResourceClient
-from hpOneView.common import make_migration_information
 
 
-class VcMigrationManagerTest(TestCase):
+class MigratableVcDomainsTest(TestCase):
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
-        self.vcmigrationmanager = VcMigrationManager(self.connection)
+        self.vcmigrationmanager = MigratableVcDomains(self.connection)
 
     @mock.patch.object(ResourceClient, 'create')
     def test_test_compatibility(self, mock_create):
         timeoutValue = 26
 
-        migrationInformation = make_migration_information('192.168.9.32', 'Administrator', 'password', 'Administrator',
-                                                          'password', enclosureGroupUri='/rest/enclosure-groups/uri')
+        migrationInformation = MigratableVcDomains. \
+            make_migration_information('192.168.9.32', 'Administrator', 'password', 'Administrator', 'password',
+                                       enclosureGroupUri='/rest/enclosure-groups/uri')
 
         self.vcmigrationmanager.test_compatibility(migrationInformation, timeout=timeoutValue)
 
@@ -51,8 +51,9 @@ class VcMigrationManagerTest(TestCase):
     @mock.patch.object(ResourceClient, 'create')
     def test_test_compatibility_default(self, mock_create):
 
-        migrationInformation = make_migration_information('192.168.9.32', 'Administrator', 'password', 'Administrator',
-                                                          'password', enclosureGroupUri='/rest/enclosure-groups/uri')
+        migrationInformation = MigratableVcDomains. \
+            make_migration_information('192.168.9.32', 'Administrator', 'password', 'Administrator', 'password',
+                                       enclosureGroupUri='/rest/enclosure-groups/uri')
 
         self.vcmigrationmanager.test_compatibility(migrationInformation)
 
