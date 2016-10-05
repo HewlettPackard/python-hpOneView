@@ -64,40 +64,6 @@ class LogicalSwitchGroupsTest(unittest.TestCase):
         mock_get.assert_called_once_with(lsg_uri)
 
     @mock.patch.object(ResourceClient, 'create')
-    def test_create_called_once_with_defaults(self, mock_create):
-        lsg = {
-            "name": "OneView Test Logical Switch Group",
-            "switchMapTemplate": {
-                "switchMapEntryTemplates": [{
-                    "logicalLocation": {
-                        "locationEntries": [{
-                            "relativeValue": 1,
-                            "type": "StackingMemberId"
-                        }]
-                    },
-                    "permittedSwitchTypeUri": "/rest/switch-types/46d7ffad-4424-4e36-acf3-b379c3116206"
-                }]
-            }
-        }
-        lsg_default = {
-            "type": "logical-switch-group",
-            "name": "OneView Test Logical Switch Group",
-            "switchMapTemplate": {
-                "switchMapEntryTemplates": [{
-                    "logicalLocation": {
-                        "locationEntries": [{
-                            "relativeValue": 1,
-                            "type": "StackingMemberId"
-                        }]
-                    },
-                    "permittedSwitchTypeUri": "/rest/switch-types/46d7ffad-4424-4e36-acf3-b379c3116206"
-                }]
-            }
-        }
-        self._lsg.create(lsg)
-        mock_create.assert_called_once_with(lsg_default, timeout=-1)
-
-    @mock.patch.object(ResourceClient, 'create')
     def test_create_called_once(self, mock_create):
         lsg = {
             "type": "logical-switch-group",
@@ -115,43 +81,7 @@ class LogicalSwitchGroupsTest(unittest.TestCase):
             }
         }
         self._lsg.create(lsg, 70)
-        mock_create.assert_called_once_with(lsg, timeout=70)
-
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_called_once_with_defaults(self, update):
-        lsg = {
-            "name": "Updated name",
-            "switchMapTemplate": {
-                "switchMapEntryTemplates": [{
-                    "logicalLocation": {
-                        "locationEntries": [{
-                            "relativeValue": 1,
-                            "type": "StackingMemberId"
-                        }]
-                    },
-                    "permittedSwitchTypeUri": "/rest/switch-types/46d7ffad-4424-4e36-acf3-b379c3116206"
-                }],
-                "uri": "/rest/logical-switch-groups/dce3fc90-873e-48f7-8340-cc927d625b16"
-            }
-        }
-        lsg_default = {
-            "type": "logical-switch-group",
-            "name": "Updated name",
-            "switchMapTemplate": {
-                "switchMapEntryTemplates": [{
-                    "logicalLocation": {
-                        "locationEntries": [{
-                            "relativeValue": 1,
-                            "type": "StackingMemberId"
-                        }]
-                    },
-                    "permittedSwitchTypeUri": "/rest/switch-types/46d7ffad-4424-4e36-acf3-b379c3116206"
-                }],
-                "uri": "/rest/logical-switch-groups/dce3fc90-873e-48f7-8340-cc927d625b16"
-            }
-        }
-        self._lsg.update(lsg)
-        update.assert_called_once_with(lsg_default, timeout=-1)
+        mock_create.assert_called_once_with(lsg, timeout=70, default_values=LogicalSwitchGroups.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_called_once(self, mock_update):
@@ -172,7 +102,7 @@ class LogicalSwitchGroupsTest(unittest.TestCase):
             }
         }
         self._lsg.update(lsg, 70)
-        mock_update.assert_called_once_with(lsg, timeout=70)
+        mock_update.assert_called_once_with(lsg, timeout=70, default_values=LogicalSwitchGroups.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):
