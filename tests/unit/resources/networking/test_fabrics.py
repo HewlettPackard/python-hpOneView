@@ -31,7 +31,6 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class FabricsTest(unittest.TestCase):
-
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -57,5 +56,22 @@ class FabricsTest(unittest.TestCase):
     def test_get_by_called_once(self, mock_get_by):
         self._fabrics.get_by('name', 'DefaultFabric')
 
-        mock_get_by.assert_called_once_with(
-            'name', 'DefaultFabric')
+        mock_get_by.assert_called_once_with('name', 'DefaultFabric')
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_reserved_vlan_range(self, mock_get):
+        uri = '/rest/fabrics/123/reserved-vlan-range'
+        self._fabrics.get_reserved_vlan_range('123')
+
+        mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_reserved_vlan_range(self, mock_update):
+        uri = '/rest/fabrics/123/reserved-vlan-range'
+        data_to_update = {
+            "start": 100,
+            "length": 100
+        }
+        self._fabrics.update_reserved_vlan_range('123', data_to_update)
+
+        mock_update.assert_called_once_with(resource=data_to_update, uri=uri, force=False)

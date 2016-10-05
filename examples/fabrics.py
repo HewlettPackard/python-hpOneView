@@ -36,12 +36,14 @@ config = {
 }
 
 # To run this example you must to defined here a fabric id
-fabric_id = '02ad4295-6f9c-4bfb-b040-0bd54b71aee'
+fabric_id = 'a7896ce7-c11d-4658-829d-142bc66a85e4'
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
+
+API_VERSION = int(config.get('api_version', 200))
 
 # Get all fabrics
 print("Get all fabrics")
@@ -65,3 +67,19 @@ except HPOneViewException as e:
 print("\nGet a fabrics by name")
 fabric_byname = oneview_client.fabrics.get_by('name', 'DefaultFabric')[0]
 pprint(fabric_byname)
+
+# These method is available for API version 300 and up
+if API_VERSION >= 300:
+    # Get reserved vlan ID range for the fabric.
+    print("\nGet reserved vlan ID range for the fabric")
+    vlan_pool = oneview_client.fabrics.get_reserved_vlan_range(fabric_id)
+    pprint(vlan_pool)
+
+    # Update the reserved vlan ID range for the fabric
+    vlan_pool_data = {
+        "start": 100,
+        "length": 100
+    }
+    print("\nUpdate the reserved vlan ID range for the fabric.")
+    fabric_byname = oneview_client.fabrics.update_reserved_vlan_range(fabric_id, vlan_pool_data)
+    pprint(fabric_byname)
