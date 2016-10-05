@@ -459,6 +459,18 @@ class ResourceTest(unittest.TestCase):
         mock_put.assert_called_once_with(expected_uri, expected_dict, custom_headers=None)
 
     @mock.patch.object(connection, 'put')
+    def test_update_without_default_values(self, mock_put):
+        dict_to_update = {"name": "test"}
+        uri = "/rest/resource/test"
+
+        mock_put.return_value = None, self.response_body
+
+        resource_client = ResourceClient(self.connection, self.URI)
+        resource_client.update(dict_to_update, uri=uri)
+
+        mock_put.assert_called_once_with(uri, dict_to_update, custom_headers=None)
+
+    @mock.patch.object(connection, 'put')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
     def test_update_uri(self, mock_wait4task, mock_update):
         dict_to_update = {"resource_data": "resource_data",
@@ -564,6 +576,16 @@ class ResourceTest(unittest.TestCase):
         expected_dict.update(dict_to_create)
 
         mock_post.assert_called_once_with(self.URI, expected_dict, custom_headers=None)
+
+    @mock.patch.object(connection, 'post')
+    def test_create_without_default_values(self, mock_post):
+        dict_to_create = {"resource_name": "a name"}
+        mock_post.return_value = {}, {}
+
+        resource_client = ResourceClient(self.connection, self.URI)
+        resource_client.create(dict_to_create, timeout=-1)
+
+        mock_post.assert_called_once_with(self.URI, dict_to_create, custom_headers=None)
 
     @mock.patch.object(connection, 'post')
     def test_create_with_custom_headers(self, mock_post):
