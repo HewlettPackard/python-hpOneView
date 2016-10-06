@@ -278,6 +278,66 @@ class ServerHardware(object):
         uri = self._client.build_uri(id_or_uri) + "/iloSsoUrl"
         return self._client.get(uri)
 
+    def get_all_firmwares(self, filter='', start=0, count=-1, query='', sort=''):
+        """
+        Gets a list of firmware inventory across all servers. In order to filter the returned data, specify a filter
+        expression to select a particular server model, component name and/or component firmware version.
+
+        Args:
+            start:
+                The first item to return, using 0-based indexing.
+                If not specified, the default is 0 - start with the first available item.
+            count:
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
+            filter (list or str):
+                A general filter/query string to narrow the list of items returned. The
+                default is no filter; all resources are returned.
+            query:
+                A general query string to narrow the list of resources returned. The default is no query; all resources
+                are returned.
+            sort:
+                The sort order of the returned data set. By default, the sort order is based
+                on create time with the oldest entry first.
+
+        Returns:
+            list: List of firmware inventory.
+        """
+        uri = self.URI + "/*/firmware"
+        return self._client.get_all(start, count, filter, query, sort, '', '', uri)
+
+    def get_firmware(self, id_or_uri):
+        """
+        Get the firmware inventory of a server.
+
+        Args:
+            id_or_uri: Can be either the server hardware resource ID or URI.
+
+        Returns:
+            dict: Server Hardware firmware.
+        """
+        uri = self._client.build_uri(id_or_uri) + "/firmware"
+        return self._client.get(uri)
+
+    def patch(self, id_or_uri, operation, path, value, timeout=-1):
+        """
+        Performs a specific patch operation for the given server. If the server supports the particular operation,
+        the operation is performed and a response is returned to the caller with the results.
+
+        Args:
+            id_or_uri: Can be either the resource ID or the resource URI.
+            operation: Patch operation
+            path: Path
+            value: Value
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            dict: Updated resource.
+        """
+        return self._client.patch(id_or_uri, operation, path, value, timeout=timeout)
+
     def get_java_remote_console_url(self, id_or_uri):
         """
         Generates a Single Sign-On (SSO) session for the iLO Java Applet console and returns the URL to launch it.

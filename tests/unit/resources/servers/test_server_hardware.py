@@ -298,3 +298,41 @@ class ServerHardwareTest(TestCase):
 
         mock_get.assert_called_once_with('/rest/server-hardware/ad28cf21-8b15-4f92-bdcf-51cb2042db32/mpFirmwareVersion',
                                          -1)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_all_firmwares_with_defaults(self, mock_get):
+        self._server_hardware.get_all_firmwares()
+
+        mock_get.assert_called_once_with(0, -1, '', '', '', '', '', '/rest/server-hardware/*/firmware')
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_all_firmwares_with_all_arguments(self, mock_get):
+        self._server_hardware.get_all_firmwares("name='name'", 2, 5, 'query', 'sort')
+
+        mock_get.assert_called_once_with(2, 5, "name='name'", 'query', 'sort', '', '',
+                                         '/rest/server-hardware/*/firmware')
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_firmware_by_id(self, mock_get):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._server_hardware.get_firmware(id)
+
+        mock_get.assert_called_once_with('/rest/server-hardware/ad28cf21-8b15-4f92-bdcf-51cb2042db32/firmware')
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_firmware_by_uri(self, mock_get):
+        uri = '/rest/server-hardware/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._server_hardware.get_firmware(uri)
+
+        mock_get.assert_called_once_with('/rest/server-hardware/ad28cf21-8b15-4f92-bdcf-51cb2042db32/firmware')
+
+    @mock.patch.object(ResourceClient, 'patch')
+    def test_patch_called_once(self, mock_patch):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._server_hardware.patch(id, 'replace', '/uidState', 'On')
+
+        mock_patch.assert_called_once_with(id,
+                                           'replace',
+                                           '/uidState',
+                                           'On',
+                                           timeout=-1)

@@ -47,7 +47,7 @@ options = {
 
 # Set the server_hardware_id to run this example.
 # server_hardware_id example: 37333036-3831-4753-4831-30315838524E
-server_hardware_id = ""
+server_hardware_id = "34323937-3431-4732-3230-313130364747"
 
 oneview_client = OneViewClient(config)
 
@@ -164,6 +164,22 @@ except HPOneViewException as e:
 remote_console_url = oneview_client.server_hardware.get_java_remote_console_url(server['uri'])
 print("URL to launch a Single Sign-On (SSO) session for iLO Integrated Remote Console Application",
       " for server at uri:\n   {}\n   '{}'".format(server['uri'], remote_console_url))
+
+# Turn the Server Hardware led light On
+oneview_client.server_hardware.patch(server_hardware_id, 'replace', '/uidState', 'On')
+print("Server Hardware led light turned on")
+
+# Get a server hardware by ID
+p = oneview_client.server_hardware.get_firmware(server_hardware_id)
+pprint(p)
+
+# Get all server hardware firmwares
+p = oneview_client.server_hardware.get_all_firmwares()
+pprint(p)
+
+# Get server hardware firmwares filtering by server name
+p = oneview_client.server_hardware.get_all_firmwares(filter="serverName='0000A66103, bay 3'")
+pprint(p)
 
 # Remove rack server
 oneview_client.enclosures.remove(server)
