@@ -731,7 +731,7 @@ class OneViewClient(object):
         Gets the VC Migration Manager API client.
 
         Returns:
-            VcMigrationManager:
+            MigratableVcDomains:
         """
         if not self.__migratable_vc_domains:
             self.__migratable_vc_domains = MigratableVcDomains(self.__connection)
