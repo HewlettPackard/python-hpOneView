@@ -91,11 +91,12 @@ from hpOneView.resources.storage.volumes import Volumes
 from hpOneView.resources.networking.uplink_sets import UplinkSets
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
+ONEVIEW_CLIENT_DEFAULT_API_VERSION = 200
 
 
 class OneViewClient(object):
     def __init__(self, config):
-        self.__connection = connection(config["ip"], config.get('api_version', 200))
+        self.__connection = connection(config["ip"], config.get('api_version', ONEVIEW_CLIENT_DEFAULT_API_VERSION))
         self.__set_proxy(config)
         self.__connection.login(config["credentials"])
         self.__connections = None
@@ -175,6 +176,16 @@ class OneViewClient(object):
             proxy_host = splitted[0]
             proxy_port = int(splitted[1])
             self.__connection.set_proxy(proxy_host, proxy_port)
+
+    @property
+    def api_version(self):
+        """
+        Gets the OneView API Version.
+
+        Returns:
+            int: API Version.
+        """
+        return self.__connection._apiVersion
 
     @property
     def connection(self):

@@ -118,6 +118,7 @@ class OneViewClientTest(unittest.TestCase):
         oneview_client = OneViewClient.from_json_file("config.json")
 
         self.assertEqual(200, oneview_client.connection._apiVersion)
+        self.assertEqual(200, oneview_client.api_version)
 
     @mock.patch.object(connection, 'login')
     @mock.patch(mock_builtin('open'))
@@ -135,6 +136,7 @@ class OneViewClientTest(unittest.TestCase):
         oneview_client = OneViewClient.from_json_file("config.json")
 
         self.assertEqual(300, oneview_client.connection._apiVersion)
+        self.assertEqual(300, oneview_client.api_version)
 
     def test_fc_networks_has_right_type(self):
         self.assertIsInstance(self._oneview.fc_networks, FcNetworks)
