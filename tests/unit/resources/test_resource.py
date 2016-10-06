@@ -637,7 +637,25 @@ class ResourceTest(unittest.TestCase):
             '123a53cz', 'replace', '/name', 'new_name', 70)
 
         mock_patch.assert_called_once_with(
-            '/rest/testuri/123a53cz', request_body, custom_headers=None)
+            '/rest/testuri/123a53cz', request_body, custom_headers={})
+
+    @mock.patch.object(connection, 'patch')
+    def test_patch_request_when_id_is_provided_v300(self, mock_patch):
+        request_body = [{
+            'op': 'replace',
+            'path': '/name',
+            'value': 'new_name',
+        }]
+        mock_patch.return_value = {}, {}
+
+        self.connection._apiVersion = 300
+
+        resource_client = ResourceClient(self.connection, self.URI)
+        resource_client.patch(
+            '123a53cz', 'replace', '/name', 'new_name', 70)
+
+        mock_patch.assert_called_once_with(
+            '/rest/testuri/123a53cz', request_body, custom_headers={'Content-Type': 'application/json-patch+json'})
 
     @mock.patch.object(connection, 'patch')
     def test_patch_request_when_uri_is_provided(self, mock_patch):
@@ -652,7 +670,7 @@ class ResourceTest(unittest.TestCase):
             '/rest/testuri/123a53cz', 'replace', '/name', 'new_name', 60)
 
         mock_patch.assert_called_once_with(
-            '/rest/testuri/123a53cz', request_body, custom_headers=None)
+            '/rest/testuri/123a53cz', request_body, custom_headers={})
 
     @mock.patch.object(connection, 'patch')
     def test_patch_with_custom_headers(self, mock_patch):
@@ -662,6 +680,21 @@ class ResourceTest(unittest.TestCase):
                                    custom_headers=self.custom_headers)
 
         mock_patch.assert_called_once_with(mock.ANY, mock.ANY, custom_headers={'Accept-Language': 'en_US'})
+
+    @mock.patch.object(connection, 'patch')
+    def test_patch_with_custom_headers_v300(self, mock_patch):
+        mock_patch.return_value = {}, {}
+
+        self.connection._apiVersion = 300
+
+        resource_client = ResourceClient(self.connection, self.URI)
+        resource_client.patch('/rest/testuri/123', 'operation', '/field', 'value',
+                              custom_headers=self.custom_headers)
+
+        mock_patch.assert_called_once_with(mock.ANY,
+                                           mock.ANY,
+                                           custom_headers={'Accept-Language': 'en_US',
+                                                           'Content-Type': 'application/json-patch+json'})
 
     @mock.patch.object(connection, 'patch')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
