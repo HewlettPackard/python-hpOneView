@@ -395,3 +395,21 @@ class ConnectionTest(unittest.TestCase):
             self.assertEqual(e.oneview_response, self.expected_response_body)
         else:
             self.fail()
+
+    @mock.patch.object(connection, 'do_http')
+    def test_task_in_response_body_without_202_status(self, mock_do_http):
+
+        # create the return values
+        mockedResponse = type('mockResponse', (), {'status': 200})()
+        mockedTaskBody = {'category': 'tasks'}
+
+        # set-up the mock
+        mock_do_http.return_value = (mockedResponse, mockedTaskBody)
+
+        # call the method we are testing
+        (testTask, testBody) = self.connection._connection__do_rest_call('PUT', '/rest/test', '{ "body": "test" }',
+                                                                         None)
+
+        # verify the result
+        self.assertEquals(mockedTaskBody, testTask)
+        self.assertEquals(mockedTaskBody, testBody)
