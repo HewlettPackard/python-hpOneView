@@ -144,3 +144,11 @@ class ManagedSANsTest(TestCase):
 
         expected_uri = '/rest/fc-sans/managed-sans/280FF951-F007-478F-AC29-E4655FC76DDC/issues/'
         mock_create_report.assert_called_once_with(uri=expected_uri, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_wwn(self, mock_get):
+        wwn = "20:00:4A:2B:21:E0:00:00"
+
+        self._resource.get_wwn(wwn)
+        uri = "/rest/fc-sans/managed-sans?locate=20:00:4A:2B:21:E0:00:00"
+        mock_get.assert_called_once_with(uri)

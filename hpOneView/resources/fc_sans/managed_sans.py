@@ -178,3 +178,16 @@ class ManagedSANs(object):
         """
         uri = self._client.build_uri(managed_san_id_or_uri) + '/issues/'
         return self._client.create_report(uri=uri, timeout=timeout)
+
+    def get_wwn(self, wwn):
+        """
+        Retrieves a list of associations between provided WWNs and the SANs (if any) on which they reside
+
+        Args:
+            wwn (str): The WWN that may be associated with the SAN.
+
+        Returns:
+            list: Associations between provided WWNs and the SANs
+        """
+        uri = '/rest/fc-sans/managed-sans?locate=' + wwn
+        return self._client.get(uri)
