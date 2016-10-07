@@ -68,7 +68,7 @@ print("\nGet a fabrics by name")
 fabric_byname = oneview_client.fabrics.get_by('name', 'DefaultFabric')[0]
 pprint(fabric_byname)
 
-# These method is available for API version 300 and up
+# These methods are available for API version 300 or later
 if API_VERSION >= 300:
     # Get reserved vlan ID range for the fabric.
     print("\nGet reserved vlan ID range for the fabric")
