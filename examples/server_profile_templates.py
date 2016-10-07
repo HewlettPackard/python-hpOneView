@@ -33,12 +33,18 @@ config = {
     }
 }
 
+# These variables must be defined according with your environment
+server_hardware_type_uri = "/rest/server-hardware-types/F8FE8F99-47A5-480C-B11D-C63DAF55C089"
+enclosure_group_uri = "/rest/enclosure-groups/cf1e3026-26d6-43f2-8646-0c30760bc157"
+enclosure_group_uri_for_transformation = "/rest/enclosure-groups/bb1fbca0-2289-4b75-adbb-0564cdc4995d"
+server_hardware_type_uri_for_transformation = "/rest/server-hardware-types/34A3A0B2-66C7-4657-995E-60895C1F8F96"
+
 server_profile_name = "ProfileTemplate101"
-server_hardware_type_uri = "/rest/server-hardware-types/94B55683-173F-4B36-8FA6-EC250BA2328B"
-enclosure_group_uri = "/rest/enclosure-groups/ad5e9e88-b858-4935-ba58-017d60a17c89"
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
+
+API_VERSION = int(config.get('api_version', 200))
 
 oneview_client = OneViewClient(config)
 
@@ -90,6 +96,14 @@ pprint(template)
 print("\nGet new profile")
 profile = oneview_client.server_profile_templates.get_new_profile(template_uri)
 pprint(profile)
+
+if API_VERSION >= 300:
+    # Get server profile template transformation
+    print("\nGet a server profile template transformation")
+
+    transformation = oneview_client.server_profile_templates.get_transformation(
+        template["uri"], server_hardware_type_uri_for_transformation, enclosure_group_uri_for_transformation)
+    pprint(transformation)
 
 # Delete the created template
 print("\nDelete the created template")

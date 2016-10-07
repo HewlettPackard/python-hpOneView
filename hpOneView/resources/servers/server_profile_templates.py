@@ -41,6 +41,8 @@ from hpOneView.resources.resource import ResourceClient
 class ServerProfileTemplate(object):
 
     URI = '/rest/server-profile-templates'
+    TRANSFORMATION_PATH = "/transformation/?serverHardwareTypeUri={server_hardware_type_uri}" + \
+                          "&enclosureGroupUri={enclosure_group_uri}"
 
     DEFAULT_VALUES = {
         '200': {'type': 'ServerProfileTemplateV1'},
@@ -180,4 +182,25 @@ class ServerProfileTemplate(object):
             dict: The server profile resource.
         """
         uri = self._client.build_uri(id_or_uri) + "/new-profile"
+        return self._client.get(id_or_uri=uri)
+
+    def get_transformation(self, id_or_uri, server_hardware_type_uri, enclosure_group_uri):
+        """
+        Transforms an existing profile template by supplying a new server hardware type and/or enclosure group.
+        A profile template will be returned with a new configuration based on the capabilities of the supplied
+        server hardware type and/or enclosure group. All configured connections will have their port assignment
+        set to 'Auto'.
+        The new profile template can subsequently be used in the update method but is not guaranteed to pass validation.
+        Any incompatibilities will be flagged when the transformed server profile template is submitted.
+
+        Args:
+            id_or_uri: Can be either the server profile template resource ID or URI.
+            server_hardware_type_uri: The URI of the new server hardware type.
+            enclosure_group_uri: The URI of the new enclosure group.
+
+        Returns:
+            dict: The server profile template resource.
+        """
+        query_params = self.TRANSFORMATION_PATH.format(**locals())
+        uri = self._client.build_uri(id_or_uri) + query_params
         return self._client.get(id_or_uri=uri)

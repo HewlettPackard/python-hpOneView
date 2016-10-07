@@ -98,3 +98,19 @@ class ServerProfileTemplateTest(TestCase):
 
         self._resource.get_new_profile(id_or_uri=template_id)
         mock_get.assert_called_once_with(id_or_uri=expected_uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_transformation(self, mock_get):
+        template_id = "6fee02f3-b7c7-42bd-a528-04341e16bad6"
+        enclosure_group_uri = "/rest/enclosure-groups/bb1fbca0-2289-4b75-adbb-0564cdc4995d"
+        server_hardware_type_uri = "/rest/server-hardware-types/34A3A0B2-66C7-4657-995E-60895C1F8F96"
+
+        transformation_path = self._resource.TRANSFORMATION_PATH.format(**locals())
+        template_uri = '/rest/server-profile-templates/6fee02f3-b7c7-42bd-a528-04341e16bad6'
+        expected_uri = template_uri + transformation_path
+
+        self._resource.get_transformation(id_or_uri=template_id,
+                                          enclosure_group_uri=enclosure_group_uri,
+                                          server_hardware_type_uri=server_hardware_type_uri)
+
+        mock_get.assert_called_once_with(id_or_uri=expected_uri)
