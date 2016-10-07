@@ -27,6 +27,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 from future import standard_library
+from future.utils import lmap
 
 standard_library.install_aliases()
 
@@ -66,6 +67,24 @@ def merge_resources(resource1, resource2):
     merged = resource1.copy()
     merged.update(resource2)
     return merged
+
+
+def merge_default_values(resource_list, default_values):
+    """
+    Generate a new list where each item of original resource_list will be merged with the default_values.
+
+    Args:
+        resource_list: list with items to be merged
+        default_values: properties to be merged with each item list. If the item already contains some property
+            the original value will be maintained.
+
+    Returns:
+        list: list containing each item merged with default_values
+    """
+    def merge_item(resource):
+        return merge_resources(default_values, resource)
+
+    return lmap(merge_item, resource_list)
 
 
 class ResourceClient(object):
@@ -648,6 +667,11 @@ class ResourceClient(object):
         return response.get('nextPageUri') if has_next_page else None
 
     def __merge_default_values(self, resource, default_values):
-        api_version = str(self._connection._apiVersion)
-        data = default_values.get(api_version, {}).copy()
-        return merge_resources(data, resource)
+        merged_resource = None
+
+        if not isinstance(resource, list):
+            api_version = str(self._connection._apiVersion)
+            data = default_values.get(api_version, {}).copy()
+            merged_resource = merge_resources(data, resource)
+
+        return merged_resource or resource

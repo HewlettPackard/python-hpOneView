@@ -38,9 +38,11 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import merge_default_values
 
 
 class Switches(object):
+
     URI = '/rest/switches'
 
     def __init__(self, con):
@@ -146,3 +148,20 @@ class Switches(object):
             list: A list of rack switches.
         """
         return self._client.get_by(field, value)
+
+    def update_ports(self, ports, id_or_uri):
+        """
+        Updates the switch ports. Only the ports under the management of OneView and those that are unlinked are
+        supported for update.
+
+        Args:
+            ports: List of Switch Ports.
+            id_or_uri: Can be either the switch id or the switch uri.
+
+        Returns:
+            dict: Switch
+        """
+        ports = merge_default_values(ports, {'type': 'port'})
+
+        uri = self._client.build_uri(id_or_uri) + "/update-ports"
+        return self._client.update(uri=uri, resource=ports)

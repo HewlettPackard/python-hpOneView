@@ -106,3 +106,14 @@ class SwitchesTest(unittest.TestCase):
     def test_get_by_called_once(self, mock_get_by):
         self._switches.get_by("name", "test name")
         mock_get_by.assert_called_once_with("name", "test name")
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_ports_called_once(self, mock_update):
+        switch_uri = '/rest/switches/f0a0a113-ec97-41b4-83ce-d7c92b900e7c'
+        resource = [{"enabled": False}]
+
+        self._switches.update_ports(resource, switch_uri)
+
+        expected_uri = switch_uri + "/update-ports"
+        expected_resource = [{"enabled": False, 'type': 'port'}]
+        mock_update.assert_called_once_with(uri=expected_uri, resource=expected_resource)

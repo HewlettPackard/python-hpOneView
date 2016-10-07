@@ -28,8 +28,6 @@ from __future__ import unicode_literals
 
 from future import standard_library
 
-from future.utils import lmap
-
 standard_library.install_aliases()
 
 __title__ = 'Interconnects'
@@ -40,6 +38,7 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import merge_default_values
 
 
 class Interconnects(object):
@@ -217,15 +216,10 @@ class Interconnects(object):
             dict: The interconnect.
 
         """
-        resources = lmap(self.__port_with_default_type, ports)
+        resources = merge_default_values(ports, {'type': 'port'})
 
         uri = self._client.build_uri(id_or_uri) + "/update-ports"
         return self._client.update(resources, uri, timeout)
-
-    def __port_with_default_type(self, port):
-        data = dict(type="port")
-        data.update(port)
-        return data
 
     def reset_port_protection(self, id_or_uri, timeout=-1):
         """

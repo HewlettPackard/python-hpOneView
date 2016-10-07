@@ -28,7 +28,7 @@ from mock import call
 
 from hpOneView.connection import connection
 from hpOneView.exceptions import HPOneViewUnknownType, HPOneViewException
-from hpOneView.resources.resource import merge_resources
+from hpOneView.resources.resource import merge_resources, merge_default_values
 from hpOneView.resources.resource import ResourceClient, RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor, \
     RESOURCE_CLIENT_TASK_EXPECTED
 
@@ -43,6 +43,20 @@ class ResourceTest(unittest.TestCase):
 
         merged_resource = merge_resources(resource1, resource2)
         self.assertEqual(merged_resource, expected_resource)
+
+    def test_merge_default_values(self):
+        default_type = {'type': 'type1'}
+        resource1 = {'name': 'resource1'}
+        resource2 = {'name': 'resource2'}
+
+        result_list = merge_default_values([resource1, resource2], default_type)
+
+        expected_list = [
+            {'name': 'resource1', 'type': 'type1'},
+            {'name': 'resource2', 'type': 'type1'}
+        ]
+
+        self.assertEqual(result_list, expected_list)
 
 
 class FakeResource(object):
@@ -1042,3 +1056,13 @@ class ResourceClientTest(unittest.TestCase):
             self.assertEqual(RESOURCE_CLIENT_TASK_EXPECTED, exception.args[0])
         else:
             self.fail("Expected Exception was not raised")
+
+    @mock.patch.object(connection, 'post')
+    def test_create_when_the_resource_is_a_list(self, mock_post):
+        dict_to_create = [{"resource_name": "a name"}]
+        mock_post.return_value = {}, {}
+
+        resource_client = ResourceClient(self.connection, self.URI)
+        resource_client.create(dict_to_create, timeout=-1)
+
+        mock_post.assert_called_once_with(self.URI, dict_to_create, custom_headers=None)
