@@ -44,8 +44,6 @@ server_profile_name = "ProfileTemplate101"
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
-API_VERSION = int(config.get('api_version', 200))
-
 oneview_client = OneViewClient(config)
 
 # Create a server profile template
@@ -97,7 +95,7 @@ print("\nGet new profile")
 profile = oneview_client.server_profile_templates.get_new_profile(template_uri)
 pprint(profile)
 
-if API_VERSION >= 300:
+if oneview_client.api_version >= 300:
     # Get server profile template transformation
     print("\nGet a server profile template transformation")
 

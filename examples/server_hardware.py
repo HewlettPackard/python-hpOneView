@@ -165,7 +165,7 @@ remote_console_url = oneview_client.server_hardware.get_java_remote_console_url(
 print("URL to launch a Single Sign-On (SSO) session for iLO Integrated Remote Console Application",
       " for server at uri:\n   {}\n   '{}'".format(server['uri'], remote_console_url))
 
-if int(config.get('api_version', 200)) >= 300:
+if oneview_client.api_version >= 300:
     # These functions are only available for the API version 300 or higher
 
     # Turn the Server Hardware led light On
