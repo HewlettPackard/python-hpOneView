@@ -219,6 +219,7 @@
 <span class="kn">from</span> <span class="nn">hpOneView.resources.settings.firmware_bundles</span> <span class="k">import</span> <span class="n">FirmwareBundles</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.storage.volumes</span> <span class="k">import</span> <span class="n">Volumes</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.networking.uplink_sets</span> <span class="k">import</span> <span class="n">UplinkSets</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.migratable_vc_domains</span> <span class="k">import</span> <span class="n">MigratableVcDomains</span>
 
 <span class="n">ONEVIEW_CLIENT_INVALID_PROXY</span> <span class="o">=</span> <span class="s1">&#39;Invalid Proxy format&#39;</span>
 
@@ -272,6 +273,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__uplink_sets</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__volumes</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__managed_sans</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__migratable_vc_domains</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="c1"># TODO: Implement: con.set_trusted_ssl_bundle(args.cert)</span>
 
     <span class="nd">@classmethod</span>
@@ -851,7 +853,19 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__managed_sans</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__managed_sans</span> <span class="o">=</span> <span class="n">ManagedSANs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__managed_sans</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__managed_sans</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">migratable_vc_domains</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the VC Migration Manager API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            MigratableVcDomains:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__migratable_vc_domains</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__migratable_vc_domains</span> <span class="o">=</span> <span class="n">MigratableVcDomains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__migratable_vc_domains</span></div>
 </pre></div>
 
            </div>

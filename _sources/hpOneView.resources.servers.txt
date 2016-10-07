@@ -68,6 +68,14 @@ hpOneView.resources.servers.logical_enclosures module
     :undoc-members:
     :show-inheritance:
 
+hpOneView.resources.servers.migratable_vc_domains module
+--------------------------------------------------------
+
+.. automodule:: hpOneView.resources.servers.migratable_vc_domains
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView.resources.servers.server_hardware module
 --------------------------------------------------
 

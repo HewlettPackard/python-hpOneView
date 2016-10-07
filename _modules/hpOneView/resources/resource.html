@@ -306,7 +306,7 @@
                 <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE</span><span class="p">)</span>
                 <span class="k">raise</span> <span class="n">HPOneViewUnknownType</span><span class="p">(</span><span class="n">RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">resource</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">force</span><span class="p">:</span>
             <span class="n">uri</span> <span class="o">+=</span> <span class="s1">&#39;?force=True&#39;</span>
