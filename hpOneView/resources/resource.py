@@ -370,8 +370,12 @@ class ResourceClient(object):
         logger.debug('Patch resource (uri = %s, op = %s, path = %s, value = %s)' % (
             uri, operation, path, value))
 
+        custom_headers_copy = custom_headers.copy() if custom_headers else {}
+        if self._connection._apiVersion >= 300:
+            custom_headers_copy['Content-Type'] = 'application/json-patch+json'
+
         patch_request = [{'op': operation, 'path': path, 'value': value}]
-        task, entity = self._connection.patch(uri, patch_request, custom_headers=custom_headers)
+        task, entity = self._connection.patch(uri, patch_request, custom_headers=custom_headers_copy)
 
         if not task:
             return entity
