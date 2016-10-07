@@ -43,9 +43,13 @@ from hpOneView.resources.resource import ResourceClient
 class Fabrics(object):
     URI = '/rest/fabrics'
 
+    DEFAULT_VALUES = {
+        '300': {'type': 'vlan-pool'}
+    }
+
     def __init__(self, con):
         self._connection = con
-        self._client = ResourceClient(con, self.URI)
+        self._client = ResourceClient(con, self.URI, self.DEFAULT_VALUES)
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
@@ -100,3 +104,32 @@ class Fabrics(object):
             list: A list of fabrics.
         """
         return self._client.get_by(field, value)
+
+    def get_reserved_vlan_range(self, id_or_uri):
+        """
+        Gets the reserved vlan ID range for the fabric.
+
+        Args:
+            id_or_uri: ID or URI of fabric.
+
+        Returns:
+            dict: vlan-pool
+        """
+        uri = self._client.build_uri(id_or_uri) + "/reserved-vlan-range"
+        return self._client.get(uri)
+
+    def update_reserved_vlan_range(self, id_or_uri, vlan_pool, force=False):
+        """
+        Updates the reserved vlan ID range for the fabric.
+
+        Args:
+            id_or_uri: ID or URI of fabric.
+            vlan_pool (dict): vlan-pool data to update.
+            force:  If set to true, the operation completes despite any problems with network connectivity or errors
+                on the resource itself. The default is false.
+
+        Returns:
+            dict: The fabric
+        """
+        uri = self._client.build_uri(id_or_uri) + "/reserved-vlan-range"
+        return self._client.update(resource=vlan_pool, uri=uri, force=force)
