@@ -43,8 +43,6 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-API_VERSION = int(config.get('api_version', 200))
-
 # Get all fabrics
 print("Get all fabrics")
 fabrics = oneview_client.fabrics.get_all()
@@ -69,7 +67,7 @@ fabric_byname = oneview_client.fabrics.get_by('name', 'DefaultFabric')[0]
 pprint(fabric_byname)
 
 # These methods are available for API version 300 or later
-if API_VERSION >= 300:
+if oneview_client.api_version >= 300:
     # Get reserved vlan ID range for the fabric.
     print("\nGet reserved vlan ID range for the fabric")
     vlan_pool = oneview_client.fabrics.get_reserved_vlan_range(fabric_id)
