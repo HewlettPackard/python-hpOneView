@@ -49,7 +49,7 @@ class Fabrics(object):
 
     def __init__(self, con):
         self._connection = con
-        self._client = ResourceClient(con, self.URI, self.DEFAULT_VALUES)
+        self._client = ResourceClient(con, self.URI)
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
@@ -132,4 +132,4 @@ class Fabrics(object):
             dict: The fabric
         """
         uri = self._client.build_uri(id_or_uri) + "/reserved-vlan-range"
-        return self._client.update(resource=vlan_pool, uri=uri, force=force)
+        return self._client.update(resource=vlan_pool, uri=uri, force=force, default_values=self.DEFAULT_VALUES)

@@ -74,7 +74,11 @@ class ServerProfileTemplateTest(TestCase):
         template = dict(name="BL460c Gen8 1")
 
         self._resource.create(resource=template, timeout=TIMEOUT)
-        mock_create.assert_called_once_with(resource=template, timeout=TIMEOUT)
+        mock_create.assert_called_once_with(
+            resource=template,
+            timeout=TIMEOUT,
+            default_values=ServerProfileTemplate.DEFAULT_VALUES
+        )
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update(self, mock_update):
@@ -82,7 +86,11 @@ class ServerProfileTemplateTest(TestCase):
         template = dict(name="BL460c Gen8 1", macType="Virtual")
 
         self._resource.update(resource=template, id_or_uri=uri)
-        mock_update.assert_called_once_with(resource=template, uri=uri)
+        mock_update.assert_called_once_with(
+            resource=template,
+            uri=uri,
+            default_values=ServerProfileTemplate.DEFAULT_VALUES
+        )
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete(self, mock_delete):
