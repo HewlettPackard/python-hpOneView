@@ -37,7 +37,6 @@ config = {
 }
 
 options = {
-    "type": "logical-switch-group",
     "name": "OneView Test Logical Switch Group",
     "switchMapTemplate": {
         "switchMapEntryTemplates": [{

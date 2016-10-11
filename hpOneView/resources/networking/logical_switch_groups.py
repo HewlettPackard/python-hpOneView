@@ -41,14 +41,17 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class LogicalSwitchGroups(object):
+
     URI = '/rest/logical-switch-groups'
+
+    DEFAULT_VALUES = {
+        '200': {"type": "logical-switch-group"},
+        '300': {"type": "logical-switch-groupV300"}
+    }
 
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
-        self.__default_values = {
-            "type": "logical-switch-group"
-        }
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
@@ -100,9 +103,7 @@ class LogicalSwitchGroups(object):
         Returns:
             dict: Created logical switch group.
         """
-        data = self.__default_values.copy()
-        data.update(resource)
-        return self._client.create(data, timeout=timeout)
+        return self._client.create(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def update(self, resource, timeout=-1):
         """
@@ -117,9 +118,7 @@ class LogicalSwitchGroups(object):
         Returns:
             dict: Updated logical switch group.
         """
-        data = self.__default_values.copy()
-        data.update(resource)
-        return self._client.update(data, timeout=timeout)
+        return self._client.update(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def delete(self, resource, force=False, timeout=-1):
         """
