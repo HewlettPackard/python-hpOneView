@@ -35,8 +35,11 @@ config = {
 }
 
 # provide info about your switch here
-switch_id = "8205fc25-af81-4834-881b-c7954afa94a9"
+switch_id = "3deb1c06-c9ba-4bb2-905e-86120c89e835"
 switch_uri = "/rest/switches/" + switch_id
+
+port_name = "1.1"
+port_id = "{switch_id}:{port_name}".format(**locals())
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
@@ -103,3 +106,19 @@ try:
     pprint(switch_by_rack_name)
 except HPOneViewException as e:
     print(e.msg)
+
+if oneview_client.api_version >= 300:
+    # Update the switch ports
+    try:
+        print("Update the switch ports")
+
+        ports_to_update = [{
+            "enabled": True,
+            "portId": port_id,
+            "portName": port_name
+        }]
+
+        ports = oneview_client.switches.update_ports(id_or_uri=switch_id, ports=ports_to_update)
+        print("  Done.")
+    except HPOneViewException as e:
+        print(e.msg)
