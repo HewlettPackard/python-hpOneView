@@ -72,6 +72,12 @@ class FabricsTest(unittest.TestCase):
             "start": 100,
             "length": 100
         }
+
         self._fabrics.update_reserved_vlan_range('123', data_to_update)
 
-        mock_update.assert_called_once_with(resource=data_to_update, uri=uri, force=False)
+        mock_update.assert_called_once_with(
+            resource=data_to_update,
+            uri=uri,
+            force=False,
+            default_values=Fabrics.DEFAULT_VALUES
+        )

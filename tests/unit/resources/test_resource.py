@@ -28,8 +28,21 @@ from mock import call
 
 from hpOneView.connection import connection
 from hpOneView.exceptions import HPOneViewUnknownType, HPOneViewException
+from hpOneView.resources.resource import merge_resources
 from hpOneView.resources.resource import ResourceClient, RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor, \
     RESOURCE_CLIENT_TASK_EXPECTED
+
+
+class ResourceTest(unittest.TestCase):
+
+    def test_merge_resources(self):
+        resource1 = {'name': 'resource1', 'type': 'resource'}
+        resource2 = {'name': 'resource2', 'port': '1'}
+
+        expected_resource = {'name': 'resource2', 'type': 'resource', 'port': '1'}
+
+        merged_resource = merge_resources(resource1, resource2)
+        self.assertEqual(merged_resource, expected_resource)
 
 
 class FakeResource(object):
@@ -41,19 +54,22 @@ class FakeResource(object):
         return self._client.get(uri)
 
 
-class ResourceTest(unittest.TestCase):
+class ResourceClientTest(unittest.TestCase):
     URI = "/rest/testuri"
 
+    TYPE_V200 = 'typeV200'
+    TYPE_V300 = 'typeV300'
+
     DEFAULT_VALUES = {
-        '200': {'type': 'TypeV1'},
-        '300': {'type': 'TypeV2'}
+        '200': {'type': TYPE_V200},
+        '300': {'type': TYPE_V300}
     }
 
     def setUp(self):
-        super(ResourceTest, self).setUp()
+        super(ResourceClientTest, self).setUp()
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
-        self.resource_client = ResourceClient(self.connection, self.URI, default_values=self.DEFAULT_VALUES)
+        self.resource_client = ResourceClient(self.connection, self.URI)
         self.task = {"task": "task"}
         self.response_body = {"body": "body"}
         self.custom_headers = {'Accept-Language': 'en_US'}
@@ -410,14 +426,10 @@ class ResourceTest(unittest.TestCase):
         uri = "/rest/resource/test"
 
         mock_put.return_value = None, self.response_body
-
         response = self.resource_client.update(dict_to_update, uri=uri)
 
-        expected_dict = self.DEFAULT_VALUES['200'].copy()
-        expected_dict.update(dict_to_update)
-
         self.assertEqual(self.response_body, response)
-        mock_put.assert_called_once_with(uri, expected_dict, custom_headers=None)
+        mock_put.assert_called_once_with(uri, dict_to_update, custom_headers=None)
 
     @mock.patch.object(connection, 'put')
     def test_update_with_custom_headers(self, mock_put):
@@ -436,11 +448,20 @@ class ResourceTest(unittest.TestCase):
 
         self.resource_client.update(dict_to_update, uri=uri, force=True)
 
-        expected_dict = self.DEFAULT_VALUES['200'].copy()
-        expected_dict.update(dict_to_update)
-
         expected_uri = "/rest/resource/test?force=True"
-        mock_put.assert_called_once_with(expected_uri, expected_dict, custom_headers=None)
+        mock_put.assert_called_once_with(expected_uri, dict_to_update, custom_headers=None)
+
+    @mock.patch.object(connection, 'put')
+    def test_update_with_default_api_version_200(self, mock_put):
+        dict_to_update = {"name": "test"}
+        uri = "/rest/resource/test"
+
+        mock_put.return_value = None, self.response_body
+
+        expected_dict = {"name": "test", "type": self.TYPE_V200}
+
+        self.resource_client.update(dict_to_update, uri=uri, default_values=self.DEFAULT_VALUES)
+        mock_put.assert_called_once_with(uri, expected_dict, custom_headers=None)
 
     @mock.patch.object(connection, 'put')
     def test_update_with_api_version_300(self, mock_put):
@@ -450,13 +471,20 @@ class ResourceTest(unittest.TestCase):
         mock_put.return_value = None, self.response_body
         self.connection._apiVersion = 300
 
-        self.resource_client.update(dict_to_update, uri=uri, force=True)
+        expected_dict = {"name": "test", "type": self.TYPE_V300}
 
-        expected_dict = self.DEFAULT_VALUES['300'].copy()
-        expected_dict.update(dict_to_update)
+        self.resource_client.update(dict_to_update, uri=uri, default_values=self.DEFAULT_VALUES)
+        mock_put.assert_called_once_with(uri, expected_dict, custom_headers=None)
 
-        expected_uri = "/rest/resource/test?force=True"
-        mock_put.assert_called_once_with(expected_uri, expected_dict, custom_headers=None)
+    @mock.patch.object(connection, 'put')
+    def test_update_should_not_override_resource_properties(self, mock_put):
+        dict_to_update = {"name": "test", "type": "anotherType"}
+        uri = "/rest/resource/test"
+
+        mock_put.return_value = None, self.response_body
+
+        self.resource_client.update(dict_to_update, uri=uri, default_values=self.DEFAULT_VALUES)
+        mock_put.assert_called_once_with(uri, dict_to_update, custom_headers=None)
 
     @mock.patch.object(connection, 'put')
     def test_update_without_default_values(self, mock_put):
@@ -480,11 +508,8 @@ class ResourceTest(unittest.TestCase):
         mock_wait4task.return_value = self.task
         update_task = self.resource_client.update(dict_to_update, False)
 
-        expected_dict = self.DEFAULT_VALUES['200'].copy()
-        expected_dict.update(dict_to_update)
-
         self.assertEqual(self.task, update_task)
-        mock_update.assert_called_once_with("a_uri", expected_dict, custom_headers=None)
+        mock_update.assert_called_once_with("a_uri", dict_to_update, custom_headers=None)
 
     @mock.patch.object(connection, 'put')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
@@ -558,24 +583,37 @@ class ResourceTest(unittest.TestCase):
         mock_post.return_value = {}, {}
 
         self.resource_client.create(dict_to_create, timeout=-1)
+        mock_post.assert_called_once_with(self.URI, dict_to_create, custom_headers=None)
 
-        expected_dict = self.DEFAULT_VALUES['200'].copy()
-        expected_dict.update(dict_to_create)
+    @mock.patch.object(connection, 'post')
+    def test_create_with_default_api_version(self, mock_post):
+        dict_to_create = {"resource_name": "a name"}
+        mock_post.return_value = {}, {}
 
+        expected_dict = {"resource_name": "a name", "type": self.TYPE_V200}
+
+        self.resource_client.create(dict_to_create, timeout=-1, default_values=self.DEFAULT_VALUES)
         mock_post.assert_called_once_with(self.URI, expected_dict, custom_headers=None)
 
     @mock.patch.object(connection, 'post')
     def test_create_with_api_version_300(self, mock_post):
         dict_to_create = {"resource_name": "a name"}
         mock_post.return_value = {}, {}
+
         self.connection._apiVersion = 300
+        expected_dict = {"resource_name": "a name", "type": self.TYPE_V300}
 
-        self.resource_client.create(dict_to_create, timeout=-1)
-
-        expected_dict = self.DEFAULT_VALUES['300'].copy()
-        expected_dict.update(dict_to_create)
-
+        self.resource_client.create(dict_to_create, timeout=-1, default_values=self.DEFAULT_VALUES)
         mock_post.assert_called_once_with(self.URI, expected_dict, custom_headers=None)
+
+    @mock.patch.object(connection, 'post')
+    def test_create_should_not_override_resource_properties(self, mock_post):
+        dict_to_create = {"resource_name": "a name", "type": "anotherType"}
+        mock_post.return_value = {}, {}
+
+        self.resource_client.create(dict_to_create, default_values=self.DEFAULT_VALUES)
+
+        mock_post.assert_called_once_with(self.URI, dict_to_create, custom_headers=None)
 
     @mock.patch.object(connection, 'post')
     def test_create_without_default_values(self, mock_post):

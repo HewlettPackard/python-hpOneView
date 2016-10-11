@@ -52,16 +52,31 @@ RESOURCE_CLIENT_TASK_EXPECTED = "Failed: Expected a TaskResponse."
 logger = logging.getLogger(__name__)
 
 
+def merge_resources(resource1, resource2):
+    """
+    Updates a copy of resource1 with resource2 values and returns the merged dictionary.
+
+    Args:
+        resource1: original resource
+        resource2: resource to update resource1
+
+    Returns:
+        dict: merged resource
+    """
+    merged = resource1.copy()
+    merged.update(resource2)
+    return merged
+
+
 class ResourceClient(object):
     """
     This class implements common functions for HpOneView API rest
     """
 
-    def __init__(self, con, uri, default_values={}):
+    def __init__(self, con, uri):
         self._connection = con
         self._uri = uri
         self._task_monitor = TaskMonitor(con)
-        self._default_values = default_values
 
     def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None):
         """
@@ -259,11 +274,13 @@ class ResourceClient(object):
 
         return self.__do_put(uri, None, timeout, custom_headers)
 
-    def update(self, resource, uri=None, force=False, timeout=-1, custom_headers=None):
+    def update(self, resource, uri=None, force=False, timeout=-1, custom_headers=None, default_values={}):
         """
         Makes a PUT request to update a resource when a request body is required.
 
         Args:
+            resource:
+                OneView resource dictionary.
             uri:
                 Can be either the resource ID or the resource URI.
             force:
@@ -274,6 +291,15 @@ class ResourceClient(object):
                 in OneView; it just stops waiting for its completion.
             custom_headers:
                 Allows set specific HTTP headers.
+            default_values:
+                Dictionary with default values grouped by OneView API version. This dictionary will be be merged with
+                the resource dictionary only if the dictionary does not contain the keys.
+                This argument is optional and the default value is an empty dictionary.
+                Ex.:
+                    default_values = {
+                        '200': {"type": "logical-switch-group"},
+                        '300': {"type": "logical-switch-groupV300"}
+                    }
 
         Returns:
             Updated resource.
@@ -291,7 +317,7 @@ class ResourceClient(object):
         if force:
             uri += '?force=True'
 
-        data = self.__merge_default_values(resource)
+        data = self.__merge_default_values(resource, default_values)
 
         return self.__do_put(uri, data, timeout, custom_headers)
 
@@ -318,11 +344,13 @@ class ResourceClient(object):
 
         return self.__do_post(uri, {}, timeout, custom_headers)
 
-    def create(self, resource, uri=None, timeout=-1, custom_headers=None):
+    def create(self, resource, uri=None, timeout=-1, custom_headers=None, default_values={}):
         """
         Makes a POST request to create a resource when a request body is required.
 
         Args:
+            resource:
+                OneView resource dictionary.
             uri:
                 Can be either the resource ID or the resource URI.
             timeout:
@@ -330,6 +358,15 @@ class ResourceClient(object):
                 in OneView; it just stops waiting for its completion.
             custom_headers:
                 Allows set specific HTTP headers.
+            default_values:
+                Dictionary with default values grouped by OneView API version. This dictionary will be be merged with
+                the resource dictionary only if the dictionary does not contain the keys.
+                This argument is optional and the default value is an empty dictionary.
+                Ex.:
+                    default_values = {
+                        '200': {"type": "logical-switch-group"},
+                        '300': {"type": "logical-switch-groupV300"}
+                    }
 
         Returns:
             Created resource.
@@ -344,7 +381,7 @@ class ResourceClient(object):
         logger.debug('Create (uri = %s, resource = %s)' %
                      (uri, str(resource)))
 
-        data = self.__merge_default_values(resource)
+        data = self.__merge_default_values(resource, default_values)
 
         return self.__do_post(uri, data, timeout, custom_headers)
 
@@ -610,8 +647,7 @@ class ResourceClient(object):
 
         return response.get('nextPageUri') if has_next_page else None
 
-    def __merge_default_values(self, resource):
+    def __merge_default_values(self, resource, default_values):
         api_version = str(self._connection._apiVersion)
-        data = self._default_values.get(api_version, {}).copy()
-        data.update(resource)
-        return data
+        data = default_values.get(api_version, {}).copy()
+        return merge_resources(data, resource)

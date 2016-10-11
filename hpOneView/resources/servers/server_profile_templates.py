@@ -51,7 +51,7 @@ class ServerProfileTemplate(object):
 
     def __init__(self, con):
         self._connection = con
-        self._client = ResourceClient(con, self.URI, self.DEFAULT_VALUES)
+        self._client = ResourceClient(con, self.URI)
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
@@ -137,7 +137,7 @@ class ServerProfileTemplate(object):
             dict: Created resource.
 
         """
-        return self._client.create(resource=resource, timeout=timeout)
+        return self._client.create(resource=resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def update(self, resource, id_or_uri):
         """
@@ -151,7 +151,7 @@ class ServerProfileTemplate(object):
         Returns:
             dict: The server profile template resource.
         """
-        return self._client.update(resource=resource, uri=id_or_uri)
+        return self._client.update(resource=resource, uri=id_or_uri, default_values=self.DEFAULT_VALUES)
 
     def delete(self, resource, timeout=-1):
         """
