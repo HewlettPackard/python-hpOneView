@@ -90,6 +90,7 @@ from hpOneView.resources.settings.firmware_drivers import FirmwareDrivers
 from hpOneView.resources.settings.firmware_bundles import FirmwareBundles
 from hpOneView.resources.storage.volumes import Volumes
 from hpOneView.resources.networking.uplink_sets import UplinkSets
+from hpOneView.resources.networking.sas_logical_interconnect_groups import SasLogicalInterconnectGroups
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 ONEVIEW_CLIENT_DEFAULT_API_VERSION = 200
@@ -145,6 +146,7 @@ class OneViewClient(object):
         self.__volumes = None
         self.__managed_sans = None
         self.__sas_interconnects = None
+        self.__sas_logical_interconnect_groups = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -747,3 +749,15 @@ class OneViewClient(object):
         if not self.__sas_interconnects:
             self.__sas_interconnects = SasInterconnects(self.__connection)
         return self.__sas_interconnects
+
+    @property
+    def sas_logical_interconnect_groups(self):
+        """
+        Gets the SasLogicalInterconnectGroups API client.
+
+        Returns:
+            SasLogicalInterconnectGroups:
+        """
+        if not self.__sas_logical_interconnect_groups:
+            self.__sas_logical_interconnect_groups = SasLogicalInterconnectGroups(self.__connection)
+        return self.__sas_logical_interconnect_groups
