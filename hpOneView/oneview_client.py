@@ -79,6 +79,7 @@ from hpOneView.resources.networking.logical_interconnects import LogicalIntercon
 from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
 from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGroups
 from hpOneView.resources.networking.logical_switches import LogicalSwitches
+from hpOneView.resources.networking.sas_interconnects import SasInterconnects
 from hpOneView.resources.servers.server_profiles import ServerProfiles
 from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
 from hpOneView.resources.storage.storage_systems import StorageSystems
@@ -143,6 +144,7 @@ class OneViewClient(object):
         self.__uplink_sets = None
         self.__volumes = None
         self.__managed_sans = None
+        self.__sas_interconnects = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -733,3 +735,15 @@ class OneViewClient(object):
         if not self.__managed_sans:
             self.__managed_sans = ManagedSANs(self.__connection)
         return self.__managed_sans
+
+    @property
+    def sas_interconnects(self):
+        """
+        Gets the SAS Interconnects API client.
+
+        Returns:
+            SasInterconnects:
+        """
+        if not self.__sas_interconnects:
+            self.__sas_interconnects = SasInterconnects(self.__connection)
+        return self.__sas_interconnects
