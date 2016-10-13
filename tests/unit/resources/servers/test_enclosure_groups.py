@@ -118,9 +118,8 @@ class EnclosureGroupsTest(unittest.TestCase):
         self.client.create(eg_initial)
 
         eg_expected = self.MINIMAL_DATA_FOR_EG_CREATION.copy()
-        eg_expected["type"] = "EnclosureGroupV200"
 
-        mock_create.assert_called_once_with(eg_expected, timeout=-1)
+        mock_create.assert_called_once_with(eg_expected, timeout=-1, default_values=self.client.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):
@@ -135,9 +134,8 @@ class EnclosureGroupsTest(unittest.TestCase):
         self.client.update(eg_initial)
 
         eg_expected = self.MINIMAL_DATA_FOR_EG_CREATION.copy()
-        eg_expected["type"] = "EnclosureGroupV200"
 
-        mock_update.assert_called_once_with(eg_expected, timeout=-1)
+        mock_update.assert_called_once_with(eg_expected, timeout=-1, default_values=self.client.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_script_by_uri_called_once(self, mock_update):

@@ -32,8 +32,7 @@ standard_library.install_aliases()
 
 __title__ = 'Enclosure Groups'
 __version__ = '0.0.1'
-__copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
-                ' Development LP'
+__copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP'
 __license__ = 'MIT'
 __status__ = 'Development'
 
@@ -43,10 +42,14 @@ from hpOneView.resources.resource import ResourceClient
 class EnclosureGroups(object):
     URI = '/rest/enclosure-groups'
 
+    DEFAULT_VALUES = {
+        '200': {"type": "EnclosureGroupV200"},
+        '300': {"type": "EnclosureGroupV300"}
+    }
+
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
-        self.__default_values = {"type": "EnclosureGroupV200"}
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
@@ -126,9 +129,7 @@ class EnclosureGroups(object):
         Returns:
             dict: Created enclosure group.
         """
-        data = self.__default_values.copy()
-        data.update(resource)
-        return self._client.create(data, timeout=timeout)
+        return self._client.create(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def delete(self, resource, timeout=-1):
         """
@@ -161,9 +162,7 @@ class EnclosureGroups(object):
             dict: Updated enclosure group
 
         """
-        data = self.__default_values.copy()
-        data.update(resource)
-        return self._client.update(data, timeout=timeout)
+        return self._client.update(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def update_script(self, id_or_uri, script_body):
         """
