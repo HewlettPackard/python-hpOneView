@@ -101,14 +101,28 @@ If your environment requires a proxy, define the proxy properties in the JSON fi
   "proxy": "<proxy_host>:<proxy_port>"
 ```
 
-## Contributing and feature requests
+## Contributing
 
-**Contributing:** You know the drill. Fork it, branch it, change it, commit it, and pull-request it.
+You know the drill. Fork it, branch it, change it, commit it, and pull-request it.
 We are passionate about improving this project, and glad to accept help to make it better. However, keep the following in mind:
 
  - We reserve the right to reject changes that we feel do not fit the scope of this project, so for feature additions, please open an issue to discuss your ideas before doing the work.
 
-**Feature Requests:** If you have a need that is not met by the current implementation, please let us know (via a new issue).
+#### Naming convention for OneView resources
+
+The following is a summary of the code structure and naming convention for the OneView resources.
+
+- **Packages:** The package is named according to the **HPE OneView API Reference** group, with all characters in lowercase, replacing spaces by underscores.
+- **Modules:** The module is named according to the **HPE OneView API Reference** endpoint title, with all characters in lowercase, replacing spaces by underscores.
+    For example: In the documentation we have: **FC Networks** so the module name will be **fc_networks**
+- **Classes:** We are using camel case to define the class name, for example: **FcNetworks** 
+- **OneViewClient properties:** In the **oneview_client**, the property name follows exactly the module name, for example: **fc_networks**
+- **Examples:** The example is named with the same name of the resource module: **fc_networks**
+- **Tests:**  The unit test folders follow the same structure of the resources. The name of the test modules should start with "test_", for example: **test_fc_networks**
+
+## Feature Requests
+
+If you have a need that is not met by the current implementation, please let us know (via a new issue).
 This feedback is crucial for us to deliver a useful product. Do not assume that we have already thought of everything, because we assure you that is not the case.
 
 ## Testing
