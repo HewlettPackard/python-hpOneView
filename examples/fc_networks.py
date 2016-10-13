@@ -39,6 +39,7 @@ options = {
     "connectionTemplateUri": None,
     "autoLoginRedistribution": True,
     "fabricType": "FabricAttach",
+    "linkStabilityTime": 30,
 }
 
 # Try load config from a file (if there is a config file)
