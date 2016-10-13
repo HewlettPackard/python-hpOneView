@@ -46,36 +46,19 @@ class FcoeNetworksTest(TestCase):
         mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort)
 
     @mock.patch.object(ResourceClient, 'create')
-    def test_create_should_use_given_values(self, mock_create):
-        resource = {
-            'name': 'vsan1',
-            'vlanId': '201',
-            'connectionTemplateUri': None,
-            'type': 'fcoe-networkV2',
-        }
-        resource_rest_call = resource.copy()
-        mock_create.return_value = {}
-
-        self._fcoe_networks.create(resource, 10)
-        mock_create.assert_called_once_with(resource_rest_call, timeout=10)
-
-    @mock.patch.object(ResourceClient, 'create')
-    def test_create_should_use_default_values(self, mock_create):
+    def test_create(self, mock_create):
         resource = {
             'name': 'OneViewSDK Test FCoE Network',
         }
-        resource_with_default_values = {
-            'name': 'OneViewSDK Test FCoE Network',
-            'type': 'fcoe-network',
-        }
+
         mock_create.return_value = {}
 
         self._fcoe_networks.create(resource)
 
-        mock_create.assert_called_once_with(resource_with_default_values, timeout=-1)
+        mock_create.assert_called_once_with(resource, timeout=-1, default_values=self._fcoe_networks.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'update')
-    def test_update_should_use_given_values(self, mock_update):
+    def test_update(self, mock_update):
         resource = {
             'name': 'vsan1',
             'vlanId': '201',
@@ -86,22 +69,8 @@ class FcoeNetworksTest(TestCase):
         mock_update.return_value = {}
 
         self._fcoe_networks.update(resource, timeout=12)
-        mock_update.assert_called_once_with(resource_rest_call, timeout=12)
-
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_should_use_default_values(self, mock_update):
-        resource = {
-            'name': 'OneViewSDK Test FCoE Network',
-        }
-        resource_with_default_values = {
-            'name': 'OneViewSDK Test FCoE Network',
-            'type': 'fcoe-network',
-        }
-        mock_update.return_value = {}
-
-        self._fcoe_networks.update(resource)
-
-        mock_update.assert_called_once_with(resource_with_default_values, timeout=-1)
+        mock_update.assert_called_once_with(resource_rest_call, timeout=12,
+                                            default_values=self._fcoe_networks.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):
