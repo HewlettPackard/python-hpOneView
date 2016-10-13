@@ -110,3 +110,23 @@ class SasInterconnects(object):
             list: A list of SAS Interconnects.
         """
         return self._client.get_by(field, value)
+
+    def patch(self, id_or_uri, operation, path, value, timeout=-1):
+        """
+        Update powerState, uidState, cpuResetState and deviceResetState using PATCH operation.
+
+        Args:
+            id_or_uri:
+                Can be either the SAS interconnect id or the SAS interconnect uri
+            operation:
+                The type of operation: one of "add", "copy", "move", "remove", "replace", or "test".
+            path:
+                The JSON path the operation is to use. The exact meaning depends on the type of operation.
+            value:
+                The value to add or replace for "add" and "replace" operations or the value to compare against
+                for a "test" operation. Not used by "copy", "move", or "remove".
+
+        Returns:
+            dict
+        """
+        return self._client.patch(id_or_uri=id_or_uri, operation=operation, path=path, value=value, timeout=timeout)

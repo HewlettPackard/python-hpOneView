@@ -52,12 +52,12 @@ sas_interconnects_limited = oneview_client.sas_interconnects.get_all(0, 10)
 pprint(sas_interconnects_limited)
 
 if all_sas_interconnects:
-    interconnect_uri = all_sas_interconnects[0]['uri']
+    sas_interconnect_uri = all_sas_interconnects[0]['uri']
 
     # Get by Id
     try:
         print("\nGet a sas-interconnects by id")
-        interconnect_id = interconnect_uri.rsplit('/')[-1]
+        interconnect_id = sas_interconnect_uri.rsplit('/')[-1]
         sas_interconnect_by_id = oneview_client.sas_interconnects.get(id_or_uri=interconnect_id)
         pprint(sas_interconnect_by_id)
     except HPOneViewException as e:
@@ -65,5 +65,41 @@ if all_sas_interconnects:
 
     # Get by Uri
     print("\nGet a sas-interconnect by uri")
-    sas_interconnect_by_uri = oneview_client.sas_interconnects.get(id_or_uri=interconnect_uri)
+    sas_interconnect_by_uri = oneview_client.sas_interconnects.get(id_or_uri=sas_interconnect_uri)
     pprint(sas_interconnect_by_uri)
+
+    print("\nTurn 'On' UID light on SAS interconnect %s" % sas_interconnect_by_uri['name'])
+    oneview_client.sas_interconnects.patch(
+        id_or_uri=sas_interconnect_uri,
+        operation='replace',
+        path='/uidState',
+        value='On'
+    )
+    print("Done!")
+
+    print("\nSoft Reset SAS interconnect %s" % sas_interconnect_by_uri['name'])
+    oneview_client.sas_interconnects.patch(
+        id_or_uri=sas_interconnect_uri,
+        operation='replace',
+        path='/cpuResetState',
+        value='Reset'
+    )
+    print("Done!")
+
+    print("\nReset SAS interconnect %s" % sas_interconnect_by_uri['name'])
+    oneview_client.sas_interconnects.patch(
+        id_or_uri=sas_interconnect_uri,
+        operation='replace',
+        path='/deviceResetState',
+        value='Reset'
+    )
+    print("Done!")
+
+    print("\nTurn off power for SAS interconnect %s" % sas_interconnect_by_uri['name'])
+    oneview_client.sas_interconnects.patch(
+        id_or_uri=sas_interconnect_uri,
+        operation='replace',
+        path='/powerState',
+        value='Off'
+    )
+    print("Done!")

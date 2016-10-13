@@ -62,3 +62,15 @@ class SasInterconnectsTest(unittest.TestCase):
         uri = '/rest/fc-networks/3518be0e-17c1-4189-8f81-83f3724f6155'
         self._sas_interconnects.get(id_or_uri=uri)
         mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'patch')
+    def test_patch_called_once(self, mock_patch):
+        args = dict(
+            id_or_uri='/rest/fc-networks/3518be0e-17c1-4189-8f81-83f3724f6155',
+            operation='replace',
+            path='/deviceResetState',
+            value='Reset',
+        )
+
+        self._sas_interconnects.patch(**args)
+        mock_patch.assert_called_once_with(timeout=-1, **args)
