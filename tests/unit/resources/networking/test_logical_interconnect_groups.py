@@ -83,20 +83,6 @@ class LogicalInterconnectGroupsTest(unittest.TestCase):
         mock_get.assert_called_once_with(lig_settings_uri)
 
     @mock.patch.object(ResourceClient, 'create')
-    def test_create_called_once_with_defaults(self, mock_create):
-        lig = {
-            "type": "logical-interconnect-groupV3",
-            "name": "OneView Test Logical Interconnect Group",
-            "interconnectMapTemplate": {
-                "interconnectMapEntryTemplates": []
-            },
-            "uplinkSets": [],
-            "enclosureType": "C7000",
-        }
-        self._lig.create(lig)
-        mock_create.assert_called_once_with(lig, timeout=-1)
-
-    @mock.patch.object(ResourceClient, 'create')
     def test_create_called_once(self, mock_create):
         lig = {
             "type": "logical-interconnect-groupV3",
@@ -108,21 +94,7 @@ class LogicalInterconnectGroupsTest(unittest.TestCase):
             "enclosureType": "C7000",
         }
         self._lig.create(lig, 70)
-        mock_create.assert_called_once_with(lig, timeout=70)
-
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_called_once_with_defaults(self, update):
-        lig = {
-            "type": "logical-interconnect-groupV3",
-            "name": "OneView Test Logical Interconnect Group",
-            "interconnectMapTemplate": {
-                "interconnectMapEntryTemplates": []
-            },
-            "uplinkSets": [],
-            "enclosureType": "C7000",
-        }
-        self._lig.update(lig)
-        update.assert_called_once_with(lig, timeout=-1)
+        mock_create.assert_called_once_with(lig, timeout=70, default_values=self._lig.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_called_once(self, mock_update):
@@ -136,7 +108,7 @@ class LogicalInterconnectGroupsTest(unittest.TestCase):
             "enclosureType": "C7000",
         }
         self._lig.update(lig, 70)
-        mock_update.assert_called_once_with(lig, timeout=70)
+        mock_update.assert_called_once_with(lig, timeout=70, default_values=self._lig.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):

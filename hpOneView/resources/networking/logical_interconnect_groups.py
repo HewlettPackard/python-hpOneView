@@ -43,6 +43,11 @@ from hpOneView.resources.resource import ResourceClient
 class LogicalInterconnectGroups(object):
     URI = '/rest/logical-interconnect-groups'
 
+    DEFAULT_VALUES = {
+        '200': {"type": "logical-interconnect-groupV3"},
+        '300': {"type": "logical-interconnect-groupV300"}
+    }
+
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
@@ -121,7 +126,7 @@ class LogicalInterconnectGroups(object):
             dict: Created logical interconnect group.
 
         """
-        return self._client.create(resource, timeout=timeout)
+        return self._client.create(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def update(self, resource, timeout=-1):
         """
@@ -137,7 +142,7 @@ class LogicalInterconnectGroups(object):
             dict: Updated logical interconnect group.
 
         """
-        return self._client.update(resource, timeout=timeout)
+        return self._client.update(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def delete(self, resource, force=False, timeout=-1):
         """
