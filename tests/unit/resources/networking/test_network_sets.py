@@ -31,7 +31,6 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class NetworkSetsTest(unittest.TestCase):
-
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -58,23 +57,8 @@ class NetworkSetsTest(unittest.TestCase):
         mock_create.return_value = {}
 
         self._network_sets.create(resource, 10)
-        mock_create.assert_called_once_with(resource_rest_call, timeout=10)
-
-    @mock.patch.object(ResourceClient, 'create')
-    def test_create_should_use_default_values(self, mock_create):
-        resource = {
-            'name': 'OneViewSDK Test Network Set',
-        }
-        resource_with_default_values = {
-            'name': 'OneViewSDK Test Network Set',
-            'connectionTemplateUri': None,
-            'type': 'network-set'
-        }
-        mock_create.return_value = {}
-
-        self._network_sets.create(resource)
-
-        mock_create.assert_called_once_with(resource_with_default_values, timeout=-1)
+        mock_create.assert_called_once_with(resource_rest_call, timeout=10,
+                                            default_values=self._network_sets.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_should_use_given_values(self, mock_update):
@@ -88,24 +72,8 @@ class NetworkSetsTest(unittest.TestCase):
         mock_update.return_value = {}
 
         self._network_sets.update(resource, 20)
-        mock_update.assert_called_once_with(resource_rest_call, timeout=20)
-
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_should_use_default_values(self, mock_update):
-        resource = {
-            'name': 'OneViewSDK Test Network Set',
-        }
-        resource_with_default_values = {
-            'name': 'OneViewSDK Test Network Set',
-            'connectionTemplateUri': None,
-            'type': 'network-set',
-        }
-        mock_update.return_value = {}
-
-        self._network_sets.update(resource)
-
-        mock_update.assert_called_once_with(
-            resource_with_default_values, timeout=-1)
+        mock_update.assert_called_once_with(resource_rest_call, timeout=20,
+                                            default_values=self._network_sets.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):
