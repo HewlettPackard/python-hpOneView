@@ -170,31 +170,16 @@ class VolumesTest(unittest.TestCase):
         mock_get.assert_called_once_with(snapshot_uri)
 
     @mock.patch.object(ResourceClient, 'create')
-    def test_create_snapshot_should_use_default_values(self, mock_create):
+    def test_create_snapshot_should_be_called_once(self, mock_create):
         volume_id = '280FF951-F007-478F-AC29-E4655FC'
         uri = '/rest/storage-volumes/280FF951-F007-478F-AC29-E4655FC/snapshots/'
         resource = {
             'name': 'OneViewSDK Test Snapshot',
         }
-        resource_with_default_values = {
-            'name': 'OneViewSDK Test Snapshot',
-            'type': 'Snapshot',
-        }
 
-        self._volumes.create_snapshot(volume_id, resource)
-        mock_create.assert_called_once_with(resource_with_default_values, uri=uri, timeout=-1)
-
-    @mock.patch.object(ResourceClient, 'create')
-    def test_create_snapshot_should_use_given_values(self, mock_create):
-        volume_id = '280FF951-F007-478F-AC29-E4655FC'
-        uri = '/rest/storage-volumes/280FF951-F007-478F-AC29-E4655FC/snapshots/'
-        resource = {
-            'name': 'OneViewSDK Test Snapshot',
-            'type': 'SnapshotV3',
-        }
-
-        self._volumes.create_snapshot(volume_id, resource)
-        mock_create.assert_called_once_with(resource, uri=uri, timeout=-1)
+        self._volumes.create_snapshot(volume_id, resource, 20)
+        mock_create.assert_called_once_with(resource, uri=uri, timeout=20,
+                                            default_values=self._volumes.DEFAULT_VALUES_SNAPSHOT)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_snapshot_called_once(self, mock_delete):
