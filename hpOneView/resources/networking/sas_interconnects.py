@@ -44,15 +44,11 @@ class SasInterconnects(object):
     URI = '/rest/sas-interconnects'
 
     def __init__(self, con):
-        self._connection = con
         self._client = ResourceClient(con, self.URI)
 
     def get_all(self, start=0, count=-1, fields='', filter='', query='', sort='', view=''):
         """
         Get list of SAS interconnects each with port details.
-
-        Note:
-            Filters are optional.
 
         Args:
             start:
@@ -86,10 +82,11 @@ class SasInterconnects(object):
 
     def get(self, id_or_uri):
         """
-        Gets the SAS Interconnect with the specified ID.
+        Gets the SAS Interconnect with the specified ID or URI.
 
         Args:
-            id_or_uri: Can be either the SAS Interconnect ID or URI
+            id_or_uri:
+                Can be either the SAS interconnect id or the SAS interconnect uri
 
         Returns:
             dict: SAS Interconnect.
@@ -127,6 +124,21 @@ class SasInterconnects(object):
                 for a "test" operation. Not used by "copy", "move", or "remove".
 
         Returns:
-            dict
+            dict: SAS Interconnect
         """
         return self._client.patch(id_or_uri=id_or_uri, operation=operation, path=path, value=value, timeout=timeout)
+
+    def refresh_state(self, id_or_uri, configuration):
+        """
+        Refresh a SAS Interconnect.
+
+        Args:
+            id_or_uri:
+                Can be either the SAS interconnect id or the SAS interconnect uri
+            configuration: Configuration
+
+        Returns:
+            dict: SAS Interconnect
+        """
+        uri = self._client.build_uri(id_or_uri) + "/refreshState"
+        return self._client.update(uri=uri, resource=configuration)

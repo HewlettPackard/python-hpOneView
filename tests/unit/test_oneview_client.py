@@ -43,6 +43,7 @@ from hpOneView.resources.networking.logical_interconnects import LogicalIntercon
 from hpOneView.resources.networking.logical_switches import LogicalSwitches
 from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGroups
 from hpOneView.resources.networking.uplink_sets import UplinkSets
+from hpOneView.resources.networking.sas_interconnects import SasInterconnects
 from hpOneView.resources.facilities.datacenters import Datacenters
 from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
 from hpOneView.resources.servers.server_profiles import ServerProfiles
@@ -432,3 +433,10 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_managed_sans(self):
         managed_sans = self._oneview.managed_sans
         self.assertEqual(managed_sans, self._oneview.managed_sans)
+
+    def test_sas_interconnects_has_right_type(self):
+        self.assertIsInstance(self._oneview.sas_interconnects, SasInterconnects)
+
+    def test_lazy_loading_sas_interconnects(self):
+        sas_interconnects = self._oneview.sas_interconnects
+        self.assertEqual(sas_interconnects, self._oneview.sas_interconnects)

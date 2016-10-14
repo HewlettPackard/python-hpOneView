@@ -25,17 +25,17 @@ import unittest
 
 import mock
 
-from hpOneView.connection import connection
 from hpOneView.resources.networking.sas_interconnects import SasInterconnects
 from hpOneView.resources.resource import ResourceClient
 
 
 class SasInterconnectsTest(unittest.TestCase):
 
+    SAS_INTERCONNECT_URI = '/rest/sas-interconnects/3518be0e-17c1-4189-8f81-83f3724f6155'
+
     def setUp(self):
         self.host = '127.0.0.1'
-        self.connection = connection(self.host)
-        self._sas_interconnects = SasInterconnects(self.connection)
+        self._sas_interconnects = SasInterconnects(None)
 
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_all_called_once(self, mock_get_all):
@@ -59,14 +59,13 @@ class SasInterconnectsTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_with_uri_called_once(self, mock_get):
-        uri = '/rest/fc-networks/3518be0e-17c1-4189-8f81-83f3724f6155'
-        self._sas_interconnects.get(id_or_uri=uri)
-        mock_get.assert_called_once_with(uri)
+        self._sas_interconnects.get(id_or_uri=self.SAS_INTERCONNECT_URI)
+        mock_get.assert_called_once_with(self.SAS_INTERCONNECT_URI)
 
     @mock.patch.object(ResourceClient, 'patch')
     def test_patch_called_once(self, mock_patch):
         args = dict(
-            id_or_uri='/rest/fc-networks/3518be0e-17c1-4189-8f81-83f3724f6155',
+            id_or_uri=self.SAS_INTERCONNECT_URI,
             operation='replace',
             path='/deviceResetState',
             value='Reset',
@@ -74,3 +73,15 @@ class SasInterconnectsTest(unittest.TestCase):
 
         self._sas_interconnects.patch(**args)
         mock_patch.assert_called_once_with(timeout=-1, **args)
+
+    @mock.patch.object(ResourceClient, 'build_uri')
+    @mock.patch.object(ResourceClient, 'update')
+    def test_refresh_state_called_once(self, mock_update, mock_build_uri):
+        configuration = dict(refreshState="RefreshPending")
+        expected_uri = self.SAS_INTERCONNECT_URI + "/refreshState"
+
+        mock_build_uri.return_value = self.SAS_INTERCONNECT_URI
+        self._sas_interconnects.refresh_state(id_or_uri=self.SAS_INTERCONNECT_URI, configuration=configuration)
+
+        mock_build_uri.assert_called_once_with(self.SAS_INTERCONNECT_URI)
+        mock_update.assert_called_once_with(uri=expected_uri, resource=configuration)
