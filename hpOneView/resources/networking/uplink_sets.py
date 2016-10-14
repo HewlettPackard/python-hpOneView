@@ -45,13 +45,15 @@ from builtins import isinstance
 class UplinkSets(object):
     URI = '/rest/uplink-sets'
 
+    DEFAULT_VALUES = {
+        '200': {"type": "uplink-setV3"},
+        '300': {"type": "uplink-setV300"}
+    }
+
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
         self._ethernet_network = EthernetNetworks(con)
-        self.__default_values = {
-            "type": "uplink-setV3",
-        }
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
@@ -122,9 +124,7 @@ class UplinkSets(object):
         Returns:
             dict: Created resource.
         """
-        data = self.__default_values.copy()
-        data.update(resource)
-        return self._client.create(data, timeout=timeout)
+        return self._client.create(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def update(self, resource, timeout=-1):
         """
@@ -139,9 +139,7 @@ class UplinkSets(object):
         Returns:
             dict: Updated resource.
         """
-        data = self.__default_values.copy()
-        data.update(resource)
-        return self._client.update(data, timeout=timeout)
+        return self._client.update(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def delete(self, resource, force=False, timeout=-1):
         """
