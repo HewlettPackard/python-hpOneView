@@ -31,7 +31,6 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class ConnectionTemplatesTest(unittest.TestCase):
-
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -79,4 +78,5 @@ class ConnectionTemplatesTest(unittest.TestCase):
             "name": "CT-23"
         }
         self._connection_templates.update(con_template, 70)
-        mock_update.assert_called_once_with(con_template, timeout=70)
+        mock_update.assert_called_once_with(con_template, timeout=70,
+                                            default_values=self._connection_templates.DEFAULT_VALUES)

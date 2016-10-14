@@ -43,6 +43,11 @@ from hpOneView.resources.resource import ResourceClient
 class ConnectionTemplates(object):
     URI = '/rest/connection-templates'
 
+    DEFAULT_VALUES = {
+        '200': {"type": "connection-template"},
+        '300': {"type": "connection-template"}
+    }
+
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
@@ -126,6 +131,4 @@ class ConnectionTemplates(object):
         Returns:
             dict: Updated resource.
         """
-        data = {}
-        data.update(resource)
-        return self._client.update(data, timeout=timeout)
+        return self._client.update(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
