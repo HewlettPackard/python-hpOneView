@@ -123,3 +123,27 @@ print("Get all logical enclosures")
 logical_enclosures = oneview_client.logical_enclosures.get_all()
 for enc in logical_enclosures:
     print('   %s' % enc['name'])
+
+if oneview_client.api_version >= 300:
+
+    if logical_enclosures:
+
+        print("Update firmware for a logical enclosure with the logical-interconnect validation set as true.")
+
+        logical_enclosure = logical_enclosures[0]
+
+        logical_enclosure_updated = oneview_client.logical_enclosures.patch(
+            id_or_uri=logical_enclosure["uri"],
+            operation="replace",
+            path="/firmware",
+            value={
+                "firmwareBaselineUri": "/rest/firmware-drivers/SPPgen9snap6_2016_0405_87",
+                "firmwareUpdateOn": "EnclosureOnly",
+                "forceInstallFirmware": "true",
+                "validateIfLIFirmwareUpdateIsNonDisruptive": "true",
+                "logicalInterconnectUpdateMode": "Orchestrated",
+                "updateFirmwareOnUnmanagedInterconnect": "true"
+            }
+        )
+
+        pprint(logical_enclosure_updated)
