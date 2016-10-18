@@ -337,7 +337,7 @@ class ResourceClient(object):
         if force:
             uri += '?force=True'
 
-        resource = self.__merge_default_values(resource, default_values)
+        resource = self.merge_default_values(resource, default_values)
 
         return self.__do_put(uri, resource, timeout, custom_headers)
 
@@ -401,7 +401,7 @@ class ResourceClient(object):
         logger.debug('Create (uri = %s, resource = %s)' %
                      (uri, str(resource)))
 
-        resource = self.__merge_default_values(resource, default_values)
+        resource = self.merge_default_values(resource, default_values)
 
         return self.__do_post(uri, resource, timeout, custom_headers)
 
@@ -667,8 +667,7 @@ class ResourceClient(object):
 
         return response.get('nextPageUri') if has_next_page else None
 
-    def __merge_default_values(self, resource, default_values):
-
+    def merge_default_values(self, resource, default_values):
         if not default_values:
             return resource
 

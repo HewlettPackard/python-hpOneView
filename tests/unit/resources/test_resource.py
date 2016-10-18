@@ -34,7 +34,6 @@ from hpOneView.resources.resource import ResourceClient, RESOURCE_CLIENT_INVALID
 
 
 class ResourceTest(unittest.TestCase):
-
     def test_merge_resources(self):
         resource1 = {'name': 'resource1', 'type': 'resource'}
         resource2 = {'name': 'resource2', 'port': '1'}
@@ -82,7 +81,7 @@ class ResourceClientTest(unittest.TestCase):
     def setUp(self):
         super(ResourceClientTest, self).setUp()
         self.host = '127.0.0.1'
-        self.connection = connection(self.host)
+        self.connection = connection(self.host, 200)
         self.resource_client = ResourceClient(self.connection, self.URI)
         self.task = {"task": "task"}
         self.response_body = {"body": "body"}
@@ -1066,3 +1065,28 @@ class ResourceClientTest(unittest.TestCase):
         resource_client.create(dict_to_create, timeout=-1)
 
         mock_post.assert_called_once_with(self.URI, dict_to_create, custom_headers=None)
+
+    def test_merge_api_default_values(self):
+        resource = {'name': 'resource1'}
+        default_values = {
+            '200': {"type": "EnclosureGroupV200"},
+            '300': {"type": "EnclosureGroupV300"}
+        }
+
+        expected = {'name': 'resource1', "type": "EnclosureGroupV200"}
+
+        resource_client = ResourceClient(self.connection, self.URI)
+        result = resource_client.merge_default_values(resource, default_values)
+
+        self.assertEqual(result, expected)
+
+    def test_should_not_merge_when_default_values_not_defined(self):
+        resource = {'name': 'resource1'}
+        default_values = {}
+
+        expected = {'name': 'resource1'}
+
+        resource_client = ResourceClient(self.connection, self.URI)
+        result = resource_client.merge_default_values(resource, default_values)
+
+        self.assertEqual(result, expected)
