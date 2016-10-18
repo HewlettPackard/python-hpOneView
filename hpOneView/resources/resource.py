@@ -81,6 +81,7 @@ def merge_default_values(resource_list, default_values):
     Returns:
         list: list containing each item merged with default_values
     """
+
     def merge_item(resource):
         return merge_resources(default_values, resource)
 
@@ -336,9 +337,9 @@ class ResourceClient(object):
         if force:
             uri += '?force=True'
 
-        data = self.__merge_default_values(resource, default_values)
+        resource = self.__merge_default_values(resource, default_values)
 
-        return self.__do_put(uri, data, timeout, custom_headers)
+        return self.__do_put(uri, resource, timeout, custom_headers)
 
     def create_with_zero_body(self, uri=None, timeout=-1, custom_headers=None):
         """
@@ -400,9 +401,9 @@ class ResourceClient(object):
         logger.debug('Create (uri = %s, resource = %s)' %
                      (uri, str(resource)))
 
-        data = self.__merge_default_values(resource, default_values)
+        resource = self.__merge_default_values(resource, default_values)
 
-        return self.__do_post(uri, data, timeout, custom_headers)
+        return self.__do_post(uri, resource, timeout, custom_headers)
 
     def patch(self, id_or_uri, operation, path, value, timeout=-1, custom_headers=None):
         """
@@ -667,6 +668,10 @@ class ResourceClient(object):
         return response.get('nextPageUri') if has_next_page else None
 
     def __merge_default_values(self, resource, default_values):
+
+        if not default_values:
+            return resource
+
         merged_resource = None
 
         if not isinstance(resource, list):
