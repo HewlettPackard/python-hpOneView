@@ -101,6 +101,40 @@ If your environment requires a proxy, define the proxy properties in the JSON fi
   "proxy": "<proxy_host>:<proxy_port>"
 ```
 
+## Exception handling
+
+All the exceptions raised by the OneView Python SDK inherit from HPOneViewException.
+
+**HPOneViewException** has the following properties:
+- **msg** a string containing the error message sent by the OneView REST API;
+- **oneview_response** has the entire JSON data (as dict) returned by the OneView, describing the error details. It can be ```None```.
+
+##### Exception handling example:
+
+```python
+try:
+    fc_network = oneview_client.fc_networks.get(id)
+except HPOneViewException as e:
+    print(e.msg)
+    if e.oneview_response:
+    	pprint(e.oneview_response)   
+```
+
+For compatibility purposes, the Exception args property is defined with the error arguments. For example:
+
+```python
+except Exception as e:
+	print(arg[0]) # e.msg equivalent
+    print(arg[1]) # e.oneview_reponse equivalent
+```
+
+:warning: The Exception Handling was modified on 2016-09-12. So, <u>before</u> this [commit](https://github.com/HewlettPackard/python-hpOneView/commit/37bd76894f8975fa3f78834b61e1eff10dc592e6), the behavior was:
+
+```python
+except HPOneViewException as e:
+    print(e.msg) # has the entire JSON result from OneView, or the error message.
+```
+
 ## Contributing
 
 You know the drill. Fork it, branch it, change it, commit it, and pull-request it.
