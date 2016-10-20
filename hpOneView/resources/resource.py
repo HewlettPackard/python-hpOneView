@@ -212,7 +212,7 @@ class ResourceClient(object):
                 logger.exception(RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE)
                 raise HPOneViewUnknownType(RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE)
         else:
-            uri = self._uri + "/" + resource
+            uri = self.build_uri(resource)
 
         if force:
             uri += '?force=True'
