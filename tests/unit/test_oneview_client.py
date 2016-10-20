@@ -44,6 +44,7 @@ from hpOneView.resources.networking.logical_switches import LogicalSwitches
 from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGroups
 from hpOneView.resources.networking.uplink_sets import UplinkSets
 from hpOneView.resources.networking.sas_interconnects import SasInterconnects
+from hpOneView.resources.networking.sas_logical_interconnect_groups import SasLogicalInterconnectGroups
 from hpOneView.resources.facilities.datacenters import Datacenters
 from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
 from hpOneView.resources.servers.server_profiles import ServerProfiles
@@ -386,6 +387,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_uplink_sets(self):
         copy_uplink_sets = self._oneview.uplink_sets
         self.assertEqual(copy_uplink_sets, self._oneview.uplink_sets)
+
+    def test_sas_logical_interconnect_groups_has_right_type(self):
+        self.assertIsInstance(self._oneview.sas_logical_interconnect_groups, SasLogicalInterconnectGroups)
+
+    def test_lazy_loading_sas_logical_interconnect_groups(self):
+        sas_logical_interconnect_groups = self._oneview.sas_logical_interconnect_groups
+        self.assertEqual(sas_logical_interconnect_groups, self._oneview.sas_logical_interconnect_groups)
 
     def test_unmanaged_devices_has_right_type(self):
         self.assertIsInstance(self._oneview.unmanaged_devices, UnmanagedDevices)
