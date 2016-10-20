@@ -58,25 +58,8 @@ class FcNetworksTest(unittest.TestCase):
         mock_create.return_value = {}
 
         self._fc_networks.create(resource, 30)
-        mock_create.assert_called_once_with(resource_rest_call, timeout=30)
-
-    @mock.patch.object(ResourceClient, 'create')
-    def test_create_should_use_default_values(self, mock_create):
-        resource = {
-            'name': 'OneViewSDK Test FC Network',
-        }
-        resource_with_default_values = {
-            'name': 'OneViewSDK Test FC Network',
-            'autoLoginRedistribution': False,
-            'type': 'fc-networkV2',
-            'linkStabilityTime': 30,
-            'fabricType': 'FabricAttach',
-        }
-        mock_create.return_value = {}
-
-        self._fc_networks.create(resource)
-
-        mock_create.assert_called_once_with(resource_with_default_values, timeout=-1)
+        mock_create.assert_called_once_with(resource_rest_call, timeout=30,
+                                            default_values=self._fc_networks.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_should_use_given_values(self, mock_update):
@@ -92,27 +75,8 @@ class FcNetworksTest(unittest.TestCase):
         mock_update.return_value = {}
 
         self._fc_networks.update(resource, 60)
-        mock_update.assert_called_once_with(resource_rest_call, timeout=60)
-
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_should_use_default_values(self, mock_update):
-        resource = {
-            'name': 'OneViewSDK Test FC Network',
-            'uri': 'a_uri',
-        }
-        resource_with_default_values = {
-            'name': 'OneViewSDK Test FC Network',
-            'autoLoginRedistribution': False,
-            'type': 'fc-networkV2',
-            'linkStabilityTime': 30,
-            'fabricType': 'FabricAttach',
-            'uri': 'a_uri',
-        }
-        mock_update.return_value = {}
-
-        self._fc_networks.update(resource)
-
-        mock_update.assert_called_once_with(resource_with_default_values, timeout=-1)
+        mock_update.assert_called_once_with(resource_rest_call, timeout=60,
+                                            default_values=self._fc_networks.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):

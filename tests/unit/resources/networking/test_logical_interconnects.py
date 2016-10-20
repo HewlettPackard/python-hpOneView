@@ -191,7 +191,8 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
         self._logical_interconnect.update_settings(logical_interconnect_uri, settings)
 
-        mock_update.assert_called_once_with(settings_rest_call, uri=uri_rest_call, force=False, timeout=-1)
+        mock_update.assert_called_once_with(settings_rest_call, uri=uri_rest_call, force=False, timeout=-1,
+                                            default_values=self._logical_interconnect.SETTINGS_DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_settings_by_id(self, mock_update):
@@ -208,13 +209,15 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
         self._logical_interconnect.update_settings(logical_interconnect_id, settings)
 
-        mock_update.assert_called_once_with(settings_rest_call, uri=uri_rest_call, force=False, timeout=-1)
+        mock_update.assert_called_once_with(settings_rest_call, uri=uri_rest_call, force=False, timeout=-1,
+                                            default_values=self._logical_interconnect.SETTINGS_DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_settings_with_force(self, mock_update):
         self._logical_interconnect.update_settings("abc123", {}, force=True)
 
-        mock_update.assert_called_once_with(mock.ANY, uri=mock.ANY, force=True, timeout=-1)
+        mock_update.assert_called_once_with(mock.ANY, uri=mock.ANY, force=True, timeout=-1,
+                                            default_values=self._logical_interconnect.SETTINGS_DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_settings_with_default_values(self, mock_update):
@@ -224,7 +227,6 @@ class LogicalInterconnectsTest(unittest.TestCase):
             }
         }
         settings_with_default_values = {
-            "type": "InterconnectSettingsV3",
             "ethernetSettings": {
                 "type": "EthernetInterconnectSettingsV3",
                 "macRefreshInterval": "5"
@@ -232,7 +234,8 @@ class LogicalInterconnectsTest(unittest.TestCase):
         }
         self._logical_interconnect.update_settings("abc123", settings)
 
-        mock_update.assert_called_once_with(settings_with_default_values, uri=mock.ANY, force=False, timeout=-1)
+        mock_update.assert_called_once_with(settings_with_default_values, uri=mock.ANY, force=False, timeout=-1,
+                                            default_values=self._logical_interconnect.SETTINGS_DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'update_with_zero_body')
     def test_update_configuration_by_uri(self, mock_update_with_zero_body):

@@ -46,8 +46,7 @@ options = {
             "capacity": "235834383322",
             "provisionType": "Thin",
             "storagePoolUri": ""
-        },
-        "type": "StorageVolumeTemplateV3"
+        }
 }
 
 oneview_client = OneViewClient(config)
@@ -129,8 +128,8 @@ except HPOneViewException as e:
 
 # Get storage volume template by uri
 print("Get storage volume template by uri: '{uri}'".format(**volume_template))
-volume_template_byid = oneview_client.storage_volume_templates.get(template_id)
-print("   Found '{name}' at uri: {uri}".format(**volume_template_byid))
+volume_template_by_uri = oneview_client.storage_volume_templates.get(volume_template['uri'])
+print("   Found '{name}' at uri: {uri}".format(**volume_template_by_uri))
 
 # Get storage volume template by name
 print("Get storage volume template by 'name': '{name}'".format(**volume_template))

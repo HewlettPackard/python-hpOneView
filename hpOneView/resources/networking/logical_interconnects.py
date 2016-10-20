@@ -41,7 +41,6 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class LogicalInterconnects(object):
-
     URI = '/rest/logical-interconnects'
     FIRMWARE_PATH = "/firmware"
     SNMP_CONFIGURATION_PATH = "/snmp-configuration"
@@ -50,6 +49,16 @@ class LogicalInterconnects(object):
     FORWARDING_INFORMATION_PATH = "/forwarding-information-base"
     QOS_AGGREGATED_CONFIGURATION = "/qos-aggregated-configuration"
     locations_uri = "{uri}{locations}".format(uri=URI, locations=LOCATIONS_PATH)
+
+    SETTINGS_DEFAULT_VALUES = {
+        '200': {"type": "InterconnectSettingsV3"},
+        '300': {"type": "InterconnectSettingsV201"}
+    }
+
+    SETTINGS_ETHERNET_DEFAULT_VALUES = {
+        '200': {"type": "EthernetInterconnectSettingsV3"},
+        '300': {"type": "EthernetInterconnectSettingsV201"}
+    }
 
     def __init__(self, con):
         self._connection = con
@@ -195,13 +204,14 @@ class LogicalInterconnects(object):
             dict: Logical Interconnect
         """
         data = settings.copy()
-        if 'type' not in data:
-            data['type'] = 'InterconnectSettingsV3'
-        if 'ethernetSettings' in data and 'type' not in data['ethernetSettings']:
-            data['ethernetSettings']['type'] = 'EthernetInterconnectSettingsV3'
+
+        if 'ethernetSettings' in data:
+            data['ethernetSettings'] = self._client.merge_default_values(data['ethernetSettings'],
+                                                                         self.SETTINGS_ETHERNET_DEFAULT_VALUES)
 
         uri = self._client.build_uri(id_or_uri) + "/settings"
-        return self._client.update(data, uri=uri, force=force, timeout=timeout)
+        return self._client.update(data, uri=uri, force=force, timeout=timeout,
+                                   default_values=self.SETTINGS_DEFAULT_VALUES)
 
     def update_configuration(self, id_or_uri, timeout=-1):
         """

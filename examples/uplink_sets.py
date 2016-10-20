@@ -40,13 +40,16 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-# To run this example you must define an interconnect uri (logicalInterconnectUri) and at leat one ethernet network
-# in 'networkUris' bellow
+# To run this example you must define an logical interconnect uri (logicalInterconnectUri) and the ethernet network uri
+logical_interconnect_uri = ''
+ethernet_network_uri = ''
+
 options = {
     "name": "Uplink Set Demo",
     "status": "OK",
-    "logicalInterconnectUri": "",
+    "logicalInterconnectUri": logical_interconnect_uri,
     "networkUris": [
+        ethernet_network_uri
     ],
     "fcNetworkUris": [],
     "fcoeNetworkUris": [],
@@ -69,7 +72,7 @@ print("Updated uplink set name to '{name}' successfully.\n  uri = '{uri}'".forma
 
 # Get a paginated list of uplink set resources sorting by name ascending and filtering by status
 print("\nGet a list of uplink sets")
-uplink_sets = oneview_client.uplink_sets.get_all(0, 15, sort='name:ascending', filter="\"'status'='OK'\"")
+uplink_sets = oneview_client.uplink_sets.get_all(0, 15, sort='name:ascending')
 for uplink_set in uplink_sets:
     print('  %s' % uplink_set['name'])
 

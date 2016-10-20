@@ -62,25 +62,6 @@ class StorageVolumeTemplatesTest(unittest.TestCase):
         mock_get.assert_called_once_with(storage_volume_templates_uri)
 
     @mock.patch.object(ResourceClient, 'create')
-    def test_create_called_once_with_defaults(self, mock_create):
-        storage_volume_template = {
-            "name": "FusionTemplateExample",
-            "provisioning": {
-                "shareable": True,
-                "provisionType": "Thin",
-                "capacity": "235834383322",
-                "storagePoolUri": "/rest/storage-pools/{id}"
-            },
-            "stateReason": "None",
-            "storageSystemUri": "/rest/storage-systems/{id}",
-            "snapshotPoolUri": "/rest/storage-pools/{id}",
-            "type": "StorageVolumeTemplateV3"
-        }
-        self._storage_volume_templates.create(storage_volume_template)
-        mock_create.assert_called_once_with(
-            storage_volume_template, timeout=-1, custom_headers={'Accept-Language': 'en_US'})
-
-    @mock.patch.object(ResourceClient, 'create')
     def test_create_called_once(self, mock_create):
         storage_volume_template = {
             "name": "FusionTemplateExample",
@@ -92,12 +73,12 @@ class StorageVolumeTemplatesTest(unittest.TestCase):
             },
             "stateReason": "None",
             "storageSystemUri": "/rest/storage-systems/{id}",
-            "snapshotPoolUri": "/rest/storage-pools/{id}",
-            "type": "StorageVolumeTemplateV3"
+            "snapshotPoolUri": "/rest/storage-pools/{id}"
         }
         self._storage_volume_templates.create(storage_volume_template, 70)
         mock_create.assert_called_once_with(
-            storage_volume_template, timeout=70, custom_headers={'Accept-Language': 'en_US'})
+            storage_volume_template, timeout=70, custom_headers={'Accept-Language': 'en_US'},
+            default_values=self._storage_volume_templates.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):
@@ -118,22 +99,6 @@ class StorageVolumeTemplatesTest(unittest.TestCase):
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(ResourceClient, 'update')
-    def test_update_called_once_with_defaults(self, update):
-        storage_volume_template = {
-            "type": "StorageVolumeTemplateV3",
-            "provisioning": {
-                "shareable": True,
-                "provisionType": "Thin",
-                "capacity": "235834383322",
-                "storagePoolUri": "/rest/storage-pools/{id}"
-            },
-            "name": "FusionTemplateExample",
-        }
-        self._storage_volume_templates.update(storage_volume_template)
-        update.assert_called_once_with(
-            storage_volume_template, timeout=-1, custom_headers={'Accept-Language': 'en_US'})
-
-    @mock.patch.object(ResourceClient, 'update')
     def test_update_called_once(self, mock_update):
         storage_volume_template = {
             "type": "StorageVolumeTemplateV3",
@@ -147,7 +112,8 @@ class StorageVolumeTemplatesTest(unittest.TestCase):
         }
         self._storage_volume_templates.update(storage_volume_template, 70)
         mock_update.assert_called_once_with(
-            storage_volume_template, timeout=70, custom_headers={'Accept-Language': 'en_US'})
+            storage_volume_template, timeout=70, custom_headers={'Accept-Language': 'en_US'},
+            default_values=self._storage_volume_templates.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'get_by')
     def test_get_by_called_once(self, mock_get_by):

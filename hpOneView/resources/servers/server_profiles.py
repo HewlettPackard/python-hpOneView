@@ -42,12 +42,14 @@ from hpOneView.resources.resource import ResourceClient
 class ServerProfiles(object):
     URI = '/rest/server-profiles'
 
+    DEFAULT_VALUES = {
+        '200': {"type": "ServerProfileV5"},
+        '300': {"type": "ServerProfileV6"}
+    }
+
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
-        self.__default_values = {
-            'type': 'ServerProfileV5'
-        }
 
     def create(self, resource, timeout=-1):
         """
@@ -61,9 +63,7 @@ class ServerProfiles(object):
         Returns:
             dict: Created server profile.
         """
-        data = self.__default_values.copy()
-        data.update(resource)
-        return self._client.create(resource=data, timeout=timeout)
+        return self._client.create(resource=resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def update(self, resource, id_or_uri):
         """
@@ -76,9 +76,7 @@ class ServerProfiles(object):
         Returns:
             dict: The server profile resource.
         """
-        data = self.__default_values.copy()
-        data.update(resource)
-        return self._client.update(resource=data, uri=id_or_uri)
+        return self._client.update(resource=resource, uri=id_or_uri, default_values=self.DEFAULT_VALUES)
 
     def patch(self, id_or_uri, operation, path, value, timeout=-1):
         """

@@ -36,20 +36,159 @@ config = {
     }
 }
 
-options = {
-    "type": "logical-interconnect-groupV3",
-    "name": "OneView Test Logical Interconnect Group",
-    "interconnectMapTemplate": {
-        "interconnectMapEntryTemplates": []
-    },
-    "uplinkSets": [],
-    "enclosureType": "C7000",
-}
-
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
+
+# Get the interconnect type named 'HP VC FlexFabric 10Gb/24-Port Module' and using the uri in the values for the fields
+# "permittedInterconnectTypeUri" and create a Logical Interconnect Group.
+# Note: If this type does not exist, select another name
+interconnect_type = oneview_client.interconnect_types.get_by('name', 'HP VC FlexFabric 10Gb/24-Port Module')[0]['uri']
+
+options = {
+    "category": None,
+    "created": None,
+    "description": None,
+    "eTag": None,
+    "uplinkSets": [],
+    "modified": None,
+    "name": "OneView Test Logical Interconnect Group",
+    "state": "Active",
+    "status": None,
+    "enclosureType": "C7000",
+    "interconnectMapTemplate": {
+        "interconnectMapEntryTemplates": [
+            {
+                "logicalDownlinkUri": None,
+                "logicalLocation": {
+                    "locationEntries": [
+                        {
+                            "relativeValue": "1",
+                            "type": "Bay"
+                        },
+                        {
+                            "relativeValue": 1,
+                            "type": "Enclosure"
+                        }
+                    ]
+                },
+                "permittedInterconnectTypeUri": interconnect_type
+            },
+            {
+                "logicalDownlinkUri": None,
+                "logicalLocation": {
+                    "locationEntries": [
+                        {
+                            "relativeValue": "2",
+                            "type": "Bay"
+                        },
+                        {
+                            "relativeValue": 1,
+                            "type": "Enclosure"
+                        }
+                    ]
+                },
+                "permittedInterconnectTypeUri": interconnect_type
+            },
+            {
+                "logicalDownlinkUri": None,
+                "logicalLocation": {
+                    "locationEntries": [
+                        {
+                            "relativeValue": 3,
+                            "type": "Bay"
+                        },
+                        {
+                            "relativeValue": 1,
+                            "type": "Enclosure"
+                        }
+                    ]
+                },
+                "permittedInterconnectTypeUri": None
+            },
+            {
+                "logicalDownlinkUri": None,
+                "logicalLocation": {
+                    "locationEntries": [
+                        {
+                            "relativeValue": 4,
+                            "type": "Bay"
+                        },
+                        {
+                            "relativeValue": 1,
+                            "type": "Enclosure"
+                        }]
+                },
+                "permittedInterconnectTypeUri": None
+            },
+            {
+                "logicalDownlinkUri": None,
+                "logicalLocation": {
+                    "locationEntries": [
+                        {
+                            "relativeValue": 5,
+                            "type": "Bay"
+                        },
+                        {
+                            "relativeValue": 1,
+                            "type": "Enclosure"
+                        }
+                    ]
+                },
+                "permittedInterconnectTypeUri": None
+            },
+            {
+                "logicalDownlinkUri": None,
+                "logicalLocation": {
+                    "locationEntries": [
+                        {
+                            "relativeValue": 6,
+                            "type": "Bay"
+                        },
+                        {
+                            "relativeValue": 1,
+                            "type": "Enclosure"
+                        }
+                    ]
+                },
+                "permittedInterconnectTypeUri": None
+            },
+            {
+                "logicalDownlinkUri": None,
+                "logicalLocation": {
+                    "locationEntries": [
+                        {
+                            "relativeValue": 7,
+                            "type": "Bay"
+                        },
+                        {
+                            "relativeValue": 1,
+                            "type": "Enclosure"
+                        }
+                    ]
+                },
+                "permittedInterconnectTypeUri": None
+            },
+            {
+                "logicalDownlinkUri": None,
+                "logicalLocation": {
+                    "locationEntries": [
+                        {
+                            "relativeValue": 8,
+                            "type": "Bay"
+                        },
+                        {
+                            "relativeValue": 1,
+                            "type": "Enclosure"
+                        }
+                    ]
+                },
+                "permittedInterconnectTypeUri": None
+            }
+        ]
+    }
+}
 
 # Create a logical interconnect group
 print("Create a logical interconnect group")

@@ -45,12 +45,14 @@ INVALID_VOLUME_URI = "When no snapshot uri is provided, volume id or valume uri 
 class Volumes(object):
     URI = '/rest/storage-volumes'
 
+    DEFAULT_VALUES_SNAPSHOT = {
+        '200': {"type": "Snapshot"},
+        '300': {"type": "Snapshot"}
+    }
+
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
-        self.__snapshot_default_values = {
-            "type": "Snapshot"
-        }
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
@@ -229,9 +231,8 @@ class Volumes(object):
             dict: Storage volume.
         """
         uri = self.__build_volume_snapshot_uri(volume_id_or_uri)
-        data = self.__snapshot_default_values.copy()
-        data.update(snapshot)
-        return self._client.create(data, uri=uri, timeout=timeout)
+
+        return self._client.create(snapshot, uri=uri, timeout=timeout, default_values=self.DEFAULT_VALUES_SNAPSHOT)
 
     def get_snapshot(self, snapshot_id_or_uri, volume_id_or_uri=None):
         """

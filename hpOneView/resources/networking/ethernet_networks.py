@@ -43,13 +43,14 @@ from hpOneView.resources.resource import ResourceClient
 class EthernetNetworks(object):
     URI = '/rest/ethernet-networks'
 
+    DEFAULT_VALUES = {
+        '200': {"type": "ethernet-networkV3"},
+        '300': {"type": "ethernet-networkV300"}
+    }
+
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
-        self.__default_values = {
-            "ethernetNetworkType": "Tagged",
-            "type": "ethernet-networkV3"
-        }
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
@@ -123,9 +124,7 @@ class EthernetNetworks(object):
             dict: Created resource.
 
         """
-        data = self.__default_values.copy()
-        data.update(resource)
-        return self._client.create(data, timeout=timeout)
+        return self._client.create(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def create_bulk(self, resource, timeout=-1):
         """
@@ -229,9 +228,7 @@ class EthernetNetworks(object):
         Returns: Updated resource.
 
         """
-        data = self.__default_values.copy()
-        data.update(resource)
-        return self._client.update(data, timeout=timeout)
+        return self._client.update(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def get_by(self, field, value):
         """

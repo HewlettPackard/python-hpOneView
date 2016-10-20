@@ -31,7 +31,6 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class LogicalSwitchGroupsTest(unittest.TestCase):
-
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -66,7 +65,6 @@ class LogicalSwitchGroupsTest(unittest.TestCase):
     @mock.patch.object(ResourceClient, 'create')
     def test_create_called_once(self, mock_create):
         lsg = {
-            "type": "logical-switch-group",
             "name": "OneView Test Logical Switch Group",
             "switchMapTemplate": {
                 "switchMapEntryTemplates": [{
@@ -81,12 +79,11 @@ class LogicalSwitchGroupsTest(unittest.TestCase):
             }
         }
         self._lsg.create(lsg, 70)
-        mock_create.assert_called_once_with(lsg, timeout=70, default_values=LogicalSwitchGroups.DEFAULT_VALUES)
+        mock_create.assert_called_once_with(lsg, timeout=70, default_values=self._lsg.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_called_once(self, mock_update):
         lsg = {
-            "type": "logical-switch-group",
             "name": "Updated name",
             "switchMapTemplate": {
                 "switchMapEntryTemplates": [{
@@ -102,7 +99,7 @@ class LogicalSwitchGroupsTest(unittest.TestCase):
             }
         }
         self._lsg.update(lsg, 70)
-        mock_update.assert_called_once_with(lsg, timeout=70, default_values=LogicalSwitchGroups.DEFAULT_VALUES)
+        mock_update.assert_called_once_with(lsg, timeout=70, default_values=self._lsg.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):

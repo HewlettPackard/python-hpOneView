@@ -43,6 +43,11 @@ from hpOneView.resources.resource import ResourceClient
 class StorageVolumeTemplates(object):
     URI = '/rest/storage-volume-templates'
 
+    DEFAULT_VALUES = {
+        '200': {"type": "StorageVolumeTemplateV3"},
+        '300': {"type": "StorageVolumeTemplateV3"}
+    }
+
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
@@ -86,7 +91,8 @@ class StorageVolumeTemplates(object):
             dict: Created storage volume template.
         """
         custom_headers = {'Accept-Language': 'en_US'}
-        return self._client.create(resource, timeout=timeout, custom_headers=custom_headers)
+        return self._client.create(resource, timeout=timeout, custom_headers=custom_headers,
+                                   default_values=self.DEFAULT_VALUES)
 
     def get(self, id_or_uri):
         """
@@ -146,7 +152,8 @@ class StorageVolumeTemplates(object):
             dict: Updated storage volume system
         """
         custom_headers = {'Accept-Language': 'en_US'}
-        return self._client.update(resource, timeout=timeout, custom_headers=custom_headers)
+        return self._client.update(resource, timeout=timeout, custom_headers=custom_headers,
+                                   default_values=self.DEFAULT_VALUES)
 
     def get_by(self, field, value):
         """

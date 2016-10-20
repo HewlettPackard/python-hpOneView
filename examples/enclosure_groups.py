@@ -80,8 +80,7 @@ pprint(created_eg)
 
 # Get the first 10 records, sorting by name descending
 print("Get the ten first Enclosure Groups, sorting by name descending")
-egs = oneview_client.enclosure_groups.get_all(0, 10,
-                                              sort='name:descending')
+egs = oneview_client.enclosure_groups.get_all(0, 10, sort='name:descending')
 pprint(egs)
 
 # Get Enclosure Group by property

@@ -42,6 +42,11 @@ from hpOneView.resources.resource import ResourceClient
 class LogicalSwitches(object):
     URI = '/rest/logical-switches'
 
+    SWITCH_DEFAULT_VALUES = {
+        '200': {"type": "logical-switch"},
+        '300': {"type": "logical-switchV300"}
+    }
+
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
@@ -169,5 +174,6 @@ class LogicalSwitches(object):
         return self._client.update_with_zero_body(uri, timeout=timeout)
 
     def __set_default_values(self, resource):
-        if 'logicalSwitch' in resource and 'type' not in resource['logicalSwitch']:
-            resource['logicalSwitch']['type'] = 'logical-switch'
+        if 'logicalSwitch' in resource:
+            resource['logicalSwitch'] = self._client.merge_default_values(resource['logicalSwitch'],
+                                                                          self.SWITCH_DEFAULT_VALUES)

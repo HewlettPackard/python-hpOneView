@@ -43,12 +43,14 @@ from hpOneView.resources.resource import ResourceClient
 class FcoeNetworks(object):
     URI = '/rest/fcoe-networks'
 
+    DEFAULT_VALUES = {
+        '200': {"type": "fcoe-network"},
+        '300': {"type": "fcoe-networkV300"}
+    }
+
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
-        self.__default_values = {
-            'type': 'fcoe-network',
-        }
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
@@ -116,9 +118,7 @@ class FcoeNetworks(object):
 
         Returns: Created resource.
         """
-        data = self.__default_values.copy()
-        data.update(resource)
-        return self._client.create(data, timeout=timeout)
+        return self._client.create(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def update(self, resource, timeout=-1):
         """
@@ -132,9 +132,7 @@ class FcoeNetworks(object):
         Returns:
             dict: Updated resource.
         """
-        data = self.__default_values.copy()
-        data.update(resource)
-        return self._client.update(data, timeout=timeout)
+        return self._client.update(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def get_by(self, field, value):
         """

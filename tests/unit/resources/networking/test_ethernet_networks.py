@@ -61,24 +61,21 @@ class EthernetNetworksTest(TestCase):
         mock_create.return_value = {}
 
         self._ethernet_networks.create(resource, 12)
-        mock_create.assert_called_once_with(resource_rest_call, timeout=12)
+        mock_create.assert_called_once_with(resource_rest_call, timeout=12,
+                                            default_values=self._ethernet_networks.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'create')
     def test_create_should_use_default_values(self, mock_create):
         resource = {
             'name': 'OneViewSDK Test Ethernet Network',
         }
-        resource_with_default_values = {
-            'name': 'OneViewSDK Test Ethernet Network',
-            'ethernetNetworkType': 'Tagged',
-            'type': 'ethernet-networkV3'
-        }
+
         mock_create.return_value = {}
 
         self._ethernet_networks.create(resource)
 
-        mock_create.assert_called_once_with(
-            resource_with_default_values, timeout=-1)
+        mock_create.assert_called_once_with(resource, timeout=-1,
+                                            default_values=self._ethernet_networks.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'create')
     @mock.patch.object(ResourceClient, 'get_all')
@@ -122,24 +119,20 @@ class EthernetNetworksTest(TestCase):
         mock_update.return_value = {}
 
         self._ethernet_networks.update(resource, timeout=60)
-        mock_update.assert_called_once_with(resource_rest_call, timeout=60)
+        mock_update.assert_called_once_with(resource_rest_call, timeout=60,
+                                            default_values=self._ethernet_networks.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_should_use_default_values(self, mock_update):
         resource = {
             'name': 'OneViewSDK Test Ethernet Network',
         }
-        resource_with_default_values = {
-            'type': 'ethernet-networkV3',
-            'name': 'OneViewSDK Test Ethernet Network',
-            'ethernetNetworkType': 'Tagged',
-        }
+
         mock_update.return_value = {}
 
         self._ethernet_networks.update(resource)
 
-        mock_update.assert_called_once_with(
-            resource_with_default_values, timeout=-1)
+        mock_update.assert_called_once_with(resource, timeout=-1, default_values=self._ethernet_networks.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):
