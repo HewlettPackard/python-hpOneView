@@ -78,6 +78,7 @@ from hpOneView.resources.fc_sans.san_managers import SanManagers
 from hpOneView.resources.fc_sans.endpoints import Endpoints
 from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
 from hpOneView.resources.networking.logical_interconnect_groups import LogicalInterconnectGroups
+from hpOneView.resources.networking.sas_logical_interconnects import SasLogicalInterconnects
 from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGroups
 from hpOneView.resources.networking.logical_switches import LogicalSwitches
 from hpOneView.resources.networking.sas_interconnects import SasInterconnects
@@ -134,6 +135,7 @@ class OneViewClient(object):
         self.__san_managers = None
         self.__endpoints = None
         self.__logical_interconnects = None
+        self.__sas_logical_interconnects = None
         self.__logical_interconnect_groups = None
         self.__logical_switch_groups = None
         self.__logical_switches = None
@@ -550,6 +552,18 @@ class OneViewClient(object):
             self.__logical_interconnects = LogicalInterconnects(
                 self.__connection)
         return self.__logical_interconnects
+
+    @property
+    def sas_logical_interconnects(self):
+        """
+        Gets the SasLogicalInterconnects API client.
+
+        Returns:
+            SasLogicalInterconnects:
+        """
+        if not self.__sas_logical_interconnects:
+            self.__sas_logical_interconnects = SasLogicalInterconnects(self.__connection)
+        return self.__sas_logical_interconnects
 
     @property
     def logical_downlinks(self):

@@ -45,6 +45,7 @@ from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGr
 from hpOneView.resources.networking.uplink_sets import UplinkSets
 from hpOneView.resources.networking.sas_interconnects import SasInterconnects
 from hpOneView.resources.networking.sas_logical_interconnect_groups import SasLogicalInterconnectGroups
+from hpOneView.resources.networking.sas_logical_interconnects import SasLogicalInterconnects
 from hpOneView.resources.networking.sas_interconnect_types import SasInterconnectTypes
 from hpOneView.resources.facilities.datacenters import Datacenters
 from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
@@ -366,6 +367,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_logical_interconnects(self):
         logical_interconnects = self._oneview.logical_interconnects
         self.assertEqual(logical_interconnects, self._oneview.logical_interconnects)
+
+    def test_sas_logical_interconnects_has_right_type(self):
+        self.assertIsInstance(self._oneview.sas_logical_interconnects, SasLogicalInterconnects)
+
+    def test_lazy_loading_sas_logical_interconnects(self):
+        sas_logical_interconnects = self._oneview.sas_logical_interconnects
+        self.assertEqual(sas_logical_interconnects, self._oneview.sas_logical_interconnects)
 
     def test_storage_volume_templates_has_right_type(self):
         self.assertIsInstance(self._oneview.storage_volume_templates, StorageVolumeTemplates)
