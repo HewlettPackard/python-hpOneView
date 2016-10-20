@@ -67,6 +67,7 @@ from hpOneView.resources.servers.id_pools_vwwn_ranges import IdPoolsVwwnRanges
 from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.interconnect_types import InterconnectTypes
 from hpOneView.resources.networking.interconnect_link_topologies import InterconnectLinkTopologies
+from hpOneView.resources.networking.sas_interconnect_types import SasInterconnectTypes
 from hpOneView.resources.uncategorized.unmanaged_devices import UnmanagedDevices
 from hpOneView.resources.networking.logical_downlinks import LogicalDownlinks
 from hpOneView.resources.facilities.power_devices import PowerDevices
@@ -124,6 +125,7 @@ class OneViewClient(object):
         self.__interconnects = None
         self.__interconnect_types = None
         self.__interconnect_link_topologies = None
+        self.__sas_interconnect_types = None
         self.__power_devices = None
         self.__unmanaged_devices = None
         self.__racks = None
@@ -508,6 +510,18 @@ class OneViewClient(object):
         if not self.__interconnect_link_topologies:
             self.__interconnect_link_topologies = InterconnectLinkTopologies(self.__connection)
         return self.__interconnect_link_topologies
+
+    @property
+    def sas_interconnect_types(self):
+        """
+        Gets the SasInterconnectTypes API client.
+
+        Returns:
+            SasInterconnectTypes:
+        """
+        if not self.__sas_interconnect_types:
+            self.__sas_interconnect_types = SasInterconnectTypes(self.__connection)
+        return self.__sas_interconnect_types
 
     @property
     def logical_interconnect_groups(self):
