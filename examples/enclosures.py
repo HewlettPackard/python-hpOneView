@@ -26,6 +26,8 @@ from hpOneView.oneview_client import OneViewClient
 from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
+# This example is compatible only for C7000 enclosures
+
 config = {
     "ip": "172.16.102.59",
     "credentials": {
@@ -37,6 +39,7 @@ config = {
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
+# The hostname, enclosure group URI, username, and password must be set on the configuration file
 options = {
     "enclosureGroupUri": config['enclosure_group_uri'],
     "hostname": config['enclosure_hostname'],
@@ -49,68 +52,76 @@ oneview_client = OneViewClient(config)
 
 # Add an Enclosure
 enclosure = oneview_client.enclosures.add(options)
-print("Added enclosure '%s'.\n  uri = '%s'" % (enclosure['name'], enclosure['uri']))
+enclosure_uri = enclosure['uri']
+print("Added enclosure '{name}'.\n  URI = '{uri}'".format(**enclosure))
 
-# Update the enclosure name
+# Perform a patch operation, replacing the name of the enclosure
 enclosure_name = enclosure['name'] + "-Updated"
-print("Updating the enclosure to have a name of '%s'" % enclosure_name)
-enclosure = oneview_client.enclosures.patch(enclosure['uri'], 'replace', '/name', enclosure_name)
-print("  Done.\n  uri = '%s', name = %s" % (enclosure['uri'], enclosure['name']))
+print("Updating the enclosure to have a name of " + enclosure_name)
+enclosure = oneview_client.enclosures.patch(enclosure_uri, 'replace', '/name', enclosure_name)
+print("  Done.\n  URI = '{uri}', name = {name}".format(**enclosure))
 
 # Find the recently added enclosure by name
+print("Find an enclosure by name")
 enclosure = oneview_client.enclosures.get_by('name', enclosure['name'])[0]
-print("Found an enclosure by name: '%s'.\n  uri = '%s'" % (enclosure['name'], enclosure['uri']))
+print("  URI = '{uri}'".format(**enclosure))
 
-# Get by Uri
-enclosure = oneview_client.enclosures.get(enclosure['uri'])
-print("Found an enclosure by uri: '%s'." % enclosure['name'])
+# Get by URI
+print("Find an enclosure by URI")
+enclosure = oneview_client.enclosures.get(enclosure_uri)
+pprint(enclosure)
 
 # Get all enclosures
 print("Get all enclosures")
 enclosures = oneview_client.enclosures.get_all()
 for enc in enclosures:
-    print('  %s' % enc['name'])
+    print('  {name}'.format(**enc))
 
+# Update configuration
 print("Reapplying the appliance's configuration on the enclosure")
 try:
-    oneview_client.enclosures.update_configuration(enclosure['uri'])
+    oneview_client.enclosures.update_configuration(enclosure_uri)
     print("  Done.")
 except HPOneViewException as e:
     print(e.msg)
 
+# Update environmental configuration
 print("Retrieve the environmental configuration data for the enclosure")
 try:
-    environmental_configuration = oneview_client.enclosures.get_environmental_configuration(enclosure['uri'])
-    print("  Enclosure calibratedMaxPower = %s" % environmental_configuration['calibratedMaxPower'])
+    environmental_configuration = oneview_client.enclosures.get_environmental_configuration(enclosure_uri)
+    print("  Enclosure calibratedMaxPower = {calibratedMaxPower}".format(**environmental_configuration))
 except HPOneViewException as e:
-    print("  %s" % e.msg)
+    print(e.msg)
 
+# Refresh the enclosure
 print("Refreshing the enclosure")
 try:
-    config = {"refreshState": "RefreshPending"}
-    enclosure = oneview_client.enclosures.refresh_state(enclosure['uri'], config)
+    refresh_state = {"refreshState": "RefreshPending"}
+    enclosure = oneview_client.enclosures.refresh_state(enclosure_uri, refresh_state)
     print("  Done")
 except HPOneViewException as e:
-    print("  %s" % e.msg)
+    print(e.msg)
 
+# Get the enclosure script
 print("Get the enclosure script")
 try:
-    script = oneview_client.enclosures.get_script(enclosure['uri'])
+    script = oneview_client.enclosures.get_script(enclosure_uri)
     pprint(script)
 except HPOneViewException as e:
-    print("  %s" % e.msg)
+    print(e.msg)
 
+# Buid the SSO URL parameters
 print("Build the SSO (Single Sign-On) URL parameters for the enclosure")
 try:
-    sso_url_parameters = oneview_client.enclosures.get_sso(enclosure['uri'], 'Active')
+    sso_url_parameters = oneview_client.enclosures.get_sso(enclosure_uri, 'Active')
     pprint(sso_url_parameters)
 except HPOneViewException as e:
-    print("  %s" % e.msg)
+    print(e.msg)
 
 # Get Statistics specifying parameters
 print("Get the enclosure statistics")
 try:
-    enclosure_statistics = oneview_client.enclosures.get_utilization(enclosure['uri'],
+    enclosure_statistics = oneview_client.enclosures.get_utilization(enclosure_uri,
                                                                      fields='AveragePower',
                                                                      filter='startDate=2016-06-30T03:29:42.000Z',
                                                                      view='day')
