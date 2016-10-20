@@ -52,6 +52,7 @@ from hpOneView.resources.uncategorized.unmanaged_devices import UnmanagedDevices
 from hpOneView.resources.storage.storage_volume_attachments import StorageVolumeAttachments
 from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTemplates
 from hpOneView.resources.storage.volumes import Volumes
+from hpOneView.resources.storage.drive_enclosures import DriveEnclosures
 from tests.test_utils import mock_builtin
 
 
@@ -448,3 +449,10 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_sas_interconnects(self):
         sas_interconnects = self._oneview.sas_interconnects
         self.assertEqual(sas_interconnects, self._oneview.sas_interconnects)
+
+    def test_drive_enclosure_has_right_type(self):
+        self.assertIsInstance(self._oneview.drive_enclosures, DriveEnclosures)
+
+    def test_lazy_loading_drive_enclosure(self):
+        drive_enclosures = self._oneview.drive_enclosures
+        self.assertEqual(drive_enclosures, self._oneview.drive_enclosures)

@@ -86,6 +86,7 @@ from hpOneView.resources.storage.storage_systems import StorageSystems
 from hpOneView.resources.storage.storage_pools import StoragePools
 from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTemplates
 from hpOneView.resources.storage.storage_volume_attachments import StorageVolumeAttachments
+from hpOneView.resources.storage.drive_enclosures import DriveEnclosures
 from hpOneView.resources.settings.firmware_drivers import FirmwareDrivers
 from hpOneView.resources.settings.firmware_bundles import FirmwareBundles
 from hpOneView.resources.storage.volumes import Volumes
@@ -147,6 +148,7 @@ class OneViewClient(object):
         self.__managed_sans = None
         self.__sas_interconnects = None
         self.__sas_logical_interconnect_groups = None
+        self.__drive_enclures = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -761,3 +763,15 @@ class OneViewClient(object):
         if not self.__sas_logical_interconnect_groups:
             self.__sas_logical_interconnect_groups = SasLogicalInterconnectGroups(self.__connection)
         return self.__sas_logical_interconnect_groups
+
+    @property
+    def drive_enclosures(self):
+        """
+        Gets the Drive Enclosures API client.
+
+        Returns:
+            DriveEnclosures:
+        """
+        if not self.__drive_enclures:
+            self.__drive_enclures = DriveEnclosures(self.__connection)
+        return self.__drive_enclures
