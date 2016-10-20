@@ -54,6 +54,7 @@ from hpOneView.resources.storage.storage_volume_attachments import StorageVolume
 from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTemplates
 from hpOneView.resources.storage.volumes import Volumes
 from hpOneView.resources.storage.drive_enclosures import DriveEnclosures
+from hpOneView.resources.storage.sas_logical_jbod_attachments import SasLogicalJbodAttachments
 from tests.test_utils import mock_builtin
 
 
@@ -416,6 +417,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_volumes(self):
         copy_volumes = self._oneview.volumes
         self.assertEqual(copy_volumes, self._oneview.volumes)
+
+    def test_sas_logical_jbod_attachments_right_type(self):
+        self.assertIsInstance(self._oneview.sas_logical_jbod_attachments, SasLogicalJbodAttachments)
+
+    def test_lazy_loading_sas_logical_jbod_attachments(self):
+        sas_logical_jbod_attachments = self._oneview.sas_logical_jbod_attachments
+        self.assertEqual(sas_logical_jbod_attachments, self._oneview.sas_logical_jbod_attachments)
 
     def test_server_profile_templates_has_right_type(self):
         self.assertIsInstance(self._oneview.server_profile_templates, ServerProfileTemplate)
