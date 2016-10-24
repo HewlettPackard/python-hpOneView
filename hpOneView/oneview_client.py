@@ -43,6 +43,7 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 import json
+import os
 
 from hpOneView.connection import connection
 from hpOneView.resources.servers.connections import Connections
@@ -95,8 +96,11 @@ ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
 
 class OneViewClient(object):
+
+    DEFAULT_API_VERSION = 200
+
     def __init__(self, config):
-        self.__connection = connection(config["ip"], config.get('api_version', 200))
+        self.__connection = connection(config["ip"], config.get('api_version', self.DEFAULT_API_VERSION))
         self.__set_proxy(config)
         self.__connection.login(config["credentials"])
         self.__connections = None
@@ -159,6 +163,35 @@ class OneViewClient(object):
         """
         with open(file_name) as json_data:
             config = json.load(json_data)
+
+        return cls(config)
+
+    @classmethod
+    def from_environment_variables(cls):
+        """
+        Construct OneViewClient using environment variables.
+
+        Allowed variables: ONEVIEWSDK_IP (required), ONEVIEWSDK_USERNAME (required), ONEVIEWSDK_PASSWORD (required),
+        ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, and ONEVIEWSDK_PROXY.
+
+        Returns:
+            OneViewClient:
+        """
+        def get_environment_variable(variable_name):
+            return os.environ[variable_name] if variable_name in os.environ else ''
+
+        ip = get_environment_variable('ONEVIEWSDK_IP')
+        api_version = get_environment_variable('ONEVIEWSDK_API_VERSION')
+        username = get_environment_variable('ONEVIEWSDK_USERNAME')
+        auth_login_domain = get_environment_variable('ONEVIEWSDK_AUTH_LOGIN_DOMAIN')
+        password = get_environment_variable('ONEVIEWSDK_PASSWORD')
+        proxy = get_environment_variable('ONEVIEWSDK_PROXY')
+        api_version_number = int(api_version) if api_version else OneViewClient.DEFAULT_API_VERSION
+
+        config = dict(ip=ip,
+                      api_version=api_version_number,
+                      credentials=dict(userName=username, authLoginDomain=auth_login_domain, password=password),
+                      proxy=proxy)
 
         return cls(config)
 
