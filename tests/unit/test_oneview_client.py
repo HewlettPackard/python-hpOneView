@@ -57,6 +57,7 @@ from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTe
 from hpOneView.resources.storage.volumes import Volumes
 from hpOneView.resources.storage.drive_enclosures import DriveEnclosures
 from hpOneView.resources.storage.sas_logical_jbod_attachments import SasLogicalJbodAttachments
+from hpOneView.resources.networking.internal_link_sets import InternalLinkSets
 from tests.test_utils import mock_builtin
 
 
@@ -488,3 +489,10 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_sas_logical_jbods(self):
         sas_logical_jbods = self._oneview.sas_logical_jbods
         self.assertEqual(sas_logical_jbods, self._oneview.sas_logical_jbods)
+
+    def test_internal_link_sets_has_right_type(self):
+        self.assertIsInstance(self._oneview.internal_link_sets, InternalLinkSets)
+
+    def test_lazy_loading_internal_link_sets(self):
+        internal_links = self._oneview.internal_link_sets
+        self.assertEqual(internal_links, self._oneview.internal_link_sets)

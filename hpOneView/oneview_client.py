@@ -68,6 +68,7 @@ from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.interconnect_types import InterconnectTypes
 from hpOneView.resources.networking.interconnect_link_topologies import InterconnectLinkTopologies
 from hpOneView.resources.networking.sas_interconnect_types import SasInterconnectTypes
+from hpOneView.resources.networking.internal_link_sets import InternalLinkSets
 from hpOneView.resources.uncategorized.unmanaged_devices import UnmanagedDevices
 from hpOneView.resources.networking.logical_downlinks import LogicalDownlinks
 from hpOneView.resources.facilities.power_devices import PowerDevices
@@ -130,6 +131,7 @@ class OneViewClient(object):
         self.__interconnect_types = None
         self.__interconnect_link_topologies = None
         self.__sas_interconnect_types = None
+        self.__internal_link_sets = None
         self.__power_devices = None
         self.__unmanaged_devices = None
         self.__racks = None
@@ -530,6 +532,18 @@ class OneViewClient(object):
         if not self.__sas_interconnect_types:
             self.__sas_interconnect_types = SasInterconnectTypes(self.__connection)
         return self.__sas_interconnect_types
+
+    @property
+    def internal_link_sets(self):
+        """
+        Gets the InternalLinkSets API client.
+
+        Returns:
+            InternalLinkSets:
+        """
+        if not self.__internal_link_sets:
+            self.__internal_link_sets = InternalLinkSets(self.__connection)
+        return self.__internal_link_sets
 
     @property
     def logical_interconnect_groups(self):
