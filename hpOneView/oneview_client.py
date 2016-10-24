@@ -91,6 +91,7 @@ from hpOneView.resources.storage.drive_enclosures import DriveEnclosures
 from hpOneView.resources.settings.firmware_drivers import FirmwareDrivers
 from hpOneView.resources.settings.firmware_bundles import FirmwareBundles
 from hpOneView.resources.storage.volumes import Volumes
+from hpOneView.resources.storage.sas_logical_jbod_attachments import SasLogicalJbodAttachments
 from hpOneView.resources.networking.uplink_sets import UplinkSets
 from hpOneView.resources.servers.migratable_vc_domains import MigratableVcDomains
 from hpOneView.resources.networking.sas_logical_interconnect_groups import SasLogicalInterconnectGroups
@@ -148,6 +149,7 @@ class OneViewClient(object):
         self.__firmware_bundles = None
         self.__uplink_sets = None
         self.__volumes = None
+        self.__sas_logical_jbod_attachments = None
         self.__managed_sans = None
         self.__migratable_vc_domains = None
         self.__sas_interconnects = None
@@ -743,6 +745,18 @@ class OneViewClient(object):
         if not self.__volumes:
             self.__volumes = Volumes(self.__connection)
         return self.__volumes
+
+    @property
+    def sas_logical_jbod_attachments(self):
+        """
+        Gets the SAS Logical JBOD Attachments client.
+
+        Returns:
+            SasLogicalJbodAttachments:
+        """
+        if not self.__sas_logical_jbod_attachments:
+            self.__sas_logical_jbod_attachments = SasLogicalJbodAttachments(self.__connection)
+        return self.__sas_logical_jbod_attachments
 
     @property
     def managed_sans(self):
