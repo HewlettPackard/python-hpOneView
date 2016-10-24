@@ -411,5 +411,5 @@ class ConnectionTest(unittest.TestCase):
                                                                          None)
 
         # verify the result
-        self.assertEquals(mockedTaskBody, testTask)
-        self.assertEquals(mockedTaskBody, testBody)
+        self.assertEqual(mockedTaskBody, testTask)
+        self.assertEqual(mockedTaskBody, testBody)
