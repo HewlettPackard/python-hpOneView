@@ -83,6 +83,7 @@ from hpOneView.resources.networking.logical_switches import LogicalSwitches
 from hpOneView.resources.networking.sas_interconnects import SasInterconnects
 from hpOneView.resources.servers.server_profiles import ServerProfiles
 from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
+from hpOneView.resources.storage.sas_logical_jbods import SasLogicalJbods
 from hpOneView.resources.storage.storage_systems import StorageSystems
 from hpOneView.resources.storage.storage_pools import StoragePools
 from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTemplates
@@ -140,6 +141,7 @@ class OneViewClient(object):
         self.__logical_downlinks = None
         self.__server_profiles = None
         self.__server_profile_templates = None
+        self.__sas_logical_jbods = None
         self.__storage_systems = None
         self.__storage_pools = None
         self.__storage_volume_templates = None
@@ -803,3 +805,15 @@ class OneViewClient(object):
         if not self.__drive_enclures:
             self.__drive_enclures = DriveEnclosures(self.__connection)
         return self.__drive_enclures
+
+    @property
+    def sas_logical_jbods(self):
+        """
+        Gets the SAS Logical JBODs API client.
+
+        Returns:
+            SasLogicalJbod:
+        """
+        if not self.__sas_logical_jbods:
+            self.__sas_logical_jbods = SasLogicalJbods(self.__connection)
+        return self.__sas_logical_jbods
