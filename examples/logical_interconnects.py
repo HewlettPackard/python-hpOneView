@@ -86,7 +86,7 @@ logical_interconnect = oneview_client.logical_interconnects.update_ethernet_sett
                                                                                      ethernet_settings,
                                                                                      force=True)
 print("Updated the ethernet settings")
-print("  with attribute 'macRefreshInterval' = {macRefreshInterval}").format(**logical_interconnect['ethernetSettings'])
+print("  with attribute 'macRefreshInterval' = {macRefreshInterval}".format(**logical_interconnect['ethernetSettings']))
 
 # Update the internal networks on the logical interconnect
 ethernet_network_options = {
@@ -107,7 +107,7 @@ else:
 logical_interconnect = oneview_client.logical_interconnects.update_internal_networks(logical_interconnect['uri'],
                                                                                      [ethernet_network['uri']])
 print("Updated internal networks on the logical interconnect")
-print("  with attribute 'internalNetworkUris' = {internalNetworkUris}").format(**logical_interconnect)
+print("  with attribute 'internalNetworkUris' = {internalNetworkUris}".format(**logical_interconnect))
 
 # Get the internal VLAN IDs
 print("Get the internal VLAN IDs for the provisioned networks on the logical interconnect")
@@ -123,7 +123,7 @@ interconnect_settings['ethernetSettings']['macRefreshInterval'] = 7
 logical_interconnect = oneview_client.logical_interconnects.update_settings(logical_interconnect['uri'],
                                                                             interconnect_settings)
 print("Updated interconnect settings on the logical interconnect")
-print("  with attribute 'macRefreshInterval' = {macRefreshInterval}").format(**logical_interconnect['ethernetSettings'])
+print("  with attribute 'macRefreshInterval' = {macRefreshInterval}".format(**logical_interconnect['ethernetSettings']))
 pprint(logical_interconnect)
 
 # Get the SNMP configuration for the logical interconnect
@@ -178,7 +178,7 @@ print("  Done.")
 # Return the logical interconnect to a consistent state
 print("Return the logical interconnect to a consistent state")
 logical_interconnect = oneview_client.logical_interconnects.update_compliance(logical_interconnect['uri'])
-print("  Done. The current consistency state is {consistencyStatus}.").format(**logical_interconnect)
+print("  Done. The current consistency state is {consistencyStatus}.".format(**logical_interconnect))
 
 # Create an interconnect at a specified location
 if enclosure_uri:
