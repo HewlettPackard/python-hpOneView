@@ -760,6 +760,42 @@ class ResourceClientTest(unittest.TestCase):
         self.assertEqual(result, entity)
 
     @mock.patch.object(connection, 'patch')
+    @mock.patch.object(TaskMonitor, 'get_completed_task')
+    def test_patch_request_custom_headers_with_content_type(self, mock_task, mock_patch):
+
+        dict_info = {"resource_name": "a name"}
+
+        mock_patch.return_value = {}, {}
+
+        headers = {'Content-Type': 'application/json',
+                   'Extra': 'extra'}
+        self.connection._apiVersion = 300
+
+        resource_client = ResourceClient(self.connection, self.URI)
+        resource_client.patch_request('/rest/testuri/id', body=dict_info, custom_headers=headers)
+
+        mock_patch.assert_called_once_with('/rest/testuri/id', dict_info, custom_headers=headers)
+
+    @mock.patch.object(connection, 'patch')
+    @mock.patch.object(TaskMonitor, 'get_completed_task')
+    def test_patch_request_custom_headers_(self, mock_task, mock_patch):
+
+        dict_info = {"resource_name": "a name"}
+
+        mock_patch.return_value = {}, {}
+        headers = {'Extra': 'extra'}
+        self.connection._apiVersion = 300
+
+        resource_client = ResourceClient(self.connection, self.URI)
+        resource_client.patch_request('/rest/testuri/id', body=dict_info, custom_headers=headers)
+
+        mock_patch.assert_called_once_with(
+            '/rest/testuri/id',
+            dict_info,
+            custom_headers={'Extra': 'extra',
+                            'Content-Type': 'application/json-patch+json'})
+
+    @mock.patch.object(connection, 'patch')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
     def test_wait_for_activity_on_patch(self, mock_wait4task, mock_patch):
         entity = {"resource_id": "123a53cz"}

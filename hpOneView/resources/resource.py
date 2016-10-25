@@ -422,17 +422,37 @@ class ResourceClient(object):
         Returns:
             Updated resource.
         """
+        patch_request_body = [{'op': operation, 'path': path, 'value': value}]
+
+        return self.patch_request(id_or_uri=id_or_uri,
+                                  body=patch_request_body,
+                                  timeout=timeout,
+                                  custom_headers=custom_headers)
+
+    def patch_request(self, id_or_uri, body, timeout=-1, custom_headers=None):
+        """
+        Uses the PATCH to update a resource.
+
+        Only one operation can be performed in each PATCH call.
+
+        Args:
+            id_or_uri: Can be either the resource ID or the resource URI.
+            body: Patch request body
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            Updated resource.
+        """
         uri = self.build_uri(id_or_uri)
 
-        logger.debug('Patch resource (uri = %s, op = %s, path = %s, value = %s)' % (
-            uri, operation, path, value))
+        logger.debug('Patch resource (uri = %s, data = %s)' % (uri, body))
 
         custom_headers_copy = custom_headers.copy() if custom_headers else {}
-        if self._connection._apiVersion >= 300:
+        if self._connection._apiVersion >= 300 and 'Content-Type' not in custom_headers_copy:
             custom_headers_copy['Content-Type'] = 'application/json-patch+json'
 
-        patch_request = [{'op': operation, 'path': path, 'value': value}]
-        task, entity = self._connection.patch(uri, patch_request, custom_headers=custom_headers_copy)
+        task, entity = self._connection.patch(uri, body, custom_headers=custom_headers_copy)
 
         if not task:
             return entity
