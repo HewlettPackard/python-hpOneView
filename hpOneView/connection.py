@@ -355,8 +355,13 @@ class connection(object):
             location = resp.getheader('Location')
             if location:
                 task = self.get(location)
-            else:
+            elif 'taskState' in body:
+                # This check is needed to handle a status response 202 without the location header,
+                # as is for PowerDevices. We are not sure if there are more resources with the same behavior.
                 task = body
+            else:
+                # For the resource Label the status is 202 but the response not contains a task.
+                task = None
 
             return task, body
 

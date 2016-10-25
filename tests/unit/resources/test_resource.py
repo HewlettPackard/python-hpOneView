@@ -49,7 +49,7 @@ class ResourceTest(unittest.TestCase):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
         self.resource_client = ResourceClient(self.connection, self.URI)
-        self.task = {"task": "task"}
+        self.task = {"task": "task", "taskState": "Finished"}
         self.response_body = {"body": "body"}
         self.custom_headers = {'Accept-Language': 'en_US'}
 
@@ -554,7 +554,7 @@ class ResourceTest(unittest.TestCase):
 
         self.resource_client.create({"test": "test"}, timeout=60)
 
-        mock_wait4task.assert_called_once_with({"task": "task"}, 60)
+        mock_wait4task.assert_called_once_with(self.task, 60)
 
     @mock.patch.object(connection, 'patch')
     def test_patch_request_when_id_is_provided(self, mock_patch):
@@ -617,7 +617,7 @@ class ResourceTest(unittest.TestCase):
         self.resource_client.patch(
             '123a53cz', 'replace', '/name', 'new_name', -1)
 
-        mock_wait4task.assert_called_once_with({"task": "task"}, mock.ANY)
+        mock_wait4task.assert_called_once_with(self.task, mock.ANY)
 
     def test_delete_with_none(self):
         try:
@@ -858,7 +858,7 @@ class ResourceTest(unittest.TestCase):
 
         self.resource_client.create_report("/rest/path/create-report", timeout=60)
 
-        mock_get_completed_task.assert_called_once_with({"task": "task"}, 60)
+        mock_get_completed_task.assert_called_once_with(self.task, 60)
 
     @mock.patch.object(connection, 'post')
     @mock.patch.object(TaskMonitor, 'get_completed_task')
