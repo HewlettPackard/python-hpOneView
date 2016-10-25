@@ -56,6 +56,7 @@ from hpOneView.resources.data_services.metric_streaming import MetricStreaming
 from hpOneView.resources.networking.switches import Switches
 from hpOneView.resources.networking.switch_types import SwitchTypes
 from hpOneView.resources.activity.tasks import Tasks
+from hpOneView.resources.settings.scopes import Scopes
 from hpOneView.resources.servers.enclosures import Enclosures
 from hpOneView.resources.servers.logical_enclosures import LogicalEnclosures
 from hpOneView.resources.servers.enclosure_groups import EnclosureGroups
@@ -118,6 +119,7 @@ class OneViewClient(object):
         self.__switches = None
         self.__switch_types = None
         self.__tasks = None
+        self.__scopes = None
         self.__enclosures = None
         self.__logical_enclosures = None
         self.__enclosure_groups = None
@@ -288,6 +290,18 @@ class OneViewClient(object):
         if not self.__fabrics:
             self.__fabrics = Fabrics(self.__connection)
         return self.__fabrics
+
+    @property
+    def scopes(self):
+        """
+        Gets the Scopes API client.
+
+        Returns:
+            Scopes:
+        """
+        if not self.__scopes:
+            self.__scopes = Scopes(self.__connection)
+        return self.__scopes
 
     @property
     def datacenters(self):

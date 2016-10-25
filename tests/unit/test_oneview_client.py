@@ -34,6 +34,7 @@ from hpOneView.resources.facilities.racks import Racks
 from hpOneView.resources.fc_sans.managed_sans import ManagedSANs
 from hpOneView.resources.fc_sans.san_managers import SanManagers
 from hpOneView.resources.fc_sans.endpoints import Endpoints
+from hpOneView.resources.settings.scopes import Scopes
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
 from hpOneView.resources.networking.interconnect_link_topologies import InterconnectLinkTopologies
@@ -407,6 +408,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_uplink_sets(self):
         copy_uplink_sets = self._oneview.uplink_sets
         self.assertEqual(copy_uplink_sets, self._oneview.uplink_sets)
+
+    def test_scopes_has_right_type(self):
+        self.assertIsInstance(self._oneview.scopes, Scopes)
+
+    def test_lazy_loading_scopes(self):
+        copy_scopes = self._oneview.scopes
+        self.assertEqual(copy_scopes, self._oneview.scopes)
 
     def test_sas_logical_interconnect_groups_has_right_type(self):
         self.assertIsInstance(self._oneview.sas_logical_interconnect_groups, SasLogicalInterconnectGroups)

@@ -778,7 +778,7 @@ class ResourceClientTest(unittest.TestCase):
 
     @mock.patch.object(connection, 'patch')
     @mock.patch.object(TaskMonitor, 'get_completed_task')
-    def test_patch_request_custom_headers_(self, mock_task, mock_patch):
+    def test_patch_request_custom_headers(self, mock_task, mock_patch):
 
         dict_info = {"resource_name": "a name"}
 
