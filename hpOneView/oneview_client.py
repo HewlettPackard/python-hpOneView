@@ -177,19 +177,15 @@ class OneViewClient(object):
         Returns:
             OneViewClient:
         """
-        def get_environment_variable(variable_name):
-            return os.environ[variable_name] if variable_name in os.environ else ''
-
-        ip = get_environment_variable('ONEVIEWSDK_IP')
-        api_version = get_environment_variable('ONEVIEWSDK_API_VERSION')
-        username = get_environment_variable('ONEVIEWSDK_USERNAME')
-        auth_login_domain = get_environment_variable('ONEVIEWSDK_AUTH_LOGIN_DOMAIN')
-        password = get_environment_variable('ONEVIEWSDK_PASSWORD')
-        proxy = get_environment_variable('ONEVIEWSDK_PROXY')
-        api_version_number = int(api_version) if api_version else OneViewClient.DEFAULT_API_VERSION
+        ip = os.environ.get('ONEVIEWSDK_IP', '')
+        api_version = int(os.environ.get('ONEVIEWSDK_API_VERSION', OneViewClient.DEFAULT_API_VERSION))
+        username = os.environ.get('ONEVIEWSDK_USERNAME', '')
+        auth_login_domain = os.environ.get('ONEVIEWSDK_AUTH_LOGIN_DOMAIN', '')
+        password = os.environ.get('ONEVIEWSDK_PASSWORD', '')
+        proxy = os.environ.get('ONEVIEWSDK_PROXY', '')
 
         config = dict(ip=ip,
-                      api_version=api_version_number,
+                      api_version=api_version,
                       credentials=dict(userName=username, authLoginDomain=auth_login_domain, password=password),
                       proxy=proxy)
 
