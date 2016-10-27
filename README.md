@@ -78,7 +78,7 @@ oneview_client = OneViewClient.from_json_file('/path/config.json')
 
 ### Environment Variables
 
-Configuration can also be store in environment variables.
+Configuration can also be stored in environment variables.
 
 ```bash
 # Required
@@ -94,7 +94,7 @@ export ONEVIEWSDK_PROXY='<proxy_host>:<proxy_port>'
 
 :lock: Tip: Make sure no unauthorised person has access to the environment variables, since the password is stored in clear-text.
 
-Once you have defined the environment variables, you can initialize the OneViewClient:
+Once you have defined the environment variables, you can initialize the OneViewClient using the following code snippet:
 
 ```python
 oneview_client = OneViewClient.from_environment_variables()
