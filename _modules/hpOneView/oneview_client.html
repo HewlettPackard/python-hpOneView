@@ -173,6 +173,7 @@
 <span class="n">__status__</span> <span class="o">=</span> <span class="s1">&#39;Development&#39;</span>
 
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">from</span> <span class="nn">hpOneView.connection</span> <span class="k">import</span> <span class="n">connection</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.servers.connections</span> <span class="k">import</span> <span class="n">Connections</span>
@@ -225,8 +226,11 @@
 
 
 <div class="viewcode-block" id="OneViewClient"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.oneview_client.OneViewClient">[docs]</a><span class="k">class</span> <span class="nc">OneViewClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="n">DEFAULT_API_VERSION</span> <span class="o">=</span> <span class="mi">200</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span> <span class="o">=</span> <span class="n">connection</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;ip&quot;</span><span class="p">],</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;api_version&#39;</span><span class="p">,</span> <span class="mi">200</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span> <span class="o">=</span> <span class="n">connection</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;ip&quot;</span><span class="p">],</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;api_version&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_API_VERSION</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__set_proxy</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;credentials&quot;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__connections</span> <span class="o">=</span> <span class="kc">None</span>
@@ -289,6 +293,31 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_data</span><span class="p">:</span>
             <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="OneViewClient.from_environment_variables"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.oneview_client.OneViewClient.from_environment_variables">[docs]</a>    <span class="k">def</span> <span class="nf">from_environment_variables</span><span class="p">(</span><span class="n">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct OneViewClient using environment variables.</span>
+
+<span class="sd">        Allowed variables: ONEVIEWSDK_IP (required), ONEVIEWSDK_USERNAME (required), ONEVIEWSDK_PASSWORD (required),</span>
+<span class="sd">        ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, and ONEVIEWSDK_PROXY.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OneViewClient:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ip</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ONEVIEWSDK_IP&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">api_version</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ONEVIEWSDK_API_VERSION&#39;</span><span class="p">,</span> <span class="n">OneViewClient</span><span class="o">.</span><span class="n">DEFAULT_API_VERSION</span><span class="p">))</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ONEVIEWSDK_USERNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">auth_login_domain</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ONEVIEWSDK_AUTH_LOGIN_DOMAIN&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ONEVIEWSDK_PASSWORD&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">proxy</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ONEVIEWSDK_PROXY&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="n">config</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">ip</span><span class="o">=</span><span class="n">ip</span><span class="p">,</span>
+                      <span class="n">api_version</span><span class="o">=</span><span class="n">api_version</span><span class="p">,</span>
+                      <span class="n">credentials</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">userName</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">authLoginDomain</span><span class="o">=</span><span class="n">auth_login_domain</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">),</span>
+                      <span class="n">proxy</span><span class="o">=</span><span class="n">proxy</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></div>
 

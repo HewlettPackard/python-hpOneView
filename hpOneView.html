@@ -487,6 +487,11 @@ to be uploaded as files</p>
 <em class="property">class </em><code class="descclassname">hpOneView.oneview_client.</code><code class="descname">OneViewClient</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/oneview_client.html#OneViewClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.DEFAULT_API_VERSION">
+<code class="descname">DEFAULT_API_VERSION</code><em class="property"> = 200</em><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.DEFAULT_API_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="hpOneView.oneview_client.OneViewClient.connection">
 <code class="descname">connection</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.connection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the underlying HPE OneView connection used by the OneViewClient.</p>
@@ -496,7 +501,7 @@ to be uploaded as files</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#module-hpOneView.connection" title="hpOneView.connection">connection</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#hpOneView.oneview_client.OneViewClient.connection" title="hpOneView.oneview_client.OneViewClient.connection">connection</a></td>
 </tr>
 </tbody>
 </table>
@@ -689,6 +694,24 @@ to be uploaded as files</p>
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.settings.html#hpOneView.resources.settings.firmware_drivers.FirmwareDrivers" title="hpOneView.resources.settings.firmware_drivers.FirmwareDrivers">FirmwareDrivers</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="hpOneView.oneview_client.OneViewClient.from_environment_variables">
+<em class="property">classmethod </em><code class="descname">from_environment_variables</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/oneview_client.html#OneViewClient.from_environment_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.from_environment_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct OneViewClient using environment variables.</p>
+<p>Allowed variables: ONEVIEWSDK_IP (required), ONEVIEWSDK_USERNAME (required), ONEVIEWSDK_PASSWORD (required),
+ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, and ONEVIEWSDK_PROXY.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#hpOneView.oneview_client.OneViewClient" title="hpOneView.oneview_client.OneViewClient">OneViewClient</a></td>
 </tr>
 </tbody>
 </table>
