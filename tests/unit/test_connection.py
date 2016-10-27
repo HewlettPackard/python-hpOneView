@@ -74,6 +74,38 @@ class ConnectionTest(unittest.TestCase):
 
     @mock.patch.object(HTTPSConnection, 'request')
     @mock.patch.object(HTTPSConnection, 'getresponse')
+    def test_post_when_status_is_202_and_task_contains_taskState(self, mock_response, mock_request):
+        mock_request.return_value = {}
+
+        fake_task = {"taskState": "Completed"}
+
+        response = mock.Mock(status=202)
+        response.read.return_value = json.dumps(fake_task).encode('utf-8')
+        response.getheader.return_value = ''
+        mock_response.return_value = response
+
+        task, body = self.connection.post('/path', self.request_body)
+
+        self.assertEqual(task, fake_task)
+        self.assertEqual(body, fake_task)
+
+    @mock.patch.object(HTTPSConnection, 'request')
+    @mock.patch.object(HTTPSConnection, 'getresponse')
+    def test_post_when_status_is_202_and_response_is_not_a_task(self, mock_response, mock_request):
+        mock_request.return_value = {}
+
+        response = mock.Mock(status=202)
+        response.read.return_value = json.dumps(self.response_body).encode('utf-8')
+        response.getheader.return_value = ''
+        mock_response.return_value = response
+
+        task, body = self.connection.post('/path', self.request_body)
+
+        self.assertEqual(task, None)
+        self.assertEqual(body, self.response_body)
+
+    @mock.patch.object(HTTPSConnection, 'request')
+    @mock.patch.object(HTTPSConnection, 'getresponse')
     def test_post_should_do_rest_call_when_status_ok(self, mock_response, mock_request):
         mock_request.return_value = {}
         mock_response.return_value = self.__make_http_response(status=200)

@@ -91,6 +91,7 @@ from hpOneView.resources.settings.firmware_bundles import FirmwareBundles
 from hpOneView.resources.storage.volumes import Volumes
 from hpOneView.resources.networking.uplink_sets import UplinkSets
 from hpOneView.resources.servers.migratable_vc_domains import MigratableVcDomains
+from hpOneView.resources.search.labels import Labels
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
@@ -148,6 +149,7 @@ class OneViewClient(object):
         self.__volumes = None
         self.__managed_sans = None
         self.__migratable_vc_domains = None
+        self.__labels = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -765,3 +767,15 @@ class OneViewClient(object):
         if not self.__migratable_vc_domains:
             self.__migratable_vc_domains = MigratableVcDomains(self.__connection)
         return self.__migratable_vc_domains
+
+    @property
+    def labels(self):
+        """
+        Gets the Labels API client.
+
+        Returns:
+            Labels:
+        """
+        if not self.__labels:
+            self.__labels = Labels(self.__connection)
+        return self.__labels

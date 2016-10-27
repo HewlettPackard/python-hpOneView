@@ -50,6 +50,7 @@ from hpOneView.resources.uncategorized.unmanaged_devices import UnmanagedDevices
 from hpOneView.resources.storage.storage_volume_attachments import StorageVolumeAttachments
 from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTemplates
 from hpOneView.resources.storage.volumes import Volumes
+from hpOneView.resources.search.labels import Labels
 from tests.test_utils import mock_builtin
 
 
@@ -471,3 +472,10 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_managed_sans(self):
         managed_sans = self._oneview.managed_sans
         self.assertEqual(managed_sans, self._oneview.managed_sans)
+
+    def test_labels_has_right_type(self):
+        self.assertIsInstance(self._oneview.labels, Labels)
+
+    def test_lazy_loading_labels(self):
+        labels = self._oneview.labels
+        self.assertEqual(labels, self._oneview.labels)
