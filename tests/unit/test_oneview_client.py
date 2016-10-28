@@ -22,8 +22,8 @@
 ###
 
 import io
-import unittest
 
+import unittest
 import mock
 
 from hpOneView.connection import connection
@@ -59,10 +59,28 @@ from hpOneView.resources.storage.volumes import Volumes
 from hpOneView.resources.storage.drive_enclosures import DriveEnclosures
 from hpOneView.resources.storage.sas_logical_jbod_attachments import SasLogicalJbodAttachments
 from hpOneView.resources.networking.internal_link_sets import InternalLinkSets
+from hpOneView.resources.search.labels import Labels
 from tests.test_utils import mock_builtin
 
 
+OS_ENVIRON_CONFIG_MINIMAL = {
+    'ONEVIEWSDK_IP': '172.16.100.199',
+    'ONEVIEWSDK_USERNAME': 'admin',
+    'ONEVIEWSDK_PASSWORD': 'secret123'
+}
+
+OS_ENVIRON_CONFIG_FULL = {
+    'ONEVIEWSDK_IP': '172.16.100.199',
+    'ONEVIEWSDK_USERNAME': 'admin',
+    'ONEVIEWSDK_PASSWORD': 'secret123',
+    'ONEVIEWSDK_API_VERSION': '201',
+    'ONEVIEWSDK_AUTH_LOGIN_DOMAIN': 'authdomain',
+    'ONEVIEWSDK_PROXY': '172.16.100.195:9999'
+}
+
+
 class OneViewClientTest(unittest.TestCase):
+
     def __mock_file_open(self, json_config_content):
         # Simulates a TextIOWrapper (file output)
         return io.StringIO(json_config_content)
@@ -146,6 +164,30 @@ class OneViewClientTest(unittest.TestCase):
 
         self.assertEqual(300, oneview_client.connection._apiVersion)
         self.assertEqual(300, oneview_client.api_version)
+
+    @mock.patch.object(connection, 'login')
+    @mock.patch.object(connection, 'set_proxy')
+    @mock.patch.dict('os.environ', OS_ENVIRON_CONFIG_MINIMAL)
+    def test_from_minimal_environment_variables(self, mock_set_proxy, mock_login):
+        oneview_client = OneViewClient.from_environment_variables()
+
+        mock_login.assert_called_once_with(dict(userName='admin',
+                                                password='secret123',
+                                                authLoginDomain=''))
+        mock_set_proxy.assert_not_called()
+        self.assertEqual(200, oneview_client.connection._apiVersion)
+
+    @mock.patch.object(connection, 'login')
+    @mock.patch.object(connection, 'set_proxy')
+    @mock.patch.dict('os.environ', OS_ENVIRON_CONFIG_FULL)
+    def test_from_full_environment_variables(self, mock_set_proxy, mock_login):
+        oneview_client = OneViewClient.from_environment_variables()
+
+        mock_login.assert_called_once_with(dict(userName='admin',
+                                                password='secret123',
+                                                authLoginDomain='authdomain'))
+        mock_set_proxy.assert_called_once_with('172.16.100.195', 9999)
+        self.assertEqual(201, oneview_client.connection._apiVersion)
 
     def test_fc_networks_has_right_type(self):
         self.assertIsInstance(self._oneview.fc_networks, FcNetworks)
@@ -504,3 +546,10 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_internal_link_sets(self):
         internal_links = self._oneview.internal_link_sets
         self.assertEqual(internal_links, self._oneview.internal_link_sets)
+
+    def test_labels_has_right_type(self):
+        self.assertIsInstance(self._oneview.labels, Labels)
+
+    def test_lazy_loading_labels(self):
+        labels = self._oneview.labels
+        self.assertEqual(labels, self._oneview.labels)

@@ -76,6 +76,30 @@ oneview_client = OneViewClient.from_json_file('/path/config.json')
 
 :lock: Tip: Check the file permissions because the password is stored in clear-text.
 
+### Environment Variables
+
+Configuration can also be stored in environment variables.
+
+```bash
+# Required
+export ONEVIEWSDK_IP='172.16.102.82'
+export ONEVIEWSDK_USERNAME='Administrator'
+export ONEVIEWSDK_PASSWORD='secret123'
+
+# Optional
+export ONEVIEWSDK_API_VERSION='200'
+export ONEVIEWSDK_AUTH_LOGIN_DOMAIN='authdomain'
+export ONEVIEWSDK_PROXY='<proxy_host>:<proxy_port>'
+```
+
+:lock: Tip: Make sure no unauthorised person has access to the environment variables, since the password is stored in clear-text.
+
+Once you have defined the environment variables, you can initialize the OneViewClient using the following code snippet:
+
+```python
+oneview_client = OneViewClient.from_environment_variables()
+```
+
 ### Dictionary
 
 You can also set the configuration using a dictionary:
@@ -84,8 +108,8 @@ You can also set the configuration using a dictionary:
 config = {
     "ip": "172.16.102.82",
     "credentials": {
-        "userName": "username",
-        "password": "password"
+        "userName": "Administrator",
+        "password": "secret123"
     }
 }
 
@@ -150,7 +174,7 @@ The following is a summary of the code structure and naming convention for the O
 - **Packages:** The package is named according to the **HPE OneView API Reference** group, with all characters in lowercase, replacing spaces by underscores.
 - **Modules:** The module is named according to the **HPE OneView API Reference** endpoint title, with all characters in lowercase, replacing spaces by underscores.
     For example: In the documentation we have: **FC Networks** so the module name will be **fc_networks**
-- **Classes:** We are using camel case to define the class name, for example: **FcNetworks** 
+- **Classes:** We are using camel case to define the class name, for example: **FcNetworks**
 - **OneViewClient properties:** In the **oneview_client**, the property name follows exactly the module name, for example: **fc_networks**
 - **Examples:** The example is named with the same name of the resource module: **fc_networks**
 - **Tests:**  The unit test folders follow the same structure of the resources. The name of the test modules should start with "test_", for example: **test_fc_networks**

@@ -43,6 +43,7 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 import json
+import os
 
 from hpOneView.connection import connection
 from hpOneView.resources.servers.connections import Connections
@@ -99,14 +100,17 @@ from hpOneView.resources.storage.sas_logical_jbod_attachments import SasLogicalJ
 from hpOneView.resources.networking.uplink_sets import UplinkSets
 from hpOneView.resources.servers.migratable_vc_domains import MigratableVcDomains
 from hpOneView.resources.networking.sas_logical_interconnect_groups import SasLogicalInterconnectGroups
+from hpOneView.resources.search.labels import Labels
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
-ONEVIEW_CLIENT_DEFAULT_API_VERSION = 200
 
 
 class OneViewClient(object):
+
+    DEFAULT_API_VERSION = 200
+
     def __init__(self, config):
-        self.__connection = connection(config["ip"], config.get('api_version', ONEVIEW_CLIENT_DEFAULT_API_VERSION))
+        self.__connection = connection(config["ip"], config.get('api_version', self.DEFAULT_API_VERSION))
         self.__set_proxy(config)
         self.__connection.login(config["credentials"])
         self.__connections = None
@@ -161,6 +165,7 @@ class OneViewClient(object):
         self.__managed_sans = None
         self.__migratable_vc_domains = None
         self.__sas_interconnects = None
+        self.__labels = None
         self.__sas_logical_interconnect_groups = None
         self.__drive_enclures = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
@@ -178,6 +183,31 @@ class OneViewClient(object):
         """
         with open(file_name) as json_data:
             config = json.load(json_data)
+
+        return cls(config)
+
+    @classmethod
+    def from_environment_variables(cls):
+        """
+        Construct OneViewClient using environment variables.
+
+        Allowed variables: ONEVIEWSDK_IP (required), ONEVIEWSDK_USERNAME (required), ONEVIEWSDK_PASSWORD (required),
+        ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, and ONEVIEWSDK_PROXY.
+
+        Returns:
+            OneViewClient:
+        """
+        ip = os.environ.get('ONEVIEWSDK_IP', '')
+        api_version = int(os.environ.get('ONEVIEWSDK_API_VERSION', OneViewClient.DEFAULT_API_VERSION))
+        username = os.environ.get('ONEVIEWSDK_USERNAME', '')
+        auth_login_domain = os.environ.get('ONEVIEWSDK_AUTH_LOGIN_DOMAIN', '')
+        password = os.environ.get('ONEVIEWSDK_PASSWORD', '')
+        proxy = os.environ.get('ONEVIEWSDK_PROXY', '')
+
+        config = dict(ip=ip,
+                      api_version=api_version,
+                      credentials=dict(userName=username, authLoginDomain=auth_login_domain, password=password),
+                      proxy=proxy)
 
         return cls(config)
 
@@ -873,3 +903,15 @@ class OneViewClient(object):
         if not self.__sas_logical_jbods:
             self.__sas_logical_jbods = SasLogicalJbods(self.__connection)
         return self.__sas_logical_jbods
+
+    @property
+    def labels(self):
+        """
+        Gets the Labels API client.
+
+        Returns:
+            Labels:
+        """
+        if not self.__labels:
+            self.__labels = Labels(self.__connection)
+        return self.__labels
