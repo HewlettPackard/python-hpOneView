@@ -29,33 +29,30 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'fc-networks'
+__title__ = 'plan-scripts'
 __version__ = '0.0.1'
-__copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
-                ' Development LP'
+__copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP'
 __license__ = 'MIT'
 __status__ = 'Development'
 
 from hpOneView.resources.resource import ResourceClient
+from hpOneView.common import extract_id_from_uri
 
 
-class FcNetworks(object):
-    URI = '/rest/fc-networks'
+class PlanScripts(object):
+    URI = '/rest/plan-scripts'
 
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
         self.__default_values = {
-            'autoLoginRedistribution': False,
-            'type': 'fc-networkV2',
-            'linkStabilityTime': 30,
-            'fabricType': 'FabricAttach',
+            'type': 'PlanScript',
         }
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a paginated collection of Fibre Channel networks. The collection is based on optional
-        sorting and filtering and is constrained by start and count parameters.
+        Gets a list of Plan Scripts based on optional sorting and filtering, and constrained by start and count
+        parameters.
 
         Args:
             start:
@@ -74,14 +71,13 @@ class FcNetworks(object):
                 on create time with the oldest entry first.
 
         Returns:
-            list: A list of Fibre Channel networks.
+            list: A list of Plan Scripts.
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
     def delete(self, resource, force=False, timeout=-1):
         """
-        Deletes a Fibre Channel network.
-        Any deployed connections that are using the network are placed in the 'Failed' state.
+        Deletes a plan script object from the appliance based on its plan script UUID.
 
         Args:
             resource: dict object to delete
@@ -100,19 +96,20 @@ class FcNetworks(object):
 
     def get(self, id_or_uri):
         """
-        Gets the Fibre Channel network with the specified ID.
+        Retrieves the overview details of the selected Plan Script as per the selected attributes.
 
         Args:
-            id_or_uri: ID or URI of Fibre Channel network.
+            id_or_uri: ID or URI of the Plan Script.
 
         Returns:
-            dict: The Fibre Channel network.
+            dict: The Plan Script.
         """
         return self._client.get(id_or_uri)
 
     def create(self, resource, timeout=-1):
         """
-        Creates a Fibre Channel network.
+        Adds a Plan Script using the information provided in the request body. The plan type can be one of the
+        following types: General, deploy and capture. Note: The OS type of the plan script is always assigned as "ESXi".
 
         Args:
             resource (dict): Object to create.
@@ -121,7 +118,7 @@ class FcNetworks(object):
                 in OneView, just stop waiting for its completion.
 
         Returns:
-            dict: Created resource.
+            dict: Created Plan Script.
 
         """
         data = self.__default_values.copy()
@@ -130,7 +127,7 @@ class FcNetworks(object):
 
     def update(self, resource, timeout=-1):
         """
-        Updates a Fibre Channel network.
+        Updates the properties of the Plan Script.
 
         Args:
             resource (dict): Object to update.
@@ -142,13 +139,11 @@ class FcNetworks(object):
             dict: Updated resource.
 
         """
-        data = self.__default_values.copy()
-        data.update(resource)
-        return self._client.update(data, timeout=timeout)
+        return self._client.update(resource, timeout=timeout)
 
     def get_by(self, field, value):
         """
-        Gets all Fibre Channel networks that match the filter.
+        Gets all Plan Scripts that match the filter.
 
         The search is case-insensitive.
 
@@ -157,6 +152,24 @@ class FcNetworks(object):
             value: Value to filter.
 
         Returns:
-            list: A list of Fibre Channel networks.
+            list: A list of Plan Scripts.
         """
         return self._client.get_by(field, value)
+
+    def retrieve_differences(self, id_or_uri, content, timeout=-1):
+        """
+        Retrieves the modified contents of the selected Plan Script according to the provided content object, as per
+        the selected attributes.
+
+        Args:
+            id_or_uri: ID or URI of the Plan Script.
+            content (str): Plan Script content.
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView, just stop waiting for its completion.
+
+        Returns:
+            dict: Script differences.
+        """
+        uri = self.URI + "/differences/" + extract_id_from_uri(id_or_uri)
+        return self._client.create(content, uri=uri, timeout=timeout)

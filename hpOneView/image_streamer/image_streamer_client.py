@@ -41,65 +41,15 @@ __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise Developmen
 __license__ = 'MIT'
 __status__ = 'Development'
 
-import json
-
 from hpOneView.connection import connection
-from hpOneView.resources.image_streamer.plan_scripts import PlanScripts
-
-
-IMAGE_STREAMER_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
-IMAGE_STREAMER_DEFAULT_API_VERSION = 300
+from hpOneView.image_streamer.resources.plan_scripts import PlanScripts
 
 
 class ImageStreamerClient(object):
-    def __init__(self, config):
-        self.__connection = connection(config["ip"], config.get('api_version', IMAGE_STREAMER_DEFAULT_API_VERSION))
-        self.__set_proxy(config)
-        self.__connection.login(config["credentials"])
+    def __init__(self, ip, session_id, api_version):
+        self.__connection = connection(ip, api_version)
+        self.__connection.set_session_id(session_id)
         self.__plan_scripts = None
-        
-
-    @classmethod
-    def from_json_file(cls, file_name):
-        """
-        Construct ImageStreamerClient using a json file.
-
-        Args:
-            file_name: json full path.
-
-        Returns:
-            ImageStreamerClient:
-        """
-        with open(file_name) as json_data:
-            config = json.load(json_data)
-
-        return cls(config)
-
-    def __set_proxy(self, config):
-        """
-        Set proxy if needed
-        Args:
-            config: Config dict
-        """
-        if "proxy" in config and config["proxy"]:
-            proxy = config["proxy"]
-            splitted = proxy.split(':')
-            if len(splitted) != 2:
-                raise ValueError(IMAGE_STREAMER_CLIENT_INVALID_PROXY)
-
-            proxy_host = splitted[0]
-            proxy_port = int(splitted[1])
-            self.__connection.set_proxy(proxy_host, proxy_port)
-
-    @property
-    def api_version(self):
-        """
-        Gets the Image Streamer API Version.
-
-        Returns:
-            int: API Version.
-        """
-        return self.__connection._apiVersion
 
     @property
     def connection(self):

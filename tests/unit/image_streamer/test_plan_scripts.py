@@ -26,7 +26,7 @@ from unittest import TestCase
 import mock
 
 from hpOneView.connection import connection
-from hpOneView.resources.image_streamer.plan_scripts import PlanScripts
+from hpOneView.image_streamer.resources.plan_scripts import PlanScripts
 from hpOneView.resources.resource import ResourceClient
 
 
@@ -107,3 +107,21 @@ class PlanScriptsTest(TestCase):
         self._client.delete(id, force=True)
 
         mock_delete.assert_called_once_with(id, force=True, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_retrieve_differences_with_uri(self, mock_create):
+        uri = '/rest/plan-scripts/3518be0e-17c1-4189-8f81-83f3724f6155'
+        self._client.retrieve_differences(uri, "content")
+
+        mock_create.assert_called_once_with("content",
+                                            timeout=-1,
+                                            uri='/rest/plan-scripts/differences/3518be0e-17c1-4189-8f81-83f3724f6155')
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_retrieve_differences_with_id(self, mock_create):
+        id = '3518be0e-17c1-4189-8f81-83f3724f6155'
+        self._client.retrieve_differences(id, "content")
+
+        mock_create.assert_called_once_with("content",
+                                            timeout=-1,
+                                            uri='/rest/plan-scripts/differences/3518be0e-17c1-4189-8f81-83f3724f6155')
