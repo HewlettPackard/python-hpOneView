@@ -1827,3 +1827,19 @@ def transform_list_to_dict(list):
             ret[str(value)] = True
 
     return ret
+
+
+def extract_id_from_uri(id_or_uri):
+    """
+    Extract ID from the end of the URI
+
+    Args:
+        id_or_uri: ID or URI of the OneView resources.
+
+    Returns:
+        str: The string founded after the last "/"
+    """
+    if '/' in id_or_uri:
+        return id_or_uri[id_or_uri.rindex('/') + 1:]
+    else:
+        return id_or_uri
