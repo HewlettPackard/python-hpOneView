@@ -32,7 +32,6 @@ oneview_client = OneViewClient.from_json_file(EXAMPLE_CONFIG_FILE)
 image_streamer_client = oneview_client.create_image_streamer_client()
 
 plan_script_information = {
-    "type": "PlanScript",
     "description": "Description of this plan script",
     "name": "Demo Plan Script",
     "hpProvided": False,
@@ -69,11 +68,11 @@ print("***** done *****\n")
 # Get all Plan Scripts
 print("Get all Plan Scripts")
 plan_scripts = image_streamer_client.plan_scripts.get_all()
-for plan_script in plan_scripts:
-    print(plan_script['name'])
+for plan_script_item in plan_scripts:
+    print(plan_script_item['name'])
 print("***** done *****\n")
 
 # Delete the Plan Script
 print("Delete the Plan Script")
-plan_script = image_streamer_client.plan_scripts.delete(plan_script)
+image_streamer_client.plan_scripts.delete(plan_script)
 print("Plan Script deleted successfully")
