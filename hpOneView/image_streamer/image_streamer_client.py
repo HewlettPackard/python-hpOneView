@@ -21,9 +21,6 @@
 # THE SOFTWARE.
 ###
 """
-image_streamer_client.py
-~~~~~~~~~~~~~~~~~~
-
 This module implements a common client for HPE Image Streamer REST API.
 """
 from __future__ import absolute_import
@@ -43,6 +40,7 @@ __status__ = 'Development'
 
 from hpOneView.connection import connection
 from hpOneView.image_streamer.resources.plan_scripts import PlanScripts
+from hpOneView.image_streamer.resources.build_plans import BuildPlans
 
 
 class ImageStreamerClient(object):
@@ -50,6 +48,7 @@ class ImageStreamerClient(object):
         self.__connection = connection(ip, api_version)
         self.__connection.set_session_id(session_id)
         self.__plan_scripts = None
+        self.__build_plans = None
 
     @property
     def connection(self):
@@ -72,3 +71,15 @@ class ImageStreamerClient(object):
         if not self.__plan_scripts:
             self.__plan_scripts = PlanScripts(self.__connection)
         return self.__plan_scripts
+
+    @property
+    def build_plans(self):
+        """
+        Gets the Build Plans API client.
+
+        Returns:
+            BuildPlans:
+        """
+        if not self.__build_plans:
+            self.__build_plans = BuildPlans(self.__connection)
+        return self.__build_plans

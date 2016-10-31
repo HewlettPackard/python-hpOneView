@@ -25,6 +25,7 @@ from unittest import TestCase
 
 from hpOneView.image_streamer.image_streamer_client import ImageStreamerClient
 from hpOneView.image_streamer.resources.plan_scripts import PlanScripts
+from hpOneView.image_streamer.resources.build_plans import BuildPlans
 
 
 class ImageStreamerClientTest(TestCase):
@@ -48,3 +49,10 @@ class ImageStreamerClientTest(TestCase):
     def test_plan_scripts_lazy_loading(self):
         resource = self._client.plan_scripts
         self.assertEqual(resource, self._client.plan_scripts)
+
+    def test_build_plans_has_right_type(self):
+        self.assertIsInstance(self._client.build_plans, BuildPlans)
+
+    def test_build_plans_lazy_loading(self):
+        resource = self._client.build_plans
+        self.assertEqual(resource, self._client.build_plans)

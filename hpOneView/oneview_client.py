@@ -21,9 +21,6 @@
 # THE SOFTWARE.
 ###
 """
-oneview_client.py
-~~~~~~~~~~~~~~~~~~
-
 This module implements a common client for HPE OneView REST API.
 """
 from __future__ import absolute_import
