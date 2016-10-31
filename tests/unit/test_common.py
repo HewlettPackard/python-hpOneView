@@ -22,7 +22,7 @@
 ###
 import unittest
 
-from hpOneView import resource_compare, transform_list_to_dict
+from hpOneView import resource_compare, transform_list_to_dict, extract_id_from_uri
 
 
 class ResourceCompareTest(unittest.TestCase):
@@ -242,6 +242,28 @@ class ResourceCompareTest(unittest.TestCase):
             "lvalue": float(10.1)
         }
         self.assertFalse(resource_compare(dict1, dict2))
+
+    def test_extract_id_from_uri(self):
+        uri = '/rest/plan-scripts/3518be0e-17c1-4189-8f81-83f3724f6155'
+        id = '3518be0e-17c1-4189-8f81-83f3724f6155'
+        extracted_id = extract_id_from_uri(uri)
+        self.assertEqual(id, extracted_id)
+
+    def test_extract_id_from_uri_with_extra_slash(self):
+        uri = '/rest/plan-scripts/3518be0e-17c1-4189-8f81-83f3724f6155/'
+        extracted_id = extract_id_from_uri(uri)
+        self.assertEqual(extracted_id, '')
+
+    def test_extract_id_from_uri_passing_id(self):
+        uri = '3518be0e-17c1-4189-8f81-83f3724f6155'
+        extracted_id = extract_id_from_uri(uri)
+        self.assertEqual(extracted_id, '3518be0e-17c1-4189-8f81-83f3724f6155')
+
+    def test_extract_id_from_uri_unsupported(self):
+        # This example is not supported yet
+        uri = '/rest/plan-scripts/3518be0e-17c1-4189-8f81-83f3724f6155/otherthing'
+        extracted_id = extract_id_from_uri(uri)
+        self.assertEqual(extracted_id, 'otherthing')
 
 
 if __name__ == '__main__':

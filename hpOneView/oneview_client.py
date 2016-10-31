@@ -46,6 +46,7 @@ import json
 import os
 
 from hpOneView.connection import connection
+from hpOneView.image_streamer.image_streamer_client import ImageStreamerClient
 from hpOneView.resources.servers.connections import Connections
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
@@ -111,6 +112,7 @@ class OneViewClient(object):
 
     def __init__(self, config):
         self.__connection = connection(config["ip"], config.get('api_version', self.DEFAULT_API_VERSION))
+        self.__image_streamer_ip = config.get("image_streamer_ip")
         self.__set_proxy(config)
         self.__connection.login(config["credentials"])
         self.__connections = None
@@ -246,6 +248,19 @@ class OneViewClient(object):
             connection:
         """
         return self.__connection
+
+    def create_image_streamer_client(self):
+        """
+        Create the Image Streamer API Client.
+
+        Returns:
+            ImageStreamerClient:
+        """
+        image_streamer = ImageStreamerClient(self.__image_streamer_ip,
+                                             self.__connection.get_session_id(),
+                                             self.__connection._apiVersion)
+
+        return image_streamer
 
     @property
     def connections(self):

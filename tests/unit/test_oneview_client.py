@@ -62,7 +62,6 @@ from hpOneView.resources.networking.internal_link_sets import InternalLinkSets
 from hpOneView.resources.search.labels import Labels
 from tests.test_utils import mock_builtin
 
-
 OS_ENVIRON_CONFIG_MINIMAL = {
     'ONEVIEWSDK_IP': '172.16.100.199',
     'ONEVIEWSDK_USERNAME': 'admin',
@@ -80,7 +79,6 @@ OS_ENVIRON_CONFIG_FULL = {
 
 
 class OneViewClientTest(unittest.TestCase):
-
     def __mock_file_open(self, json_config_content):
         # Simulates a TextIOWrapper (file output)
         return io.StringIO(json_config_content)
@@ -188,6 +186,43 @@ class OneViewClientTest(unittest.TestCase):
                                                 authLoginDomain='authdomain'))
         mock_set_proxy.assert_called_once_with('172.16.100.195', 9999)
         self.assertEqual(201, oneview_client.connection._apiVersion)
+
+    @mock.patch.object(connection, 'login')
+    def test_create_image_streamer_client_without_image_streamer_ip(self, mock_login):
+
+        config = {"ip": "172.16.102.59",
+                  "credentials": {
+                      "userName": "administrator",
+                      "password": "password"}}
+
+        client = OneViewClient(config)
+        client.connection.set_session_id('123')
+
+        i3s = client.create_image_streamer_client()
+
+        self.assertEqual(i3s.connection.get_session_id(), client.connection.get_session_id())
+        self.assertEqual(i3s.connection._apiVersion, client.api_version)
+        self.assertEqual(i3s.connection.get_host(), None)
+        self.assertEqual(client.connection.get_host(), "172.16.102.59")
+
+    @mock.patch.object(connection, 'login')
+    def test_create_image_streamer_client_with_image_streamer_ip(self, mock_login):
+
+        config = {"ip": "172.16.102.59",
+                  "image_streamer_ip": "172.16.102.50",
+                  "credentials": {
+                      "userName": "administrator",
+                      "password": "password"}}
+
+        client = OneViewClient(config)
+        client.connection.set_session_id('124')
+
+        i3s = client.create_image_streamer_client()
+
+        self.assertEqual(i3s.connection.get_session_id(), client.connection.get_session_id())
+        self.assertEqual(i3s.connection._apiVersion, client.api_version)
+        self.assertEqual(i3s.connection.get_host(), "172.16.102.50")
+        self.assertEqual(client.connection.get_host(), "172.16.102.59")
 
     def test_fc_networks_has_right_type(self):
         self.assertIsInstance(self._oneview.fc_networks, FcNetworks)

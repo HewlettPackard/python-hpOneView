@@ -107,7 +107,11 @@ class connection(object):
         return self._session
 
     def get_session_id(self):
-        return self._headers['auth']
+        return self._headers.get('auth')
+
+    def set_session_id(self, session_id):
+        self._headers['auth'] = session_id
+        self._session = True
 
     def get_host(self):
         return self._host
