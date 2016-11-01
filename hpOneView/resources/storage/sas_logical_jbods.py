@@ -86,6 +86,21 @@ class SasLogicalJbods(object):
         """
         return self._client.get(id_or_uri=id_or_uri)
 
+    def get_by(self, field, value):
+        """
+        Gets all SAS Logical JBODs that match the filter.
+
+        The search is case-insensitive.
+
+        Args:
+            field: Field name to filter.
+            value: Value to filter.
+
+        Returns:
+            list: A list of SAS Logical JBODs.
+        """
+        return self._client.get_by(field, value)
+
     def get_drives(self, id_or_uri):
         """
         Gets the list of drives allocated to this SAS logical JBOD.
