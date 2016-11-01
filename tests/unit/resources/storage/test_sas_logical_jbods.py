@@ -57,6 +57,12 @@ class SasLogicalJbodsTest(unittest.TestCase):
         self._resource.get(id_or_uri=self.SAS_LOGICAL_JBOD_ID)
         mock_get.assert_called_once_with(id_or_uri=self.SAS_LOGICAL_JBOD_ID)
 
+    @mock.patch.object(ResourceClient, 'get_by')
+    def test_get_by_called_once(self, mock_get_by):
+        self._resource.get_by('name', 'SAS Logical JBOD Name')
+
+        mock_get_by.assert_called_once_with('name', 'SAS Logical JBOD Name')
+
     @mock.patch.object(ResourceClient, 'build_uri')
     @mock.patch.object(ResourceClient, 'get')
     def test_get_drives_called_once(self, mock_get, mock_build_uri):
