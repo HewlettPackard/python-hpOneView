@@ -38,30 +38,56 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
+
+# Set the URI of existent resources to be added/removed to/from the scope
+resource_uri_1 = "/rest/ethernet-networks/50e703bf-5103-459d-857c-7c49adcd37ca"
+resource_uri_2 = "/rest/ethernet-networks/fa22aaaa-d348-41ad-85e7-1ca09c58891d"
+resource_uri_3 = "/rest/fc-networks/56e05cd3-148a-4fc3-84f6-12ac58ae230f"
+
+# Create a scope
+print("Create the scope")
+options = {
+    "name": "SampleScope",
+    "description": "Sample Scope description"
+}
+scope = oneview_client.scopes.create(options)
+pprint(scope)
+
+# Update the name of the scope
+print("Update the scope")
+scope['name'] = "SampleScopeRenamed"
+scope = oneview_client.scopes.update(scope)
+pprint(scope)
+
+# Find the recently created scope by name
+scope_by_name = oneview_client.scopes.get_by_name('SampleScopeRenamed')
+print("Found scope by name: '{name}'.\n  uri = '{uri}'".format(**scope_by_name))
+
+# Find the recently created scope by URI
+scope_by_uri = oneview_client.scopes.get(scope['uri'])
+print("Found scope by URI: '{uri}'.\n  name = '{name}'".format(**scope_by_uri))
+
+# Get all scopes
 print("Get all Scopes")
 scopes = oneview_client.scopes.get_all()
 pprint(scopes)
 
-information = {
-    "addedResourceUris": ["/rest/ethernet-networks/e801b73f-b4e8-4b32-b042-36f5bac2d60f"],
-    "removedResourceUris": ["/rest/ethernet-networks/390bc9f9-cdd5-4c70-b38f-cf04e64f5c72"]
+# Update the scope resource assignments
+print("Update the scope resource assignments, adding two resources")
+options = {
+    "addedResourceUris": [resource_uri_1, resource_uri_2]
 }
+oneview_client.scopes.update_resource_assignments(scope['uri'], options)
+print("  Done.")
 
-information_swap = {
-    "removedResourceUris": ["/rest/ethernet-networks/e801b73f-b4e8-4b32-b042-36f5bac2d60f"],
-    "addedResourceUris": ["/rest/ethernet-networks/390bc9f9-cdd5-4c70-b38f-cf04e64f5c72"]
+print("Update the scope resource assignments, adding one resource and removing another previously added")
+options = {
+    "removedResourceUris": [resource_uri_1],
+    "addedResourceUris": [resource_uri_3]
 }
+oneview_client.scopes.update_resource_assignments(scope['uri'], options)
+print("  Done.")
 
-if scopes:
-    # Gets the first Scope
-    uri = scopes[0]["uri"]
-
-    # Add/Remove
-    print("Add/Remove resource to/from scope")
-    drives = oneview_client.scopes.update_resource_assignments(uri, information)
-    pprint(drives)
-
-    # Add/Remove (Invert)
-    print("Remove a resource from the Scope and add other")
-    drives = oneview_client.scopes.update_resource_assignments(uri, information_swap)
-    pprint(drives)
+# Delete the scope
+oneview_client.scopes.delete(scope)
+print("Scope deleted successfully.")

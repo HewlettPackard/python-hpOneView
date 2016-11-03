@@ -39,6 +39,10 @@ from hpOneView.resources.resource import ResourceClient
 class Scopes(object):
     URI = '/rest/scopes'
 
+    DEFAULT_VALUES = {
+        '300': {"type": "Scope"}
+    }
+
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
@@ -66,6 +70,86 @@ class Scopes(object):
             list: A list of scopes.
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
+
+    def get(self, id_or_uri):
+        """
+        Gets the Scope with the specified ID or URI.
+
+        Args:
+            id_or_uri: ID or URI of the Scope
+
+        Returns:
+            dict: Scope
+        """
+        return self._client.get(id_or_uri)
+
+    def get_by_name(self, name):
+        """
+        Gets a Scope by name.
+
+        Args:
+            name: Name of the Scope
+
+        Returns:
+            dict: Scope.
+        """
+        scopes = self._client.get_all()
+        result = [x for x in scopes if x['name'] == name]
+        return result[0] if result else None
+
+    def create(self, resource, timeout=-1):
+        """
+        Creates a scope.
+
+        Args:
+            resource (dict): Object to create.
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView, just stop waiting for its completion.
+
+        Returns:
+            dict: Created scope.
+
+        """
+        return self._client.create(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
+
+    def update(self, resource, timeout=-1):
+        """
+        Updates a scope.
+
+        Args:
+            resource (dict): Object to update.
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView, just stop waiting for its completion.
+
+        Returns:
+            dict: Updated scope.
+
+        """
+        headers = {'If-Match': resource.get('eTag', '*')}
+        return self._client.update(resource, timeout=timeout, default_values=self.DEFAULT_VALUES,
+                                   custom_headers=headers)
+
+    def delete(self, resource, timeout=-1):
+        """
+        Deletes a Scope.
+
+        Args:
+            resource: dict object to delete
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            bool: Indicates if the resource was successfully deleted.
+
+        """
+        if type(resource) is dict:
+            headers = {'If-Match': resource.get('eTag', '*')}
+        else:
+            headers = {'If-Match': '*'}
+        return self._client.delete(resource, timeout=timeout, custom_headers=headers)
 
     def update_resource_assignments(self, id_or_uri, resource_assignments, timeout=-1):
         """
