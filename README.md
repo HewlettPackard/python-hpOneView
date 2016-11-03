@@ -126,6 +126,22 @@ If your environment requires a proxy, define the proxy properties in the JSON fi
   "proxy": "<proxy_host>:<proxy_port>"
 ```
 
+### OneView 3.0
+
+The OneView Python SDK supports the new API endpoints for OneView 3.0 and for HPE Synergy.
+To access this features, you must set the API version on the OneViewClient configuration, either using the JSON configuration:
+
+```json
+  "api_version": 300
+```
+or using the Environment Variable:
+
+```bash
+export ONEVIEWSDK_API_VERSION='300'
+```
+
+If this property is not specified, it will fallback to the ```200``` default value.
+
 ## Exception handling
 
 All the exceptions raised by the OneView Python SDK inherit from HPOneViewException.
