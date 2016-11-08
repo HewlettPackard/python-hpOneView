@@ -40,6 +40,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class EnclosureGroups(object):
+    """
+    Enclosure Groups API client.
+
+    """
     URI = '/rest/enclosure-groups'
 
     DEFAULT_VALUES = {

@@ -44,7 +44,7 @@ class Connections(object):
     Connections API client.
 
     """
-    
+
     URI = '/rest/connections'
 
     def __init__(self, con):
