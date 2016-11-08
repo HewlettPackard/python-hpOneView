@@ -1843,3 +1843,29 @@ def extract_id_from_uri(id_or_uri):
         return id_or_uri[id_or_uri.rindex('/') + 1:]
     else:
         return id_or_uri
+
+
+def merge_list_by_key(original_list, updated_list, key):
+    """
+    Merge two lists by the key.
+    The returned list has the same lenght that the updated list, since all new items on the updated list will be present
+    on the returned list, and all removed items will be absent.
+
+    Args:
+        original_list: original list.
+        updated_list: list with changes.
+        key: unique identifier.
+    Returns:
+        list: Lists merged.
+    """
+    items_map = {x[key]: x for x in original_list}
+    merged_items = {}
+
+    for item in updated_list:
+        if item[key] in items_map:
+            merged_items[item[key]] = items_map[item[key]].copy()
+            merged_items[item[key]].update(item)
+        else:
+            merged_items[item[key]] = item.copy()
+
+    return [val for (_, val) in merged_items.items()]

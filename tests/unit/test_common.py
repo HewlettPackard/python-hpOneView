@@ -22,7 +22,7 @@
 ###
 import unittest
 
-from hpOneView import resource_compare, transform_list_to_dict, extract_id_from_uri
+from hpOneView import resource_compare, transform_list_to_dict, extract_id_from_uri, merge_list_by_key
 
 
 class ResourceCompareTest(unittest.TestCase):
@@ -265,6 +265,168 @@ class ResourceCompareTest(unittest.TestCase):
         extracted_id = extract_id_from_uri(uri)
         self.assertEqual(extracted_id, 'otherthing')
 
+    def test_merge_list_by_key_with_same_lenght_and_order(self):
+        original_list = [{
+            "id": 1,
+            "allocatedMbps": 2500,
+            "mac": "E2:4B:0D:30:00:09",
+            "portId": "Auto",
+            "requestedMbps": 3500
+        }, {
+            "id": 2,
+            "allocatedMbps": 1000,
+            "mac": "E2:4B:0D:30:00:0B",
+            "portId": "Flb 1:1-a",
+            "requestedMbps": 1000
+        }]
+
+        updated_list = [{
+            "id": 1,
+            "allocatedVFs": 3500,
+            "requestedMbps": 2700
+        }, {
+            "id": 2,
+            "requestedMbps": 1005
+        }]
+
+        merged_list = merge_list_by_key(original_list, updated_list, "id")
+
+        expected_list = [{
+            "id": 1,
+            "allocatedMbps": 2500,
+            "allocatedVFs": 3500,
+            "mac": "E2:4B:0D:30:00:09",
+            "portId": "Auto",
+            "requestedMbps": 2700
+        }, {
+            "id": 2,
+            "allocatedMbps": 1000,
+            "mac": "E2:4B:0D:30:00:0B",
+            "portId": "Flb 1:1-a",
+            "requestedMbps": 1005
+        }]
+        self.assertEqual(merged_list, expected_list)
+
+    def test_merge_list_by_key_with_different_order(self):
+        original_list = [{
+            "id": 1,
+            "allocatedMbps": 2500,
+            "mac": "E2:4B:0D:30:00:09",
+            "portId": "Auto",
+            "requestedMbps": 3500
+        }, {
+            "id": 2,
+            "allocatedMbps": 1000,
+            "mac": "E2:4B:0D:30:00:0B",
+            "portId": "Flb 1:1-a",
+            "requestedMbps": 1000
+        }]
+
+        updated_list = [{
+            "id": 2,
+            "requestedMbps": 1005
+        }, {
+            "id": 1,
+            "allocatedVFs": 3500,
+            "requestedMbps": 2700
+        }]
+
+        merged_list = merge_list_by_key(original_list, updated_list, "id")
+
+        expected_list = [{
+            "id": 1,
+            "allocatedMbps": 2500,
+            "allocatedVFs": 3500,
+            "mac": "E2:4B:0D:30:00:09",
+            "portId": "Auto",
+            "requestedMbps": 2700
+        }, {
+            "id": 2,
+            "allocatedMbps": 1000,
+            "mac": "E2:4B:0D:30:00:0B",
+            "portId": "Flb 1:1-a",
+            "requestedMbps": 1005
+        }]
+        self.assertEqual(merged_list, expected_list)
+
+    def test_merge_list_by_key_with_removed_items(self):
+        original_list = [{
+            "id": 1,
+            "allocatedMbps": 2500,
+            "mac": "E2:4B:0D:30:00:09",
+            "portId": "Auto",
+            "requestedMbps": 3500
+        }, {
+            "id": 2,
+            "allocatedMbps": 1000,
+            "mac": "E2:4B:0D:30:00:0B",
+            "portId": "Flb 1:1-a",
+            "requestedMbps": 1000
+        }]
+
+        updated_list = [{
+            "id": 2,
+            "requestedMbps": 1005
+        }]
+
+        merged_list = merge_list_by_key(original_list, updated_list, "id")
+
+        expected_list = [{
+            "id": 2,
+            "allocatedMbps": 1000,
+            "mac": "E2:4B:0D:30:00:0B",
+            "portId": "Flb 1:1-a",
+            "requestedMbps": 1005
+        }]
+        self.assertEqual(merged_list, expected_list)
+
+    def test_merge_list_by_key_with_added_items(self):
+        original_list = [{
+            "id": 1,
+            "allocatedMbps": 2500,
+            "mac": "E2:4B:0D:30:00:09",
+            "portId": "Auto",
+            "requestedMbps": 3500
+        }, {
+            "id": 2,
+            "allocatedMbps": 1000,
+            "mac": "E2:4B:0D:30:00:0B",
+            "portId": "Flb 1:1-a",
+            "requestedMbps": 1000
+        }]
+
+        updated_list = [{
+            "id": 2,
+            "requestedMbps": 1005
+        }, {
+            "id": 1,
+            "allocatedVFs": 3500,
+            "requestedMbps": 2700
+        }, {
+            "id": 3,
+            "requestedMbps": 1000
+        }]
+
+        merged_list = merge_list_by_key(original_list, updated_list, "id")
+
+        expected_list = [{
+            "id": 1,
+            "allocatedMbps": 2500,
+            "allocatedVFs": 3500,
+            "mac": "E2:4B:0D:30:00:09",
+            "portId": "Auto",
+            "requestedMbps": 2700
+        }, {
+            "id": 2,
+            "allocatedMbps": 1000,
+            "mac": "E2:4B:0D:30:00:0B",
+            "portId": "Flb 1:1-a",
+            "requestedMbps": 1005
+        }, {
+            "id": 3,
+            "requestedMbps": 1000
+        }]
+        self.assertEqual(merged_list, expected_list)
 
 if __name__ == '__main__':
     unittest.main()
