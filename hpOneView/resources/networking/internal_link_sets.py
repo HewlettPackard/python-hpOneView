@@ -30,7 +30,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'internal-link-sets'
+__title__ = 'Internal Link Sets'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP'
 __license__ = 'MIT'
@@ -39,8 +39,15 @@ __status__ = 'Development'
 from hpOneView.resources.resource import ResourceClient
 
 
-# This class is only available for API version 300 or later
 class InternalLinkSets(object):
+    """
+    Internal Link Sets API client.
+
+    Note:
+        This resource is available for API version 300 or later.
+
+    """
+
     URI = '/rest/internal-link-sets'
 
     def __init__(self, con):
@@ -49,7 +56,7 @@ class InternalLinkSets(object):
 
     def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields=''):
         """
-        Gets a paginated collection of all internal-link-sets.
+        Gets a paginated collection of all internal link sets.
         The collection is based on optional sorting and filtering and is constrained by start and count parameters.
 
         Args:

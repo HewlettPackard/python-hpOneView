@@ -41,6 +41,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class LogicalInterconnectGroups(object):
+    """
+    Logical Interconnect Groups API client.
+
+    """
     URI = '/rest/logical-interconnect-groups'
 
     DEFAULT_VALUES = {

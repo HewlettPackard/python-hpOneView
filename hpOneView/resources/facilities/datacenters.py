@@ -40,6 +40,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class Datacenters(object):
+    """
+    Datacenters API client.
+
+    """
     URI = '/rest/datacenters'
 
     def __init__(self, con):

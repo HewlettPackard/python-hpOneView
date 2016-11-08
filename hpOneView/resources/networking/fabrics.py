@@ -41,6 +41,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class Fabrics(object):
+    """
+    Fabrics API client.
+
+    """
     URI = '/rest/fabrics'
 
     DEFAULT_VALUES = {
@@ -109,6 +113,9 @@ class Fabrics(object):
         """
         Gets the reserved vlan ID range for the fabric.
 
+        Note:
+            This method is only available on HPE Synergy.
+
         Args:
             id_or_uri: ID or URI of fabric.
 
@@ -121,6 +128,9 @@ class Fabrics(object):
     def update_reserved_vlan_range(self, id_or_uri, vlan_pool, force=False):
         """
         Updates the reserved vlan ID range for the fabric.
+
+        Note:
+            This method is only available on HPE Synergy.
 
         Args:
             id_or_uri: ID or URI of fabric.

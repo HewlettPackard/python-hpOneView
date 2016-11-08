@@ -29,7 +29,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'sas-logical-interconnect-groups'
+__title__ = 'SAS Logical Interconnect Groups'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
                 ' Development LP'
@@ -40,6 +40,13 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class SasLogicalInterconnectGroups(object):
+    """
+    SAS Logical Interconnect Groups API client.
+
+    Note:
+        This resource is only available on HPE Synergy.
+
+    """
     URI = '/rest/sas-logical-interconnect-groups'
 
     DEFAULT_VALUES = {
@@ -51,8 +58,8 @@ class SasLogicalInterconnectGroups(object):
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a paginated collection of SAS logical interconnect groups. The collection is based on optional
-        sorting and filtering and is constrained by start and count parameters.
+        Gets a paginated collection of SAS logical interconnect groups. The collection is based
+        on optional sorting and filtering and is constrained by start and count parameters.
 
         Args:
             start:
@@ -135,9 +142,9 @@ class SasLogicalInterconnectGroups(object):
 
     def delete(self, resource, force=False, timeout=-1):
         """
-        Remove a SAS logical interconnect group. You cannot delete a SAS logical interconnect group when a corresponding
-        SAS logical interconnect is still referencing it. Delete the logical enclosure before attempting to delete the
-        SAS logical interconnect it uses.
+        Removes a SAS logical interconnect group. You cannot delete a SAS logical interconnect group when a
+        corresponding SAS logical interconnect is still referencing it. Delete the logical enclosure before
+        attempting to delete the SAS logical interconnect it uses.
 
         Args:
             resource: object to delete

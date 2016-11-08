@@ -41,6 +41,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class Tasks(object):
+    """
+    Tasks API client.
+
+    """
     URI = '/rest/tasks'
 
     def __init__(self, con):

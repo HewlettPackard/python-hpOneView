@@ -41,6 +41,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class PowerDevices(object):
+    """
+    Power Devices API client.
+
+    """
     URI = '/rest/power-devices'
 
     def __init__(self, con):

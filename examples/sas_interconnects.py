@@ -26,7 +26,7 @@ from hpOneView.oneview_client import OneViewClient
 from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
-# WARNING: This example works only with the API version 300 or higher
+# This resource is only available on HPE Synergy
 
 config = {
     "ip": "172.16.102.59",

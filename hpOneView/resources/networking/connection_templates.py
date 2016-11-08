@@ -41,6 +41,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class ConnectionTemplates(object):
+    """
+    Connection Templates API client.
+
+    """
     URI = '/rest/connection-templates'
 
     DEFAULT_VALUES = {

@@ -40,6 +40,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class Endpoints(object):
+    """
+    Endpoints API client.
+
+    """
     URI = '/rest/fc-sans/endpoints'
 
     def __init__(self, con):

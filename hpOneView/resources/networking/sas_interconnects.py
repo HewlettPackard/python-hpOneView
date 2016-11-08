@@ -29,7 +29,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'sas-interconnects'
+__title__ = 'SAS Interconnects'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
                 ' Development LP'
@@ -40,7 +40,13 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class SasInterconnects(object):
+    """
+    SAS Interconnects API client.
 
+    Note:
+        This resource is only available on HPE Synergy.
+
+    """
     URI = '/rest/sas-interconnects'
 
     def __init__(self, con):
@@ -56,7 +62,7 @@ class SasInterconnects(object):
                  first available item.
             count:
                 The number of resources to return. A count of -1 requests all items. The actual number of items in
-                the response may differ from the requested count if the sum of start and count exceed the total number
+                the response may differ from the requested count if the sum of start and count exceeds the total number
                 of items.
             fields:
                  Specifies which fields should be returned in the result set.
@@ -110,18 +116,17 @@ class SasInterconnects(object):
 
     def patch(self, id_or_uri, operation, path, value, timeout=-1):
         """
-        Update powerState, uidState, cpuResetState and deviceResetState using PATCH operation.
+        Update powerState, uidState, softResetState or hardResetState using PATCH operation
 
         Args:
             id_or_uri:
                 Can be either the SAS interconnect id or the SAS interconnect uri
             operation:
-                The type of operation: one of "add", "copy", "move", "remove", "replace", or "test".
+                The type of operation: "replace" is the only value allowed for this resource.
             path:
                 The JSON path the operation is to use. The exact meaning depends on the type of operation.
             value:
-                The value to add or replace for "add" and "replace" operations or the value to compare against
-                for a "test" operation. Not used by "copy", "move", or "remove".
+                The value to replace.
 
         Returns:
             dict: SAS Interconnect

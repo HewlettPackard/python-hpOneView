@@ -41,7 +41,13 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class LogicalSwitchGroups(object):
+    """
+    Logical Switch Groups API client.
 
+    Note:
+        This resource is only available on C7000 enclosures.
+
+    """
     URI = '/rest/logical-switch-groups'
 
     DEFAULT_VALUES = {

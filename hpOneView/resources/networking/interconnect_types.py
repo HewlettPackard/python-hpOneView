@@ -41,6 +41,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class InterconnectTypes(object):
+    """
+    Interconnect Types API client.
+
+    """
     URI = '/rest/interconnect-types'
 
     def __init__(self, con):

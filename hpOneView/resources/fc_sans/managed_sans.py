@@ -40,6 +40,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class ManagedSANs(object):
+    """
+    Managed SANs API client.
+
+    """
     URI = '/rest/fc-sans/managed-sans'
 
     def __init__(self, con):
@@ -100,10 +104,10 @@ class ManagedSANs(object):
         """
         Updates a Managed SAN.
 
-        It's possible:
+        It's possible to:
             - Refresh the Managed SAN.
-            - Updating the Managed SAN's publicAttributes.
-            - Updating the Managed SAN's policy.
+            - Update the Managed SAN's publicAttributes.
+            - Update the Managed SAN's policy.
 
         Args:
             id_or_uri: Can be either the Managed SAN resource ID or URI.
@@ -181,7 +185,10 @@ class ManagedSANs(object):
 
     def get_wwn(self, wwn):
         """
-        Retrieves a list of associations between provided WWNs and the SANs (if any) on which they reside
+        Retrieves a list of associations between provided WWNs and the SANs (if any) on which they reside.
+
+        Note:
+            This method is available for API version 300 or later.
 
         Args:
             wwn (str): The WWN that may be associated with the SAN.

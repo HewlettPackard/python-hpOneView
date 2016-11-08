@@ -42,6 +42,11 @@ from hpOneView.resources.resource import merge_default_values
 
 
 class Interconnects(object):
+    """
+    Interconnects API client.
+
+    """
+
     URI = '/rest/interconnects'
 
     def __init__(self, con):
