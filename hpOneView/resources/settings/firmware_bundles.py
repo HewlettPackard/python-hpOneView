@@ -30,7 +30,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'firmware-bundles'
+__title__ = 'Firmware Bundles'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
                 ' Development LP'
@@ -46,6 +46,10 @@ import os
 
 
 class FirmwareBundles(object):
+    """
+    Firmware Bundles API client.
+
+    """
     URI = '/rest/firmware-bundles'
 
     def __init__(self, con):

@@ -30,7 +30,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'drive-enclosures'
+__title__ = 'Drive Enclosures'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
                 ' Development LP'
@@ -41,7 +41,13 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class DriveEnclosures(object):
+    """
+    Drive Enclosures API client.
 
+    Note:
+        This resource is only available on HPE Synergy
+
+    """
     URI = '/rest/drive-enclosures'
     PORT_MAP_PATH = "/port-map"
     REFRESH_STATE_PATH = "/refreshState"
@@ -90,7 +96,7 @@ class DriveEnclosures(object):
 
     def get_by(self, field, value):
         """
-        Gets all drive enclosure that match the filter.
+        Gets all drive enclosures that match the filter.
 
         The search is case-insensitive.
 
@@ -105,7 +111,7 @@ class DriveEnclosures(object):
 
     def get_port_map(self, id_or_uri):
         """
-        Use to get drive enclosure I/O adapter port to SAS interconnect port connectivity.
+        Use to get the drive enclosure I/O adapter port to SAS interconnect port connectivity.
 
         Args:
             id_or_uri: Can be either the resource ID or the resource URI.
@@ -118,7 +124,7 @@ class DriveEnclosures(object):
 
     def refresh_state(self, id_or_uri, configuration, timeout=-1):
         """
-        Refresh a drive enclosure.
+        Refreshes a drive enclosure.
 
         Args:
             id_or_uri: Can be either the resource ID or the resource URI.
