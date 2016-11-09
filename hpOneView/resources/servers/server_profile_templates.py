@@ -29,7 +29,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'server-profile-template'
+__title__ = 'Server Profile Templates'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP'
 __license__ = 'MIT'
@@ -39,6 +39,21 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class ServerProfileTemplate(object):
+    """
+    The server profile template resource provides REST APIs to create, retrieve, modify, and delete server
+    profile templates.
+
+    A server profile template serves as a structural reference when creating a server profile.
+    All of the configuration constructs of a server profile are present in the server profile template.
+    The server profile template serves as the initial and ongoing reference for the structure of a server profile.
+    The server profile template defines the centralized source for the configuration of firmware, connections,
+    local storage, SAN storage, boot, BIOS, profile affinity and hide unused flexNICs.
+
+    After being created from a server profile template, a server profile continues to maintain an association to its
+    server profile template. Any drift in configuration consistency between the server profile template and server
+    profile(s) is monitored and made visible on both the server profile template and the associated server profile(s).
+
+    """
 
     URI = '/rest/server-profile-templates'
     TRANSFORMATION_PATH = "/transformation/?serverHardwareTypeUri={server_hardware_type_uri}" + \
@@ -142,7 +157,7 @@ class ServerProfileTemplate(object):
     def update(self, resource, id_or_uri):
         """
         Allows a server profile template object to have its configuration modified. These modifications can be as
-        simple as a name or description change or much more complex changes around the networking configuration.
+        simple as a name or description change or more complex changes around the networking configuration.
 
         Args:
             id_or_uri: Can be either the template id or the template uri.
@@ -186,12 +201,15 @@ class ServerProfileTemplate(object):
 
     def get_transformation(self, id_or_uri, server_hardware_type_uri, enclosure_group_uri):
         """
-        Transforms an existing profile template by supplying a new server hardware type and/or enclosure group.
+        Transforms an existing profile template by supplying a new server hardware type and enclosure group or both.
         A profile template will be returned with a new configuration based on the capabilities of the supplied
-        server hardware type and/or enclosure group. All configured connections will have their port assignment
-        set to 'Auto'.
-        The new profile template can subsequently be used in the update method but is not guaranteed to pass validation.
-        Any incompatibilities will be flagged when the transformed server profile template is submitted.
+        server hardware type and/or enclosure group. All configured connections will have their port assignments
+        set to 'Auto.'
+        The new profile template can subsequently be used in the update method, but is not guaranteed to pass
+        validation. Any incompatibilities will be flagged when the transformed server profile template is submitted.
+
+        Note:
+            This method is available for API version 300 or later.
 
         Args:
             id_or_uri: Can be either the server profile template resource ID or URI.

@@ -30,7 +30,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'server-profile-template'
+__title__ = 'Server Profiles'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP'
 __license__ = 'MIT'
@@ -40,6 +40,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class ServerProfiles(object):
+    """
+    Server Profile API client.
+
+    """
     URI = '/rest/server-profiles'
 
     DEFAULT_VALUES = {
@@ -82,8 +86,8 @@ class ServerProfiles(object):
         """
         Performs a specific patch operation for the given server profile.
 
-        The supported operation is:
-            Update the server profile from the server profile template.
+        The supported operation:
+            Updates the server profile from the server profile template.
                 Operation: replace | Path: /templateCompliance | Value: Compliant
 
         Args:
@@ -120,7 +124,7 @@ class ServerProfiles(object):
         """
         Deletes all Server Profile objects from the appliance that match the provided filter.
         Filters are supported only for the following profile attributes:  name, description, serialnumber, uuid,
-        mactype, wwntype, serialnumbertype, status and state.
+        mactype, wwntype, serialnumbertype, status, and state.
 
 
         Examples:
@@ -130,7 +134,7 @@ class ServerProfiles(object):
             >>> server_profile_client.delete_all(filter="name matches'%25Database%25'")
             # Remove all profiles that have the word "Database" in its name
 
-        The filter function here operates very similar to the function defined for GET Server Profiles. It allows
+        The filter function here operates similarly to the function defined for GET Server Profiles. It allows
         for both actual and partial matches of data in the profile. Any requests that use a wildcard match
         must include a %25 as illustrated in the previous example. This is how you encode that character for
         transmission to the appliance.
@@ -147,7 +151,7 @@ class ServerProfiles(object):
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a list of server profile based on optional sorting and filtering and is constrained by start and
+        Gets a list of server profiles based on optional sorting and filtering and is constrained by start and
         count parameters.
 
         Args:
@@ -166,7 +170,7 @@ class ServerProfiles(object):
                 A general filter/query string to narrow the list of items returned. The
                 default is no filter; all resources are returned.
                 Filters are supported for the name, description, serialNumber, uuid, affinity, macType, wwnType,
-                serialNumberType, serverProfileTemplateUri, templateCompliance, status and state attributes.
+                serialNumberType, serverProfileTemplateUri, templateCompliance, status, and state attributes.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
                 on create time with the oldest entry first.
@@ -190,7 +194,7 @@ class ServerProfiles(object):
 
     def get_by(self, field, value):
         """
-        Gets all server profile that match a specified filter.
+        Gets all server profiles that match a specified filter.
 
         The search is case-insensitive.
 

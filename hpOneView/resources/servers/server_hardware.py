@@ -30,7 +30,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'server-hardware'
+__title__ = 'Server Hardware'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP'
 __license__ = 'MIT'
@@ -40,6 +40,12 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class ServerHardware(object):
+    """
+    The server hardware resource is a representation of a physical server.
+    The server hardware resource provides APIs for server management tasks such
+    as applying a profile, importing a server and managing an iLO.
+
+    """
     URI = '/rest/server-hardware'
 
     def __init__(self, con):
@@ -236,7 +242,7 @@ class ServerHardware(object):
     def get_environmental_configuration(self, id_or_uri):
         """
         Gets the settings that describe the environmental configuration (supported feature set, calibrated minimum and
-        maximum power, location and dimensions, etc) of the server hardware resource.
+        maximum power, location and dimensions, etc.) of the server hardware resource.
 
         Args:
             id_or_uri: Can be either the server hardware resource ID or URI.
@@ -280,8 +286,11 @@ class ServerHardware(object):
 
     def get_all_firmwares(self, filter='', start=0, count=-1, query='', sort=''):
         """
-        Gets a list of firmware inventory across all servers. In order to filter the returned data, specify a filter
-        expression to select a particular server model, component name and/or component firmware version.
+        Gets a list of firmware inventory across all servers. To filter the returned data, specify a filter
+        expression to select a particular server model, component name, and/or component firmware version.
+
+        Note:
+            This method is available for API version 300 or later.
 
         Args:
             start:
@@ -310,6 +319,9 @@ class ServerHardware(object):
     def get_firmware(self, id_or_uri):
         """
         Get the firmware inventory of a server.
+
+        Note:
+            This method is available for API version 300 or later.
 
         Args:
             id_or_uri: Can be either the server hardware resource ID or URI.

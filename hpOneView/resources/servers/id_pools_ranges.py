@@ -29,7 +29,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'id-pools-ranges'
+__title__ = 'Id Pools Ranges'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP'
 __license__ = 'MIT'
@@ -39,6 +39,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class IdPoolsRanges(object):
+    """
+    Id Pools Ranges API client.
+
+    """
 
     def __init__(self, uri, con):
         self._connection = con
