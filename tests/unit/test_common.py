@@ -183,18 +183,6 @@ class ResourceCompareTest(unittest.TestCase):
 
         self.assertFalse(resource_compare(dict1, dict2))
 
-    def test_transform_list_to_dict(self):
-        list = ['one', 'two', {'tree': 3}, 'four', 5]
-
-        dict_transformed = transform_list_to_dict(list=list)
-
-        self.assertEqual(dict_transformed,
-                         {'5': True,
-                          'four': True,
-                          'one': True,
-                          'tree': 3,
-                          'two': True})
-
     def test_comparison_with_int_and_float(self):
         dict1 = {
             "name": "name",
@@ -231,6 +219,30 @@ class ResourceCompareTest(unittest.TestCase):
         }
         self.assertTrue(resource_compare(dict1, dict2))
 
+    def test_comparison_dict_and_list(self):
+        dict1 = {
+            "name": "name",
+            "value": {"id": 123}
+        }
+
+        dict2 = {
+            "name": "name",
+            "value": [1, 2, 3]
+        }
+        self.assertFalse(resource_compare(dict1, dict2))
+
+    def test_comparison_list_and_dict(self):
+        dict1 = {
+            "name": "name",
+            "value": [1, 2, 3]
+        }
+
+        dict2 = {
+            "name": "name",
+            "value": {"id": 123}
+        }
+        self.assertFalse(resource_compare(dict1, dict2))
+
     def test_comparison_with_different_float_values(self):
         dict1 = {
             "name": "name",
@@ -242,6 +254,214 @@ class ResourceCompareTest(unittest.TestCase):
             "lvalue": float(10.1)
         }
         self.assertFalse(resource_compare(dict1, dict2))
+
+    def test_comparison_empty_list_and_none(self):
+        dict1 = {
+            "name": "name",
+            "values": []
+        }
+
+        dict2 = {
+            "name": "name",
+            "values": None
+        }
+        self.assertTrue(resource_compare(dict1, dict2))
+
+    def test_comparison_none_and_empty_list(self):
+        dict1 = {
+            "name": "name",
+            "values": None
+        }
+        dict2 = {
+            "name": "name",
+            "values": []
+        }
+        self.assertTrue(resource_compare(dict1, dict2))
+
+    def test_comparison_true_and_false(self):
+        dict1 = {
+            "name": "name",
+            "values": True
+        }
+
+        dict2 = {
+            "name": "name",
+            "values": False
+        }
+        self.assertFalse(resource_compare(dict1, dict2))
+
+    def test_comparison_false_and_true(self):
+        dict1 = {
+            "name": "name",
+            "values": False
+        }
+
+        dict2 = {
+            "name": "name",
+            "values": True
+        }
+        self.assertFalse(resource_compare(dict1, dict2))
+
+    def test_comparison_true_and_true(self):
+        dict1 = {
+            "name": "name",
+            "values": True
+        }
+
+        dict2 = {
+            "name": "name",
+            "values": True
+        }
+        self.assertTrue(resource_compare(dict1, dict2))
+
+    def test_comparison_false_and_false(self):
+        dict1 = {
+            "name": "name",
+            "values": False
+        }
+
+        dict2 = {
+            "name": "name",
+            "values": False
+        }
+        self.assertTrue(resource_compare(dict1, dict2))
+
+    def test_comparison_none_and_false(self):
+        dict1 = {
+            "name": "name",
+            "values": None
+        }
+
+        dict2 = {
+            "name": "name",
+            "values": False
+        }
+        self.assertTrue(resource_compare(dict1, dict2))
+
+    def test_comparison_false_and_none(self):
+        dict1 = {
+            "name": "name",
+            "values": False
+        }
+        dict2 = {
+            "name": "name",
+            "values": None
+        }
+        self.assertTrue(resource_compare(dict1, dict2))
+
+    def test_comparison_list_and_none_level_1(self):
+        dict1 = {
+            "name": "name",
+            "value": [{"name": "item1",
+                       "name": "item2"}]
+        }
+        dict2 = {
+            "name": "name",
+            "value": None
+        }
+        self.assertFalse(resource_compare(dict1, dict2))
+
+    def test_comparison_none_and_list_level_1(self):
+        dict1 = {
+            "name": "name",
+            "value": None
+        }
+        dict2 = {
+            "name": "name",
+            "value": [{"name": "item1",
+                       "name": "item2"}]
+        }
+        self.assertFalse(resource_compare(dict1, dict2))
+
+    def test_comparison_dict_and_none_level_1(self):
+        dict1 = {
+            "name": "name",
+            "value": {"name": "subresource"}
+        }
+        dict2 = {
+            "name": "name",
+            "value": None
+        }
+        self.assertFalse(resource_compare(dict1, dict2))
+
+    def test_comparison_none_and_dict_level_1(self):
+        dict1 = {
+            "name": "name",
+            "value": None
+        }
+        dict2 = {
+            "name": "name",
+            "value": {"name": "subresource"}
+        }
+        self.assertFalse(resource_compare(dict1, dict2))
+
+    def test_comparison_none_and_dict_level_2(self):
+        dict1 = {
+            "name": "name",
+            "value": {"name": "subresource",
+                      "value": None}
+        }
+        dict2 = {
+            "name": "name",
+            "value": {"name": "subresource",
+                      "value": {
+                          "name": "sub-sub-resource"
+                      }}
+        }
+        self.assertFalse(resource_compare(dict1, dict2))
+
+    def test_comparison_dict_and_none_level_2(self):
+        dict1 = {
+            "name": "name",
+            "value": {"name": "subresource",
+                      "value": {
+                          "name": "sub-sub-resource"
+                      }}
+        }
+        dict2 = {
+            "name": "name",
+            "value": {"name": "subresource",
+                      "value": None}
+        }
+        self.assertFalse(resource_compare(dict1, dict2))
+
+    def test_comparison_none_and_list_level_2(self):
+        dict1 = {
+            "name": "name",
+            "value": {"name": "subresource",
+                      "list": None}
+        }
+        dict2 = {
+            "name": "name",
+            "value": {"name": "subresource",
+                      "list": ["item1", "item2"]}
+        }
+        self.assertFalse(resource_compare(dict1, dict2))
+
+    def test_comparison_list_and_none_level_2(self):
+        dict1 = {
+            "name": "name",
+            "value": {"name": "subresource",
+                      "list": ["item1", "item2"]}
+        }
+        dict2 = {
+            "name": "name",
+            "value": {"name": "subresource",
+                      "list": None}
+        }
+        self.assertFalse(resource_compare(dict1, dict2))
+
+    def test_transform_list_to_dict(self):
+        list = ['one', 'two', {'tree': 3}, 'four', 5]
+
+        dict_transformed = transform_list_to_dict(list=list)
+
+        self.assertEqual(dict_transformed,
+                         {'5': True,
+                          'four': True,
+                          'one': True,
+                          'tree': 3,
+                          'two': True})
 
     def test_extract_id_from_uri(self):
         uri = '/rest/plan-scripts/3518be0e-17c1-4189-8f81-83f3724f6155'
@@ -266,166 +486,56 @@ class ResourceCompareTest(unittest.TestCase):
         self.assertEqual(extracted_id, 'otherthing')
 
     def test_merge_list_by_key_with_same_lenght_and_order(self):
-        original_list = [{
-            "id": 1,
-            "allocatedMbps": 2500,
-            "mac": "E2:4B:0D:30:00:09",
-            "portId": "Auto",
-            "requestedMbps": 3500
-        }, {
-            "id": 2,
-            "allocatedMbps": 1000,
-            "mac": "E2:4B:0D:30:00:0B",
-            "portId": "Flb 1:1-a",
-            "requestedMbps": 1000
-        }]
+        original_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=3500),
+                         dict(id=2, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1000)]
 
-        updated_list = [{
-            "id": 1,
-            "allocatedVFs": 3500,
-            "requestedMbps": 2700
-        }, {
-            "id": 2,
-            "requestedMbps": 1005
-        }]
+        updated_list = [dict(id=1, requestedMbps=2700, allocatedVFs=3500),
+                        dict(id=2, requestedMbps=1005)]
 
         merged_list = merge_list_by_key(original_list, updated_list, "id")
 
-        expected_list = [{
-            "id": 1,
-            "allocatedMbps": 2500,
-            "allocatedVFs": 3500,
-            "mac": "E2:4B:0D:30:00:09",
-            "portId": "Auto",
-            "requestedMbps": 2700
-        }, {
-            "id": 2,
-            "allocatedMbps": 1000,
-            "mac": "E2:4B:0D:30:00:0B",
-            "portId": "Flb 1:1-a",
-            "requestedMbps": 1005
-        }]
+        expected_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=2700, allocatedVFs=3500),
+                         dict(id=2, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1005)]
+
         self.assertEqual(merged_list, expected_list)
 
     def test_merge_list_by_key_with_different_order(self):
-        original_list = [{
-            "id": 1,
-            "allocatedMbps": 2500,
-            "mac": "E2:4B:0D:30:00:09",
-            "portId": "Auto",
-            "requestedMbps": 3500
-        }, {
-            "id": 2,
-            "allocatedMbps": 1000,
-            "mac": "E2:4B:0D:30:00:0B",
-            "portId": "Flb 1:1-a",
-            "requestedMbps": 1000
-        }]
+        original_list = [dict(id=2, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1000),
+                         dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=3500)]
 
-        updated_list = [{
-            "id": 2,
-            "requestedMbps": 1005
-        }, {
-            "id": 1,
-            "allocatedVFs": 3500,
-            "requestedMbps": 2700
-        }]
+        updated_list = [dict(id=1, requestedMbps=2700, allocatedVFs=3500),
+                        dict(id=2, requestedMbps=1005)]
 
         merged_list = merge_list_by_key(original_list, updated_list, "id")
 
-        expected_list = [{
-            "id": 1,
-            "allocatedMbps": 2500,
-            "allocatedVFs": 3500,
-            "mac": "E2:4B:0D:30:00:09",
-            "portId": "Auto",
-            "requestedMbps": 2700
-        }, {
-            "id": 2,
-            "allocatedMbps": 1000,
-            "mac": "E2:4B:0D:30:00:0B",
-            "portId": "Flb 1:1-a",
-            "requestedMbps": 1005
-        }]
+        expected_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=2700, allocatedVFs=3500),
+                         dict(id=2, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1005)]
+
         self.assertEqual(merged_list, expected_list)
 
     def test_merge_list_by_key_with_removed_items(self):
-        original_list = [{
-            "id": 1,
-            "allocatedMbps": 2500,
-            "mac": "E2:4B:0D:30:00:09",
-            "portId": "Auto",
-            "requestedMbps": 3500
-        }, {
-            "id": 2,
-            "allocatedMbps": 1000,
-            "mac": "E2:4B:0D:30:00:0B",
-            "portId": "Flb 1:1-a",
-            "requestedMbps": 1000
-        }]
+        original_list = [dict(id=2, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1000),
+                         dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=3500)]
 
-        updated_list = [{
-            "id": 2,
-            "requestedMbps": 1005
-        }]
+        updated_list = [dict(id=1, requestedMbps=2700, allocatedVFs=3500)]
 
         merged_list = merge_list_by_key(original_list, updated_list, "id")
 
-        expected_list = [{
-            "id": 2,
-            "allocatedMbps": 1000,
-            "mac": "E2:4B:0D:30:00:0B",
-            "portId": "Flb 1:1-a",
-            "requestedMbps": 1005
-        }]
+        expected_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=2700, allocatedVFs=3500)]
+
         self.assertEqual(merged_list, expected_list)
 
     def test_merge_list_by_key_with_added_items(self):
-        original_list = [{
-            "id": 1,
-            "allocatedMbps": 2500,
-            "mac": "E2:4B:0D:30:00:09",
-            "portId": "Auto",
-            "requestedMbps": 3500
-        }, {
-            "id": 2,
-            "allocatedMbps": 1000,
-            "mac": "E2:4B:0D:30:00:0B",
-            "portId": "Flb 1:1-a",
-            "requestedMbps": 1000
-        }]
+        original_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=3500)]
 
-        updated_list = [{
-            "id": 2,
-            "requestedMbps": 1005
-        }, {
-            "id": 1,
-            "allocatedVFs": 3500,
-            "requestedMbps": 2700
-        }, {
-            "id": 3,
-            "requestedMbps": 1000
-        }]
+        updated_list = [dict(id=1, requestedMbps=2700, allocatedVFs=3500),
+                        dict(id=2, requestedMbps=1005)]
 
         merged_list = merge_list_by_key(original_list, updated_list, "id")
 
-        expected_list = [{
-            "id": 1,
-            "allocatedMbps": 2500,
-            "allocatedVFs": 3500,
-            "mac": "E2:4B:0D:30:00:09",
-            "portId": "Auto",
-            "requestedMbps": 2700
-        }, {
-            "id": 2,
-            "allocatedMbps": 1000,
-            "mac": "E2:4B:0D:30:00:0B",
-            "portId": "Flb 1:1-a",
-            "requestedMbps": 1005
-        }, {
-            "id": 3,
-            "requestedMbps": 1000
-        }]
+        expected_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=2700, allocatedVFs=3500),
+                         dict(id=2, requestedMbps=1005)]
+
         self.assertEqual(merged_list, expected_list)
 
 if __name__ == '__main__':

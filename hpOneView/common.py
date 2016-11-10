@@ -1720,10 +1720,11 @@ def resource_compare(resource1, resource2):
         resource2: second dictionary
 
     Returns:
-        True when equal;
-        False when different.
-
+        bool: True when equal, False when different.
     """
+    # The first resource is True / Not Null and the second resource is False / Null
+    if resource1 and not resource2:
+        return False
 
     # Check all keys in first dict
     for key in resource1.keys():
@@ -1732,6 +1733,9 @@ def resource_compare(resource1, resource2):
             if resource1[key] is not None:
                 # key inexistent is equivalent to exist and value None
                 return False
+        # If both values are null / empty / False
+        elif not resource1[key] and not resource2[key]:
+            continue
         elif isinstance(resource1[key], dict):
             # recursive call
             if not resource_compare(resource1[key], resource2[key]):
@@ -1770,6 +1774,14 @@ def resource_compare_list(resource1, resource2):
         False when different.
 
     """
+    # Both lists are null / empty / False
+    if not resource1 and not resource2:
+        return True
+
+    # The second list is null / empty  / False
+    if not resource2:
+        return False
+
     if len(resource1) != len(resource2):
         # different length
         return False
