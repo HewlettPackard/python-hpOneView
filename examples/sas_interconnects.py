@@ -29,7 +29,7 @@ from config_loader import try_load_from_file
 # WARNING: This example works only with the API version 300 or higher
 
 config = {
-    "ip": "172.16.102.59",
+    "ip": "172.16.102.164",
     "credentials": {
         "userName": "administrator",
         "password": ""
@@ -98,7 +98,7 @@ if all_sas_interconnects:
     oneview_client.sas_interconnects.patch(
         id_or_uri=sas_interconnect_uri,
         operation='replace',
-        path='/cpuResetState',
+        path='/softResetState',
         value='Reset'
     )
     print("Done!")
@@ -107,7 +107,7 @@ if all_sas_interconnects:
     oneview_client.sas_interconnects.patch(
         id_or_uri=sas_interconnect_uri,
         operation='replace',
-        path='/deviceResetState',
+        path='/hardResetState',
         value='Reset'
     )
     print("Done!")
