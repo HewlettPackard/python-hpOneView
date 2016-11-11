@@ -35,7 +35,7 @@ $ cd python-hpOneView
 $ pip install .
 ```
 
-Both of these installation methods work if you are using virtualenv, which you should be!
+Both installation methods work if you are using virtualenv, which you should be!
 
 ### From Pypi
 
@@ -65,7 +65,7 @@ More information about the logging configuration can be found in the Python Docu
 
 Connection properties for accessing the OneView appliance can be set in a JSON file.
 
-Before running the samples or your own scrips, you must create the JSON file.
+Before running the samples or your own scripts, you must create the JSON file.
 An example can be found at: [OneView configuration sample](examples/config-rename.json).
 
 Once you have created the JSON file, you can initialize the OneViewClient:
@@ -78,7 +78,7 @@ oneview_client = OneViewClient.from_json_file('/path/config.json')
 
 ### Environment Variables
 
-Configuration can also be stored in environment variables.
+Configuration can also be stored in environment variables:
 
 ```bash
 # Required
@@ -92,7 +92,7 @@ export ONEVIEWSDK_AUTH_LOGIN_DOMAIN='authdomain'
 export ONEVIEWSDK_PROXY='<proxy_host>:<proxy_port>'
 ```
 
-:lock: Tip: Make sure no unauthorised person has access to the environment variables, since the password is stored in clear-text.
+:lock: Tip: Make sure no unauthorized person has access to the environment variables, since the password is stored in clear-text.
 
 Once you have defined the environment variables, you can initialize the OneViewClient using the following code snippet:
 
@@ -129,28 +129,28 @@ If your environment requires a proxy, define the proxy properties in the JSON fi
 ### OneView 3.0
 
 The OneView Python SDK supports the new API endpoints for OneView 3.0 and for HPE Synergy.
-To access this features, you must set the API version on the OneViewClient configuration, either using the JSON configuration:
+To access this feature, you must set the API version on the OneViewClient configuration, either using the JSON configuration:
 
 ```json
   "api_version": 300
 ```
-or using the Environment Variable:
+OR using the Environment variable:
 
 ```bash
 export ONEVIEWSDK_API_VERSION='300'
 ```
 
-If this property is not specified, it will fallback to the ```200``` default value.
+If this property is not specified, it will fall back to the ```200``` default value.
 
 ## Exception handling
 
-All the exceptions raised by the OneView Python SDK inherit from HPOneViewException.
+All exceptions raised by the OneView Python SDK inherit from HPOneViewException.
 
 **HPOneViewException** has the following properties:
-- **msg** a string containing the error message sent by the OneView REST API;
-- **oneview_response** has the entire JSON data (as dict) returned by the OneView, describing the error details. It can be ```None```.
+- **msg** - a string containing the error message sent by the OneView REST API;
+- **oneview_response** - contains the entire JSON data dictionary with error details that are returned by the OneView Python SDK. It can be: ```None```.
 
-##### Exception handling example:
+##### Exception Handling example:
 
 ```python
 try:
@@ -179,30 +179,30 @@ except HPOneViewException as e:
 ## Contributing
 
 You know the drill. Fork it, branch it, change it, commit it, and pull-request it.
-We are passionate about improving this project, and glad to accept help to make it better. However, keep the following in mind:
+We are passionate about improving this project, and are glad to accept help to make it better. However, keep the following in mind:
 
- - We reserve the right to reject changes that we feel do not fit the scope of this project, so for feature additions, please open an issue to discuss your ideas before doing the work.
+We reserve the right to reject changes that we feel do not fit the scope of this project. For feature additions, please open an issue to discuss your ideas before doing the work.
 
-#### Naming convention for OneView resources
+#### Naming Convention for OneView Resources
 
-The following is a summary of the code structure and naming convention for the OneView resources.
+The following summarizes code structure and naming conventions for the OneView resources.
 
-- **Packages:** The package is named according to the **HPE OneView API Reference** group, with all characters in lowercase, replacing spaces by underscores.
-- **Modules:** The module is named according to the **HPE OneView API Reference** endpoint title, with all characters in lowercase, replacing spaces by underscores.
-    For example: In the documentation we have: **FC Networks** so the module name will be **fc_networks**
-- **Classes:** We are using camel case to define the class name, for example: **FcNetworks**
-- **OneViewClient properties:** In the **oneview_client**, the property name follows exactly the module name, for example: **fc_networks**
-- **Examples:** The example is named with the same name of the resource module: **fc_networks**
-- **Tests:**  The unit test folders follow the same structure of the resources. The name of the test modules should start with "test_", for example: **test_fc_networks**
+- **Packages:** The package is named according to the **HPE OneView API Reference** group, with all characters in lowercase, replacing spaces with underscores.
+- **Modules:** The module is named according to the **HPE OneView API Reference** endpoint title, with all characters in lowercase, replacing spaces with underscores.
+    For example: In the documentation we have **FC Networks**, so the module name will be **fc_networks**.
+- **Classes:** We are using camel case to define the class name, for example: **FcNetworks**.
+- **OneViewClient properties:** In the **oneview_client**, the property name follows exactly the module name, for example: **fc_networks**.
+- **Examples:** The example is named with the same name of the resource module: **fc_networks**.
+- **Tests:**  The unit test folders follow the same structure of the resources. The name of the test modules should start with "test," for example: **test_fc_networks**.
 
 ## Feature Requests
 
-If you have a need that is not met by the current implementation, please let us know (via a new issue).
+If you have a need not being met by the current implementation, please let us know (via a new issue).
 This feedback is crucial for us to deliver a useful product. Do not assume that we have already thought of everything, because we assure you that is not the case.
 
 ## Testing
 
-We've already packaged everything you need to do to check if the code is passing the tests.
+We have already packaged everything you need to do to verify if the code is passing the tests.
 The tox script wraps the unit tests execution against Python 2 and 3, flake8 validation, and the test coverage report generation.
 
 Run the following command:
