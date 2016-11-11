@@ -48,6 +48,9 @@ __status__ = 'Development'
 # THE SOFTWARE.
 ###
 from warnings import warn
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def deprecated(func):
@@ -1712,6 +1715,9 @@ class pages(object):
             raise StopIteration
 
 
+MSG_DIFF_AT_KEY = 'Difference found at key \'{0}\'. '
+
+
 def resource_compare(resource1, resource2):
     """
     Recursively compares dictionary contents, ignoring type and order
@@ -1722,8 +1728,11 @@ def resource_compare(resource1, resource2):
     Returns:
         bool: True when equal, False when different.
     """
+    debug_resources = "resource1 = {0}, resource2 = {1}".format(resource1, resource2)
+
     # The first resource is True / Not Null and the second resource is False / Null
     if resource1 and not resource2:
+        logger.debug("resource1 and not resource2. " + debug_resources)
         return False
 
     # Check all keys in first dict
@@ -1732,6 +1741,7 @@ def resource_compare(resource1, resource2):
             # no key in second dict
             if resource1[key] is not None:
                 # key inexistent is equivalent to exist and value None
+                logger.debug(MSG_DIFF_AT_KEY.format(key) + debug_resources)
                 return False
         # If both values are null / empty / False
         elif not resource1[key] and not resource2[key]:
@@ -1740,14 +1750,17 @@ def resource_compare(resource1, resource2):
             # recursive call
             if not resource_compare(resource1[key], resource2[key]):
                 # if different, stops here
+                logger.debug(MSG_DIFF_AT_KEY.format(key) + debug_resources)
                 return False
         elif isinstance(resource1[key], list):
             # change comparison function (list compare)
             if not resource_compare_list(resource1[key], resource2[key]):
                 # if different, stops here
+                logger.debug(MSG_DIFF_AT_KEY.format(key) + debug_resources)
                 return False
         elif standardize_value(resource1[key]) != standardize_value(resource2[key]):
             # different value
+            logger.debug(MSG_DIFF_AT_KEY.format(key) + debug_resources)
             return False
 
     # Check all keys in second dict to find missing
@@ -1756,6 +1769,7 @@ def resource_compare(resource1, resource2):
             # not exists in first dict
             if resource2[key] is not None:
                 # key inexistent is equivalent to exist and value None
+                logger.debug(MSG_DIFF_AT_KEY.format(key) + debug_resources)
                 return False
 
     # no differences found
@@ -1774,29 +1788,32 @@ def resource_compare_list(resource1, resource2):
         False when different.
 
     """
-    # Both lists are null / empty / False
-    if not resource1 and not resource2:
-        return True
+    debug_resources = "resource1 = {0}, resource2 = {1}".format(resource1, resource2)
 
     # The second list is null / empty  / False
     if not resource2:
+        logger.debug("resource 2 is null. " + debug_resources)
         return False
 
     if len(resource1) != len(resource2):
         # different length
+        logger.debug("resources have different length. " + debug_resources)
         return False
 
     for i, val in enumerate(resource1):
         if isinstance(val, dict):
             # change comparison function
             if not resource_compare(val, resource2[i]):
+                logger.debug("resources are different. " + debug_resources)
                 return False
         elif isinstance(val, list):
             # recursive call
             if not resource_compare_list(val, resource2[i]):
+                logger.debug("lists are different. " + debug_resources)
                 return False
         elif standardize_value(val) != standardize_value(resource2[i]):
             # value is different
+            logger.debug("values are different. " + debug_resources)
             return False
 
     # no differences found
@@ -1859,9 +1876,10 @@ def extract_id_from_uri(id_or_uri):
 
 def merge_list_by_key(original_list, updated_list, key):
     """
-    Merge two lists by the key.
-    The returned list has the same lenght that the updated list, since all new items on the updated list will be present
-    on the returned list, and all removed items will be absent.
+    Merge two lists by the key. It basically:
+    1. Adds the items that are present on updated_list and are absent on original_list.
+    2. Removes items that are absent on updated_list and are present on original_list.
+    3. For all items that are in both lists, overwrites the values from the original item by the updated item.
 
     Args:
         original_list: original list.
@@ -1874,10 +1892,11 @@ def merge_list_by_key(original_list, updated_list, key):
     merged_items = {}
 
     for item in updated_list:
-        if item[key] in items_map:
-            merged_items[item[key]] = items_map[item[key]].copy()
-            merged_items[item[key]].update(item)
+        item_key = item[key]
+        if item_key in items_map:
+            merged_items[item_key] = items_map[item_key].copy()
+            merged_items[item_key].update(item)
         else:
-            merged_items[item[key]] = item.copy()
+            merged_items[item_key] = item.copy()
 
     return [val for (_, val) in merged_items.items()]

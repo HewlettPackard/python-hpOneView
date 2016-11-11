@@ -351,12 +351,12 @@ class ResourceCompareTest(unittest.TestCase):
 
     def test_comparison_list_and_none_level_1(self):
         dict1 = {
-            "name": "name",
-            "value": [{"name": "item1",
-                       "name": "item2"}]
+            "name": "name of the resource",
+            "value": [{"name": "item1"},
+                      {"name": "item2"}]
         }
         dict2 = {
-            "name": "name",
+            "name": "name of the resource",
             "value": None
         }
         self.assertFalse(resource_compare(dict1, dict2))
@@ -368,8 +368,8 @@ class ResourceCompareTest(unittest.TestCase):
         }
         dict2 = {
             "name": "name",
-            "value": [{"name": "item1",
-                       "name": "item2"}]
+            "value": [{"name": "item1"},
+                      {"name": "item2"}]
         }
         self.assertFalse(resource_compare(dict1, dict2))
 
@@ -489,10 +489,10 @@ class ResourceCompareTest(unittest.TestCase):
         original_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=3500),
                          dict(id=2, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1000)]
 
-        updated_list = [dict(id=1, requestedMbps=2700, allocatedVFs=3500),
-                        dict(id=2, requestedMbps=1005)]
+        list_with_changes = [dict(id=1, requestedMbps=2700, allocatedVFs=3500),
+                             dict(id=2, requestedMbps=1005)]
 
-        merged_list = merge_list_by_key(original_list, updated_list, "id")
+        merged_list = merge_list_by_key(original_list, list_with_changes, "id")
 
         expected_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=2700, allocatedVFs=3500),
                          dict(id=2, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1005)]
@@ -503,10 +503,10 @@ class ResourceCompareTest(unittest.TestCase):
         original_list = [dict(id=2, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1000),
                          dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=3500)]
 
-        updated_list = [dict(id=1, requestedMbps=2700, allocatedVFs=3500),
-                        dict(id=2, requestedMbps=1005)]
+        list_with_changes = [dict(id=1, requestedMbps=2700, allocatedVFs=3500),
+                             dict(id=2, requestedMbps=1005)]
 
-        merged_list = merge_list_by_key(original_list, updated_list, "id")
+        merged_list = merge_list_by_key(original_list, list_with_changes, "id")
 
         expected_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=2700, allocatedVFs=3500),
                          dict(id=2, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1005)]
@@ -517,9 +517,9 @@ class ResourceCompareTest(unittest.TestCase):
         original_list = [dict(id=2, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1000),
                          dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=3500)]
 
-        updated_list = [dict(id=1, requestedMbps=2700, allocatedVFs=3500)]
+        list_with_changes = [dict(id=1, requestedMbps=2700, allocatedVFs=3500)]
 
-        merged_list = merge_list_by_key(original_list, updated_list, "id")
+        merged_list = merge_list_by_key(original_list, list_with_changes, "id")
 
         expected_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=2700, allocatedVFs=3500)]
 
@@ -528,15 +528,16 @@ class ResourceCompareTest(unittest.TestCase):
     def test_merge_list_by_key_with_added_items(self):
         original_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=3500)]
 
-        updated_list = [dict(id=1, requestedMbps=2700, allocatedVFs=3500),
-                        dict(id=2, requestedMbps=1005)]
+        list_with_changes = [dict(id=1, requestedMbps=2700, allocatedVFs=3500),
+                             dict(id=2, requestedMbps=1005)]
 
-        merged_list = merge_list_by_key(original_list, updated_list, "id")
+        merged_list = merge_list_by_key(original_list, list_with_changes, "id")
 
         expected_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=2700, allocatedVFs=3500),
                          dict(id=2, requestedMbps=1005)]
 
         self.assertEqual(merged_list, expected_list)
+
 
 if __name__ == '__main__':
     unittest.main()
