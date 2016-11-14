@@ -40,7 +40,7 @@ from hpOneView.resources.resource import ResourceClient
 
 class MigratableVcDomains(object):
     """
-    The migratable VC domains resource provides REST APIs for migrating Virtual Connect (VC)
+    The migratable VC domains resource provides methods for migrating Virtual Connect (VC)
     enclosures into the appliance. The operations are testing compatibility of a VC
     managed enclosure, retrieving a compatibility report, deleting a
     compatibility report and migrating a VC managed enclosure into the appliance.

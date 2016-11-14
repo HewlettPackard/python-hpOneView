@@ -40,7 +40,7 @@ from hpOneView.resources.resource import ResourceClient
 
 class ServerProfileTemplate(object):
     """
-    The server profile template resource provides REST APIs to create, retrieve, modify, and delete server
+    The server profile template resource provides methods to create, retrieve, modify, and delete server
     profile templates.
 
     A server profile template serves as a structural reference when creating a server profile.
@@ -49,7 +49,7 @@ class ServerProfileTemplate(object):
     The server profile template defines the centralized source for the configuration of firmware, connections,
     local storage, SAN storage, boot, BIOS, profile affinity and hide unused flexNICs.
 
-    After being created from a server profile template, a server profile continues to maintain an association to its
+    After being created from a server profile template, the server profile continues to maintain an association to its
     server profile template. Any drift in configuration consistency between the server profile template and server
     profile(s) is monitored and made visible on both the server profile template and the associated server profile(s).
 

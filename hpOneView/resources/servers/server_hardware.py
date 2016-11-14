@@ -42,7 +42,7 @@ from hpOneView.resources.resource import ResourceClient
 class ServerHardware(object):
     """
     The server hardware resource is a representation of a physical server.
-    The server hardware resource provides APIs for server management tasks such
+    The server hardware resource provides methods for server management tasks such
     as applying a profile, importing a server and managing an iLO.
 
     """
