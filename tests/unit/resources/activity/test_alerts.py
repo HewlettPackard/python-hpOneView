@@ -95,12 +95,19 @@ class AlertsTest(TestCase):
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):
-        id = '35323930-4936-4450-5531-303153474820'
-        self._client.delete(id)
-        mock_delete.assert_called_once_with(id)
+        id_alert = '35323930-4936-4450-5531-303153474820'
+        self._client.delete(id_alert)
+        mock_delete.assert_called_once_with(id_alert)
 
     @mock.patch.object(ResourceClient, 'delete')
-    def test_delete_alert_change_log_called_once(self, mock_delete):
-        id = '35323930-4936-4450-5531-303153474820'
-        self._client.delete_alert_change_log(id)
-        mock_delete.assert_called_once_with({'uri': '/rest/alerts/AlertChangeLog/35323930-4936-4450-5531-303153474820'})
+    def test_delete_alert_change_log_called_once_by_id(self, mock_delete):
+        id_alert = '20'
+        self._client.delete_alert_change_log(id_alert)
+        mock_delete.assert_called_once_with({'uri': '/rest/alerts/AlertChangeLog/20'})
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_delete_alert_change_log_called_once_by_uri(self, mock_delete):
+        uri = '/rest/alerts/AlertChangeLog/20'
+        self._client.delete_alert_change_log(uri)
+        mock_delete.assert_called_once_with(
+            {'uri': uri})

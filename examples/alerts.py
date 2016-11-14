@@ -57,18 +57,20 @@ alert_by_uri = _client.alerts.get(alert['uri'])
 print("uri: '%s' | alertState: '%s'" % (alert_by_uri['uri'], alert_by_uri['alertState']))
 
 # Find first alert by state
-print("\nGet first alert by state: Active")
-alert_by_state = _client.alerts.get_by('alertState', 'Active')[0]
-print("Found alert by state: '%s' | uri: '%s'" % (alert_by_state["alertState"], alert_by_state["uri"]))
+print("\nGet first alert by state: Cleared")
+alert_by_state = _client.alerts.get_by('alertState', 'Cleared')[0]
+print("Found alert by state: '%s' | uri: '%s'" % (alert_by_state['alertState'], alert_by_state['uri']))
 
-# Update state alert
-print("\nUpdate state alert")
+# Updates state alert and add note
+print("\nUpdate state alert and add an note")
 alert_to_update = {
     'uri': alert_by_state['uri'],
-    'alertState': 'Cleared',
+    'alertState': 'Active',
+    'notes': 'A note to delete!'
 }
 alert_updated = _client.alerts.update(alert_to_update)
-print("Update alert successfully.\n uri = '%s' | alertState = '%s'" %
+print("uri = '%s' | alertState = '%s'" % (alert_by_state['uri'], alert_by_state['alertState']))
+print("Update alert successfully.\nuri = '%s' | alertState = '%s'" %
       (alert_updated['uri'], alert_updated['alertState']))
 
 # Filter by state
@@ -77,11 +79,15 @@ alerts = _client.alerts.get_all(filter="\"alertState='Locked'\"", view="day", co
 for alert in alerts:
     print("'%s' | type: '%s' | alertState: '%s'" % (alert['uri'], alert['type'], alert['alertState']))
 
-# Delete the alert
+# Deletes the alert
 print("\nDelete an alert")
 _client.alerts.delete(alert_by_id)
 print("Successfully deleted alert")
 
-# # Deletes the AlertChangeLog item identified by ID
-# print("Deletes alert change log")
-# _client.alerts.delete_alert_change_log('8')
+# Deletes the AlertChangeLog item identified by URI
+print("\nDelete alert change log by URI")
+# filter by user entered logs
+list_change_logs = [x for x in alert_updated['changeLog'] if x['userEntered'] is True]
+uri_note = list_change_logs[-1]['uri']
+_client.alerts.delete_alert_change_log(uri_note)
+print("Note with URI '%s' deleted" % uri_note)
