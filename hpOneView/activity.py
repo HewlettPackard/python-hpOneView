@@ -61,7 +61,9 @@ def deprecated(func):
     def wrapper(*args, **kwargs):
         warn("Module activity is deprecated, use OneViewClient class instead", DeprecationWarning, stacklevel=2)
         return func(*args, **kwargs)
+
     return wrapper
+
 
 TaskErrorStates = ['Error', 'Warning', 'Terminated', 'Killed']
 TaskCompletedStates = ['Error', 'Warning', 'Completed', 'Terminated', 'Killed']

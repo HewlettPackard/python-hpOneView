@@ -24,6 +24,7 @@
 from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
 from hpOneView import extract_id_from_uri
+from pprint import pprint
 
 config = {
     "ip": "172.16.102.59",
@@ -42,7 +43,7 @@ _client = OneViewClient(config)
 print("\nGetting the first 5 alerts")
 alerts = _client.alerts.get_all(0, 5)
 for alert in alerts:
-    print("uri: '%s' | type: '%s' | alertState: '%s'" % (alert['uri'], alert['type'], alert['alertState']))
+    "uri: '{uri}' | type: '{type}' | alertState: '{alertState}'".format(**alert)
 
 # Get a specific alert (first of the list that was obtained in previous item)
 print("\nGet a specific alert")
@@ -62,7 +63,7 @@ alert_by_state = _client.alerts.get_by('alertState', 'Cleared')[0]
 print("Found alert by state: '%s' | uri: '%s'" % (alert_by_state['alertState'], alert_by_state['uri']))
 
 # Updates state alert and add note
-print("\nUpdate state alert and add an note")
+print("\nUpdate state alert and add a note")
 alert_to_update = {
     'uri': alert_by_state['uri'],
     'alertState': 'Active',
@@ -70,8 +71,8 @@ alert_to_update = {
 }
 alert_updated = _client.alerts.update(alert_to_update)
 print("uri = '%s' | alertState = '%s'" % (alert_by_state['uri'], alert_by_state['alertState']))
-print("Update alert successfully.\nuri = '%s' | alertState = '%s'" %
-      (alert_updated['uri'], alert_updated['alertState']))
+print("Update alert successfully.")
+pprint(alert_updated)
 
 # Filter by state
 print("\nGet all alerts filtering by alertState")
