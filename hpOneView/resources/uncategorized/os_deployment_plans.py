@@ -76,14 +76,14 @@ class OsDeploymentPlans(object):
 
     def get(self, id_or_uri):
         """
-        Gets a single Os Deployment plans resource based upon its uri or id.
+        Gets a single Os Deployment plan resource based upon its URI or ID.
 
         Args:
             id_or_uri:
-                Can be either the Os Deployment plans id or the uri
+                Can be either the Os Deployment plan ID or the URI
 
         Returns:
-            dict: Os Deployment plans
+            dict: Os Deployment plan
         """
         return self._client.get(id_or_uri)
 
@@ -97,7 +97,7 @@ class OsDeploymentPlans(object):
             value: value to filter
 
         Returns:
-            dict: Os Deployment plans
+            list: Os Deployment plans
         """
         return self._client.get_by(field, value)
 
