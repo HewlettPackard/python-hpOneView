@@ -25,7 +25,7 @@ from pprint import pprint
 from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
 
-# This resource is only supported for synergy enclosures
+# This resource is only available on HPE Synergy
 
 config = {
     "ip": "",

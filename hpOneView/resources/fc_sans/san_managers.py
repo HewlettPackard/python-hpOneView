@@ -30,7 +30,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'server-profile-template'
+__title__ = 'SAN Managers'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP'
 __license__ = 'MIT'
@@ -40,6 +40,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class SanManagers(object):
+    """
+    SAN Managers API client.
+
+    """
     URI = '/rest/fc-sans/device-managers'
     PROVIDER_URI = '/rest/fc-sans/providers'
 

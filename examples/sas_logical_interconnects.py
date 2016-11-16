@@ -25,6 +25,8 @@ from pprint import pprint
 from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
 
+# This resource is only available on HPE Synergy
+
 config = {
     "ip": "172.16.102.59",
     "credentials": {

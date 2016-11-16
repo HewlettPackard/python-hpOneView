@@ -41,6 +41,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class SwitchTypes(object):
+    """
+    Switch Types API client.
+
+    """
     URI = '/rest/switch-types'
 
     def __init__(self, con):

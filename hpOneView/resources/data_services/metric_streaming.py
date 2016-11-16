@@ -41,6 +41,8 @@ from hpOneView.resources.resource import ResourceClient
 
 class MetricStreaming(object):
     """
+    Metrics API client.
+
     Metrics can be relayed from OneView for managed resources at a specified interval. The following steps can be
     followed to enable the metric relay in OneView:
 

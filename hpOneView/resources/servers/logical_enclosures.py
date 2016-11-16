@@ -40,6 +40,11 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class LogicalEnclosures(object):
+    """
+    The logical enclosure resource provides methods for managing one or more enclosures that are
+    linked or stacked with stacking links.
+
+    """
     URI = '/rest/logical-enclosures'
 
     def __init__(self, con):

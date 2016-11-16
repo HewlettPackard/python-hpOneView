@@ -26,6 +26,8 @@ from hpOneView.oneview_client import OneViewClient
 from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
+# This resource is only available on C7000 enclosures
+
 config = {
     "ip": "172.16.102.59",
     "credentials": {

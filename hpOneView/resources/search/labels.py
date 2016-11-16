@@ -30,7 +30,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'labels'
+__title__ = 'Labels'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
                 ' Development LP'
@@ -41,6 +41,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class Labels(object):
+    """
+    Labels API client.
+
+    """
 
     URI = '/rest/labels'
     RESOURCES_PATH = '/resources'

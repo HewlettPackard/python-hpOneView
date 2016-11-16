@@ -29,7 +29,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'logical-downlinks'
+__title__ = 'Logical Downlinks'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
                 ' Development LP'
@@ -40,6 +40,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class LogicalDownlinks(object):
+    """
+    Logical Downlinks API client.
+
+    """
     URI = '/rest/logical-downlinks'
 
     def __init__(self, con):

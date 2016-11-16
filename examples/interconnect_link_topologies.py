@@ -26,7 +26,7 @@ import re
 from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
 
-# This class only supported for synergy enclosures
+# This resource is only available on HPE Synergy
 
 config = {
     "ip": "",

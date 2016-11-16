@@ -30,7 +30,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'sas-logical-jbod'
+__title__ = 'SAS Logical JBODs'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
                 ' Development LP'
@@ -41,7 +41,13 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class SasLogicalJbods(object):
+    """
+    SAS Logical JBODs API client.
 
+    Note:
+        This resource is only available on HPE Synergy
+
+    """
     URI = '/rest/sas-logical-jbods'
     DRIVES_PATH = '/drives'
 

@@ -29,7 +29,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'migratablevcdomains'
+__title__ = 'Migratable VC Domains'
 __version__ = '1.0.0'
 __copyright__ = '(C) Copyright (2016) Hewlett Packard Enterprise Development LP'
 __license__ = 'MIT'
@@ -39,6 +39,14 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class MigratableVcDomains(object):
+    """
+    The migratable VC domains resource provides methods for migrating Virtual Connect (VC)
+    enclosures into the appliance. The operations are testing compatibility of a VC
+    managed enclosure, retrieving a compatibility report, deleting a
+    compatibility report and migrating a VC managed enclosure into the appliance.
+
+    """
+
     URI = '/rest/migratable-vc-domains'
 
     def __init__(self, connection):
@@ -125,7 +133,7 @@ class MigratableVcDomains(object):
             timeout: Timeout in seconds.  Waits for task completion by default.  The timeout does not abort the task in
                 OneView; just stops waiting for its completion.
 
-        Returns: bool: Indicating if the migration report was successfully deleted.
+        Returns: bool: Indicates if the migration report was successfully deleted.
         """
 
         return self._client.delete(id_or_uri, timeout=timeout)

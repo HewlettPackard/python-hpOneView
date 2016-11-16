@@ -30,7 +30,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'volumes'
+__title__ = 'Volumes'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
                 ' Development LP'
@@ -43,6 +43,11 @@ INVALID_VOLUME_URI = "When no snapshot uri is provided, volume id or valume uri 
 
 
 class Volumes(object):
+    """
+    Volumes API client.
+
+    """
+
     URI = '/rest/storage-volumes'
 
     DEFAULT_VALUES_SNAPSHOT = {

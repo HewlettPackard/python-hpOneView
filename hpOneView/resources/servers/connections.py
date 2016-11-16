@@ -29,7 +29,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'connections'
+__title__ = 'Connections'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
                 ' Development LP'
@@ -40,6 +40,11 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class Connections(object):
+    """
+    Connections API client.
+
+    """
+
     URI = '/rest/connections'
 
     def __init__(self, con):

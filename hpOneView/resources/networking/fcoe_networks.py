@@ -30,7 +30,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'FcoeNetworks'
+__title__ = 'FCoE Networks'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
                 ' Development LP'
@@ -41,6 +41,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class FcoeNetworks(object):
+    """
+    FCoE Networks API client.
+
+    """
     URI = '/rest/fcoe-networks'
 
     DEFAULT_VALUES = {

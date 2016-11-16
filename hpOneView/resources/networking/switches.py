@@ -42,7 +42,13 @@ from hpOneView.resources.resource import merge_default_values
 
 
 class Switches(object):
+    """
+    Switches API client.
 
+    Note:
+        This resource is only available on C7000 enclosures.
+
+    """
     URI = '/rest/switches'
 
     def __init__(self, con):
@@ -153,6 +159,9 @@ class Switches(object):
         """
         Updates the switch ports. Only the ports under the management of OneView and those that are unlinked are
         supported for update.
+
+        Note:
+            This method is available for API version 300 or later.
 
         Args:
             ports: List of Switch Ports.

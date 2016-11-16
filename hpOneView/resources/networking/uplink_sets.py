@@ -43,6 +43,10 @@ from builtins import isinstance
 
 
 class UplinkSets(object):
+    """
+    Uplink Sets API client.
+
+    """
     URI = '/rest/uplink-sets'
 
     DEFAULT_VALUES = {

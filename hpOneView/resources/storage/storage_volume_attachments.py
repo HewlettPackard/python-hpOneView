@@ -30,7 +30,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'storage-volume-templates'
+__title__ = 'Storage Volume Attachments'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
                 ' Development LP'
@@ -41,6 +41,11 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class StorageVolumeAttachments(object):
+    """
+    Storage Volume Attachments API client.
+
+    """
+
     URI = '/rest/storage-volume-attachments'
 
     def __init__(self, con):

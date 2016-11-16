@@ -41,6 +41,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class LogicalInterconnects(object):
+    """
+    Logical Interconnects API client.
+
+    """
     URI = '/rest/logical-interconnects'
     FIRMWARE_PATH = "/firmware"
     SNMP_CONFIGURATION_PATH = "/snmp-configuration"

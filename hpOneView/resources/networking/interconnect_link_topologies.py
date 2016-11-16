@@ -41,7 +41,13 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class InterconnectLinkTopologies(object):
-    """This class is only supported for synergy enclosures."""
+    """
+    Interconnect Link Topologies API client.
+
+    Note:
+        This resource is only available on HPE Synergy.
+
+    """
 
     URI = '/rest/interconnect-link-topologies'
 

@@ -29,7 +29,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'enclosures'
+__title__ = 'Enclosures'
 __version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
                 ' Development LP'
@@ -40,6 +40,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class Enclosures(object):
+    """
+    Enclosures API client.
+
+    """
     URI = '/rest/enclosures'
 
     def __init__(self, con):
@@ -88,8 +92,14 @@ class Enclosures(object):
 
     def add(self, information, timeout=-1):
         """
-        Takes information about an enclosure (for example: IP address, username, password) and uses
-        it to claim/configure the enclosure and add its components to the appliance.
+        C7000:
+            Takes information about an enclosure (for example: IP address, username, password) and uses
+            it to claim/configure the enclosure and add its components to the appliance.
+
+        Synergy:
+            Adds a remote enclosure and all the enclosures linked to that enclosure by their frame link
+            modules. The remote enclosures' frame link modules must not be claimed by another appliance.
+            The IP used must be the frame link module's Link Local IPv6 address.
 
         Args:
             information: Enclosure information to add.

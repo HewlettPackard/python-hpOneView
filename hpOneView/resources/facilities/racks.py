@@ -41,6 +41,10 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class Racks(object):
+    """
+    Racks API client.
+
+    """
     URI = '/rest/racks'
 
     def __init__(self, con):

@@ -29,7 +29,8 @@ from __future__ import unicode_literals
 from future import standard_library
 
 standard_library.install_aliases()
-
+__title__ = 'Scopes'
+__version__ = '0.0.1'
 __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP'
 __license__ = 'MIT'
 
@@ -37,6 +38,13 @@ from hpOneView.resources.resource import ResourceClient
 
 
 class Scopes(object):
+    """
+    Scopes API client.
+
+    Note:
+        This resource is available for API version 300 or later.
+
+    """
     URI = '/rest/scopes'
 
     DEFAULT_VALUES = {
@@ -158,7 +166,7 @@ class Scopes(object):
         Args:
             id_or_uri: Can be either the resource ID or the resource URI.
             resource_assignments (dict):
-                A dict object with a list of resourceUris to be added and a list to be removed.
+                A dict object with a list of resource URIs to be added and a list of resource URIs to be removed.
             timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
 
