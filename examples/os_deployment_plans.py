@@ -34,10 +34,18 @@ config = {
     }
 }
 
+# To run this example you must define an Os Deployment Plan ID
+os_deployment_plan_id = "81decf85-0dff-4a5e-8a95-52994eeb6493"
+
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
+
+
+print("Get an Os Deployment Plan by ID:")
+os_deployment_plan = oneview_client.os_deployment_plans.get(os_deployment_plan_id)
+pprint(os_deployment_plan)
 
 print("Get Os Deployment Plans by Filter:")
 os_deployment_plans = oneview_client.os_deployment_plans.get_by('deploymentType', 'I3S')
