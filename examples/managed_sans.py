@@ -125,6 +125,6 @@ else:
 # This method is available for API version 300 or later
 if oneview_client.api_version >= 300:
     # Retrieves an association between the provided WWN and the SAN (if any) on which it resides
-    print("\nGet  list of associations between provided WWNs and the SANs on which they reside")
+    print("\nGet a list of associations between provided WWNs and the SANs on which they reside")
     wwns = oneview_client.managed_sans.get_wwn(wwn)
     pprint(wwns)
