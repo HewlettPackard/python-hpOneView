@@ -99,6 +99,7 @@ from hpOneView.resources.networking.uplink_sets import UplinkSets
 from hpOneView.resources.servers.migratable_vc_domains import MigratableVcDomains
 from hpOneView.resources.networking.sas_logical_interconnect_groups import SasLogicalInterconnectGroups
 from hpOneView.resources.search.labels import Labels
+from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPlans
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
@@ -167,6 +168,7 @@ class OneViewClient(object):
         self.__labels = None
         self.__sas_logical_interconnect_groups = None
         self.__drive_enclures = None
+        self.__os_deployment_plans = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -927,3 +929,15 @@ class OneViewClient(object):
         if not self.__labels:
             self.__labels = Labels(self.__connection)
         return self.__labels
+
+    @property
+    def os_deployment_plans(self):
+        """
+        Gets the Os Deployment Plans API client.
+
+        Returns:
+            OsDeploymentPlans:
+        """
+        if not self.__os_deployment_plans:
+            self.__os_deployment_plans = OsDeploymentPlans(self.__connection)
+        return self.__os_deployment_plans
