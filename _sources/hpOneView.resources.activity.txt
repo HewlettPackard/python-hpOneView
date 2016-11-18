@@ -4,6 +4,14 @@ hpOneView.resources.activity package
 Submodules
 ----------
 
+hpOneView.resources.activity.alerts module
+------------------------------------------
+
+.. automodule:: hpOneView.resources.activity.alerts
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView.resources.activity.tasks module
 -----------------------------------------
 
