@@ -51,6 +51,7 @@ from hpOneView.resources.storage.storage_volume_attachments import StorageVolume
 from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTemplates
 from hpOneView.resources.storage.volumes import Volumes
 from hpOneView.resources.search.labels import Labels
+from hpOneView.resources.activity.alerts import Alerts
 from tests.test_utils import mock_builtin
 
 
@@ -479,3 +480,10 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_labels(self):
         labels = self._oneview.labels
         self.assertEqual(labels, self._oneview.labels)
+
+    def test_alerts_has_right_type(self):
+        self.assertIsInstance(self._oneview.alerts, Alerts)
+
+    def test_lazy_loading_alerts(self):
+        alerts = self._oneview.alerts
+        self.assertEqual(alerts, self._oneview.alerts)

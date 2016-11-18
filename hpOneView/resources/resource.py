@@ -398,7 +398,7 @@ class ResourceClient(object):
         logger.debug('Get by (uri = %s, field = %s, value = %s)' %
                      (uri, field, str(value)))
 
-        filter = "\"'{0}'='{1}'\"".format(field, value)
+        filter = "\"{0}='{1}'\"".format(field, value)
         return self.get_all(filter=filter, uri=uri)
 
     def get_by_name(self, name):

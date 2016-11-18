@@ -92,6 +92,7 @@ from hpOneView.resources.storage.volumes import Volumes
 from hpOneView.resources.networking.uplink_sets import UplinkSets
 from hpOneView.resources.servers.migratable_vc_domains import MigratableVcDomains
 from hpOneView.resources.search.labels import Labels
+from hpOneView.resources.activity.alerts import Alerts
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
@@ -150,6 +151,7 @@ class OneViewClient(object):
         self.__managed_sans = None
         self.__migratable_vc_domains = None
         self.__labels = None
+        self.__alerts = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -779,3 +781,15 @@ class OneViewClient(object):
         if not self.__labels:
             self.__labels = Labels(self.__connection)
         return self.__labels
+
+    @property
+    def alerts(self):
+        """
+        Gets the Alerts API client.
+
+        Returns:
+            Alerts:
+        """
+        if not self.__alerts:
+            self.__alerts = Alerts(self.__connection)
+        return self.__alerts
