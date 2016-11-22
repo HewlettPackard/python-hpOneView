@@ -125,6 +125,10 @@ If your environment requires a proxy, define the proxy properties in the JSON fi
 ```json
   "proxy": "<proxy_host>:<proxy_port>"
 ```
+OR export the `ONEVIEWSDK_PROXY` environment variable:
+```bash
+export ONEVIEWSDK_PROXY='<proxy_host>:<proxy_port>'
+```
 
 ### OneView 3.0
 
