@@ -146,16 +146,13 @@ class TaskMonitor(object):
             else:
                 raise HPOneViewTaskError(MSG_UNKNOWN_EXCEPTION, error_code)
 
-        deleted_resource = 'name' in task and task['name'] in deleted_states
+        if 'name' in task and task['name'] in deleted_states:
+            return True
 
-        if 'type' in task and task['type'].startswith('Task') and 'name' in task and not deleted_resource:
+        if 'type' in task and task['type'].startswith('Task'):
             # get associated resource when is not a delete task
             task, entity = self.get_associated_resource(task)
             return entity
-
-        if deleted_resource:
-            # delete/remove task return true
-            return True
 
         logger.warning('Task completed, unknown response: ' + str(task))
         return task
