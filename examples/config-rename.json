@@ -1,7 +1,7 @@
 {
   "ip": "172.16.102.59",
   "image_streamer_ip": "172.16.102.60",
-  "api_version": 200,
+  "api_version": 300,
   "credentials": {
     "userName": "administrator",
     "authLoginDomain": "",
@@ -19,6 +19,5 @@
   "storage_system_password": "",
   "power_device_hostname": "",
   "power_device_username": "",
-  "power_device_password": "",
-  "proxy": "<proxy_host>:<proxy_port>"
+  "power_device_password": ""
 }
