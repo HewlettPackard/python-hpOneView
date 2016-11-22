@@ -309,6 +309,60 @@ class TaskMonitorTest(unittest.TestCase):
         # may return a different type
         self.assertEqual(True, ret)
 
+    @mock.patch.object(TaskMonitor, 'get_associated_resource')
+    @mock.patch.object(TaskMonitor, 'is_task_running')
+    @mock.patch.object(TaskMonitor, 'get')
+    def test_wait_for_task_remove(self, mock_get, mock_is_running, mock_assoc_res):
+        task = {"uri": "uri",
+                "type": "TaskResourceV2",
+                "name": "Remove",
+                "taskState": "Removed",
+                }
+
+        mock_is_running.return_value = False
+        mock_get.return_value = task
+        mock_assoc_res.return_value = task.copy(), {"resource": "resource1"}
+
+        ret = self.task_monitor.wait_for_task(task.copy())
+
+        self.assertEqual(True, ret)
+
+    @mock.patch.object(TaskMonitor, 'get_associated_resource')
+    @mock.patch.object(TaskMonitor, 'is_task_running')
+    @mock.patch.object(TaskMonitor, 'get')
+    def test_wait_for_task_remove_san_manager(self, mock_get, mock_is_running, mock_assoc_res):
+        task = {"uri": "uri",
+                "type": "TaskResourceV2",
+                "name": "Remove SAN manager",
+                "taskState": "Completed",
+                }
+
+        mock_is_running.return_value = False
+        mock_get.return_value = task
+        mock_assoc_res.return_value = task.copy(), {"resource": "resource1"}
+
+        ret = self.task_monitor.wait_for_task(task.copy())
+
+        self.assertEqual(True, ret)
+
+    @mock.patch.object(TaskMonitor, 'get_associated_resource')
+    @mock.patch.object(TaskMonitor, 'is_task_running')
+    @mock.patch.object(TaskMonitor, 'get')
+    def test_wait_for_task_delete_server_hardware_type(self, mock_get, mock_is_running, mock_assoc_res):
+        task = {"uri": "uri",
+                "type": "TaskResourceV2",
+                "name": "Delete server hardware type",
+                "taskState": "Completed",
+                }
+
+        mock_is_running.return_value = False
+        mock_get.return_value = task
+        mock_assoc_res.return_value = task.copy(), {"resource": "resource1"}
+
+        ret = self.task_monitor.wait_for_task(task.copy())
+
+        self.assertEqual(True, ret)
+
     @mock.patch.object(connection, 'get')
     def test_get(self, mock_get):
         self.task_monitor.get({"uri": "an uri"})
