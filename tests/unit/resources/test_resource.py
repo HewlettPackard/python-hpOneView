@@ -375,12 +375,12 @@ class ResourceClientTest(unittest.TestCase):
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_by_property(self, mock_get_all):
         self.resource_client.get_by('name', 'MyFibreNetwork')
-        mock_get_all.assert_called_once_with(filter="\"'name'='MyFibreNetwork'\"", uri='/rest/testuri')
+        mock_get_all.assert_called_once_with(filter="\"name='MyFibreNetwork'\"", uri='/rest/testuri')
 
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_by_property_with_uri(self, mock_get_all):
         self.resource_client.get_by('name', 'MyFibreNetwork', uri='/rest/testuri/5435534/sub')
-        mock_get_all.assert_called_once_with(filter="\"'name'='MyFibreNetwork'\"", uri='/rest/testuri/5435534/sub')
+        mock_get_all.assert_called_once_with(filter="\"name='MyFibreNetwork'\"", uri='/rest/testuri/5435534/sub')
 
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_by_property_with__invalid_uri(self, mock_get_all):

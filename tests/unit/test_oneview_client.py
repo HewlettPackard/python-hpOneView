@@ -61,6 +61,7 @@ from hpOneView.resources.storage.sas_logical_jbod_attachments import SasLogicalJ
 from hpOneView.resources.networking.internal_link_sets import InternalLinkSets
 from hpOneView.resources.search.labels import Labels
 from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPlans
+from hpOneView.resources.activity.alerts import Alerts
 from tests.test_utils import mock_builtin
 
 OS_ENVIRON_CONFIG_MINIMAL = {
@@ -589,6 +590,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_labels(self):
         labels = self._oneview.labels
         self.assertEqual(labels, self._oneview.labels)
+
+    def test_alerts_has_right_type(self):
+        self.assertIsInstance(self._oneview.alerts, Alerts)
+
+    def test_lazy_loading_alerts(self):
+        alerts = self._oneview.alerts
+        self.assertEqual(alerts, self._oneview.alerts)
 
     def test_os_deployment_plans_has_right_type(self):
         self.assertIsInstance(self._oneview.os_deployment_plans, OsDeploymentPlans)
