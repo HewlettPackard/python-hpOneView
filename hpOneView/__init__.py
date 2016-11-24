@@ -10,6 +10,7 @@ from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
 from future import standard_library
+
 standard_library.install_aliases()
 
 __title__ = 'hpOneView'
@@ -41,15 +42,16 @@ __status__ = 'Development'
 # THE SOFTWARE.
 ###
 
+
 import sys
 
 PYTHON_VERSION = sys.version_info[:3]
 PY2 = (PYTHON_VERSION[0] == 2)
 if PY2:
     if PYTHON_VERSION < (2, 7, 9):
-        raise Exception('Must use Python 2.7.9 or later')
+        raise Exception('Must use Python 2.7.9 or later, detected version: %s' % '.'.join(map(str, PYTHON_VERSION)))
 elif PYTHON_VERSION < (3, 4):
-    raise Exception('Must use Python 3.4 or later')
+    raise Exception('Must use Python 3.4 or later, detected version: %s' % '.'.join(map(str, PYTHON_VERSION)))
 
 from hpOneView.common import *
 from hpOneView.connection import *
@@ -71,6 +73,7 @@ logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 sys.excepthook = handle_exceptions
 
+
 def main():
     parser = argparse.ArgumentParser(add_help=True, description='Usage')
     parser.add_argument('-a', '--appliance', dest='host', required=True,
@@ -81,7 +84,7 @@ def main():
                         help='HPE OneView Password')
     parser.add_argument('-c', '--certificate', dest='cert', required=False,
                         help='Trusted SSL Certificate Bundle in PEM '
-                        '(Base64 Encoded DER) Format')
+                             '(Base64 Encoded DER) Format')
     parser.add_argument('-r', '--proxy', dest='proxy', required=False,
                         help='Proxy (host:port format')
     args = parser.parse_args()
@@ -94,9 +97,11 @@ def main():
     con.login(args.host, credential)
     con.logout()
 
+
 if __name__ == '__main__':
     import sys
     import argparse
+
     sys.exit(main())
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
