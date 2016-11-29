@@ -350,13 +350,14 @@ class UplinkSetsTest(unittest.TestCase):
         self.assertEqual(uplink, result)
 
     @mock.patch.object(UplinkSets, 'get')
-    def test___set_ethernet_uris_with_invalid_operation(self, mock_uplink_get):
+    def test_set_ethernet_uris_with_invalid_operation(self, mock_uplink_get):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         ethernet_to_add = [
             '5f14bf27-f839-4e9f-9ec8-9f0e0b413939',
             'd34dcf5e-0d8e-441c-b00d-e1dd6a067188',
         ]
-        # Force private call with invalid operation
+
+        # Force a private call with invalid operation (aims to reach 100% coverage)
         self.assertRaises(ValueError,
                           self._uplink_sets._UplinkSets__set_ethernet_uris,
                           id, ethernet_to_add, "invalid_operation")
