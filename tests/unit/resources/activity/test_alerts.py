@@ -105,6 +105,11 @@ class AlertsTest(TestCase):
         self._client.delete_alert_change_log(id_alert)
         mock_delete.assert_called_once_with({'uri': '/rest/alerts/AlertChangeLog/20'})
 
+    @mock.patch.object(ResourceClient, 'delete_all')
+    def test_delete_all_called_once(self, mock_delete):
+        self._client.delete_all('name="name"')
+        mock_delete.assert_called_once_with(filter='name="name"', timeout=-1)
+
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_alert_change_log_called_once_by_uri(self, mock_delete):
         uri = '/rest/alerts/AlertChangeLog/20'

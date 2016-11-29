@@ -128,7 +128,9 @@ class Alerts(object):
         Deletes all Alert objects from the appliance that match the provided filter.
 
         Args:
-            filter (dict): Object to delete.
+            filter (list or str):
+                 A general filter string to narrow the list of items to delete. The default is no filter; all
+                 resources are deleted.
             timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
 
