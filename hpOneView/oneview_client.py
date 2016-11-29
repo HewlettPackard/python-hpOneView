@@ -195,12 +195,13 @@ class OneViewClient(object):
         Construct OneViewClient using environment variables.
 
         Allowed variables: ONEVIEWSDK_IP (required), ONEVIEWSDK_USERNAME (required), ONEVIEWSDK_PASSWORD (required),
-        ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, and ONEVIEWSDK_PROXY.
+        ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, ONEVIEWSDK_IMAGE_STREAMER_IP, and ONEVIEWSDK_PROXY.
 
         Returns:
             OneViewClient:
         """
         ip = os.environ.get('ONEVIEWSDK_IP', '')
+        image_streamer_ip = os.environ.get('ONEVIEWSDK_IMAGE_STREAMER_IP', '')
         api_version = int(os.environ.get('ONEVIEWSDK_API_VERSION', OneViewClient.DEFAULT_API_VERSION))
         username = os.environ.get('ONEVIEWSDK_USERNAME', '')
         auth_login_domain = os.environ.get('ONEVIEWSDK_AUTH_LOGIN_DOMAIN', '')
@@ -208,6 +209,7 @@ class OneViewClient(object):
         proxy = os.environ.get('ONEVIEWSDK_PROXY', '')
 
         config = dict(ip=ip,
+                      image_streamer_ip=image_streamer_ip,
                       api_version=api_version,
                       credentials=dict(userName=username, authLoginDomain=auth_login_domain, password=password),
                       proxy=proxy)
