@@ -171,7 +171,15 @@
 
 
 <div class="viewcode-block" id="Fabrics"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.fabrics.Fabrics">[docs]</a><span class="k">class</span> <span class="nc">Fabrics</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fabrics API client.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/fabrics&#39;</span>
+
+    <span class="n">DEFAULT_VALUES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;vlan-pool&#39;</span><span class="p">}</span>
+    <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
@@ -229,7 +237,42 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of fabrics.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Fabrics.get_reserved_vlan_range"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.fabrics.Fabrics.get_reserved_vlan_range">[docs]</a>    <span class="k">def</span> <span class="nf">get_reserved_vlan_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the reserved vlan ID range for the fabric.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This method is only available on HPE Synergy.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: ID or URI of fabric.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: vlan-pool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/reserved-vlan-range&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Fabrics.update_reserved_vlan_range"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.fabrics.Fabrics.update_reserved_vlan_range">[docs]</a>    <span class="k">def</span> <span class="nf">update_reserved_vlan_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">vlan_pool</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the reserved vlan ID range for the fabric.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This method is only available on HPE Synergy.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: ID or URI of fabric.</span>
+<span class="sd">            vlan_pool (dict): vlan-pool data to update.</span>
+<span class="sd">            force:  If set to true, the operation completes despite any problems with network connectivity or errors</span>
+<span class="sd">                on the resource itself. The default is false.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: The fabric</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/reserved-vlan-range&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">vlan_pool</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

@@ -170,6 +170,10 @@
 
 
 <div class="viewcode-block" id="ManagedSANs"><a class="viewcode-back" href="../../../../hpOneView.resources.fc_sans.html#hpOneView.resources.fc_sans.managed_sans.ManagedSANs">[docs]</a><span class="k">class</span> <span class="nc">ManagedSANs</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Managed SANs API client.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/fc-sans/managed-sans&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
@@ -230,10 +234,10 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates a Managed SAN.</span>
 
-<span class="sd">        It&#39;s possible:</span>
+<span class="sd">        It&#39;s possible to:</span>
 <span class="sd">            - Refresh the Managed SAN.</span>
-<span class="sd">            - Updating the Managed SAN&#39;s publicAttributes.</span>
-<span class="sd">            - Updating the Managed SAN&#39;s policy.</span>
+<span class="sd">            - Update the Managed SAN&#39;s publicAttributes.</span>
+<span class="sd">            - Update the Managed SAN&#39;s policy.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            id_or_uri: Can be either the Managed SAN resource ID or URI.</span>
@@ -307,7 +311,23 @@
 <span class="sd">            list: A list of FCIssueResponse dict.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">managed_san_id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/issues/&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create_report</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create_report</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ManagedSANs.get_wwn"><a class="viewcode-back" href="../../../../hpOneView.resources.fc_sans.html#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_wwn">[docs]</a>    <span class="k">def</span> <span class="nf">get_wwn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wwn</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves a list of associations between provided WWNs and the SANs (if any) on which they reside.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This method is available for API version 300 or later.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            wwn (str): The WWN that may be associated with the SAN.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: Associations between provided WWNs and the SANs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s1">&#39;/rest/fc-sans/managed-sans?locate=&#39;</span> <span class="o">+</span> <span class="n">wwn</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

@@ -171,7 +171,10 @@
 
 
 <div class="viewcode-block" id="LogicalInterconnects"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects">[docs]</a><span class="k">class</span> <span class="nc">LogicalInterconnects</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Logical Interconnects API client.</span>
 
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/logical-interconnects&#39;</span>
     <span class="n">FIRMWARE_PATH</span> <span class="o">=</span> <span class="s2">&quot;/firmware&quot;</span>
     <span class="n">SNMP_CONFIGURATION_PATH</span> <span class="o">=</span> <span class="s2">&quot;/snmp-configuration&quot;</span>
@@ -180,6 +183,16 @@
     <span class="n">FORWARDING_INFORMATION_PATH</span> <span class="o">=</span> <span class="s2">&quot;/forwarding-information-base&quot;</span>
     <span class="n">QOS_AGGREGATED_CONFIGURATION</span> <span class="o">=</span> <span class="s2">&quot;/qos-aggregated-configuration&quot;</span>
     <span class="n">locations_uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{uri}{locations}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">URI</span><span class="p">,</span> <span class="n">locations</span><span class="o">=</span><span class="n">LOCATIONS_PATH</span><span class="p">)</span>
+
+    <span class="n">SETTINGS_DEFAULT_VALUES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;200&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;InterconnectSettingsV3&quot;</span><span class="p">},</span>
+        <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;InterconnectSettingsV201&quot;</span><span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">SETTINGS_ETHERNET_DEFAULT_VALUES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;200&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;EthernetInterconnectSettingsV3&quot;</span><span class="p">},</span>
+        <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;EthernetInterconnectSettingsV201&quot;</span><span class="p">}</span>
+    <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
@@ -325,13 +338,14 @@
 <span class="sd">            dict: Logical Interconnect</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s1">&#39;type&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;InterconnectSettingsV3&#39;</span>
-        <span class="k">if</span> <span class="s1">&#39;ethernetSettings&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="s1">&#39;type&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ethernetSettings&#39;</span><span class="p">]:</span>
-            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ethernetSettings&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;EthernetInterconnectSettingsV3&#39;</span>
+
+        <span class="k">if</span> <span class="s1">&#39;ethernetSettings&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ethernetSettings&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">merge_default_values</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;ethernetSettings&#39;</span><span class="p">],</span>
+                                                                         <span class="bp">self</span><span class="o">.</span><span class="n">SETTINGS_ETHERNET_DEFAULT_VALUES</span><span class="p">)</span>
 
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/settings&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
+                                   <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">SETTINGS_DEFAULT_VALUES</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LogicalInterconnects.update_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">update_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

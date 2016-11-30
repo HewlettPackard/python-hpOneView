@@ -92,12 +92,17 @@
 <li><a class="reference internal" href="#module-hpOneView.resources.networking.interconnect_link_topologies">hpOneView.resources.networking.interconnect_link_topologies module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.networking.interconnect_types">hpOneView.resources.networking.interconnect_types module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.networking.interconnects">hpOneView.resources.networking.interconnects module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.networking.internal_link_sets">hpOneView.resources.networking.internal_link_sets module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.networking.logical_downlinks">hpOneView.resources.networking.logical_downlinks module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.networking.logical_interconnect_groups">hpOneView.resources.networking.logical_interconnect_groups module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.networking.logical_interconnects">hpOneView.resources.networking.logical_interconnects module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.networking.logical_switch_groups">hpOneView.resources.networking.logical_switch_groups module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.networking.logical_switches">hpOneView.resources.networking.logical_switches module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.networking.network_sets">hpOneView.resources.networking.network_sets module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.networking.sas_interconnect_types">hpOneView.resources.networking.sas_interconnect_types module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.networking.sas_interconnects">hpOneView.resources.networking.sas_interconnects module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.networking.sas_logical_interconnect_groups">hpOneView.resources.networking.sas_logical_interconnect_groups module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.networking.sas_logical_interconnects">hpOneView.resources.networking.sas_logical_interconnects module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.networking.switch_types">hpOneView.resources.networking.switch_types module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.networking.switches">hpOneView.resources.networking.switches module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.networking.uplink_sets">hpOneView.resources.networking.uplink_sets module</a></li>
@@ -159,6 +164,12 @@
 <dt id="hpOneView.resources.networking.connection_templates.ConnectionTemplates">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.connection_templates.</code><code class="descname">ConnectionTemplates</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/connection_templates.html#ConnectionTemplates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.connection_templates.ConnectionTemplates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Connection Templates API client.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.connection_templates.ConnectionTemplates.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'connection-template'}, u'200': {u'type': u'connection-template'}}</em><a class="headerlink" href="#hpOneView.resources.networking.connection_templates.ConnectionTemplates.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.connection_templates.ConnectionTemplates.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/connection-templates'</em><a class="headerlink" href="#hpOneView.resources.networking.connection_templates.ConnectionTemplates.URI" title="Permalink to this definition">¶</a></dt>
@@ -292,6 +303,12 @@ OneView, just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.ethernet_networks.</code><code class="descname">EthernetNetworks</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Ethernet Networks API client.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'ethernet-networkV300'}, u'200': {u'type': u'ethernet-networkV3'}}</em><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/ethernet-networks'</em><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.URI" title="Permalink to this definition">¶</a></dt>
@@ -581,6 +598,12 @@ in OneView; it just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.networking.fabrics.Fabrics">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.fabrics.</code><code class="descname">Fabrics</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/fabrics.html#Fabrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.fabrics.Fabrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Fabrics API client.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.fabrics.Fabrics.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'vlan-pool'}}</em><a class="headerlink" href="#hpOneView.resources.networking.fabrics.Fabrics.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.fabrics.Fabrics.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/fabrics'</em><a class="headerlink" href="#hpOneView.resources.networking.fabrics.Fabrics.URI" title="Permalink to this definition">¶</a></dt>
@@ -662,6 +685,58 @@ on create time with the oldest entry first.</li>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="hpOneView.resources.networking.fabrics.Fabrics.get_reserved_vlan_range">
+<code class="descname">get_reserved_vlan_range</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/fabrics.html#Fabrics.get_reserved_vlan_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.fabrics.Fabrics.get_reserved_vlan_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the reserved vlan ID range for the fabric.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method is only available on HPE Synergy.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of fabric.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">vlan-pool</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.fabrics.Fabrics.update_reserved_vlan_range">
+<code class="descname">update_reserved_vlan_range</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>vlan_pool</em>, <em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/fabrics.html#Fabrics.update_reserved_vlan_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.fabrics.Fabrics.update_reserved_vlan_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the reserved vlan ID range for the fabric.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method is only available on HPE Synergy.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; ID or URI of fabric.</li>
+<li><strong>vlan_pool</strong> (<em>dict</em>) &#8211; vlan-pool data to update.</li>
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with network connectivity or errors
+on the resource itself. The default is false.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The fabric</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -671,6 +746,12 @@ on create time with the oldest entry first.</li>
 <dt id="hpOneView.resources.networking.fc_networks.FcNetworks">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.fc_networks.</code><code class="descname">FcNetworks</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/fc_networks.html#FcNetworks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.fc_networks.FcNetworks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Fibre Channel networks API client.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.fc_networks.FcNetworks.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'fc-networkV300'}, u'200': {u'type': u'fc-networkV2'}}</em><a class="headerlink" href="#hpOneView.resources.networking.fc_networks.FcNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.fc_networks.FcNetworks.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/fc-networks'</em><a class="headerlink" href="#hpOneView.resources.networking.fc_networks.FcNetworks.URI" title="Permalink to this definition">¶</a></dt>
@@ -839,6 +920,12 @@ in OneView, just stop waiting for its completion.</li>
 <dt id="hpOneView.resources.networking.fcoe_networks.FcoeNetworks">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.fcoe_networks.</code><code class="descname">FcoeNetworks</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/fcoe_networks.html#FcoeNetworks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.fcoe_networks.FcoeNetworks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>FCoE Networks API client.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.fcoe_networks.FcoeNetworks.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'fcoe-networkV300'}, u'200': {u'type': u'fcoe-network'}}</em><a class="headerlink" href="#hpOneView.resources.networking.fcoe_networks.FcoeNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.fcoe_networks.FcoeNetworks.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/fcoe-networks'</em><a class="headerlink" href="#hpOneView.resources.networking.fcoe_networks.FcoeNetworks.URI" title="Permalink to this definition">¶</a></dt>
@@ -1000,7 +1087,11 @@ in OneView; it just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.networking.interconnect_link_topologies.InterconnectLinkTopologies">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.interconnect_link_topologies.</code><code class="descname">InterconnectLinkTopologies</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnect_link_topologies.html#InterconnectLinkTopologies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnect_link_topologies.InterconnectLinkTopologies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>This class is only supported for synergy enclosures.</p>
+<p>Interconnect Link Topologies API client.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This resource is only available on HPE Synergy.</p>
+</div>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.interconnect_link_topologies.InterconnectLinkTopologies.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/interconnect-link-topologies'</em><a class="headerlink" href="#hpOneView.resources.networking.interconnect_link_topologies.InterconnectLinkTopologies.URI" title="Permalink to this definition">¶</a></dt>
@@ -1091,6 +1182,7 @@ The search is case-insensitive</p>
 <dt id="hpOneView.resources.networking.interconnect_types.InterconnectTypes">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.interconnect_types.</code><code class="descname">InterconnectTypes</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnect_types.html#InterconnectTypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnect_types.InterconnectTypes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Interconnect Types API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.interconnect_types.InterconnectTypes.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/interconnect-types'</em><a class="headerlink" href="#hpOneView.resources.networking.interconnect_types.InterconnectTypes.URI" title="Permalink to this definition">¶</a></dt>
@@ -1181,6 +1273,7 @@ on create time with the oldest entry first.</li>
 <dt id="hpOneView.resources.networking.interconnects.Interconnects">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.interconnects.</code><code class="descname">Interconnects</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnects.html#Interconnects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnects.Interconnects" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Interconnects API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.interconnects.Interconnects.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/interconnects'</em><a class="headerlink" href="#hpOneView.resources.networking.interconnects.Interconnects.URI" title="Permalink to this definition">¶</a></dt>
@@ -1453,12 +1546,113 @@ in OneView; it just stops waiting for its completion.</li>
 </dd></dl>
 
 </div>
+<div class="section" id="module-hpOneView.resources.networking.internal_link_sets">
+<span id="hponeview-resources-networking-internal-link-sets-module"></span><h2>hpOneView.resources.networking.internal_link_sets module<a class="headerlink" href="#module-hpOneView.resources.networking.internal_link_sets" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.networking.internal_link_sets.InternalLinkSets">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.internal_link_sets.</code><code class="descname">InternalLinkSets</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/internal_link_sets.html#InternalLinkSets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.internal_link_sets.InternalLinkSets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Internal Link Sets API client.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This resource is available for API version 300 or later.</p>
+</div>
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.internal_link_sets.InternalLinkSets.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/internal-link-sets'</em><a class="headerlink" href="#hpOneView.resources.networking.internal_link_sets.InternalLinkSets.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.internal_link_sets.InternalLinkSets.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/internal_link_sets.html#InternalLinkSets.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.internal_link_sets.InternalLinkSets.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a specific internal-link-set resource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the Internal Link Set resource.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Internal Link Set.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.internal_link_sets.InternalLinkSets.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>view=u''</em>, <em>fields=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/internal_link_sets.html#InternalLinkSets.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.internal_link_sets.InternalLinkSets.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a paginated collection of all internal link sets.
+The collection is based on optional sorting and filtering and is constrained by start and count parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+default is no filter; all resources are returned.</li>
+<li><strong>query</strong> &#8211; A general query string to narrow the list of resources returned. The default is
+no query - all resources are returned.</li>
+<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+on create time with the oldest entry first.</li>
+<li><strong>fields</strong> &#8211; Specifies which fields should be returned in the result set.</li>
+<li><strong>view</strong> &#8211; Return a specific subset of the attributes of the resource or collection, by specifying the name
+of a predefined view. The default view is expand - show all attributes of the resource and all
+elements of collections of resources.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Internal Link Set Collection.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.internal_link_sets.InternalLinkSets.get_by">
+<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/internal_link_sets.html#InternalLinkSets.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.internal_link_sets.InternalLinkSets.get_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all internal-link-sets that match the filter.
+The search is case-insensitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>field</strong> &#8211; field name to filter</li>
+<li><strong>value</strong> &#8211; value to filter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of Internal Link Sets.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-hpOneView.resources.networking.logical_downlinks">
 <span id="hponeview-resources-networking-logical-downlinks-module"></span><h2>hpOneView.resources.networking.logical_downlinks module<a class="headerlink" href="#module-hpOneView.resources.networking.logical_downlinks" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hpOneView.resources.networking.logical_downlinks.LogicalDownlinks">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.logical_downlinks.</code><code class="descname">LogicalDownlinks</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_downlinks.html#LogicalDownlinks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_downlinks.LogicalDownlinks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Logical Downlinks API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_downlinks.LogicalDownlinks.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/logical-downlinks'</em><a class="headerlink" href="#hpOneView.resources.networking.logical_downlinks.LogicalDownlinks.URI" title="Permalink to this definition">¶</a></dt>
@@ -1593,6 +1787,12 @@ on create time with the oldest entry first.</li>
 <dt id="hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.logical_interconnect_groups.</code><code class="descname">LogicalInterconnectGroups</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnect_groups.html#LogicalInterconnectGroups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Logical Interconnect Groups API client.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'logical-interconnect-groupV300'}, u'200': {u'type': u'logical-interconnect-groupV3'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/logical-interconnect-groups'</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.URI" title="Permalink to this definition">¶</a></dt>
@@ -1793,6 +1993,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.logical_interconnects.</code><code class="descname">LogicalInterconnects</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Logical Interconnects API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.FIRMWARE_PATH">
 <code class="descname">FIRMWARE_PATH</code><em class="property"> = u'/firmware'</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.FIRMWARE_PATH" title="Permalink to this definition">¶</a></dt>
@@ -1816,6 +2017,16 @@ in OneView; it just stops waiting for its completion.</li>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.QOS_AGGREGATED_CONFIGURATION">
 <code class="descname">QOS_AGGREGATED_CONFIGURATION</code><em class="property"> = u'/qos-aggregated-configuration'</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.QOS_AGGREGATED_CONFIGURATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_DEFAULT_VALUES">
+<code class="descname">SETTINGS_DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'InterconnectSettingsV201'}, u'200': {u'type': u'InterconnectSettingsV3'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_ETHERNET_DEFAULT_VALUES">
+<code class="descname">SETTINGS_ETHERNET_DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'EthernetInterconnectSettingsV201'}, u'200': {u'type': u'EthernetInterconnectSettingsV3'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_ETHERNET_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -2386,6 +2597,16 @@ applied to all managed interconnects.</p>
 <dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.logical_switch_groups.</code><code class="descname">LogicalSwitchGroups</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switch_groups.html#LogicalSwitchGroups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Logical Switch Groups API client.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This resource is only available on C7000 enclosures.</p>
+</div>
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'logical-switch-groupV300'}, u'200': {u'type': u'logical-switch-group'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/logical-switch-groups'</em><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.URI" title="Permalink to this definition">¶</a></dt>
@@ -2552,6 +2773,16 @@ in OneView; it just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.networking.logical_switches.LogicalSwitches">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.logical_switches.</code><code class="descname">LogicalSwitches</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switches.html#LogicalSwitches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switches.LogicalSwitches" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Logical Switches API client.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This resource is only available on C7000 enclosures.</p>
+</div>
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.logical_switches.LogicalSwitches.SWITCH_DEFAULT_VALUES">
+<code class="descname">SWITCH_DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'logical-switchV300'}, u'200': {u'type': u'logical-switch'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_switches.LogicalSwitches.SWITCH_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_switches.LogicalSwitches.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/logical-switches'</em><a class="headerlink" href="#hpOneView.resources.networking.logical_switches.LogicalSwitches.URI" title="Permalink to this definition">¶</a></dt>
@@ -2744,6 +2975,12 @@ in OneView, just stop waiting for its completion.</li>
 <dt id="hpOneView.resources.networking.network_sets.NetworkSets">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.network_sets.</code><code class="descname">NetworkSets</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/network_sets.html#NetworkSets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.network_sets.NetworkSets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Network Sets API client.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.network_sets.NetworkSets.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'network-setV300'}, u'200': {u'type': u'network-set'}}</em><a class="headerlink" href="#hpOneView.resources.networking.network_sets.NetworkSets.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.network_sets.NetworkSets.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/network-sets'</em><a class="headerlink" href="#hpOneView.resources.networking.network_sets.NetworkSets.URI" title="Permalink to this definition">¶</a></dt>
@@ -2950,12 +3187,669 @@ in OneView; it just stops waiting for its completion.</li>
 </dd></dl>
 
 </div>
+<div class="section" id="module-hpOneView.resources.networking.sas_interconnect_types">
+<span id="hponeview-resources-networking-sas-interconnect-types-module"></span><h2>hpOneView.resources.networking.sas_interconnect_types module<a class="headerlink" href="#module-hpOneView.resources.networking.sas_interconnect_types" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.networking.sas_interconnect_types.SasInterconnectTypes">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.sas_interconnect_types.</code><code class="descname">SasInterconnectTypes</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnect_types.html#SasInterconnectTypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnect_types.SasInterconnectTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>SAS Interconnect Types API client.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This resource is only available on HPE Synergy.</p>
+</div>
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.sas_interconnect_types.SasInterconnectTypes.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/sas-interconnect-types'</em><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnect_types.SasInterconnectTypes.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_interconnect_types.SasInterconnectTypes.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnect_types.html#SasInterconnectTypes.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnect_types.SasInterconnectTypes.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the SAS interconnect type with the specified ID or URI.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the SAS Interconnect Type.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The SAS Interconnect Type</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_interconnect_types.SasInterconnectTypes.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnect_types.html#SasInterconnectTypes.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnect_types.SasInterconnectTypes.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a paginated collection of SAS interconnect types. The collection is based on optional
+sorting and filtering and is constrained by start and count parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+default is no filter; all resources are returned.</li>
+<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+on create time with the oldest entry first.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of SAS interconnect types.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_interconnect_types.SasInterconnectTypes.get_by">
+<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnect_types.html#SasInterconnectTypes.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnect_types.SasInterconnectTypes.get_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all SAS interconnect types that match the filter.</p>
+<p>The search is case-insensitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>field</strong> &#8211; Field name to filter.</li>
+<li><strong>value</strong> &#8211; Value to filter.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of SAS interconnect types.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hpOneView.resources.networking.sas_interconnects">
+<span id="hponeview-resources-networking-sas-interconnects-module"></span><h2>hpOneView.resources.networking.sas_interconnects module<a class="headerlink" href="#module-hpOneView.resources.networking.sas_interconnects" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.networking.sas_interconnects.SasInterconnects">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.sas_interconnects.</code><code class="descname">SasInterconnects</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>SAS Interconnects API client.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This resource is only available on HPE Synergy.</p>
+</div>
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.sas_interconnects.SasInterconnects.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/sas-interconnects'</em><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_interconnects.SasInterconnects.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the SAS Interconnect with the specified ID or URI.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the SAS interconnect id or the SAS interconnect uri</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">SAS Interconnect.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_interconnects.SasInterconnects.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>fields=u''</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>view=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get list of SAS interconnects each with port details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
+first available item.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items. The actual number of items in
+the response may differ from the requested count if the sum of start and count exceeds the total number
+of items.</li>
+<li><strong>fields</strong> &#8211; Specifies which fields should be returned in the result set.</li>
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The default is no filter; all
+resources are returned.</li>
+<li><strong>query</strong> &#8211; A general query string to narrow the list of resources returned. The default is no query (all
+resources are returned).</li>
+<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based on create time, with the
+oldest entry first.</li>
+<li><strong>view</strong> &#8211; Returns a specific subset of the attributes of the resource or collection, by specifying the name of a
+predefined view. The default view is expand (show all attributes of the resource and all elements of
+collections of resources).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of SAS interconnects.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_interconnects.SasInterconnects.get_by">
+<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects.get_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all SAS Interconnects that match the filter.</p>
+<p>The search is case-insensitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>field</strong> &#8211; Field name to filter.</li>
+<li><strong>value</strong> &#8211; Value to filter.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of SAS Interconnects.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_interconnects.SasInterconnects.patch">
+<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects.patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update powerState, uidState, softResetState or hardResetState using PATCH operation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; Can be either the SAS interconnect id or the SAS interconnect uri</li>
+<li><strong>operation</strong> &#8211; The type of operation: &#8220;replace&#8221; is the only value allowed for this resource.</li>
+<li><strong>path</strong> &#8211; The JSON path the operation is to use. The exact meaning depends on the type of operation.</li>
+<li><strong>value</strong> &#8211; The value to replace.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">SAS Interconnect</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_interconnects.SasInterconnects.refresh_state">
+<code class="descname">refresh_state</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>configuration</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects.refresh_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects.refresh_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Refresh a SAS Interconnect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; Can be either the SAS interconnect id or the SAS interconnect uri</li>
+<li><strong>configuration</strong> &#8211; Configuration</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">SAS Interconnect</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hpOneView.resources.networking.sas_logical_interconnect_groups">
+<span id="hponeview-resources-networking-sas-logical-interconnect-groups-module"></span><h2>hpOneView.resources.networking.sas_logical_interconnect_groups module<a class="headerlink" href="#module-hpOneView.resources.networking.sas_logical_interconnect_groups" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.sas_logical_interconnect_groups.</code><code class="descname">SasLogicalInterconnectGroups</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnect_groups.html#SasLogicalInterconnectGroups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>SAS Logical Interconnect Groups API client.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This resource is only available on HPE Synergy.</p>
+</div>
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'sas-logical-interconnect-group'}}</em><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/sas-logical-interconnect-groups'</em><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnect_groups.html#SasLogicalInterconnectGroups.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a SAS logical interconnect group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnect_groups.html#SasLogicalInterconnectGroups.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a SAS logical interconnect group. You cannot delete a SAS logical interconnect group when a
+corresponding SAS logical interconnect is still referencing it. Delete the logical enclosure before
+attempting to delete the SAS logical interconnect it uses.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> &#8211; object to delete</li>
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
+network connectivity or errors on the resource itself. The default is false.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was deleted successfully.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnect_groups.html#SasLogicalInterconnectGroups.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the SAS logical interconnect group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of a SAS logical interconnect group.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">SAS logical interconnect group.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnect_groups.html#SasLogicalInterconnectGroups.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a paginated collection of SAS logical interconnect groups. The collection is based
+on optional sorting and filtering and is constrained by start and count parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+default is no filter; all resources are returned.</li>
+<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+on create time with the oldest entry first.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of SAS logical interconnect groups.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.get_by">
+<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnect_groups.html#SasLogicalInterconnectGroups.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.get_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all SAS logical interconnect groups that match the filter.</p>
+<p>The search is case-insensitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>field</strong> &#8211; Field name to filter.</li>
+<li><strong>value</strong> &#8211; Value to filter.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of SAS logical interconnect groups.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnect_groups.html#SasLogicalInterconnectGroups.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates a SAS logical interconnect group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hpOneView.resources.networking.sas_logical_interconnects">
+<span id="hponeview-resources-networking-sas-logical-interconnects-module"></span><h2>hpOneView.resources.networking.sas_logical_interconnects module<a class="headerlink" href="#module-hpOneView.resources.networking.sas_logical_interconnects" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.sas_logical_interconnects.</code><code class="descname">SasLogicalInterconnects</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>SAS Logical Interconnects API client.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/sas-logical-interconnects'</em><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the SAS Logical Interconnect with the specified ID or URI.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the SAS Logical Interconnect ID or URI.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">SAS Logical Interconnect.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>fields=u''</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>view=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list of SAS Logical Interconnects based on optional sorting and filtering and constrained by start and
+count parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
+first available item.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items. The actual number of items in
+the response may differ from the requested count if the sum of start and count exceeds the total number
+of items.</li>
+<li><strong>fields</strong> &#8211; Specifies which fields should be returned in the result set.</li>
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The default is no filter; all
+resources are returned.</li>
+<li><strong>query</strong> &#8211; A general query string to narrow the list of resources returned. The default is no query (all
+resources are returned).</li>
+<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based on create time, with the
+oldest entry first.</li>
+<li><strong>view</strong> &#8211; Returns a specific subset of the attributes of the resource or collection, by specifying the name of a
+predefined view. The default view is expand (show all attributes of the resource and all elements of
+collections of resources).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of SAS logical interconnects.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get_by">
+<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all SAS Logical Interconnects that match the filter.</p>
+<p>The search is case-insensitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>field</strong> &#8211; Field name to filter.</li>
+<li><strong>value</strong> &#8211; Value to filter.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of SAS Logical Interconnects.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get_firmware">
+<code class="descname">get_firmware</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.get_firmware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get_firmware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets baseline firmware information for a SAS Logical Interconnect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the SAS Logical Interconnect ID or URI.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">SAS Logical Interconnect Firmware.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.replace_drive_enclosure">
+<code class="descname">replace_drive_enclosure</code><span class="sig-paren">(</span><em>information</em>, <em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.replace_drive_enclosure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.replace_drive_enclosure" title="Permalink to this definition">¶</a></dt>
+<dd><p>When a drive enclosure has been physically replaced, initiate the replacement operation that enables the
+new drive enclosure to take over as a replacement for the prior drive enclosure. The request requires
+specification of both the serial numbers of the original drive enclosure and its replacement to be provided.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>information</strong> &#8211; Options to replace the drive enclosure.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the SAS Logical Interconnect ID or URI.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">SAS Logical Interconnect.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_compliance">
+<code class="descname">update_compliance</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.update_compliance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_compliance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a SAS Logical Interconnect to a consistent state. The current SAS Logical Interconnect state is
+compared to the associated SAS Logical Interconnect group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or URI.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">SAS Logical Interconnect.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_compliance_all">
+<code class="descname">update_compliance_all</code><span class="sig-paren">(</span><em>information</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.update_compliance_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_compliance_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns SAS Logical Interconnects to a consistent state. The current SAS Logical Interconnect state is
+compared to the associated SAS Logical Interconnect group.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>information</strong> &#8211; Can be either the resource ID or URI.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">SAS Logical Interconnect.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_configuration">
+<code class="descname">update_configuration</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.update_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asynchronously applies or re-applies the SAS Logical Interconnect configuration to all managed interconnects
+of a SAS Logical Interconnect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the SAS Logical Interconnect ID or URI.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">SAS Logical Interconnect.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_firmware">
+<code class="descname">update_firmware</code><span class="sig-paren">(</span><em>firmware_information</em>, <em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.update_firmware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_firmware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Installs firmware to the member interconnects of a SAS Logical Interconnect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>firmware_information</strong> &#8211; Options to install firmware to a SAS Logical Interconnect.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the SAS Logical Interconnect ID or URI.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">SAS Logical Interconnect Firmware.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-hpOneView.resources.networking.switch_types">
 <span id="hponeview-resources-networking-switch-types-module"></span><h2>hpOneView.resources.networking.switch_types module<a class="headerlink" href="#module-hpOneView.resources.networking.switch_types" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hpOneView.resources.networking.switch_types.SwitchTypes">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.switch_types.</code><code class="descname">SwitchTypes</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/switch_types.html#SwitchTypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.switch_types.SwitchTypes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Switch Types API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.switch_types.SwitchTypes.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/switch-types'</em><a class="headerlink" href="#hpOneView.resources.networking.switch_types.SwitchTypes.URI" title="Permalink to this definition">¶</a></dt>
@@ -3046,6 +3940,11 @@ on create time with the oldest entry first.</li>
 <dt id="hpOneView.resources.networking.switches.Switches">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.switches.</code><code class="descname">Switches</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/switches.html#Switches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.switches.Switches" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Switches API client.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This resource is only available on C7000 enclosures.</p>
+</div>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.switches.Switches.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/switches'</em><a class="headerlink" href="#hpOneView.resources.networking.switches.Switches.URI" title="Permalink to this definition">¶</a></dt>
@@ -3191,6 +4090,35 @@ on create time with the oldest entry first.</li>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="hpOneView.resources.networking.switches.Switches.update_ports">
+<code class="descname">update_ports</code><span class="sig-paren">(</span><em>ports</em>, <em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/switches.html#Switches.update_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.switches.Switches.update_ports" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the switch ports. Only the ports under the management of OneView and those that are unlinked are
+supported for update.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method is available for API version 300 or later.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ports</strong> &#8211; List of Switch Ports.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the switch id or the switch uri.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Switch</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -3200,6 +4128,12 @@ on create time with the oldest entry first.</li>
 <dt id="hpOneView.resources.networking.uplink_sets.UplinkSets">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.uplink_sets.</code><code class="descname">UplinkSets</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/uplink_sets.html#UplinkSets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Uplink Sets API client.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'uplink-setV300'}, u'200': {u'type': u'uplink-setV3'}}</em><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/uplink-sets'</em><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.URI" title="Permalink to this definition">¶</a></dt>

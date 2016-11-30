@@ -160,7 +160,7 @@
 
 <span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
 
-<span class="n">__title__</span> <span class="o">=</span> <span class="s1">&#39;server-profile-template&#39;</span>
+<span class="n">__title__</span> <span class="o">=</span> <span class="s1">&#39;Server Profiles&#39;</span>
 <span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span>
 <span class="n">__copyright__</span> <span class="o">=</span> <span class="s1">&#39;(C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP&#39;</span>
 <span class="n">__license__</span> <span class="o">=</span> <span class="s1">&#39;MIT&#39;</span>
@@ -170,14 +170,20 @@
 
 
 <div class="viewcode-block" id="ServerProfiles"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles">[docs]</a><span class="k">class</span> <span class="nc">ServerProfiles</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Server Profile API client.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/server-profiles&#39;</span>
+
+    <span class="n">DEFAULT_VALUES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;200&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ServerProfileV5&quot;</span><span class="p">},</span>
+        <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ServerProfileV6&quot;</span><span class="p">}</span>
+    <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__default_values</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;ServerProfileV5&#39;</span>
-        <span class="p">}</span>
 
 <div class="viewcode-block" id="ServerProfiles.create"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -191,9 +197,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Created server profile.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default_values</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ServerProfiles.update"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -206,16 +210,14 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: The server profile resource.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default_values</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">id_or_uri</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ServerProfiles.patch"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.patch">[docs]</a>    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Performs a specific patch operation for the given server profile.</span>
 
-<span class="sd">        The supported operation is:</span>
-<span class="sd">            Update the server profile from the server profile template.</span>
+<span class="sd">        The supported operation:</span>
+<span class="sd">            Updates the server profile from the server profile template.</span>
 <span class="sd">                Operation: replace | Path: /templateCompliance | Value: Compliant</span>
 
 <span class="sd">        Args:</span>
@@ -252,7 +254,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deletes all Server Profile objects from the appliance that match the provided filter.</span>
 <span class="sd">        Filters are supported only for the following profile attributes:  name, description, serialnumber, uuid,</span>
-<span class="sd">        mactype, wwntype, serialnumbertype, status and state.</span>
+<span class="sd">        mactype, wwntype, serialnumbertype, status, and state.</span>
 
 
 <span class="sd">        Examples:</span>
@@ -262,7 +264,7 @@
 <span class="sd">            &gt;&gt;&gt; server_profile_client.delete_all(filter=&quot;name matches&#39;%25Database%25&#39;&quot;)</span>
 <span class="sd">            # Remove all profiles that have the word &quot;Database&quot; in its name</span>
 
-<span class="sd">        The filter function here operates very similar to the function defined for GET Server Profiles. It allows</span>
+<span class="sd">        The filter function here operates similarly to the function defined for GET Server Profiles. It allows</span>
 <span class="sd">        for both actual and partial matches of data in the profile. Any requests that use a wildcard match</span>
 <span class="sd">        must include a %25 as illustrated in the previous example. This is how you encode that character for</span>
 <span class="sd">        transmission to the appliance.</span>
@@ -279,7 +281,7 @@
 
 <div class="viewcode-block" id="ServerProfiles.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets a list of server profile based on optional sorting and filtering and is constrained by start and</span>
+<span class="sd">        Gets a list of server profiles based on optional sorting and filtering and is constrained by start and</span>
 <span class="sd">        count parameters.</span>
 
 <span class="sd">        Args:</span>
@@ -298,7 +300,7 @@
 <span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
 <span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">                Filters are supported for the name, description, serialNumber, uuid, affinity, macType, wwnType,</span>
-<span class="sd">                serialNumberType, serverProfileTemplateUri, templateCompliance, status and state attributes.</span>
+<span class="sd">                serialNumberType, serverProfileTemplateUri, templateCompliance, status, and state attributes.</span>
 <span class="sd">            sort:</span>
 <span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
 <span class="sd">                on create time with the oldest entry first.</span>
@@ -322,7 +324,7 @@
 
 <div class="viewcode-block" id="ServerProfiles.get_by"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.get_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets all server profile that match a specified filter.</span>
+<span class="sd">        Gets all server profiles that match a specified filter.</span>
 
 <span class="sd">        The search is case-insensitive.</span>
 

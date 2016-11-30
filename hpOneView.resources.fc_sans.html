@@ -145,6 +145,7 @@
 <dt id="hpOneView.resources.fc_sans.endpoints.Endpoints">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.fc_sans.endpoints.</code><code class="descname">Endpoints</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/endpoints.html#Endpoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.endpoints.Endpoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Endpoints API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.fc_sans.endpoints.Endpoints.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/fc-sans/endpoints'</em><a class="headerlink" href="#hpOneView.resources.fc_sans.endpoints.Endpoints.URI" title="Permalink to this definition">¶</a></dt>
@@ -190,6 +191,7 @@ on create time with the oldest entry first.</li>
 <dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.fc_sans.managed_sans.</code><code class="descname">ManagedSANs</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Managed SANs API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/fc-sans/managed-sans'</em><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.URI" title="Permalink to this definition">¶</a></dt>
@@ -345,15 +347,37 @@ on create time with the oldest entry first.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_wwn">
+<code class="descname">get_wwn</code><span class="sig-paren">(</span><em>wwn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.get_wwn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_wwn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a list of associations between provided WWNs and the SANs (if any) on which they reside.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method is available for API version 300 or later.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wwn</strong> (<em>str</em>) &#8211; The WWN that may be associated with the SAN.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Associations between provided WWNs and the SANs</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>data</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates a Managed SAN.</p>
 <dl class="docutils">
-<dt>It&#8217;s possible:</dt>
+<dt>It&#8217;s possible to:</dt>
 <dd><ul class="first last simple">
 <li>Refresh the Managed SAN.</li>
-<li>Updating the Managed SAN&#8217;s publicAttributes.</li>
-<li>Updating the Managed SAN&#8217;s policy.</li>
+<li>Update the Managed SAN&#8217;s publicAttributes.</li>
+<li>Update the Managed SAN&#8217;s policy.</li>
 </ul>
 </dd>
 </dl>
@@ -388,6 +412,7 @@ in OneView, just stop waiting for its completion.</li>
 <dt id="hpOneView.resources.fc_sans.san_managers.SanManagers">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.fc_sans.san_managers.</code><code class="descname">SanManagers</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/san_managers.html#SanManagers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.san_managers.SanManagers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>SAN Managers API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.fc_sans.san_managers.SanManagers.PROVIDER_URI">
 <code class="descname">PROVIDER_URI</code><em class="property"> = u'/rest/fc-sans/providers'</em><a class="headerlink" href="#hpOneView.resources.fc_sans.san_managers.SanManagers.PROVIDER_URI" title="Permalink to this definition">¶</a></dt>

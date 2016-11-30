@@ -160,7 +160,7 @@
 
 <span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
 
-<span class="n">__title__</span> <span class="o">=</span> <span class="s1">&#39;server-hardware&#39;</span>
+<span class="n">__title__</span> <span class="o">=</span> <span class="s1">&#39;Server Hardware&#39;</span>
 <span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span>
 <span class="n">__copyright__</span> <span class="o">=</span> <span class="s1">&#39;(C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP&#39;</span>
 <span class="n">__license__</span> <span class="o">=</span> <span class="s1">&#39;MIT&#39;</span>
@@ -170,6 +170,12 @@
 
 
 <div class="viewcode-block" id="ServerHardware"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware">[docs]</a><span class="k">class</span> <span class="nc">ServerHardware</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The server hardware resource is a representation of a physical server.</span>
+<span class="sd">    The server hardware resource provides methods for server management tasks such</span>
+<span class="sd">    as applying a profile, importing a server and managing an iLO.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/server-hardware&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
@@ -366,7 +372,7 @@
 <div class="viewcode-block" id="ServerHardware.get_environmental_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get_environmental_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">get_environmental_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the settings that describe the environmental configuration (supported feature set, calibrated minimum and</span>
-<span class="sd">        maximum power, location and dimensions, etc) of the server hardware resource.</span>
+<span class="sd">        maximum power, location and dimensions, etc.) of the server hardware resource.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            id_or_uri: Can be either the server hardware resource ID or URI.</span>
@@ -407,6 +413,72 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/iloSsoUrl&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.get_all_firmwares"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get_all_firmwares">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_firmwares</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets a list of firmware inventory across all servers. To filter the returned data, specify a filter</span>
+<span class="sd">        expression to select a particular server model, component name, and/or component firmware version.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This method is available for API version 300 or later.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start:</span>
+<span class="sd">                The first item to return, using 0-based indexing.</span>
+<span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
+<span class="sd">            count:</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
+<span class="sd">                The actual number of items in the response might differ from the requested</span>
+<span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
+<span class="sd">            filter (list or str):</span>
+<span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
+<span class="sd">                default is no filter; all resources are returned.</span>
+<span class="sd">            query:</span>
+<span class="sd">                A general query string to narrow the list of resources returned. The default is no query; all resources</span>
+<span class="sd">                are returned.</span>
+<span class="sd">            sort:</span>
+<span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
+<span class="sd">                on create time with the oldest entry first.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: List of firmware inventory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/*/firmware&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">sort</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.get_firmware"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get_firmware">[docs]</a>    <span class="k">def</span> <span class="nf">get_firmware</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the firmware inventory of a server.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This method is available for API version 300 or later.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Can be either the server hardware resource ID or URI.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Server Hardware firmware.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/firmware&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.patch"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.patch">[docs]</a>    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs a specific patch operation for the given server. If the server supports the particular operation,</span>
+<span class="sd">        the operation is performed and a response is returned to the caller with the results.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Can be either the resource ID or the resource URI.</span>
+<span class="sd">            operation: Patch operation</span>
+<span class="sd">            path: Path</span>
+<span class="sd">            value: Value</span>
+<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Updated resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ServerHardware.get_java_remote_console_url"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get_java_remote_console_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_java_remote_console_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

@@ -155,6 +155,7 @@
 <dt id="hpOneView.resources.servers.connections.Connections">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.servers.connections.</code><code class="descname">Connections</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/connections.html#Connections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.connections.Connections" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Connections API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.servers.connections.Connections.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/connections'</em><a class="headerlink" href="#hpOneView.resources.servers.connections.Connections.URI" title="Permalink to this definition">¶</a></dt>
@@ -246,6 +247,12 @@ all attributes of the resource and all elements of collections of resources).</l
 <dt id="hpOneView.resources.servers.enclosure_groups.EnclosureGroups">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.servers.enclosure_groups.</code><code class="descname">EnclosureGroups</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosure_groups.html#EnclosureGroups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosure_groups.EnclosureGroups" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Enclosure Groups API client.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.servers.enclosure_groups.EnclosureGroups.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'EnclosureGroupV300'}, u'200': {u'type': u'EnclosureGroupV200'}}</em><a class="headerlink" href="#hpOneView.resources.servers.enclosure_groups.EnclosureGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="hpOneView.resources.servers.enclosure_groups.EnclosureGroups.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/enclosure-groups'</em><a class="headerlink" href="#hpOneView.resources.servers.enclosure_groups.EnclosureGroups.URI" title="Permalink to this definition">¶</a></dt>
@@ -452,6 +459,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.servers.enclosures.Enclosures">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.servers.enclosures.</code><code class="descname">Enclosures</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Enclosures API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/enclosures'</em><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.URI" title="Permalink to this definition">¶</a></dt>
@@ -460,8 +468,15 @@ in OneView; it just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.add">
 <code class="descname">add</code><span class="sig-paren">(</span><em>information</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.add" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes information about an enclosure (for example: IP address, username, password) and uses
-it to claim/configure the enclosure and add its components to the appliance.</p>
+<dd><dl class="docutils">
+<dt>C7000:</dt>
+<dd>Takes information about an enclosure (for example: IP address, username, password) and uses
+it to claim/configure the enclosure and add its components to the appliance.</dd>
+<dt>Synergy:</dt>
+<dd>Adds a remote enclosure and all the enclosures linked to that enclosure by their frame link
+modules. The remote enclosures&#8217; frame link modules must not be claimed by another appliance.
+The IP used must be the frame link module&#8217;s Link Local IPv6 address.</dd>
+</dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -845,6 +860,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.servers.id_pools_ranges.</code><code class="descname">IdPoolsRanges</code><span class="sig-paren">(</span><em>uri</em>, <em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_ranges.html#IdPoolsRanges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Id Pools Ranges API client.</p>
 <dl class="method">
 <dt id="hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges.allocate">
 <code class="descname">allocate</code><span class="sig-paren">(</span><em>information</em>, <em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_ranges.html#IdPoolsRanges.allocate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges.allocate" title="Permalink to this definition">¶</a></dt>
@@ -1114,6 +1130,8 @@ reuse.</p>
 <dt id="hpOneView.resources.servers.logical_enclosures.LogicalEnclosures">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.servers.logical_enclosures.</code><code class="descname">LogicalEnclosures</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/logical_enclosures.html#LogicalEnclosures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.logical_enclosures.LogicalEnclosures" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The logical enclosure resource provides methods for managing one or more enclosures that are
+linked or stacked with stacking links.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/logical-enclosures'</em><a class="headerlink" href="#hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.URI" title="Permalink to this definition">¶</a></dt>
@@ -1395,6 +1413,10 @@ in OneView; it just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.servers.migratable_vc_domains.MigratableVcDomains">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.servers.migratable_vc_domains.</code><code class="descname">MigratableVcDomains</code><span class="sig-paren">(</span><em>connection</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/migratable_vc_domains.html#MigratableVcDomains"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.migratable_vc_domains.MigratableVcDomains" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The migratable VC domains resource provides methods for migrating Virtual Connect (VC)
+enclosures into the appliance. The operations are testing compatibility of a VC
+managed enclosure, retrieving a compatibility report, deleting a
+compatibility report and migrating a VC managed enclosure into the appliance.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.servers.migratable_vc_domains.MigratableVcDomains.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/migratable-vc-domains'</em><a class="headerlink" href="#hpOneView.resources.servers.migratable_vc_domains.MigratableVcDomains.URI" title="Permalink to this definition">¶</a></dt>
@@ -1417,7 +1439,7 @@ OneView; just stops waiting for its completion.</li>
 </tr>
 </tbody>
 </table>
-<p>Returns: bool: Indicating if the migration report was successfully deleted.</p>
+<p>Returns: bool: Indicates if the migration report was successfully deleted.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1491,6 +1513,9 @@ OneView; just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.servers.server_hardware.</code><code class="descname">ServerHardware</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The server hardware resource is a representation of a physical server.
+The server hardware resource provides methods for server management tasks such
+as applying a profile, importing a server and managing an iLO.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/server-hardware'</em><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.URI" title="Permalink to this definition">¶</a></dt>
@@ -1575,6 +1600,44 @@ on create time with the oldest entry first.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_all_firmwares">
+<code class="descname">get_all_firmwares</code><span class="sig-paren">(</span><em>filter=u''</em>, <em>start=0</em>, <em>count=-1</em>, <em>query=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_all_firmwares"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_all_firmwares" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list of firmware inventory across all servers. To filter the returned data, specify a filter
+expression to select a particular server model, component name, and/or component firmware version.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method is available for API version 300 or later.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+default is no filter; all resources are returned.</li>
+<li><strong>query</strong> &#8211; A general query string to narrow the list of resources returned. The default is no query; all resources
+are returned.</li>
+<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+on create time with the oldest entry first.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">List of firmware inventory.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_bios">
 <code class="descname">get_bios</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_bios"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_bios" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the list of BIOS/UEFI values currently set on the physical server.</p>
@@ -1618,7 +1681,7 @@ on create time with the oldest entry first.</li>
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_environmental_configuration">
 <code class="descname">get_environmental_configuration</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_environmental_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_environmental_configuration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the settings that describe the environmental configuration (supported feature set, calibrated minimum and
-maximum power, location and dimensions, etc) of the server hardware resource.</p>
+maximum power, location and dimensions, etc.) of the server hardware resource.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1626,6 +1689,28 @@ maximum power, location and dimensions, etc) of the server hardware resource.</p
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the server hardware resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Environmental configuration settings.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_firmware">
+<code class="descname">get_firmware</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_firmware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_firmware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the firmware inventory of a server.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method is available for API version 300 or later.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the server hardware resource ID or URI.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Server Hardware firmware.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
@@ -1777,6 +1862,35 @@ years.</dd>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.servers.server_hardware.ServerHardware.patch">
+<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a specific patch operation for the given server. If the server supports the particular operation,
+the operation is performed and a response is returned to the caller with the results.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
+<li><strong>operation</strong> &#8211; Patch operation</li>
+<li><strong>path</strong> &#8211; Path</li>
+<li><strong>value</strong> &#8211; Value</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.refresh_state">
 <code class="descname">refresh_state</code><span class="sig-paren">(</span><em>configuration</em>, <em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.refresh_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.refresh_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Refreshes the server hardware to fix configuration issues.</p>
@@ -1908,6 +2022,8 @@ in OneView; it just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.servers.server_hardware_types.</code><code class="descname">ServerHardwareTypes</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware_types.html#ServerHardwareTypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The server hardware types resource is a representation/abstraction of a physical server managed by the appliance.
+It defines capabilities and settings that can be used in a server profile.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/server-hardware-types'</em><a class="headerlink" href="#hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.URI" title="Permalink to this definition">¶</a></dt>
@@ -2049,6 +2165,26 @@ in OneView; it just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.servers.server_profile_templates.</code><code class="descname">ServerProfileTemplate</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profile_templates.html#ServerProfileTemplate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The server profile template resource provides methods to create, retrieve, modify, and delete server
+profile templates.</p>
+<p>A server profile template serves as a structural reference when creating a server profile.
+All of the configuration constructs of a server profile are present in the server profile template.
+The server profile template serves as the initial and ongoing reference for the structure of a server profile.
+The server profile template defines the centralized source for the configuration of firmware, connections,
+local storage, SAN storage, boot, BIOS, profile affinity and hide unused flexNICs.</p>
+<p>After being created from a server profile template, the server profile continues to maintain an association to its
+server profile template. Any drift in configuration consistency between the server profile template and server
+profile(s) is monitored and made visible on both the server profile template and the associated server profile(s).</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'ServerProfileTemplateV2'}, u'200': {u'type': u'ServerProfileTemplateV1'}}</em><a class="headerlink" href="#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.TRANSFORMATION_PATH">
+<code class="descname">TRANSFORMATION_PATH</code><em class="property"> = u'/transformation/?serverHardwareTypeUri={server_hardware_type_uri}&amp;enclosureGroupUri={enclosure_group_uri}'</em><a class="headerlink" href="#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.TRANSFORMATION_PATH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/server-profile-templates'</em><a class="headerlink" href="#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.URI" title="Permalink to this definition">¶</a></dt>
@@ -2225,10 +2361,44 @@ connection to change it to bootable and to specify the boot target.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.get_transformation">
+<code class="descname">get_transformation</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>server_hardware_type_uri</em>, <em>enclosure_group_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profile_templates.html#ServerProfileTemplate.get_transformation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.get_transformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms an existing profile template by supplying a new server hardware type and enclosure group or both.
+A profile template will be returned with a new configuration based on the capabilities of the supplied
+server hardware type and/or enclosure group. All configured connections will have their port assignments
+set to &#8216;Auto.&#8217;
+The new profile template can subsequently be used in the update method, but is not guaranteed to pass
+validation. Any incompatibilities will be flagged when the transformed server profile template is submitted.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method is available for API version 300 or later.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; Can be either the server profile template resource ID or URI.</li>
+<li><strong>server_hardware_type_uri</strong> &#8211; The URI of the new server hardware type.</li>
+<li><strong>enclosure_group_uri</strong> &#8211; The URI of the new enclosure group.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The server profile template resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profile_templates.html#ServerProfileTemplate.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allows a server profile template object to have its configuration modified. These modifications can be as
-simple as a name or description change or much more complex changes around the networking configuration.</p>
+simple as a name or description change or more complex changes around the networking configuration.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2258,6 +2428,12 @@ simple as a name or description change or much more complex changes around the n
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.servers.server_profiles.</code><code class="descname">ServerProfiles</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Server Profile API client.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'ServerProfileV6'}, u'200': {u'type': u'ServerProfileV5'}}</em><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/server-profiles'</em><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.URI" title="Permalink to this definition">¶</a></dt>
@@ -2318,7 +2494,7 @@ in OneView; it just stops waiting for its completion.</li>
 <code class="descname">delete_all</code><span class="sig-paren">(</span><em>filter</em>, <em>timeout=-1</em>, <em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.delete_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.delete_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes all Server Profile objects from the appliance that match the provided filter.
 Filters are supported only for the following profile attributes:  name, description, serialnumber, uuid,
-mactype, wwntype, serialnumbertype, status and state.</p>
+mactype, wwntype, serialnumbertype, status, and state.</p>
 <p class="rubric">Examples</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">server_profile_client</span><span class="o">.</span><span class="n">delete_all</span><span class="p">(</span><span class="nb">filter</span><span class="o">=</span><span class="s2">&quot;name=&#39;Exchange Server&#39;&quot;</span><span class="p">)</span>
 <span class="go"># Remove all profiles that match the name &quot;Exchange Server&quot;</span>
@@ -2328,7 +2504,7 @@ mactype, wwntype, serialnumbertype, status and state.</p>
 <span class="go"># Remove all profiles that have the word &quot;Database&quot; in its name</span>
 </pre></div>
 </div>
-<p>The filter function here operates very similar to the function defined for GET Server Profiles. It allows
+<p>The filter function here operates similarly to the function defined for GET Server Profiles. It allows
 for both actual and partial matches of data in the profile. Any requests that use a wildcard match
 must include a %25 as illustrated in the previous example. This is how you encode that character for
 transmission to the appliance.</p>
@@ -2374,7 +2550,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a list of server profile based on optional sorting and filtering and is constrained by start and
+<dd><p>Gets a list of server profiles based on optional sorting and filtering and is constrained by start and
 count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2393,7 +2569,7 @@ requested number of items would take too long.</li>
 <li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.
 Filters are supported for the name, description, serialNumber, uuid, affinity, macType, wwnType,
-serialNumberType, serverProfileTemplateUri, templateCompliance, status and state attributes.</li>
+serialNumberType, serverProfileTemplateUri, templateCompliance, status, and state attributes.</li>
 <li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
 </ul>
@@ -2564,7 +2740,7 @@ profile.</p>
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all server profile that match a specified filter.</p>
+<dd><p>Gets all server profiles that match a specified filter.</p>
 <p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -2718,9 +2894,9 @@ transformed server profile is submitted.</p>
 <code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs a specific patch operation for the given server profile.</p>
 <dl class="docutils">
-<dt>The supported operation is:</dt>
+<dt>The supported operation:</dt>
 <dd><dl class="first last docutils">
-<dt>Update the server profile from the server profile template.</dt>
+<dt>Updates the server profile from the server profile template.</dt>
 <dd>Operation: replace | Path: /templateCompliance | Value: Compliant</dd>
 </dl>
 </dd>

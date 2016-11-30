@@ -254,6 +254,11 @@
                 <span class="k">raise</span> <span class="n">HPOneViewTimeout</span><span class="p">(</span><span class="n">MSG_TIMEOUT</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">timeout</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">__get_task_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
+        <span class="n">deleted_states</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Delete&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;Remove&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;Delete server hardware type&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;Remove SAN manager&#39;</span><span class="p">]</span>
+
         <span class="k">if</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;taskState&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">TASK_ERROR_STATES</span> <span class="ow">and</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;taskState&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;Warning&#39;</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">error_code</span> <span class="o">=</span> <span class="kc">None</span>
@@ -271,16 +276,13 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">HPOneViewTaskError</span><span class="p">(</span><span class="n">MSG_UNKNOWN_EXCEPTION</span><span class="p">,</span> <span class="n">error_code</span><span class="p">)</span>
 
-        <span class="n">deleted_resource</span> <span class="o">=</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Delete&#39;</span><span class="p">,</span> <span class="s1">&#39;Remove&#39;</span><span class="p">,</span> <span class="s1">&#39;Delete server hardware type&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">task</span> <span class="ow">and</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">deleted_states</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
 
-        <span class="k">if</span> <span class="s1">&#39;type&#39;</span> <span class="ow">in</span> <span class="n">task</span> <span class="ow">and</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Task&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">task</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">deleted_resource</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">&#39;type&#39;</span> <span class="ow">in</span> <span class="n">task</span> <span class="ow">and</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Task&#39;</span><span class="p">):</span>
             <span class="c1"># get associated resource when is not a delete task</span>
             <span class="n">task</span><span class="p">,</span> <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_associated_resource</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">entity</span>
-
-        <span class="k">if</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">task</span> <span class="ow">and</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Delete&#39;</span><span class="p">:</span>
-            <span class="c1"># delete task return true</span>
-            <span class="k">return</span> <span class="kc">True</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Task completed, unknown response: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">task</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">task</span>

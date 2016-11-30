@@ -159,7 +159,7 @@
 
 <span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
 
-<span class="n">__title__</span> <span class="o">=</span> <span class="s1">&#39;enclosures&#39;</span>
+<span class="n">__title__</span> <span class="o">=</span> <span class="s1">&#39;Enclosures&#39;</span>
 <span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span>
 <span class="n">__copyright__</span> <span class="o">=</span> <span class="s1">&#39;(C) Copyright (2012-2016) Hewlett Packard Enterprise &#39;</span> \
                 <span class="s1">&#39; Development LP&#39;</span>
@@ -170,6 +170,10 @@
 
 
 <div class="viewcode-block" id="Enclosures"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures">[docs]</a><span class="k">class</span> <span class="nc">Enclosures</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enclosures API client.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/enclosures&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
@@ -218,8 +222,14 @@
 
 <div class="viewcode-block" id="Enclosures.add"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.enclosures.Enclosures.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">information</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes information about an enclosure (for example: IP address, username, password) and uses</span>
-<span class="sd">        it to claim/configure the enclosure and add its components to the appliance.</span>
+<span class="sd">        C7000:</span>
+<span class="sd">            Takes information about an enclosure (for example: IP address, username, password) and uses</span>
+<span class="sd">            it to claim/configure the enclosure and add its components to the appliance.</span>
+
+<span class="sd">        Synergy:</span>
+<span class="sd">            Adds a remote enclosure and all the enclosures linked to that enclosure by their frame link</span>
+<span class="sd">            modules. The remote enclosures&#39; frame link modules must not be claimed by another appliance.</span>
+<span class="sd">            The IP used must be the frame link module&#39;s Link Local IPv6 address.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            information: Enclosure information to add.</span>

@@ -86,6 +86,7 @@
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.firmware_bundles">hpOneView.resources.settings.firmware_bundles module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.firmware_drivers">hpOneView.resources.settings.firmware_drivers module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.settings.scopes">hpOneView.resources.settings.scopes module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings">Module contents</a></li>
 </ul>
 </li>
@@ -144,6 +145,7 @@
 <dt id="hpOneView.resources.settings.firmware_bundles.FirmwareBundles">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.settings.firmware_bundles.</code><code class="descname">FirmwareBundles</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/firmware_bundles.html#FirmwareBundles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.firmware_bundles.FirmwareBundles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Firmware Bundles API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.settings.firmware_bundles.FirmwareBundles.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/firmware-bundles'</em><a class="headerlink" href="#hpOneView.resources.settings.firmware_bundles.FirmwareBundles.URI" title="Permalink to this definition">¶</a></dt>
@@ -185,6 +187,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.settings.firmware_drivers.FirmwareDrivers">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.settings.firmware_drivers.</code><code class="descname">FirmwareDrivers</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/firmware_drivers.html#FirmwareDrivers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.firmware_drivers.FirmwareDrivers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Firmware Drivers API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.settings.firmware_drivers.FirmwareDrivers.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/firmware-drivers'</em><a class="headerlink" href="#hpOneView.resources.settings.firmware_drivers.FirmwareDrivers.URI" title="Permalink to this definition">¶</a></dt>
@@ -288,6 +291,199 @@ filter the list of resources returned.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hpOneView.resources.settings.scopes">
+<span id="hponeview-resources-settings-scopes-module"></span><h2>hpOneView.resources.settings.scopes module<a class="headerlink" href="#module-hpOneView.resources.settings.scopes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.settings.scopes.Scopes">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.settings.scopes.</code><code class="descname">Scopes</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/scopes.html#Scopes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.scopes.Scopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Scopes API client.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This resource is available for API version 300 or later.</p>
+</div>
+<dl class="attribute">
+<dt id="hpOneView.resources.settings.scopes.Scopes.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'Scope'}}</em><a class="headerlink" href="#hpOneView.resources.settings.scopes.Scopes.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.settings.scopes.Scopes.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/scopes'</em><a class="headerlink" href="#hpOneView.resources.settings.scopes.Scopes.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.scopes.Scopes.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/scopes.html#Scopes.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.scopes.Scopes.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a scope.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created scope.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.scopes.Scopes.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/scopes.html#Scopes.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.scopes.Scopes.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a Scope.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> &#8211; dict object to delete</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.scopes.Scopes.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/scopes.html#Scopes.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.scopes.Scopes.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Scope with the specified ID or URI.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the Scope</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Scope</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.scopes.Scopes.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/scopes.html#Scopes.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.scopes.Scopes.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Gets a list of scopes.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+default is no filter; all resources are returned.</li>
+<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+on create time with the oldest entry first.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of scopes.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.scopes.Scopes.get_by_name">
+<code class="descname">get_by_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/scopes.html#Scopes.get_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.scopes.Scopes.get_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a Scope by name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; Name of the Scope</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Scope.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.scopes.Scopes.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/scopes.html#Scopes.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.scopes.Scopes.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates a scope.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated scope.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.scopes.Scopes.update_resource_assignments">
+<code class="descname">update_resource_assignments</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>resource_assignments</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/scopes.html#Scopes.update_resource_assignments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.scopes.Scopes.update_resource_assignments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modifies scope membership by adding or removing resource assignments.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
+<li><strong>resource_assignments</strong> (<em>dict</em>) &#8211; A dict object with a list of resource URIs to be added and a list of resource URIs to be removed.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
 </td>
 </tr>
 </tbody>

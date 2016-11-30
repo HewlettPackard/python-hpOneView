@@ -4,6 +4,14 @@ hpOneView.resources.uncategorized package
 Submodules
 ----------
 
+hpOneView.resources.uncategorized.os_deployment_plans module
+------------------------------------------------------------
+
+.. automodule:: hpOneView.resources.uncategorized.os_deployment_plans
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView.resources.uncategorized.unmanaged_devices module
 ----------------------------------------------------------
 

@@ -190,7 +190,8 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>filter</strong> (<em>dict</em>) &#8211; Object to delete.</li>
+<li><strong>filter</strong> (<em>list or str</em>) &#8211; A general filter string to narrow the list of items to delete. The default is no filter; all
+resources are deleted.</li>
 <li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
@@ -319,6 +320,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.activity.tasks.Tasks">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.activity.tasks.</code><code class="descname">Tasks</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/activity/tasks.html#Tasks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.activity.tasks.Tasks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Tasks API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.activity.tasks.Tasks.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/tasks'</em><a class="headerlink" href="#hpOneView.resources.activity.tasks.Tasks.URI" title="Permalink to this definition">¶</a></dt>

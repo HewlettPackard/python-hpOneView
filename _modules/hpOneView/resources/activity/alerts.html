@@ -258,7 +258,9 @@
 <span class="sd">        Deletes all Alert objects from the appliance that match the provided filter.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            filter (dict): Object to delete.</span>
+<span class="sd">            filter (list or str):</span>
+<span class="sd">                 A general filter string to narrow the list of items to delete. The default is no filter; all</span>
+<span class="sd">                 resources are deleted.</span>
 <span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
 <span class="sd">                in OneView; it just stops waiting for its completion.</span>
 

@@ -171,7 +171,16 @@
 
 
 <div class="viewcode-block" id="ConnectionTemplates"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.connection_templates.ConnectionTemplates">[docs]</a><span class="k">class</span> <span class="nc">ConnectionTemplates</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Connection Templates API client.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/connection-templates&#39;</span>
+
+    <span class="n">DEFAULT_VALUES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;200&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;connection-template&quot;</span><span class="p">},</span>
+        <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;connection-template&quot;</span><span class="p">}</span>
+    <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
@@ -256,9 +265,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Updated resource.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

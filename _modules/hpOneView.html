@@ -138,6 +138,7 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
 <span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+
 <span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
 
 <span class="n">__title__</span> <span class="o">=</span> <span class="s1">&#39;hpOneView&#39;</span>
@@ -169,15 +170,16 @@
 <span class="c1"># THE SOFTWARE.</span>
 <span class="c1">###</span>
 
+
 <span class="kn">import</span> <span class="nn">sys</span>
 
 <span class="n">PYTHON_VERSION</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
 <span class="n">PY2</span> <span class="o">=</span> <span class="p">(</span><span class="n">PYTHON_VERSION</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">PY2</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">PYTHON_VERSION</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Must use Python 2.7.9 or later&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Must use Python 2.7.9 or later, detected version: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">PYTHON_VERSION</span><span class="p">)))</span>
 <span class="k">elif</span> <span class="n">PYTHON_VERSION</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
-    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Must use Python 3.4 or later&#39;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Must use Python 3.4 or later, detected version: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">PYTHON_VERSION</span><span class="p">)))</span>
 
 <span class="kn">from</span> <span class="nn">hpOneView.common</span> <span class="k">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">hpOneView.connection</span> <span class="k">import</span> <span class="o">*</span>
@@ -199,6 +201,7 @@
 
 <span class="n">sys</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="n">handle_exceptions</span>
 
+
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../hpOneView.html#hpOneView.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">add_help</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Usage&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-a&#39;</span><span class="p">,</span> <span class="s1">&#39;--appliance&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;host&#39;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -209,7 +212,7 @@
                         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;HPE OneView Password&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="s1">&#39;--certificate&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;cert&#39;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Trusted SSL Certificate Bundle in PEM &#39;</span>
-                        <span class="s1">&#39;(Base64 Encoded DER) Format&#39;</span><span class="p">)</span>
+                             <span class="s1">&#39;(Base64 Encoded DER) Format&#39;</span><span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-r&#39;</span><span class="p">,</span> <span class="s1">&#39;--proxy&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;proxy&#39;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                         <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Proxy (host:port format&#39;</span><span class="p">)</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
@@ -222,9 +225,11 @@
     <span class="n">con</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">credential</span><span class="p">)</span>
     <span class="n">con</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span></div>
 
+
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">sys</span>
     <span class="kn">import</span> <span class="nn">argparse</span>
+
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 
 <span class="c1"># vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:</span>

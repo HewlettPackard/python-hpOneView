@@ -20,6 +20,14 @@ hpOneView.resources.settings.firmware_drivers module
     :undoc-members:
     :show-inheritance:
 
+hpOneView.resources.settings.scopes module
+------------------------------------------
+
+.. automodule:: hpOneView.resources.settings.scopes
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

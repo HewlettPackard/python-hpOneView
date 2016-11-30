@@ -159,7 +159,7 @@
 
 <span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
 
-<span class="n">__title__</span> <span class="o">=</span> <span class="s1">&#39;server-profile-template&#39;</span>
+<span class="n">__title__</span> <span class="o">=</span> <span class="s1">&#39;Server Profile Templates&#39;</span>
 <span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span>
 <span class="n">__copyright__</span> <span class="o">=</span> <span class="s1">&#39;(C) Copyright (2012-2016) Hewlett Packard Enterprise Development LP&#39;</span>
 <span class="n">__license__</span> <span class="o">=</span> <span class="s1">&#39;MIT&#39;</span>
@@ -169,14 +169,34 @@
 
 
 <div class="viewcode-block" id="ServerProfileTemplate"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate">[docs]</a><span class="k">class</span> <span class="nc">ServerProfileTemplate</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The server profile template resource provides methods to create, retrieve, modify, and delete server</span>
+<span class="sd">    profile templates.</span>
+
+<span class="sd">    A server profile template serves as a structural reference when creating a server profile.</span>
+<span class="sd">    All of the configuration constructs of a server profile are present in the server profile template.</span>
+<span class="sd">    The server profile template serves as the initial and ongoing reference for the structure of a server profile.</span>
+<span class="sd">    The server profile template defines the centralized source for the configuration of firmware, connections,</span>
+<span class="sd">    local storage, SAN storage, boot, BIOS, profile affinity and hide unused flexNICs.</span>
+
+<span class="sd">    After being created from a server profile template, the server profile continues to maintain an association to its</span>
+<span class="sd">    server profile template. Any drift in configuration consistency between the server profile template and server</span>
+<span class="sd">    profile(s) is monitored and made visible on both the server profile template and the associated server profile(s).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/server-profile-templates&#39;</span>
+    <span class="n">TRANSFORMATION_PATH</span> <span class="o">=</span> <span class="s2">&quot;/transformation/?serverHardwareTypeUri=</span><span class="si">{server_hardware_type_uri}</span><span class="s2">&quot;</span> <span class="o">+</span> \
+                          <span class="s2">&quot;&amp;enclosureGroupUri=</span><span class="si">{enclosure_group_uri}</span><span class="s2">&quot;</span>
+
+    <span class="n">DEFAULT_VALUES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;200&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;ServerProfileTemplateV1&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;ServerProfileTemplateV2&#39;</span><span class="p">}</span>
+    <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__default_values</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;ServerProfileTemplateV1&#39;</span>
-        <span class="p">}</span>
 
 <div class="viewcode-block" id="ServerProfileTemplate.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -262,14 +282,12 @@
 <span class="sd">            dict: Created resource.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default_values</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ServerProfileTemplate.update"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Allows a server profile template object to have its configuration modified. These modifications can be as</span>
-<span class="sd">        simple as a name or description change or much more complex changes around the networking configuration.</span>
+<span class="sd">        simple as a name or description change or more complex changes around the networking configuration.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            id_or_uri: Can be either the template id or the template uri.</span>
@@ -278,9 +296,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: The server profile template resource.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default_values</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">id_or_uri</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ServerProfileTemplate.delete"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -311,6 +327,30 @@
 <span class="sd">            dict: The server profile resource.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/new-profile&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="o">=</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerProfileTemplate.get_transformation"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.get_transformation">[docs]</a>    <span class="k">def</span> <span class="nf">get_transformation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">server_hardware_type_uri</span><span class="p">,</span> <span class="n">enclosure_group_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transforms an existing profile template by supplying a new server hardware type and enclosure group or both.</span>
+<span class="sd">        A profile template will be returned with a new configuration based on the capabilities of the supplied</span>
+<span class="sd">        server hardware type and/or enclosure group. All configured connections will have their port assignments</span>
+<span class="sd">        set to &#39;Auto.&#39;</span>
+<span class="sd">        The new profile template can subsequently be used in the update method, but is not guaranteed to pass</span>
+<span class="sd">        validation. Any incompatibilities will be flagged when the transformed server profile template is submitted.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This method is available for API version 300 or later.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: Can be either the server profile template resource ID or URI.</span>
+<span class="sd">            server_hardware_type_uri: The URI of the new server hardware type.</span>
+<span class="sd">            enclosure_group_uri: The URI of the new enclosure group.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: The server profile template resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">TRANSFORMATION_PATH</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="n">query_params</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="o">=</span><span class="n">uri</span><span class="p">)</span></div></div>
 </pre></div>
 

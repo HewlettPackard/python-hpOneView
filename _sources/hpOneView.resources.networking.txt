@@ -68,6 +68,14 @@ hpOneView.resources.networking.interconnects module
     :undoc-members:
     :show-inheritance:
 
+hpOneView.resources.networking.internal_link_sets module
+--------------------------------------------------------
+
+.. automodule:: hpOneView.resources.networking.internal_link_sets
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView.resources.networking.logical_downlinks module
 -------------------------------------------------------
 
@@ -112,6 +120,38 @@ hpOneView.resources.networking.network_sets module
 --------------------------------------------------
 
 .. automodule:: hpOneView.resources.networking.network_sets
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+hpOneView.resources.networking.sas_interconnect_types module
+------------------------------------------------------------
+
+.. automodule:: hpOneView.resources.networking.sas_interconnect_types
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+hpOneView.resources.networking.sas_interconnects module
+-------------------------------------------------------
+
+.. automodule:: hpOneView.resources.networking.sas_interconnects
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+hpOneView.resources.networking.sas_logical_interconnect_groups module
+---------------------------------------------------------------------
+
+.. automodule:: hpOneView.resources.networking.sas_logical_interconnect_groups
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+hpOneView.resources.networking.sas_logical_interconnects module
+---------------------------------------------------------------
+
+.. automodule:: hpOneView.resources.networking.sas_logical_interconnects
     :members:
     :undoc-members:
     :show-inheritance:
