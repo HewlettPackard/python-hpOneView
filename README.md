@@ -136,7 +136,7 @@ The OneView Python SDK supports the new API endpoints for OneView 3.0 and for HP
 To access this feature, you must set the API version on the OneViewClient configuration, either using the JSON configuration:
 
 ```json
-  "api_version": 300
+"api_version": 300
 ```
 OR using the Environment variable:
 
@@ -145,6 +145,36 @@ export ONEVIEWSDK_API_VERSION='300'
 ```
 
 If this property is not specified, it will fall back to the ```200``` default value.
+
+
+### HPE Synergy Image Streamer
+
+The OneView Python SDK also supports the API endpoints for HPE Synergy Image Streamer.
+To configure the SDK, you must set the Image Streamer IP on the OneViewClient configuration, 
+either using the JSON configuration:
+
+```json
+"image_streamer_ip": "100.100.100.100"
+```
+
+OR using the Environment variable:
+
+```bash
+export ONEVIEWSDK_IMAGE_STREAMER_IP='100.100.100.100'
+```
+
+To create the ImageStreamerClient, you must call the `create_image_streamer_client`
+method from the pre-existent OneViewClient instance. Through the created
+ImageStreamerClient, you are able to access the API Clients of the
+Image Streamer resources:
+
+```python
+image_streamer_client = oneview_client.create_image_streamer_client()
+
+build_plans = image_streamer_client.build_plans.get_all()
+```
+
+You can find more usage examples in the folder ```/examples/image_streamer```
 
 ## Exception handling
 

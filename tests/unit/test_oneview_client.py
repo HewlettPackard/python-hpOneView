@@ -22,7 +22,6 @@
 ###
 
 import io
-
 import unittest
 import mock
 
@@ -43,6 +42,7 @@ from hpOneView.resources.networking.logical_interconnect_groups import LogicalIn
 from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
 from hpOneView.resources.networking.logical_switches import LogicalSwitches
 from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGroups
+from hpOneView.resources.servers.migratable_vc_domains import MigratableVcDomains
 from hpOneView.resources.networking.uplink_sets import UplinkSets
 from hpOneView.resources.networking.sas_interconnects import SasInterconnects
 from hpOneView.resources.networking.sas_logical_interconnect_groups import SasLogicalInterconnectGroups
@@ -72,6 +72,7 @@ OS_ENVIRON_CONFIG_MINIMAL = {
 
 OS_ENVIRON_CONFIG_FULL = {
     'ONEVIEWSDK_IP': '172.16.100.199',
+    'ONEVIEWSDK_IMAGE_STREAMER_IP': '172.172.172.172',
     'ONEVIEWSDK_USERNAME': 'admin',
     'ONEVIEWSDK_PASSWORD': 'secret123',
     'ONEVIEWSDK_API_VERSION': '201',
@@ -187,7 +188,24 @@ class OneViewClientTest(unittest.TestCase):
                                                 password='secret123',
                                                 authLoginDomain='authdomain'))
         mock_set_proxy.assert_called_once_with('172.16.100.195', 9999)
+
         self.assertEqual(201, oneview_client.connection._apiVersion)
+        self.assertEqual(oneview_client.create_image_streamer_client().connection.get_host(),
+                         OS_ENVIRON_CONFIG_FULL['ONEVIEWSDK_IMAGE_STREAMER_IP'])
+
+    @mock.patch.dict('os.environ', OS_ENVIRON_CONFIG_FULL)
+    @mock.patch.object(OneViewClient, '__init__')
+    def test_from_environment_variables_is_passing_right_arguments_to_the_constructor(self, mock_cls):
+        mock_cls.return_value = None
+        OneViewClient.from_environment_variables()
+        mock_cls.assert_called_once_with({'api_version': 201,
+                                          'proxy': '172.16.100.195:9999',
+                                          'ip': '172.16.100.199',
+                                          'image_streamer_ip': '172.172.172.172',
+                                          'credentials':
+                                              {'password': 'secret123',
+                                               'authLoginDomain': 'authdomain',
+                                               'userName': 'admin'}})
 
     @mock.patch.object(connection, 'login')
     def test_create_image_streamer_client_without_image_streamer_ip(self, mock_login):
@@ -373,6 +391,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_firmware_bundles(self):
         firmware_bundles = self._oneview.firmware_bundles
         self.assertEqual(firmware_bundles, self._oneview.firmware_bundles)
+
+    def test_migratable_vc_domains_has_right_type(self):
+        self.assertIsInstance(self._oneview.migratable_vc_domains, MigratableVcDomains)
+
+    def test_migratable_vc_domains_lazy_loading(self):
+        migratable_vc_domains = self._oneview.migratable_vc_domains
+        self.assertEqual(migratable_vc_domains, self._oneview.migratable_vc_domains)
 
     def test_power_devices_has_right_type(self):
         self.assertIsInstance(self._oneview.power_devices, PowerDevices)
