@@ -31,33 +31,43 @@ oneview_client = OneViewClient.from_json_file(EXAMPLE_CONFIG_FILE)
 
 image_streamer_client = oneview_client.create_image_streamer_client()
 
+# You must set a valid osVolumeURI and buildPlanUri
 golden_image_information = {
     "type": "GoldenImage",
-    "name": "Test",
+    "name": "Demo Golden Image Creation",
     "description": "Test",
     "imageCapture": "true",
-    "osVolumeURI": "/rest/os-volumes/1234",
-    "buildPlanUri": "/rest/build-plans/1234"
+    "osVolumeURI": "/rest/os-volumes/57f2d803-9c11-4f9a-bc02-71804a0fcc3e",
+    "buildPlanUri": "/rest/build-plans/b199aada-ed44-4785-8ced-cd979386d4db"
 }
 
-local_image_file_name = ''
+golden_image_upload = {
+    "name": "Demo Golden Image",
+    "description": "Test",
+}
+
+local_image_file_name = 'c:/Util/Licenses.zip'
 
 # Create a Golden Image
 print("Create a Golden Image")
-golden_image = image_streamer_client.golden_images.create(golden_image_information)
-pprint(golden_image)
+golden_image_created = image_streamer_client.golden_images.create(golden_image_information)
+pprint(golden_image_created)
 print("***** done *****\n")
 
 # Upload a Golden Image
-print("Create a Golden Image")
-golden_image = image_streamer_client.golden_images.upload(local_image_file_name, golden_image_information)
+print("Upload a Golden Image")
+image_streamer_client.golden_images.upload(local_image_file_name, golden_image_upload)
+print("***** done *****\n")
+
+# Get the Golden Image by URI
+print("Get the Golden Image by URI")
+golden_image = image_streamer_client.golden_images.get_by('name', golden_image_upload['name'])[0]
 pprint(golden_image)
 print("***** done *****\n")
 
 # Update the Golden Image
 print("Update the Golden Image")
 golden_image["description"] = "New description"
-golden_image["content"] = 'echo "Commands"\necho "Command 2"'
 golden_image = image_streamer_client.golden_images.update(golden_image)
 pprint(golden_image)
 print("***** done *****\n")
@@ -75,7 +85,7 @@ print("***** golden_image_file downloaded *****\n")
 
 # Retrieve archived logs of the Golden Image
 print("Retrieve archived logs of the Golden Image")
-archieve = image_streamer_client.golden_images.get_archive(golden_image['uri'])
+archieve = image_streamer_client.golden_images.get_archive(golden_image_created['uri'])
 pprint(archieve)
 print("***** done *****\n")
 
@@ -87,6 +97,7 @@ for golden_image_item in golden_images:
 print("***** done *****\n")
 
 # Delete the Golden Image
-print("Delete the Golden Image")
+print("Delete the Golden Images")
 image_streamer_client.golden_images.delete(golden_image)
-print("Golden Image deleted successfully")
+image_streamer_client.golden_images.delete(golden_image_created)
+print("Golden Images deleted successfully")

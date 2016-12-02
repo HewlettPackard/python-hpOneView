@@ -40,6 +40,7 @@ from hpOneView.resources.task_monitor import TaskMonitor
 from hpOneView.common import extract_id_from_uri
 from hpOneView.exceptions import HPOneViewException
 import os
+from urllib.parse import quote
 
 
 class GoldenImages(object):
@@ -95,7 +96,7 @@ class GoldenImages(object):
         data.update(resource)
         return self._client.create(data, timeout=timeout)
 
-    def upload(self, file_path, golden_image_info, timeout=-1):
+    def upload(self, file_path, golden_image_info):
         """
         Adds an Golden Image resource from the file that is uploaded from a local drive. Only the .zip format file can
         be used for upload.
@@ -103,19 +104,20 @@ class GoldenImages(object):
         Args:
             file_path (str): File name to upload.
             golden_image_info (dict): Golden Image information.
-            timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView, just stop waiting for its completion.
 
         Returns:
-            dict: Golden Image created.
+            bool: Success.
         """
         upload_file_name = os.path.basename(file_path)
-        response, body = self._connection.post_multipart(self.URI, golden_image_info, file_path, upload_file_name)
+
+        uri = "{0}?name={1}&description={2}".format(self.URI,
+                                                    quote(golden_image_info.get('name', '')),
+                                                    quote(golden_image_info.get('description', '')))
+        response, body = self._connection.post_multipart(uri, None, file_path, upload_file_name)
         if response.status >= 400:
             raise HPOneViewException(body)
 
-        return self._task_monitor.wait_for_task(body, timeout)
+        return body == "SUCCESS"
 
     def get_archive(self, id_or_uri):
         """
@@ -139,7 +141,7 @@ class GoldenImages(object):
             id_or_uri: ID or URI of the Golden Image.
 
         Returns:
-            dict: The Golden Image.
+            bytes: Downloaded file.
         """
         uri = self.URI + "/download/" + extract_id_from_uri(id_or_uri)
         return self._client.get(uri)
