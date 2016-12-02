@@ -355,6 +355,13 @@ class connection(object):
                                   custom_headers=custom_headers)
         if resp.status >= 400:
             raise HPOneViewException(body)
+
+        if resp.status == 304:
+            if body and isinstance(body, str):
+                try:
+                    body = json.loads(body)
+                except ValueError:
+                    pass
         elif resp.status == 202:
             location = resp.getheader('Location')
             if location:
@@ -369,7 +376,7 @@ class connection(object):
 
             return task, body
 
-        if 'category' in body and body['category'] == 'tasks':
+        if isinstance(body, dict) and 'category' in body and body['category'] == 'tasks':
             return body, body
 
         return None, body

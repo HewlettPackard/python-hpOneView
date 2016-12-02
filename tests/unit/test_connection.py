@@ -31,7 +31,6 @@ from mock import call
 
 
 class ConnectionTest(unittest.TestCase):
-
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -445,3 +444,18 @@ class ConnectionTest(unittest.TestCase):
         # verify the result
         self.assertEqual(mockedTaskBody, testTask)
         self.assertEqual(mockedTaskBody, testBody)
+
+    @mock.patch.object(connection, 'do_http')
+    def test_do_rest_call_with_304_status(self, mock_do_http):
+
+        mockedResponse = type('mockResponse', (), {'status': 304})()
+
+        mock_do_http.return_value = (mockedResponse, '{ "body": "test" }')
+
+        (testTask, testBody) = self.connection._connection__do_rest_call('PUT',
+                                                                         '/rest/test',
+                                                                         '{ "body": "test" }',
+                                                                         None)
+
+        self.assertIsNone(testTask)
+        self.assertEqual(testBody, {"body": "test"})
