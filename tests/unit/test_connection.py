@@ -459,3 +459,18 @@ class ConnectionTest(unittest.TestCase):
 
         self.assertIsNone(testTask)
         self.assertEqual(testBody, {"body": "test"})
+
+    @mock.patch.object(connection, 'do_http')
+    def test_do_rest_call_with_304_status_and_invalid_json(self, mock_do_http):
+
+        mockedResponse = type('mockResponse', (), {'status': 304})()
+
+        mock_do_http.return_value = (mockedResponse, 111)
+
+        (testTask, testBody) = self.connection._connection__do_rest_call('PUT',
+                                                                         '/rest/test',
+                                                                         111,
+                                                                         None)
+
+        self.assertIsNone(testTask)
+        self.assertEqual(testBody, 111)

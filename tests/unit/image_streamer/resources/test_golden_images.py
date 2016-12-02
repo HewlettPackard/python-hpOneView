@@ -194,7 +194,7 @@ class GoldenImagesTest(TestCase):
         mock_get.assert_called_once_with('/rest/golden-images/download/3518be0e-17c1-4189-8f81-83f3724f6155')
 
     @mock.patch.object(ResourceClient, 'get')
-    def test_download_called_once_with_di(self, mock_get):
+    def test_download_called_once_with_id(self, mock_get):
         id = '3518be0e-17c1-4189-8f81-83f3724f6155'
         self._client.download(id)
         mock_get.assert_called_once_with('/rest/golden-images/download/3518be0e-17c1-4189-8f81-83f3724f6155')

@@ -357,10 +357,10 @@ class connection(object):
             raise HPOneViewException(body)
 
         if resp.status == 304:
-            if body and isinstance(body, str):
+            if body and not isinstance(body, dict):
                 try:
                     body = json.loads(body)
-                except ValueError:
+                except Exception:
                     pass
         elif resp.status == 202:
             location = resp.getheader('Location')

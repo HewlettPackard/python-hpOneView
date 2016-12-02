@@ -46,7 +46,7 @@ golden_image_upload = {
     "description": "Test",
 }
 
-local_image_file_name = 'c:/Util/Licenses.zip'
+local_image_file_name = '~/image_file.zip'
 
 # Create a Golden Image
 print("Create a Golden Image")
