@@ -117,8 +117,6 @@ class OsVolumes(object):
         """
         Get the details of the archived OS volume with the specified attribute.
 
-        The search is case-insensitive.
-
         Args:
             archive_id: ID of the Archive OS Volume.
 
