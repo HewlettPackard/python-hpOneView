@@ -31,8 +31,12 @@ oneview_client = OneViewClient.from_json_file(EXAMPLE_CONFIG_FILE)
 
 image_streamer_client = oneview_client.create_image_streamer_client()
 
+# To run this example set a valid Build Plan URI
 deployment_plan_information = {
-    "name": "Demo Deployment Plan"
+    "name": "Demo Deployment Plan",
+    "description": "",
+    "hpProvided": "false",
+    "oeBuildPlanURI": "/rest/build-plans/1beb9333-66a8-48d5-82b6-1bda1a81582a",
 }
 
 # Create a Deployment Plan
@@ -50,6 +54,11 @@ pprint(deployment_plan_updated)
 print("\nGet the Deployment Plan by URI")
 deployment_plan_by_uri = image_streamer_client.deployment_plans.get(deployment_plan_created['uri'])
 pprint(deployment_plan_by_uri)
+
+# Get the Deployment Plan by name
+print("\nGet the Deployment Plan by name")
+deployment_plan_by_name = image_streamer_client.deployment_plans.get_by('name', deployment_plan_updated['name'])
+pprint(deployment_plan_by_name)
 
 # Get all Deployment Plans
 print("\nGet all Deployment Plans")
