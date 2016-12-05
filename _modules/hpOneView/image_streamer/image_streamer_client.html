@@ -171,6 +171,7 @@
 <span class="kn">from</span> <span class="nn">hpOneView.connection</span> <span class="k">import</span> <span class="n">connection</span>
 <span class="kn">from</span> <span class="nn">hpOneView.image_streamer.resources.plan_scripts</span> <span class="k">import</span> <span class="n">PlanScripts</span>
 <span class="kn">from</span> <span class="nn">hpOneView.image_streamer.resources.build_plans</span> <span class="k">import</span> <span class="n">BuildPlans</span>
+<span class="kn">from</span> <span class="nn">hpOneView.image_streamer.resources.os_volumes</span> <span class="k">import</span> <span class="n">OsVolumes</span>
 
 
 <div class="viewcode-block" id="ImageStreamerClient"><a class="viewcode-back" href="../../../hpOneView.image_streamer.html#hpOneView.image_streamer.image_streamer_client.ImageStreamerClient">[docs]</a><span class="k">class</span> <span class="nc">ImageStreamerClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -179,6 +180,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">set_session_id</span><span class="p">(</span><span class="n">session_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__plan_scripts</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__build_plans</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__os_volumes</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -212,7 +214,19 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_plans</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__build_plans</span> <span class="o">=</span> <span class="n">BuildPlans</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_plans</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_plans</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">os_volumes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the OS Volumes API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OsVolumes:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__os_volumes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__os_volumes</span> <span class="o">=</span> <span class="n">OsVolumes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__os_volumes</span></div>
 </pre></div>
 
            </div>
