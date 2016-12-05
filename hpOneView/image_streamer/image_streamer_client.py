@@ -41,6 +41,7 @@ __status__ = 'Development'
 from hpOneView.connection import connection
 from hpOneView.image_streamer.resources.plan_scripts import PlanScripts
 from hpOneView.image_streamer.resources.build_plans import BuildPlans
+from hpOneView.image_streamer.resources.os_volumes import OsVolumes
 
 
 class ImageStreamerClient(object):
@@ -49,6 +50,7 @@ class ImageStreamerClient(object):
         self.__connection.set_session_id(session_id)
         self.__plan_scripts = None
         self.__build_plans = None
+        self.__os_volumes = None
 
     @property
     def connection(self):
@@ -83,3 +85,15 @@ class ImageStreamerClient(object):
         if not self.__build_plans:
             self.__build_plans = BuildPlans(self.__connection)
         return self.__build_plans
+
+    @property
+    def os_volumes(self):
+        """
+        Gets the OS Volumes API client.
+
+        Returns:
+            OsVolumes:
+        """
+        if not self.__os_volumes:
+            self.__os_volumes = OsVolumes(self.__connection)
+        return self.__os_volumes
