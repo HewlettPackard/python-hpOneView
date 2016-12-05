@@ -33,8 +33,7 @@ image_streamer_client = oneview_client.create_image_streamer_client()
 
 os_volumes_information = {
     "name": "OSVolume-5",
-    "id": "57f2d803-9c11-4f9a-bc02-71804a0fcc3e",
-    "archived_id": "123"
+    "id": "57f2d803-9c11-4f9a-bc02-71804a0fcc3e"
 }
 
 # Get all OS Volumes
