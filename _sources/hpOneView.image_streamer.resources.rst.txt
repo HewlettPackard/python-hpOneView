@@ -12,6 +12,14 @@ hpOneView.image_streamer.resources.build_plans module
     :undoc-members:
     :show-inheritance:
 
+hpOneView.image_streamer.resources.deployment_plans module
+----------------------------------------------------------
+
+.. automodule:: hpOneView.image_streamer.resources.deployment_plans
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView.image_streamer.resources.os_volumes module
 ----------------------------------------------------
 
