@@ -24,7 +24,7 @@ import json
 import mock
 import unittest
 
-from http.client import HTTPSConnection
+from http.client import HTTPSConnection, BadStatusLine
 from hpOneView.connection import connection
 from hpOneView.exceptions import HPOneViewException
 from mock import call
@@ -474,3 +474,21 @@ class ConnectionTest(unittest.TestCase):
 
         self.assertIsNone(testTask)
         self.assertEqual(testBody, 111)
+
+    @mock.patch.object(connection, 'get_connection')
+    def test_download_to_stream(self, mock_get_conn):
+
+        mock_conn = mock.Mock()
+        # First attempt: Error, second attempt: successful connection
+        mock_get_conn.side_effect = [BadStatusLine(0), mock_conn]
+
+        mock_response = mock_conn.getresponse.return_value
+        # Stops at the fourth read call
+        mock_response.read.side_effect = ['111', '222', '333', None]
+
+        mock_stream = mock.Mock()
+
+        result = self.connection.download_to_stream(mock_stream, '/rest/download.zip')
+
+        self.assertTrue(result)
+        mock_stream.write.assert_has_calls([call('111'), call('222'), call('333')])
