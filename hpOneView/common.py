@@ -1874,7 +1874,7 @@ def extract_id_from_uri(id_or_uri):
         return id_or_uri
 
 
-def merge_list_by_key(original_list, updated_list, key):
+def merge_list_by_key(original_list, updated_list, key, ignore_when_null=[]):
     """
     Merge two lists by the key. It basically:
     1. Adds the items that are present on updated_list and are absent on original_list.
@@ -1885,15 +1885,23 @@ def merge_list_by_key(original_list, updated_list, key):
         original_list: original list.
         updated_list: list with changes.
         key: unique identifier.
+        ignore_when_null: list with the keys from the updated items that should be ignored in the merge, if its
+        values are null.
     Returns:
         list: Lists merged.
     """
-    items_map = {x[key]: x for x in original_list}
+    if not original_list:
+        return updated_list
+
+    items_map = {x[key]: x.copy() for x in original_list}
     merged_items = {}
 
     for item in updated_list:
         item_key = item[key]
         if item_key in items_map:
+            for ignored_key in ignore_when_null:
+                if ignored_key in item and not item[ignored_key]:
+                    item.pop(ignored_key)
             merged_items[item_key] = items_map[item_key].copy()
             merged_items[item_key].update(item)
         else:
