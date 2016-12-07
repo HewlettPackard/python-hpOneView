@@ -37,7 +37,7 @@ golden_image_information = {
     "name": "Demo Golden Image Creation",
     "description": "Test",
     "imageCapture": "true",
-    "osVolumeURI": "/rest/os-volumes/57f2d803-9c11-4f9a-bc02-71804a0fcc3e",
+    "osVolumeURI": "/rest/os-volumes/5315314f-9db0-4d88-b111-df8b9fb1995a",
     "buildPlanUri": "/rest/build-plans/b199aada-ed44-4785-8ced-cd979386d4db"
 }
 
@@ -47,6 +47,7 @@ golden_image_upload = {
 }
 
 local_image_file_name = '~/image_file.zip'
+destination_file_path = '~/downloaded_image_file.zip'
 
 # Create a Golden Image
 print("Create a Golden Image")
@@ -80,8 +81,10 @@ print("***** done *****\n")
 
 # Download the Golden Image
 print("Get the Golden Image")
-golden_image_file = image_streamer_client.golden_images.download(golden_image['uri'])
-print("***** golden_image_file downloaded *****\n")
+if image_streamer_client.golden_images.download(golden_image['uri'], destination_file_path):
+    print("***** Golden Image successfully downloaded *****\n")
+else:
+    print("***** Golden Image download has failed *****\n")
 
 # Retrieve archived logs of the Golden Image
 print("Retrieve archived logs of the Golden Image")
@@ -96,7 +99,7 @@ for golden_image_item in golden_images:
     print(golden_image_item['name'])
 print("***** done *****\n")
 
-# Delete the Golden Image
+# Delete the Golden Images
 print("Delete the Golden Images")
 image_streamer_client.golden_images.delete(golden_image)
 image_streamer_client.golden_images.delete(golden_image_created)

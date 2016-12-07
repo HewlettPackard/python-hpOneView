@@ -299,9 +299,6 @@ class connection(object):
                 self._numDisplayedRecords = body['count']
         return body
 
-    def download(self, uri):
-        resp, body = self.do_http('GET', uri, '')
-
     def getNextPage(self):
         body = self.get(self._nextPage)
         return get_members(body)

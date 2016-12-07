@@ -98,7 +98,7 @@ class GoldenImages(object):
 
     def upload(self, file_path, golden_image_info):
         """
-        Adds an Golden Image resource from the file that is uploaded from a local drive. Only the .zip format file can
+        Adds a Golden Image resource from the file that is uploaded from a local drive. Only the .zip format file can
         be used for upload.
 
         Args:
@@ -133,18 +133,21 @@ class GoldenImages(object):
         uri = self.URI + "/archive/" + extract_id_from_uri(id_or_uri)
         return self._client.get(uri)
 
-    def download(self, id_or_uri):
+    def download(self, id_or_uri, file_path):
         """
         Downloads the content of the selected Golden Image as per the specified attributes.
 
         Args:
             id_or_uri: ID or URI of the Golden Image.
+            file_path(str): Destination file path.
 
         Returns:
-            bytes: Downloaded file.
+            bool: Successfully downloaded.
         """
         uri = self.URI + "/download/" + extract_id_from_uri(id_or_uri)
-        return self._client.get(uri)
+
+        with open(file_path, 'wb') as file:
+            return self._connection.download_to_stream(file, uri)
 
     def get(self, id_or_uri):
         """

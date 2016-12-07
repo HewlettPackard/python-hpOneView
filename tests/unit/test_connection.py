@@ -475,8 +475,9 @@ class ConnectionTest(unittest.TestCase):
         self.assertIsNone(testTask)
         self.assertEqual(testBody, 111)
 
+    @mock.patch('time.sleep')
     @mock.patch.object(connection, 'get_connection')
-    def test_download_to_stream(self, mock_get_conn):
+    def test_download_to_stream(self, mock_get_conn, mock_sleep):
 
         mock_conn = mock.Mock()
         # First attempt: Error, second attempt: successful connection

@@ -24,11 +24,13 @@
 from unittest import TestCase
 
 import mock
+import io
 
 from hpOneView.connection import connection
 from hpOneView.image_streamer.resources.golden_images import GoldenImages
 from hpOneView.resources.resource import ResourceClient
 from hpOneView.exceptions import HPOneViewException
+from tests.test_utils import mock_builtin
 
 
 class GoldenImagesTest(TestCase):
@@ -187,14 +189,25 @@ class GoldenImagesTest(TestCase):
         self._client.get_archive(uri)
         mock_get.assert_called_once_with('/rest/golden-images/archive/3518be0e-17c1-4189-8f81-83f3724f6155')
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_download_called_once_with_uri(self, mock_get):
+    @mock.patch.object(connection, 'download_to_stream')
+    @mock.patch(mock_builtin('open'))
+    def test_download_called_once_with_uri(self, mock_open, mock_download):
         uri = '/rest/golden-images/3518be0e-17c1-4189-8f81-83f3724f6155'
-        self._client.download(uri)
-        mock_get.assert_called_once_with('/rest/golden-images/download/3518be0e-17c1-4189-8f81-83f3724f6155')
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_download_called_once_with_id(self, mock_get):
+        mock_open.return_value = io.StringIO(u"binary data")
+
+        self._client.download(uri, '~/image.zip')
+        mock_open.assert_called_once_with('~/image.zip', 'wb')
+        mock_download.assert_called_once_with(mock.ANY,
+                                              '/rest/golden-images/download/3518be0e-17c1-4189-8f81-83f3724f6155')
+
+    @mock.patch.object(connection, 'download_to_stream')
+    @mock.patch(mock_builtin('open'))
+    def test_download_called_once_with_id(self, mock_open, mock_download):
         id = '3518be0e-17c1-4189-8f81-83f3724f6155'
-        self._client.download(id)
-        mock_get.assert_called_once_with('/rest/golden-images/download/3518be0e-17c1-4189-8f81-83f3724f6155')
+        mock_open.return_value = io.StringIO(u"binary data")
+
+        self._client.download(id, '~/image.zip')
+        mock_open.assert_called_once_with('~/image.zip', 'wb')
+        mock_download.assert_called_once_with(mock.ANY,
+                                              '/rest/golden-images/download/3518be0e-17c1-4189-8f81-83f3724f6155')
