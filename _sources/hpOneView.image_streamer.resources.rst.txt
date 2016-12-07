@@ -20,6 +20,14 @@ hpOneView.image_streamer.resources.deployment_plans module
     :undoc-members:
     :show-inheritance:
 
+hpOneView.image_streamer.resources.golden_images module
+-------------------------------------------------------
+
+.. automodule:: hpOneView.image_streamer.resources.golden_images
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView.image_streamer.resources.os_volumes module
 ----------------------------------------------------
 
