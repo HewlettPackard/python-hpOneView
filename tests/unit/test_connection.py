@@ -24,14 +24,13 @@ import json
 import mock
 import unittest
 
-from http.client import HTTPSConnection
+from http.client import HTTPSConnection, BadStatusLine
 from hpOneView.connection import connection
 from hpOneView.exceptions import HPOneViewException
 from mock import call
 
 
 class ConnectionTest(unittest.TestCase):
-
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
@@ -445,3 +444,52 @@ class ConnectionTest(unittest.TestCase):
         # verify the result
         self.assertEqual(mockedTaskBody, testTask)
         self.assertEqual(mockedTaskBody, testBody)
+
+    @mock.patch.object(connection, 'do_http')
+    def test_do_rest_call_with_304_status(self, mock_do_http):
+
+        mockedResponse = type('mockResponse', (), {'status': 304})()
+
+        mock_do_http.return_value = (mockedResponse, '{ "body": "test" }')
+
+        (testTask, testBody) = self.connection._connection__do_rest_call('PUT',
+                                                                         '/rest/test',
+                                                                         '{ "body": "test" }',
+                                                                         None)
+
+        self.assertIsNone(testTask)
+        self.assertEqual(testBody, {"body": "test"})
+
+    @mock.patch.object(connection, 'do_http')
+    def test_do_rest_call_with_304_status_and_invalid_json(self, mock_do_http):
+
+        mockedResponse = type('mockResponse', (), {'status': 304})()
+
+        mock_do_http.return_value = (mockedResponse, 111)
+
+        (testTask, testBody) = self.connection._connection__do_rest_call('PUT',
+                                                                         '/rest/test',
+                                                                         111,
+                                                                         None)
+
+        self.assertIsNone(testTask)
+        self.assertEqual(testBody, 111)
+
+    @mock.patch('time.sleep')
+    @mock.patch.object(connection, 'get_connection')
+    def test_download_to_stream(self, mock_get_conn, mock_sleep):
+
+        mock_conn = mock.Mock()
+        # First attempt: Error, second attempt: successful connection
+        mock_get_conn.side_effect = [BadStatusLine(0), mock_conn]
+
+        mock_response = mock_conn.getresponse.return_value
+        # Stops at the fourth read call
+        mock_response.read.side_effect = ['111', '222', '333', None]
+
+        mock_stream = mock.Mock()
+
+        result = self.connection.download_to_stream(mock_stream, '/rest/download.zip')
+
+        self.assertTrue(result)
+        mock_stream.write.assert_has_calls([call('111'), call('222'), call('333')])

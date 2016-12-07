@@ -58,12 +58,10 @@ import time
 from hpOneView.common import uri, get_members, get_member, make_eula_dict, make_initial_password_change_dict
 from hpOneView.exceptions import HPOneViewException
 
-
 logger = logging.getLogger(__name__)
 
 
 class connection(object):
-
     def __init__(self, applianceIp, api_version=200):
         self._session = None
         self._host = applianceIp
@@ -154,6 +152,38 @@ class connection(object):
                 time.sleep(1)
                 continue
         return resp, body
+
+    def download_to_stream(self, stream_writer, url, body='', method='GET', custom_headers=None):
+        http_headers = self._headers.copy()
+        if custom_headers:
+            http_headers.update(custom_headers)
+
+        chunk_size = 4096
+        conn = None
+
+        successful_connected = False
+        while not successful_connected:
+            try:
+                conn = self.get_connection()
+                conn.request(method, url, body, http_headers)
+                resp = conn.getresponse()
+
+                tempbytes = True
+                while tempbytes:
+                    tempbytes = resp.read(chunk_size)
+                    if tempbytes:  # filter out keep-alive new chunks
+                        stream_writer.write(tempbytes)
+
+                conn.close()
+                successful_connected = True
+            except http.client.BadStatusLine:
+                logger.warning('Bad Status Line. Trying again...')
+                if conn:
+                    conn.close()
+                time.sleep(1)
+                continue
+
+        return successful_connected
 
     def get_connection(self):
         context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
@@ -355,6 +385,13 @@ class connection(object):
                                   custom_headers=custom_headers)
         if resp.status >= 400:
             raise HPOneViewException(body)
+
+        if resp.status == 304:
+            if body and not isinstance(body, dict):
+                try:
+                    body = json.loads(body)
+                except Exception:
+                    pass
         elif resp.status == 202:
             location = resp.getheader('Location')
             if location:
@@ -369,7 +406,7 @@ class connection(object):
 
             return task, body
 
-        if 'category' in body and body['category'] == 'tasks':
+        if isinstance(body, dict) and 'category' in body and body['category'] == 'tasks':
             return body, body
 
         return None, body

@@ -39,6 +39,7 @@ __license__ = 'MIT'
 __status__ = 'Development'
 
 from hpOneView.connection import connection
+from hpOneView.image_streamer.resources.golden_images import GoldenImages
 from hpOneView.image_streamer.resources.plan_scripts import PlanScripts
 from hpOneView.image_streamer.resources.build_plans import BuildPlans
 from hpOneView.image_streamer.resources.os_volumes import OsVolumes
@@ -49,6 +50,7 @@ class ImageStreamerClient(object):
     def __init__(self, ip, session_id, api_version):
         self.__connection = connection(ip, api_version)
         self.__connection.set_session_id(session_id)
+        self.__golden_images = None
         self.__plan_scripts = None
         self.__build_plans = None
         self.__os_volumes = None
@@ -63,6 +65,18 @@ class ImageStreamerClient(object):
             connection:
         """
         return self.__connection
+
+    @property
+    def golden_images(self):
+        """
+        Gets the Golden Images API client.
+
+        Returns:
+            GoldenImages:
+        """
+        if not self.__golden_images:
+            self.__golden_images = GoldenImages(self.__connection)
+        return self.__golden_images
 
     @property
     def plan_scripts(self):
