@@ -44,6 +44,7 @@ from hpOneView.image_streamer.resources.plan_scripts import PlanScripts
 from hpOneView.image_streamer.resources.build_plans import BuildPlans
 from hpOneView.image_streamer.resources.os_volumes import OsVolumes
 from hpOneView.image_streamer.resources.deployment_plans import DeploymentPlans
+from hpOneView.image_streamer.resources.artifact_bundles import ArtifactBundles
 
 
 class ImageStreamerClient(object):
@@ -55,6 +56,7 @@ class ImageStreamerClient(object):
         self.__build_plans = None
         self.__os_volumes = None
         self.__deployment_plans = None
+        self.__artifact_bundles = None
 
     @property
     def connection(self):
@@ -125,3 +127,15 @@ class ImageStreamerClient(object):
         if not self.__deployment_plans:
             self.__deployment_plans = DeploymentPlans(self.__connection)
         return self.__deployment_plans
+
+    def artifact_bundles(self):
+        """
+        Gets the Artifact Bundles API client.
+
+        Returns:
+            ArtifactBundles:
+        """
+        if not self.__artifact_bundles:
+            self.__artifact_bundles = ArtifactBundles(self.__connection)
+        return self.__artifact_bundles
+
