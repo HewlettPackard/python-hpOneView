@@ -34,11 +34,48 @@ config = {
     }
 }
 
-
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
+
+try:
+    # The valid enclosure URIs need to be inserted sorted by URI
+    # The number of enclosure URIs must be equal to the enclosure count in the enclosure group
+    options = dict(
+        enclosureUris=[],
+        enclosureGroupUri="",
+        forceInstallFirmware=False,
+        name="LogicalEnclosure2"
+    )
+
+    # Get enclosure group for creating logical enclosure
+    enclosure_groups = oneview_client.enclosure_groups.get_all()
+    first_enclosure_groups = enclosure_groups[0]
+    options["enclosureGroupUri"] = first_enclosure_groups["uri"]
+    enclosure_count = first_enclosure_groups["enclosureCount"]
+
+    # Get enclosures
+    enclosures = oneview_client.enclosures.get_all()
+    enclosure_uris = []
+    for i in range(0, enclosure_count):
+        enclosure_uris.append(enclosures[i]["uri"])
+    options["enclosureUris"] = enclosure_uris
+
+    # Create a logical enclosure
+    # This method is only available on HPE Synergy.
+    logical_enclosure_created = oneview_client.logical_enclosures.create(options)
+    print("Created logical enclosure'%s' successfully.\n  uri = '%s'" % (
+        logical_enclosure_created['name'],
+        logical_enclosure_created['uri'])
+    )
+
+    # Delete the logical enclosure created
+    # This method is only available on HPE Synergy.
+    oneview_client.logical_enclosures.delete(logical_enclosure_created)
+    print("Delete logical enclosure")
+except HPOneViewException as e:
+    print(e.msg)
 
 # Get first logical enclosure
 logical_enclosure = oneview_client.logical_enclosures.get_all()[0]
@@ -92,11 +129,14 @@ except HPOneViewException as e:
 
 # update and get script
 print("Update script")
-script = "# TEST COMMAND"
-logical_enclosure = oneview_client.logical_enclosures.update_script(
-    logical_enclosure['uri'], script)
-print("   updated script: '{}'".format(
-    oneview_client.logical_enclosures.get_script(logical_enclosure['uri'])))
+try:
+    script = "# TEST COMMAND"
+    logical_enclosure = oneview_client.logical_enclosures.update_script(
+        logical_enclosure['uri'], script)
+    print("   updated script: '{}'".format(
+        oneview_client.logical_enclosures.get_script(logical_enclosure['uri'])))
+except HPOneViewException as e:
+    print("  %s" % e.msg)
 
 # create support dumps
 print("Generate support dump")

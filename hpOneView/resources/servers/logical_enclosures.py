@@ -51,6 +51,46 @@ class LogicalEnclosures(object):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
 
+    def create(self, resource, timeout=-1):
+        """
+        Creates a logical enclosure.
+
+        Note:
+            This method is only available on HPE Synergy.
+
+        Args:
+            resource (dict): Object to create.
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView, just stop waiting for its completion.
+
+        Returns:
+            dict: Created resource.
+        """
+        return self._client.create(resource, timeout=timeout)
+
+    def delete(self, resource, force=False, timeout=-1):
+        """
+        Deletes a logical enclosure.
+
+        Note:
+            This method is only available on HPE Synergy.
+
+        Args:
+            resource: dict object to delete
+            force:
+                 If set to true, the operation completes despite any problems with
+                 network connectivity or errors on the resource itself. The default is false.
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            bool: Indicates if the resource was successfully deleted.
+
+        """
+        return self._client.delete(resource, force=force, timeout=timeout)
+
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
         Returns a list of logical enclosures matching the specified filter. A maximum of 40 logical enclosures are
