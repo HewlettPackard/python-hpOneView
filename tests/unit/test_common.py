@@ -485,6 +485,24 @@ class ResourceCompareTest(unittest.TestCase):
         extracted_id = extract_id_from_uri(uri)
         self.assertEqual(extracted_id, 'otherthing')
 
+    def test_merge_list_by_key_when_original_list_is_empty(self):
+        original_list = []
+        list_with_changes = [dict(id=1, value="123")]
+
+        merged_list = merge_list_by_key(original_list, list_with_changes, key="id")
+
+        expected_list = [dict(id=1, value="123")]
+        self.assertEqual(merged_list, expected_list)
+
+    def test_merge_list_by_key_when_original_list_is_null(self):
+        original_list = None
+        list_with_changes = [dict(id=1, value="123")]
+
+        merged_list = merge_list_by_key(original_list, list_with_changes, key="id")
+
+        expected_list = [dict(id=1, value="123")]
+        self.assertEqual(merged_list, expected_list)
+
     def test_merge_list_by_key_with_same_lenght_and_order(self):
         original_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=3500),
                          dict(id=2, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1000)]
@@ -492,7 +510,7 @@ class ResourceCompareTest(unittest.TestCase):
         list_with_changes = [dict(id=1, requestedMbps=2700, allocatedVFs=3500),
                              dict(id=2, requestedMbps=1005)]
 
-        merged_list = merge_list_by_key(original_list, list_with_changes, "id")
+        merged_list = merge_list_by_key(original_list, list_with_changes, key="id")
 
         expected_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=2700, allocatedVFs=3500),
                          dict(id=2, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1005)]
@@ -506,7 +524,7 @@ class ResourceCompareTest(unittest.TestCase):
         list_with_changes = [dict(id=1, requestedMbps=2700, allocatedVFs=3500),
                              dict(id=2, requestedMbps=1005)]
 
-        merged_list = merge_list_by_key(original_list, list_with_changes, "id")
+        merged_list = merge_list_by_key(original_list, list_with_changes, key="id")
 
         expected_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=2700, allocatedVFs=3500),
                          dict(id=2, allocatedMbps=1000, mac="E2:4B:0D:30:00:0B", requestedMbps=1005)]
@@ -519,7 +537,7 @@ class ResourceCompareTest(unittest.TestCase):
 
         list_with_changes = [dict(id=1, requestedMbps=2700, allocatedVFs=3500)]
 
-        merged_list = merge_list_by_key(original_list, list_with_changes, "id")
+        merged_list = merge_list_by_key(original_list, list_with_changes, key="id")
 
         expected_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=2700, allocatedVFs=3500)]
 
@@ -531,10 +549,32 @@ class ResourceCompareTest(unittest.TestCase):
         list_with_changes = [dict(id=1, requestedMbps=2700, allocatedVFs=3500),
                              dict(id=2, requestedMbps=1005)]
 
-        merged_list = merge_list_by_key(original_list, list_with_changes, "id")
+        merged_list = merge_list_by_key(original_list, list_with_changes, key="id")
 
         expected_list = [dict(id=1, allocatedMbps=2500, mac="E2:4B:0D:30:00:09", requestedMbps=2700, allocatedVFs=3500),
                          dict(id=2, requestedMbps=1005)]
+
+        self.assertEqual(merged_list, expected_list)
+
+    def test_merge_list_by_key_should_ignore_key_when_null(self):
+        original_list = [dict(id=1, value1="123", value2="345")]
+        list_with_changes = [dict(id=1, value1=None, value2="345-changed")]
+
+        merged_list = merge_list_by_key(original_list, list_with_changes, key="id",
+                                        ignore_when_null=['value1', 'value2'])
+
+        expected_list = [dict(id=1, value1="123", value2="345-changed")]
+
+        self.assertEqual(merged_list, expected_list)
+
+    def test_merge_list_by_key_should_not_fail_when_ignored_key_absent(self):
+        original_list = [dict(id=1, value1="123", value2="345")]
+        list_with_changes = [dict(id=1, value3="678")]
+
+        merged_list = merge_list_by_key(original_list, list_with_changes, key="id",
+                                        ignore_when_null=['value1'])
+
+        expected_list = [dict(id=1, value1="123", value2="345", value3="678")]
 
         self.assertEqual(merged_list, expected_list)
 
