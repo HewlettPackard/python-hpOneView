@@ -36,6 +36,37 @@ class LogicalEnclosuresTest(TestCase):
         self.connection = connection(self.host)
         self._logical_enclosures = LogicalEnclosures(self.connection)
 
+    @mock.patch.object(ResourceClient, 'create')
+    def test_create_called_once(self, mock_create):
+        resource = dict(
+            enclosureUris=[
+                "/rest/enclosures/0000000000A66101",
+                "/rest/enclosures/0000000000A66102",
+                "/rest/enclosures/0000000000A66103"
+            ],
+            enclosureGroupUri="/rest/enclosure-groups/e41118e4-2233-4b6b-9318-c9982dbf01fa",
+            forceInstallFirmware=False,
+            name="testLogicalEnclosure"
+        )
+        mock_create.return_value = {}
+
+        self._logical_enclosures.create(resource)
+        mock_create.assert_called_once_with(resource.copy(), timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_delete_called_once(self, mock_delete):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._logical_enclosures.delete(id, force=False)
+
+        mock_delete.assert_called_once_with(id, force=False, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_delete_called_once_with_force(self, mock_delete):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._logical_enclosures.delete(id, force=True)
+
+        mock_delete.assert_called_once_with(id, force=True, timeout=-1)
+
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_all_called_once(self, mock_get_all):
         filter = 'name=TestName'
