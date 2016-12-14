@@ -128,6 +128,7 @@ class ImageStreamerClient(object):
             self.__deployment_plans = DeploymentPlans(self.__connection)
         return self.__deployment_plans
 
+    @property
     def artifact_bundles(self):
         """
         Gets the Artifact Bundles API client.
@@ -138,4 +139,3 @@ class ImageStreamerClient(object):
         if not self.__artifact_bundles:
             self.__artifact_bundles = ArtifactBundles(self.__connection)
         return self.__artifact_bundles
-

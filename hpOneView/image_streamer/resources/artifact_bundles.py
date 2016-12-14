@@ -37,7 +37,8 @@ __status__ = 'Development'
 
 from hpOneView.resources.resource import ResourceClient
 from hpOneView.common import extract_id_from_uri
-
+from hpOneView.exceptions import HPOneViewException
+import os
 
 
 class ArtifactBundles(object):
@@ -46,8 +47,7 @@ class ArtifactBundles(object):
     BACKUPS_PATH = '/backups'
     ARCHIVE_PATH = '/archive'
     STOP_CREATION_PATH = '/stopArtifactCreate'
-
-
+    DOWNLOAD_PATH = '/download'
 
     def __init__(self, con):
         self._connection = con
@@ -143,31 +143,38 @@ class ArtifactBundles(object):
         uri = self.URI + self.BACKUPS_PATH + '/' + extract_id_from_uri(id_or_uri)
         return self._client.get(id_or_uri=uri)
 
-    def download_archive_artifact_bundle(self, id_or_uri):
+    def download_archive_artifact_bundle(self, id_or_uri, file_path):
         """
         Download archive for the Artifact Bundle.
 
         Args:
             id_or_uri: ID or URI of the Artifact Bundle.
+            file_path(str): Destination file path.
 
         Returns:
             list: A list of Artifacts Bundle.
         """
-        uri = self.URI + self.BACKUPS_PATH + "/archive/" + extract_id_from_uri(id_or_uri)
-        return self._client.get(id_or_uri=uri)
 
-    def download_artifact_bundle(self, id_or_uri):
+        uri = self.URI + self.BACKUPS_PATH + self.ARCHIVE_PATH + '/' + extract_id_from_uri(id_or_uri)
+
+        with open(file_path, 'wb') as file:
+            return self._connection.download_to_stream(file, uri)
+
+    def download_artifact_bundle(self, id_or_uri, file_path):
         """
         Download the Artifact Bundle.
 
         Args:
             id_or_uri: ID or URI of the Artifact Bundle.
+            file_path(str): Destination file path.
 
         Returns:
             list: A list of Artifacts Bundle.
         """
-        uri = self.URI + self.BACKUPS_PATH + "/download/" + extract_id_from_uri(id_or_uri)
-        return self._client.get(id_or_uri=uri)
+        uri = self.URI + self.DOWNLOAD_PATH + '/' + extract_id_from_uri(id_or_uri)
+
+        with open(file_path, 'wb') as file:
+            return self._connection.download_to_stream(file, uri)
 
     def create_backup(self, deployment_groups_id_or_uri, timeout=-1):
         """
@@ -180,7 +187,7 @@ class ArtifactBundles(object):
                 OneView, just stops waiting for its completion.
 
         Returns:
-            dict: .
+            dict: The Artifact Bundle.
         """
         if self.DEPLOYMENT_GROUPS_URI not in deployment_groups_id_or_uri:
             deployment_groups_uri = self.DEPLOYMENT_GROUPS_URI + deployment_groups_id_or_uri
@@ -194,25 +201,55 @@ class ArtifactBundles(object):
         uri = self.URI + self.BACKUPS_PATH
         return self._client.create(data, uri=uri, timeout=timeout)
 
-    def restore_backup_bundle_from_file(self, file, timeout=-1):
+    def upload_bundle_from_file(self, file_path):
         """
-        Restore an Artifact Bundle from a backup file.
+        Restore an Artifact Bundle from backup file.
 
         Args:
-            file:
+            file_path (str): The File Path to restore the Artifact Bundle.
+
+        Returns:
+            dict: The Artifact Bundle.
+        """
+
+        upload_file_name = os.path.basename(file_path)
+
+        uri = self.URI
+
+        response, body = self._connection.post_multipart(uri, None, file_path, upload_file_name)
+        if response.status >= 400:
+            raise HPOneViewException(body)
+
+        return body == "SUCCESS"
+
+    def upload_backup_bundle_from_file(self, file_path, deployment_groups_id_or_uri):
+        """
+        Restore an Artifact Bundle from backup file.
+
+        Args:
+            file_path (str): The File Path to restore the Artifact Bundle.
+            deployment_groups_id_or_uri: ID or URI of the Deployment Groups.
             timeout:
                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
                 OneView, just stops waiting for its completion.
 
         Returns:
-            dict: .
+            dict: The Artifact Bundle.
         """
-        data = {
-            "type": "multipart/form-data",
-        }
+        if self.DEPLOYMENT_GROUPS_URI not in deployment_groups_id_or_uri:
+            deployment_groups_uri = self.DEPLOYMENT_GROUPS_URI + deployment_groups_id_or_uri
+        else:
+            deployment_groups_uri = deployment_groups_id_or_uri
 
-        uri = self.URI + self.BACKUPS_PATH + self.ARCHIVE_PATH
-        return self._client.create(data, uri=uri, timeout=timeout)
+        upload_file_name = os.path.basename(file_path)
+
+        uri = self.URI + self.BACKUPS_PATH + self.ARCHIVE_PATH + "?deploymentGrpUri=" + deployment_groups_uri
+
+        response, body = self._connection.post_multipart(uri, None, file_path, upload_file_name)
+        if response.status >= 400:
+            raise HPOneViewException(body)
+
+        return body == "SUCCESS"
 
     def create(self, resource, timeout=-1):
         """
@@ -226,7 +263,6 @@ class ArtifactBundles(object):
 
         Returns:
             dict: Created resource.
-
         """
         return self._client.create(resource, timeout=timeout)
 
@@ -237,9 +273,6 @@ class ArtifactBundles(object):
         Args:
             resource(str, dict):
                 Accept either the resource id  or the entire resource.
-            force:
-                 If set to true, the operation completes despite any problems with
-                 network connectivity or errors on the resource itself. The default is false.
             timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
 
@@ -253,6 +286,7 @@ class ArtifactBundles(object):
         Updates only name for the Artifact Bundle.
 
         Args:
+            id_or_uri: ID or URI of the Artifact Bundle.
             name_to_update: Artifact Bundle name to be updated.
             timeout:
                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
@@ -260,7 +294,6 @@ class ArtifactBundles(object):
 
         Returns:
             dict: Updated resource.
-
         """
         if self.URI not in id_or_uri:
             id_or_uri = self.URI + "/" + id_or_uri
@@ -273,7 +306,30 @@ class ArtifactBundles(object):
 
         return self._client.update(data, timeout=timeout)
 
-    def extract_bundle(self, deployment_groups_id_or_uri, timeout=-1):
+    def extract_bundle(self, id_or_uri, timeout=-1):
+        """
+        Extracts the exisiting bundle on the appliance and creates all the artifacts.
+
+        Args:
+            id_or_uri: ID or URI of the Artifact Bundle.
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
+                OneView, just stops waiting for its completion.
+
+        Returns:
+            dict: The Artifact Bundle.
+        """
+        if self.URI not in id_or_uri:
+            id_or_uri = self.URI + "/" + id_or_uri
+
+        data = {
+            "uri": id_or_uri
+        }
+
+        custom_headers = {"Content-Type": "text/plain"}
+        return self._client.update(data, timeout=timeout, custom_headers=custom_headers)
+
+    def extract_backup_bundle(self, deployment_groups_id_or_uri, timeout=-1):
         """
         Extracts the exisiting backup bundle on the appliance and creates all the artifacts.
 
@@ -284,7 +340,7 @@ class ArtifactBundles(object):
                 OneView, just stops waiting for its completion.
 
         Returns:
-            dict: .
+            dict: The Artifact Bundle.
         """
         if self.DEPLOYMENT_GROUPS_URI not in deployment_groups_id_or_uri:
             deployment_groups_uri = self.DEPLOYMENT_GROUPS_URI + deployment_groups_id_or_uri
@@ -308,7 +364,7 @@ class ArtifactBundles(object):
             task_uri: Task URI associated with the Artifact Bundle.
 
         Returns:
-            dict: .
+            dict: The Artifact Bundle.
         """
         data = {
             "taskUri": task_uri

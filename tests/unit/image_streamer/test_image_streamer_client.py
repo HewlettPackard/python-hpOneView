@@ -29,6 +29,7 @@ from hpOneView.image_streamer.resources.golden_images import GoldenImages
 from hpOneView.image_streamer.resources.build_plans import BuildPlans
 from hpOneView.image_streamer.resources.os_volumes import OsVolumes
 from hpOneView.image_streamer.resources.deployment_plans import DeploymentPlans
+from hpOneView.image_streamer.resources.artifact_bundles import ArtifactBundles
 
 
 class ImageStreamerClientTest(TestCase):
@@ -80,3 +81,10 @@ class ImageStreamerClientTest(TestCase):
     def test_deployment_plans_lazy_loading(self):
         resource = self._client.deployment_plans
         self.assertEqual(resource, self._client.deployment_plans)
+
+    def test_artifact_bundles_has_right_type(self):
+        self.assertIsInstance(self._client.artifact_bundles, ArtifactBundles)
+
+    def test_artifact_bundles_lazy_loading(self):
+        resource = self._client.artifact_bundles
+        self.assertEqual(resource, self._client.artifact_bundles)
