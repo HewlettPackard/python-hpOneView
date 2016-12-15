@@ -37,8 +37,8 @@ golden_image_information = {
     "name": "Demo Golden Image Creation",
     "description": "Test",
     "imageCapture": "true",
-    "osVolumeURI": "/rest/os-volumes/5315314f-9db0-4d88-b111-df8b9fb1995a",
-    "buildPlanUri": "/rest/build-plans/b199aada-ed44-4785-8ced-cd979386d4db"
+    "osVolumeURI": "/rest/os-volumes/45909d53-36e5-48dc-869e-9a769847a81b",
+    "buildPlanUri": "/rest/build-plans/3a5ea44b-2497-4906-ad68-ed457579c91e"
 }
 
 golden_image_upload = {
@@ -48,6 +48,7 @@ golden_image_upload = {
 
 local_image_file_name = '~/image_file.zip'
 destination_file_path = '~/downloaded_image_file.zip'
+destination_archive_path = '~/archive_log.txt'
 
 # Create a Golden Image
 print("Create a Golden Image")
@@ -88,8 +89,10 @@ else:
 
 # Retrieve archived logs of the Golden Image
 print("Retrieve archived logs of the Golden Image")
-archieve = image_streamer_client.golden_images.get_archive(golden_image_created['uri'])
-pprint(archieve)
+if image_streamer_client.golden_images.download_archive(golden_image_created['uri'], destination_archive_path):
+    print("***** Golden Image archive log successfully downloaded *****\n")
+else:
+    print("***** Golden Image archive log download has failed *****\n")
 print("***** done *****\n")
 
 # Get all Golden Images

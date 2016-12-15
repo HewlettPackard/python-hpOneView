@@ -119,19 +119,22 @@ class GoldenImages(object):
 
         return body == "SUCCESS"
 
-    def get_archive(self, id_or_uri):
+    def download_archive(self, id_or_uri, file_path):
         """
         Download the details of the Golden Image capture logs which has been archived based on the specific attribute
         ID.
 
         Args:
             id_or_uri: ID or URI of the Golden Image.
+            file_path (str): File name to save the archive.
 
         Returns:
-            dict: The Golden Image.
+            bool: Success.
         """
         uri = self.URI + "/archive/" + extract_id_from_uri(id_or_uri)
-        return self._client.get(uri)
+
+        with open(file_path, 'wb') as file:
+            return self._connection.download_to_stream(file, uri)
 
     def download(self, id_or_uri, file_path):
         """
