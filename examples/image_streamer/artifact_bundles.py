@@ -33,9 +33,10 @@ image_streamer_client = oneview_client.create_image_streamer_client()
 
 artifact_bundles_information = {
     "name": "RHEL-7.2-artifact-bundle",
-    "id": "78836581-2b6f-4e26-9969-5667fb5837b4",
+    "id": "827b415b-1c7e-42cd-94e7-3006847dbf17",
     "id_backup": "744587b5-d739-4575-9745-5bb9b3d19f71",
-    "deployment_groups": "00c1344d-e4dd-43c3-a733-1664e159a36f"
+    "deployment_groups": "c5a727ef-71e9-4154-a512-6655b168c2e3",
+    "": "0ABDE00534F"
 }
 
 artifact_bundles_to_be_created = {
@@ -43,13 +44,13 @@ artifact_bundles_to_be_created = {
     "description": "Description of Artifact Bundles Test",
     "buildPlans": [
         {
-            "resourceUri": "/rest/build-plans/bc2135ab-e8cf-4847-9bac-1c957073cfc2",
+            "resourceUri": "/rest/build-plans/3d4a2f48-4fea-41d2-a884-56adadd0c6b8",
             "readOnly": "false"
         }
     ]
 }
 
-local_image_file_name = '~/HPE-ImageStreamer-Developer-2016-09-12.zip'
+local_image_file_path = '~/HPE-ImageStreamer-Developer-2016-09-12.zip'
 destination_file_path = '~/file.zip'
 
 # Get all Artifacts Bundle
@@ -80,7 +81,8 @@ pprint(artifacts_bundle)
 # Update an Artifact Bundle
 print("\nUpdate an Artifact Bundle")
 artifact_bundle = image_streamer_client.artifact_bundles.get_by_name(artifact_bundles_to_be_created['name'])
-response = image_streamer_client.artifact_bundles.update(artifact_bundle, 'Artifact Bundles Test Updated')
+artifact_bundle['name'] = 'Artifact Bundles Test Updated'
+response = image_streamer_client.artifact_bundles.update(artifact_bundle)
 pprint(response)
 
 
@@ -92,13 +94,13 @@ image_streamer_client.artifact_bundles.delete(artifact_bundle)
 
 # Get all Backups for Artifact Bundles
 print("\nGet all Backups for Artifact Bundles")
-artifacts_bundle = image_streamer_client.artifact_bundles.get_backups()
+artifacts_bundle = image_streamer_client.artifact_bundles.get_all_backups()
 pprint(artifacts_bundle)
 
 
 # Get Backup for an Artifacts Bundle
 print("\nGet Backups for an Artifacts Bundle")
-artifacts_bundle = image_streamer_client.artifact_bundles.get_backups_by_id(artifact_bundles_information['id_backup'])
+artifacts_bundle = image_streamer_client.artifact_bundles.get_backup(artifact_bundles_information['id_backup'])
 pprint(artifacts_bundle)
 
 
@@ -123,14 +125,14 @@ pprint(response)
 
 # Upload an Artifact Bundle from file
 print("\nUpload an Artifact Bundle from file")
-response = image_streamer_client.artifact_bundles.upload_bundle_from_file(local_image_file_name)
+response = image_streamer_client.artifact_bundles.upload_bundle_from_file(local_image_file_path)
 pprint(response)
 
 
 # Upload a Backup of Artifact Bundle from file
 print("\nUpload a Backup of Artifact Bundle from file")
 response = image_streamer_client.artifact_bundles\
-    .upload_backup_bundle_from_file(local_image_file_name, artifact_bundles_information['deployment_groups'])
+    .upload_backup_bundle_from_file(local_image_file_path, artifact_bundles_information['deployment_groups'])
 pprint(response)
 
 

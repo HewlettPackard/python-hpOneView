@@ -93,15 +93,16 @@ class ArtifactBundlesTest(TestCase):
     @mock.patch.object(ResourceClient, 'update')
     def test_update_called_once(self, mock_update):
         information = {
-            "type": "ArtifactsBundle",
             "name": "ArtifactBundleUpdate",
             "uri": "/rest/artifact-bundles/78836581-2b6f-4e26-9969-5667fb5837b4"
         }
         mock_update.return_value = {}
 
-        self._client.update(information['uri'], "ArtifactBundleUpdate")
+        self._client.update(information)
 
-        mock_update.assert_called_once_with(information.copy(), timeout=-1)
+        default_values = {u'300': {u'type': u'ArtifactsBundle'}}
+
+        mock_update.assert_called_once_with(information.copy(), default_values=default_values, timeout=-1)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_remove_called_once(self, mock_delete):
@@ -113,7 +114,7 @@ class ArtifactBundlesTest(TestCase):
     @mock.patch.object(ResourceClient, 'get')
     def test_get_all_backups_called_once(self, mock_get):
         uri = '/rest/artifact-bundles/backups'
-        self._client.get_backups()
+        self._client.get_all_backups()
 
         mock_get.assert_called_once_with(id_or_uri=uri)
 
@@ -121,7 +122,7 @@ class ArtifactBundlesTest(TestCase):
     def test_get_backups_by_id_called_once(self, mock_get):
         uri = '/rest/artifact-bundles/backups'
         id = '78836581-2b6f-4e26-9969-5667fb5837b4'
-        self._client.get_backups_by_id(id)
+        self._client.get_backup(id)
 
         mock_get.assert_called_once_with(id_or_uri=uri + '/' + id)
 

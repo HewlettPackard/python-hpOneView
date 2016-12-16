@@ -49,6 +49,10 @@ class ArtifactBundles(object):
     STOP_CREATION_PATH = '/stopArtifactCreate'
     DOWNLOAD_PATH = '/download'
 
+    DEFAULT_VALUES = {
+        '300': {"type": "ArtifactsBundle"}
+    }
+
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
@@ -87,7 +91,7 @@ class ArtifactBundles(object):
         Retrieves the overview details of the selected Artifact Bundle as per the selected attributes.
 
         Args:
-            id_or_uri: ID or URI of the OS Volume.
+            id_or_uri: ID or URI of the Artifact Bundle.
 
         Returns:
             dict: The Artifact Bundle.
@@ -105,7 +109,7 @@ class ArtifactBundles(object):
             value: Value to filter.
 
         Returns:
-            dict: The Artifacts Bundle.
+            list: The Artifacts Bundle.
         """
         return self._client.get_by(field, value)
 
@@ -121,7 +125,7 @@ class ArtifactBundles(object):
         """
         return self._client.get_by_name(name)
 
-    def get_backups(self):
+    def get_all_backups(self):
         """
         Get all Backups for Artifact Bundle.
 
@@ -130,7 +134,7 @@ class ArtifactBundles(object):
         """
         return self._client.get(id_or_uri=self.URI + self.BACKUPS_PATH)
 
-    def get_backups_by_id(self, id_or_uri):
+    def get_backup(self, id_or_uri):
         """
         Get the details of the backup for an Artifact Bundle.
 
@@ -138,7 +142,7 @@ class ArtifactBundles(object):
             id_or_uri: ID or URI of the Artifact Bundle.
 
         Returns:
-            list: Backup for an Artifacts Bundle.
+            Dict: Backup for an Artifacts Bundle.
         """
         uri = self.URI + self.BACKUPS_PATH + '/' + extract_id_from_uri(id_or_uri)
         return self._client.get(id_or_uri=uri)
@@ -152,9 +156,8 @@ class ArtifactBundles(object):
             file_path(str): Destination file path.
 
         Returns:
-            list: A list of Artifacts Bundle.
+            bool: Successfully downloaded.
         """
-
         uri = self.URI + self.BACKUPS_PATH + self.ARCHIVE_PATH + '/' + extract_id_from_uri(id_or_uri)
 
         with open(file_path, 'wb') as file:
@@ -169,7 +172,7 @@ class ArtifactBundles(object):
             file_path(str): Destination file path.
 
         Returns:
-            list: A list of Artifacts Bundle.
+            bool: Successfully downloaded.
         """
         uri = self.URI + self.DOWNLOAD_PATH + '/' + extract_id_from_uri(id_or_uri)
 
@@ -189,10 +192,7 @@ class ArtifactBundles(object):
         Returns:
             dict: The Artifact Bundle.
         """
-        if self.DEPLOYMENT_GROUPS_URI not in deployment_groups_id_or_uri:
-            deployment_groups_uri = self.DEPLOYMENT_GROUPS_URI + deployment_groups_id_or_uri
-        else:
-            deployment_groups_uri = deployment_groups_id_or_uri
+        deployment_groups_uri = self.build_deployment_group_uri(deployment_groups_id_or_uri)
 
         data = {
             "deploymentGroupURI": deployment_groups_uri
@@ -211,7 +211,6 @@ class ArtifactBundles(object):
         Returns:
             dict: The Artifact Bundle.
         """
-
         upload_file_name = os.path.basename(file_path)
 
         uri = self.URI
@@ -236,10 +235,7 @@ class ArtifactBundles(object):
         Returns:
             dict: The Artifact Bundle.
         """
-        if self.DEPLOYMENT_GROUPS_URI not in deployment_groups_id_or_uri:
-            deployment_groups_uri = self.DEPLOYMENT_GROUPS_URI + deployment_groups_id_or_uri
-        else:
-            deployment_groups_uri = deployment_groups_id_or_uri
+        deployment_groups_uri = self.build_deployment_group_uri(deployment_groups_id_or_uri)
 
         upload_file_name = os.path.basename(file_path)
 
@@ -281,13 +277,12 @@ class ArtifactBundles(object):
         """
         return self._client.delete(resource, timeout=timeout)
 
-    def update(self, id_or_uri, name_to_update, timeout=-1):
+    def update(self, resource, timeout=-1):
         """
         Updates only name for the Artifact Bundle.
 
         Args:
-            id_or_uri: ID or URI of the Artifact Bundle.
-            name_to_update: Artifact Bundle name to be updated.
+            resource (dict): Object to update.
             timeout:
                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView, just stop waiting for its completion.
@@ -295,20 +290,11 @@ class ArtifactBundles(object):
         Returns:
             dict: Updated resource.
         """
-        if self.URI not in id_or_uri:
-            id_or_uri = self.URI + "/" + id_or_uri
-
-        data = {
-            "type": "ArtifactsBundle",
-            "name": name_to_update,
-            "uri": id_or_uri
-        }
-
-        return self._client.update(data, timeout=timeout)
+        return self._client.update(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def extract_bundle(self, id_or_uri, timeout=-1):
         """
-        Extracts the exisiting bundle on the appliance and creates all the artifacts.
+        Extracts the existing bundle on the appliance and creates all the artifacts.
 
         Args:
             id_or_uri: ID or URI of the Artifact Bundle.
@@ -319,8 +305,7 @@ class ArtifactBundles(object):
         Returns:
             dict: The Artifact Bundle.
         """
-        if self.URI not in id_or_uri:
-            id_or_uri = self.URI + "/" + id_or_uri
+        id_or_uri = self._client.build_uri(id_or_uri)
 
         data = {
             "uri": id_or_uri
@@ -331,7 +316,7 @@ class ArtifactBundles(object):
 
     def extract_backup_bundle(self, deployment_groups_id_or_uri, timeout=-1):
         """
-        Extracts the exisiting backup bundle on the appliance and creates all the artifacts.
+        Extracts the existing backup bundle on the appliance and creates all the artifacts.
 
         Args:
             deployment_groups_id_or_uri: ID or URI of the Deployment Groups.
@@ -342,10 +327,7 @@ class ArtifactBundles(object):
         Returns:
             dict: The Artifact Bundle.
         """
-        if self.DEPLOYMENT_GROUPS_URI not in deployment_groups_id_or_uri:
-            deployment_groups_uri = self.DEPLOYMENT_GROUPS_URI + deployment_groups_id_or_uri
-        else:
-            deployment_groups_uri = deployment_groups_id_or_uri
+        deployment_groups_uri = self.build_deployment_group_uri(deployment_groups_id_or_uri)
 
         data = {
             "deploymentGroupURI": deployment_groups_uri
@@ -373,3 +355,10 @@ class ArtifactBundles(object):
         uri = self.URI + '/' + extract_id_from_uri(id_or_uri) + self.STOP_CREATION_PATH
 
         return self._client.update(data, uri=uri)
+
+    def build_deployment_group_uri(self, deployment_groups_id_or_uri):
+        if self.DEPLOYMENT_GROUPS_URI not in deployment_groups_id_or_uri:
+            deployment_groups_uri = self.DEPLOYMENT_GROUPS_URI + deployment_groups_id_or_uri
+        else:
+            deployment_groups_uri = deployment_groups_id_or_uri
+        return deployment_groups_uri
