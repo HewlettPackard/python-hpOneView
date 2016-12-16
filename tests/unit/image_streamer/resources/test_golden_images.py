@@ -177,17 +177,25 @@ class GoldenImagesTest(TestCase):
         else:
             self.fail("Expected exception was not raised")
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_archive_called_once_with_id(self, mock_get):
+    @mock.patch.object(connection, 'download_to_stream')
+    @mock.patch(mock_builtin('open'))
+    def test_get_archive_called_once_with_id(self, mock_open, mock_download):
         id = '3518be0e-17c1-4189-8f81-83f3724f6155'
-        self._client.get_archive(id)
-        mock_get.assert_called_once_with('/rest/golden-images/archive/3518be0e-17c1-4189-8f81-83f3724f6155')
+        mock_open.return_value = io.StringIO(u"binary data")
+        self._client.download_archive(id, "~/archive.log")
+        mock_open.assert_called_once_with('~/archive.log', 'wb')
+        mock_download.assert_called_once_with(mock.ANY,
+                                              '/rest/golden-images/archive/3518be0e-17c1-4189-8f81-83f3724f6155')
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_archive_called_once_with_uri(self, mock_get):
+    @mock.patch.object(connection, 'download_to_stream')
+    @mock.patch(mock_builtin('open'))
+    def test_get_archive_called_once_with_uri(self, mock_open, mock_download):
         uri = '/rest/golden-images/3518be0e-17c1-4189-8f81-83f3724f6155'
-        self._client.get_archive(uri)
-        mock_get.assert_called_once_with('/rest/golden-images/archive/3518be0e-17c1-4189-8f81-83f3724f6155')
+        mock_open.return_value = io.StringIO(u"binary data")
+        self._client.download_archive(uri, "~/archive.log")
+        mock_open.assert_called_once_with('~/archive.log', 'wb')
+        mock_download.assert_called_once_with(mock.ANY,
+                                              '/rest/golden-images/archive/3518be0e-17c1-4189-8f81-83f3724f6155')
 
     @mock.patch.object(connection, 'download_to_stream')
     @mock.patch(mock_builtin('open'))
