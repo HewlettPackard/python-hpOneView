@@ -249,19 +249,22 @@
 
         <span class="k">return</span> <span class="n">body</span> <span class="o">==</span> <span class="s2">&quot;SUCCESS&quot;</span></div>
 
-<div class="viewcode-block" id="GoldenImages.get_archive"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.golden_images.GoldenImages.get_archive">[docs]</a>    <span class="k">def</span> <span class="nf">get_archive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+<div class="viewcode-block" id="GoldenImages.download_archive"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.golden_images.GoldenImages.download_archive">[docs]</a>    <span class="k">def</span> <span class="nf">download_archive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Download the details of the Golden Image capture logs which has been archived based on the specific attribute</span>
 <span class="sd">        ID.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            id_or_uri: ID or URI of the Golden Image.</span>
+<span class="sd">            file_path (str): File name to save the archive.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: The Golden Image.</span>
+<span class="sd">            bool: Success.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/archive/&quot;</span> <span class="o">+</span> <span class="n">extract_id_from_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">download_to_stream</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">uri</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GoldenImages.download"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.golden_images.GoldenImages.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

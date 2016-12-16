@@ -562,6 +562,31 @@ in OneView; it just stops waiting for its completion.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.image_streamer.resources.golden_images.GoldenImages.download_archive">
+<code class="descname">download_archive</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/golden_images.html#GoldenImages.download_archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.golden_images.GoldenImages.download_archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the details of the Golden Image capture logs which has been archived based on the specific attribute
+ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; ID or URI of the Golden Image.</li>
+<li><strong>file_path</strong> (<em>str</em>) &#8211; File name to save the archive.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Success.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.image_streamer.resources.golden_images.GoldenImages.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/golden_images.html#GoldenImages.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.golden_images.GoldenImages.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the overview details of the selected Golden Image as per the specified attributes.</p>
@@ -606,25 +631,6 @@ on create time with the oldest entry first.</li>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
 </td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.image_streamer.resources.golden_images.GoldenImages.get_archive">
-<code class="descname">get_archive</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/golden_images.html#GoldenImages.get_archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.golden_images.GoldenImages.get_archive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Download the details of the Golden Image capture logs which has been archived based on the specific attribute
-ID.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the Golden Image.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The Golden Image.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
 </tbody>
 </table>
