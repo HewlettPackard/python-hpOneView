@@ -35,8 +35,7 @@ artifact_bundles_information = {
     "name": "RHEL-7.2-artifact-bundle",
     "id": "827b415b-1c7e-42cd-94e7-3006847dbf17",
     "id_backup": "744587b5-d739-4575-9745-5bb9b3d19f71",
-    "deployment_groups": "c5a727ef-71e9-4154-a512-6655b168c2e3",
-    "": "0ABDE00534F"
+    "deployment_groups": "c5a727ef-71e9-4154-a512-6655b168c2e3"
 }
 
 artifact_bundles_to_be_created = {
@@ -106,15 +105,15 @@ pprint(artifacts_bundle)
 
 # Download the archive of the Artifact Bundle
 print("\nDownload the archive of the Artifact Bundle")
-artifacts_bundle = image_streamer_client.artifact_bundles\
+response = image_streamer_client.artifact_bundles\
     .download_archive_artifact_bundle(artifact_bundles_information['id'], destination_file_path)
-pprint(artifacts_bundle)
+pprint(response)
 
 
 # Download the Artifact Bundle
 print("\nDownload the Artifact Bundle")
-artifacts_bundle = image_streamer_client.artifact_bundles.download_artifact_bundle("0ABDE00534F", destination_file_path)
-pprint(artifacts_bundle)
+response = image_streamer_client.artifact_bundles.download_artifact_bundle("0ABDE00534F", destination_file_path)
+pprint(response)
 
 
 # Create a Backup for the Artifact Bundle
