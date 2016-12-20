@@ -4,6 +4,14 @@ hpOneView.image_streamer.resources package
 Submodules
 ----------
 
+hpOneView.image_streamer.resources.artifact_bundles module
+----------------------------------------------------------
+
+.. automodule:: hpOneView.image_streamer.resources.artifact_bundles
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView.image_streamer.resources.build_plans module
 -----------------------------------------------------
 

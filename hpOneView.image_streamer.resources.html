@@ -84,6 +84,7 @@
                 <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">hpOneView.image_streamer.resources package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-hpOneView.image_streamer.resources.artifact_bundles">hpOneView.image_streamer.resources.artifact_bundles module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.image_streamer.resources.build_plans">hpOneView.image_streamer.resources.build_plans module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.image_streamer.resources.deployment_plans">hpOneView.image_streamer.resources.deployment_plans module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.image_streamer.resources.golden_images">hpOneView.image_streamer.resources.golden_images module</a></li>
@@ -140,6 +141,449 @@
 <h1>hpOneView.image_streamer.resources package<a class="headerlink" href="#hponeview-image-streamer-resources-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-hpOneView.image_streamer.resources.artifact_bundles">
+<span id="hponeview-image-streamer-resources-artifact-bundles-module"></span><h2>hpOneView.image_streamer.resources.artifact_bundles module<a class="headerlink" href="#module-hpOneView.image_streamer.resources.artifact_bundles" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles">
+<em class="property">class </em><code class="descclassname">hpOneView.image_streamer.resources.artifact_bundles.</code><code class="descname">ArtifactBundles</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.BACKUPS_PATH">
+<code class="descname">BACKUPS_PATH</code><em class="property"> = u'/rest/artifact-bundles/backups'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.BACKUPS_PATH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.BACKUP_ARCHIVE_PATH">
+<code class="descname">BACKUP_ARCHIVE_PATH</code><em class="property"> = u'/rest/artifact-bundles/backups/archive'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.BACKUP_ARCHIVE_PATH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'ArtifactsBundle'}}</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.DEPLOYMENT_GROUPS_URI">
+<code class="descname">DEPLOYMENT_GROUPS_URI</code><em class="property"> = u'/rest/deployment-groups/'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.DEPLOYMENT_GROUPS_URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.DOWNLOAD_PATH">
+<code class="descname">DOWNLOAD_PATH</code><em class="property"> = u'/rest/artifact-bundles/download'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.DOWNLOAD_PATH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.STOP_CREATION_PATH">
+<code class="descname">STOP_CREATION_PATH</code><em class="property"> = u'/stopArtifactCreate'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.STOP_CREATION_PATH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/artifact-bundles'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.build_deployment_group_uri">
+<code class="descname">build_deployment_group_uri</code><span class="sig-paren">(</span><em>deployment_groups_id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.build_deployment_group_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.build_deployment_group_uri" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an Artifact Bundle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.create_backup">
+<code class="descname">create_backup</code><span class="sig-paren">(</span><em>deployment_groups_id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.create_backup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.create_backup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create Backup for Artifacts Bundle specified in the Deployment Groups.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>deployment_groups_id_or_uri</strong> &#8211; ID or URI of the Deployment Groups.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
+OneView, just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Artifact Bundle.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes an Artifact Bundle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>str</em><em>, </em><em>dict</em>) &#8211; Accept either the resource id  or the entire resource.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.download_archive_artifact_bundle">
+<code class="descname">download_archive_artifact_bundle</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.download_archive_artifact_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.download_archive_artifact_bundle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download archive for the Artifact Bundle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; ID or URI of the Artifact Bundle.</li>
+<li><strong>file_path</strong> (<em>str</em>) &#8211; Destination file path.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Successfully downloaded.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.download_artifact_bundle">
+<code class="descname">download_artifact_bundle</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.download_artifact_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.download_artifact_bundle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the Artifact Bundle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; ID or URI of the Artifact Bundle.</li>
+<li><strong>file_path</strong> (<em>str</em>) &#8211; Destination file path.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Successfully downloaded.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.extract_backup_bundle">
+<code class="descname">extract_backup_bundle</code><span class="sig-paren">(</span><em>deployment_groups_id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.extract_backup_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.extract_backup_bundle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts the existing backup bundle on the appliance and creates all the artifacts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>deployment_groups_id_or_uri</strong> &#8211; ID or URI of the Deployment Groups.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
+OneView, just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Artifact Bundle.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.extract_bundle">
+<code class="descname">extract_bundle</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.extract_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.extract_bundle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts the existing bundle on the appliance and creates all the artifacts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; ID or URI of the Artifact Bundle.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
+OneView, just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Artifact Bundle.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the overview details of the selected Artifact Bundle as per the selected attributes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the Artifact Bundle.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The Artifact Bundle.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list of Artifacts Bundle based on optional sorting and filtering, and constrained by start and count
+parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> &#8211; <p>The number of resources to return. A count of -1 requests all items.</p>
+<p>The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</p>
+</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+default is no filter; all resources are returned.</li>
+<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+on create time with the oldest entry first.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of Artifacts Bundle.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_all_backups">
+<code class="descname">get_all_backups</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.get_all_backups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_all_backups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all Backups for Artifact Bundle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of Backups for Artifacts Bundle.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_backup">
+<code class="descname">get_backup</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.get_backup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_backup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the details of the backup for an Artifact Bundle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the Artifact Bundle.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Backup for an Artifacts Bundle.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_by">
+<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all Artifacts Bundle that match the filter.</p>
+<p>The search is case-insensitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>field</strong> &#8211; Field name to filter.</li>
+<li><strong>value</strong> &#8211; Value to filter.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Artifacts Bundle.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_by_name">
+<code class="descname">get_by_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.get_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets an Artifact Bundle by name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; Name of the Artifact Bundle.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The Artifact Bundle.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.stop_artifact_creation">
+<code class="descname">stop_artifact_creation</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>task_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.stop_artifact_creation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.stop_artifact_creation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops creation of the selected artifact bundle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; ID or URI of the Artifact Bundle.</li>
+<li><strong>task_uri</strong> &#8211; Task URI associated with the Artifact Bundle.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates only name for the Artifact Bundle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.upload_backup_bundle_from_file">
+<code class="descname">upload_backup_bundle_from_file</code><span class="sig-paren">(</span><em>file_path</em>, <em>deployment_groups_id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.upload_backup_bundle_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.upload_backup_bundle_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore an Artifact Bundle from backup file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file_path</strong> (<em>str</em>) &#8211; The File Path to restore the Artifact Bundle.</li>
+<li><strong>deployment_groups_id_or_uri</strong> &#8211; ID or URI of the Deployment Groups.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
+OneView, just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Successfully uploaded.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.upload_bundle_from_file">
+<code class="descname">upload_bundle_from_file</code><span class="sig-paren">(</span><em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.upload_bundle_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.upload_bundle_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore an Artifact Bundle from backup file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_path</strong> (<em>str</em>) &#8211; The File Path to restore the Artifact Bundle.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Successfully uploaded.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-hpOneView.image_streamer.resources.build_plans">
 <span id="hponeview-image-streamer-resources-build-plans-module"></span><h2>hpOneView.image_streamer.resources.build_plans module<a class="headerlink" href="#module-hpOneView.image_streamer.resources.build_plans" title="Permalink to this headline">¶</a></h2>
