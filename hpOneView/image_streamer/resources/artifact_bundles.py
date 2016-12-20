@@ -42,12 +42,13 @@ import os
 
 
 class ArtifactBundles(object):
+
     URI = '/rest/artifact-bundles'
     DEPLOYMENT_GROUPS_URI = '/rest/deployment-groups/'
-    BACKUPS_PATH = '/backups'
-    ARCHIVE_PATH = '/archive'
+    BACKUPS_PATH = '/rest/artifact-bundles/backups'
+    BACKUP_ARCHIVE_PATH = '/rest/artifact-bundles/backups/archive'
     STOP_CREATION_PATH = '/stopArtifactCreate'
-    DOWNLOAD_PATH = '/download'
+    DOWNLOAD_PATH = '/rest/artifact-bundles/download'
 
     DEFAULT_VALUES = {
         '300': {"type": "ArtifactsBundle"}
@@ -132,7 +133,7 @@ class ArtifactBundles(object):
         Returns:
             list: A list of Backups for Artifacts Bundle.
         """
-        return self._client.get(id_or_uri=self.URI + self.BACKUPS_PATH)
+        return self._client.get(id_or_uri=self.BACKUPS_PATH)
 
     def get_backup(self, id_or_uri):
         """
@@ -144,7 +145,7 @@ class ArtifactBundles(object):
         Returns:
             Dict: Backup for an Artifacts Bundle.
         """
-        uri = self.URI + self.BACKUPS_PATH + '/' + extract_id_from_uri(id_or_uri)
+        uri = self.BACKUPS_PATH + '/' + extract_id_from_uri(id_or_uri)
         return self._client.get(id_or_uri=uri)
 
     def download_archive_artifact_bundle(self, id_or_uri, file_path):
@@ -158,7 +159,8 @@ class ArtifactBundles(object):
         Returns:
             bool: Successfully downloaded.
         """
-        uri = self.URI + self.BACKUPS_PATH + self.ARCHIVE_PATH + '/' + extract_id_from_uri(id_or_uri)
+
+        uri = self.BACKUP_ARCHIVE_PATH + '/' + extract_id_from_uri(id_or_uri)
 
         with open(file_path, 'wb') as file:
             return self._connection.download_to_stream(file, uri)
@@ -174,7 +176,7 @@ class ArtifactBundles(object):
         Returns:
             bool: Successfully downloaded.
         """
-        uri = self.URI + self.DOWNLOAD_PATH + '/' + extract_id_from_uri(id_or_uri)
+        uri = self.DOWNLOAD_PATH + '/' + extract_id_from_uri(id_or_uri)
 
         with open(file_path, 'wb') as file:
             return self._connection.download_to_stream(file, uri)
@@ -198,8 +200,7 @@ class ArtifactBundles(object):
             "deploymentGroupURI": deployment_groups_uri
         }
 
-        uri = self.URI + self.BACKUPS_PATH
-        return self._client.create(data, uri=uri, timeout=timeout)
+        return self._client.create(data, uri=self.BACKUPS_PATH, timeout=timeout)
 
     def upload_bundle_from_file(self, file_path):
         """
@@ -209,13 +210,11 @@ class ArtifactBundles(object):
             file_path (str): The File Path to restore the Artifact Bundle.
 
         Returns:
-            dict: The Artifact Bundle.
+            bool: Successfully uploaded.
         """
         upload_file_name = os.path.basename(file_path)
 
-        uri = self.URI
-
-        response, body = self._connection.post_multipart(uri, None, file_path, upload_file_name)
+        response, body = self._connection.post_multipart(self.URI, None, file_path, upload_file_name)
         if response.status >= 400:
             raise HPOneViewException(body)
 
@@ -233,13 +232,13 @@ class ArtifactBundles(object):
                 OneView, just stops waiting for its completion.
 
         Returns:
-            dict: The Artifact Bundle.
+            bool: Successfully uploaded.
         """
         deployment_groups_uri = self.build_deployment_group_uri(deployment_groups_id_or_uri)
 
         upload_file_name = os.path.basename(file_path)
 
-        uri = self.URI + self.BACKUPS_PATH + self.ARCHIVE_PATH + "?deploymentGrpUri=" + deployment_groups_uri
+        uri = self.BACKUP_ARCHIVE_PATH + "?deploymentGrpUri=" + deployment_groups_uri
 
         response, body = self._connection.post_multipart(uri, None, file_path, upload_file_name)
         if response.status >= 400:
@@ -333,7 +332,7 @@ class ArtifactBundles(object):
             "deploymentGroupURI": deployment_groups_uri
         }
 
-        uri = self.URI + self.BACKUPS_PATH + self.ARCHIVE_PATH
+        uri = self.BACKUP_ARCHIVE_PATH
 
         return self._client.update(data, uri=uri, timeout=timeout)
 
@@ -346,7 +345,7 @@ class ArtifactBundles(object):
             task_uri: Task URI associated with the Artifact Bundle.
 
         Returns:
-            dict: The Artifact Bundle.
+            string:
         """
         data = {
             "taskUri": task_uri

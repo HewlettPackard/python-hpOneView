@@ -146,11 +146,3 @@ print("\nExtract an Artifact Bundle from Backup")
 response = image_streamer_client.artifact_bundles\
     .extract_backup_bundle(artifact_bundles_information['deployment_groups'])
 pprint(response)
-
-
-# Stop the creation of an Artifact Bundle
-print("\nStop creation")
-artifact_uri = "/rest/artifact-bundles/04939e89-bcb0-49fc-814f-1a6bc0a2f63c"
-task_uri = "/rest/tasks/A15F9270-46FC-48DF-94A9-D11EDB52877E"
-response = image_streamer_client.artifact_bundles.stop_artifact_creation(artifact_uri, task_uri)
-pprint(response)
