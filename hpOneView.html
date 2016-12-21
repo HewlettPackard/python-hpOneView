@@ -319,6 +319,13 @@
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.connection.connection.disable_etag_validation">
+<code class="descname">disable_etag_validation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.disable_etag_validation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.disable_etag_validation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable the concurrency control for the PUT and DELETE requests. The requests will be forced without specifying
+an explicit ETag. This method sets an If-Match header of &#8220;*&#8221;.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.connection.connection.do_http">
 <code class="descname">do_http</code><span class="sig-paren">(</span><em>method</em>, <em>path</em>, <em>body</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.do_http"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.do_http" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -327,6 +334,14 @@
 <dt id="hpOneView.connection.connection.download_to_stream">
 <code class="descname">download_to_stream</code><span class="sig-paren">(</span><em>stream_writer</em>, <em>url</em>, <em>body=u''</em>, <em>method=u'GET'</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.download_to_stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.download_to_stream" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.connection.connection.enable_etag_validation">
+<code class="descname">enable_etag_validation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.enable_etag_validation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.enable_etag_validation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable the concurrency control for the PUT and DELETE requests, in which the requests are conditionally
+processed only if the provided entity tag in the body matches the latest entity tag stored for the resource.</p>
+<p>The eTag validation is enabled by default.</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.connection.connection.encode_multipart_formdata">
@@ -575,7 +590,7 @@ to be uploaded as files</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#hpOneView.connection.connection" title="hpOneView.connection.connection">connection</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.image_streamer.html#hpOneView.image_streamer.image_streamer_client.ImageStreamerClient.connection" title="hpOneView.image_streamer.image_streamer_client.ImageStreamerClient.connection">connection</a></td>
 </tr>
 </tbody>
 </table>

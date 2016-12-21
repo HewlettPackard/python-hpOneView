@@ -595,7 +595,23 @@
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="p">[</span><span class="s1">&#39;auth&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Logged out successfully&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span></div></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="connection.enable_etag_validation"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.enable_etag_validation">[docs]</a>    <span class="k">def</span> <span class="nf">enable_etag_validation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Enable the concurrency control for the PUT and DELETE requests, in which the requests are conditionally</span>
+<span class="sd">        processed only if the provided entity tag in the body matches the latest entity tag stored for the resource.</span>
+
+<span class="sd">        The eTag validation is enabled by default.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;If-Match&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="connection.disable_etag_validation"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.disable_etag_validation">[docs]</a>    <span class="k">def</span> <span class="nf">disable_etag_validation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Disable the concurrency control for the PUT and DELETE requests. The requests will be forced without specifying</span>
+<span class="sd">        an explicit ETag. This method sets an If-Match header of &quot;*&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="p">[</span><span class="s1">&#39;If-Match&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span></div></div>
 </pre></div>
 
            </div>
