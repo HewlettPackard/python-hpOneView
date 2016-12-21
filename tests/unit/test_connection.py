@@ -42,6 +42,12 @@ class ConnectionTest(unittest.TestCase):
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
+        self.default_headers_with_etag_validation_off = {
+            'X-API-Version': 200,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'If-Match': '*'
+        }
         self.merged_headers = {
             'X-API-Version': 200,
             'Accept': 'application/json',
@@ -63,6 +69,24 @@ class ConnectionTest(unittest.TestCase):
 
     def test_default_headers(self):
         self.assertEqual(self.default_headers, self.connection._headers)
+
+    def test_default_headers_when_etag_validation_is_disabled(self):
+        self.connection.disable_etag_validation()
+        self.assertEqual(self.default_headers_with_etag_validation_off, self.connection._headers)
+
+    def test_default_headers_when_etag_validation_is_enabled(self):
+        self.connection.enable_etag_validation()
+        self.assertEqual(self.default_headers, self.connection._headers)
+
+    def test_default_headers_when_etag_validation_is_disabled_and_enabled(self):
+        self.connection.disable_etag_validation()
+        self.connection.enable_etag_validation()
+        self.assertEqual(self.default_headers, self.connection._headers)
+
+    def test_default_headers_when_etag_validation_is_enabled_and_disabled(self):
+        self.connection.enable_etag_validation()
+        self.connection.disable_etag_validation()
+        self.assertEqual(self.default_headers_with_etag_validation_off, self.connection._headers)
 
     def test_headers_with_api_version_300(self):
         self.connection = connection(self.host, 300)
