@@ -466,3 +466,19 @@ class connection(object):
         self._session = False
         logger.info('Logged out successfully')
         return None
+
+    def enable_etag_validation(self):
+        """
+        Enable the concurrency control for the PUT and DELETE requests, in which the requests are conditionally
+        processed only if the provided entity tag in the body matches the latest entity tag stored for the resource.
+
+        The eTag validation is enabled by default.
+        """
+        self._headers.pop('If-Match', None)
+
+    def disable_etag_validation(self):
+        """
+        Disable the concurrency control for the PUT and DELETE requests. The requests will be forced without specifying
+        an explicit ETag. This method sets an If-Match header of "*".
+        """
+        self._headers['If-Match'] = '*'
