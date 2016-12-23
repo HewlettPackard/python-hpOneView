@@ -23,16 +23,17 @@
 
 import unittest
 from mock import mock, call
+from errno import ETIMEDOUT, ECONNABORTED
 
 from hpOneView.connection import connection
 from hpOneView.resources.task_monitor import TaskMonitor, MSG_UNKNOWN_OBJECT_TYPE, MSG_TASK_TYPE_UNRECONIZED, \
     MSG_TIMEOUT, MSG_UNKNOWN_EXCEPTION, MSG_INVALID_TASK
 from hpOneView.exceptions import HPOneViewUnknownType, HPOneViewInvalidResource, HPOneViewTimeout, HPOneViewTaskError
 
+ERR_MSG = "Message error"
+
 
 class TaskMonitorTest(unittest.TestCase):
-    URI = "/rest/testuri"
-
     def setUp(self):
         super(TaskMonitorTest, self).setUp()
         self.host = '127.0.0.1'
@@ -140,6 +141,74 @@ class TaskMonitorTest(unittest.TestCase):
                                  "taskState": "Warning"}
 
         self.assertFalse(self.task_monitor.is_task_running({"uri": "uri"}))
+
+    @mock.patch.object(TaskMonitor, 'get')
+    def test_is_task_running_ignore_network_failure(self, mock_get):
+        mock_get.side_effect = [{"uri": "uri",
+                                 "taskState": "Pending"}, EnvironmentError(ETIMEDOUT, ERR_MSG)]
+
+        connection_failure_control = dict(last_success=self.task_monitor.get_current_seconds())
+
+        # 1. Success get
+        self.assertTrue(self.task_monitor.is_task_running({"uri": "uri"}, connection_failure_control))
+        # 2. Timeout error, expected True anyway
+        self.assertTrue(self.task_monitor.is_task_running({"uri": "uri"}, connection_failure_control))
+
+    @mock.patch.object(TaskMonitor, 'get')
+    def test_is_task_running_network_failure_without_timeout_control(self, mock_get):
+        mock_get.side_effect = EnvironmentError(ETIMEDOUT, ERR_MSG)
+
+        self.assertRaises(EnvironmentError, self.task_monitor.is_task_running, {"uri": "uri"})
+
+    @mock.patch.object(TaskMonitor, 'get')
+    def test_is_task_running_generic_failure_with_timeout_control(self, mock_get):
+        mock_get.side_effect = Exception(ERR_MSG)
+
+        connection_failure_control = dict(last_success=self.task_monitor.get_current_seconds())
+
+        self.assertRaises(Exception, self.task_monitor.is_task_running, {"uri": "uri"}, connection_failure_control)
+
+    @mock.patch.object(TaskMonitor, 'get')
+    def test_is_task_running_ignore_network_failure_reset_count(self, mock_get):
+        mock_get.side_effect = [{"uri": "uri",
+                                 "taskState": "Pending"},
+                                EnvironmentError(ECONNABORTED, ERR_MSG),
+                                {"uri": "uri",
+                                 "taskState": "Pending"},
+                                EnvironmentError(ETIMEDOUT, ERR_MSG)
+                                ]
+
+        connection_failure_control = dict(last_success=self.task_monitor.get_current_seconds())
+
+        # 1. Success get
+        self.assertTrue(self.task_monitor.is_task_running({"uri": "uri"}, connection_failure_control))
+        # 2. Inside the timeout, must continue
+        self.assertTrue(self.task_monitor.is_task_running({"uri": "uri"}, connection_failure_control))
+        # Force exceed the timeout
+        seconds_to_decrement = TaskMonitor.CONNECTION_FAILURE_TIMEOUT + 10
+        connection_failure_control['last_success'] -= seconds_to_decrement
+        # 3. Success get (reset timeout)
+        self.assertTrue(self.task_monitor.is_task_running({"uri": "uri"}, connection_failure_control))
+        # 4. Inside the timeout again, must continue
+        self.assertTrue(self.task_monitor.is_task_running({"uri": "uri"}, connection_failure_control))
+
+    @mock.patch.object(TaskMonitor, 'get')
+    def test_is_task_running_ignore_network_failure_exceed_timeout(self, mock_get):
+        mock_get.side_effect = [{"uri": "uri",
+                                 "taskState": "Pending"},
+                                EnvironmentError(ECONNABORTED, ERR_MSG)
+                                ]
+
+        conn_failure_control = dict(last_success=self.task_monitor.get_current_seconds())
+
+        # 1. Success get
+        self.assertTrue(self.task_monitor.is_task_running({"uri": "uri"}, conn_failure_control))
+        # Decrement last success to force exceed the timeout
+        seconds_to_decrement = TaskMonitor.CONNECTION_FAILURE_TIMEOUT + 10
+        conn_failure_control['last_success'] -= seconds_to_decrement
+        # 2. Should fail, timeout exceeded
+        self.assertRaises(EnvironmentError, self.task_monitor.is_task_running, {"uri": "uri"},
+                          conn_failure_control)
 
     @mock.patch.object(TaskMonitor, 'is_task_running')
     def test_wait_for_task_timeout(self, mock_is_running):

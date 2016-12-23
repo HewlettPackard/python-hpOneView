@@ -39,6 +39,8 @@ __status__ = 'Development'
 
 import logging
 import time
+
+from errno import ECONNABORTED, ETIMEDOUT, ENOEXEC, EINVAL, ENETUNREACH, ECONNRESET, ENETDOWN, ECONNREFUSED
 from hpOneView.exceptions import HPOneViewInvalidResource, HPOneViewTimeout, HPOneViewTaskError, HPOneViewUnknownType
 
 TASK_PENDING_STATES = ['New', 'Starting', 'Pending', 'Running', 'Suspended', 'Stopping']
@@ -57,6 +59,13 @@ logger = logging.getLogger(__name__)
 
 
 class TaskMonitor(object):
+    # Seconds to wait when a network failure occurs
+    CONNECTION_FAILURE_TIMEOUT = 90
+
+    # Known error numbers when the connection drops
+    CONNECTION_FAILURE_ERROR_NUMBERS = [ENOEXEC, EINVAL, ENETUNREACH, ETIMEDOUT, ECONNRESET,
+                                        ECONNABORTED, ENETUNREACH, ENETDOWN, ECONNREFUSED]
+
     def __init__(self, con):
         self._connection = con
 
@@ -109,9 +118,10 @@ class TaskMonitor(object):
 
         # gets current cpu second for timeout
         start_time = self.get_current_seconds()
+        connection_failure_control = dict(last_success=self.get_current_seconds())
 
         i = 0
-        while self.is_task_running(task):
+        while self.is_task_running(task, connection_failure_control):
             # wait 1 to 10 seconds
             # the value increases to avoid flooding server with requests
             i = i + 1 if i < 10 else 10
@@ -157,21 +167,51 @@ class TaskMonitor(object):
         logger.warning('Task completed, unknown response: ' + str(task))
         return task
 
-    def is_task_running(self, task):
+    def is_task_running(self, task, connection_failure_control=None):
         """
         Check if a task is running according to: TASK_PENDING_STATES ['New', 'Starting',
         'Pending', 'Running', 'Suspended', 'Stopping']
 
         Args:
-            task: task dict
+            task (dict): OneView Task resource.
+            connection_failure_control (dict):
+                A dictionary instance that contains last_success for error tolerance control.
+
+        Examples:
+
+            >>> connection_failure_control = dict(last_success=int(time.time()))
+            >>> while self.is_task_running(task, connection_failure_control):
+            >>>     pass
 
         Returns:
             True when in TASK_PENDING_STATES; False when not.
         """
         if 'uri' in task:
-            task = self.get(task)
-            if 'taskState' in task and task['taskState'] in TASK_PENDING_STATES:
-                return True
+            try:
+                task = self.get(task)
+                if connection_failure_control:
+                    # Updates last success
+                    connection_failure_control['last_success'] = self.get_current_seconds()
+                if 'taskState' in task and task['taskState'] in TASK_PENDING_STATES:
+                    return True
+
+            except Exception as error:
+                logger.error('; '.join(str(e) for e in error.args) + ' when waiting for the task: ' + str(task))
+
+                if not connection_failure_control:
+                    raise error
+
+                if hasattr(error, 'errno') and error.errno in self.CONNECTION_FAILURE_ERROR_NUMBERS:
+                    last_success = connection_failure_control['last_success']
+                    if last_success + self.CONNECTION_FAILURE_TIMEOUT < self.get_current_seconds():
+                        # Timeout reached
+                        raise error
+                    else:
+                        # Return task is running when network instability occurs
+                        return True
+                else:
+                    raise error
+
         return False
 
     def get(self, task):
