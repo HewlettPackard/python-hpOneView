@@ -22,7 +22,9 @@
 ###
 
 from unittest import TestCase
+from tests.test_utils import mock_builtin
 
+import io
 import mock
 
 from hpOneView.connection import connection
@@ -70,3 +72,27 @@ class OsVolumesTest(TestCase):
         self._client.get_by_name('OSVolume-5')
 
         mock_get_by.assert_called_once_with('OSVolume-5')
+
+    @mock.patch.object(connection, 'download_to_stream')
+    @mock.patch(mock_builtin('open'))
+    def test_download_archive_called_once_with_id(self, mock_open, mock_download):
+        id = '3518be0e-17c1-4189-8f81-83f3724f6155'
+        mock_open.return_value = io.StringIO(u"binary data")
+
+        self._client.download_archive(id, "~/archive.log")
+
+        mock_open.assert_called_once_with('~/archive.log', 'wb')
+        mock_download.assert_called_once_with(mock.ANY,
+                                              '/rest/os-volumes/archive/3518be0e-17c1-4189-8f81-83f3724f6155')
+
+    @mock.patch.object(connection, 'download_to_stream')
+    @mock.patch(mock_builtin('open'))
+    def test_download_archive_called_once_with_uri(self, mock_open, mock_download):
+        uri = '/rest/os-volumes/3518be0e-17c1-4189-8f81-83f3724f6155'
+        mock_open.return_value = io.StringIO(u"binary data")
+
+        self._client.download_archive(uri, "~/archive.log")
+
+        mock_open.assert_called_once_with('~/archive.log', 'wb')
+        mock_download.assert_called_once_with(mock.ANY,
+                                              '/rest/os-volumes/archive/3518be0e-17c1-4189-8f81-83f3724f6155')

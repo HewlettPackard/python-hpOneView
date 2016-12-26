@@ -501,7 +501,7 @@ class ConnectionTest(unittest.TestCase):
 
     @mock.patch('time.sleep')
     @mock.patch.object(connection, 'get_connection')
-    def test_download_to_stream(self, mock_get_conn, mock_sleep):
+    def test_download_to_stream_when_status_ok(self, mock_get_conn, mock_sleep):
 
         mock_conn = mock.Mock()
         # First attempt: Error, second attempt: successful connection
@@ -510,6 +510,7 @@ class ConnectionTest(unittest.TestCase):
         mock_response = mock_conn.getresponse.return_value
         # Stops at the fourth read call
         mock_response.read.side_effect = ['111', '222', '333', None]
+        mock_response.status = 200
 
         mock_stream = mock.Mock()
 
@@ -517,3 +518,61 @@ class ConnectionTest(unittest.TestCase):
 
         self.assertTrue(result)
         mock_stream.write.assert_has_calls([call('111'), call('222'), call('333')])
+
+    @mock.patch('time.sleep')
+    @mock.patch.object(connection, 'get_connection')
+    def test_download_to_stream_when_error_status_with_response_body(self, mock_get_conn, mock_sleep):
+        mock_conn = mock.Mock()
+        mock_get_conn.return_value = mock_conn
+
+        mock_response = mock_conn.getresponse.return_value
+        mock_response.read.return_value = json.dumps('error message').encode('utf-8')
+        mock_response.status = 500
+
+        mock_stream = mock.Mock()
+
+        try:
+            self.connection.download_to_stream(mock_stream, '/rest/download.zip')
+        except HPOneViewException as e:
+            self.assertEqual(e.msg, 'error message')
+        else:
+            self.fail()
+
+    @mock.patch('time.sleep')
+    @mock.patch.object(connection, 'get_connection')
+    def test_download_to_stream_when_error_status_with_decode_error(self, mock_get_conn, mock_sleep):
+        mock_conn = mock.Mock()
+        mock_get_conn.return_value = mock_conn
+
+        mock_response = mock_conn.getresponse.return_value
+        mock_response.read.return_value = json.dumps('error message').encode('utf-8')
+        mock_response.read.decode.side_effect = UnicodeDecodeError('sn33af', b"", 42, 43, 'ths239sn')
+        mock_response.status = 500
+
+        mock_stream = mock.Mock()
+
+        try:
+            self.connection.download_to_stream(mock_stream, '/rest/download.zip')
+        except HPOneViewException as e:
+            self.assertEqual(e.msg, 'error message')
+        else:
+            self.fail()
+
+    @mock.patch('time.sleep')
+    @mock.patch.object(connection, 'get_connection')
+    def test_download_to_stream_when_error_status_with_empty_body(self, mock_get_conn, mock_sleep):
+        mock_conn = mock.Mock()
+        mock_get_conn.return_value = mock_conn
+
+        mock_response = mock_conn.getresponse.return_value
+        mock_response.read.return_value = json.dumps('').encode('utf-8')
+        mock_response.status = 500
+
+        mock_stream = mock.Mock()
+
+        try:
+            self.connection.download_to_stream(mock_stream, '/rest/download.zip')
+        except HPOneViewException as e:
+            self.assertEqual(e.msg, 'Error 500')
+        else:
+            self.fail()

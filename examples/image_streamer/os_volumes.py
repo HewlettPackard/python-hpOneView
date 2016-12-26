@@ -35,6 +35,7 @@ os_volumes_information = {
     "name": "OSVolume-5",
     "id": "57f2d803-9c11-4f9a-bc02-71804a0fcc3e"
 }
+destination_archive_path = './archive_log.txt'
 
 # Get all OS Volumes
 print("\nGet all OS Volumes")
@@ -53,3 +54,11 @@ pprint(os_volume)
 print("\nGet the OS Volumes by Name")
 os_volume = image_streamer_client.os_volumes.get_by_name(os_volumes_information['name'])
 pprint(os_volume)
+
+
+# Retrieve archived logs of the OS Volume
+print("Retrieve archived logs of the OS Volume")
+if image_streamer_client.os_volumes.download_archive(os_volume['uri'], destination_archive_path):
+    print("  File downloaded successfully.")
+else:
+    print("  Error downloading the file.")

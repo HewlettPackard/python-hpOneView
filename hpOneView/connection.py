@@ -168,6 +168,9 @@ class connection(object):
                 conn.request(method, url, body, http_headers)
                 resp = conn.getresponse()
 
+                if resp.status >= 400:
+                    self.__handle_download_error(resp, conn)
+
                 tempbytes = True
                 while tempbytes:
                     tempbytes = resp.read(chunk_size)
@@ -184,6 +187,23 @@ class connection(object):
                 continue
 
         return successful_connected
+
+    def __handle_download_error(self, resp, conn):
+        try:
+            tempbytes = resp.read()
+            tempbody = tempbytes.decode('utf-8')
+            try:
+                body = json.loads(tempbody)
+            except ValueError:
+                body = tempbody
+        except UnicodeDecodeError:  # Might be binary data
+            body = tempbytes
+            conn.close()
+        if not body:
+            body = "Error " + str(resp.status)
+
+        conn.close()
+        raise HPOneViewException(body)
 
     def get_connection(self):
         context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)

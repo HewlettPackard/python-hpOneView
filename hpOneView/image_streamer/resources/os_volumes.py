@@ -35,6 +35,7 @@ __copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise Developmen
 __license__ = 'MIT'
 __status__ = 'Development'
 
+from hpOneView.common import extract_id_from_uri
 from hpOneView.resources.resource import ResourceClient
 
 
@@ -113,15 +114,18 @@ class OsVolumes(object):
         """
         return self._client.get_by_name(name)
 
-    def get_archive(self, archive_id):
+    def download_archive(self, id_or_uri, file_path):
         """
-        Get the details of the archived OS volume with the specified attribute.
+        Download the details of the archived OS Volume.
 
         Args:
-            archive_id: ID of the Archive OS Volume.
+            id_or_uri: ID or URI of the OS Volume.
+            file_path (str): Destination file path.
 
         Returns:
-            list: A list of Archived OS Volume.
+            bool: Indicates if the resource was successfully downloaded.
         """
-        uri = self.URI + "/archive/" + archive_id
-        return self._client.get(id_or_uri=uri)
+        uri = self.URI + "/archive/" + extract_id_from_uri(id_or_uri)
+
+        with open(file_path, 'wb') as file:
+            return self._connection.download_to_stream(file, uri)
