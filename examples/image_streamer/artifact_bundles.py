@@ -112,7 +112,8 @@ pprint(response)
 
 # Download the Artifact Bundle
 print("\nDownload the Artifact Bundle")
-response = image_streamer_client.artifact_bundles.download_artifact_bundle("0ABDE00534F", destination_file_path)
+response = image_streamer_client.artifact_bundles.download_artifact_bundle(
+    artifact_bundles_information['id'], destination_file_path)
 pprint(response)
 
 
