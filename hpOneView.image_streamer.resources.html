@@ -1170,6 +1170,30 @@ be used for upload.</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.image_streamer.resources.os_volumes.OsVolumes.download_archive">
+<code class="descname">download_archive</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/os_volumes.html#OsVolumes.download_archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.os_volumes.OsVolumes.download_archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the details of the archived OS Volume.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; ID or URI of the OS Volume.</li>
+<li><strong>file_path</strong> (<em>str</em>) &#8211; Destination file path.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully downloaded.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.image_streamer.resources.os_volumes.OsVolumes.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/os_volumes.html#OsVolumes.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.os_volumes.OsVolumes.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the overview details of the selected OS Volume as per the selected attributes.</p>
@@ -1215,24 +1239,6 @@ on create time with the oldest entry first.</li>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
 </td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.image_streamer.resources.os_volumes.OsVolumes.get_archive">
-<code class="descname">get_archive</code><span class="sig-paren">(</span><em>archive_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/os_volumes.html#OsVolumes.get_archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.os_volumes.OsVolumes.get_archive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the details of the archived OS volume with the specified attribute.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>archive_id</strong> &#8211; ID of the Archive OS Volume.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of Archived OS Volume.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
 </tr>
 </tbody>
 </table>
