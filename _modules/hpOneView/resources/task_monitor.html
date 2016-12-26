@@ -169,6 +169,8 @@
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">errno</span> <span class="k">import</span> <span class="n">ECONNABORTED</span><span class="p">,</span> <span class="n">ETIMEDOUT</span><span class="p">,</span> <span class="n">ENOEXEC</span><span class="p">,</span> <span class="n">EINVAL</span><span class="p">,</span> <span class="n">ENETUNREACH</span><span class="p">,</span> <span class="n">ECONNRESET</span><span class="p">,</span> <span class="n">ENETDOWN</span><span class="p">,</span> <span class="n">ECONNREFUSED</span>
 <span class="kn">from</span> <span class="nn">hpOneView.exceptions</span> <span class="k">import</span> <span class="n">HPOneViewInvalidResource</span><span class="p">,</span> <span class="n">HPOneViewTimeout</span><span class="p">,</span> <span class="n">HPOneViewTaskError</span><span class="p">,</span> <span class="n">HPOneViewUnknownType</span>
 
 <span class="n">TASK_PENDING_STATES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;New&#39;</span><span class="p">,</span> <span class="s1">&#39;Starting&#39;</span><span class="p">,</span> <span class="s1">&#39;Pending&#39;</span><span class="p">,</span> <span class="s1">&#39;Running&#39;</span><span class="p">,</span> <span class="s1">&#39;Suspended&#39;</span><span class="p">,</span> <span class="s1">&#39;Stopping&#39;</span><span class="p">]</span>
@@ -187,6 +189,13 @@
 
 
 <div class="viewcode-block" id="TaskMonitor"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.task_monitor.TaskMonitor">[docs]</a><span class="k">class</span> <span class="nc">TaskMonitor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="c1"># Seconds to wait when a network failure occurs</span>
+    <span class="n">CONNECTION_FAILURE_TIMEOUT</span> <span class="o">=</span> <span class="mi">90</span>
+
+    <span class="c1"># Known error numbers when the connection drops</span>
+    <span class="n">CONNECTION_FAILURE_ERROR_NUMBERS</span> <span class="o">=</span> <span class="p">[</span><span class="n">ENOEXEC</span><span class="p">,</span> <span class="n">EINVAL</span><span class="p">,</span> <span class="n">ENETUNREACH</span><span class="p">,</span> <span class="n">ETIMEDOUT</span><span class="p">,</span> <span class="n">ECONNRESET</span><span class="p">,</span>
+                                        <span class="n">ECONNABORTED</span><span class="p">,</span> <span class="n">ENETUNREACH</span><span class="p">,</span> <span class="n">ENETDOWN</span><span class="p">,</span> <span class="n">ECONNREFUSED</span><span class="p">]</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
 
@@ -239,9 +248,10 @@
 
         <span class="c1"># gets current cpu second for timeout</span>
         <span class="n">start_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_seconds</span><span class="p">()</span>
+        <span class="n">connection_failure_control</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">last_success</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_current_seconds</span><span class="p">())</span>
 
         <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_task_running</span><span class="p">(</span><span class="n">task</span><span class="p">):</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_task_running</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">connection_failure_control</span><span class="p">):</span>
             <span class="c1"># wait 1 to 10 seconds</span>
             <span class="c1"># the value increases to avoid flooding server with requests</span>
             <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="k">else</span> <span class="mi">10</span>
@@ -287,21 +297,51 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Task completed, unknown response: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">task</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">task</span>
 
-<div class="viewcode-block" id="TaskMonitor.is_task_running"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.task_monitor.TaskMonitor.is_task_running">[docs]</a>    <span class="k">def</span> <span class="nf">is_task_running</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
+<div class="viewcode-block" id="TaskMonitor.is_task_running"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.task_monitor.TaskMonitor.is_task_running">[docs]</a>    <span class="k">def</span> <span class="nf">is_task_running</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">connection_failure_control</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check if a task is running according to: TASK_PENDING_STATES [&#39;New&#39;, &#39;Starting&#39;,</span>
 <span class="sd">        &#39;Pending&#39;, &#39;Running&#39;, &#39;Suspended&#39;, &#39;Stopping&#39;]</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            task: task dict</span>
+<span class="sd">            task (dict): OneView Task resource.</span>
+<span class="sd">            connection_failure_control (dict):</span>
+<span class="sd">                A dictionary instance that contains last_success for error tolerance control.</span>
+
+<span class="sd">        Examples:</span>
+
+<span class="sd">            &gt;&gt;&gt; connection_failure_control = dict(last_success=int(time.time()))</span>
+<span class="sd">            &gt;&gt;&gt; while self.is_task_running(task, connection_failure_control):</span>
+<span class="sd">            &gt;&gt;&gt;     pass</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            True when in TASK_PENDING_STATES; False when not.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s1">&#39;uri&#39;</span> <span class="ow">in</span> <span class="n">task</span><span class="p">:</span>
-            <span class="n">task</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s1">&#39;taskState&#39;</span> <span class="ow">in</span> <span class="n">task</span> <span class="ow">and</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;taskState&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">TASK_PENDING_STATES</span><span class="p">:</span>
-                <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">task</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">connection_failure_control</span><span class="p">:</span>
+                    <span class="c1"># Updates last success</span>
+                    <span class="n">connection_failure_control</span><span class="p">[</span><span class="s1">&#39;last_success&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_seconds</span><span class="p">()</span>
+                <span class="k">if</span> <span class="s1">&#39;taskState&#39;</span> <span class="ow">in</span> <span class="n">task</span> <span class="ow">and</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;taskState&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">TASK_PENDING_STATES</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">error</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; when waiting for the task: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">task</span><span class="p">))</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">connection_failure_control</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">error</span>
+
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="s1">&#39;errno&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">error</span><span class="o">.</span><span class="n">errno</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">CONNECTION_FAILURE_ERROR_NUMBERS</span><span class="p">:</span>
+                    <span class="n">last_success</span> <span class="o">=</span> <span class="n">connection_failure_control</span><span class="p">[</span><span class="s1">&#39;last_success&#39;</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">last_success</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">CONNECTION_FAILURE_TIMEOUT</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_seconds</span><span class="p">():</span>
+                        <span class="c1"># Timeout reached</span>
+                        <span class="k">raise</span> <span class="n">error</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># Return task is running when network instability occurs</span>
+                        <span class="k">return</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">error</span>
+
         <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="TaskMonitor.get"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.task_monitor.TaskMonitor.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>

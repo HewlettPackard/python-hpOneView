@@ -757,6 +757,16 @@ the original value will be maintained.</li>
 <dt id="hpOneView.resources.task_monitor.TaskMonitor">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.task_monitor.</code><code class="descname">TaskMonitor</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/task_monitor.html#TaskMonitor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.task_monitor.TaskMonitor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="hpOneView.resources.task_monitor.TaskMonitor.CONNECTION_FAILURE_ERROR_NUMBERS">
+<code class="descname">CONNECTION_FAILURE_ERROR_NUMBERS</code><em class="property"> = [8, 22, 101, 110, 104, 103, 101, 100, 111]</em><a class="headerlink" href="#hpOneView.resources.task_monitor.TaskMonitor.CONNECTION_FAILURE_ERROR_NUMBERS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.task_monitor.TaskMonitor.CONNECTION_FAILURE_TIMEOUT">
+<code class="descname">CONNECTION_FAILURE_TIMEOUT</code><em class="property"> = 90</em><a class="headerlink" href="#hpOneView.resources.task_monitor.TaskMonitor.CONNECTION_FAILURE_TIMEOUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="hpOneView.resources.task_monitor.TaskMonitor.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>task</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/task_monitor.html#TaskMonitor.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.task_monitor.TaskMonitor.get" title="Permalink to this definition">¶</a></dt>
@@ -822,16 +832,32 @@ the original value will be maintained.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.task_monitor.TaskMonitor.is_task_running">
-<code class="descname">is_task_running</code><span class="sig-paren">(</span><em>task</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/task_monitor.html#TaskMonitor.is_task_running"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.task_monitor.TaskMonitor.is_task_running" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_task_running</code><span class="sig-paren">(</span><em>task</em>, <em>connection_failure_control=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/task_monitor.html#TaskMonitor.is_task_running"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.task_monitor.TaskMonitor.is_task_running" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if a task is running according to: TASK_PENDING_STATES [&#8216;New&#8217;, &#8216;Starting&#8217;,
 &#8216;Pending&#8217;, &#8216;Running&#8217;, &#8216;Suspended&#8217;, &#8216;Stopping&#8217;]</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>task</strong> &#8211; task dict</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>task</strong> (<em>dict</em>) &#8211; OneView Task resource.</li>
+<li><strong>connection_failure_control</strong> (<em>dict</em>) &#8211; A dictionary instance that contains last_success for error tolerance control.</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True when in TASK_PENDING_STATES; False when not.</td>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">connection_failure_control</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">last_success</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_task_running</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">connection_failure_control</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">pass</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True when in TASK_PENDING_STATES; False when not.</td>
 </tr>
 </tbody>
 </table>
