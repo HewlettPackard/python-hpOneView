@@ -26,7 +26,6 @@ import unittest
 import mock
 
 from hpOneView.connection import connection
-from hpOneView.exceptions import HPOneViewException
 from hpOneView.resources.settings.firmware_bundles import FirmwareBundles
 from hpOneView.resources.task_monitor import TaskMonitor
 
@@ -58,22 +57,3 @@ class FirmwareBundlesTest(unittest.TestCase):
                                             'SPPgen9snap6.2015_0405.81.iso')
 
         mock_wait_task.assert_called_once_with(body, -1)
-
-    @mock.patch.object(TaskMonitor, 'wait_for_task')
-    @mock.patch.object(connection, 'post_multipart')
-    def test_upload_should_raise_exception(self, mock_upload, mock_wait_task):
-        firmware_path = "test/SPPgen9snap6.2015_0405.81.iso"
-
-        response = mock.MagicMock(status=400)
-
-        body = {"message": "The file you are attempting to upload is empty."}
-
-        mock_upload.return_value = response, body
-
-        try:
-            self._firmware_bundles.upload(firmware_path)
-        except HPOneViewException as e:
-            self.assertEqual(e.msg, "The file you are attempting to upload is empty.")
-            mock_wait_task.assert_not_called()
-        else:
-            self.fail("Expected exception was not raised")

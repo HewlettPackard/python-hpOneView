@@ -38,7 +38,6 @@ __status__ = 'Development'
 from hpOneView.resources.resource import ResourceClient
 from hpOneView.resources.task_monitor import TaskMonitor
 from hpOneView.common import extract_id_from_uri
-from hpOneView.exceptions import HPOneViewException
 import os
 from urllib.parse import quote
 
@@ -114,8 +113,6 @@ class GoldenImages(object):
                                                     quote(golden_image_info.get('name', '')),
                                                     quote(golden_image_info.get('description', '')))
         response, body = self._connection.post_multipart(uri, None, file_path, upload_file_name)
-        if response.status >= 400:
-            raise HPOneViewException(body)
 
         return body == "SUCCESS"
 

@@ -40,8 +40,6 @@ __status__ = 'Development'
 from hpOneView.resources.resource import ResourceClient
 from hpOneView.resources.task_monitor import TaskMonitor
 
-from hpOneView.exceptions import HPOneViewException
-
 import os
 
 
@@ -73,7 +71,5 @@ class FirmwareBundles(object):
         """
         upload_file_name = os.path.basename(file_path)
         response, body = self._connection.post_multipart(self.URI, None, file_path, upload_file_name)
-        if response.status >= 400:
-            raise HPOneViewException(body.get('message'))
 
         return self._task_monitor.wait_for_task(body, timeout)

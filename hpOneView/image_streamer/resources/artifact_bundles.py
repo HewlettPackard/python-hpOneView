@@ -37,7 +37,6 @@ __status__ = 'Development'
 
 from hpOneView.resources.resource import ResourceClient
 from hpOneView.common import extract_id_from_uri
-from hpOneView.exceptions import HPOneViewException
 import os
 
 
@@ -215,8 +214,6 @@ class ArtifactBundles(object):
         upload_file_name = os.path.basename(file_path)
 
         response, body = self._connection.post_multipart(self.URI, None, file_path, upload_file_name)
-        if response.status >= 400:
-            raise HPOneViewException(body)
 
         return body == "SUCCESS"
 
@@ -241,8 +238,6 @@ class ArtifactBundles(object):
         uri = self.BACKUP_ARCHIVE_PATH + "?deploymentGrpUri=" + deployment_groups_uri
 
         response, body = self._connection.post_multipart(uri, None, file_path, upload_file_name)
-        if response.status >= 400:
-            raise HPOneViewException(body)
 
         return body == "SUCCESS"
 

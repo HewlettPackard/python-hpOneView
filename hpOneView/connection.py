@@ -230,6 +230,9 @@ class connection(object):
                 conn.set_tunnel(self._host, 443)
         return conn
 
+    def _open(self, name, mode):
+        return open(name, mode)
+
     def encode_multipart_formdata(self, fields, files, baseName, verbose=False):
         """
         Fields is a sequence of (name, value) elements for regular form fields.
@@ -243,8 +246,8 @@ class connection(object):
         content_type = 'multipart/form-data; boundary=%s' % BOUNDARY
         if verbose is True:
             print(('Encoding ' + baseName + ' for upload...'))
-        fin = open(files, 'rb')
-        fout = open(files + '.b64', 'wb')
+        fin = self._open(files, 'rb')
+        fout = self._open(files + '.b64', 'wb')
         fout.write(bytearray('--' + BOUNDARY + CRLF, 'utf-8'))
         fout.write(bytearray('Content-Disposition: form-data'
                              '; name="file"; filename="' +
@@ -263,7 +266,7 @@ class connection(object):
     def post_multipart(self, uri, fields, files, baseName, verbose=False):
         content_type = self.encode_multipart_formdata(fields, files, baseName,
                                                       verbose)
-        inputfile = open(files + '.b64', 'rb')
+        inputfile = self._open(files + '.b64', 'rb')
         mappedfile = mmap.mmap(inputfile.fileno(), 0, access=mmap.ACCESS_READ)
         if verbose is True:
             print(('Uploading ' + files + '...'))
@@ -278,6 +281,7 @@ class connection(object):
         conn.putheader('Content-Length', totalSize)
         conn.putheader('X-API-Version', self._apiVersion)
         conn.endheaders()
+
         while mappedfile.tell() < mappedfile.size():
             # Send 1MB at a time
             # NOTE: Be careful raising this value as the read chunk
@@ -291,12 +295,18 @@ class connection(object):
         os.remove(files + '.b64')
         response = conn.getresponse()
         body = response.read().decode('utf-8')
+
         if body:
             try:
                 body = json.loads(body)
             except ValueError:
                 body = response.read().decode('utf-8')
+
         conn.close()
+
+        if response.status >= 400:
+            raise HPOneViewException(body)
+
         return response, body
 
     ###########################################################################
