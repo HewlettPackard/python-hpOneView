@@ -17,12 +17,6 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'connection'
-__version__ = '0.0.1'
-__copyright__ = '(C) Copyright (2012-2015) Hewlett Packard Enterprise ' \
-                ' Development LP'
-__license__ = 'MIT'
-__status__ = 'Development'
 
 ###
 # (C) Copyright (2012-2015) Hewlett Packard Enterprise Development LP

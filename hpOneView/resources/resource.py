@@ -31,12 +31,6 @@ from future.utils import lmap
 
 standard_library.install_aliases()
 
-__title__ = 'resource'
-__version__ = '0.0.1'
-__copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
-                ' Development LP'
-__license__ = 'MIT'
-__status__ = 'Development'
 
 import logging
 from urllib.parse import quote

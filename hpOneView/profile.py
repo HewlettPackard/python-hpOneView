@@ -10,24 +10,14 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-
 import json
 import re
-
 from future import standard_library
-
 from hpOneView.common import (make_FirmwareSettingsV3, make_LogicalDriveV3, make_LocalStorageEmbeddedController,
                               make_LocalStorageSettingsV3, make_BootModeSetting, make_BootSettings)
 from hpOneView.exceptions import HPOneViewInvalidResource
 
 standard_library.install_aliases()
-
-__title__ = 'common'
-__version__ = '0.0.1'
-__copyright__ = '(C) Copyright (2012-2016) Hewlett Packard Enterprise ' \
-                ' Development LP'
-__license__ = 'MIT'
-__status__ = 'Development'
 
 
 ###

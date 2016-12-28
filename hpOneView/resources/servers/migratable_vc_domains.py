@@ -29,12 +29,6 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-__title__ = 'Migratable VC Domains'
-__version__ = '1.0.0'
-__copyright__ = '(C) Copyright (2016) Hewlett Packard Enterprise Development LP'
-__license__ = 'MIT'
-__status__ = 'Development'
-
 from hpOneView.resources.resource import ResourceClient
 
 
