@@ -38,7 +38,6 @@ __status__ = 'Development'
 from hpOneView.resources.resource import ResourceClient
 from hpOneView.resources.task_monitor import TaskMonitor
 from hpOneView.common import extract_id_from_uri
-import os
 from urllib.parse import quote
 
 
@@ -105,16 +104,13 @@ class GoldenImages(object):
             golden_image_info (dict): Golden Image information.
 
         Returns:
-            bool: Success.
+            dict: Golden Image.
         """
-        upload_file_name = os.path.basename(file_path)
-
         uri = "{0}?name={1}&description={2}".format(self.URI,
                                                     quote(golden_image_info.get('name', '')),
                                                     quote(golden_image_info.get('description', '')))
-        response, body = self._connection.post_multipart(uri, None, file_path, upload_file_name)
 
-        return body == "SUCCESS"
+        return self._client.upload(file_path, uri)
 
     def download_archive(self, id_or_uri, file_path):
         """

@@ -263,6 +263,18 @@ class connection(object):
         fin.close()
         return content_type
 
+    def post_multipart_with_response_handling(self, uri, file_path, baseName):
+        resp, body = self.post_multipart(uri, None, file_path, baseName)
+
+        if resp.status == 202:
+            task = self.__get_task_from_response(resp, body)
+            return task, body
+
+        if self.__body_content_is_task(body):
+            return body, body
+
+        return None, body
+
     def post_multipart(self, uri, fields, files, baseName, verbose=False):
         content_type = self.encode_multipart_formdata(fields, files, baseName,
                                                       verbose)
@@ -408,6 +420,22 @@ class connection(object):
                 raise e
         return entity
 
+    def __body_content_is_task(self, body):
+        return isinstance(body, dict) and 'category' in body and body['category'] == 'tasks'
+
+    def __get_task_from_response(self, response, body):
+        location = response.getheader('Location')
+        if location:
+            task = self.get(location)
+        elif 'taskState' in body:
+            # This check is needed to handle a status response 202 without the location header,
+            # as is for PowerDevices. We are not sure if there are more resources with the same behavior.
+            task = body
+        else:
+            # For the resource Label the status is 202 but the response not contains a task.
+            task = None
+        return task
+
     def __do_rest_call(self, http_method, uri, body, custom_headers):
         resp, body = self.do_http(method=http_method,
                                   path=uri,
@@ -423,20 +451,10 @@ class connection(object):
                 except Exception:
                     pass
         elif resp.status == 202:
-            location = resp.getheader('Location')
-            if location:
-                task = self.get(location)
-            elif 'taskState' in body:
-                # This check is needed to handle a status response 202 without the location header,
-                # as is for PowerDevices. We are not sure if there are more resources with the same behavior.
-                task = body
-            else:
-                # For the resource Label the status is 202 but the response not contains a task.
-                task = None
-
+            task = self.__get_task_from_response(resp, body)
             return task, body
 
-        if isinstance(body, dict) and 'category' in body and body['category'] == 'tasks':
+        if self.__body_content_is_task(body):
             return body, body
 
         return None, body

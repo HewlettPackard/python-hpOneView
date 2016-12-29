@@ -79,7 +79,7 @@ class ConnectionTest(unittest.TestCase):
         mock_mapped_file.read.side_effect = ['data chunck 1', 'data chunck 2', 'data chunck 3']
         return mock_mapped_file
 
-    def __create_fakes_for_post_multipart(self, response_status=200):
+    def __prepare_connection_to_post_multipart(self, response_status=200):
         fake_connection = mock.Mock()
         fake_connection.getresponse.return_value.read.return_value = json.dumps(self.response_body).encode('utf-8')
         fake_connection.getresponse.return_value.status = response_status
@@ -610,8 +610,7 @@ class ConnectionTest(unittest.TestCase):
     @mock.patch.object(os.path, 'getsize')
     @mock.patch.object(os, 'remove')
     def test_post_multipart_should_put_request(self, mock_rm, mock_path_size, mock_copy, mock_mmap):
-        self.__create_fakes_for_post_multipart()
-
+        self.__prepare_connection_to_post_multipart()
         mock_mmap.return_value = self.__create_fake_mapped_file()
 
         self.connection.post_multipart(uri='/rest/resources/',
@@ -627,7 +626,7 @@ class ConnectionTest(unittest.TestCase):
     @mock.patch.object(os.path, 'getsize')
     @mock.patch.object(os, 'remove')
     def test_post_multipart_should_put_headers(self, mock_rm, mock_path_size, mock_copy, mock_mmap):
-        self.__create_fakes_for_post_multipart()
+        self.__prepare_connection_to_post_multipart()
         mock_mmap.return_value = self.__create_fake_mapped_file()
         mock_path_size.return_value = 2621440  # 2.5 MB
 
@@ -641,7 +640,7 @@ class ConnectionTest(unittest.TestCase):
             mock.call('auth', 'LTIxNjUzMjc0OTUzzHoF7eEkZLEUWVA-fuOZP4VGA3U8e67E'),
             mock.call('Content-Type', 'multipart/form-data; boundary=----------ThIs_Is_tHe_bouNdaRY_$'),
             mock.call('Content-Length', 2621440),
-            mock.call('X-API-Version', 200)]
+            mock.call('X-API-Version', 300)]
 
         internal_conn = self.connection.get_connection.return_value
         internal_conn.putheader.assert_has_calls(expected_putheader_calls)
@@ -651,7 +650,7 @@ class ConnectionTest(unittest.TestCase):
     @mock.patch.object(os.path, 'getsize')
     @mock.patch.object(os, 'remove')
     def test_post_multipart_should_read_file_in_chunks_of_1mb(self, mock_rm, mock_path_size, mock_copy, mock_mmap):
-        self.__create_fakes_for_post_multipart()
+        self.__prepare_connection_to_post_multipart()
         mock_mmap.return_value = self.__create_fake_mapped_file()
 
         self.connection.post_multipart(uri='/rest/resources/',
@@ -671,7 +670,7 @@ class ConnectionTest(unittest.TestCase):
     @mock.patch.object(os.path, 'getsize')
     @mock.patch.object(os, 'remove')
     def test_post_multipart_should_send_file_in_chuncks_of_1mb(self, mock_rm, mock_path_size, mock_copy, mock_mmap):
-        self.__create_fakes_for_post_multipart()
+        self.__prepare_connection_to_post_multipart()
         mock_mmap.return_value = self.__create_fake_mapped_file()
 
         self.connection.post_multipart(uri='/rest/resources/',
@@ -692,7 +691,7 @@ class ConnectionTest(unittest.TestCase):
     @mock.patch.object(os.path, 'getsize')
     @mock.patch.object(os, 'remove')
     def test_post_multipart_should_remove_temp_encoded_file(self, mock_rm, mock_path_size, mock_copy, mock_mmap):
-        self.__create_fakes_for_post_multipart()
+        self.__prepare_connection_to_post_multipart()
         mock_mmap.return_value = self.__create_fake_mapped_file()
 
         self.connection.post_multipart(uri='/rest/resources/',
@@ -708,7 +707,7 @@ class ConnectionTest(unittest.TestCase):
     @mock.patch.object(os, 'remove')
     def test_post_multipart_should_raise_exception_when_response_status_400(self, mock_rm, mock_path_size, mock_copy,
                                                                             mock_mmap):
-        self.__create_fakes_for_post_multipart(response_status=400)
+        self.__prepare_connection_to_post_multipart(response_status=400)
         mock_mmap.return_value = self.__create_fake_mapped_file()
 
         try:
@@ -727,7 +726,7 @@ class ConnectionTest(unittest.TestCase):
     @mock.patch.object(os, 'remove')
     def test_post_multipart_should_return_response_and_body_when_response_status_200(self, mock_rm, mock_path_size,
                                                                                      mock_copy, mock_mmap):
-        self.__create_fakes_for_post_multipart()
+        self.__prepare_connection_to_post_multipart()
         mock_mmap.return_value = self.__create_fake_mapped_file()
 
         response, body = self.connection.post_multipart(uri='/rest/resources/',
@@ -745,7 +744,7 @@ class ConnectionTest(unittest.TestCase):
     @mock.patch.object(json, 'loads')
     def test_post_multipart_should_handle_json_load_exception(self, mock_json_loads, mock_rm, mock_path_size, mock_copy,
                                                               mock_mmap):
-        self.__create_fakes_for_post_multipart()
+        self.__prepare_connection_to_post_multipart()
         mock_mmap.return_value = self.__create_fake_mapped_file()
         mock_json_loads.side_effect = ValueError("Invalid JSON")
 
@@ -756,6 +755,50 @@ class ConnectionTest(unittest.TestCase):
 
         self.assertTrue(body)
         self.assertEqual(response.status, 200)
+
+    @mock.patch.object(connection, 'post_multipart')
+    def test_post_multipart_with_response_handling_when_status_202_without_task(self, mock_post_multipart):
+        mock_response = mock.Mock(status=202)
+        mock_response.getheader.return_value = None
+        mock_post_multipart.return_value = mock_response, "content"
+
+        task, body = self.connection.post_multipart_with_response_handling("uri", "filepath", "basename")
+
+        self.assertFalse(task)
+        self.assertEqual(body, "content")
+
+    @mock.patch.object(connection, 'post_multipart')
+    @mock.patch.object(connection, 'get')
+    def test_post_multipart_with_response_handling_when_status_202_with_task(self, mock_get, mock_post_multipart):
+        fake_task = {"category": "tasks"}
+        mock_response = mock.Mock(status=202)
+        mock_response.getheader.return_value = "/rest/tasks/taskid"
+        mock_post_multipart.return_value = mock_response, "content"
+        mock_get.return_value = fake_task
+
+        task, body = self.connection.post_multipart_with_response_handling("uri", "filepath", "basename")
+
+        self.assertEqual(task, fake_task)
+        self.assertEqual(body, "content")
+
+    @mock.patch.object(connection, 'post_multipart')
+    def test_post_multipart_with_response_handling_when_status_200_and_body_is_task(self, mock_post_multipart):
+        fake_task = {"category": "tasks"}
+        mock_post_multipart.return_value = mock.MagicMock(status=200), fake_task
+
+        task, body = self.connection.post_multipart_with_response_handling("uri", "filepath", "basename")
+
+        self.assertEqual(task, fake_task)
+        self.assertEqual(body, fake_task)
+
+    @mock.patch.object(connection, 'post_multipart')
+    def test_post_multipart_with_response_handling_when_status_200_and_body_is_not_task(self, mock_post_multipart):
+        mock_post_multipart.return_value = mock.MagicMock(status=200), "content"
+
+        task, body = self.connection.post_multipart_with_response_handling("uri", "filepath", "basename")
+
+        self.assertFalse(task)
+        self.assertEqual(body, "content")
 
 
 if __name__ == '__main__':

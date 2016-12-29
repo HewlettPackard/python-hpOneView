@@ -27,7 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.settings.firmware_bundles import FirmwareBundles
-from hpOneView.resources.task_monitor import TaskMonitor
+from hpOneView.resources.resource import ResourceClient
 
 
 class FirmwareBundlesTest(unittest.TestCase):
@@ -36,24 +36,10 @@ class FirmwareBundlesTest(unittest.TestCase):
         self.connection = connection(self.host)
         self._firmware_bundles = FirmwareBundles(self.connection)
 
-    @mock.patch.object(TaskMonitor, 'wait_for_task')
-    @mock.patch.object(connection, 'post_multipart')
-    def test_upload(self, mock_upload, mock_wait_task):
+    @mock.patch.object(ResourceClient, 'upload')
+    def test_upload(self, mock_upload):
         firmware_path = "test/SPPgen9snap6.2015_0405.81.iso"
-        response = mock.MagicMock(status=200)
-
-        body = {
-            "category": "tasks",
-            "type": "TaskResourceV2",
-            "associatedResource": {
-                "resourceUri": "/rest/associatedresourceuri"
-            }}
-
-        mock_upload.return_value = response, body
-        mock_wait_task.return_value = {}
 
         self._firmware_bundles.upload(firmware_path)
-        mock_upload.assert_called_once_with('/rest/firmware-bundles', None, firmware_path,
-                                            'SPPgen9snap6.2015_0405.81.iso')
 
-        mock_wait_task.assert_called_once_with(body, -1)
+        mock_upload.assert_called_once_with(firmware_path, timeout=-1)

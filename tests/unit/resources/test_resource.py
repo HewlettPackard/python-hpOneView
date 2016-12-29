@@ -1126,3 +1126,72 @@ class ResourceClientTest(unittest.TestCase):
         result = resource_client.merge_default_values(resource, default_values)
 
         self.assertEqual(result, expected)
+
+    @mock.patch.object(connection, 'post_multipart_with_response_handling')
+    def test_upload_should_call_post_multipart(self, mock_post_multipart):
+        uri = '/rest/testuri/'
+        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
+        mock_post_multipart.return_value = None, mock.Mock()
+
+        self.resource_client.upload(filepath, uri)
+
+        mock_post_multipart.assert_called_once_with(uri, filepath, 'SPPgen9snap6.2015_0405.81.iso')
+
+    @mock.patch.object(connection, 'post_multipart_with_response_handling')
+    def test_upload_should_call_post_multipart_with_resource_uri_when_not_uri_provided(self, mock_post_multipart):
+        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
+        mock_post_multipart.return_value = None, mock.Mock()
+
+        self.resource_client.upload(filepath)
+
+        mock_post_multipart.assert_called_once_with('/rest/testuri', mock.ANY, mock.ANY)
+
+    @mock.patch.object(connection, 'post_multipart_with_response_handling')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    @mock.patch.object(connection, 'get')
+    def test_upload_should_wait_for_task_when_response_is_task(self, mock_get, mock_wait4task, mock_post_multipart):
+        uri = '/rest/testuri/'
+        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
+        mock_post_multipart.return_value = self.task, mock.Mock()
+
+        self.resource_client.upload(filepath, uri)
+
+        mock_wait4task.assert_called_once_with(self.task, -1)
+
+    @mock.patch.object(connection, 'post_multipart_with_response_handling')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    def test_upload_should_not_wait_for_task_when_response_is_not_task(self, mock_wait4task, mock_post_multipart):
+        uri = '/rest/testuri/'
+        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
+        mock_post_multipart.return_value = None, mock.Mock()
+
+        self.resource_client.upload(filepath, uri)
+
+        mock_wait4task.not_been_called()
+
+    @mock.patch.object(connection, 'post_multipart_with_response_handling')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    @mock.patch.object(connection, 'get')
+    def test_upload_should_return_associated_resource_when_response_is_task(self, mock_get, mock_wait4task,
+                                                                            mock_post_multipart):
+        fake_associated_resurce = mock.Mock()
+        uri = '/rest/testuri/'
+        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
+        mock_post_multipart.return_value = self.task, mock.Mock()
+        mock_wait4task.return_value = fake_associated_resurce
+
+        result = self.resource_client.upload(filepath, uri)
+
+        self.assertEqual(result, fake_associated_resurce)
+
+    @mock.patch.object(connection, 'post_multipart_with_response_handling')
+    @mock.patch.object(TaskMonitor, 'wait_for_task')
+    def test_upload_should_return_resource_when_response_is_not_task(self, mock_wait4task, mock_post_multipart):
+        fake_response_body = mock.Mock()
+        uri = '/rest/testuri/'
+        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
+        mock_post_multipart.return_value = None, fake_response_body
+
+        result = self.resource_client.upload(filepath, uri)
+
+        self.assertEqual(result, fake_response_body)
