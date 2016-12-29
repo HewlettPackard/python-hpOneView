@@ -145,8 +145,8 @@ class OneViewClientTest(unittest.TestCase):
         mock_open.return_value = self.__mock_file_open(json_config_content)
         oneview_client = OneViewClient.from_json_file("config.json")
 
-        self.assertEqual(200, oneview_client.connection._apiVersion)
-        self.assertEqual(200, oneview_client.api_version)
+        self.assertEqual(300, oneview_client.connection._apiVersion)
+        self.assertEqual(300, oneview_client.api_version)
 
     @mock.patch.object(connection, 'login')
     @mock.patch(mock_builtin('open'))
@@ -176,7 +176,7 @@ class OneViewClientTest(unittest.TestCase):
                                                 password='secret123',
                                                 authLoginDomain=''))
         mock_set_proxy.assert_not_called()
-        self.assertEqual(200, oneview_client.connection._apiVersion)
+        self.assertEqual(300, oneview_client.connection._apiVersion)
 
     @mock.patch.object(connection, 'login')
     @mock.patch.object(connection, 'set_proxy')
