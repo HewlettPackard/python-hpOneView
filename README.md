@@ -87,7 +87,7 @@ export ONEVIEWSDK_USERNAME='Administrator'
 export ONEVIEWSDK_PASSWORD='secret123'
 
 # Optional
-export ONEVIEWSDK_API_VERSION='200'
+export ONEVIEWSDK_API_VERSION='300'
 export ONEVIEWSDK_AUTH_LOGIN_DOMAIN='authdomain'
 export ONEVIEWSDK_PROXY='<proxy_host>:<proxy_port>'
 ```
@@ -144,13 +144,13 @@ OR using the Environment variable:
 export ONEVIEWSDK_API_VERSION='300'
 ```
 
-If this property is not specified, it will fall back to the ```200``` default value.
+If this property is not specified, it will fall back to the ```300``` default value.
 
 
 ### HPE Synergy Image Streamer
 
 The OneView Python SDK also supports the API endpoints for HPE Synergy Image Streamer.
-To configure the SDK, you must set the Image Streamer IP on the OneViewClient configuration, 
+To configure the SDK, you must set the Image Streamer IP on the OneViewClient configuration,
 either using the JSON configuration:
 
 ```json

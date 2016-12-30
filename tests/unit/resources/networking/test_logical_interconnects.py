@@ -228,7 +228,7 @@ class LogicalInterconnectsTest(unittest.TestCase):
         }
         settings_with_default_values = {
             "ethernetSettings": {
-                "type": "EthernetInterconnectSettingsV3",
+                "type": "EthernetInterconnectSettingsV201",
                 "macRefreshInterval": "5"
             }
         }

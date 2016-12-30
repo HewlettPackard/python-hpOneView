@@ -81,7 +81,7 @@ class ResourceClientTest(unittest.TestCase):
     def setUp(self):
         super(ResourceClientTest, self).setUp()
         self.host = '127.0.0.1'
-        self.connection = connection(self.host, 200)
+        self.connection = connection(self.host, 300)
         self.resource_client = ResourceClient(self.connection, self.URI)
         self.task = {"task": "task", "taskState": "Finished"}
         self.response_body = {"body": "body"}
@@ -465,11 +465,12 @@ class ResourceClientTest(unittest.TestCase):
         mock_put.assert_called_once_with(expected_uri, dict_to_update, custom_headers=None)
 
     @mock.patch.object(connection, 'put')
-    def test_update_with_default_api_version_200(self, mock_put):
+    def test_update_with_api_version_200(self, mock_put):
         dict_to_update = {"name": "test"}
         uri = "/rest/resource/test"
 
         mock_put.return_value = None, self.response_body
+        self.connection._apiVersion = 200
 
         expected_dict = {"name": "test", "type": self.TYPE_V200}
 
@@ -477,12 +478,11 @@ class ResourceClientTest(unittest.TestCase):
         mock_put.assert_called_once_with(uri, expected_dict, custom_headers=None)
 
     @mock.patch.object(connection, 'put')
-    def test_update_with_api_version_300(self, mock_put):
+    def test_update_with_default_api_version_300(self, mock_put):
         dict_to_update = {"name": "test"}
         uri = "/rest/resource/test"
 
         mock_put.return_value = None, self.response_body
-        self.connection._apiVersion = 300
 
         expected_dict = {"name": "test", "type": self.TYPE_V300}
 
@@ -599,21 +599,21 @@ class ResourceClientTest(unittest.TestCase):
         mock_post.assert_called_once_with(self.URI, dict_to_create, custom_headers=None)
 
     @mock.patch.object(connection, 'post')
-    def test_create_with_default_api_version(self, mock_post):
+    def test_create_with_api_version_200(self, mock_post):
         dict_to_create = {"resource_name": "a name"}
         mock_post.return_value = {}, {}
 
+        self.connection._apiVersion = 200
         expected_dict = {"resource_name": "a name", "type": self.TYPE_V200}
 
         self.resource_client.create(dict_to_create, timeout=-1, default_values=self.DEFAULT_VALUES)
         mock_post.assert_called_once_with(self.URI, expected_dict, custom_headers=None)
 
     @mock.patch.object(connection, 'post')
-    def test_create_with_api_version_300(self, mock_post):
+    def test_create_with_default_api_version_300(self, mock_post):
         dict_to_create = {"resource_name": "a name"}
         mock_post.return_value = {}, {}
 
-        self.connection._apiVersion = 300
         expected_dict = {"resource_name": "a name", "type": self.TYPE_V300}
 
         self.resource_client.create(dict_to_create, timeout=-1, default_values=self.DEFAULT_VALUES)
@@ -676,13 +676,15 @@ class ResourceClientTest(unittest.TestCase):
         mock_wait4task.assert_called_once_with(self.task, 60)
 
     @mock.patch.object(connection, 'patch')
-    def test_patch_request_when_id_is_provided(self, mock_patch):
+    def test_patch_request_when_id_is_provided_v200(self, mock_patch):
         request_body = [{
             'op': 'replace',
             'path': '/name',
             'value': 'new_name',
         }]
         mock_patch.return_value = {}, {}
+
+        self.connection._apiVersion = 200
 
         self.resource_client.patch(
             '123a53cz', 'replace', '/name', 'new_name', 70)
@@ -698,8 +700,6 @@ class ResourceClientTest(unittest.TestCase):
             'value': 'new_name',
         }]
         mock_patch.return_value = {}, {}
-
-        self.connection._apiVersion = 300
 
         resource_client = ResourceClient(self.connection, self.URI)
         resource_client.patch(
@@ -721,11 +721,13 @@ class ResourceClientTest(unittest.TestCase):
             '/rest/testuri/123a53cz', 'replace', '/name', 'new_name', 60)
 
         mock_patch.assert_called_once_with(
-            '/rest/testuri/123a53cz', request_body, custom_headers={})
+            '/rest/testuri/123a53cz', request_body, custom_headers={'Content-Type': 'application/json-patch+json'})
 
     @mock.patch.object(connection, 'patch')
-    def test_patch_with_custom_headers(self, mock_patch):
+    def test_patch_with_custom_headers_v200(self, mock_patch):
         mock_patch.return_value = {}, {}
+
+        self.connection._apiVersion = 200
 
         self.resource_client.patch('/rest/testuri/123', 'operation', '/field', 'value',
                                    custom_headers=self.custom_headers)
@@ -735,8 +737,6 @@ class ResourceClientTest(unittest.TestCase):
     @mock.patch.object(connection, 'patch')
     def test_patch_with_custom_headers_v300(self, mock_patch):
         mock_patch.return_value = {}, {}
-
-        self.connection._apiVersion = 300
 
         resource_client = ResourceClient(self.connection, self.URI)
         resource_client.patch('/rest/testuri/123', 'operation', '/field', 'value',
@@ -1109,7 +1109,7 @@ class ResourceClientTest(unittest.TestCase):
             '300': {"type": "EnclosureGroupV300"}
         }
 
-        expected = {'name': 'resource1', "type": "EnclosureGroupV200"}
+        expected = {'name': 'resource1', "type": "EnclosureGroupV300"}
 
         resource_client = ResourceClient(self.connection, self.URI)
         result = resource_client.merge_default_values(resource, default_values)

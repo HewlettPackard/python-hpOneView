@@ -38,18 +38,18 @@ class ConnectionTest(unittest.TestCase):
             'Accept-Language': 'en_US'
         }
         self.default_headers = {
-            'X-API-Version': 200,
+            'X-API-Version': 300,
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
         self.default_headers_with_etag_validation_off = {
-            'X-API-Version': 200,
+            'X-API-Version': 300,
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'If-Match': '*'
         }
         self.merged_headers = {
-            'X-API-Version': 200,
+            'X-API-Version': 300,
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Accept-Language': 'en_US'
