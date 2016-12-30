@@ -27,14 +27,13 @@ import mock
 
 import hpOneView.profile as profile
 from hpOneView.connection import connection
-from hpOneView.exceptions import HPOneViewInvalidResource
+from hpOneView.exceptions import HPOneViewInvalidResource, HPOneViewException
 from hpOneView.servers import servers
 from hpOneView.settings import settings
 from tests.test_utils import mock_builtin
 
 
 class ProfilesTest(unittest.TestCase):
-
     def setUp(self):
         super(ProfilesTest, self).setUp()
         self.host = 'http://1.2.3.4'
@@ -84,10 +83,12 @@ class ProfilesTest(unittest.TestCase):
             sht, 'RAID0', False, False, 2, 'Operating System')
         self.assertIsNotNone(local_storage)
         self.assertEqual(
-            {'controllers': [{'slotNumber': '0', 'logicalDrives': [
-                             {'driveTechnology': None, 'driveName': 'Operating System', 'raidLevel': 'RAID0',
-                              'bootable': False, 'numPhysicalDrives': 2}], 'importConfiguration': True,
-                'mode': 'RAID', 'initialize': False, 'managed': True}]},
+            {'controllers': [
+                {'slotNumber': '0', 'logicalDrives': [
+                    {'driveTechnology': None, 'driveName': 'Operating System', 'raidLevel': 'RAID0',
+                     'bootable': False, 'numPhysicalDrives': 2}], 'importConfiguration': True,
+                 'mode': 'RAID', 'initialize': False, 'managed': True}
+            ]},
             local_storage)
 
     def test_make_local_storage_with_dl(self):
@@ -199,10 +200,75 @@ class ProfilesTest(unittest.TestCase):
         try:
             self.profile.make_bios_dict(filename)
         except ValueError as value_error:
-            self.assertEqual(value_error.args[
-                             0], "Error: Cannot parse BIOS JSON file. JSON must be well-formed.")
+            self.assertEqual(value_error.args[0], "Error: Cannot parse BIOS JSON file. JSON must be well-formed.")
         else:
             self.fail("Expected Exception")
+
+    def test_add_new_connection(self):
+
+        sp = self.build_server_profile_without_conns()
+
+        profile.add_connection(sp,
+                               id=3,
+                               port_id=None,
+                               name="New Connection",
+                               function_type='Ethernet',
+                               requested_mbps=2500,
+                               network_uri='/rest/ethernet-networks/1f2bf8e2-3e1a-42a8-9aff-64b04314bf3c',
+                               boot={
+                                   "priority": "NotBootable"
+                               })
+
+        self.assertEqual(sp, self.build_server_profile_with_added_conn())
+
+    def test_add_connection_with_same_name(self):
+        sp = self.build_server_profile_with_added_conn()
+
+        self.assertRaises(HPOneViewException, profile.add_connection, sp,
+                          id=3,
+                          port_id=None,
+                          name="New Connection",
+                          function_type='Ethernet',
+                          requested_mbps=2500,
+                          network_uri='/rest/ethernet-networks/1f2bf8e2-3e1a-42a8-9aff-64b04314bf3c',
+                          boot={
+                              "priority": "NotBootable"
+                          })
+
+    def test_add_connection_with_same_id(self):
+        sp = self.build_server_profile_with_added_conn()
+
+        profile.add_connection(sp,
+                               id=3,
+                               port_id=None,
+                               name="Network A",
+                               function_type='Ethernet',
+                               requested_mbps=2500,
+                               network_uri='/rest/ethernet-networks/1f2bf8e2-3e1a-42a8-9aff-64b04314bf3c',
+                               boot={
+                                   "priority": "NotBootable"
+                               })
+
+        sp_expected = self.build_server_profile_with_added_conn()
+        sp_expected['connections'][0]['name'] = 'Network A'
+
+        self.assertEqual(sp, sp_expected)
+
+    def test_remove_existent_connection(self):
+        sp = self.build_server_profile_with_added_conn()
+
+        profile.remove_connection(sp,
+                                  connection_name="New Connection")
+
+        self.assertEqual(sp, self.build_server_profile_without_conns())
+
+    def test_remove_nonexistent_connection(self):
+        sp = self.build_server_profile_with_added_conn()
+
+        profile.remove_connection(sp,
+                                  connection_name="New Connection NO")
+
+        self.assertEqual(sp, self.build_server_profile_with_added_conn())
 
     # helper functions
     def build_dl_sht(self):
@@ -323,6 +389,30 @@ class ProfilesTest(unittest.TestCase):
             'help': 'Controls the Virtual Install Disk.',
             'name': 'Virtual Install Disk'
         }])
+
+    def build_server_profile_without_conns(self):
+        server_profile = {
+            'name': 'server profile name',
+            'connections': []
+        }
+        return server_profile
+
+    def build_server_profile_with_added_conn(self):
+        server_profile = {
+            'name': 'server profile name',
+            'connections': [{'boot': {'priority': 'NotBootable'},
+                             'functionType': 'Ethernet',
+                             'id': 3,
+                             'name': 'New Connection',
+                             'networkUri': '/rest/ethernet-networks/1f2bf8e2-3e1a-42a8-9aff-64b04314bf3c',
+                             'portId': None,
+                             'requestedMbps': 2500,
+                             'mac': None,
+                             'requestedVFs': 'Auto',
+                             'wwnn': None,
+                             'wwpn': None}]}
+
+        return server_profile
 
 
 if __name__ == '__main__':

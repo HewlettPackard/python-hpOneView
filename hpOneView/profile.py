@@ -15,7 +15,7 @@ import re
 from future import standard_library
 from hpOneView.common import (make_FirmwareSettingsV3, make_LogicalDriveV3, make_LocalStorageEmbeddedController,
                               make_LocalStorageSettingsV3, make_BootModeSetting, make_BootSettings)
-from hpOneView.exceptions import HPOneViewInvalidResource
+from hpOneView.exceptions import HPOneViewInvalidResource, HPOneViewException
 
 standard_library.install_aliases()
 
@@ -154,6 +154,86 @@ def __get_boot_settings_dict_boot_mode(gen9, boot_mode, pxe):
         else:
             bootmode = make_BootModeSetting(True, boot_mode, pxe)
     return bootmode
+
+
+def add_connection(srv_profile, id, name, function_type, network_uri, port_id,
+                   requested_mbps, boot, mac=None, requested_vfs='Auto', wwnn=None, wwpn=None):
+    """
+    Adds a connection to a server profile resource (dict only).
+
+    Args:
+        srv_profile (dict): Server profile resource to update.
+        id (int): A unique identifier for this connection.
+        name (str): A string used to identify the respective connection.
+        function_type (str): Type of function required for the connection.
+        network_uri (str): Identifies the network or network set to be connected.
+        port_id: Identifies the port (FlexNIC) used for this connection.
+        requested_mbps: The transmit throughput (mbps) that should be allocated to this connection.
+        boot (dict): Indicates that the server will attempt to boot from this connection.
+        mac (str): The MAC address that is currently programmed on the FlexNic.
+        requested_vfs: This value can be "Auto" or 0.
+        wwnn: The node WWN address that is currently programmed on the FlexNIC.
+        wwpn: The port WWN address that is currently programmed on the FlexNIC.
+
+    Examples:
+
+        >>> profile.add_connection(server_profile_dict,
+        >>>                        id=2,
+        >>>                        port_id=None,
+        >>>                        name="Network name",
+        >>>                        function_type='Ethernet',
+        >>>                        requested_mbps=2500,
+        >>>                        network_uri='/rest/ethernet-networks/2f2bf8e2-3e1a-42a8-9aff-64b04314bf3c',
+        >>>                        boot={
+        >>>                            "priority": "NotBootable"
+        >>>                        })
+
+    """
+
+    connections = srv_profile.get('connections')
+
+    new_connection = {
+        "id": id,
+        "name": name,
+        "functionType": function_type,
+        "portId": port_id,
+        "requestedMbps": requested_mbps,
+        "networkUri": network_uri,
+        "boot": boot,
+        'mac': mac,
+        'requestedVFs': requested_vfs,
+        'wwnn': wwnn,
+        'wwpn': wwpn
+    }
+
+    updated = False
+    for connection in connections:
+        if connection['name'] == name:
+            raise HPOneViewException("The connection name is already used by another connection within the profile.")
+
+        if connection['id'] == id:
+            connection.clear()
+            connection.update(new_connection)
+            updated = True
+
+    if not updated:
+        connections.append(new_connection)
+
+
+def remove_connection(srv_profile, connection_name):
+    """
+    Removes a connection from the server profile resource (dict only).
+
+    Args:
+        srv_profile: Server profile resource to update.
+        connection_name (str): The connection name to delete.
+
+    Examples:
+        >>> profile.remove_connection(server_profile_dict, "Connection name")
+
+    """
+    connections = srv_profile.get('connections')
+    srv_profile['connections'] = [item for item in connections if item['name'] != connection_name]
 
 
 def make_boot_settings_dict(srv, sht, disable_manage_boot, boot_order, boot_mode, pxe):
