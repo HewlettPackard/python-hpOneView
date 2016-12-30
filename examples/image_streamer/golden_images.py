@@ -58,7 +58,8 @@ print("***** done *****\n")
 
 # Upload a Golden Image
 print("Upload a Golden Image")
-image_streamer_client.golden_images.upload(local_image_file_name, golden_image_upload)
+golden_image_uploaded = image_streamer_client.golden_images.upload(local_image_file_name, golden_image_upload)
+pprint(golden_image_uploaded)
 print("***** done *****\n")
 
 # Get the Golden Image by URI

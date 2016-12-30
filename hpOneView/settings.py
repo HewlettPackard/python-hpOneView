@@ -67,8 +67,6 @@ class settings(object):
     def upload_fw(self, path, name, verbose=False):
         response, body = self._con.post_multipart(uri['appliance-firmware'],
                                                   '', path, name, verbose)
-        if response.status >= 400:
-            raise HPOneViewException(body)
         return body
 
     @deprecated
@@ -93,8 +91,6 @@ class settings(object):
     def upload_spp(self, sppPath, sppName, verbose=False, blocking=True):
         response, body = self._con.post_multipart(uri['fwUpload'], '',
                                                   sppPath, sppName, verbose)
-        if response.status >= 400:
-            raise HPOneViewException(body)
         if response.status == 202 and verbose is True:
             print('Upload complete. Waiting for processing.')
         task, spp = self._activity.make_task_entity_tuple(body)
@@ -171,8 +167,6 @@ class settings(object):
     def upload_backup(self, path, name, verbose=False, blocking=True):
         response, body = self._con.post_multipart(uri['archive'], '',
                                                   path, name, verbose)
-        if response.status >= 400:
-            raise HPOneViewException(body)
         if response.status == 202 and verbose is True:
             print('Upload complete. Waiting for processing.')
         task, backup = self._activity.make_task_entity_tuple(body)

@@ -32,11 +32,6 @@ standard_library.install_aliases()
 
 
 from hpOneView.resources.resource import ResourceClient
-from hpOneView.resources.task_monitor import TaskMonitor
-
-from hpOneView.exceptions import HPOneViewException
-
-import os
 
 
 class FirmwareBundles(object):
@@ -49,7 +44,6 @@ class FirmwareBundles(object):
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
-        self._task_monitor = TaskMonitor(con)
 
     def upload(self, file_path, timeout=-1):
         """
@@ -65,9 +59,4 @@ class FirmwareBundles(object):
         Returns:
           dict: Information about the updated firmware bundle.
         """
-        upload_file_name = os.path.basename(file_path)
-        response, body = self._connection.post_multipart(self.URI, None, file_path, upload_file_name)
-        if response.status >= 400:
-            raise HPOneViewException(body.get('message'))
-
-        return self._task_monitor.wait_for_task(body, timeout)
+        return self._client.upload(file_path, timeout=timeout)

@@ -224,6 +224,9 @@ class connection(object):
                 conn.set_tunnel(self._host, 443)
         return conn
 
+    def _open(self, name, mode):
+        return open(name, mode)
+
     def encode_multipart_formdata(self, fields, files, baseName, verbose=False):
         """
         Fields is a sequence of (name, value) elements for regular form fields.
@@ -237,8 +240,8 @@ class connection(object):
         content_type = 'multipart/form-data; boundary=%s' % BOUNDARY
         if verbose is True:
             print(('Encoding ' + baseName + ' for upload...'))
-        fin = open(files, 'rb')
-        fout = open(files + '.b64', 'wb')
+        fin = self._open(files, 'rb')
+        fout = self._open(files + '.b64', 'wb')
         fout.write(bytearray('--' + BOUNDARY + CRLF, 'utf-8'))
         fout.write(bytearray('Content-Disposition: form-data'
                              '; name="file"; filename="' +
@@ -254,10 +257,22 @@ class connection(object):
         fin.close()
         return content_type
 
+    def post_multipart_with_response_handling(self, uri, file_path, baseName):
+        resp, body = self.post_multipart(uri, None, file_path, baseName)
+
+        if resp.status == 202:
+            task = self.__get_task_from_response(resp, body)
+            return task, body
+
+        if self.__body_content_is_task(body):
+            return body, body
+
+        return None, body
+
     def post_multipart(self, uri, fields, files, baseName, verbose=False):
         content_type = self.encode_multipart_formdata(fields, files, baseName,
                                                       verbose)
-        inputfile = open(files + '.b64', 'rb')
+        inputfile = self._open(files + '.b64', 'rb')
         mappedfile = mmap.mmap(inputfile.fileno(), 0, access=mmap.ACCESS_READ)
         if verbose is True:
             print(('Uploading ' + files + '...'))
@@ -272,6 +287,7 @@ class connection(object):
         conn.putheader('Content-Length', totalSize)
         conn.putheader('X-API-Version', self._apiVersion)
         conn.endheaders()
+
         while mappedfile.tell() < mappedfile.size():
             # Send 1MB at a time
             # NOTE: Be careful raising this value as the read chunk
@@ -285,12 +301,18 @@ class connection(object):
         os.remove(files + '.b64')
         response = conn.getresponse()
         body = response.read().decode('utf-8')
+
         if body:
             try:
                 body = json.loads(body)
             except ValueError:
                 body = response.read().decode('utf-8')
+
         conn.close()
+
+        if response.status >= 400:
+            raise HPOneViewException(body)
+
         return response, body
 
     ###########################################################################
@@ -392,6 +414,22 @@ class connection(object):
                 raise e
         return entity
 
+    def __body_content_is_task(self, body):
+        return isinstance(body, dict) and 'category' in body and body['category'] == 'tasks'
+
+    def __get_task_from_response(self, response, body):
+        location = response.getheader('Location')
+        if location:
+            task = self.get(location)
+        elif 'taskState' in body:
+            # This check is needed to handle a status response 202 without the location header,
+            # as is for PowerDevices. We are not sure if there are more resources with the same behavior.
+            task = body
+        else:
+            # For the resource Label the status is 202 but the response not contains a task.
+            task = None
+        return task
+
     def __do_rest_call(self, http_method, uri, body, custom_headers):
         resp, body = self.do_http(method=http_method,
                                   path=uri,
@@ -407,20 +445,10 @@ class connection(object):
                 except Exception:
                     pass
         elif resp.status == 202:
-            location = resp.getheader('Location')
-            if location:
-                task = self.get(location)
-            elif 'taskState' in body:
-                # This check is needed to handle a status response 202 without the location header,
-                # as is for PowerDevices. We are not sure if there are more resources with the same behavior.
-                task = body
-            else:
-                # For the resource Label the status is 202 but the response not contains a task.
-                task = None
-
+            task = self.__get_task_from_response(resp, body)
             return task, body
 
-        if isinstance(body, dict) and 'category' in body and body['category'] == 'tasks':
+        if self.__body_content_is_task(body):
             return body, body
 
         return None, body

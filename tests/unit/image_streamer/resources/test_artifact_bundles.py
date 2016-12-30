@@ -158,31 +158,24 @@ class ArtifactBundlesTest(TestCase):
         uri = '/rest/artifact-bundles/backups'
         mock_create.assert_called_once_with(information.copy(), uri=uri, timeout=-1)
 
-    @mock.patch.object(connection, 'post_multipart')
+    @mock.patch.object(ResourceClient, 'upload')
     def test_upload_artifact_bundle_called_once(self, mock_upload):
+        filepath = "~/HPE-ImageStreamer-Developer-2016-09-12.zip"
 
-        filename = "~/HPE-ImageStreamer-Developer-2016-09-12.zip"
-        response = mock.MagicMock(status=200)
-        mock_upload.return_value = response, "SUCCESS"
+        self._client.upload_bundle_from_file(filepath)
 
-        self._client.upload_bundle_from_file(filename)
+        mock_upload.assert_called_once_with(filepath)
 
-        expected_uri = '/rest/artifact-bundles'
-
-        mock_upload.assert_called_once_with(expected_uri, None, filename, 'HPE-ImageStreamer-Developer-2016-09-12.zip')
-
-    @mock.patch.object(connection, 'post_multipart')
+    @mock.patch.object(ResourceClient, 'upload')
     def test_upload_backup_artifact_bundle_called_once(self, mock_upload):
-        filename = "~/HPE-ImageStreamer-Developer-2016-09-12.zip"
-        response = mock.MagicMock(status=200)
-        mock_upload.return_value = response, "SUCCESS"
+        filepath = "~/HPE-ImageStreamer-Developer-2016-09-12.zip"
         deployment_groups = "/rest/deployment-groups/00c1344d-e4dd-43c3-a733-1664e159a36f"
 
-        self._client.upload_backup_bundle_from_file(filename, deployment_groups)
+        self._client.upload_backup_bundle_from_file(filepath, deployment_groups)
 
         expected_uri = '/rest/artifact-bundles/backups/archive?deploymentGrpUri=' + deployment_groups
 
-        mock_upload.assert_called_once_with(expected_uri, None, filename, 'HPE-ImageStreamer-Developer-2016-09-12.zip')
+        mock_upload.assert_called_once_with(filepath, expected_uri)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_extract_called_once(self, mock_update):

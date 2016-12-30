@@ -23,6 +23,11 @@
 import json
 import mock
 import unittest
+import mmap
+import os
+import shutil
+
+import os.path
 
 from http.client import HTTPSConnection, BadStatusLine
 from hpOneView.connection import connection
@@ -66,6 +71,29 @@ class ConnectionTest(unittest.TestCase):
         if status == 200 or status == 202:
             mock_response.getheader.return_value = '/task/uri'
         return mock_response
+
+    def __create_fake_mapped_file(self):
+        mock_mapped_file = mock.Mock()
+        mock_mapped_file.tell.side_effect = [0, 1048576, 2097152, 2621440]  # 0, 1MB, 2MB 2.5MB
+        mock_mapped_file.size.return_value = 2621440  # 2.5MB
+        mock_mapped_file.read.side_effect = ['data chunck 1', 'data chunck 2', 'data chunck 3']
+        return mock_mapped_file
+
+    def __prepare_connection_to_post_multipart(self, response_status=200):
+        fake_connection = mock.Mock()
+        fake_connection.getresponse.return_value.read.return_value = json.dumps(self.response_body).encode('utf-8')
+        fake_connection.getresponse.return_value.status = response_status
+
+        self.connection.get_connection = mock.Mock()
+        self.connection.get_connection.return_value = fake_connection
+
+        self.connection._open = mock.Mock()
+
+        self.connection._headers['auth'] = 'LTIxNjUzMjc0OTUzzHoF7eEkZLEUWVA-fuOZP4VGA3U8e67E'
+
+        encode_multipart = "multipart/form-data; boundary=----------ThIs_Is_tHe_bouNdaRY_$"
+        self.connection.encode_multipart_formdata = mock.Mock()
+        self.connection.encode_multipart_formdata.return_value = encode_multipart
 
     def test_default_headers(self):
         self.assertEqual(self.default_headers, self.connection._headers)
@@ -576,3 +604,202 @@ class ConnectionTest(unittest.TestCase):
             self.assertEqual(e.msg, 'Error 500')
         else:
             self.fail()
+
+    @mock.patch.object(mmap, 'mmap')
+    @mock.patch.object(shutil, 'copyfileobj')
+    @mock.patch.object(os.path, 'getsize')
+    @mock.patch.object(os, 'remove')
+    def test_post_multipart_should_put_request(self, mock_rm, mock_path_size, mock_copy, mock_mmap):
+        self.__prepare_connection_to_post_multipart()
+        mock_mmap.return_value = self.__create_fake_mapped_file()
+
+        self.connection.post_multipart(uri='/rest/resources/',
+                                       fields=None,
+                                       files="/a/path/filename.zip",
+                                       baseName="archive.zip")
+
+        internal_conn = self.connection.get_connection.return_value
+        internal_conn.putrequest.assert_called_once_with('POST', '/rest/resources/')
+
+    @mock.patch.object(mmap, 'mmap')
+    @mock.patch.object(shutil, 'copyfileobj')
+    @mock.patch.object(os.path, 'getsize')
+    @mock.patch.object(os, 'remove')
+    def test_post_multipart_should_put_headers(self, mock_rm, mock_path_size, mock_copy, mock_mmap):
+        self.__prepare_connection_to_post_multipart()
+        mock_mmap.return_value = self.__create_fake_mapped_file()
+        mock_path_size.return_value = 2621440  # 2.5 MB
+
+        self.connection.post_multipart(uri='/rest/resources/',
+                                       fields=None,
+                                       files="/a/path/filename.zip",
+                                       baseName="archive.zip")
+
+        expected_putheader_calls = [
+            mock.call('uploadfilename', 'archive.zip'),
+            mock.call('auth', 'LTIxNjUzMjc0OTUzzHoF7eEkZLEUWVA-fuOZP4VGA3U8e67E'),
+            mock.call('Content-Type', 'multipart/form-data; boundary=----------ThIs_Is_tHe_bouNdaRY_$'),
+            mock.call('Content-Length', 2621440),
+            mock.call('X-API-Version', 300)]
+
+        internal_conn = self.connection.get_connection.return_value
+        internal_conn.putheader.assert_has_calls(expected_putheader_calls)
+
+    @mock.patch.object(mmap, 'mmap')
+    @mock.patch.object(shutil, 'copyfileobj')
+    @mock.patch.object(os.path, 'getsize')
+    @mock.patch.object(os, 'remove')
+    def test_post_multipart_should_read_file_in_chunks_of_1mb(self, mock_rm, mock_path_size, mock_copy, mock_mmap):
+        self.__prepare_connection_to_post_multipart()
+        mock_mmap.return_value = self.__create_fake_mapped_file()
+
+        self.connection.post_multipart(uri='/rest/resources/',
+                                       fields=None,
+                                       files="/a/path/filename.zip",
+                                       baseName="archive.zip")
+
+        expected_mmap_read_calls = [
+            mock.call(1048576),
+            mock.call(1048576),
+            mock.call(1048576)]
+
+        mock_mmap.return_value.read.assert_has_calls(expected_mmap_read_calls)
+
+    @mock.patch.object(mmap, 'mmap')
+    @mock.patch.object(shutil, 'copyfileobj')
+    @mock.patch.object(os.path, 'getsize')
+    @mock.patch.object(os, 'remove')
+    def test_post_multipart_should_send_file_in_chuncks_of_1mb(self, mock_rm, mock_path_size, mock_copy, mock_mmap):
+        self.__prepare_connection_to_post_multipart()
+        mock_mmap.return_value = self.__create_fake_mapped_file()
+
+        self.connection.post_multipart(uri='/rest/resources/',
+                                       fields=None,
+                                       files="/a/path/filename.zip",
+                                       baseName="archive.zip")
+
+        expected_conn_send_calls = [
+            mock.call('data chunck 1'),
+            mock.call('data chunck 2'),
+            mock.call('data chunck 3')]
+
+        internal_conn = self.connection.get_connection.return_value
+        internal_conn.send.assert_has_calls(expected_conn_send_calls)
+
+    @mock.patch.object(mmap, 'mmap')
+    @mock.patch.object(shutil, 'copyfileobj')
+    @mock.patch.object(os.path, 'getsize')
+    @mock.patch.object(os, 'remove')
+    def test_post_multipart_should_remove_temp_encoded_file(self, mock_rm, mock_path_size, mock_copy, mock_mmap):
+        self.__prepare_connection_to_post_multipart()
+        mock_mmap.return_value = self.__create_fake_mapped_file()
+
+        self.connection.post_multipart(uri='/rest/resources/',
+                                       fields=None,
+                                       files="/a/path/filename.zip",
+                                       baseName="archive.zip")
+
+        mock_rm.assert_called_once_with('/a/path/filename.zip.b64')
+
+    @mock.patch.object(mmap, 'mmap')
+    @mock.patch.object(shutil, 'copyfileobj')
+    @mock.patch.object(os.path, 'getsize')
+    @mock.patch.object(os, 'remove')
+    def test_post_multipart_should_raise_exception_when_response_status_400(self, mock_rm, mock_path_size, mock_copy,
+                                                                            mock_mmap):
+        self.__prepare_connection_to_post_multipart(response_status=400)
+        mock_mmap.return_value = self.__create_fake_mapped_file()
+
+        try:
+            self.connection.post_multipart(uri='/rest/resources/',
+                                           fields=None,
+                                           files="/a/path/filename.zip",
+                                           baseName="archive.zip")
+        except HPOneViewException as e:
+            self.assertEqual(e.msg, "An error occurred.")
+        else:
+            self.fail()
+
+    @mock.patch.object(mmap, 'mmap')
+    @mock.patch.object(shutil, 'copyfileobj')
+    @mock.patch.object(os.path, 'getsize')
+    @mock.patch.object(os, 'remove')
+    def test_post_multipart_should_return_response_and_body_when_response_status_200(self, mock_rm, mock_path_size,
+                                                                                     mock_copy, mock_mmap):
+        self.__prepare_connection_to_post_multipart()
+        mock_mmap.return_value = self.__create_fake_mapped_file()
+
+        response, body = self.connection.post_multipart(uri='/rest/resources/',
+                                                        fields=None,
+                                                        files="/a/path/filename.zip",
+                                                        baseName="archive.zip")
+
+        self.assertEqual(body, self.expected_response_body)
+        self.assertEqual(response.status, 200)
+
+    @mock.patch.object(mmap, 'mmap')
+    @mock.patch.object(shutil, 'copyfileobj')
+    @mock.patch.object(os.path, 'getsize')
+    @mock.patch.object(os, 'remove')
+    @mock.patch.object(json, 'loads')
+    def test_post_multipart_should_handle_json_load_exception(self, mock_json_loads, mock_rm, mock_path_size, mock_copy,
+                                                              mock_mmap):
+        self.__prepare_connection_to_post_multipart()
+        mock_mmap.return_value = self.__create_fake_mapped_file()
+        mock_json_loads.side_effect = ValueError("Invalid JSON")
+
+        response, body = self.connection.post_multipart(uri='/rest/resources/',
+                                                        fields=None,
+                                                        files="/a/path/filename.zip",
+                                                        baseName="archive.zip")
+
+        self.assertTrue(body)
+        self.assertEqual(response.status, 200)
+
+    @mock.patch.object(connection, 'post_multipart')
+    def test_post_multipart_with_response_handling_when_status_202_without_task(self, mock_post_multipart):
+        mock_response = mock.Mock(status=202)
+        mock_response.getheader.return_value = None
+        mock_post_multipart.return_value = mock_response, "content"
+
+        task, body = self.connection.post_multipart_with_response_handling("uri", "filepath", "basename")
+
+        self.assertFalse(task)
+        self.assertEqual(body, "content")
+
+    @mock.patch.object(connection, 'post_multipart')
+    @mock.patch.object(connection, 'get')
+    def test_post_multipart_with_response_handling_when_status_202_with_task(self, mock_get, mock_post_multipart):
+        fake_task = {"category": "tasks"}
+        mock_response = mock.Mock(status=202)
+        mock_response.getheader.return_value = "/rest/tasks/taskid"
+        mock_post_multipart.return_value = mock_response, "content"
+        mock_get.return_value = fake_task
+
+        task, body = self.connection.post_multipart_with_response_handling("uri", "filepath", "basename")
+
+        self.assertEqual(task, fake_task)
+        self.assertEqual(body, "content")
+
+    @mock.patch.object(connection, 'post_multipart')
+    def test_post_multipart_with_response_handling_when_status_200_and_body_is_task(self, mock_post_multipart):
+        fake_task = {"category": "tasks"}
+        mock_post_multipart.return_value = mock.MagicMock(status=200), fake_task
+
+        task, body = self.connection.post_multipart_with_response_handling("uri", "filepath", "basename")
+
+        self.assertEqual(task, fake_task)
+        self.assertEqual(body, fake_task)
+
+    @mock.patch.object(connection, 'post_multipart')
+    def test_post_multipart_with_response_handling_when_status_200_and_body_is_not_task(self, mock_post_multipart):
+        mock_post_multipart.return_value = mock.MagicMock(status=200), "content"
+
+        task, body = self.connection.post_multipart_with_response_handling("uri", "filepath", "basename")
+
+        self.assertFalse(task)
+        self.assertEqual(body, "content")
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -33,6 +33,8 @@ standard_library.install_aliases()
 
 
 import logging
+import os
+
 from urllib.parse import quote
 from hpOneView.resources.task_monitor import TaskMonitor
 from hpOneView.exceptions import HPOneViewUnknownType, HPOneViewException
@@ -398,6 +400,33 @@ class ResourceClient(object):
         resource = self.merge_default_values(resource, default_values)
 
         return self.__do_post(uri, resource, timeout, custom_headers)
+
+    def upload(self, file_path, uri=None, timeout=-1):
+        """
+        Makes a multipart request.
+
+        Args:
+            file_path:
+                File to upload.
+            uri:
+                A specific URI (optional).
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            dict: Response body.
+        """
+        if not uri:
+            uri = self._uri
+
+        upload_file_name = os.path.basename(file_path)
+        task, entity = self._connection.post_multipart_with_response_handling(uri, file_path, upload_file_name)
+
+        if not task:
+            return entity
+
+        return self._task_monitor.wait_for_task(task, timeout)
 
     def patch(self, id_or_uri, operation, path, value, timeout=-1, custom_headers=None):
         """

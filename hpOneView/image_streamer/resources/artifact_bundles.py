@@ -32,8 +32,6 @@ standard_library.install_aliases()
 
 from hpOneView.resources.resource import ResourceClient
 from hpOneView.common import extract_id_from_uri
-from hpOneView.exceptions import HPOneViewException
-import os
 
 
 class ArtifactBundles(object):
@@ -205,15 +203,9 @@ class ArtifactBundles(object):
             file_path (str): The File Path to restore the Artifact Bundle.
 
         Returns:
-            bool: Successfully uploaded.
+            dict: Artifact bundle.
         """
-        upload_file_name = os.path.basename(file_path)
-
-        response, body = self._connection.post_multipart(self.URI, None, file_path, upload_file_name)
-        if response.status >= 400:
-            raise HPOneViewException(body)
-
-        return body == "SUCCESS"
+        return self._client.upload(file_path)
 
     def upload_backup_bundle_from_file(self, file_path, deployment_groups_id_or_uri):
         """
@@ -227,19 +219,13 @@ class ArtifactBundles(object):
                 OneView, just stops waiting for its completion.
 
         Returns:
-            bool: Successfully uploaded.
+            dict: Deployment group.
         """
         deployment_groups_uri = self.build_deployment_group_uri(deployment_groups_id_or_uri)
 
-        upload_file_name = os.path.basename(file_path)
-
         uri = self.BACKUP_ARCHIVE_PATH + "?deploymentGrpUri=" + deployment_groups_uri
 
-        response, body = self._connection.post_multipart(uri, None, file_path, upload_file_name)
-        if response.status >= 400:
-            raise HPOneViewException(body)
-
-        return body == "SUCCESS"
+        return self._client.upload(file_path, uri)
 
     def create(self, resource, timeout=-1):
         """

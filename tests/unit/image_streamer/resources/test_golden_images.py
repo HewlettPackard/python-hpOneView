@@ -29,7 +29,6 @@ import io
 from hpOneView.connection import connection
 from hpOneView.image_streamer.resources.golden_images import GoldenImages
 from hpOneView.resources.resource import ResourceClient
-from hpOneView.exceptions import HPOneViewException
 from tests.test_utils import mock_builtin
 
 
@@ -111,71 +110,44 @@ class GoldenImagesTest(TestCase):
 
         mock_delete.assert_called_once_with(id, force=True, timeout=-1)
 
-    @mock.patch.object(connection, 'post_multipart')
+    @mock.patch.object(ResourceClient, 'upload')
     def test_upload_post_multipart_called_once(self, mock_upload):
         information = {
             "name": "GoldenImageName",
             "description": "Description of this Golden Image",
         }
+        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
 
-        filename = "test/SPPgen9snap6.2015_0405.81.iso"
-        response = mock.MagicMock(status=200)
-        mock_upload.return_value = response, "SUCCESS"
-
-        self._client.upload(filename, information)
+        self._client.upload(filepath, information)
 
         expected_uri = '/rest/golden-images?name=GoldenImageName&description=Description%20of%20this%20Golden%20Image'
 
-        mock_upload.assert_called_once_with(expected_uri, None, filename, 'SPPgen9snap6.2015_0405.81.iso')
+        mock_upload.assert_called_once_with(filepath, expected_uri)
 
-    @mock.patch.object(connection, 'post_multipart')
+    @mock.patch.object(ResourceClient, 'upload')
     def test_upload_without_description(self, mock_upload):
         information = {
             "name": "GoldenImageName",
         }
 
-        filename = "test/SPPgen9snap6.2015_0405.81.iso"
-        response = mock.MagicMock(status=200)
-        mock_upload.return_value = response, "SUCCESS"
+        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
 
-        self._client.upload(filename, information)
+        self._client.upload(filepath, information)
 
         expected_uri = '/rest/golden-images?name=GoldenImageName&description='
 
-        mock_upload.assert_called_once_with(expected_uri, None, filename, 'SPPgen9snap6.2015_0405.81.iso')
+        mock_upload.assert_called_once_with(filepath, expected_uri)
 
-    @mock.patch.object(connection, 'post_multipart')
+    @mock.patch.object(ResourceClient, 'upload')
     def test_upload_with_empty_information(self, mock_upload):
         information = {}
+        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
 
-        filename = "test/SPPgen9snap6.2015_0405.81.iso"
-        response = mock.MagicMock(status=200)
-        mock_upload.return_value = response, "SUCCESS"
-
-        self._client.upload(filename, information)
+        self._client.upload(filepath, information)
 
         expected_uri = '/rest/golden-images?name=&description='
 
-        mock_upload.assert_called_once_with(expected_uri, None, filename, 'SPPgen9snap6.2015_0405.81.iso')
-
-    @mock.patch.object(connection, 'post_multipart')
-    def test_upload_should_raise_exception(self, mock_upload):
-        information = {
-            "name": "GoldenImageName",
-            "description": "Description of this Golden Image",
-        }
-
-        filename = "test/SPPgen9snap6.2015_0405.81.iso"
-        response = mock.MagicMock(status=400)
-        body = {"message": "The file you are attempting to upload is empty."}
-        mock_upload.return_value = response, body
-
-        try:
-            self._client.upload(filename, information)
-        except HPOneViewException as e:
-            self.assertEqual(e.msg, "The file you are attempting to upload is empty.")
-        else:
-            self.fail("Expected exception was not raised")
+        mock_upload.assert_called_once_with(filepath, expected_uri)
 
     @mock.patch.object(connection, 'download_to_stream')
     @mock.patch(mock_builtin('open'))
