@@ -46,7 +46,7 @@ $ pip install hpOneView
 
 ## API Implementation
 
-A status of the HPE OneView REST interfaces that have been implemented in this Python library can be found in the [Wiki section](https://github.com/HewlettPackard/python-hpOneView/wiki/HPE-OneView-API-Version-200-Implementation-Status).
+A status of the HPE OneView REST interfaces that have been implemented in this Python library can be found in the [Wiki section](https://github.com/HewlettPackard/python-hpOneView/wiki/HPE-OneView-API-Implementation-Status).
 
 
 ## SDK Documentation
