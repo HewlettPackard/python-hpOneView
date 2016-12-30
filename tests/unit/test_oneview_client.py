@@ -153,7 +153,7 @@ class OneViewClientTest(unittest.TestCase):
     def test_configured_api_version(self, mock_open, mock_login):
         json_config_content = u"""{
           "ip": "172.16.102.59",
-          "api_version": 300,
+          "api_version": 200,
           "credentials": {
             "userName": "administrator",
             "authLoginDomain": "",
@@ -163,8 +163,8 @@ class OneViewClientTest(unittest.TestCase):
         mock_open.return_value = self.__mock_file_open(json_config_content)
         oneview_client = OneViewClient.from_json_file("config.json")
 
-        self.assertEqual(300, oneview_client.connection._apiVersion)
-        self.assertEqual(300, oneview_client.api_version)
+        self.assertEqual(200, oneview_client.connection._apiVersion)
+        self.assertEqual(200, oneview_client.api_version)
 
     @mock.patch.object(connection, 'login')
     @mock.patch.object(connection, 'set_proxy')
