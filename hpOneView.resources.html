@@ -699,6 +699,32 @@ in OneView; it just stops waiting for its completion.</li>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceClient.upload">
+<code class="descname">upload</code><span class="sig-paren">(</span><em>file_path</em>, <em>uri=None</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a multipart request.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file_path</strong> &#8211; File to upload.</li>
+<li><strong>uri</strong> &#8211; A specific URI (optional).</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Response body.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="function">

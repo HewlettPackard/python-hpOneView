@@ -162,11 +162,6 @@
 
 
 <span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">ResourceClient</span>
-<span class="kn">from</span> <span class="nn">hpOneView.resources.task_monitor</span> <span class="k">import</span> <span class="n">TaskMonitor</span>
-
-<span class="kn">from</span> <span class="nn">hpOneView.exceptions</span> <span class="k">import</span> <span class="n">HPOneViewException</span>
-
-<span class="kn">import</span> <span class="nn">os</span>
 
 
 <div class="viewcode-block" id="FirmwareBundles"><a class="viewcode-back" href="../../../../hpOneView.resources.settings.html#hpOneView.resources.settings.firmware_bundles.FirmwareBundles">[docs]</a><span class="k">class</span> <span class="nc">FirmwareBundles</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -179,7 +174,6 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_task_monitor</span> <span class="o">=</span> <span class="n">TaskMonitor</span><span class="p">(</span><span class="n">con</span><span class="p">)</span>
 
 <div class="viewcode-block" id="FirmwareBundles.upload"><a class="viewcode-back" href="../../../../hpOneView.resources.settings.html#hpOneView.resources.settings.firmware_bundles.FirmwareBundles.upload">[docs]</a>    <span class="k">def</span> <span class="nf">upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -195,12 +189,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">          dict: Information about the updated firmware bundle.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">upload_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-        <span class="n">response</span><span class="p">,</span> <span class="n">body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">post_multipart</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">upload_file_name</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">HPOneViewException</span><span class="p">(</span><span class="n">body</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">))</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_monitor</span><span class="o">.</span><span class="n">wait_for_task</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
