@@ -650,6 +650,20 @@ class ResourceClient(object):
         else:
             return self._uri + "/" + id_or_uri
 
+    def download(self, uri, file_path):
+        """
+        Downloads the contents of the requested URI to a stream.
+
+        Args:
+            uri: URI
+            file_path: File path destination
+
+        Returns:
+            bool: Indicates if the file was successfully downloaded.
+        """
+        with open(file_path, 'wb') as file:
+            return self._connection.download_to_stream(file, uri)
+
     def __validate_resource_uri(self, path):
         if self._uri not in path:
             logger.exception('Get by uri : unrecognized uri: (%s)' % path)

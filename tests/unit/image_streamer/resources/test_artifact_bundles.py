@@ -24,12 +24,10 @@
 from unittest import TestCase
 
 import mock
-import io
 
 from hpOneView.connection import connection
 from hpOneView.image_streamer.resources.artifact_bundles import ArtifactBundles
 from hpOneView.resources.resource import ResourceClient
-from tests.test_utils import mock_builtin
 
 
 class ArtifactBundlesTest(TestCase):
@@ -126,26 +124,41 @@ class ArtifactBundlesTest(TestCase):
 
         mock_get.assert_called_once_with(id_or_uri=uri + '/' + id)
 
-    @mock.patch.object(connection, 'download_to_stream')
-    @mock.patch(mock_builtin('open'))
-    def test_download_called_once(self, mock_open, mock_download):
-        mock_open.return_value = io.StringIO(u"binary data")
+    @mock.patch.object(ResourceClient, 'download')
+    def test_download_called_once_by_id(self, mock_download):
+        destination = '~/image.zip'
+        self._client.download_artifact_bundle('0ABDE00534F', destination)
 
-        self._client.download_artifact_bundle('0ABDE00534F', '~/image.zip')
-        mock_open.assert_called_once_with('~/image.zip', 'wb')
-        mock_download.assert_called_once_with(mock.ANY, mock.ANY)
+        mock_download.assert_called_once_with('/rest/artifact-bundles/download/0ABDE00534F', destination)
 
-    @mock.patch.object(connection, 'download_to_stream')
-    @mock.patch(mock_builtin('open'))
-    def test_download_archive_artifact_bundle_called_once(self, mock_open, mock_download):
-        mock_open.return_value = io.StringIO(u"binary data")
+    @mock.patch.object(ResourceClient, 'download')
+    def test_download_called_once_by_uri(self, mock_download):
+        uri = '/rest/artifact-bundles/0ABDE00534F'
+        destination = '~/image.zip'
 
+        self._client.download_artifact_bundle(uri, destination)
+
+        mock_download.assert_called_once_with('/rest/artifact-bundles/download/0ABDE00534F', destination)
+
+    @mock.patch.object(ResourceClient, 'download')
+    def test_download_archive_artifact_bundle_by_id_called_once(self, mock_download):
         id = '78836581-2b6f-4e26-9969-5667fb5837b4'
         destination = '~/image.zip'
 
         self._client.download_archive_artifact_bundle(id, destination)
-        mock_open.assert_called_once_with(destination, 'wb')
-        mock_download.assert_called_once_with(mock.ANY, mock.ANY)
+
+        expected_uri = '/rest/artifact-bundles/backups/archive/78836581-2b6f-4e26-9969-5667fb5837b4'
+        mock_download.assert_called_once_with(expected_uri, destination)
+
+    @mock.patch.object(ResourceClient, 'download')
+    def test_download_archive_artifact_bundle_by_uri_called_once(self, mock_download):
+        uri = '/rest/artifact-bundles/78836581-2b6f-4e26-9969-5667fb5837b4'
+        destination = '~/image.zip'
+
+        self._client.download_archive_artifact_bundle(uri, destination)
+
+        expected_uri = '/rest/artifact-bundles/backups/archive/78836581-2b6f-4e26-9969-5667fb5837b4'
+        mock_download.assert_called_once_with(expected_uri, destination)
 
     @mock.patch.object(ResourceClient, 'create')
     def test_create_backup_called_once(self, mock_create):
