@@ -111,12 +111,12 @@ class ArtifactBundlesTest(TestCase):
 
         mock_delete.assert_called_once_with(id, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_all_backups_called_once(self, mock_get):
+    @mock.patch.object(ResourceClient, 'get_collection')
+    def test_get_all_backups_called_once(self, mock_get_collection):
         uri = '/rest/artifact-bundles/backups'
         self._client.get_all_backups()
 
-        mock_get.assert_called_once_with(id_or_uri=uri)
+        mock_get_collection.assert_called_once_with(id_or_uri=uri)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_backups_by_id_called_once(self, mock_get):
@@ -154,7 +154,7 @@ class ArtifactBundlesTest(TestCase):
         }
         mock_create.return_value = {}
 
-        self._client.create_backup(information['deploymentGroupURI'])
+        self._client.create_backup(information)
         uri = '/rest/artifact-bundles/backups'
         mock_create.assert_called_once_with(information.copy(), uri=uri, timeout=-1)
 
@@ -181,13 +181,10 @@ class ArtifactBundlesTest(TestCase):
     def test_extract_called_once(self, mock_update):
         mock_update.return_value = {}
 
-        uri = '/rest/artifact-bundles/'
-        id = '78836581-2b6f-4e26-9969-5667fb5837b4'
-
-        uri = {'uri': uri + id}
+        uri = {'uri': '/rest/artifact-bundles/78836581-2b6f-4e26-9969-5667fb5837b4'}
         custom_headers = {'Content-Type': 'text/plain'}
 
-        self._client.extract_bundle(id)
+        self._client.extract_bundle(uri)
 
         mock_update.assert_called_once_with(uri, custom_headers=custom_headers, timeout=-1)
 
@@ -201,7 +198,7 @@ class ArtifactBundlesTest(TestCase):
 
         uri = '/rest/artifact-bundles/backups/archive'
 
-        self._client.extract_backup_bundle(data['deploymentGroupURI'])
+        self._client.extract_backup_bundle(data)
 
         mock_update.assert_called_once_with(data, uri=uri, timeout=-1)
 

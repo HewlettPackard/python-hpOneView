@@ -126,7 +126,7 @@ class ArtifactBundles(object):
         Returns:
             list: A list of Backups for Artifacts Bundle.
         """
-        return self._client.get(id_or_uri=self.BACKUPS_PATH)
+        return self._client.get_collection(id_or_uri=self.BACKUPS_PATH)
 
     def get_backup(self, id_or_uri):
         """
@@ -174,26 +174,20 @@ class ArtifactBundles(object):
         with open(file_path, 'wb') as file:
             return self._connection.download_to_stream(file, uri)
 
-    def create_backup(self, deployment_groups_id_or_uri, timeout=-1):
+    def create_backup(self, resource, timeout=-1):
         """
         Create Backup for Artifacts Bundle specified in the Deployment Groups.
 
         Args:
-            deployment_groups_id_or_uri: ID or URI of the Deployment Groups.
+            resource (dict): Deployment Group to create the backup.
             timeout:
                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
                 OneView, just stops waiting for its completion.
 
         Returns:
-            dict: The Artifact Bundle.
+            dict: A Deployment Group associated with the Artifact Bundle backup.
         """
-        deployment_groups_uri = self.build_deployment_group_uri(deployment_groups_id_or_uri)
-
-        data = {
-            "deploymentGroupURI": deployment_groups_uri
-        }
-
-        return self._client.create(data, uri=self.BACKUPS_PATH, timeout=timeout)
+        return self._client.create(resource, uri=self.BACKUPS_PATH, timeout=timeout)
 
     def upload_bundle_from_file(self, file_path):
         """
@@ -214,14 +208,14 @@ class ArtifactBundles(object):
         Args:
             file_path (str): The File Path to restore the Artifact Bundle.
             deployment_groups_id_or_uri: ID or URI of the Deployment Groups.
-            timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
-                OneView, just stops waiting for its completion.
 
         Returns:
             dict: Deployment group.
         """
-        deployment_groups_uri = self.build_deployment_group_uri(deployment_groups_id_or_uri)
+        deployment_groups_uri = deployment_groups_id_or_uri
+
+        if self.DEPLOYMENT_GROUPS_URI not in deployment_groups_id_or_uri:
+            deployment_groups_uri = self.DEPLOYMENT_GROUPS_URI + deployment_groups_id_or_uri
 
         uri = self.BACKUP_ARCHIVE_PATH + "?deploymentGrpUri=" + deployment_groups_uri
 
@@ -272,12 +266,12 @@ class ArtifactBundles(object):
         """
         return self._client.update(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
-    def extract_bundle(self, id_or_uri, timeout=-1):
+    def extract_bundle(self, resource, timeout=-1):
         """
         Extracts the existing bundle on the appliance and creates all the artifacts.
 
         Args:
-            id_or_uri: ID or URI of the Artifact Bundle.
+            resource (dict): Artifact Bundle to extract.
             timeout:
                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
                 OneView, just stops waiting for its completion.
@@ -285,37 +279,22 @@ class ArtifactBundles(object):
         Returns:
             dict: The Artifact Bundle.
         """
-        id_or_uri = self._client.build_uri(id_or_uri)
+        return self._client.update(resource, timeout=timeout, custom_headers={"Content-Type": "text/plain"})
 
-        data = {
-            "uri": id_or_uri
-        }
-
-        custom_headers = {"Content-Type": "text/plain"}
-        return self._client.update(data, timeout=timeout, custom_headers=custom_headers)
-
-    def extract_backup_bundle(self, deployment_groups_id_or_uri, timeout=-1):
+    def extract_backup_bundle(self, resource, timeout=-1):
         """
         Extracts the existing backup bundle on the appliance and creates all the artifacts.
 
         Args:
-            deployment_groups_id_or_uri: ID or URI of the Deployment Groups.
+            resource (dict): Deployment Group to extract.
             timeout:
                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
                 OneView, just stops waiting for its completion.
 
         Returns:
-            dict: The Artifact Bundle.
+            dict: A Deployment Group associated with the Artifact Bundle backup.
         """
-        deployment_groups_uri = self.build_deployment_group_uri(deployment_groups_id_or_uri)
-
-        data = {
-            "deploymentGroupURI": deployment_groups_uri
-        }
-
-        uri = self.BACKUP_ARCHIVE_PATH
-
-        return self._client.update(data, uri=uri, timeout=timeout)
+        return self._client.update(resource, uri=self.BACKUP_ARCHIVE_PATH, timeout=timeout)
 
     def stop_artifact_creation(self, id_or_uri, task_uri):
         """
@@ -335,10 +314,3 @@ class ArtifactBundles(object):
         uri = self.URI + '/' + extract_id_from_uri(id_or_uri) + self.STOP_CREATION_PATH
 
         return self._client.update(data, uri=uri)
-
-    def build_deployment_group_uri(self, deployment_groups_id_or_uri):
-        if self.DEPLOYMENT_GROUPS_URI not in deployment_groups_id_or_uri:
-            deployment_groups_uri = self.DEPLOYMENT_GROUPS_URI + deployment_groups_id_or_uri
-        else:
-            deployment_groups_uri = deployment_groups_id_or_uri
-        return deployment_groups_uri
