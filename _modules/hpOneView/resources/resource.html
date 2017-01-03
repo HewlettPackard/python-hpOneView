@@ -780,6 +780,20 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">id_or_uri</span></div>
 
+<div class="viewcode-block" id="ResourceClient.download"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceClient.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Downloads the contents of the requested URI to a stream.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            uri: URI</span>
+<span class="sd">            file_path: File path destination</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Indicates if the file was successfully downloaded.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">download_to_stream</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">uri</span><span class="p">)</span></div>
+
     <span class="k">def</span> <span class="nf">__validate_resource_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Get by uri : unrecognized uri: (</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
