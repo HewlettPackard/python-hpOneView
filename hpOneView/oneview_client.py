@@ -95,6 +95,7 @@ from hpOneView.resources.networking.sas_logical_interconnect_groups import SasLo
 from hpOneView.resources.search.labels import Labels
 from hpOneView.resources.activity.alerts import Alerts
 from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPlans
+from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
@@ -165,6 +166,7 @@ class OneViewClient(object):
         self.__alerts = None
         self.__drive_enclures = None
         self.__os_deployment_plans = None
+        self.__certificate_rabbitmq = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -951,3 +953,15 @@ class OneViewClient(object):
         if not self.__os_deployment_plans:
             self.__os_deployment_plans = OsDeploymentPlans(self.__connection)
         return self.__os_deployment_plans
+
+    @property
+    def certificate_rabbitmq(self):
+        """
+        Gets the Certificate RabbitMQ API client.
+
+        Returns:
+            CertificateRabbitMQ:
+        """
+        if not self.__certificate_rabbitmq:
+            self.__certificate_rabbitmq = CertificateRabbitMQ(self.__connection)
+        return self.__certificate_rabbitmq
