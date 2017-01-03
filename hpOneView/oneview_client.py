@@ -38,6 +38,7 @@ import os
 
 from hpOneView.connection import connection
 from hpOneView.image_streamer.image_streamer_client import ImageStreamerClient
+from hpOneView.resources.security.certificate_authority import CertificateAuthority
 from hpOneView.resources.servers.connections import Connections
 from hpOneView.resources.networking.fc_networks import FcNetworks
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
@@ -108,6 +109,7 @@ class OneViewClient(object):
         self.__image_streamer_ip = config.get("image_streamer_ip")
         self.__set_proxy(config)
         self.__connection.login(config["credentials"])
+        self.__certificate_authority = None
         self.__connections = None
         self.__connection_templates = None
         self.__fc_networks = None
@@ -258,6 +260,18 @@ class OneViewClient(object):
                                              self.__connection._apiVersion)
 
         return image_streamer
+
+    @property
+    def certificate_authority(self):
+        """
+        Gets the Certificate Authority API client.
+
+        Returns:
+            CertificateAuthority:
+        """
+        if not self.__certificate_authority:
+            self.__certificate_authority = CertificateAuthority(self.__connection)
+        return self.__certificate_authority
 
     @property
     def connections(self):

@@ -27,6 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.oneview_client import OneViewClient
+from hpOneView.resources.security.certificate_authority import CertificateAuthority
 from hpOneView.resources.data_services.metric_streaming import MetricStreaming
 from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.facilities.racks import Racks
@@ -343,6 +344,16 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_interconnects(self):
         interconnects = self._oneview.interconnects
         self.assertEqual(interconnects, self._oneview.interconnects)
+
+    def test_certificate_authority_has_right_type(self):
+        self.assertIsInstance(self._oneview.certificate_authority, CertificateAuthority)
+
+    def test_certificate_authority_has_value(self):
+        self.assertIsNotNone(self._oneview.certificate_authority)
+
+    def test_lazy_loading_certificate_authority(self):
+        certificates = self._oneview.certificate_authority
+        self.assertEqual(certificates, self._oneview.certificate_authority)
 
     def test_lazy_loading_connections(self):
         connections = self._oneview.connections
