@@ -184,11 +184,6 @@
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.build_deployment_group_uri">
-<code class="descname">build_deployment_group_uri</code><span class="sig-paren">(</span><em>deployment_groups_id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.build_deployment_group_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.build_deployment_group_uri" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.create">
 <code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an Artifact Bundle.</p>
@@ -215,20 +210,20 @@ in OneView, just stop waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.create_backup">
-<code class="descname">create_backup</code><span class="sig-paren">(</span><em>deployment_groups_id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.create_backup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.create_backup" title="Permalink to this definition">¶</a></dt>
+<code class="descname">create_backup</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.create_backup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.create_backup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create Backup for Artifacts Bundle specified in the Deployment Groups.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>deployment_groups_id_or_uri</strong> &#8211; ID or URI of the Deployment Groups.</li>
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Deployment Group to create the backup.</li>
 <li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
 OneView, just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Artifact Bundle.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A Deployment Group associated with the Artifact Bundle backup.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
@@ -313,20 +308,20 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.extract_backup_bundle">
-<code class="descname">extract_backup_bundle</code><span class="sig-paren">(</span><em>deployment_groups_id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.extract_backup_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.extract_backup_bundle" title="Permalink to this definition">¶</a></dt>
+<code class="descname">extract_backup_bundle</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.extract_backup_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.extract_backup_bundle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extracts the existing backup bundle on the appliance and creates all the artifacts.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>deployment_groups_id_or_uri</strong> &#8211; ID or URI of the Deployment Groups.</li>
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Deployment Group to extract.</li>
 <li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
 OneView, just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Artifact Bundle.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A Deployment Group associated with the Artifact Bundle backup.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
@@ -338,14 +333,14 @@ OneView, just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.extract_bundle">
-<code class="descname">extract_bundle</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.extract_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.extract_bundle" title="Permalink to this definition">¶</a></dt>
+<code class="descname">extract_bundle</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.extract_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.extract_bundle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extracts the existing bundle on the appliance and creates all the artifacts.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; ID or URI of the Artifact Bundle.</li>
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Artifact Bundle to extract.</li>
 <li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
 OneView, just stops waiting for its completion.</li>
 </ul>
@@ -549,8 +544,6 @@ in OneView, just stop waiting for its completion.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>file_path</strong> (<em>str</em>) &#8211; The File Path to restore the Artifact Bundle.</li>
 <li><strong>deployment_groups_id_or_uri</strong> &#8211; ID or URI of the Deployment Groups.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
-OneView, just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
