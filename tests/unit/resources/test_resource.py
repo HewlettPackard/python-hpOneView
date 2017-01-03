@@ -20,11 +20,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 ###
-
+import io
 import unittest
-
 import mock
+
 from mock import call
+from tests.test_utils import mock_builtin
 
 from hpOneView.connection import connection
 from hpOneView.exceptions import HPOneViewUnknownType, HPOneViewException
@@ -1195,3 +1196,51 @@ class ResourceClientTest(unittest.TestCase):
         result = self.resource_client.upload(filepath, uri)
 
         self.assertEqual(result, fake_response_body)
+
+    @mock.patch.object(connection, 'download_to_stream')
+    @mock.patch(mock_builtin('open'))
+    def test_download_should_call_download_to_stream_with_given_uri(self, mock_open, mock_download_to_stream):
+        file_path = "~/archive.log"
+        uri = '/rest/testuri/3ec91dd2-0ebb-4484-8b2d-90d065114315'
+        mock_open.return_value = io.StringIO()
+
+        self.resource_client.download(uri, file_path)
+
+        mock_download_to_stream.assert_called_once_with(mock.ANY, uri)
+
+    @mock.patch.object(connection, 'download_to_stream')
+    @mock.patch(mock_builtin('open'))
+    def test_download_should_call_download_to_stream_with_open_file(self, mock_open, mock_download_to_stream):
+        file_path = "~/archive.log"
+        uri = '/rest/testuri/3ec91dd2-0ebb-4484-8b2d-90d065114315'
+        fake_file = io.StringIO()
+        mock_open.return_value = fake_file
+
+        self.resource_client.download(uri, file_path)
+
+        mock_open.assert_called_once_with(file_path, 'wb')
+        mock_download_to_stream.assert_called_once_with(fake_file, mock.ANY)
+
+    @mock.patch.object(connection, 'download_to_stream')
+    @mock.patch(mock_builtin('open'))
+    def test_download_should_return_true_when_success(self, mock_open, mock_download_to_stream):
+        file_path = "~/archive.log"
+        uri = '/rest/testuri/3ec91dd2-0ebb-4484-8b2d-90d065114315'
+        mock_download_to_stream.return_value = True
+        mock_open.return_value = io.StringIO()
+
+        result = self.resource_client.download(uri, file_path)
+
+        self.assertTrue(result)
+
+    @mock.patch.object(connection, 'download_to_stream')
+    @mock.patch(mock_builtin('open'))
+    def test_download_should_return_false_when_error(self, mock_open, mock_download_to_stream):
+        file_path = "~/archive.log"
+        uri = '/rest/testuri/3ec91dd2-0ebb-4484-8b2d-90d065114315'
+        mock_download_to_stream.return_value = False
+        mock_open.return_value = io.StringIO()
+
+        result = self.resource_client.download(uri, file_path)
+
+        self.assertFalse(result)

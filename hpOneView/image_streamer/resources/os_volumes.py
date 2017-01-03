@@ -38,7 +38,6 @@ class OsVolumes(object):
     URI = '/rest/os-volumes'
 
     def __init__(self, con):
-        self._connection = con
         self._client = ResourceClient(con, self.URI)
         self.__default_values = {
             'type': 'OeVolume',
@@ -121,6 +120,4 @@ class OsVolumes(object):
             bool: Indicates if the resource was successfully downloaded.
         """
         uri = self.URI + "/archive/" + extract_id_from_uri(id_or_uri)
-
-        with open(file_path, 'wb') as file:
-            return self._connection.download_to_stream(file, uri)
+        return self._client.download(uri, file_path)

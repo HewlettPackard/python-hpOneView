@@ -40,7 +40,6 @@ class GoldenImages(object):
     URI = '/rest/golden-images'
 
     def __init__(self, con):
-        self._connection = con
         self._client = ResourceClient(con, self.URI)
         self._task_monitor = TaskMonitor(con)
         self.__default_values = {
@@ -120,9 +119,7 @@ class GoldenImages(object):
             bool: Success.
         """
         uri = self.URI + "/archive/" + extract_id_from_uri(id_or_uri)
-
-        with open(file_path, 'wb') as file:
-            return self._connection.download_to_stream(file, uri)
+        return self._client.download(uri, file_path)
 
     def download(self, id_or_uri, file_path):
         """
@@ -136,9 +133,7 @@ class GoldenImages(object):
             bool: Successfully downloaded.
         """
         uri = self.URI + "/download/" + extract_id_from_uri(id_or_uri)
-
-        with open(file_path, 'wb') as file:
-            return self._connection.download_to_stream(file, uri)
+        return self._client.download(uri, file_path)
 
     def get(self, id_or_uri):
         """

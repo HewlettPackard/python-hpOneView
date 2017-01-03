@@ -48,7 +48,6 @@ class ArtifactBundles(object):
     }
 
     def __init__(self, con):
-        self._connection = con
         self._client = ResourceClient(con, self.URI)
         self.__default_values = {
             'type': 'ArtifactsBundle',
@@ -154,9 +153,7 @@ class ArtifactBundles(object):
         """
 
         uri = self.BACKUP_ARCHIVE_PATH + '/' + extract_id_from_uri(id_or_uri)
-
-        with open(file_path, 'wb') as file:
-            return self._connection.download_to_stream(file, uri)
+        return self._client.download(uri, file_path)
 
     def download_artifact_bundle(self, id_or_uri, file_path):
         """
@@ -170,9 +167,7 @@ class ArtifactBundles(object):
             bool: Successfully downloaded.
         """
         uri = self.DOWNLOAD_PATH + '/' + extract_id_from_uri(id_or_uri)
-
-        with open(file_path, 'wb') as file:
-            return self._connection.download_to_stream(file, uri)
+        return self._client.download(uri, file_path)
 
     def create_backup(self, resource, timeout=-1):
         """
