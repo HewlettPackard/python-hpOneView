@@ -40,6 +40,7 @@ from hpOneView.image_streamer.resources.build_plans import BuildPlans
 from hpOneView.image_streamer.resources.os_volumes import OsVolumes
 from hpOneView.image_streamer.resources.deployment_plans import DeploymentPlans
 from hpOneView.image_streamer.resources.artifact_bundles import ArtifactBundles
+from hpOneView.image_streamer.resources.deployment_groups import DeploymentGroups
 
 
 class ImageStreamerClient(object):
@@ -52,6 +53,7 @@ class ImageStreamerClient(object):
         self.__os_volumes = None
         self.__deployment_plans = None
         self.__artifact_bundles = None
+        self.__deployment_groups = None
 
     @property
     def connection(self):
@@ -134,3 +136,15 @@ class ImageStreamerClient(object):
         if not self.__artifact_bundles:
             self.__artifact_bundles = ArtifactBundles(self.__connection)
         return self.__artifact_bundles
+
+    @property
+    def deployment_groups(self):
+        """
+        Gets the Deployment Groups API client.
+
+        Returns:
+            DeploymentGroups:
+        """
+        if not self.__deployment_groups:
+            self.__deployment_groups = DeploymentGroups(self.__connection)
+        return self.__deployment_groups
