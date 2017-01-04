@@ -226,6 +226,7 @@
 <span class="kn">from</span> <span class="nn">hpOneView.resources.search.labels</span> <span class="k">import</span> <span class="n">Labels</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.activity.alerts</span> <span class="k">import</span> <span class="n">Alerts</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.uncategorized.os_deployment_plans</span> <span class="k">import</span> <span class="n">OsDeploymentPlans</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.security.certificate_rabbitmq</span> <span class="k">import</span> <span class="n">CertificateRabbitMQ</span>
 
 <span class="n">ONEVIEW_CLIENT_INVALID_PROXY</span> <span class="o">=</span> <span class="s1">&#39;Invalid Proxy format&#39;</span>
 
@@ -297,6 +298,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__alerts</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__drive_enclures</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__os_deployment_plans</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__certificate_rabbitmq</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="c1"># TODO: Implement: con.set_trusted_ssl_bundle(args.cert)</span>
 
     <span class="nd">@classmethod</span>
@@ -1094,7 +1096,19 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__os_deployment_plans</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__os_deployment_plans</span> <span class="o">=</span> <span class="n">OsDeploymentPlans</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__os_deployment_plans</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__os_deployment_plans</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">certificate_rabbitmq</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Certificate RabbitMQ API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            CertificateRabbitMQ:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__certificate_rabbitmq</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__certificate_rabbitmq</span> <span class="o">=</span> <span class="n">CertificateRabbitMQ</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__certificate_rabbitmq</span></div>
 </pre></div>
 
            </div>
