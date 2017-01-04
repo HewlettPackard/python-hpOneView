@@ -12,6 +12,7 @@ Subpackages
     hpOneView.resources.fc_sans
     hpOneView.resources.networking
     hpOneView.resources.search
+    hpOneView.resources.security
     hpOneView.resources.servers
     hpOneView.resources.settings
     hpOneView.resources.storage

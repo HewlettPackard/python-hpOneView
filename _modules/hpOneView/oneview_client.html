@@ -168,6 +168,7 @@
 
 <span class="kn">from</span> <span class="nn">hpOneView.connection</span> <span class="k">import</span> <span class="n">connection</span>
 <span class="kn">from</span> <span class="nn">hpOneView.image_streamer.image_streamer_client</span> <span class="k">import</span> <span class="n">ImageStreamerClient</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.security.certificate_authority</span> <span class="k">import</span> <span class="n">CertificateAuthority</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.servers.connections</span> <span class="k">import</span> <span class="n">Connections</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.networking.fc_networks</span> <span class="k">import</span> <span class="n">FcNetworks</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.networking.fcoe_networks</span> <span class="k">import</span> <span class="n">FcoeNetworks</span>
@@ -238,6 +239,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__image_streamer_ip</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;image_streamer_ip&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__set_proxy</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;credentials&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__certificate_authority</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__connections</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__connection_templates</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__fc_networks</span> <span class="o">=</span> <span class="kc">None</span>
@@ -388,6 +390,18 @@
                                              <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">_apiVersion</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">image_streamer</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">certificate_authority</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Certificate Authority API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            CertificateAuthority:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__certificate_authority</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__certificate_authority</span> <span class="o">=</span> <span class="n">CertificateAuthority</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__certificate_authority</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">connections</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
