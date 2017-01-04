@@ -63,6 +63,7 @@ from hpOneView.resources.networking.internal_link_sets import InternalLinkSets
 from hpOneView.resources.search.labels import Labels
 from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPlans
 from hpOneView.resources.activity.alerts import Alerts
+from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
 from tests.test_utils import mock_builtin
 
 OS_ENVIRON_CONFIG_MINIMAL = {
@@ -640,3 +641,10 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_os_deployment_plans(self):
         os_deployment_plans = self._oneview.os_deployment_plans
         self.assertEqual(os_deployment_plans, self._oneview.os_deployment_plans)
+
+    def test_certificate_rabbitmq_has_right_type(self):
+        self.assertIsInstance(self._oneview.certificate_rabbitmq, CertificateRabbitMQ)
+
+    def test_lazy_loading_certificate_rabbitmq(self):
+        certificate_rabbitmq = self._oneview.certificate_rabbitmq
+        self.assertEqual(certificate_rabbitmq, self._oneview.certificate_rabbitmq)
