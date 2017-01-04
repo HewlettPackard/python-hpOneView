@@ -52,43 +52,47 @@ certificate_self_signed_client = {
 }
 
 
-# Generate a CA Signed Client
-print('Generate a CA Signed Client')
+# Generate a CA Signed Certificate
+print('Generate a CA Signed Certificate')
 try:
     response = oneview_client.certificate_rabbitmq.generate(certificate_ca_signed_client)
     pprint(response)
-except HPOneViewException:
-    print("The existing certificate is still valid. "
-          "A new certificate can not be issued until it is expired or revoked by the Certificate Authority.")
+except HPOneViewException as e:
+    print (e.msg)
+    if e.oneview_response:
+        print e.oneview_response.get('recommendedActions')
 
-# Generate a Self Signed Client
-print('Generate a Self Signed Client')
+
+# Generate a Self Signed Certificate
+print('\nGenerate a Self Signed Certificate')
 try:
     response = oneview_client.certificate_rabbitmq.generate(certificate_self_signed_client)
     pprint(response)
-except HPOneViewException:
-    print("The existing certificate is still valid. "
-          "A new certificate can not be issued until it is expired or revoked by the Certificate Authority.")
+except HPOneViewException as e:
+    print (e.msg)
+    if e.oneview_response:
+        print e.oneview_response.get('recommendedActions')
 
 
 # Get an Alias Name
-print('Get an Alias Name')
+print('\nGet an Alias Name')
 response = oneview_client.certificate_rabbitmq.get_alias_name('default')
 pprint(response)
 
 
 # Get a Key Pair
-print('Get a Key Pair')
+print('\nGet a Key Pair')
 response = oneview_client.certificate_rabbitmq.get_key_pair('default')
 pprint(response)
 
 
 # Get Keys in Base64 format
-print('Get Keys in Base64 format')
+print('\nGet Keys in Base64 format')
 response = oneview_client.certificate_rabbitmq.get_keys('default', 'Base64')
 pprint(response)
 
-# Get Keys
-print('Get Keys in PKCS12 format')
+
+# Get Keys in PKCS12 format
+print('\nGet Keys in PKCS12 format')
 response = oneview_client.certificate_rabbitmq.get_keys('default', 'PKCS12')
 pprint(response)
