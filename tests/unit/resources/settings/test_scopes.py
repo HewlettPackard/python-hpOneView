@@ -39,11 +39,12 @@ class ScopesTest(TestCase):
 
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_all(self, mock_get_all):
-        filter_by = 'name=TestName'
         sort = 'name:ascending'
+        query = 'name eq "TestName"'
+        view = 'expand'
 
-        self.resource.get_all(2, 500, filter_by, sort)
-        mock_get_all.assert_called_once_with(2, 500, filter=filter_by, sort=sort)
+        self.resource.get_all(2, 500, sort, query, view)
+        mock_get_all.assert_called_once_with(2, 500, sort=sort, query=query, view=view)
 
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_by_name_should_return_scope_when_found(self, mock_get_all):

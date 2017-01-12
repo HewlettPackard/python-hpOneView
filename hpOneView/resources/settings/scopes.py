@@ -51,7 +51,7 @@ class Scopes(object):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
 
-    def get_all(self, start=0, count=-1, filter='', sort=''):
+    def get_all(self, start=0, count=-1, sort='', query='', view=''):
         """
          Gets a list of scopes.
 
@@ -63,17 +63,21 @@ class Scopes(object):
                 The number of resources to return. A count of -1 requests all items.
                 The actual number of items in the response might differ from the requested
                 count if the sum of start and count exceeds the total number of items.
-            filter (list or str):
-                A general filter/query string to narrow the list of items returned. The
-                default is no filter; all resources are returned.
             sort:
                 The sort order of the returned data set. By default, the sort order is based
                 on create time with the oldest entry first.
+            query:
+                A general query string to narrow the list of resources returned. The default
+                is no query - all resources are returned.
+            view:
+                 Returns a specific subset of the attributes of the resource or collection, by
+                 specifying the name of a predefined view. The default view is expand (show all
+                 attributes of the resource and all elements of collections of resources).
 
         Returns:
             list: A list of scopes.
         """
-        return self._client.get_all(start, count, filter=filter, sort=sort)
+        return self._client.get_all(start, count, sort=sort, query=query, view=view)
 
     def get(self, id_or_uri):
         """
