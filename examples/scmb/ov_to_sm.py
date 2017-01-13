@@ -22,13 +22,10 @@
 # THE SOFTWARE.
 ###
 
-import sys
-if sys.version_info < (3, 4):
-    raise Exception('Must use Python 3.4 or later')
-
 from hpOneView import *
 from functools import partial
 import amqp
+import amqp.spec
 import json
 import ssl
 import datetime
@@ -90,7 +87,6 @@ def sev_to_urgency(sev):
 
 
 def new_incident(desc, sev):
-
     body = {'Incident': {'Area': 'hardware',
                          'AssignmentGroup': 'Service Manager',
                          'Category': 'incident',
@@ -211,6 +207,7 @@ def recv(host, route):
 
     # Connect to RabbitMQ
     conn = amqp.Connection(dest, login_method='EXTERNAL', ssl=ssl_options)
+    conn.connect()
 
     ch = conn.channel()
     qname, _, _ = ch.queue_declare()
@@ -219,7 +216,7 @@ def recv(host, route):
 
     # Start listening for messages
     while ch.callbacks:
-        ch.wait()
+        ch.wait(amqp.spec.Queue.BindOk)
 
     ch.close()
     conn.close()
@@ -267,6 +264,11 @@ def getRabbitKp(sec):
 
 def main():
     global smhost, smhead, act
+
+    if amqp.VERSION < (2, 1, 4):
+        print("WARNING: This script has been tested only with amqp 2.1.4, "
+              "we cannot guarantee that it will work with a lower version.\n")
+
     parser = argparse.ArgumentParser(add_help=True, description='Usage')
     parser.add_argument('-a', '--appliance', dest='host', required=True,
                         help='HPE OneView Appliance hostname or IP')
@@ -322,9 +324,11 @@ def main():
 
     recv(args.host, args.route)
 
+
 if __name__ == '__main__':
     import sys
     import argparse
+
     sys.exit(main())
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
