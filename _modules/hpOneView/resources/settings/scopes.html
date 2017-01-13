@@ -181,7 +181,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Scopes.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.settings.html#hpOneView.resources.settings.scopes.Scopes.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="Scopes.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.settings.html#hpOneView.resources.settings.scopes.Scopes.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">         Gets a list of scopes.</span>
 
@@ -193,17 +193,21 @@
 <span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
 <span class="sd">                The actual number of items in the response might differ from the requested</span>
 <span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
-<span class="sd">            filter (list or str):</span>
-<span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
-<span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">            sort:</span>
 <span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
 <span class="sd">                on create time with the oldest entry first.</span>
+<span class="sd">            query:</span>
+<span class="sd">                A general query string to narrow the list of resources returned. The default</span>
+<span class="sd">                is no query - all resources are returned.</span>
+<span class="sd">            view:</span>
+<span class="sd">                 Returns a specific subset of the attributes of the resource or collection, by</span>
+<span class="sd">                 specifying the name of a predefined view. The default view is expand (show all</span>
+<span class="sd">                 attributes of the resource and all elements of collections of resources).</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of scopes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Scopes.get"><a class="viewcode-back" href="../../../../hpOneView.resources.settings.html#hpOneView.resources.settings.scopes.Scopes.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
