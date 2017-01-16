@@ -31,7 +31,6 @@ from future.utils import lmap
 
 standard_library.install_aliases()
 
-
 import logging
 import os
 
@@ -508,7 +507,14 @@ class ResourceClient(object):
                      (uri, field, str(value)))
 
         filter = "\"{0}='{1}'\"".format(field, value)
-        return self.get_all(filter=filter, uri=uri)
+        results = self.get_all(filter=filter, uri=uri)
+
+        # Workaround when the OneView filter does not work, it will filter again
+        if "." not in field:
+            # This filter only work for the first level
+            results = [item for item in results if str(item.get(field, '')).lower() == value.lower()]
+
+        return results
 
     def get_by_name(self, name):
         """
