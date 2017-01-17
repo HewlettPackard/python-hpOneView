@@ -190,6 +190,17 @@ class ArtifactBundlesTest(TestCase):
 
         mock_upload.assert_called_once_with(filepath, expected_uri)
 
+    @mock.patch.object(ResourceClient, 'upload')
+    def test_upload_backup_artifact_bundle_called_once_with_id(self, mock_upload):
+        filepath = "~/HPE-ImageStreamer-Developer-2016-09-12.zip"
+        deployment_groups = "00c1344d-e4dd-43c3-a733-1664e159a36f"
+
+        self._client.upload_backup_bundle_from_file(filepath, deployment_groups)
+
+        expected_uri = '/rest/artifact-bundles/backups/archive?' \
+                       'deploymentGrpUri=/rest/deployment-groups/00c1344d-e4dd-43c3-a733-1664e159a36f'
+        mock_upload.assert_called_once_with(filepath, expected_uri)
+
     @mock.patch.object(ResourceClient, 'update')
     def test_extract_called_once(self, mock_update):
         mock_update.return_value = {}
