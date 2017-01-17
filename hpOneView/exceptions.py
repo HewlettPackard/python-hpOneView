@@ -67,18 +67,65 @@ class HPOneViewException(Exception):
 
 
 class HPOneViewInvalidResource(HPOneViewException):
+    """
+    OneView Invalid Resource Exception.
+
+    Attributes:
+       msg (str): Exception message.
+    """
     pass
 
 
 class HPOneViewTaskError(HPOneViewException):
+    """
+    OneView Task Error Exception.
+
+    Attributes:
+       msg (str): Exception message.
+       error_code (str): A code which uniquely identifies the specific error.
+    """
     def __init__(self, msg, error_code=None):
         super(HPOneViewTaskError, self).__init__(msg)
         self.error_code = error_code
 
 
 class HPOneViewUnknownType(HPOneViewException):
+    """
+    OneView Unknown Type Error.
+
+    Attributes:
+       msg (str): Exception message.
+    """
     pass
 
 
 class HPOneViewTimeout(HPOneViewException):
+    """
+    OneView Timeout Exception.
+
+    Attributes:
+       msg (str): Exception message.
+    """
+    pass
+
+
+class HPOneViewValueError(HPOneViewException):
+    """
+    OneView Value Error.
+    The exception is raised when the data contains an inappropriate value.
+
+    Attributes:
+       msg (str): Exception message.
+    """
+    pass
+
+
+class HPOneViewResourceNotFound(HPOneViewException):
+    """
+    OneView Resource Not Found Exception.
+    The exception is raised when an associated resource was not found.
+
+    Attributes:
+       msg (str): Exception message.
+    """
     pass

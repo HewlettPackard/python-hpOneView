@@ -22,12 +22,18 @@
 ###
 import unittest
 
-from hpOneView.exceptions import HPOneViewException, HPOneViewInvalidResource, HPOneViewUnknownType, HPOneViewTaskError
+from hpOneView.exceptions import HPOneViewException
+from hpOneView.exceptions import HPOneViewInvalidResource
+from hpOneView.exceptions import HPOneViewUnknownType
+from hpOneView.exceptions import HPOneViewTaskError
+from hpOneView.exceptions import HPOneViewResourceNotFound
+from hpOneView.exceptions import HPOneViewValueError
 
 
 class ExceptionsTest(unittest.TestCase):
     def test_exception_constructor_with_string(self):
         exception = HPOneViewException("A message string")
+
         self.assertEqual(exception.msg, "A message string")
         self.assertEqual(exception.oneview_response, None)
         self.assertEqual(exception.args[0], "A message string")
@@ -35,6 +41,7 @@ class ExceptionsTest(unittest.TestCase):
 
     def test_exception_constructor_with_valid_dict(self):
         exception = HPOneViewException({'message': "A message string"})
+
         self.assertEqual(exception.msg, "A message string")
         self.assertEqual(exception.oneview_response, {'message': "A message string"})
         self.assertEqual(exception.args[0], "A message string")
@@ -42,6 +49,7 @@ class ExceptionsTest(unittest.TestCase):
 
     def test_exception_constructor_with_invalid_dict(self):
         exception = HPOneViewException({'msg': "A message string"})
+
         self.assertEqual(exception.msg, None)
         self.assertEqual(exception.oneview_response, {'msg': "A message string"})
         self.assertEqual(exception.args[0], None)
@@ -49,6 +57,7 @@ class ExceptionsTest(unittest.TestCase):
 
     def test_exception_constructor_with_invalid_type(self):
         exception = HPOneViewException(['List, item 1', "List, item 2: A message string"])
+
         self.assertEqual(exception.msg, None)
         self.assertEqual(exception.oneview_response, ['List, item 1', "List, item 2: A message string"])
         self.assertEqual(exception.args[0], None)
@@ -56,6 +65,8 @@ class ExceptionsTest(unittest.TestCase):
 
     def test_invalid_resource_exception_inheritance(self):
         exception = HPOneViewInvalidResource({'message': "A message string"})
+
+        self.assertIsInstance(exception, HPOneViewException)
         self.assertEqual(exception.msg, "A message string")
         self.assertEqual(exception.oneview_response, {'message': "A message string"})
         self.assertEqual(exception.args[0], "A message string")
@@ -63,6 +74,8 @@ class ExceptionsTest(unittest.TestCase):
 
     def test_unknown_type_exception_inheritance_with_string(self):
         exception = HPOneViewUnknownType("A message string")
+
+        self.assertIsInstance(exception, HPOneViewException)
         self.assertEqual(exception.msg, "A message string")
         self.assertEqual(exception.oneview_response, None)
         self.assertEqual(exception.args[0], "A message string")
@@ -70,6 +83,7 @@ class ExceptionsTest(unittest.TestCase):
 
     def test_exception_constructor_with_unicode(self):
         exception = HPOneViewException(u"A message string")
+
         self.assertEqual(exception.msg, "A message string")
         self.assertEqual(exception.oneview_response, None)
         self.assertEqual(exception.args[0], "A message string")
@@ -77,8 +91,26 @@ class ExceptionsTest(unittest.TestCase):
 
     def test_task_error_constructor_with_string(self):
         exception = HPOneViewTaskError("A message string", 100)
+
+        self.assertIsInstance(exception, HPOneViewException)
         self.assertEqual(exception.msg, "A message string")
         self.assertEqual(exception.oneview_response, None)
         self.assertEqual(exception.args[0], "A message string")
         self.assertEqual(len(exception.args), 1)
         self.assertEqual(exception.error_code, 100)
+
+    def test_oneview_resource_not_found_inheritance(self):
+        exception = HPOneViewResourceNotFound("The resource was not found!")
+
+        self.assertIsInstance(exception, HPOneViewException)
+        self.assertEqual(exception.msg, "The resource was not found!")
+        self.assertEqual(exception.oneview_response, None)
+        self.assertEqual(exception.args[0], "The resource was not found!")
+
+    def test_oneview_value_error_inheritance(self):
+        exception = HPOneViewValueError("The given data is empty!")
+
+        self.assertIsInstance(exception, HPOneViewException)
+        self.assertEqual(exception.msg, "The given data is empty!")
+        self.assertEqual(exception.oneview_response, None)
+        self.assertEqual(exception.args[0], "The given data is empty!")
