@@ -197,20 +197,67 @@
 
 
 <div class="viewcode-block" id="HPOneViewInvalidResource"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.exceptions.HPOneViewInvalidResource">[docs]</a><span class="k">class</span> <span class="nc">HPOneViewInvalidResource</span><span class="p">(</span><span class="n">HPOneViewException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    OneView Invalid Resource Exception.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">       msg (str): Exception message.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="HPOneViewTaskError"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.exceptions.HPOneViewTaskError">[docs]</a><span class="k">class</span> <span class="nc">HPOneViewTaskError</span><span class="p">(</span><span class="n">HPOneViewException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    OneView Task Error Exception.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">       msg (str): Exception message.</span>
+<span class="sd">       error_code (str): A code which uniquely identifies the specific error.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">HPOneViewTaskError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">error_code</span> <span class="o">=</span> <span class="n">error_code</span></div>
 
 
 <div class="viewcode-block" id="HPOneViewUnknownType"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.exceptions.HPOneViewUnknownType">[docs]</a><span class="k">class</span> <span class="nc">HPOneViewUnknownType</span><span class="p">(</span><span class="n">HPOneViewException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    OneView Unknown Type Error.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">       msg (str): Exception message.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="HPOneViewTimeout"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.exceptions.HPOneViewTimeout">[docs]</a><span class="k">class</span> <span class="nc">HPOneViewTimeout</span><span class="p">(</span><span class="n">HPOneViewException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    OneView Timeout Exception.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">       msg (str): Exception message.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="HPOneViewValueError"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.exceptions.HPOneViewValueError">[docs]</a><span class="k">class</span> <span class="nc">HPOneViewValueError</span><span class="p">(</span><span class="n">HPOneViewException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    OneView Value Error.</span>
+<span class="sd">    The exception is raised when the data contains an inappropriate value.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">       msg (str): Exception message.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="HPOneViewResourceNotFound"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.exceptions.HPOneViewResourceNotFound">[docs]</a><span class="k">class</span> <span class="nc">HPOneViewResourceNotFound</span><span class="p">(</span><span class="n">HPOneViewException</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    OneView Resource Not Found Exception.</span>
+<span class="sd">    The exception is raised when an associated resource was not found.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">       msg (str): Exception message.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">pass</span></div>
 </pre></div>
 
