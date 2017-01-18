@@ -379,6 +379,26 @@ class ResourceClientTest(unittest.TestCase):
         mock_get_all.assert_called_once_with(filter="\"name='MyFibreNetwork'\"", uri='/rest/testuri')
 
     @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_by_with_incorrect_result_autofix(self, mock_get_all):
+
+        mock_get_all.return_value = [{"name": "EXpected"},
+                                     {"name": "not expected"}]
+
+        response = self.resource_client.get_by('name', 'exPEcted')
+        self.assertEqual(response, [{"name": "EXpected"}])
+        mock_get_all.assert_called_once_with(filter="\"name='exPEcted'\"", uri='/rest/testuri')
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_by_with_incorrect_result_skip_autofix(self, mock_get_all):
+
+        mock_get_all.return_value = [{"name": "expected"},
+                                     {"name": "not expected"}]
+
+        response = self.resource_client.get_by('connection.name', 'expected')
+        self.assertEqual(response, [{'name': 'expected'}, {'name': 'not expected'}])
+        mock_get_all.assert_called_once_with(filter="\"connection.name='expected'\"", uri='/rest/testuri')
+
+    @mock.patch.object(ResourceClient, 'get_all')
     def test_get_by_property_with_uri(self, mock_get_all):
         self.resource_client.get_by('name', 'MyFibreNetwork', uri='/rest/testuri/5435534/sub')
         mock_get_all.assert_called_once_with(filter="\"name='MyFibreNetwork'\"", uri='/rest/testuri/5435534/sub')
