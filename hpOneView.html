@@ -89,10 +89,7 @@
 <li><a class="reference internal" href="#connection-py">connection.py</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-hpOneView.exceptions">hpOneView.exceptions module</a><ul>
-<li><a class="reference internal" href="#exceptions-py">exceptions.py</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#module-hpOneView.exceptions">hpOneView.exceptions module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.oneview_client">hpOneView.oneview_client module</a></li>
 <li><a class="reference internal" href="#module-hpOneView">Module contents</a><ul>
 <li><a class="reference internal" href="#hpe-oneview-library">HPE OneView Library</a></li>
@@ -501,9 +498,6 @@ to be uploaded as files</p>
 </div>
 <div class="section" id="module-hpOneView.exceptions">
 <span id="hponeview-exceptions-module"></span><h2>hpOneView.exceptions module<a class="headerlink" href="#module-hpOneView.exceptions" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="exceptions-py">
-<h3>exceptions.py<a class="headerlink" href="#exceptions-py" title="Permalink to this headline">¶</a></h3>
-<p>This module implements exceptions of the HPE OneView REST API.</p>
 <dl class="exception">
 <dt id="hpOneView.exceptions.HPOneViewException">
 <em class="property">exception </em><code class="descclassname">hpOneView.exceptions.</code><code class="descname">HPOneViewException</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/exceptions.html#HPOneViewException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.exceptions.HPOneViewException" title="Permalink to this definition">¶</a></dt>
@@ -609,7 +603,11 @@ The exception is raised when the data contains an inappropriate value.</p>
 
 </dd></dl>
 
-</div>
+<dl class="function">
+<dt id="hpOneView.exceptions.handle_exceptions">
+<code class="descclassname">hpOneView.exceptions.</code><code class="descname">handle_exceptions</code><span class="sig-paren">(</span><em>exception_type</em>, <em>exception_value</em>, <em>exception_traceback</em>, <em>logger=&lt;logging.Logger object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/exceptions.html#handle_exceptions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.exceptions.handle_exceptions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 <div class="section" id="module-hpOneView.oneview_client">
 <span id="hponeview-oneview-client-module"></span><h2>hpOneView.oneview_client module<a class="headerlink" href="#module-hpOneView.oneview_client" title="Permalink to this headline">¶</a></h2>
@@ -697,7 +695,7 @@ The exception is raised when the data contains an inappropriate value.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.image_streamer.html#hpOneView.image_streamer.image_streamer_client.ImageStreamerClient.connection" title="hpOneView.image_streamer.image_streamer_client.ImageStreamerClient.connection">connection</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#hpOneView.connection.connection" title="hpOneView.connection.connection">connection</a></td>
 </tr>
 </tbody>
 </table>

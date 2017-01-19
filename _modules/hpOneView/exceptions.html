@@ -129,24 +129,8 @@
             
   <h1>Source code for hpOneView.exceptions</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">exceptions.py</span>
-<span class="sd">~~~~~~~~~~~~~~</span>
-
-<span class="sd">This module implements exceptions of the HPE OneView REST API.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
-<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
-
-<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
-
-
 <span class="c1">###</span>
-<span class="c1"># (C) Copyright (2012-2015) Hewlett Packard Enterprise Development LP</span>
+<span class="c1"># (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP</span>
 <span class="c1">#</span>
 <span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
 <span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
@@ -166,7 +150,42 @@
 <span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN</span>
 <span class="c1"># THE SOFTWARE.</span>
 <span class="c1">###</span>
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+
+<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
 <span class="kn">from</span> <span class="nn">past.builtins</span> <span class="k">import</span> <span class="n">basestring</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="handle_exceptions"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.exceptions.handle_exceptions">[docs]</a><span class="k">def</span> <span class="nf">handle_exceptions</span><span class="p">(</span><span class="n">exception_type</span><span class="p">,</span> <span class="n">exception_value</span><span class="p">,</span> <span class="n">exception_traceback</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">):</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">__get_message</span><span class="p">(</span><span class="n">exception_value</span><span class="p">,</span> <span class="n">exception_type</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Uncaught Exception: </span><span class="si">%s</span><span class="s2"> with message: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">exception_type</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
+    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exception</span><span class="p">(</span><span class="n">exception_type</span><span class="p">,</span> <span class="n">exception_value</span><span class="p">,</span> <span class="n">exception_traceback</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">__get_message</span><span class="p">(</span><span class="n">exception_value</span><span class="p">,</span> <span class="n">exception_type</span><span class="p">):</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">exception_type</span><span class="p">,</span> <span class="n">HPOneViewException</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">exception_value</span><span class="o">.</span><span class="n">msg</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">exception_value</span><span class="o">.</span><span class="n">msg</span>
+        <span class="k">if</span> <span class="n">exception_value</span><span class="o">.</span><span class="n">oneview_response</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">exception_value</span><span class="o">.</span><span class="n">oneview_response</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">exception_value</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">exception_value</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">message</span>
 
 
 <div class="viewcode-block" id="HPOneViewException"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.exceptions.HPOneViewException">[docs]</a><span class="k">class</span> <span class="nc">HPOneViewException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -214,6 +233,7 @@
 <span class="sd">       msg (str): Exception message.</span>
 <span class="sd">       error_code (str): A code which uniquely identifies the specific error.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">HPOneViewTaskError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">error_code</span> <span class="o">=</span> <span class="n">error_code</span></div>
