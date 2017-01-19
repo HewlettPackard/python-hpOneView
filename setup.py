@@ -26,7 +26,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 setup(name='hpOneView',
-      version='3.0.0',
+      version='3.1.0',
       description='HPE OneView Python Library',
       url='https://github.com/HewlettPackard/python-hpOneView',
       download_url="https://github.com/HewlettPackard/python-hpOneView/tarball/hpOneView-API-v300",

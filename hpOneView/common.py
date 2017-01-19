@@ -19,7 +19,6 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-
 ###
 # (C) Copyright (2012-2015) Hewlett Packard Enterprise Development LP
 #
@@ -1709,129 +1708,6 @@ class pages(object):
             raise StopIteration
 
 
-MSG_DIFF_AT_KEY = 'Difference found at key \'{0}\'. '
-
-
-def resource_compare(resource1, resource2):
-    """
-    Recursively compares dictionary contents, ignoring type and order
-    Args:
-        resource1: first dictionary
-        resource2: second dictionary
-
-    Returns:
-        bool: True when equal, False when different.
-    """
-    debug_resources = "resource1 = {0}, resource2 = {1}".format(resource1, resource2)
-
-    # The first resource is True / Not Null and the second resource is False / Null
-    if resource1 and not resource2:
-        logger.debug("resource1 and not resource2. " + debug_resources)
-        return False
-
-    # Check all keys in first dict
-    for key in resource1.keys():
-        if key not in resource2:
-            # no key in second dict
-            if resource1[key] is not None:
-                # key inexistent is equivalent to exist and value None
-                logger.debug(MSG_DIFF_AT_KEY.format(key) + debug_resources)
-                return False
-        # If both values are null / empty / False
-        elif not resource1[key] and not resource2[key]:
-            continue
-        elif isinstance(resource1[key], dict):
-            # recursive call
-            if not resource_compare(resource1[key], resource2[key]):
-                # if different, stops here
-                logger.debug(MSG_DIFF_AT_KEY.format(key) + debug_resources)
-                return False
-        elif isinstance(resource1[key], list):
-            # change comparison function (list compare)
-            if not resource_compare_list(resource1[key], resource2[key]):
-                # if different, stops here
-                logger.debug(MSG_DIFF_AT_KEY.format(key) + debug_resources)
-                return False
-        elif standardize_value(resource1[key]) != standardize_value(resource2[key]):
-            # different value
-            logger.debug(MSG_DIFF_AT_KEY.format(key) + debug_resources)
-            return False
-
-    # Check all keys in second dict to find missing
-    for key in resource2.keys():
-        if key not in resource1:
-            # not exists in first dict
-            if resource2[key] is not None:
-                # key inexistent is equivalent to exist and value None
-                logger.debug(MSG_DIFF_AT_KEY.format(key) + debug_resources)
-                return False
-
-    # no differences found
-    return True
-
-
-def resource_compare_list(resource1, resource2):
-    """
-    Recursively compares lists contents, ignoring type
-    Args:
-        resource1: first list
-        resource2: second list
-
-    Returns:
-        True when equal;
-        False when different.
-
-    """
-    debug_resources = "resource1 = {0}, resource2 = {1}".format(resource1, resource2)
-
-    # The second list is null / empty  / False
-    if not resource2:
-        logger.debug("resource 2 is null. " + debug_resources)
-        return False
-
-    if len(resource1) != len(resource2):
-        # different length
-        logger.debug("resources have different length. " + debug_resources)
-        return False
-
-    for i, val in enumerate(resource1):
-        if isinstance(val, dict):
-            # change comparison function
-            if not resource_compare(val, resource2[i]):
-                logger.debug("resources are different. " + debug_resources)
-                return False
-        elif isinstance(val, list):
-            # recursive call
-            if not resource_compare_list(val, resource2[i]):
-                logger.debug("lists are different. " + debug_resources)
-                return False
-        elif standardize_value(val) != standardize_value(resource2[i]):
-            # value is different
-            logger.debug("values are different. " + debug_resources)
-            return False
-
-    # no differences found
-    return True
-
-
-def standardize_value(value):
-    """
-    Convert value to string to enhance the comparison.
-
-    Args:
-        value: Any object type.
-
-    Returns:
-        str: Converted value.
-    """
-    if isinstance(value, float) and value.is_integer():
-        # Workaround to avoid erroneous comparison between int and float
-        # Removes zero from integer floats
-        value = int(value)
-
-    return str(value)
-
-
 def transform_list_to_dict(list):
     """
         Transforms a list into a dictionary, putting values as keys
@@ -1866,39 +1742,3 @@ def extract_id_from_uri(id_or_uri):
         return id_or_uri[id_or_uri.rindex('/') + 1:]
     else:
         return id_or_uri
-
-
-def merge_list_by_key(original_list, updated_list, key, ignore_when_null=[]):
-    """
-    Merge two lists by the key. It basically:
-    1. Adds the items that are present on updated_list and are absent on original_list.
-    2. Removes items that are absent on updated_list and are present on original_list.
-    3. For all items that are in both lists, overwrites the values from the original item by the updated item.
-
-    Args:
-        original_list: original list.
-        updated_list: list with changes.
-        key: unique identifier.
-        ignore_when_null: list with the keys from the updated items that should be ignored in the merge, if its
-        values are null.
-    Returns:
-        list: Lists merged.
-    """
-    if not original_list:
-        return updated_list
-
-    items_map = {x[key]: x.copy() for x in original_list}
-    merged_items = {}
-
-    for item in updated_list:
-        item_key = item[key]
-        if item_key in items_map:
-            for ignored_key in ignore_when_null:
-                if ignored_key in item and not item[ignored_key]:
-                    item.pop(ignored_key)
-            merged_items[item_key] = items_map[item_key].copy()
-            merged_items[item_key].update(item)
-        else:
-            merged_items[item_key] = item.copy()
-
-    return [val for (_, val) in merged_items.items()]
