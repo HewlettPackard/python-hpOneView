@@ -56,7 +56,7 @@ class CertificateRabbitMQ(object):
         """
         return self._client.create(information, timeout=timeout)
 
-    def get_alias_name(self, alias_name):
+    def get(self, alias_name):
         """
         Retrieves the base-64 encoded certificate associated with the RabbitMQ user.
 
@@ -66,8 +66,7 @@ class CertificateRabbitMQ(object):
         Returns:
             dict: RabbitMQ certificate
         """
-        uri = self.URI + "/" + alias_name
-        return self._client.get(uri)
+        return self._client.get(alias_name)
 
     def get_key_pair(self, alias_name):
         """
