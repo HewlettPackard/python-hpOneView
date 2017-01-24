@@ -250,11 +250,13 @@
             <span class="n">http_headers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">custom_headers</span><span class="p">)</span>
 
         <span class="n">bConnected</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">while</span> <span class="n">bConnected</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">conn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_connection</span><span class="p">()</span>
                 <span class="n">conn</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">http_headers</span><span class="p">)</span>
                 <span class="n">resp</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
+                <span class="n">tempbytes</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">tempbytes</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
                     <span class="n">tempbody</span> <span class="o">=</span> <span class="n">tempbytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
@@ -271,8 +273,9 @@
                 <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                 <span class="n">bConnected</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">except</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">BadStatusLine</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bad Status Line. Trying again...&#39;</span><span class="p">)</span>
-                <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Bad Status Line. Trying again...&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">conn</span><span class="p">:</span>
+                    <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                 <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
                 <span class="k">continue</span>
         <span class="k">return</span> <span class="n">resp</span><span class="p">,</span> <span class="n">body</span></div>
