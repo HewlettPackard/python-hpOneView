@@ -120,11 +120,13 @@ class connection(object):
             http_headers.update(custom_headers)
 
         bConnected = False
+        conn = None
         while bConnected is False:
             try:
                 conn = self.get_connection()
                 conn.request(method, path, body, http_headers)
                 resp = conn.getresponse()
+                tempbytes = ''
                 try:
                     tempbytes = resp.read()
                     tempbody = tempbytes.decode('utf-8')
@@ -141,8 +143,9 @@ class connection(object):
                 conn.close()
                 bConnected = True
             except http.client.BadStatusLine:
-                print('Bad Status Line. Trying again...')
-                conn.close()
+                logger.warning('Bad Status Line. Trying again...')
+                if conn:
+                    conn.close()
                 time.sleep(1)
                 continue
         return resp, body
