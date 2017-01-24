@@ -74,9 +74,9 @@ except HPOneViewException as e:
         print e.oneview_response.get('recommendedActions')
 
 
-# Get an Alias Name
-print('\nGet an Alias Name')
-response = oneview_client.certificate_rabbitmq.get_alias_name('default')
+# Get by Alias Name
+print('\nGet by Alias Name')
+response = oneview_client.certificate_rabbitmq.get('default')
 pprint(response)
 
 

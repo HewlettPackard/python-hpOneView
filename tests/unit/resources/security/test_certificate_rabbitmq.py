@@ -46,11 +46,10 @@ class CertificateRabbitMQTest(TestCase):
         mock_create.assert_called_once_with(information, timeout=-1)
 
     @mock.patch.object(ResourceClient, 'get')
-    def test_get_alias_name_called_once(self, mock_get):
+    def test_get_by_alias_name_called_once(self, mock_get):
         alias_name = 'default'
-        self._certificate_rabbitmq.get_alias_name(alias_name)
-        uri = "/rest/certificates/client/rabbitmq/" + alias_name
-        mock_get.assert_called_once_with(uri)
+        self._certificate_rabbitmq.get(alias_name)
+        mock_get.assert_called_once_with(alias_name)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_key_pair_called_once(self, mock_get):
