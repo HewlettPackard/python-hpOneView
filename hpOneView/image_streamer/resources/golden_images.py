@@ -78,8 +78,8 @@ class GoldenImages(object):
         Args:
             resource (dict): Object to create.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView, just stop waiting for its completion.
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+                in OneView, it just stops waiting for its completion.
 
         Returns:
             dict: Golden Image created.
@@ -91,7 +91,7 @@ class GoldenImages(object):
     def upload(self, file_path, golden_image_info):
         """
         Adds a Golden Image resource from the file that is uploaded from a local drive. Only the .zip format file can
-        be used for upload.
+        be used for the upload.
 
         Args:
             file_path (str): File name to upload.
@@ -108,7 +108,7 @@ class GoldenImages(object):
 
     def download_archive(self, id_or_uri, file_path):
         """
-        Download the details of the Golden Image capture logs which has been archived based on the specific attribute
+        Download the details of the Golden Image capture logs, which has been archived based on the specific attribute
         ID.
 
         Args:
@@ -154,8 +154,8 @@ class GoldenImages(object):
         Args:
             resource (dict): Object to update.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView, just stop waiting for its completion.
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+                in OneView, it just stops waiting for its completion.
 
         Returns:
             dict: Updated resource.
@@ -173,7 +173,7 @@ class GoldenImages(object):
                  If set to true, the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
 
         Returns:

@@ -72,7 +72,7 @@ class PlanScripts(object):
 
     def delete(self, resource, force=False, timeout=-1):
         """
-        Deletes a plan script object from the appliance based on its plan script UUID.
+        Deletes a Plan Script object from the appliance based on its Plan Script UUID.
 
         Args:
             resource: dict object to delete
@@ -80,7 +80,7 @@ class PlanScripts(object):
                  If set to true, the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
 
         Returns:
@@ -104,13 +104,14 @@ class PlanScripts(object):
     def create(self, resource, timeout=-1):
         """
         Adds a Plan Script using the information provided in the request body. The plan type can be one of the
-        following types: General, deploy and capture. Note: The OS type of the plan script is always assigned as "ESXi".
+        following types: General, deploy and capture. Note: The OS type for the Plan Script is always assigned
+        as "ESXi".
 
         Args:
             resource (dict): Object to create.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView, just stop waiting for its completion.
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+                in OneView, it just stops waiting for its completion.
 
         Returns:
             dict: Created Plan Script.
@@ -127,8 +128,8 @@ class PlanScripts(object):
         Args:
             resource (dict): Object to update.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView, just stop waiting for its completion.
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+                in OneView, it just stops waiting for its completion.
 
         Returns:
             dict: Updated resource.
@@ -160,8 +161,8 @@ class PlanScripts(object):
             id_or_uri: ID or URI of the Plan Script.
             content (str): Plan Script content.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView, just stop waiting for its completion.
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+                in OneView, it just stops waiting for its completion.
 
         Returns:
             dict: Script differences.

@@ -45,7 +45,7 @@ class DeploymentPlans(object):
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a list of deployment plans resources based on optional sorting and filtering, and constrained by start and
+        Gets a list of Deployment Plans resources based on optional sorting and filtering, and constrained by start and
         count parameters.
 
         Args:
@@ -85,7 +85,7 @@ class DeploymentPlans(object):
 
     def get(self, id_or_uri):
         """
-        Retrieves a specific deployment plan resource based on the ID or URI provided.
+        Retrieves a specific Deployment Plan resource based on the ID or URI provided.
 
         Args:
             id_or_uri: ID or URI of the Deployment Plan.
@@ -97,13 +97,13 @@ class DeploymentPlans(object):
 
     def create(self, resource, timeout=-1):
         """
-        Adds a deployment plan based on the attributes specified.
+        Adds a Deployment Plan based on the attributes specified.
 
         Args:
             resource (dict): Object to create.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView, just stop waiting for its completion.
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+                in OneView, it just stops waiting for its completion.
 
         Returns:
             dict: Created Deployment plan.
@@ -115,22 +115,22 @@ class DeploymentPlans(object):
 
     def update(self, resource, timeout=-1):
         """
-        Updates the properties of the deployment plan.
+        Updates the properties of the Deployment Plan.
 
         Args:
             resource (dict): Object to update.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView, just stop waiting for its completion.
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+                in OneView, it just stops waiting for its completion.
 
         Returns:
-            dict: Updated deployment plan.
+            dict: Updated Deployment Plan.
         """
         return self._client.update(resource, timeout=timeout)
 
     def delete(self, resource, force=False, timeout=-1):
         """
-        Deletes the deployment plan.
+        Deletes the Deployment Plan.
 
         Args:
             resource: dict object to delete
@@ -138,7 +138,7 @@ class DeploymentPlans(object):
                  If set to true, the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
 
         Returns:

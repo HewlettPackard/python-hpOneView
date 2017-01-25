@@ -81,7 +81,7 @@ class ArtifactBundles(object):
 
     def get(self, id_or_uri):
         """
-        Retrieves the overview details of the selected Artifact Bundle as per the selected attributes.
+        Retrieves the overview details for the selected Artifact Bundle as per the selected attributes.
 
         Args:
             id_or_uri: ID or URI of the Artifact Bundle.
@@ -93,7 +93,7 @@ class ArtifactBundles(object):
 
     def get_by(self, field, value):
         """
-        Gets all Artifacts Bundle that match the filter.
+        Gets all of the Artifacts Bundle resources that match the filter.
 
         The search is case-insensitive.
 
@@ -129,7 +129,7 @@ class ArtifactBundles(object):
 
     def get_backup(self, id_or_uri):
         """
-        Get the details of the backup for an Artifact Bundle.
+        Get the details for the backup from an Artifact Bundle.
 
         Args:
             id_or_uri: ID or URI of the Artifact Bundle.
@@ -142,7 +142,7 @@ class ArtifactBundles(object):
 
     def download_archive_artifact_bundle(self, id_or_uri, file_path):
         """
-        Download archive for the Artifact Bundle.
+        Downloads an archive for the Artifact Bundle.
 
         Args:
             id_or_uri: ID or URI of the Artifact Bundle.
@@ -171,13 +171,14 @@ class ArtifactBundles(object):
 
     def create_backup(self, resource, timeout=-1):
         """
-        Create Backup for Artifacts Bundle specified in the Deployment Groups.
+        Creates a backup bundle with all the artifacts present on the appliance. At any given point only one backup
+        bundle will exist on the appliance.
 
         Args:
             resource (dict): Deployment Group to create the backup.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
-                OneView, just stops waiting for its completion.
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in
+                OneView, it just stops waiting for its completion.
 
         Returns:
             dict: A Deployment Group associated with the Artifact Bundle backup.
@@ -186,7 +187,7 @@ class ArtifactBundles(object):
 
     def upload_bundle_from_file(self, file_path):
         """
-        Restore an Artifact Bundle from backup file.
+        Restore an Artifact Bundle from a backup file.
 
         Args:
             file_path (str): The File Path to restore the Artifact Bundle.
@@ -198,7 +199,7 @@ class ArtifactBundles(object):
 
     def upload_backup_bundle_from_file(self, file_path, deployment_groups_id_or_uri):
         """
-        Restore an Artifact Bundle from backup file.
+        Restore an Artifact Bundle from a backup file.
 
         Args:
             file_path (str): The File Path to restore the Artifact Bundle.
@@ -223,8 +224,8 @@ class ArtifactBundles(object):
         Args:
             resource (dict): Object to create.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView, just stop waiting for its completion.
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+                in OneView, it just stops waiting for its completion.
 
         Returns:
             dict: Created resource.
@@ -238,8 +239,9 @@ class ArtifactBundles(object):
         Args:
             resource(str, dict):
                 Accept either the resource id  or the entire resource.
-            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView; it just stops waiting for its completion.
+            timeout:
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in
+                OneView, it just stops waiting for its completion.
 
         Returns:
             bool: Indicates if the resource was successfully deleted.
@@ -253,8 +255,8 @@ class ArtifactBundles(object):
         Args:
             resource (dict): Object to update.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView, just stop waiting for its completion.
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+                in OneView, it just stops waiting for its completion.
 
         Returns:
             dict: Updated resource.
@@ -268,8 +270,8 @@ class ArtifactBundles(object):
         Args:
             resource (dict): Artifact Bundle to extract.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
-                OneView, just stops waiting for its completion.
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in
+                OneView, it just stops waiting for its completion.
 
         Returns:
             dict: The Artifact Bundle.
@@ -283,8 +285,8 @@ class ArtifactBundles(object):
         Args:
             resource (dict): Deployment Group to extract.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
-                OneView, just stops waiting for its completion.
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in
+                OneView, it just stops waiting for its completion.
 
         Returns:
             dict: A Deployment Group associated with the Artifact Bundle backup.
@@ -293,7 +295,7 @@ class ArtifactBundles(object):
 
     def stop_artifact_creation(self, id_or_uri, task_uri):
         """
-        Stops creation of the selected artifact bundle.
+        Stops creation of the selected Artifact Bundle.
 
         Args:
             id_or_uri: ID or URI of the Artifact Bundle.
