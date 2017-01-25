@@ -194,8 +194,8 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView, just stop waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -212,15 +212,16 @@ in OneView, just stop waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.create_backup">
 <code class="descname">create_backup</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.create_backup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.create_backup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create Backup for Artifacts Bundle specified in the Deployment Groups.</p>
+<dd><p>Creates a backup bundle with all the artifacts present on the appliance. At any given point only one backup
+bundle will exist on the appliance.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Deployment Group to create the backup.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
-OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in
+OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -244,8 +245,8 @@ OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>str</em><em>, </em><em>dict</em>) &#8211; Accept either the resource id  or the entire resource.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in
+OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -262,7 +263,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.download_archive_artifact_bundle">
 <code class="descname">download_archive_artifact_bundle</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.download_archive_artifact_bundle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.download_archive_artifact_bundle" title="Permalink to this definition">¶</a></dt>
-<dd><p>Download archive for the Artifact Bundle.</p>
+<dd><p>Downloads an archive for the Artifact Bundle.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -317,8 +318,8 @@ in OneView; it just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Deployment Group to extract.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
-OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in
+OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -342,8 +343,8 @@ OneView, just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Artifact Bundle to extract.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
-OneView, just stops waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in
+OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -360,7 +361,7 @@ OneView, just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves the overview details of the selected Artifact Bundle as per the selected attributes.</p>
+<dd><p>Retrieves the overview details for the selected Artifact Bundle as per the selected attributes.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -427,7 +428,7 @@ on create time with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_backup">
 <code class="descname">get_backup</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.get_backup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_backup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the details of the backup for an Artifact Bundle.</p>
+<dd><p>Get the details for the backup from an Artifact Bundle.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -445,7 +446,7 @@ on create time with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all Artifacts Bundle that match the filter.</p>
+<dd><p>Gets all of the Artifacts Bundle resources that match the filter.</p>
 <p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -488,7 +489,7 @@ on create time with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.stop_artifact_creation">
 <code class="descname">stop_artifact_creation</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>task_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.stop_artifact_creation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.stop_artifact_creation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stops creation of the selected artifact bundle.</p>
+<dd><p>Stops creation of the selected Artifact Bundle.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -519,8 +520,8 @@ on create time with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView, just stop waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -537,7 +538,7 @@ in OneView, just stop waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.upload_backup_bundle_from_file">
 <code class="descname">upload_backup_bundle_from_file</code><span class="sig-paren">(</span><em>file_path</em>, <em>deployment_groups_id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.upload_backup_bundle_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.upload_backup_bundle_from_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore an Artifact Bundle from backup file.</p>
+<dd><p>Restore an Artifact Bundle from a backup file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -561,7 +562,7 @@ in OneView, just stop waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.upload_bundle_from_file">
 <code class="descname">upload_bundle_from_file</code><span class="sig-paren">(</span><em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.upload_bundle_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.upload_bundle_from_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore an Artifact Bundle from backup file.</p>
+<dd><p>Restore an Artifact Bundle from a backup file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -593,7 +594,7 @@ in OneView, just stop waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.build_plans.BuildPlans.create">
 <code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/build_plans.html#BuildPlans.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.build_plans.BuildPlans.create" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates an OS build plan using the information provided. The OS Build Plan can be one of the following types -
+<dd><p>Creates an OS Build Plan using the information provided. The OS Build Plan can be one of the following types -
 Deploy or Capture.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -601,12 +602,12 @@ Deploy or Capture.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView, just stop waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created OS build plan.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created OS Build Plan.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
@@ -619,7 +620,7 @@ in OneView, just stop waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.build_plans.BuildPlans.delete">
 <code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/build_plans.html#BuildPlans.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.build_plans.BuildPlans.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deletes an OS build plan resource.</p>
+<dd><p>Deletes an OS Build Plan resource.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -628,7 +629,7 @@ in OneView, just stop waiting for its completion.</li>
 <li><strong>resource</strong> &#8211; dict object to delete</li>
 <li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -646,14 +647,14 @@ in OneView; it just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.build_plans.BuildPlans.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/build_plans.html#BuildPlans.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.build_plans.BuildPlans.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves a specific OS build plan resource based on the ID or URI provided.</p>
+<dd><p>Retrieves a specific OS Build Plan resource based on the ID or URI provided.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the Build Plan.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The Os Build Plan.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The OS Build Plan.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
@@ -664,7 +665,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.build_plans.BuildPlans.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/build_plans.html#BuildPlans.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.build_plans.BuildPlans.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a list of OS build plan resources based on optional sorting and filtering, and constrained by start and
+<dd><p>Gets a list of OS Build Plan resources based on optional sorting and filtering, and constrained by start and
 count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -683,7 +684,7 @@ on create time with the oldest entry first.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of OS build plan.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of OS Build Plan.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
@@ -728,12 +729,12 @@ on create time with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView, just stop waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated OS build plan.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated OS Build Plan.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
@@ -778,7 +779,7 @@ in OneView, just stop waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.deployment_groups.DeploymentGroups.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/deployment_groups.html#DeploymentGroups.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_groups.DeploymentGroups.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a list of Deployment Group based on optional sorting and filtering, and constrained by start and count
+<dd><p>Gets a list of the Deployment Group based on optional sorting and filtering, and constrained by start and count
 parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -811,7 +812,7 @@ on create time with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.deployment_groups.DeploymentGroups.get_by">
 <code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/deployment_groups.html#DeploymentGroups.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_groups.DeploymentGroups.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all Deployment Group that match the filter.</p>
+<dd><p>Gets all Deployment Groups that match the filter.</p>
 <p>The search is case-insensitive.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -868,15 +869,15 @@ on create time with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.create">
 <code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/deployment_plans.html#DeploymentPlans.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.create" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds a deployment plan based on the attributes specified.</p>
+<dd><p>Adds a Deployment Plan based on the attributes specified.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView, just stop waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -893,7 +894,7 @@ in OneView, just stop waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.delete">
 <code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/deployment_plans.html#DeploymentPlans.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deletes the deployment plan.</p>
+<dd><p>Deletes the Deployment Plan.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -902,7 +903,7 @@ in OneView, just stop waiting for its completion.</li>
 <li><strong>resource</strong> &#8211; dict object to delete</li>
 <li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -920,7 +921,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.get">
 <code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/deployment_plans.html#DeploymentPlans.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves a specific deployment plan resource based on the ID or URI provided.</p>
+<dd><p>Retrieves a specific Deployment Plan resource based on the ID or URI provided.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -938,7 +939,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/deployment_plans.html#DeploymentPlans.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a list of deployment plans resources based on optional sorting and filtering, and constrained by start and
+<dd><p>Gets a list of Deployment Plans resources based on optional sorting and filtering, and constrained by start and
 count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -995,19 +996,19 @@ on create time with the oldest entry first.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/deployment_plans.html#DeploymentPlans.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates the properties of the deployment plan.</p>
+<dd><p>Updates the properties of the Deployment Plan.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView, just stop waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated deployment plan.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated Deployment Plan.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
@@ -1041,8 +1042,8 @@ in OneView, just stop waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView, just stop waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1068,7 +1069,7 @@ in OneView, just stop waiting for its completion.</li>
 <li><strong>resource</strong> &#8211; dict object to delete</li>
 <li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -1110,7 +1111,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.golden_images.GoldenImages.download_archive">
 <code class="descname">download_archive</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/golden_images.html#GoldenImages.download_archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.golden_images.GoldenImages.download_archive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Download the details of the Golden Image capture logs which has been archived based on the specific attribute
+<dd><p>Download the details of the Golden Image capture logs, which has been archived based on the specific attribute
 ID.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1217,8 +1218,8 @@ on create time with the oldest entry first.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView, just stop waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1236,7 +1237,7 @@ in OneView, just stop waiting for its completion.</li>
 <dt id="hpOneView.image_streamer.resources.golden_images.GoldenImages.upload">
 <code class="descname">upload</code><span class="sig-paren">(</span><em>file_path</em>, <em>golden_image_info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/golden_images.html#GoldenImages.upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.golden_images.GoldenImages.upload" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a Golden Image resource from the file that is uploaded from a local drive. Only the .zip format file can
-be used for upload.</p>
+be used for the upload.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1316,7 +1317,7 @@ be used for upload.</p>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.os_volumes.OsVolumes.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/os_volumes.html#OsVolumes.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.os_volumes.OsVolumes.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a list of OS Volume based on optional sorting and filtering, and constrained by start and count
+<dd><p>Gets a list of the OS Volume based on optional sorting and filtering, and constrained by start and count
 parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1407,15 +1408,16 @@ on create time with the oldest entry first.</li>
 <dt id="hpOneView.image_streamer.resources.plan_scripts.PlanScripts.create">
 <code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/plan_scripts.html#PlanScripts.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.plan_scripts.PlanScripts.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a Plan Script using the information provided in the request body. The plan type can be one of the
-following types: General, deploy and capture. Note: The OS type of the plan script is always assigned as &#8220;ESXi&#8221;.</p>
+following types: General, deploy and capture. Note: The OS type for the Plan Script is always assigned
+as &#8220;ESXi&#8221;.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView, just stop waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1432,7 +1434,7 @@ in OneView, just stop waiting for its completion.</li>
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.plan_scripts.PlanScripts.delete">
 <code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/plan_scripts.html#PlanScripts.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.plan_scripts.PlanScripts.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deletes a plan script object from the appliance based on its plan script UUID.</p>
+<dd><p>Deletes a Plan Script object from the appliance based on its Plan Script UUID.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1441,7 +1443,7 @@ in OneView, just stop waiting for its completion.</li>
 <li><strong>resource</strong> &#8211; dict object to delete</li>
 <li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -1544,8 +1546,8 @@ the selected attributes.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>id_or_uri</strong> &#8211; ID or URI of the Plan Script.</li>
 <li><strong>content</strong> (<em>str</em>) &#8211; Plan Script content.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView, just stop waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>
@@ -1569,8 +1571,8 @@ in OneView, just stop waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView, just stop waiting for its completion.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
 </tr>

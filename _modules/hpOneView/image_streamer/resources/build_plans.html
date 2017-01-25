@@ -175,7 +175,7 @@
 
 <div class="viewcode-block" id="BuildPlans.get_all"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.build_plans.BuildPlans.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets a list of OS build plan resources based on optional sorting and filtering, and constrained by start and</span>
+<span class="sd">        Gets a list of OS Build Plan resources based on optional sorting and filtering, and constrained by start and</span>
 <span class="sd">        count parameters.</span>
 
 <span class="sd">        Args:</span>
@@ -194,7 +194,7 @@
 <span class="sd">                on create time with the oldest entry first.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list: A list of OS build plan.</span>
+<span class="sd">            list: A list of OS Build Plan.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span></div>
 
@@ -215,29 +215,29 @@
 
 <div class="viewcode-block" id="BuildPlans.get"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.build_plans.BuildPlans.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Retrieves a specific OS build plan resource based on the ID or URI provided.</span>
+<span class="sd">        Retrieves a specific OS Build Plan resource based on the ID or URI provided.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            id_or_uri: ID or URI of the Build Plan.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: The Os Build Plan.</span>
+<span class="sd">            dict: The OS Build Plan.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BuildPlans.create"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.build_plans.BuildPlans.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates an OS build plan using the information provided. The OS Build Plan can be one of the following types -</span>
+<span class="sd">        Creates an OS Build Plan using the information provided. The OS Build Plan can be one of the following types -</span>
 <span class="sd">        Deploy or Capture.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict): Object to create.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stop waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: Created OS build plan.</span>
+<span class="sd">            dict: Created OS Build Plan.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__default_values</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -251,18 +251,18 @@
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict): Object to update.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stop waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: Updated OS build plan.</span>
+<span class="sd">            dict: Updated OS Build Plan.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BuildPlans.delete"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.build_plans.BuildPlans.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Deletes an OS build plan resource.</span>
+<span class="sd">        Deletes an OS Build Plan resource.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            resource: dict object to delete</span>
@@ -270,7 +270,7 @@
 <span class="sd">                 If set to true, the operation completes despite any problems with</span>
 <span class="sd">                 network connectivity or errors on the resource itself. The default is false.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation</span>
 <span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>

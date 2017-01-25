@@ -211,7 +211,7 @@
 
 <div class="viewcode-block" id="ArtifactBundles.get"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Retrieves the overview details of the selected Artifact Bundle as per the selected attributes.</span>
+<span class="sd">        Retrieves the overview details for the selected Artifact Bundle as per the selected attributes.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            id_or_uri: ID or URI of the Artifact Bundle.</span>
@@ -223,7 +223,7 @@
 
 <div class="viewcode-block" id="ArtifactBundles.get_by"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets all Artifacts Bundle that match the filter.</span>
+<span class="sd">        Gets all of the Artifacts Bundle resources that match the filter.</span>
 
 <span class="sd">        The search is case-insensitive.</span>
 
@@ -259,7 +259,7 @@
 
 <div class="viewcode-block" id="ArtifactBundles.get_backup"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_backup">[docs]</a>    <span class="k">def</span> <span class="nf">get_backup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the details of the backup for an Artifact Bundle.</span>
+<span class="sd">        Get the details for the backup from an Artifact Bundle.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            id_or_uri: ID or URI of the Artifact Bundle.</span>
@@ -272,7 +272,7 @@
 
 <div class="viewcode-block" id="ArtifactBundles.download_archive_artifact_bundle"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.download_archive_artifact_bundle">[docs]</a>    <span class="k">def</span> <span class="nf">download_archive_artifact_bundle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Download archive for the Artifact Bundle.</span>
+<span class="sd">        Downloads an archive for the Artifact Bundle.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            id_or_uri: ID or URI of the Artifact Bundle.</span>
@@ -301,13 +301,14 @@
 
 <div class="viewcode-block" id="ArtifactBundles.create_backup"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.create_backup">[docs]</a>    <span class="k">def</span> <span class="nf">create_backup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create Backup for Artifacts Bundle specified in the Deployment Groups.</span>
+<span class="sd">        Creates a backup bundle with all the artifacts present on the appliance. At any given point only one backup</span>
+<span class="sd">        bundle will exist on the appliance.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict): Deployment Group to create the backup.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in</span>
-<span class="sd">                OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in</span>
+<span class="sd">                OneView, it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A Deployment Group associated with the Artifact Bundle backup.</span>
@@ -316,7 +317,7 @@
 
 <div class="viewcode-block" id="ArtifactBundles.upload_bundle_from_file"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.upload_bundle_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">upload_bundle_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Restore an Artifact Bundle from backup file.</span>
+<span class="sd">        Restore an Artifact Bundle from a backup file.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            file_path (str): The File Path to restore the Artifact Bundle.</span>
@@ -328,7 +329,7 @@
 
 <div class="viewcode-block" id="ArtifactBundles.upload_backup_bundle_from_file"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.upload_backup_bundle_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">upload_backup_bundle_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">deployment_groups_id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Restore an Artifact Bundle from backup file.</span>
+<span class="sd">        Restore an Artifact Bundle from a backup file.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            file_path (str): The File Path to restore the Artifact Bundle.</span>
@@ -353,8 +354,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict): Object to create.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stop waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Created resource.</span>
@@ -368,8 +369,9 @@
 <span class="sd">        Args:</span>
 <span class="sd">            resource(str, dict):</span>
 <span class="sd">                Accept either the resource id  or the entire resource.</span>
-<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView; it just stops waiting for its completion.</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in</span>
+<span class="sd">                OneView, it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Indicates if the resource was successfully deleted.</span>
@@ -383,8 +385,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict): Object to update.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stop waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Updated resource.</span>
@@ -398,8 +400,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict): Artifact Bundle to extract.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in</span>
-<span class="sd">                OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in</span>
+<span class="sd">                OneView, it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: The Artifact Bundle.</span>
@@ -413,8 +415,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict): Deployment Group to extract.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in</span>
-<span class="sd">                OneView, just stops waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in</span>
+<span class="sd">                OneView, it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: A Deployment Group associated with the Artifact Bundle backup.</span>
@@ -423,7 +425,7 @@
 
 <div class="viewcode-block" id="ArtifactBundles.stop_artifact_creation"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.stop_artifact_creation">[docs]</a>    <span class="k">def</span> <span class="nf">stop_artifact_creation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">task_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Stops creation of the selected artifact bundle.</span>
+<span class="sd">        Stops creation of the selected Artifact Bundle.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            id_or_uri: ID or URI of the Artifact Bundle.</span>

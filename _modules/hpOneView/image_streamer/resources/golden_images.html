@@ -208,8 +208,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict): Object to create.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stop waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Golden Image created.</span>
@@ -221,7 +221,7 @@
 <div class="viewcode-block" id="GoldenImages.upload"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.golden_images.GoldenImages.upload">[docs]</a>    <span class="k">def</span> <span class="nf">upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">golden_image_info</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a Golden Image resource from the file that is uploaded from a local drive. Only the .zip format file can</span>
-<span class="sd">        be used for upload.</span>
+<span class="sd">        be used for the upload.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            file_path (str): File name to upload.</span>
@@ -238,7 +238,7 @@
 
 <div class="viewcode-block" id="GoldenImages.download_archive"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.golden_images.GoldenImages.download_archive">[docs]</a>    <span class="k">def</span> <span class="nf">download_archive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Download the details of the Golden Image capture logs which has been archived based on the specific attribute</span>
+<span class="sd">        Download the details of the Golden Image capture logs, which has been archived based on the specific attribute</span>
 <span class="sd">        ID.</span>
 
 <span class="sd">        Args:</span>
@@ -284,8 +284,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict): Object to update.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stop waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Updated resource.</span>
@@ -303,7 +303,7 @@
 <span class="sd">                 If set to true, the operation completes despite any problems with</span>
 <span class="sd">                 network connectivity or errors on the resource itself. The default is false.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation</span>
 <span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>

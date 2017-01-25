@@ -202,7 +202,7 @@
 
 <div class="viewcode-block" id="PlanScripts.delete"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.plan_scripts.PlanScripts.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Deletes a plan script object from the appliance based on its plan script UUID.</span>
+<span class="sd">        Deletes a Plan Script object from the appliance based on its Plan Script UUID.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            resource: dict object to delete</span>
@@ -210,7 +210,7 @@
 <span class="sd">                 If set to true, the operation completes despite any problems with</span>
 <span class="sd">                 network connectivity or errors on the resource itself. The default is false.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation</span>
 <span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
@@ -234,13 +234,14 @@
 <div class="viewcode-block" id="PlanScripts.create"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.plan_scripts.PlanScripts.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a Plan Script using the information provided in the request body. The plan type can be one of the</span>
-<span class="sd">        following types: General, deploy and capture. Note: The OS type of the plan script is always assigned as &quot;ESXi&quot;.</span>
+<span class="sd">        following types: General, deploy and capture. Note: The OS type for the Plan Script is always assigned</span>
+<span class="sd">        as &quot;ESXi&quot;.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict): Object to create.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stop waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Created Plan Script.</span>
@@ -257,8 +258,8 @@
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict): Object to update.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stop waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Updated resource.</span>
@@ -290,8 +291,8 @@
 <span class="sd">            id_or_uri: ID or URI of the Plan Script.</span>
 <span class="sd">            content (str): Plan Script content.</span>
 <span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView, just stop waiting for its completion.</span>
+<span class="sd">                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Script differences.</span>
