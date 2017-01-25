@@ -41,7 +41,7 @@ class DeploymentGroups(object):
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a list of Deployment Group based on optional sorting and filtering, and constrained by start and count
+        Gets a list of the Deployment Group based on optional sorting and filtering, and constrained by start and count
         parameters.
 
         Args:
@@ -79,7 +79,7 @@ class DeploymentGroups(object):
 
     def get_by(self, field, value):
         """
-        Gets all Deployment Group that match the filter.
+        Gets all Deployment Groups that match the filter.
 
         The search is case-insensitive.
 

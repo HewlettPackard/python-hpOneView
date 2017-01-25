@@ -45,7 +45,7 @@ class OsVolumes(object):
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a list of OS Volume based on optional sorting and filtering, and constrained by start and count
+        Gets a list of the OS Volume based on optional sorting and filtering, and constrained by start and count
         parameters.
 
         Args:

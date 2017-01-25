@@ -45,7 +45,7 @@ class BuildPlans(object):
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
-        Gets a list of OS build plan resources based on optional sorting and filtering, and constrained by start and
+        Gets a list of OS Build Plan resources based on optional sorting and filtering, and constrained by start and
         count parameters.
 
         Args:
@@ -64,7 +64,7 @@ class BuildPlans(object):
                 on create time with the oldest entry first.
 
         Returns:
-            list: A list of OS build plan.
+            list: A list of OS Build Plan.
         """
         return self._client.get_all(start, count, filter=filter, sort=sort)
 
@@ -85,29 +85,29 @@ class BuildPlans(object):
 
     def get(self, id_or_uri):
         """
-        Retrieves a specific OS build plan resource based on the ID or URI provided.
+        Retrieves a specific OS Build Plan resource based on the ID or URI provided.
 
         Args:
             id_or_uri: ID or URI of the Build Plan.
 
         Returns:
-            dict: The Os Build Plan.
+            dict: The OS Build Plan.
         """
         return self._client.get(id_or_uri)
 
     def create(self, resource, timeout=-1):
         """
-        Creates an OS build plan using the information provided. The OS Build Plan can be one of the following types -
+        Creates an OS Build Plan using the information provided. The OS Build Plan can be one of the following types -
         Deploy or Capture.
 
         Args:
             resource (dict): Object to create.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView, just stop waiting for its completion.
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+                in OneView, it just stops waiting for its completion.
 
         Returns:
-            dict: Created OS build plan.
+            dict: Created OS Build Plan.
 
         """
         data = self.__default_values.copy()
@@ -121,18 +121,18 @@ class BuildPlans(object):
         Args:
             resource (dict): Object to update.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView, just stop waiting for its completion.
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+                in OneView, it just stops waiting for its completion.
 
         Returns:
-            dict: Updated OS build plan.
+            dict: Updated OS Build Plan.
 
         """
         return self._client.update(resource, timeout=timeout)
 
     def delete(self, resource, force=False, timeout=-1):
         """
-        Deletes an OS build plan resource.
+        Deletes an OS Build Plan resource.
 
         Args:
             resource: dict object to delete
@@ -140,7 +140,7 @@ class BuildPlans(object):
                  If set to true, the operation completes despite any problems with
                  network connectivity or errors on the resource itself. The default is false.
             timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
 
         Returns:
