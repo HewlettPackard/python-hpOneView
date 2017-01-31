@@ -29,27 +29,34 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-
 from hpOneView.resources.resource import ResourceClient
+from hpOneView import HPOneViewValueError
 
 
 class IdPoolsRanges(object):
     """
-    Id Pools Ranges API client.
+    Base class for Id Pools Ranges API client.
 
+    Has common function used by: vMAC, vSN, vWWN
     """
 
-    def __init__(self, uri, con):
-        self._connection = con
+    def __init__(self, type, con):
+
+        uri = ""
+        if type == 'vmac':
+            uri = '/rest/id-pools/vmac/ranges'
+        elif type == 'vsn':
+            uri = '/rest/id-pools/vsn/ranges'
+        elif type == 'vwwn':
+            uri = '/rest/id-pools/vwwn/ranges'
+        else:
+            raise HPOneViewValueError("Invalid type: {0}, types allowed: vmac, vsn, vwwn, ".format(type))
+
         self._client = ResourceClient(con, uri)
 
     def create(self, resource, timeout=-1):
         """
         Creates range.
-
-        A range can be one of two types based on the specified range category: Generated or Custom. The Generated
-        range type automatically assigns start and end addresses to the range. The Custom range type requires a start
-        address to be specified. The end address may also be specified but is optional.
 
         Args:
             resource (dict): Object to create
@@ -131,8 +138,7 @@ class IdPoolsRanges(object):
         Returns:
             list: A list with IDs.
         """
-        uri = self._client.build_uri(id_or_uri) + \
-            "/allocated-fragments?start={0}&count={1}".format(start, count)
+        uri = self._client.build_uri(id_or_uri) + "/allocated-fragments?start={0}&count={1}".format(start, count)
         return self._client.get(uri)
 
     def allocate(self, information, id_or_uri, timeout=-1):
@@ -197,6 +203,5 @@ class IdPoolsRanges(object):
         Returns:
             list: The list of IDs.
         """
-        uri = self._client.build_uri(
-            id_or_uri) + "/free-fragments?start={0}&count={1}".format(start, count)
+        uri = self._client.build_uri(id_or_uri) + "/free-fragments?start={0}&count={1}".format(start, count)
         return self._client.get(uri)

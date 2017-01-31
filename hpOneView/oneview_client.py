@@ -56,9 +56,7 @@ from hpOneView.resources.servers.logical_enclosures import LogicalEnclosures
 from hpOneView.resources.servers.enclosure_groups import EnclosureGroups
 from hpOneView.resources.servers.server_hardware import ServerHardware
 from hpOneView.resources.servers.server_hardware_types import ServerHardwareTypes
-from hpOneView.resources.servers.id_pools_vsn_ranges import IdPoolsVsnRanges
-from hpOneView.resources.servers.id_pools_vmac_ranges import IdPoolsVmacRanges
-from hpOneView.resources.servers.id_pools_vwwn_ranges import IdPoolsVwwnRanges
+from hpOneView.resources.servers.id_pools_ranges import IdPoolsRanges
 from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.interconnect_types import InterconnectTypes
 from hpOneView.resources.networking.interconnect_link_topologies import InterconnectLinkTopologies
@@ -416,37 +414,34 @@ class OneViewClient(object):
         Gets the IdPoolsVsnRanges API client.
 
         Returns:
-            IdPoolsVsnRanges:
+            IdPoolsRanges:
         """
         if not self.__id_pools_vsn_ranges:
-            self.__id_pools_vsn_ranges = IdPoolsVsnRanges(
-                self.__connection)
+            self.__id_pools_vsn_ranges = IdPoolsRanges('vsn', self.__connection)
         return self.__id_pools_vsn_ranges
 
     @property
     def id_pools_vmac_ranges(self):
         """
-        Gets the IdPoolsVmacRanges API client.
+        Gets the IdPoolsRanges API client.
 
         Returns:
-            IdPoolsVmacRanges:
+            IdPoolsRanges:
         """
         if not self.__id_pools_vmac_ranges:
-            self.__id_pools_vmac_ranges = IdPoolsVmacRanges(
-                self.__connection)
+            self.__id_pools_vmac_ranges = IdPoolsRanges('vmac', self.__connection)
         return self.__id_pools_vmac_ranges
 
     @property
     def id_pools_vwwn_ranges(self):
         """
-        Gets the IdPoolsVwwnRanges API client.
+        Gets the IdPoolsRanges API client.
 
         Returns:
-            IdPoolsVwwnRanges:
+            IdPoolsRanges:
         """
         if not self.__id_pools_vwwn_ranges:
-            self.__id_pools_vwwn_ranges = IdPoolsVwwnRanges(
-                self.__connection)
+            self.__id_pools_vwwn_ranges = IdPoolsRanges('vwwn', self.__connection)
         return self.__id_pools_vwwn_ranges
 
     @property
