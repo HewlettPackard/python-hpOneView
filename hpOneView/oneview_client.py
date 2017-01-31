@@ -57,6 +57,7 @@ from hpOneView.resources.servers.enclosure_groups import EnclosureGroups
 from hpOneView.resources.servers.server_hardware import ServerHardware
 from hpOneView.resources.servers.server_hardware_types import ServerHardwareTypes
 from hpOneView.resources.servers.id_pools_ranges import IdPoolsRanges
+from hpOneView.resources.servers.id_pools_ipv4_ranges import IdPoolsIpv4Ranges
 from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.interconnect_types import InterconnectTypes
 from hpOneView.resources.networking.interconnect_link_topologies import InterconnectLinkTopologies
@@ -129,6 +130,7 @@ class OneViewClient(object):
         self.__id_pools_vsn_ranges = None
         self.__id_pools_vmac_ranges = None
         self.__id_pools_vwwn_ranges = None
+        self.__id_pools_ipv4_ranges = None
         self.__interconnects = None
         self.__interconnect_types = None
         self.__interconnect_link_topologies = None
@@ -411,7 +413,7 @@ class OneViewClient(object):
     @property
     def id_pools_vsn_ranges(self):
         """
-        Gets the IdPoolsVsnRanges API client.
+        Gets the IdPoolsRanges API Client for VSN Ranges.
 
         Returns:
             IdPoolsRanges:
@@ -423,7 +425,7 @@ class OneViewClient(object):
     @property
     def id_pools_vmac_ranges(self):
         """
-        Gets the IdPoolsRanges API client.
+        Gets the IdPoolsRanges API Client for VMAC Ranges.
 
         Returns:
             IdPoolsRanges:
@@ -435,7 +437,7 @@ class OneViewClient(object):
     @property
     def id_pools_vwwn_ranges(self):
         """
-        Gets the IdPoolsRanges API client.
+        Gets the IdPoolsRanges API Client for VWWN Ranges.
 
         Returns:
             IdPoolsRanges:
@@ -445,6 +447,17 @@ class OneViewClient(object):
         return self.__id_pools_vwwn_ranges
 
     @property
+    def id_pools_ipv4_ranges(self):
+        """
+        Gets the IdPoolsIpv4Ranges API client.
+
+        Returns:
+            IdPoolsIpv4Ranges:
+        """
+        if not self.__id_pools_ipv4_ranges:
+            self.__id_pools_ipv4_ranges = IdPoolsIpv4Ranges(self.__connection)
+        return self.__id_pools_ipv4_ranges
+
     def switches(self):
         """
         Gets the Switches API client.
