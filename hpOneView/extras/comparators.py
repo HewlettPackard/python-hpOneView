@@ -27,6 +27,8 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 from future import standard_library
+import json
+from copy import deepcopy
 
 standard_library.install_aliases()
 
@@ -37,16 +39,19 @@ logger = logging.getLogger(__name__)
 MSG_DIFF_AT_KEY = 'Difference found at key \'{0}\'. '
 
 
-def resource_compare(resource1, resource2):
+def resource_compare(first_resource, second_resource):
     """
     Recursively compares dictionary contents, ignoring type and order
     Args:
-        resource1: first dictionary
-        resource2: second dictionary
+        first_resource: first dictionary
+        second_resource: second dictionary
 
     Returns:
         bool: True when equal, False when different.
     """
+    resource1 = deepcopy(first_resource)
+    resource2 = deepcopy(second_resource)
+
     debug_resources = "resource1 = {0}, resource2 = {1}".format(resource1, resource2)
 
     # The first resource is True / Not Null and the second resource is False / Null
@@ -95,18 +100,22 @@ def resource_compare(resource1, resource2):
     return True
 
 
-def resource_compare_list(resource1, resource2):
+def resource_compare_list(first_resource, second_resource):
     """
     Recursively compares lists contents, ignoring type
     Args:
-        resource1: first list
-        resource2: second list
+        first_resource: first list
+        second_resource: second list
 
     Returns:
         True when equal;
         False when different.
 
     """
+
+    resource1 = deepcopy(first_resource)
+    resource2 = deepcopy(second_resource)
+
     debug_resources = "resource1 = {0}, resource2 = {1}".format(resource1, resource2)
 
     # The second list is null / empty  / False
@@ -118,6 +127,9 @@ def resource_compare_list(resource1, resource2):
         # different length
         logger.debug("resources have different length. " + debug_resources)
         return False
+
+    resource1 = sorted(resource1, key=_str_sorted)
+    resource2 = sorted(resource2, key=_str_sorted)
 
     for i, val in enumerate(resource1):
         if isinstance(val, dict):
@@ -137,6 +149,13 @@ def resource_compare_list(resource1, resource2):
 
     # no differences found
     return True
+
+
+def _str_sorted(obj):
+    if isinstance(obj, dict):
+        return json.dumps(obj, sort_keys=True)
+    else:
+        return str(obj)
 
 
 def _standardize_value(value):
