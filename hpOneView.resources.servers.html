@@ -87,10 +87,8 @@
 <li><a class="reference internal" href="#module-hpOneView.resources.servers.connections">hpOneView.resources.servers.connections module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.servers.enclosure_groups">hpOneView.resources.servers.enclosure_groups module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.servers.enclosures">hpOneView.resources.servers.enclosures module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.servers.id_pools_ipv4_ranges">hpOneView.resources.servers.id_pools_ipv4_ranges module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.servers.id_pools_ranges">hpOneView.resources.servers.id_pools_ranges module</a></li>
-<li><a class="reference internal" href="#module-hpOneView.resources.servers.id_pools_vmac_ranges">hpOneView.resources.servers.id_pools_vmac_ranges module</a></li>
-<li><a class="reference internal" href="#module-hpOneView.resources.servers.id_pools_vsn_ranges">hpOneView.resources.servers.id_pools_vsn_ranges module</a></li>
-<li><a class="reference internal" href="#module-hpOneView.resources.servers.id_pools_vwwn_ranges">hpOneView.resources.servers.id_pools_vwwn_ranges module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.servers.logical_enclosures">hpOneView.resources.servers.logical_enclosures module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.servers.migratable_vc_domains">hpOneView.resources.servers.migratable_vc_domains module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.servers.server_hardware">hpOneView.resources.servers.server_hardware module</a></li>
@@ -854,13 +852,208 @@ in OneView; it just stops waiting for its completion.</li>
 </dd></dl>
 
 </div>
+<div class="section" id="module-hpOneView.resources.servers.id_pools_ipv4_ranges">
+<span id="hponeview-resources-servers-id-pools-ipv4-ranges-module"></span><h2>hpOneView.resources.servers.id_pools_ipv4_ranges module<a class="headerlink" href="#module-hpOneView.resources.servers.id_pools_ipv4_ranges" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.servers.id_pools_ipv4_ranges.</code><code class="descname">IdPoolsIpv4Ranges</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_ipv4_ranges.html#IdPoolsIpv4Ranges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>The ID pools IPv4 ranges resource provides a Client API for managing IPv4 ranges.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/id-pools/ipv4/ranges'</em><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_ipv4_ranges.html#IdPoolsIpv4Ranges.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an IPv4 range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created range.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_ipv4_ranges.html#IdPoolsIpv4Ranges.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes an IPv4 range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to delete</li>
+<li><strong>force</strong> (<em>bool</em>) &#8211; If set to true, the operation completes despite any problems with
+network connectivity or errors on the resource itself. The default is false.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges.enable">
+<code class="descname">enable</code><span class="sig-paren">(</span><em>information</em>, <em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_ipv4_ranges.html#IdPoolsIpv4Ranges.enable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges.enable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables or disables an IPv4 range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>information</strong> (<em>dict</em>) &#8211; Information to update.</li>
+<li><strong>id_or_uri</strong> &#8211; ID or URI of range.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated IPv4 range.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_ipv4_ranges.html#IdPoolsIpv4Ranges.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets an IPv4 range by ID or URI.</p>
+<p>Using the allocator and collector associated with the range, IDs may be allocated from or collected back to the
+range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the range ID or URI.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Range</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges.get_allocated_fragments">
+<code class="descname">get_allocated_fragments</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>count=-1</em>, <em>start=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_ipv4_ranges.html#IdPoolsIpv4Ranges.get_allocated_fragments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges.get_allocated_fragments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all fragments that have been allocated in range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; ID or URI of range.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items. The actual number of items in
+the response may differ from the requested count if the sum of start and count exceed the total number
+of items.</li>
+<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
+first available item.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list with IDs.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges.get_free_fragments">
+<code class="descname">get_free_fragments</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>count=-1</em>, <em>start=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_ipv4_ranges.html#IdPoolsIpv4Ranges.get_free_fragments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges.get_free_fragments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all free fragments in an IPv4 range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; ID or URI of range.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items. The actual number of items in
+the response may differ from the requested count if the sum of start and count exceed the total number
+of items.</li>
+<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
+first available item.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The list of IDs.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>information</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_ipv4_ranges.html#IdPoolsIpv4Ranges.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit an IPv4 Range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>information</strong> (<em>dict</em>) &#8211; Information to update.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated IPv4 range.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-hpOneView.resources.servers.id_pools_ranges">
 <span id="hponeview-resources-servers-id-pools-ranges-module"></span><h2>hpOneView.resources.servers.id_pools_ranges module<a class="headerlink" href="#module-hpOneView.resources.servers.id_pools_ranges" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.servers.id_pools_ranges.</code><code class="descname">IdPoolsRanges</code><span class="sig-paren">(</span><em>uri</em>, <em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_ranges.html#IdPoolsRanges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">hpOneView.resources.servers.id_pools_ranges.</code><code class="descname">IdPoolsRanges</code><span class="sig-paren">(</span><em>type</em>, <em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_ranges.html#IdPoolsRanges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Id Pools Ranges API client.</p>
+<p>Base class for Id Pools Ranges API client.</p>
+<p>Has common function used by: vMAC, vSN, vWWN</p>
 <dl class="method">
 <dt id="hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges.allocate">
 <code class="descname">allocate</code><span class="sig-paren">(</span><em>information</em>, <em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_ranges.html#IdPoolsRanges.allocate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges.allocate" title="Permalink to this definition">¶</a></dt>
@@ -919,9 +1112,6 @@ in OneView; it just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges.create">
 <code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_ranges.html#IdPoolsRanges.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates range.</p>
-<p>A range can be one of two types based on the specified range category: Generated or Custom. The Generated
-range type automatically assigns start and end addresses to the range. The Custom range type requires a start
-address to be specified. The end address may also be specified but is optional.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1071,55 +1261,6 @@ first available item.</li>
 </tbody>
 </table>
 </dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="module-hpOneView.resources.servers.id_pools_vmac_ranges">
-<span id="hponeview-resources-servers-id-pools-vmac-ranges-module"></span><h2>hpOneView.resources.servers.id_pools_vmac_ranges module<a class="headerlink" href="#module-hpOneView.resources.servers.id_pools_vmac_ranges" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="hpOneView.resources.servers.id_pools_vmac_ranges.IdPoolsVmacRanges">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.servers.id_pools_vmac_ranges.</code><code class="descname">IdPoolsVmacRanges</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_vmac_ranges.html#IdPoolsVmacRanges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_vmac_ranges.IdPoolsVmacRanges" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges" title="hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges"><code class="xref py py-class docutils literal"><span class="pre">hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges</span></code></a></p>
-<p>The ID pools virtual MAC (vMAC) ranges resource provides APIs for managing vMAC ranges. A vMAC can be requested,
-used, and returned. Once returned, the vMAC is reclaimed by the range and is available for reuse.</p>
-<dl class="attribute">
-<dt id="hpOneView.resources.servers.id_pools_vmac_ranges.IdPoolsVmacRanges.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/id-pools/vmac/ranges'</em><a class="headerlink" href="#hpOneView.resources.servers.id_pools_vmac_ranges.IdPoolsVmacRanges.URI" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="module-hpOneView.resources.servers.id_pools_vsn_ranges">
-<span id="hponeview-resources-servers-id-pools-vsn-ranges-module"></span><h2>hpOneView.resources.servers.id_pools_vsn_ranges module<a class="headerlink" href="#module-hpOneView.resources.servers.id_pools_vsn_ranges" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="hpOneView.resources.servers.id_pools_vsn_ranges.IdPoolsVsnRanges">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.servers.id_pools_vsn_ranges.</code><code class="descname">IdPoolsVsnRanges</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_vsn_ranges.html#IdPoolsVsnRanges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_vsn_ranges.IdPoolsVsnRanges" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges" title="hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges"><code class="xref py py-class docutils literal"><span class="pre">hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges</span></code></a></p>
-<p>The ID pools virtual serial number (vSN) ranges resource provides APIs for managing vSN ranges. A vSN may be
-requested, used, and returned. Once returned, the vSN is reclaimed by the range and available for reuse.</p>
-<dl class="attribute">
-<dt id="hpOneView.resources.servers.id_pools_vsn_ranges.IdPoolsVsnRanges.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/id-pools/vsn/ranges'</em><a class="headerlink" href="#hpOneView.resources.servers.id_pools_vsn_ranges.IdPoolsVsnRanges.URI" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="module-hpOneView.resources.servers.id_pools_vwwn_ranges">
-<span id="hponeview-resources-servers-id-pools-vwwn-ranges-module"></span><h2>hpOneView.resources.servers.id_pools_vwwn_ranges module<a class="headerlink" href="#module-hpOneView.resources.servers.id_pools_vwwn_ranges" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="hpOneView.resources.servers.id_pools_vwwn_ranges.IdPoolsVwwnRanges">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.servers.id_pools_vwwn_ranges.</code><code class="descname">IdPoolsVwwnRanges</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools_vwwn_ranges.html#IdPoolsVwwnRanges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools_vwwn_ranges.IdPoolsVwwnRanges" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges" title="hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges"><code class="xref py py-class docutils literal"><span class="pre">hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges</span></code></a></p>
-<p>The ID pools virtual world wide name (vWWN) ranges resource provides REST APIs to manage ID pools vWWN ranges.
-A vWWN may be requested, used, and returned. Once returned, the vWWN is reclaimed by the range and available for
-reuse.</p>
-<dl class="attribute">
-<dt id="hpOneView.resources.servers.id_pools_vwwn_ranges.IdPoolsVwwnRanges.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/id-pools/vwwn/ranges'</em><a class="headerlink" href="#hpOneView.resources.servers.id_pools_vwwn_ranges.IdPoolsVwwnRanges.URI" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </dd></dl>
 

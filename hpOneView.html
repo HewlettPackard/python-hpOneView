@@ -251,10 +251,8 @@
 <li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.connections">hpOneView.resources.servers.connections module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.enclosure_groups">hpOneView.resources.servers.enclosure_groups module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.enclosures">hpOneView.resources.servers.enclosures module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.id_pools_ipv4_ranges">hpOneView.resources.servers.id_pools_ipv4_ranges module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.id_pools_ranges">hpOneView.resources.servers.id_pools_ranges module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.id_pools_vmac_ranges">hpOneView.resources.servers.id_pools_vmac_ranges module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.id_pools_vsn_ranges">hpOneView.resources.servers.id_pools_vsn_ranges module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.id_pools_vwwn_ranges">hpOneView.resources.servers.id_pools_vwwn_ranges module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.logical_enclosures">hpOneView.resources.servers.logical_enclosures module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.migratable_vc_domains">hpOneView.resources.servers.migratable_vc_domains module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.servers.html#module-hpOneView.resources.servers.server_hardware">hpOneView.resources.servers.server_hardware module</a></li>
@@ -702,7 +700,7 @@ The exception is raised when the data contains an inappropriate value.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#hpOneView.oneview_client.OneViewClient.connection" title="hpOneView.oneview_client.OneViewClient.connection">connection</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#hpOneView.connection.connection" title="hpOneView.connection.connection">connection</a></td>
 </tr>
 </tbody>
 </table>
@@ -969,16 +967,32 @@ ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, ONEVIEWSDK_IMAGE_STREAMER_
 </dd></dl>
 
 <dl class="attribute">
-<dt id="hpOneView.oneview_client.OneViewClient.id_pools_vmac_ranges">
-<code class="descname">id_pools_vmac_ranges</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.id_pools_vmac_ranges" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the IdPoolsVmacRanges API client.</p>
+<dt id="hpOneView.oneview_client.OneViewClient.id_pools_ipv4_ranges">
+<code class="descname">id_pools_ipv4_ranges</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.id_pools_ipv4_ranges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the IdPoolsIpv4Ranges API client.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.id_pools_vmac_ranges.IdPoolsVmacRanges" title="hpOneView.resources.servers.id_pools_vmac_ranges.IdPoolsVmacRanges">IdPoolsVmacRanges</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges" title="hpOneView.resources.servers.id_pools_ipv4_ranges.IdPoolsIpv4Ranges">IdPoolsIpv4Ranges</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.id_pools_vmac_ranges">
+<code class="descname">id_pools_vmac_ranges</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.id_pools_vmac_ranges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the IdPoolsRanges API Client for VMAC Ranges.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges" title="hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges">IdPoolsRanges</a></td>
 </tr>
 </tbody>
 </table>
@@ -987,14 +1001,14 @@ ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, ONEVIEWSDK_IMAGE_STREAMER_
 <dl class="attribute">
 <dt id="hpOneView.oneview_client.OneViewClient.id_pools_vsn_ranges">
 <code class="descname">id_pools_vsn_ranges</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.id_pools_vsn_ranges" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the IdPoolsVsnRanges API client.</p>
+<dd><p>Gets the IdPoolsRanges API Client for VSN Ranges.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.id_pools_vsn_ranges.IdPoolsVsnRanges" title="hpOneView.resources.servers.id_pools_vsn_ranges.IdPoolsVsnRanges">IdPoolsVsnRanges</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges" title="hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges">IdPoolsRanges</a></td>
 </tr>
 </tbody>
 </table>
@@ -1003,14 +1017,14 @@ ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, ONEVIEWSDK_IMAGE_STREAMER_
 <dl class="attribute">
 <dt id="hpOneView.oneview_client.OneViewClient.id_pools_vwwn_ranges">
 <code class="descname">id_pools_vwwn_ranges</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.id_pools_vwwn_ranges" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the IdPoolsVwwnRanges API client.</p>
+<dd><p>Gets the IdPoolsRanges API Client for VWWN Ranges.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.id_pools_vwwn_ranges.IdPoolsVwwnRanges" title="hpOneView.resources.servers.id_pools_vwwn_ranges.IdPoolsVwwnRanges">IdPoolsVwwnRanges</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.servers.html#hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges" title="hpOneView.resources.servers.id_pools_ranges.IdPoolsRanges">IdPoolsRanges</a></td>
 </tr>
 </tbody>
 </table>
@@ -1576,9 +1590,9 @@ ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, ONEVIEWSDK_IMAGE_STREAMER_
 </table>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="hpOneView.oneview_client.OneViewClient.switches">
-<code class="descname">switches</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.switches" title="Permalink to this definition">¶</a></dt>
+<code class="descname">switches</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/oneview_client.html#OneViewClient.switches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.switches" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the Switches API client.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

@@ -28,34 +28,18 @@ hpOneView.resources.servers.enclosures module
     :undoc-members:
     :show-inheritance:
 
+hpOneView.resources.servers.id_pools_ipv4_ranges module
+-------------------------------------------------------
+
+.. automodule:: hpOneView.resources.servers.id_pools_ipv4_ranges
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView.resources.servers.id_pools_ranges module
 --------------------------------------------------
 
 .. automodule:: hpOneView.resources.servers.id_pools_ranges
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-hpOneView.resources.servers.id_pools_vmac_ranges module
--------------------------------------------------------
-
-.. automodule:: hpOneView.resources.servers.id_pools_vmac_ranges
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-hpOneView.resources.servers.id_pools_vsn_ranges module
-------------------------------------------------------
-
-.. automodule:: hpOneView.resources.servers.id_pools_vsn_ranges
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-hpOneView.resources.servers.id_pools_vwwn_ranges module
--------------------------------------------------------
-
-.. automodule:: hpOneView.resources.servers.id_pools_vwwn_ranges
     :members:
     :undoc-members:
     :show-inheritance:

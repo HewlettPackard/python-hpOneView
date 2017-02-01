@@ -186,9 +186,8 @@
 <span class="kn">from</span> <span class="nn">hpOneView.resources.servers.enclosure_groups</span> <span class="k">import</span> <span class="n">EnclosureGroups</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.servers.server_hardware</span> <span class="k">import</span> <span class="n">ServerHardware</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.servers.server_hardware_types</span> <span class="k">import</span> <span class="n">ServerHardwareTypes</span>
-<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.id_pools_vsn_ranges</span> <span class="k">import</span> <span class="n">IdPoolsVsnRanges</span>
-<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.id_pools_vmac_ranges</span> <span class="k">import</span> <span class="n">IdPoolsVmacRanges</span>
-<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.id_pools_vwwn_ranges</span> <span class="k">import</span> <span class="n">IdPoolsVwwnRanges</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.id_pools_ranges</span> <span class="k">import</span> <span class="n">IdPoolsRanges</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.id_pools_ipv4_ranges</span> <span class="k">import</span> <span class="n">IdPoolsIpv4Ranges</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.networking.interconnects</span> <span class="k">import</span> <span class="n">Interconnects</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.networking.interconnect_types</span> <span class="k">import</span> <span class="n">InterconnectTypes</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.networking.interconnect_link_topologies</span> <span class="k">import</span> <span class="n">InterconnectLinkTopologies</span>
@@ -261,6 +260,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vsn_ranges</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vmac_ranges</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vwwn_ranges</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_ipv4_ranges</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__interconnects</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__interconnect_types</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__interconnect_link_topologies</span> <span class="o">=</span> <span class="kc">None</span>
@@ -543,44 +543,52 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">id_pools_vsn_ranges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets the IdPoolsVsnRanges API client.</span>
+<span class="sd">        Gets the IdPoolsRanges API Client for VSN Ranges.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            IdPoolsVsnRanges:</span>
+<span class="sd">            IdPoolsRanges:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vsn_ranges</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vsn_ranges</span> <span class="o">=</span> <span class="n">IdPoolsVsnRanges</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vsn_ranges</span> <span class="o">=</span> <span class="n">IdPoolsRanges</span><span class="p">(</span><span class="s1">&#39;vsn&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vsn_ranges</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">id_pools_vmac_ranges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets the IdPoolsVmacRanges API client.</span>
+<span class="sd">        Gets the IdPoolsRanges API Client for VMAC Ranges.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            IdPoolsVmacRanges:</span>
+<span class="sd">            IdPoolsRanges:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vmac_ranges</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vmac_ranges</span> <span class="o">=</span> <span class="n">IdPoolsVmacRanges</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vmac_ranges</span> <span class="o">=</span> <span class="n">IdPoolsRanges</span><span class="p">(</span><span class="s1">&#39;vmac&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vmac_ranges</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">id_pools_vwwn_ranges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets the IdPoolsVwwnRanges API client.</span>
+<span class="sd">        Gets the IdPoolsRanges API Client for VWWN Ranges.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            IdPoolsVwwnRanges:</span>
+<span class="sd">            IdPoolsRanges:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vwwn_ranges</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vwwn_ranges</span> <span class="o">=</span> <span class="n">IdPoolsVwwnRanges</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vwwn_ranges</span> <span class="o">=</span> <span class="n">IdPoolsRanges</span><span class="p">(</span><span class="s1">&#39;vwwn&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vwwn_ranges</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">switches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">id_pools_ipv4_ranges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the IdPoolsIpv4Ranges API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            IdPoolsIpv4Ranges:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_ipv4_ranges</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_ipv4_ranges</span> <span class="o">=</span> <span class="n">IdPoolsIpv4Ranges</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_ipv4_ranges</span>
+
+<div class="viewcode-block" id="OneViewClient.switches"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.oneview_client.OneViewClient.switches">[docs]</a>    <span class="k">def</span> <span class="nf">switches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the Switches API client.</span>
 
@@ -589,7 +597,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__switches</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__switches</span> <span class="o">=</span> <span class="n">Switches</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__switches</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__switches</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">switch_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
