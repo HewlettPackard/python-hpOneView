@@ -21,42 +21,30 @@
 # THE SOFTWARE.
 ###
 
+from __future__ import absolute_import
+from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
-from __future__ import division
-from __future__ import absolute_import
+
 from future import standard_library
 
 standard_library.install_aliases()
 
 from hpOneView.resources.resource import ResourceClient
-from hpOneView import HPOneViewValueError
 
 
-class IdPoolsRanges(object):
+class IdPoolsIpv4Ranges(object):
     """
-    Base class for Id Pools Ranges API client.
-
-    Has common function used by: vMAC, vSN, vWWN
+    The ID pools IPv4 ranges resource provides a Client API for managing IPv4 ranges.
     """
+    URI = '/rest/id-pools/ipv4/ranges'
 
-    def __init__(self, type, con):
-
-        uri = ""
-        if type == 'vmac':
-            uri = '/rest/id-pools/vmac/ranges'
-        elif type == 'vsn':
-            uri = '/rest/id-pools/vsn/ranges'
-        elif type == 'vwwn':
-            uri = '/rest/id-pools/vwwn/ranges'
-        else:
-            raise HPOneViewValueError("Invalid type: {0}, types allowed: vmac, vsn, vwwn, ".format(type))
-
-        self._client = ResourceClient(con, uri)
+    def __init__(self, con):
+        self._client = ResourceClient(con, self.URI)
 
     def create(self, resource, timeout=-1):
         """
-        Creates range.
+        Creates an IPv4 range.
 
         Args:
             resource (dict): Object to create
@@ -70,7 +58,7 @@ class IdPoolsRanges(object):
 
     def get(self, id_or_uri):
         """
-        Gets range.
+        Gets an IPv4 range by ID or URI.
 
         Using the allocator and collector associated with the range, IDs may be allocated from or collected back to the
         range.
@@ -85,7 +73,7 @@ class IdPoolsRanges(object):
 
     def enable(self, information, id_or_uri, timeout=-1):
         """
-        Enables or disables a range.
+        Enables or disables an IPv4 range.
 
         Args:
             information (dict): Information to update.
@@ -94,16 +82,31 @@ class IdPoolsRanges(object):
                 in OneView; it just stops waiting for its completion.
 
         Returns:
-            dict: Updated resource.
+            dict: Updated IPv4 range.
         """
 
         uri = self._client.build_uri(id_or_uri)
 
         return self._client.update(information, uri, timeout=timeout)
 
+    def update(self, information, timeout=-1):
+        """
+        Edit an IPv4 Range.
+
+        Args:
+            information (dict): Information to update.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            dict: Updated IPv4 range.
+        """
+
+        return self._client.update(information, timeout=timeout)
+
     def delete(self, resource, force=False, timeout=-1):
         """
-        Deletes range.
+        Deletes an IPv4 range.
 
         Args:
             resource (dict):
@@ -141,53 +144,9 @@ class IdPoolsRanges(object):
         uri = self._client.build_uri(id_or_uri) + "/allocated-fragments?start={0}&count={1}".format(start, count)
         return self._client.get(uri)
 
-    def allocate(self, information, id_or_uri, timeout=-1):
-        """
-        Allocates a set of IDs from range.
-
-        The allocator returned contains the list of IDs successfully allocated.
-
-        Args:
-            information (dict):
-                Information to update. Can result in system specified IDs or the system reserving user-specified IDs.
-            id_or_uri:
-                ID or URI of vSN range.
-            timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView; it just stops waiting for its completion.
-
-        Returns:
-            dict: Allocator
-        """
-        uri = self._client.build_uri(id_or_uri) + "/allocator"
-
-        return self._client.update(information, uri, timeout=timeout)
-
-    def collect(self, information, id_or_uri, timeout=-1):
-        """
-        Collects a set of IDs back to range.
-
-        The collector returned contains the list of IDs successfully collected.
-
-        Args:
-            information (dict):
-                The list of IDs to be collected
-            id_or_uri:
-                ID or URI of range
-            timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView; it just stops waiting for its completion.
-
-        Returns:
-            dict: Collector containing list of collected IDs successfully collected.
-        """
-        uri = self._client.build_uri(id_or_uri) + "/collector"
-
-        return self._client.update(information, uri, timeout=timeout)
-
     def get_free_fragments(self, id_or_uri, count=-1, start=0):
         """
-        Gets all free fragments in a vSN range.
+        Gets all free fragments in an IPv4 range.
 
         Args:
             id_or_uri:
