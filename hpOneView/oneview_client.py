@@ -32,7 +32,6 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-
 import json
 import os
 
@@ -59,6 +58,7 @@ from hpOneView.resources.servers.server_hardware_types import ServerHardwareType
 from hpOneView.resources.servers.id_pools_ranges import IdPoolsRanges
 from hpOneView.resources.servers.id_pools_ipv4_ranges import IdPoolsIpv4Ranges
 from hpOneView.resources.servers.id_pools_ipv4_subnets import IdPoolsIpv4Subnets
+from hpOneView.resources.servers.id_pools import IdPools
 from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.interconnect_types import InterconnectTypes
 from hpOneView.resources.networking.interconnect_link_topologies import InterconnectLinkTopologies
@@ -102,7 +102,6 @@ ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
 
 class OneViewClient(object):
-
     DEFAULT_API_VERSION = 300
 
     def __init__(self, config):
@@ -133,6 +132,7 @@ class OneViewClient(object):
         self.__id_pools_vwwn_ranges = None
         self.__id_pools_ipv4_ranges = None
         self.__id_pools_ipv4_subnets = None
+        self.__id_pools = None
         self.__interconnects = None
         self.__interconnect_types = None
         self.__interconnect_link_topologies = None
@@ -472,6 +472,19 @@ class OneViewClient(object):
             self.__id_pools_ipv4_subnets = IdPoolsIpv4Subnets(self.__connection)
         return self.__id_pools_ipv4_subnets
 
+    @property
+    def id_pools(self):
+        """
+        Gets the IdPools API client.
+
+        Returns:
+            IdPools:
+        """
+        if not self.__id_pools:
+            self.__id_pools = IdPools(self.__connection)
+        return self.__id_pools
+
+    @property
     def switches(self):
         """
         Gets the Switches API client.
