@@ -58,6 +58,7 @@ from hpOneView.resources.servers.server_hardware import ServerHardware
 from hpOneView.resources.servers.server_hardware_types import ServerHardwareTypes
 from hpOneView.resources.servers.id_pools_ranges import IdPoolsRanges
 from hpOneView.resources.servers.id_pools_ipv4_ranges import IdPoolsIpv4Ranges
+from hpOneView.resources.servers.id_pools_ipv4_subnets import IdPoolsIpv4Subnets
 from hpOneView.resources.networking.interconnects import Interconnects
 from hpOneView.resources.networking.interconnect_types import InterconnectTypes
 from hpOneView.resources.networking.interconnect_link_topologies import InterconnectLinkTopologies
@@ -131,6 +132,7 @@ class OneViewClient(object):
         self.__id_pools_vmac_ranges = None
         self.__id_pools_vwwn_ranges = None
         self.__id_pools_ipv4_ranges = None
+        self.__id_pools_ipv4_subnets = None
         self.__interconnects = None
         self.__interconnect_types = None
         self.__interconnect_link_topologies = None
@@ -457,6 +459,18 @@ class OneViewClient(object):
         if not self.__id_pools_ipv4_ranges:
             self.__id_pools_ipv4_ranges = IdPoolsIpv4Ranges(self.__connection)
         return self.__id_pools_ipv4_ranges
+
+    @property
+    def id_pools_ipv4_subnets(self):
+        """
+        Gets the IdPoolsIpv4Subnets API client.
+
+        Returns:
+            IdPoolsIpv4Subnets:
+        """
+        if not self.__id_pools_ipv4_subnets:
+            self.__id_pools_ipv4_subnets = IdPoolsIpv4Subnets(self.__connection)
+        return self.__id_pools_ipv4_subnets
 
     def switches(self):
         """
