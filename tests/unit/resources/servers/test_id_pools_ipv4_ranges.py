@@ -64,22 +64,22 @@ class TestIdPoolsIpv4Ranges(unittest.TestCase):
         self.client.enable(self.resource_info.copy(), self.example_uri)
         update.assert_called_once_with(self.resource_info.copy(), self.example_uri, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceClient, 'get_collection')
     def test_get_allocated_fragments_called_once_with_defaults(self, mock_get):
         self.client.get_allocated_fragments(self.example_uri)
         mock_get.assert_called_once_with(self.example_uri + "/allocated-fragments?start=0&count=-1")
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceClient, 'get_collection')
     def test_get_allocated_fragments_called_once(self, mock_get):
         self.client.get_allocated_fragments(self.example_uri, 5, 2)
         mock_get.assert_called_once_with(self.example_uri + "/allocated-fragments?start=2&count=5")
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceClient, 'get_collection')
     def test_get_free_fragments_called_once_with_defaults(self, mock_get):
         self.client.get_free_fragments(self.example_uri)
         mock_get.assert_called_once_with(self.example_uri + "/free-fragments?start=0&count=-1")
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceClient, 'get_collection')
     def test_get_free_fragments_called_once(self, mock_get):
         self.client.get_free_fragments(self.example_uri, 5, 3)
         mock_get.assert_called_once_with(self.example_uri + "/free-fragments?start=3&count=5")

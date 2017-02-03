@@ -136,10 +136,10 @@ class IdPoolsRanges(object):
                 first available item.
 
         Returns:
-            list: A list with IDs.
+            list: A list with the allocated fragements.
         """
         uri = self._client.build_uri(id_or_uri) + "/allocated-fragments?start={0}&count={1}".format(start, count)
-        return self._client.get(uri)
+        return self._client.get_collection(uri)
 
     def allocate(self, information, id_or_uri, timeout=-1):
         """
@@ -201,7 +201,7 @@ class IdPoolsRanges(object):
                 first available item.
 
         Returns:
-            list: The list of IDs.
+            list: A list with the free fragments.
         """
         uri = self._client.build_uri(id_or_uri) + "/free-fragments?start={0}&count={1}".format(start, count)
-        return self._client.get(uri)
+        return self._client.get_collection(uri)
