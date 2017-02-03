@@ -36,6 +36,14 @@ hpOneView.resources.servers.id_pools_ipv4_ranges module
     :undoc-members:
     :show-inheritance:
 
+hpOneView.resources.servers.id_pools_ipv4_subnets module
+--------------------------------------------------------
+
+.. automodule:: hpOneView.resources.servers.id_pools_ipv4_subnets
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView.resources.servers.id_pools_ranges module
 --------------------------------------------------
 

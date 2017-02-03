@@ -188,6 +188,7 @@
 <span class="kn">from</span> <span class="nn">hpOneView.resources.servers.server_hardware_types</span> <span class="k">import</span> <span class="n">ServerHardwareTypes</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.servers.id_pools_ranges</span> <span class="k">import</span> <span class="n">IdPoolsRanges</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.servers.id_pools_ipv4_ranges</span> <span class="k">import</span> <span class="n">IdPoolsIpv4Ranges</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.servers.id_pools_ipv4_subnets</span> <span class="k">import</span> <span class="n">IdPoolsIpv4Subnets</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.networking.interconnects</span> <span class="k">import</span> <span class="n">Interconnects</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.networking.interconnect_types</span> <span class="k">import</span> <span class="n">InterconnectTypes</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.networking.interconnect_link_topologies</span> <span class="k">import</span> <span class="n">InterconnectLinkTopologies</span>
@@ -261,6 +262,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vmac_ranges</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_vwwn_ranges</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_ipv4_ranges</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_ipv4_subnets</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__interconnects</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__interconnect_types</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__interconnect_link_topologies</span> <span class="o">=</span> <span class="kc">None</span>
@@ -587,6 +589,18 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_ipv4_ranges</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_ipv4_ranges</span> <span class="o">=</span> <span class="n">IdPoolsIpv4Ranges</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_ipv4_ranges</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">id_pools_ipv4_subnets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the IdPoolsIpv4Subnets API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            IdPoolsIpv4Subnets:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_ipv4_subnets</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_ipv4_subnets</span> <span class="o">=</span> <span class="n">IdPoolsIpv4Subnets</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__id_pools_ipv4_subnets</span>
 
 <div class="viewcode-block" id="OneViewClient.switches"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.oneview_client.OneViewClient.switches">[docs]</a>    <span class="k">def</span> <span class="nf">switches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
