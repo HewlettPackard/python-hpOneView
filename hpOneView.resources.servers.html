@@ -87,6 +87,7 @@
 <li><a class="reference internal" href="#module-hpOneView.resources.servers.connections">hpOneView.resources.servers.connections module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.servers.enclosure_groups">hpOneView.resources.servers.enclosure_groups module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.servers.enclosures">hpOneView.resources.servers.enclosures module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.servers.id_pools">hpOneView.resources.servers.id_pools module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.servers.id_pools_ipv4_ranges">hpOneView.resources.servers.id_pools_ipv4_ranges module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.servers.id_pools_ipv4_subnets">hpOneView.resources.servers.id_pools_ipv4_subnets module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.servers.id_pools_ranges">hpOneView.resources.servers.id_pools_ranges module</a></li>
@@ -853,6 +854,211 @@ in OneView; it just stops waiting for its completion.</li>
 </dd></dl>
 
 </div>
+<div class="section" id="module-hpOneView.resources.servers.id_pools">
+<span id="hponeview-resources-servers-id-pools-module"></span><h2>hpOneView.resources.servers.id_pools module<a class="headerlink" href="#module-hpOneView.resources.servers.id_pools" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.servers.id_pools.IdPools">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.servers.id_pools.</code><code class="descname">IdPools</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools.html#IdPools"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools.IdPools" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Class for Id Pools API client.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.servers.id_pools.IdPools.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/id-pools'</em><a class="headerlink" href="#hpOneView.resources.servers.id_pools.IdPools.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.id_pools.IdPools.allocate">
+<code class="descname">allocate</code><span class="sig-paren">(</span><em>information</em>, <em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools.html#IdPools.allocate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools.IdPools.allocate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allocates a set of IDs from range.</p>
+<p>The allocator returned contains the list of IDs successfully allocated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>information</strong> (<em>dict</em>) &#8211; Information to update. Can result in system specified IDs or the system reserving user-specified IDs.</li>
+<li><strong>id_or_uri</strong> &#8211; ID or URI of vSN range.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A dict containing a list with IDs.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.id_pools.IdPools.collect">
+<code class="descname">collect</code><span class="sig-paren">(</span><em>information</em>, <em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools.html#IdPools.collect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools.IdPools.collect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collects one or more IDs to be returned to a pool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>information</strong> (<em>dict</em>) &#8211; The list of IDs to be collected</li>
+<li><strong>id_or_uri</strong> &#8211; ID or URI of range</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Collector containing list of collected IDs successfully collected.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.id_pools.IdPools.enable">
+<code class="descname">enable</code><span class="sig-paren">(</span><em>information</em>, <em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools.html#IdPools.enable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools.IdPools.enable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables or disables a pool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>information</strong> (<em>dict</em>) &#8211; Information to update.</li>
+<li><strong>id_or_uri</strong> &#8211; ID or URI of range.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.id_pools.IdPools.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools.html#IdPools.generate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools.IdPools.generate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates and returns a random range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of range.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A dict containing a list with IDs.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.id_pools.IdPools.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools.html#IdPools.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools.IdPools.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a pool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the range ID or URI.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Pool resource.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.id_pools.IdPools.get_check_range_availability">
+<code class="descname">get_check_range_availability</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>ids_pools</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools.html#IdPools.get_check_range_availability"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools.IdPools.get_check_range_availability" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks the range availability in the ID pool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; ID or URI of range.</li>
+<li><strong>ids_pools</strong> (<em>list</em>) &#8211; List of Id Pools.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A dict containing a list with IDs.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.id_pools.IdPools.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><em>information</em>, <em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools.html#IdPools.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools.IdPools.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates a set of user specified IDs to reserve in the pool.</p>
+<p>This API can be used to check if the specified IDs can be allocated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>information</strong> (<em>dict</em>) &#8211; Information to update. Can result in system specified IDs or the system reserving user-specified IDs.</li>
+<li><strong>id_or_uri</strong> &#8211; ID or URI of vSN range.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A dict containing a list with IDs.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.id_pools.IdPools.validate_id_pool">
+<code class="descname">validate_id_pool</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>ids_pools</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/id_pools.html#IdPools.validate_id_pool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.id_pools.IdPools.validate_id_pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates an ID pool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; ID or URI of range.</li>
+<li><strong>ids_pools</strong> (<em>list</em>) &#8211; List of Id Pools.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A dict containing a list with IDs.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-hpOneView.resources.servers.id_pools_ipv4_ranges">
 <span id="hponeview-resources-servers-id-pools-ipv4-ranges-module"></span><h2>hpOneView.resources.servers.id_pools_ipv4_ranges module<a class="headerlink" href="#module-hpOneView.resources.servers.id_pools_ipv4_ranges" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -981,7 +1187,7 @@ first available item.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list with IDs.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list with the allocated fragements.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
@@ -1009,7 +1215,7 @@ first available item.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The list of IDs.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list with the free fragments.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
@@ -1369,7 +1575,7 @@ first available item.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list with IDs.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list with the allocated fragements.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
@@ -1397,7 +1603,7 @@ first available item.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The list of IDs.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list with the free fragments.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>

@@ -28,6 +28,14 @@ hpOneView.resources.servers.enclosures module
     :undoc-members:
     :show-inheritance:
 
+hpOneView.resources.servers.id_pools module
+-------------------------------------------
+
+.. automodule:: hpOneView.resources.servers.id_pools
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView.resources.servers.id_pools_ipv4_ranges module
 -------------------------------------------------------
 
