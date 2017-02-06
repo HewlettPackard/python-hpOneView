@@ -52,6 +52,10 @@ from hpOneView.resources.networking.sas_interconnect_types import SasInterconnec
 from hpOneView.resources.facilities.datacenters import Datacenters
 from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
 from hpOneView.resources.servers.server_profiles import ServerProfiles
+from hpOneView.resources.servers.id_pools import IdPools
+from hpOneView.resources.servers.id_pools_ranges import IdPoolsRanges
+from hpOneView.resources.servers.id_pools_ipv4_ranges import IdPoolsIpv4Ranges
+from hpOneView.resources.servers.id_pools_ipv4_subnets import IdPoolsIpv4Subnets
 from hpOneView.resources.uncategorized.unmanaged_devices import UnmanagedDevices
 from hpOneView.resources.storage.sas_logical_jbods import SasLogicalJbods
 from hpOneView.resources.storage.storage_volume_attachments import StorageVolumeAttachments
@@ -64,6 +68,7 @@ from hpOneView.resources.search.labels import Labels
 from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPlans
 from hpOneView.resources.activity.alerts import Alerts
 from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
+
 from tests.test_utils import mock_builtin
 
 OS_ENVIRON_CONFIG_MINIMAL = {
@@ -368,13 +373,52 @@ class OneViewClientTest(unittest.TestCase):
         id_pools_vsn_ranges = self._oneview.id_pools_vsn_ranges
         self.assertEqual(id_pools_vsn_ranges, self._oneview.id_pools_vsn_ranges)
 
+    def test_id_pools_vsn_ranges_has_right_type(self):
+        self.assertIsInstance(self._oneview.id_pools_vsn_ranges, IdPoolsRanges)
+
+    def test_id_pools_vsn_ranges_has_right_value(self):
+        self.assertEqual('/rest/id-pools/vsn/ranges', self._oneview.id_pools_vsn_ranges._client._uri)
+
     def test_lazy_loading_id_pools_vmac_ranges(self):
         id_pools_vmac_ranges = self._oneview.id_pools_vmac_ranges
         self.assertEqual(id_pools_vmac_ranges, self._oneview.id_pools_vmac_ranges)
 
+    def test_id_pools_vmac_ranges_has_right_type(self):
+        self.assertIsInstance(self._oneview.id_pools_vmac_ranges, IdPoolsRanges)
+
+    def test_id_pools_vmac_ranges_has_right_value(self):
+        self.assertEqual('/rest/id-pools/vmac/ranges', self._oneview.id_pools_vmac_ranges._client._uri)
+
     def test_lazy_loading_id_pools_vwwn_ranges(self):
         id_pools_vwwn_ranges = self._oneview.id_pools_vwwn_ranges
         self.assertEqual(id_pools_vwwn_ranges, self._oneview.id_pools_vwwn_ranges)
+
+    def test_id_pools_vwwn_ranges_has_right_type(self):
+        self.assertIsInstance(self._oneview.id_pools_vwwn_ranges, IdPoolsRanges)
+
+    def test_id_pools_vwwn_ranges_has_right_value(self):
+        self.assertEqual('/rest/id-pools/vwwn/ranges', self._oneview.id_pools_vwwn_ranges._client._uri)
+
+    def test_id_pools_ipv4_ranges_has_right_type(self):
+        self.assertIsInstance(self._oneview.id_pools_ipv4_ranges, IdPoolsIpv4Ranges)
+
+    def test_id_pools_ipv4_ranges_lazy_loading(self):
+        id_pools_ipv4_ranges = self._oneview.id_pools_ipv4_ranges
+        self.assertEqual(id_pools_ipv4_ranges, self._oneview.id_pools_ipv4_ranges)
+
+    def test_id_pools_ipv4_subnets_has_right_type(self):
+        self.assertIsInstance(self._oneview.id_pools_ipv4_subnets, IdPoolsIpv4Subnets)
+
+    def test_id_pools_ipv4_subnets_lazy_loading(self):
+        id_pools_ipv4_subnets = self._oneview.id_pools_ipv4_subnets
+        self.assertEqual(id_pools_ipv4_subnets, self._oneview.id_pools_ipv4_subnets)
+
+    def test_id_pools_has_right_type(self):
+        self.assertIsInstance(self._oneview.id_pools, IdPools)
+
+    def test_id_pools_lazy_loading(self):
+        id_pools = self._oneview.id_pools
+        self.assertEqual(id_pools, self._oneview.id_pools)
 
     def test_lazy_loading_logical_enclosures(self):
         logical_enclosures = self._oneview.logical_enclosures

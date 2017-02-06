@@ -139,10 +139,10 @@ class IdPoolsIpv4Ranges(object):
                 first available item.
 
         Returns:
-            list: A list with IDs.
+            list: A list with the allocated fragements.
         """
         uri = self._client.build_uri(id_or_uri) + "/allocated-fragments?start={0}&count={1}".format(start, count)
-        return self._client.get(uri)
+        return self._client.get_collection(uri)
 
     def get_free_fragments(self, id_or_uri, count=-1, start=0):
         """
@@ -160,7 +160,7 @@ class IdPoolsIpv4Ranges(object):
                 first available item.
 
         Returns:
-            list: The list of IDs.
+            list: A list with the free fragments.
         """
         uri = self._client.build_uri(id_or_uri) + "/free-fragments?start={0}&count={1}".format(start, count)
-        return self._client.get(uri)
+        return self._client.get_collection(uri)

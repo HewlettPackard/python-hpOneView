@@ -30,62 +30,32 @@ from future import standard_library
 standard_library.install_aliases()
 
 from hpOneView.resources.resource import ResourceClient
-from hpOneView import HPOneViewValueError
 
 
-class IdPoolsRanges(object):
+class IdPools(object):
     """
-    Base class for Id Pools Ranges API client.
-
-    Has common function used by: vMAC, vSN, vWWN
+    Class for Id Pools API client.
     """
+    URI = '/rest/id-pools'
 
-    def __init__(self, type, con):
-
-        uri = ""
-        if type == 'vmac':
-            uri = '/rest/id-pools/vmac/ranges'
-        elif type == 'vsn':
-            uri = '/rest/id-pools/vsn/ranges'
-        elif type == 'vwwn':
-            uri = '/rest/id-pools/vwwn/ranges'
-        else:
-            raise HPOneViewValueError("Invalid type: {0}, types allowed: vmac, vsn, vwwn, ".format(type))
-
-        self._client = ResourceClient(con, uri)
-
-    def create(self, resource, timeout=-1):
-        """
-        Creates range.
-
-        Args:
-            resource (dict): Object to create
-            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView; it just stops waiting for its completion.
-
-        Returns:
-            dict: Created range.
-        """
-        return self._client.create(resource, timeout=timeout)
+    def __init__(self, con):
+        self._client = ResourceClient(con, self.URI)
 
     def get(self, id_or_uri):
         """
-        Gets range.
-
-        Using the allocator and collector associated with the range, IDs may be allocated from or collected back to the
-        range.
+        Gets a pool.
 
         Args:
             id_or_uri: Can be either the range ID or URI.
 
         Returns:
-            dict: Range
+            dict: Pool resource.
         """
         return self._client.get(id_or_uri)
 
     def enable(self, information, id_or_uri, timeout=-1):
         """
-        Enables or disables a range.
+        Enables or disables a pool.
 
         Args:
             information (dict): Information to update.
@@ -98,48 +68,44 @@ class IdPoolsRanges(object):
         """
 
         uri = self._client.build_uri(id_or_uri)
-
         return self._client.update(information, uri, timeout=timeout)
 
-    def delete(self, resource, force=False, timeout=-1):
+    def validate_id_pool(self, id_or_uri, ids_pools):
         """
-        Deletes range.
+        Validates an ID pool.
 
         Args:
-            resource (dict):
-                Object to delete
-            force (bool):
-                If set to true, the operation completes despite any problems with
-                network connectivity or errors on the resource itself. The default is false.
+            id_or_uri:
+                ID or URI of range.
+            ids_pools (list):
+                List of Id Pools.
+
+        Returns:
+            dict: A dict containing a list with IDs.
+        """
+        uri = self._client.build_uri(id_or_uri) + "/validate?idList=" + "&idList=".join(ids_pools)
+        return self._client.get(uri)
+
+    def validate(self, information, id_or_uri, timeout=-1):
+        """
+        Validates a set of user specified IDs to reserve in the pool.
+
+        This API can be used to check if the specified IDs can be allocated.
+
+        Args:
+            information (dict):
+                Information to update. Can result in system specified IDs or the system reserving user-specified IDs.
+            id_or_uri:
+                ID or URI of vSN range.
             timeout:
                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
 
         Returns:
-            bool: Indicates if the resource was successfully deleted.
+            dict: A dict containing a list with IDs.
         """
-        return self._client.delete(resource, force=force, timeout=timeout)
-
-    def get_allocated_fragments(self, id_or_uri, count=-1, start=0):
-        """
-        Gets all fragments that have been allocated in range.
-
-        Args:
-            id_or_uri:
-                ID or URI of range.
-            count:
-                 The number of resources to return. A count of -1 requests all items. The actual number of items in
-                 the response may differ from the requested count if the sum of start and count exceed the total number
-                 of items.
-            start:
-                The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
-                first available item.
-
-        Returns:
-            list: A list with the allocated fragements.
-        """
-        uri = self._client.build_uri(id_or_uri) + "/allocated-fragments?start={0}&count={1}".format(start, count)
-        return self._client.get_collection(uri)
+        uri = self._client.build_uri(id_or_uri) + "/validate"
+        return self._client.update(information, uri, timeout=timeout)
 
     def allocate(self, information, id_or_uri, timeout=-1):
         """
@@ -157,7 +123,7 @@ class IdPoolsRanges(object):
                 in OneView; it just stops waiting for its completion.
 
         Returns:
-            dict: Allocator
+            dict: A dict containing a list with IDs.
         """
         uri = self._client.build_uri(id_or_uri) + "/allocator"
 
@@ -165,9 +131,7 @@ class IdPoolsRanges(object):
 
     def collect(self, information, id_or_uri, timeout=-1):
         """
-        Collects a set of IDs back to range.
-
-        The collector returned contains the list of IDs successfully collected.
+        Collects one or more IDs to be returned to a pool.
 
         Args:
             information (dict):
@@ -185,23 +149,33 @@ class IdPoolsRanges(object):
 
         return self._client.update(information, uri, timeout=timeout)
 
-    def get_free_fragments(self, id_or_uri, count=-1, start=0):
+    def get_check_range_availability(self, id_or_uri, ids_pools):
         """
-        Gets all free fragments in a vSN range.
+        Checks the range availability in the ID pool.
 
         Args:
             id_or_uri:
                 ID or URI of range.
-            count:
-                 The number of resources to return. A count of -1 requests all items. The actual number of items in
-                 the response may differ from the requested count if the sum of start and count exceed the total number
-                 of items.
-            start:
-                The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
-                first available item.
+            ids_pools (list):
+                List of Id Pools.
 
         Returns:
-            list: A list with the free fragments.
+            dict: A dict containing a list with IDs.
         """
-        uri = self._client.build_uri(id_or_uri) + "/free-fragments?start={0}&count={1}".format(start, count)
-        return self._client.get_collection(uri)
+
+        uri = self._client.build_uri(id_or_uri) + "/checkrangeavailability?idList=" + "&idList=".join(ids_pools)
+        return self._client.get(uri)
+
+    def generate(self, id_or_uri):
+        """
+        Generates and returns a random range.
+
+        Args:
+            id_or_uri:
+                ID or URI of range.
+
+        Returns:
+            dict: A dict containing a list with IDs.
+        """
+        uri = self._client.build_uri(id_or_uri) + "/generate"
+        return self._client.get(uri)
