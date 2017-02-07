@@ -31,6 +31,7 @@ from future import standard_library
 standard_library.install_aliases()
 
 import logging
+from collections import OrderedDict
 
 logger = logging.getLogger(__name__)
 
@@ -54,8 +55,9 @@ def merge_list_by_key(original_list, updated_list, key, ignore_when_null=[]):
     if not original_list:
         return updated_list
 
-    items_map = {x[key]: x.copy() for x in original_list}
-    merged_items = {}
+    items_map = OrderedDict([(i[key], i.copy()) for i in original_list])
+
+    merged_items = OrderedDict()
 
     for item in updated_list:
         item_key = item[key]

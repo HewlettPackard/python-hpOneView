@@ -56,7 +56,7 @@ class ResourceCompareTest(unittest.TestCase):
                                'level3': {
                                    "lvl3_t1": u"lvl3_t1"
                                },
-                               "list": [1, 2, '3']
+                               "list": [1, '3', 2]
                            },
                            u'modified': u'2016-06-13T20:39:15.993Z',
                            u'fabricUri': u'/rest/fabrics/a3cff65e-6d95-4d4d-9047-3548b6aca902',
@@ -448,6 +448,225 @@ class ResourceCompareTest(unittest.TestCase):
             "name": "name",
             "value": {"name": "subresource",
                       "list": None}
+        }
+        self.assertFalse(resource_compare(dict1, dict2))
+
+    def test_comparison_list_of_dicts_with_diff_order(self):
+        resource1 = {'connections': [
+            {
+                u'allocatedMbps': 0,
+                u'networkUri': u'/rest/fc-networks/617a2c3b-1505-4369-a0a5-4c169183bf9d',
+                u'requestedMbps': u'2500',
+                u'portId': u'None',
+                u'name': u'connection2',
+                u'maximumMbps': 0,
+                u'wwpnType': u'Virtual',
+                u'deploymentStatus': u'Reserved',
+                u'boot': {
+                    u'priority': u'NotBootable',
+                    u'chapLevel': u'None',
+                    u'initiatorNameSource': u'ProfileInitiatorName'
+                },
+                u'wwnn': u'10:00:c2:54:96:f0:00:03',
+                u'mac': u'46:E0:32:50:00:01',
+                u'macType': u'Virtual',
+                u'wwpn': u'10:00:c2:54:96:f0:00:02',
+                u'interconnectUri': None,
+                u'requestedVFs': None,
+                u'functionType': u'FibreChannel',
+                u'id': 2,
+                u'allocatedVFs': None
+            },
+            {
+                u'allocatedMbps': 1000,
+                u'networkUri': u'/rest/ethernet-networks/7704a66f-fa60-4375-8e9d-e72111bf4b3a',
+                u'requestedMbps': u'1000',
+                u'portId': u'Flb 1:1-a',
+                u'name': u'connection3',
+                u'maximumMbps': 1000,
+                u'wwpnType': u'Virtual',
+                u'deploymentStatus': u'Deployed',
+                u'boot': {
+                    u'priority': u'NotBootable',
+                    u'chapLevel': u'None',
+                    u'initiatorNameSource': u'ProfileInitiatorName'
+                },
+                u'wwnn': None,
+                u'mac': u'46:E0:32:50:00:02',
+                u'macType': u'Virtual',
+                u'wwpn': None,
+                u'interconnectUri': u'/rest/interconnects/6930962f-8aba-42ac-8bbc-3794890ea945',
+                u'requestedVFs': u'Auto',
+                u'functionType': u'Ethernet',
+                u'id': 3,
+                u'allocatedVFs': None
+            },
+            {
+                u'allocatedMbps': 1000,
+                u'networkUri': u'/rest/ethernet-networks/7704a66f-fa60-4375-8e9d-e72111bf4b3a',
+                u'requestedMbps': u'1000',
+                u'portId': u'Flb 1:2-a',
+                u'name': u'connection4',
+                u'maximumMbps': 1000,
+                u'wwpnType': u'Virtual',
+                u'deploymentStatus': u'Deployed',
+                u'boot': {
+                    u'priority': u'NotBootable',
+                    u'chapLevel': u'None',
+                    u'initiatorNameSource': u'ProfileInitiatorName'
+                },
+                u'wwnn': None,
+                u'mac': u'46:E0:32:50:00:03',
+                u'macType': u'Virtual',
+                u'wwpn': None,
+                u'interconnectUri': u'/rest/interconnects/a3c936f2-2993-4779-a6e3-dc302b6f1bc6',
+                u'requestedVFs': u'Auto',
+                u'functionType': u'Ethernet',
+                u'id': 4,
+                u'allocatedVFs': None
+            },
+            {
+                u'allocatedMbps': 2500,
+                u'networkUri': u'/rest/fc-networks/179222e0-d59e-4898-b2bf-5c053c872ee6',
+                u'requestedMbps': u'2500',
+                u'portId': u'Flb 1:1-b',
+                u'name': u'connection1',
+                u'maximumMbps': 10000,
+                u'wwpnType': u'Virtual',
+                u'deploymentStatus': u'Deployed',
+                u'boot': {
+                    u'priority': u'NotBootable',
+                    u'chapLevel': u'None',
+                    u'initiatorNameSource': u'ProfileInitiatorName'
+                },
+                u'wwnn': u'10:00:c2:54:96:f0:00:01',
+                u'mac': u'46:E0:32:50:00:00',
+                u'macType': u'Virtual',
+                u'wwpn': u'10:00:c2:54:96:f0:00:00',
+                u'interconnectUri': u'/rest/interconnects/6930962f-8aba-42ac-8bbc-3794890ea945',
+                u'requestedVFs': None,
+                u'functionType': u'FibreChannel',
+                u'id': 1,
+                u'allocatedVFs': None
+            }
+        ]
+        }
+
+        resource2 = {'connections': [
+            {
+                u'requestedMbps': 1000,
+                u'deploymentStatus': u'Deployed',
+                u'networkUri': u'/rest/ethernet-networks/7704a66f-fa60-4375-8e9d-e72111bf4b3a',
+                u'mac': u'46:E0:32:50:00:02',
+                u'wwpnType': u'Virtual',
+                u'id': 3,
+                u'macType': u'Virtual',
+                u'allocatedMbps': 1000,
+                u'wwnn': None,
+                u'maximumMbps': 1000,
+                u'portId': u'Flb 1:1-a',
+                u'name': 'connection3',
+                u'functionType': 'Ethernet',
+                u'boot': {
+                    u'priority': 'NotBootable',
+                    u'chapLevel': u'None',
+                    u'initiatorNameSource': u'ProfileInitiatorName'
+                },
+                u'allocatedVFs': None,
+                u'wwpn': None,
+                u'interconnectUri': u'/rest/interconnects/6930962f-8aba-42ac-8bbc-3794890ea945',
+                u'requestedVFs': u'Auto'
+            },
+            {
+                u'requestedMbps': 1000,
+                u'deploymentStatus': u'Deployed',
+                u'networkUri': u'/rest/ethernet-networks/7704a66f-fa60-4375-8e9d-e72111bf4b3a',
+                u'mac': u'46:E0:32:50:00:03',
+                u'wwpnType': u'Virtual',
+                u'id': 4,
+                u'macType': u'Virtual',
+                u'allocatedMbps': 1000,
+                u'wwnn': None,
+                u'maximumMbps': 1000,
+                u'portId': u'Flb 1:2-a',
+                u'name': 'connection4',
+                u'functionType': 'Ethernet',
+                u'boot': {
+                    u'priority': 'NotBootable',
+                    u'chapLevel': u'None',
+                    u'initiatorNameSource': u'ProfileInitiatorName'
+                },
+                u'allocatedVFs': None,
+                u'wwpn': None,
+                u'interconnectUri': u'/rest/interconnects/a3c936f2-2993-4779-a6e3-dc302b6f1bc6',
+                u'requestedVFs': u'Auto'
+            },
+            {
+                u'requestedMbps': 2500,
+                u'deploymentStatus': u'Deployed',
+                u'networkUri': u'/rest/fc-networks/179222e0-d59e-4898-b2bf-5c053c872ee6',
+                u'mac': u'46:E0:32:50:00:00',
+                u'wwpnType': u'Virtual',
+                u'id': 1,
+                u'macType': u'Virtual',
+                u'allocatedMbps': 2500,
+                u'wwnn': u'10:00:c2:54:96:f0:00:01',
+                u'maximumMbps': 10000,
+                u'portId': u'Flb 1:1-b',
+                u'name': 'connection1',
+                u'functionType': 'FibreChannel',
+                u'boot': {
+                    u'priority': 'NotBootable',
+                    u'chapLevel': u'None',
+                    u'initiatorNameSource': u'ProfileInitiatorName'
+                },
+                u'allocatedVFs': None,
+                u'wwpn': u'10:00:c2:54:96:f0:00:00',
+                u'interconnectUri': u'/rest/interconnects/6930962f-8aba-42ac-8bbc-3794890ea945',
+                u'requestedVFs': None
+            },
+            {
+                u'requestedMbps': 2500,
+                u'deploymentStatus': u'Reserved',
+                u'networkUri': u'/rest/fc-networks/617a2c3b-1505-4369-a0a5-4c169183bf9d',
+                u'mac': u'46:E0:32:50:00:01',
+                u'wwpnType': u'Virtual',
+                u'id': 2,
+                u'macType': u'Virtual',
+                u'allocatedMbps': 0,
+                u'wwnn': u'10:00:c2:54:96:f0:00:03',
+                u'maximumMbps': 0,
+                u'portId': 'None',
+                u'name': 'connection2',
+                u'functionType': 'FibreChannel',
+                u'boot': {
+                    u'priority': 'NotBootable',
+                    u'chapLevel': u'None',
+                    u'initiatorNameSource': u'ProfileInitiatorName'
+                },
+                u'allocatedVFs': None,
+                u'wwpn': u'10:00:c2:54:96:f0:00:02',
+                u'interconnectUri': None,
+                u'requestedVFs': None
+            }
+        ]
+        }
+
+        self.assertTrue(resource_compare(resource1, resource2))
+
+    def test_comparison_list_when_dict_has_diff_key(self):
+        dict1 = {
+            "name": "name",
+            "value": [{'name': 'value1'},
+                      {'name': 'value2'},
+                      {'name': 3}]
+        }
+
+        dict2 = {
+            "name": "name",
+            "value": [{'count': 3},
+                      {'name': 'value1'},
+                      {'name': 'value2'}]
         }
         self.assertFalse(resource_compare(dict1, dict2))
 
