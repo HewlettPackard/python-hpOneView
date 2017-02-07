@@ -161,6 +161,7 @@
 <span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -184,8 +185,9 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">original_list</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">updated_list</span>
 
-    <span class="n">items_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span> <span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">original_list</span><span class="p">}</span>
-    <span class="n">merged_items</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">items_map</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="n">i</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">i</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">original_list</span><span class="p">])</span>
+
+    <span class="n">merged_items</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
 
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">updated_list</span><span class="p">:</span>
         <span class="n">item_key</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>

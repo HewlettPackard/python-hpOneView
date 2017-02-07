@@ -86,6 +86,7 @@
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-hpOneView.extras.comparators">hpOneView.extras.comparators module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.extras.mergers">hpOneView.extras.mergers module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.extras.server_profile_utils">hpOneView.extras.server_profile_utils module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.extras">Module contents</a></li>
 </ul>
 </li>
@@ -142,10 +143,10 @@
 <span id="hponeview-extras-comparators-module"></span><h2>hpOneView.extras.comparators module<a class="headerlink" href="#module-hpOneView.extras.comparators" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="hpOneView.extras.comparators.resource_compare">
-<code class="descclassname">hpOneView.extras.comparators.</code><code class="descname">resource_compare</code><span class="sig-paren">(</span><em>resource1</em>, <em>resource2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/extras/comparators.html#resource_compare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.extras.comparators.resource_compare" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hpOneView.extras.comparators.</code><code class="descname">resource_compare</code><span class="sig-paren">(</span><em>first_resource</em>, <em>second_resource</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/extras/comparators.html#resource_compare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.extras.comparators.resource_compare" title="Permalink to this definition">¶</a></dt>
 <dd><p>Recursively compares dictionary contents, ignoring type and order
-:param resource1: first dictionary
-:param resource2: second dictionary</p>
+:param first_resource: first dictionary
+:param second_resource: second dictionary</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -160,10 +161,10 @@
 
 <dl class="function">
 <dt id="hpOneView.extras.comparators.resource_compare_list">
-<code class="descclassname">hpOneView.extras.comparators.</code><code class="descname">resource_compare_list</code><span class="sig-paren">(</span><em>resource1</em>, <em>resource2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/extras/comparators.html#resource_compare_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.extras.comparators.resource_compare_list" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">hpOneView.extras.comparators.</code><code class="descname">resource_compare_list</code><span class="sig-paren">(</span><em>first_resource</em>, <em>second_resource</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/extras/comparators.html#resource_compare_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.extras.comparators.resource_compare_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Recursively compares lists contents, ignoring type
-:param resource1: first list
-:param resource2: second list</p>
+:param first_resource: first list
+:param second_resource: second list</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -206,6 +207,252 @@ False when different.</td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-hpOneView.extras.server_profile_utils">
+<span id="hponeview-extras-server-profile-utils-module"></span><h2>hpOneView.extras.server_profile_utils module<a class="headerlink" href="#module-hpOneView.extras.server_profile_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.extras.server_profile_utils.Keys">
+<em class="property">class </em><code class="descclassname">hpOneView.extras.server_profile_utils.</code><code class="descname">Keys</code><a class="reference internal" href="_modules/hpOneView/extras/server_profile_utils.html#Keys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.ATTRIBUTES">
+<code class="descname">ATTRIBUTES</code><em class="property"> = 'osCustomAttributes'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.ATTRIBUTES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.BIOS">
+<code class="descname">BIOS</code><em class="property"> = 'bios'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.BIOS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.BOOT">
+<code class="descname">BOOT</code><em class="property"> = 'boot'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.BOOT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.BOOT_MODE">
+<code class="descname">BOOT_MODE</code><em class="property"> = 'bootMode'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.BOOT_MODE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.CONNECTIONS">
+<code class="descname">CONNECTIONS</code><em class="property"> = 'connections'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.CONNECTIONS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.CONN_ID">
+<code class="descname">CONN_ID</code><em class="property"> = 'connectionId'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.CONN_ID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.CONTROLLERS">
+<code class="descname">CONTROLLERS</code><em class="property"> = 'controllers'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.CONTROLLERS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.DEVICE_SLOT">
+<code class="descname">DEVICE_SLOT</code><em class="property"> = 'deviceSlot'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.DEVICE_SLOT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.DRIVE_NUMBER">
+<code class="descname">DRIVE_NUMBER</code><em class="property"> = 'driveNumber'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.DRIVE_NUMBER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.ID">
+<code class="descname">ID</code><em class="property"> = 'id'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.ID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.LOCAL_STORAGE">
+<code class="descname">LOCAL_STORAGE</code><em class="property"> = 'localStorage'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.LOCAL_STORAGE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.LOGICAL_DRIVES">
+<code class="descname">LOGICAL_DRIVES</code><em class="property"> = 'logicalDrives'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.LOGICAL_DRIVES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.LUN">
+<code class="descname">LUN</code><em class="property"> = 'lun'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.LUN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.LUN_TYPE">
+<code class="descname">LUN_TYPE</code><em class="property"> = 'lunType'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.LUN_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.MAC">
+<code class="descname">MAC</code><em class="property"> = 'mac'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.MAC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.MAC_TYPE">
+<code class="descname">MAC_TYPE</code><em class="property"> = 'macType'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.MAC_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.MODE">
+<code class="descname">MODE</code><em class="property"> = 'mode'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.MODE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.NAME">
+<code class="descname">NAME</code><em class="property"> = 'name'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.OS_DEPLOYMENT">
+<code class="descname">OS_DEPLOYMENT</code><em class="property"> = 'osDeploymentSettings'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.OS_DEPLOYMENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.OS_DEPLOYMENT_URI">
+<code class="descname">OS_DEPLOYMENT_URI</code><em class="property"> = 'osDeploymentPlanUri'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.OS_DEPLOYMENT_URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.PATHS">
+<code class="descname">PATHS</code><em class="property"> = 'storagePaths'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.PATHS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.SAN">
+<code class="descname">SAN</code><em class="property"> = 'sanStorage'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.SAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.SAS_LOGICAL_JBODS">
+<code class="descname">SAS_LOGICAL_JBODS</code><em class="property"> = 'sasLogicalJBODs'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.SAS_LOGICAL_JBODS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.SAS_LOGICAL_JBOD_ID">
+<code class="descname">SAS_LOGICAL_JBOD_ID</code><em class="property"> = 'sasLogicalJBODId'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.SAS_LOGICAL_JBOD_ID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.SAS_LOGICAL_JBOD_URI">
+<code class="descname">SAS_LOGICAL_JBOD_URI</code><em class="property"> = 'sasLogicalJBODUri'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.SAS_LOGICAL_JBOD_URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.SERIAL_NUMBER">
+<code class="descname">SERIAL_NUMBER</code><em class="property"> = 'serialNumber'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.SERIAL_NUMBER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.SERIAL_NUMBER_TYPE">
+<code class="descname">SERIAL_NUMBER_TYPE</code><em class="property"> = 'serialNumberType'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.SERIAL_NUMBER_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.UUID">
+<code class="descname">UUID</code><em class="property"> = 'uuid'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.UUID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.VOLUMES">
+<code class="descname">VOLUMES</code><em class="property"> = 'volumeAttachments'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.VOLUMES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.WWNN">
+<code class="descname">WWNN</code><em class="property"> = 'wwnn'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.WWNN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.WWPN">
+<code class="descname">WWPN</code><em class="property"> = 'wwpn'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.WWPN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.Keys.WWPN_TYPE">
+<code class="descname">WWPN_TYPE</code><em class="property"> = 'wwpnType'</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.Keys.WWPN_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hpOneView.extras.server_profile_utils.ServerProfileMerger">
+<em class="property">class </em><code class="descclassname">hpOneView.extras.server_profile_utils.</code><code class="descname">ServerProfileMerger</code><a class="reference internal" href="_modules/hpOneView/extras/server_profile_utils.html#ServerProfileMerger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.extras.server_profile_utils.ServerProfileMerger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="hpOneView.extras.server_profile_utils.ServerProfileMerger.merge_data">
+<code class="descname">merge_data</code><span class="sig-paren">(</span><em>resource</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/extras/server_profile_utils.html#ServerProfileMerger.merge_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.extras.server_profile_utils.ServerProfileMerger.merge_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris">
+<em class="property">class </em><code class="descclassname">hpOneView.extras.server_profile_utils.</code><code class="descname">ServerProfileReplaceNamesByUris</code><a class="reference internal" href="_modules/hpOneView/extras/server_profile_utils.html#ServerProfileReplaceNamesByUris"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.ENCLOSURE_NOT_FOUND">
+<code class="descname">ENCLOSURE_NOT_FOUND</code><em class="property"> = 'Enclosure not found: '</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.ENCLOSURE_NOT_FOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.FIRMWARE_DRIVER_NOT_FOUND">
+<code class="descname">FIRMWARE_DRIVER_NOT_FOUND</code><em class="property"> = 'Firmware Driver not found: '</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.FIRMWARE_DRIVER_NOT_FOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.INTERCONNECT_NOT_FOUND">
+<code class="descname">INTERCONNECT_NOT_FOUND</code><em class="property"> = 'Interconnect not found: '</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.INTERCONNECT_NOT_FOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.SAS_LOGICAL_JBOD_NOT_FOUND">
+<code class="descname">SAS_LOGICAL_JBOD_NOT_FOUND</code><em class="property"> = 'SAS logical JBOD not found: '</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.SAS_LOGICAL_JBOD_NOT_FOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.SERVER_HARDWARE_TYPE_NOT_FOUND">
+<code class="descname">SERVER_HARDWARE_TYPE_NOT_FOUND</code><em class="property"> = 'Server Hardware Type not found: '</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.SERVER_HARDWARE_TYPE_NOT_FOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.SERVER_PROFILE_ENCLOSURE_GROUP_NOT_FOUND">
+<code class="descname">SERVER_PROFILE_ENCLOSURE_GROUP_NOT_FOUND</code><em class="property"> = 'Enclosure Group not found: '</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.SERVER_PROFILE_ENCLOSURE_GROUP_NOT_FOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.SERVER_PROFILE_NETWORK_NOT_FOUND">
+<code class="descname">SERVER_PROFILE_NETWORK_NOT_FOUND</code><em class="property"> = 'Network not found: '</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.SERVER_PROFILE_NETWORK_NOT_FOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.SERVER_PROFILE_OS_DEPLOYMENT_NOT_FOUND">
+<code class="descname">SERVER_PROFILE_OS_DEPLOYMENT_NOT_FOUND</code><em class="property"> = 'OS Deployment Plan not found: '</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.SERVER_PROFILE_OS_DEPLOYMENT_NOT_FOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.STORAGE_POOL_NOT_FOUND">
+<code class="descname">STORAGE_POOL_NOT_FOUND</code><em class="property"> = 'Storage Pool not found: '</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.STORAGE_POOL_NOT_FOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.STORAGE_SYSTEM_NOT_FOUND">
+<code class="descname">STORAGE_SYSTEM_NOT_FOUND</code><em class="property"> = 'Storage System not found: '</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.STORAGE_SYSTEM_NOT_FOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.VOLUME_NOT_FOUND">
+<code class="descname">VOLUME_NOT_FOUND</code><em class="property"> = 'Volume not found: '</em><a class="headerlink" href="#hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.VOLUME_NOT_FOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.replace">
+<code class="descname">replace</code><span class="sig-paren">(</span><em>oneview_client</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/extras/server_profile_utils.html#ServerProfileReplaceNamesByUris.replace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.replace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </div>

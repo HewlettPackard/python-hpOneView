@@ -1,0 +1,533 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>hpOneView.extras.server_profile_utils &mdash; HPE OneView Python SDK 3.1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="HPE OneView Python SDK 3.1.0 documentation" href="../../../index.html"/>
+        <link rel="up" title="hpOneView" href="../../hpOneView.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> HPE OneView Python SDK
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <!-- Local TOC -->
+                <div class="local-toc"></div>
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">HPE OneView Python SDK</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+          <li><a href="../../hpOneView.html">hpOneView</a> &raquo;</li>
+      
+    <li>hpOneView.extras.server_profile_utils</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hpOneView.extras.server_profile_utils</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/python</span>
+
+<span class="c1">###</span>
+<span class="c1"># Copyright (2017) Hewlett Packard Enterprise Development LP</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># You may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1"># http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">###</span>
+<span class="kn">from</span> <span class="nn">hpOneView.extras.mergers</span> <span class="k">import</span> <span class="n">merge_list_by_key</span>
+<span class="kn">from</span> <span class="nn">hpOneView.exceptions</span> <span class="k">import</span> <span class="n">HPOneViewResourceNotFound</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+
+
+<div class="viewcode-block" id="Keys"><a class="viewcode-back" href="../../../hpOneView.extras.html#hpOneView.extras.server_profile_utils.Keys">[docs]</a><span class="k">class</span> <span class="nc">Keys</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">ID</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span>
+    <span class="n">NAME</span> <span class="o">=</span> <span class="s1">&#39;name&#39;</span>
+    <span class="n">DEVICE_SLOT</span> <span class="o">=</span> <span class="s1">&#39;deviceSlot&#39;</span>
+    <span class="n">CONNECTIONS</span> <span class="o">=</span> <span class="s1">&#39;connections&#39;</span>
+    <span class="n">OS_DEPLOYMENT</span> <span class="o">=</span> <span class="s1">&#39;osDeploymentSettings&#39;</span>
+    <span class="n">OS_DEPLOYMENT_URI</span> <span class="o">=</span> <span class="s1">&#39;osDeploymentPlanUri&#39;</span>
+    <span class="n">ATTRIBUTES</span> <span class="o">=</span> <span class="s1">&#39;osCustomAttributes&#39;</span>
+    <span class="n">SAN</span> <span class="o">=</span> <span class="s1">&#39;sanStorage&#39;</span>
+    <span class="n">VOLUMES</span> <span class="o">=</span> <span class="s1">&#39;volumeAttachments&#39;</span>
+    <span class="n">PATHS</span> <span class="o">=</span> <span class="s1">&#39;storagePaths&#39;</span>
+    <span class="n">CONN_ID</span> <span class="o">=</span> <span class="s1">&#39;connectionId&#39;</span>
+    <span class="n">BOOT</span> <span class="o">=</span> <span class="s1">&#39;boot&#39;</span>
+    <span class="n">BIOS</span> <span class="o">=</span> <span class="s1">&#39;bios&#39;</span>
+    <span class="n">BOOT_MODE</span> <span class="o">=</span> <span class="s1">&#39;bootMode&#39;</span>
+    <span class="n">LOCAL_STORAGE</span> <span class="o">=</span> <span class="s1">&#39;localStorage&#39;</span>
+    <span class="n">SAS_LOGICAL_JBODS</span> <span class="o">=</span> <span class="s1">&#39;sasLogicalJBODs&#39;</span>
+    <span class="n">CONTROLLERS</span> <span class="o">=</span> <span class="s1">&#39;controllers&#39;</span>
+    <span class="n">LOGICAL_DRIVES</span> <span class="o">=</span> <span class="s1">&#39;logicalDrives&#39;</span>
+    <span class="n">SAS_LOGICAL_JBOD_URI</span> <span class="o">=</span> <span class="s1">&#39;sasLogicalJBODUri&#39;</span>
+    <span class="n">SAS_LOGICAL_JBOD_ID</span> <span class="o">=</span> <span class="s1">&#39;sasLogicalJBODId&#39;</span>
+    <span class="n">MODE</span> <span class="o">=</span> <span class="s1">&#39;mode&#39;</span>
+    <span class="n">MAC_TYPE</span> <span class="o">=</span> <span class="s1">&#39;macType&#39;</span>
+    <span class="n">MAC</span> <span class="o">=</span> <span class="s1">&#39;mac&#39;</span>
+    <span class="n">SERIAL_NUMBER_TYPE</span> <span class="o">=</span> <span class="s1">&#39;serialNumberType&#39;</span>
+    <span class="n">UUID</span> <span class="o">=</span> <span class="s1">&#39;uuid&#39;</span>
+    <span class="n">SERIAL_NUMBER</span> <span class="o">=</span> <span class="s1">&#39;serialNumber&#39;</span>
+    <span class="n">DRIVE_NUMBER</span> <span class="o">=</span> <span class="s1">&#39;driveNumber&#39;</span>
+    <span class="n">WWPN_TYPE</span> <span class="o">=</span> <span class="s1">&#39;wwpnType&#39;</span>
+    <span class="n">WWNN</span> <span class="o">=</span> <span class="s1">&#39;wwnn&#39;</span>
+    <span class="n">WWPN</span> <span class="o">=</span> <span class="s1">&#39;wwpn&#39;</span>
+    <span class="n">LUN_TYPE</span> <span class="o">=</span> <span class="s1">&#39;lunType&#39;</span>
+    <span class="n">LUN</span> <span class="o">=</span> <span class="s1">&#39;lun&#39;</span></div>
+
+
+<div class="viewcode-block" id="ServerProfileMerger"><a class="viewcode-back" href="../../../hpOneView.extras.html#hpOneView.extras.server_profile_utils.ServerProfileMerger">[docs]</a><span class="k">class</span> <span class="nc">ServerProfileMerger</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="ServerProfileMerger.merge_data"><a class="viewcode-back" href="../../../hpOneView.extras.html#hpOneView.extras.server_profile_utils.ServerProfileMerger.merge_data">[docs]</a>    <span class="k">def</span> <span class="nf">merge_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">merged_data</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
+        <span class="n">merged_data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_bios_and_boot</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_connections</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_san_storage</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span>
+        <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_os_deployment_settings</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_local_storage</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">merged_data</span></div>
+
+    <span class="k">def</span> <span class="nf">_merge_bios_and_boot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_merge</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">BIOS</span><span class="p">):</span>
+            <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_dict</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">BIOS</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_merge</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">BOOT</span><span class="p">):</span>
+            <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_dict</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">BOOT</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_merge</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">BOOT_MODE</span><span class="p">):</span>
+            <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_dict</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">BOOT_MODE</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">merged_data</span>
+
+    <span class="k">def</span> <span class="nf">_merge_connections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_merge</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONNECTIONS</span><span class="p">):</span>
+            <span class="n">existing_connections</span> <span class="o">=</span> <span class="n">resource</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONNECTIONS</span><span class="p">]</span>
+            <span class="n">params_connections</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONNECTIONS</span><span class="p">]</span>
+            <span class="n">merged_data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONNECTIONS</span><span class="p">]</span> <span class="o">=</span> <span class="n">merge_list_by_key</span><span class="p">(</span><span class="n">existing_connections</span><span class="p">,</span> <span class="n">params_connections</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">ID</span><span class="p">)</span>
+
+            <span class="c1"># merge Boot from Connections</span>
+            <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_connections_boot</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">merged_data</span>
+
+    <span class="k">def</span> <span class="nf">_merge_connections_boot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+        <span class="n">existing_connection_map</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">ID</span><span class="p">]:</span> <span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">resource</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONNECTIONS</span><span class="p">]}</span>
+        <span class="k">for</span> <span class="n">merged_connection</span> <span class="ow">in</span> <span class="n">merged_data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONNECTIONS</span><span class="p">]:</span>
+            <span class="n">conn_id</span> <span class="o">=</span> <span class="n">merged_connection</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">ID</span><span class="p">]</span>
+            <span class="n">existing_conn_has_boot</span> <span class="o">=</span> <span class="n">conn_id</span> <span class="ow">in</span> <span class="n">existing_connection_map</span> <span class="ow">and</span> <span class="n">Keys</span><span class="o">.</span><span class="n">BOOT</span> <span class="ow">in</span> <span class="n">existing_connection_map</span><span class="p">[</span>
+                <span class="n">conn_id</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">existing_conn_has_boot</span> <span class="ow">and</span> <span class="n">Keys</span><span class="o">.</span><span class="n">BOOT</span> <span class="ow">in</span> <span class="n">merged_connection</span><span class="p">:</span>
+                <span class="n">current_connection</span> <span class="o">=</span> <span class="n">existing_connection_map</span><span class="p">[</span><span class="n">conn_id</span><span class="p">]</span>
+                <span class="n">boot_settings_merged</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">current_connection</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">BOOT</span><span class="p">])</span>
+                <span class="n">boot_settings_merged</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">merged_connection</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">BOOT</span><span class="p">])</span>
+                <span class="n">merged_connection</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">BOOT</span><span class="p">]</span> <span class="o">=</span> <span class="n">boot_settings_merged</span>
+        <span class="k">return</span> <span class="n">merged_data</span>
+
+    <span class="k">def</span> <span class="nf">_merge_san_storage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">merged_data</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_removed_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAN</span><span class="p">):</span>
+            <span class="n">merged_data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAN</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">volumeAttachments</span><span class="o">=</span><span class="p">[],</span> <span class="n">manageSanStorage</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_merge</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAN</span><span class="p">):</span>
+            <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_dict</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAN</span><span class="p">)</span>
+
+            <span class="c1"># Merge Volumes from SAN Storage</span>
+            <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_san_volumes</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">merged_data</span>
+
+    <span class="k">def</span> <span class="nf">_merge_san_volumes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_merge</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAN</span><span class="p">],</span> <span class="n">resource</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAN</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">VOLUMES</span><span class="p">):</span>
+            <span class="n">existing_volumes</span> <span class="o">=</span> <span class="n">resource</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAN</span><span class="p">][</span><span class="n">Keys</span><span class="o">.</span><span class="n">VOLUMES</span><span class="p">]</span>
+            <span class="n">params_volumes</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAN</span><span class="p">][</span><span class="n">Keys</span><span class="o">.</span><span class="n">VOLUMES</span><span class="p">]</span>
+            <span class="n">merged_volumes</span> <span class="o">=</span> <span class="n">merge_list_by_key</span><span class="p">(</span><span class="n">existing_volumes</span><span class="p">,</span> <span class="n">params_volumes</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">ID</span><span class="p">)</span>
+            <span class="n">merged_data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAN</span><span class="p">][</span><span class="n">Keys</span><span class="o">.</span><span class="n">VOLUMES</span><span class="p">]</span> <span class="o">=</span> <span class="n">merged_volumes</span>
+
+            <span class="c1"># Merge Paths from SAN Storage Volumes</span>
+            <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_san_storage_paths</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">merged_data</span>
+
+    <span class="k">def</span> <span class="nf">_merge_san_storage_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+
+        <span class="n">existing_volumes_map</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="n">i</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">ID</span><span class="p">],</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">resource</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAN</span><span class="p">][</span><span class="n">Keys</span><span class="o">.</span><span class="n">VOLUMES</span><span class="p">]])</span>
+        <span class="n">merged_volumes</span> <span class="o">=</span> <span class="n">merged_data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAN</span><span class="p">][</span><span class="n">Keys</span><span class="o">.</span><span class="n">VOLUMES</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">merged_volume</span> <span class="ow">in</span> <span class="n">merged_volumes</span><span class="p">:</span>
+            <span class="n">volume_id</span> <span class="o">=</span> <span class="n">merged_volume</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">ID</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">volume_id</span> <span class="ow">in</span> <span class="n">existing_volumes_map</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">Keys</span><span class="o">.</span><span class="n">PATHS</span> <span class="ow">in</span> <span class="n">merged_volume</span> <span class="ow">and</span> <span class="n">Keys</span><span class="o">.</span><span class="n">PATHS</span> <span class="ow">in</span> <span class="n">existing_volumes_map</span><span class="p">[</span><span class="n">volume_id</span><span class="p">]:</span>
+                    <span class="n">existent_paths</span> <span class="o">=</span> <span class="n">existing_volumes_map</span><span class="p">[</span><span class="n">volume_id</span><span class="p">][</span><span class="n">Keys</span><span class="o">.</span><span class="n">PATHS</span><span class="p">]</span>
+
+                    <span class="n">paths_from_merged_volume</span> <span class="o">=</span> <span class="n">merged_volume</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">PATHS</span><span class="p">]</span>
+
+                    <span class="n">merged_paths</span> <span class="o">=</span> <span class="n">merge_list_by_key</span><span class="p">(</span><span class="n">existent_paths</span><span class="p">,</span> <span class="n">paths_from_merged_volume</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONN_ID</span><span class="p">)</span>
+
+                    <span class="n">merged_volume</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">PATHS</span><span class="p">]</span> <span class="o">=</span> <span class="n">merged_paths</span>
+        <span class="k">return</span> <span class="n">merged_data</span>
+
+    <span class="k">def</span> <span class="nf">_merge_os_deployment_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_merge</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">OS_DEPLOYMENT</span><span class="p">):</span>
+            <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_dict</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">OS_DEPLOYMENT</span><span class="p">)</span>
+
+            <span class="c1"># Merge Custom Attributes from OS Deployment Settings</span>
+            <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_os_deployment_custom_attr</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">merged_data</span>
+
+    <span class="k">def</span> <span class="nf">_merge_os_deployment_custom_attr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">hpOneView.extras.comparators</span> <span class="k">import</span> <span class="n">resource_compare_list</span>
+
+        <span class="k">if</span> <span class="n">Keys</span><span class="o">.</span><span class="n">ATTRIBUTES</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">OS_DEPLOYMENT</span><span class="p">]:</span>
+            <span class="n">existing_os_deployment</span> <span class="o">=</span> <span class="n">resource</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">OS_DEPLOYMENT</span><span class="p">]</span>
+            <span class="n">params_os_deployment</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">OS_DEPLOYMENT</span><span class="p">]</span>
+            <span class="n">merged_os_deployment</span> <span class="o">=</span> <span class="n">merged_data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">OS_DEPLOYMENT</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_removed_data</span><span class="p">(</span><span class="n">params_os_deployment</span><span class="p">,</span> <span class="n">existing_os_deployment</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">ATTRIBUTES</span><span class="p">):</span>
+                <span class="n">merged_os_deployment</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">ATTRIBUTES</span><span class="p">]</span> <span class="o">=</span> <span class="n">params_os_deployment</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">ATTRIBUTES</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">existing_attributes</span> <span class="o">=</span> <span class="n">existing_os_deployment</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">ATTRIBUTES</span><span class="p">]</span>
+                <span class="n">params_attributes</span> <span class="o">=</span> <span class="n">params_os_deployment</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">ATTRIBUTES</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="n">resource_compare_list</span><span class="p">(</span><span class="n">existing_attributes</span><span class="p">,</span> <span class="n">params_attributes</span><span class="p">):</span>
+                    <span class="n">merged_os_deployment</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">ATTRIBUTES</span><span class="p">]</span> <span class="o">=</span> <span class="n">existing_attributes</span>
+
+        <span class="k">return</span> <span class="n">merged_data</span>
+
+    <span class="k">def</span> <span class="nf">_merge_local_storage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_removed_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOCAL_STORAGE</span><span class="p">):</span>
+            <span class="n">merged_data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOCAL_STORAGE</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">sasLogicalJBODs</span><span class="o">=</span><span class="p">[],</span> <span class="n">controllers</span><span class="o">=</span><span class="p">[])</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_merge</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOCAL_STORAGE</span><span class="p">):</span>
+            <span class="c1"># Merge SAS Logical JBODs from Local Storage</span>
+            <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_sas_logical_jbods</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+            <span class="c1"># Merge Controllers from Local Storage</span>
+            <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_controllers</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">merged_data</span>
+
+    <span class="k">def</span> <span class="nf">_merge_sas_logical_jbods</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_merge</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOCAL_STORAGE</span><span class="p">],</span> <span class="n">resource</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOCAL_STORAGE</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAS_LOGICAL_JBODS</span><span class="p">):</span>
+            <span class="n">existing_items</span> <span class="o">=</span> <span class="n">resource</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOCAL_STORAGE</span><span class="p">][</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAS_LOGICAL_JBODS</span><span class="p">]</span>
+            <span class="n">provided_items</span> <span class="o">=</span> <span class="n">merged_data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOCAL_STORAGE</span><span class="p">][</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAS_LOGICAL_JBODS</span><span class="p">]</span>
+            <span class="n">merged_jbods</span> <span class="o">=</span> <span class="n">merge_list_by_key</span><span class="p">(</span><span class="n">existing_items</span><span class="p">,</span>
+                                             <span class="n">provided_items</span><span class="p">,</span>
+                                             <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span>
+                                             <span class="n">ignore_when_null</span><span class="o">=</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAS_LOGICAL_JBOD_URI</span><span class="p">])</span>
+            <span class="n">merged_data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOCAL_STORAGE</span><span class="p">][</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAS_LOGICAL_JBODS</span><span class="p">]</span> <span class="o">=</span> <span class="n">merged_jbods</span>
+        <span class="k">return</span> <span class="n">merged_data</span>
+
+    <span class="k">def</span> <span class="nf">_merge_controllers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_merge</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOCAL_STORAGE</span><span class="p">],</span> <span class="n">resource</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOCAL_STORAGE</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONTROLLERS</span><span class="p">):</span>
+            <span class="n">existing_items</span> <span class="o">=</span> <span class="n">resource</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOCAL_STORAGE</span><span class="p">][</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONTROLLERS</span><span class="p">]</span>
+            <span class="n">provided_items</span> <span class="o">=</span> <span class="n">merged_data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOCAL_STORAGE</span><span class="p">][</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONTROLLERS</span><span class="p">]</span>
+            <span class="n">merged_controllers</span> <span class="o">=</span> <span class="n">merge_list_by_key</span><span class="p">(</span><span class="n">existing_items</span><span class="p">,</span> <span class="n">provided_items</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">Keys</span><span class="o">.</span><span class="n">DEVICE_SLOT</span><span class="p">)</span>
+            <span class="n">merged_data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOCAL_STORAGE</span><span class="p">][</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONTROLLERS</span><span class="p">]</span> <span class="o">=</span> <span class="n">merged_controllers</span>
+
+            <span class="c1"># Merge Drives from Mezzanine and Embedded controllers</span>
+            <span class="n">merged_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_merge_controller_drives</span><span class="p">(</span><span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">merged_data</span>
+
+    <span class="k">def</span> <span class="nf">_merge_controller_drives</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">current_controller</span> <span class="ow">in</span> <span class="n">merged_data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOCAL_STORAGE</span><span class="p">][</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONTROLLERS</span><span class="p">][:]:</span>
+            <span class="k">for</span> <span class="n">existing_controller</span> <span class="ow">in</span> <span class="n">resource</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOCAL_STORAGE</span><span class="p">][</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONTROLLERS</span><span class="p">][:]:</span>
+                <span class="n">same_slot</span> <span class="o">=</span> <span class="n">current_controller</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">DEVICE_SLOT</span><span class="p">)</span> <span class="o">==</span> <span class="n">existing_controller</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">DEVICE_SLOT</span><span class="p">)</span>
+                <span class="n">same_mode</span> <span class="o">=</span> <span class="n">existing_controller</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">MODE</span><span class="p">)</span> <span class="o">==</span> <span class="n">existing_controller</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">MODE</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">same_slot</span> <span class="ow">and</span> <span class="n">same_mode</span> <span class="ow">and</span> <span class="n">current_controller</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOGICAL_DRIVES</span><span class="p">]:</span>
+
+                    <span class="n">key_merge</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_define_key_to_merge_drives</span><span class="p">(</span><span class="n">current_controller</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">key_merge</span><span class="p">:</span>
+                        <span class="n">merged_drives</span> <span class="o">=</span> <span class="n">merge_list_by_key</span><span class="p">(</span><span class="n">existing_controller</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOGICAL_DRIVES</span><span class="p">],</span>
+                                                          <span class="n">current_controller</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOGICAL_DRIVES</span><span class="p">],</span>
+                                                          <span class="n">key</span><span class="o">=</span><span class="n">key_merge</span><span class="p">)</span>
+                        <span class="n">current_controller</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOGICAL_DRIVES</span><span class="p">]</span> <span class="o">=</span> <span class="n">merged_drives</span>
+        <span class="k">return</span> <span class="n">merged_data</span>
+
+    <span class="k">def</span> <span class="nf">_define_key_to_merge_drives</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
+        <span class="n">has_name</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">has_logical_jbod_id</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">drive</span> <span class="ow">in</span> <span class="n">controller</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">LOGICAL_DRIVES</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">drive</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">NAME</span><span class="p">):</span>
+                <span class="n">has_name</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">drive</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Keys</span><span class="o">.</span><span class="n">SAS_LOGICAL_JBOD_ID</span><span class="p">):</span>
+                <span class="n">has_logical_jbod_id</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">has_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Keys</span><span class="o">.</span><span class="n">NAME</span>
+        <span class="k">elif</span> <span class="n">has_logical_jbod_id</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Keys</span><span class="o">.</span><span class="n">SAS_LOGICAL_JBOD_ID</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_removed_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="ow">and</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">resource</span>
+
+    <span class="k">def</span> <span class="nf">_should_merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">data_has_value</span> <span class="o">=</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="n">existing_resource_has_value</span> <span class="o">=</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">resource</span> <span class="ow">and</span> <span class="n">resource</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">data_has_value</span> <span class="ow">and</span> <span class="n">existing_resource_has_value</span>
+
+    <span class="k">def</span> <span class="nf">_merge_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">merged_data</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">resource</span><span class="p">[</span><span class="n">key</span><span class="p">]:</span>
+            <span class="n">merged_dict</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">resource</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+            <span class="n">merged_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+        <span class="n">merged_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">merged_dict</span>
+        <span class="k">return</span> <span class="n">merged_data</span></div>
+
+
+<div class="viewcode-block" id="ServerProfileReplaceNamesByUris"><a class="viewcode-back" href="../../../hpOneView.extras.html#hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris">[docs]</a><span class="k">class</span> <span class="nc">ServerProfileReplaceNamesByUris</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">SERVER_PROFILE_OS_DEPLOYMENT_NOT_FOUND</span> <span class="o">=</span> <span class="s1">&#39;OS Deployment Plan not found: &#39;</span>
+    <span class="n">SERVER_PROFILE_ENCLOSURE_GROUP_NOT_FOUND</span> <span class="o">=</span> <span class="s1">&#39;Enclosure Group not found: &#39;</span>
+    <span class="n">SERVER_PROFILE_NETWORK_NOT_FOUND</span> <span class="o">=</span> <span class="s1">&#39;Network not found: &#39;</span>
+    <span class="n">SERVER_HARDWARE_TYPE_NOT_FOUND</span> <span class="o">=</span> <span class="s1">&#39;Server Hardware Type not found: &#39;</span>
+    <span class="n">VOLUME_NOT_FOUND</span> <span class="o">=</span> <span class="s1">&#39;Volume not found: &#39;</span>
+    <span class="n">STORAGE_POOL_NOT_FOUND</span> <span class="o">=</span> <span class="s1">&#39;Storage Pool not found: &#39;</span>
+    <span class="n">STORAGE_SYSTEM_NOT_FOUND</span> <span class="o">=</span> <span class="s1">&#39;Storage System not found: &#39;</span>
+    <span class="n">INTERCONNECT_NOT_FOUND</span> <span class="o">=</span> <span class="s1">&#39;Interconnect not found: &#39;</span>
+    <span class="n">FIRMWARE_DRIVER_NOT_FOUND</span> <span class="o">=</span> <span class="s1">&#39;Firmware Driver not found: &#39;</span>
+    <span class="n">SAS_LOGICAL_JBOD_NOT_FOUND</span> <span class="o">=</span> <span class="s1">&#39;SAS logical JBOD not found: &#39;</span>
+    <span class="n">ENCLOSURE_NOT_FOUND</span> <span class="o">=</span> <span class="s1">&#39;Enclosure not found: &#39;</span>
+
+<div class="viewcode-block" id="ServerProfileReplaceNamesByUris.replace"><a class="viewcode-back" href="../../../hpOneView.extras.html#hpOneView.extras.server_profile_utils.ServerProfileReplaceNamesByUris.replace">[docs]</a>    <span class="k">def</span> <span class="nf">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">oneview_client</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">oneview_client</span> <span class="o">=</span> <span class="n">oneview_client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__replace_os_deployment_name_by_uri</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__replace_enclosure_group_name_by_uri</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__replace_networks_name_by_uri</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__replace_server_hardware_type_name_by_uri</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__replace_volume_attachment_names_by_uri</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__replace_enclosure_name_by_uri</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__replace_interconnect_name_by_uri</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__replace_firmware_baseline_name_by_uri</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__replace_sas_logical_jbod_name_by_uri</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__replace_name_by_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">attr_name</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">resource_client</span><span class="p">):</span>
+        <span class="n">attr_uri</span> <span class="o">=</span> <span class="n">attr_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="s2">&quot;Uri&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">attr_name</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">attr_name</span><span class="p">)</span>
+            <span class="n">resource_by_name</span> <span class="o">=</span> <span class="n">resource_client</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">resource_by_name</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">HPOneViewResourceNotFound</span><span class="p">(</span><span class="n">message</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">attr_uri</span><span class="p">]</span> <span class="o">=</span> <span class="n">resource_by_name</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__replace_os_deployment_name_by_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">Keys</span><span class="o">.</span><span class="n">OS_DEPLOYMENT</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">OS_DEPLOYMENT</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__replace_name_by_uri</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">OS_DEPLOYMENT</span><span class="p">],</span> <span class="s1">&#39;osDeploymentPlanName&#39;</span><span class="p">,</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">SERVER_PROFILE_OS_DEPLOYMENT_NOT_FOUND</span><span class="p">,</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">oneview_client</span><span class="o">.</span><span class="n">os_deployment_plans</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__replace_enclosure_group_name_by_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__replace_name_by_uri</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;enclosureGroupName&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">SERVER_PROFILE_ENCLOSURE_GROUP_NOT_FOUND</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">oneview_client</span><span class="o">.</span><span class="n">enclosure_groups</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__replace_networks_name_by_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">Keys</span><span class="o">.</span><span class="n">CONNECTIONS</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONNECTIONS</span><span class="p">]:</span>
+            <span class="k">for</span> <span class="n">connection</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">Keys</span><span class="o">.</span><span class="n">CONNECTIONS</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="s1">&#39;networkName&#39;</span> <span class="ow">in</span> <span class="n">connection</span><span class="p">:</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;networkName&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                    <span class="n">connection</span><span class="p">[</span><span class="s1">&#39;networkUri&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_network_by_name</span><span class="p">(</span><span class="n">name</span><span class="p">)[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__replace_server_hardware_type_name_by_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__replace_name_by_uri</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;serverHardwareTypeName&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">SERVER_HARDWARE_TYPE_NOT_FOUND</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">oneview_client</span><span class="o">.</span><span class="n">server_hardware_types</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__replace_volume_attachment_names_by_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">volume_attachments</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sanStorage&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;volumeAttachments&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">volume_attachments</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">volume</span> <span class="ow">in</span> <span class="n">volume_attachments</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__replace_name_by_uri</span><span class="p">(</span><span class="n">volume</span><span class="p">,</span> <span class="s1">&#39;volumeName&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">VOLUME_NOT_FOUND</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">oneview_client</span><span class="o">.</span><span class="n">volumes</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__replace_name_by_uri</span><span class="p">(</span><span class="n">volume</span><span class="p">,</span> <span class="s1">&#39;volumeStoragePoolName&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">STORAGE_POOL_NOT_FOUND</span><span class="p">,</span>
+                                           <span class="bp">self</span><span class="o">.</span><span class="n">oneview_client</span><span class="o">.</span><span class="n">storage_pools</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__replace_name_by_uri</span><span class="p">(</span><span class="n">volume</span><span class="p">,</span> <span class="s1">&#39;volumeStorageSystemName&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">STORAGE_SYSTEM_NOT_FOUND</span><span class="p">,</span>
+                                           <span class="bp">self</span><span class="o">.</span><span class="n">oneview_client</span><span class="o">.</span><span class="n">storage_systems</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__replace_enclosure_name_by_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__replace_name_by_uri</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;enclosureName&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ENCLOSURE_NOT_FOUND</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">oneview_client</span><span class="o">.</span><span class="n">enclosures</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__replace_interconnect_name_by_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">connections</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;connections&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">connections</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">connection</span> <span class="ow">in</span> <span class="n">connections</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__replace_name_by_uri</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="s1">&#39;interconnectName&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">INTERCONNECT_NOT_FOUND</span><span class="p">,</span>
+                                           <span class="bp">self</span><span class="o">.</span><span class="n">oneview_client</span><span class="o">.</span><span class="n">interconnects</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__replace_firmware_baseline_name_by_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">firmware</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;firmware&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__replace_name_by_uri</span><span class="p">(</span><span class="n">firmware</span><span class="p">,</span> <span class="s1">&#39;firmwareBaselineName&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">FIRMWARE_DRIVER_NOT_FOUND</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">oneview_client</span><span class="o">.</span><span class="n">firmware_drivers</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__replace_sas_logical_jbod_name_by_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">sas_logical_jbods</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;localStorage&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sasLogicalJBODs&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sas_logical_jbods</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">jbod</span> <span class="ow">in</span> <span class="n">sas_logical_jbods</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__replace_name_by_uri</span><span class="p">(</span><span class="n">jbod</span><span class="p">,</span> <span class="s1">&#39;sasLogicalJBODName&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">SAS_LOGICAL_JBOD_NOT_FOUND</span><span class="p">,</span>
+                                           <span class="bp">self</span><span class="o">.</span><span class="n">oneview_client</span><span class="o">.</span><span class="n">sas_logical_jbods</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__get_network_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">fc_networks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oneview_client</span><span class="o">.</span><span class="n">fc_networks</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fc_networks</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">fc_networks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">ethernet_networks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oneview_client</span><span class="o">.</span><span class="n">ethernet_networks</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ethernet_networks</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">HPOneViewResourceNotFound</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SERVER_PROFILE_NETWORK_NOT_FOUND</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ethernet_networks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'3.1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -20,6 +20,14 @@ hpOneView.extras.mergers module
     :undoc-members:
     :show-inheritance:
 
+hpOneView.extras.server_profile_utils module
+--------------------------------------------
+
+.. automodule:: hpOneView.extras.server_profile_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
