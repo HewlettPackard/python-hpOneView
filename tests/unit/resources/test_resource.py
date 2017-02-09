@@ -28,10 +28,10 @@ from mock import call
 from tests.test_utils import mock_builtin
 
 from hpOneView.connection import connection
-from hpOneView.exceptions import HPOneViewUnknownType, HPOneViewException
+from hpOneView.exceptions import HPOneViewUnknownType, HPOneViewException, HPOneViewValueError
 from hpOneView.resources.resource import merge_resources, merge_default_values
 from hpOneView.resources.resource import ResourceClient, RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor, \
-    RESOURCE_CLIENT_TASK_EXPECTED
+    RESOURCE_CLIENT_TASK_EXPECTED, RESOURCE_ID_OR_URI_REQUIRED
 
 
 class ResourceTest(unittest.TestCase):
@@ -1040,6 +1040,57 @@ class ResourceClientTest(unittest.TestCase):
             self.resource_client.build_uri('/rest/')
         except HPOneViewUnknownType as exception:
             self.assertEqual(UNRECOGNIZED_URI, exception.args[0])
+        else:
+            self.fail("Expected Exception was not raised")
+
+    def test_build_subresource_uri(self):
+        options = [
+            dict(
+                resource='1',
+                subresource='2',
+                path='sub',
+                uri='/rest/testuri/1/sub/2'),
+            dict(
+                resource='/rest/testuri/3',
+                subresource='4',
+                path='sub',
+                uri='/rest/testuri/3/sub/4'),
+            dict(
+                resource='5',
+                subresource='/rest/testuri/5/sub/6',
+                path='sub',
+                uri='/rest/testuri/5/sub/6'),
+            dict(
+                resource='/rest/testuri/7',
+                subresource='/rest/testuri/7/sub/8',
+                path='sub',
+                uri='/rest/testuri/7/sub/8'),
+            dict(
+                resource=None,
+                subresource='/rest/testuri/9/sub/10',
+                path='sub',
+                uri='/rest/testuri/9/sub/10'),
+            dict(
+                resource='/rest/testuri/11',
+                subresource='12',
+                path='/sub/',
+                uri='/rest/testuri/11/sub/12'),
+            dict(
+                resource='/rest/testuri/13',
+                subresource=None,
+                path='/sub/',
+                uri='/rest/testuri/13/sub'),
+        ]
+
+        for option in options:
+            uri = self.resource_client.build_subresource_uri(option['resource'], option['subresource'], option['path'])
+            self.assertEqual(uri, option['uri'])
+
+    def test_build_subresource_uri_with_subresourceid_and_without_resource_should_fail(self):
+        try:
+            self.resource_client.build_subresource_uri(None, "123456", 'sub-path')
+        except HPOneViewValueError as exception:
+            self.assertEqual(RESOURCE_ID_OR_URI_REQUIRED, exception.args[0])
         else:
             self.fail("Expected Exception was not raised")
 
