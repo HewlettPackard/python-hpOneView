@@ -151,3 +151,54 @@ class InterconnectsTest(unittest.TestCase):
 
         self._interconnects.update_ports(ports, interconnect_id)
         mock_update.assert_called_once_with(expected_ports, url, -1)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_ports_called_once(self, mock_get_all):
+        interconnect_id = "123456"
+        uri = '/rest/interconnects/123456/ports'
+
+        self._interconnects.get_ports(interconnect_id, 2, 5)
+
+        mock_get_all.assert_called_once_with(2, 5, uri=uri)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_ports_called_once_with_defaults(self, mock_get_all):
+        interconnect_id = "123456"
+        uri = '/rest/interconnects/123456/ports'
+
+        self._interconnects.get_ports(interconnect_id)
+
+        mock_get_all.assert_called_once_with(0, -1, uri=uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_ports_should_return_the_ports(self, mock_get):
+        interconnect_id = "123456"
+        port_id = "88888"
+
+        ports = [{"mock": "value"}, {"mock": "value2"}]
+        mock_get.return_value = ports
+
+        result = self._interconnects.get_port(interconnect_id, port_id)
+
+        self.assertEqual(result, ports)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_port_called_once(self, mock_get):
+        interconnect_id = "123456"
+        port_id = "88888"
+        uri = '/rest/interconnects/123456/ports/88888'
+
+        self._interconnects.get_port(interconnect_id, port_id)
+
+        mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_port_should_return_the_port(self, mock_get):
+        interconnect_id = "123456"
+        port_id = "88888"
+
+        mock_get.return_value = {"mock": "value"}
+
+        result = self._interconnects.get_port(interconnect_id, port_id)
+
+        self.assertEqual(result, {"mock": "value"})

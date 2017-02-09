@@ -30,7 +30,6 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-
 from hpOneView.resources.resource import ResourceClient
 from hpOneView.resources.resource import merge_default_values
 
@@ -237,3 +236,37 @@ class Interconnects(object):
         """
         uri = self._client.build_uri(id_or_uri) + "/resetportprotection"
         return self._client.update_with_zero_body(uri, timeout)
+
+    def get_ports(self, id_or_uri, start=0, count=-1):
+        """
+        Gets all interconnect ports.
+
+        Args:
+            id_or_uri: Can be either the interconnect id or the interconnect uri.
+            start:
+                The first item to return, using 0-based indexing.
+                If not specified, the default is 0 - start with the first available item.
+            count:
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
+
+        Returns:
+            list: All interconnect ports.
+        """
+        uri = self._client.build_subresource_uri(resource_id_or_uri=id_or_uri, subresource_path="ports")
+        return self._client.get_all(start, count, uri=uri)
+
+    def get_port(self, id_or_uri, port_id_or_uri):
+        """
+        Gets an interconnect port.
+
+        Args:
+            id_or_uri: Can be either the interconnect id or uri.
+            port_id_or_uri: The interconnect port id or uri.
+
+        Returns:
+            dict: The interconnect port.
+        """
+        uri = self._client.build_subresource_uri(id_or_uri, port_id_or_uri, "ports")
+        return self._client.get(uri)

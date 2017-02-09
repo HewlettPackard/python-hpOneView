@@ -163,6 +163,19 @@ try:
 except HPOneViewException as e:
     print(e.msg)
 
+# Get the interconnect ports.
+try:
+    print("Get all the interconnect ports.")
+    ports = oneview_client.interconnects.get_ports(interconnect_id)
+    pprint(ports)
+
+    print("Get an interconnect port.")
+    ports = oneview_client.interconnects.get_port(interconnect_id, port_d1["portId"])
+    pprint(ports)
+
+except HPOneViewException as e:
+    print(e.msg)
+
 # Updates the interconnect ports.
 print("Update the interconnect ports")
 
