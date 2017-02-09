@@ -96,6 +96,7 @@ from hpOneView.resources.networking.sas_logical_interconnect_groups import SasLo
 from hpOneView.resources.search.labels import Labels
 from hpOneView.resources.activity.alerts import Alerts
 from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPlans
+from hpOneView.resources.uncategorized.os_deployment_servers import OsDeploymentServers
 from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
@@ -170,6 +171,7 @@ class OneViewClient(object):
         self.__alerts = None
         self.__drive_enclures = None
         self.__os_deployment_plans = None
+        self.__os_deployment_servers = None
         self.__certificate_rabbitmq = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
@@ -1002,6 +1004,18 @@ class OneViewClient(object):
         if not self.__os_deployment_plans:
             self.__os_deployment_plans = OsDeploymentPlans(self.__connection)
         return self.__os_deployment_plans
+
+    @property
+    def os_deployment_servers(self):
+        """
+        Gets the Os Deployment Servers API client.
+
+        Returns:
+            OsDeploymentServers:
+        """
+        if not self.__os_deployment_servers:
+            self.__os_deployment_servers = OsDeploymentServers(self.__connection)
+        return self.__os_deployment_servers
 
     @property
     def certificate_rabbitmq(self):

@@ -66,6 +66,7 @@ from hpOneView.resources.storage.sas_logical_jbod_attachments import SasLogicalJ
 from hpOneView.resources.networking.internal_link_sets import InternalLinkSets
 from hpOneView.resources.search.labels import Labels
 from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPlans
+from hpOneView.resources.uncategorized.os_deployment_servers import OsDeploymentServers
 from hpOneView.resources.activity.alerts import Alerts
 from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
 
@@ -685,6 +686,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_os_deployment_plans(self):
         os_deployment_plans = self._oneview.os_deployment_plans
         self.assertEqual(os_deployment_plans, self._oneview.os_deployment_plans)
+
+    def test_os_deployment_servers_has_right_type(self):
+        self.assertIsInstance(self._oneview.os_deployment_servers, OsDeploymentServers)
+
+    def test_lazy_loading_os_deployment_servers(self):
+        os_deployment_servers = self._oneview.os_deployment_servers
+        self.assertEqual(os_deployment_servers, self._oneview.os_deployment_servers)
 
     def test_certificate_rabbitmq_has_right_type(self):
         self.assertIsInstance(self._oneview.certificate_rabbitmq, CertificateRabbitMQ)
