@@ -167,6 +167,7 @@
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">quote</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.task_monitor</span> <span class="k">import</span> <span class="n">TaskMonitor</span>
 <span class="kn">from</span> <span class="nn">hpOneView.exceptions</span> <span class="k">import</span> <span class="n">HPOneViewUnknownType</span><span class="p">,</span> <span class="n">HPOneViewException</span>
+<span class="kn">from</span> <span class="nn">hpOneView.exceptions</span> <span class="k">import</span> <span class="n">HPOneViewValueError</span>
 
 <span class="n">RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED</span> <span class="o">=</span> <span class="s1">&#39;Resource was not provided&#39;</span>
 <span class="n">RESOURCE_CLIENT_INVALID_FIELD</span> <span class="o">=</span> <span class="s1">&#39;Invalid field was provided&#39;</span>
@@ -174,6 +175,8 @@
 <span class="n">RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE</span> <span class="o">=</span> <span class="s1">&#39;Unknown object type&#39;</span>
 <span class="n">UNRECOGNIZED_URI</span> <span class="o">=</span> <span class="s1">&#39;Unrecognized URI for this resource&#39;</span>
 <span class="n">RESOURCE_CLIENT_TASK_EXPECTED</span> <span class="o">=</span> <span class="s2">&quot;Failed: Expected a TaskResponse.&quot;</span>
+<span class="n">RESOURCE_ID_OR_URI_REQUIRED</span> <span class="o">=</span> <span class="s1">&#39;It is required to inform the Resource ID or URI.&#39;</span>
+
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -785,6 +788,23 @@
             <span class="k">return</span> <span class="n">id_or_uri</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">id_or_uri</span></div>
+
+<div class="viewcode-block" id="ResourceClient.build_subresource_uri"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceClient.build_subresource_uri">[docs]</a>    <span class="k">def</span> <span class="nf">build_subresource_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_id_or_uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subresource_id_or_uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subresource_path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">subresource_id_or_uri</span> <span class="ow">and</span> <span class="s2">&quot;/&quot;</span> <span class="ow">in</span> <span class="n">subresource_id_or_uri</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">subresource_id_or_uri</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">resource_id_or_uri</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">HPOneViewValueError</span><span class="p">(</span><span class="n">RESOURCE_ID_OR_URI_REQUIRED</span><span class="p">)</span>
+
+            <span class="n">resource_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">resource_id_or_uri</span><span class="p">)</span>
+
+            <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resource_uri</span><span class="p">,</span> <span class="n">subresource_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">subresource_id_or_uri</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;//&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">uri</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+                <span class="n">uri</span> <span class="o">=</span> <span class="n">uri</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="n">uri</span></div>
 
 <div class="viewcode-block" id="ResourceClient.download"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceClient.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

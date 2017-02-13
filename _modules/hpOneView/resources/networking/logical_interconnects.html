@@ -160,7 +160,6 @@
 
 <span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
 
-
 <span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">ResourceClient</span>
 
 
@@ -186,6 +185,11 @@
     <span class="n">SETTINGS_ETHERNET_DEFAULT_VALUES</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;200&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;EthernetInterconnectSettingsV3&quot;</span><span class="p">},</span>
         <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;EthernetInterconnectSettingsV201&quot;</span><span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;200&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;telemetry-configuration&quot;</span><span class="p">},</span>
+        <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;telemetry-configuration&quot;</span><span class="p">}</span>
     <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
@@ -498,7 +502,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: LIFirmware.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">firmware_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_firmware_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span>
+        <span class="n">firmware_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_subresource_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">subresource_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">FIRMWARE_PATH</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">firmware_uri</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LogicalInterconnects.install_firmware"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.install_firmware">[docs]</a>    <span class="k">def</span> <span class="nf">install_firmware</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">firmware_information</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
@@ -514,7 +518,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">firmware_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_firmware_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span>
+        <span class="n">firmware_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_subresource_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">subresource_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">FIRMWARE_PATH</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">firmware_information</span><span class="p">,</span> <span class="n">firmware_uri</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LogicalInterconnects.get_forwarding_information_base"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_forwarding_information_base">[docs]</a>    <span class="k">def</span> <span class="nf">get_forwarding_information_base</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
@@ -585,6 +589,43 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">QOS_AGGREGATED_CONFIGURATION</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">qos_configuration</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.update_telemetry_configurations"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_telemetry_configurations">[docs]</a>    <span class="k">def</span> <span class="nf">update_telemetry_configurations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tc_id_or_uri</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the telemetry configuration of a logical interconnect. Changes to the telemetry configuration are</span>
+<span class="sd">        asynchronously applied to all managed interconnects.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tc_id_or_uri:</span>
+<span class="sd">                Can be either the telemetry configuration id or uri.</span>
+<span class="sd">            configuration:</span>
+<span class="sd">                The telemetry configuration for the logical interconnect.</span>
+<span class="sd">            id_or_uri:</span>
+<span class="sd">                Can be either the logical interconnect id or uri.</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in</span>
+<span class="sd">                OneView, just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: The telemetry configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_subresource_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">tc_id_or_uri</span><span class="p">,</span> <span class="s1">&#39;telemetry-configurations&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
+                                   <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.get_ethernet_settings"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_ethernet_settings">[docs]</a>    <span class="k">def</span> <span class="nf">get_ethernet_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Ethernet interconnect settings for the Logical Interconnect.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri:</span>
+<span class="sd">                Can be either the logical interconnect id or uri.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Ethernet Interconnect Settings</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/ethernetSettings&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__build_firmware_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">FIRMWARE_PATH</span></div>

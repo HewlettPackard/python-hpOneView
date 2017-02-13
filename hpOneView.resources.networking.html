@@ -2030,6 +2030,11 @@ in OneView; it just stops waiting for its completion.</li>
 <dd></dd></dl>
 
 <dl class="attribute">
+<dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES">
+<code class="descname">SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'telemetry-configuration'}, u'300': {u'type': u'telemetry-configuration'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SNMP_CONFIGURATION_PATH">
 <code class="descname">SNMP_CONFIGURATION_PATH</code><em class="property"> = u'/snmp-configuration'</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SNMP_CONFIGURATION_PATH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -2181,6 +2186,24 @@ on create time with the oldest entry first.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; Name of the logical interconnect.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Logical Interconnect.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_ethernet_settings">
+<code class="descname">get_ethernet_settings</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get_ethernet_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_ethernet_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Ethernet interconnect settings for the Logical Interconnect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect id or uri.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Ethernet Interconnect Settings</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
@@ -2579,6 +2602,34 @@ applied to all managed interconnects.</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">snmp configuration.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_telemetry_configurations">
+<code class="descname">update_telemetry_configurations</code><span class="sig-paren">(</span><em>tc_id_or_uri</em>, <em>configuration</em>, <em>id_or_uri=None</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.update_telemetry_configurations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_telemetry_configurations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the telemetry configuration of a logical interconnect. Changes to the telemetry configuration are
+asynchronously applied to all managed interconnects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tc_id_or_uri</strong> &#8211; Can be either the telemetry configuration id or uri.</li>
+<li><strong>configuration</strong> &#8211; The telemetry configuration for the logical interconnect.</li>
+<li><strong>id_or_uri</strong> &#8211; Can be either the logical interconnect id or uri.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
+OneView, just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The telemetry configuration.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
