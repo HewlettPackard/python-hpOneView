@@ -167,7 +167,7 @@
 <p>Connection Templates API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.connection_templates.ConnectionTemplates.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'connection-template'}, u'300': {u'type': u'connection-template'}}</em><a class="headerlink" href="#hpOneView.resources.networking.connection_templates.ConnectionTemplates.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'connection-template'}, u'200': {u'type': u'connection-template'}}</em><a class="headerlink" href="#hpOneView.resources.networking.connection_templates.ConnectionTemplates.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -306,7 +306,7 @@ OneView, just stops waiting for its completion.</li>
 <p>Ethernet Networks API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'ethernet-networkV3'}, u'300': {u'type': u'ethernet-networkV300'}}</em><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'ethernet-networkV300'}, u'200': {u'type': u'ethernet-networkV3'}}</em><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -749,7 +749,7 @@ on the resource itself. The default is false.</li>
 <p>Fibre Channel networks API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.fc_networks.FcNetworks.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'fc-networkV2'}, u'300': {u'type': u'fc-networkV300'}}</em><a class="headerlink" href="#hpOneView.resources.networking.fc_networks.FcNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'fc-networkV300'}, u'200': {u'type': u'fc-networkV2'}}</em><a class="headerlink" href="#hpOneView.resources.networking.fc_networks.FcNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -923,7 +923,7 @@ in OneView, just stop waiting for its completion.</li>
 <p>FCoE Networks API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.fcoe_networks.FcoeNetworks.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'fcoe-network'}, u'300': {u'type': u'fcoe-networkV300'}}</em><a class="headerlink" href="#hpOneView.resources.networking.fcoe_networks.FcoeNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'fcoe-networkV300'}, u'200': {u'type': u'fcoe-network'}}</em><a class="headerlink" href="#hpOneView.resources.networking.fcoe_networks.FcoeNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -1389,6 +1389,58 @@ The search is case-insensitive</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.networking.interconnects.Interconnects.get_port">
+<code class="descname">get_port</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>port_id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnects.html#Interconnects.get_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnects.Interconnects.get_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets an interconnect port.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; Can be either the interconnect id or uri.</li>
+<li><strong>port_id_or_uri</strong> &#8211; The interconnect port id or uri.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The interconnect port.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.interconnects.Interconnects.get_ports">
+<code class="descname">get_ports</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>start=0</em>, <em>count=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnects.html#Interconnects.get_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnects.Interconnects.get_ports" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all interconnect ports.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; Can be either the interconnect id or the interconnect uri.</li>
+<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">All interconnect ports.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.networking.interconnects.Interconnects.get_statistics">
 <code class="descname">get_statistics</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>port_name=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnects.html#Interconnects.get_statistics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnects.Interconnects.get_statistics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the statistics from an interconnect.</p>
@@ -1790,7 +1842,7 @@ on create time with the oldest entry first.</li>
 <p>Logical Interconnect Groups API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'logical-interconnect-groupV3'}, u'300': {u'type': u'logical-interconnect-groupV300'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'logical-interconnect-groupV300'}, u'200': {u'type': u'logical-interconnect-groupV3'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -2021,17 +2073,17 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_DEFAULT_VALUES">
-<code class="descname">SETTINGS_DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'InterconnectSettingsV3'}, u'300': {u'type': u'InterconnectSettingsV201'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SETTINGS_DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'InterconnectSettingsV201'}, u'200': {u'type': u'InterconnectSettingsV3'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_ETHERNET_DEFAULT_VALUES">
-<code class="descname">SETTINGS_ETHERNET_DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'EthernetInterconnectSettingsV3'}, u'300': {u'type': u'EthernetInterconnectSettingsV201'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_ETHERNET_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SETTINGS_ETHERNET_DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'EthernetInterconnectSettingsV201'}, u'200': {u'type': u'EthernetInterconnectSettingsV3'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_ETHERNET_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES">
-<code class="descname">SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'telemetry-configuration'}, u'300': {u'type': u'telemetry-configuration'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'telemetry-configuration'}, u'200': {u'type': u'telemetry-configuration'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -2655,7 +2707,7 @@ OneView, just stops waiting for its completion.</li>
 </div>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'logical-switch-group'}, u'300': {u'type': u'logical-switch-groupV300'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'logical-switch-groupV300'}, u'200': {u'type': u'logical-switch-group'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -2831,7 +2883,7 @@ in OneView; it just stops waiting for its completion.</li>
 </div>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_switches.LogicalSwitches.SWITCH_DEFAULT_VALUES">
-<code class="descname">SWITCH_DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'logical-switch'}, u'300': {u'type': u'logical-switchV300'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_switches.LogicalSwitches.SWITCH_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SWITCH_DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'logical-switchV300'}, u'200': {u'type': u'logical-switch'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_switches.LogicalSwitches.SWITCH_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -3029,7 +3081,7 @@ in OneView, just stop waiting for its completion.</li>
 <p>Network Sets API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.network_sets.NetworkSets.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'network-set'}, u'300': {u'type': u'network-setV300'}}</em><a class="headerlink" href="#hpOneView.resources.networking.network_sets.NetworkSets.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'network-setV300'}, u'200': {u'type': u'network-set'}}</em><a class="headerlink" href="#hpOneView.resources.networking.network_sets.NetworkSets.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -4182,7 +4234,7 @@ supported for update.</p>
 <p>Uplink Sets API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'uplink-setV3'}, u'300': {u'type': u'uplink-setV300'}}</em><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'uplink-setV300'}, u'200': {u'type': u'uplink-setV3'}}</em><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
