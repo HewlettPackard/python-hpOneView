@@ -37,6 +37,7 @@ import os
 from urllib.parse import quote
 from hpOneView.resources.task_monitor import TaskMonitor
 from hpOneView.exceptions import HPOneViewUnknownType, HPOneViewException
+from hpOneView.exceptions import HPOneViewValueError
 
 RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED = 'Resource was not provided'
 RESOURCE_CLIENT_INVALID_FIELD = 'Invalid field was provided'
@@ -44,6 +45,8 @@ RESOURCE_CLIENT_INVALID_ID = 'Invalid id was provided'
 RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE = 'Unknown object type'
 UNRECOGNIZED_URI = 'Unrecognized URI for this resource'
 RESOURCE_CLIENT_TASK_EXPECTED = "Failed: Expected a TaskResponse."
+RESOURCE_ID_OR_URI_REQUIRED = 'It is required to inform the Resource ID or URI.'
+
 
 logger = logging.getLogger(__name__)
 
@@ -655,6 +658,23 @@ class ResourceClient(object):
             return id_or_uri
         else:
             return self._uri + "/" + id_or_uri
+
+    def build_subresource_uri(self, resource_id_or_uri=None, subresource_id_or_uri=None, subresource_path=''):
+        if subresource_id_or_uri and "/" in subresource_id_or_uri:
+            return subresource_id_or_uri
+        else:
+            if not resource_id_or_uri:
+                raise HPOneViewValueError(RESOURCE_ID_OR_URI_REQUIRED)
+
+            resource_uri = self.build_uri(resource_id_or_uri)
+
+            uri = "{}/{}/{}".format(resource_uri, subresource_path, str(subresource_id_or_uri or ''))
+            uri = uri.replace("//", "/")
+
+            if uri.endswith("/"):
+                uri = uri[:-1]
+
+            return uri
 
     def download(self, uri, file_path):
         """

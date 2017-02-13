@@ -36,6 +36,13 @@ class LogicalInterconnectsTest(unittest.TestCase):
         self.connection = connection(self.host)
         self._logical_interconnect = LogicalInterconnects(self.connection)
 
+        self.telemetry_config = {
+            "sampleCount": 12,
+            "enableTelemetry": True,
+            "sampleInterval": 300
+        }
+        self.tc_default_values = self._logical_interconnect.SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES
+
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_all_called_once(self, mock_get_all):
         filter = 'name=TestName'
@@ -573,3 +580,67 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
         expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/qos-aggregated-configuration'
         mock_update.assert_called_once_with(qos_configuration_rest_call, uri=expected_uri, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_ethernet_settings_by_uri(self, mock_get):
+        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+
+        self._logical_interconnect.get_ethernet_settings(logical_interconnect_uri)
+
+        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/ethernetSettings'
+        mock_get.assert_called_once_with(expected_uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_ethernet_settings_by_id(self, mock_get):
+        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/ethernetSettings'
+        expected_result = {'name': 'ES634039453'}
+        mock_get.return_value = expected_result
+
+        result = self._logical_interconnect.get_ethernet_settings(logical_interconnect_id)
+
+        mock_get.assert_called_once_with(expected_uri)
+        self.assertEqual(result, expected_result)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_telemetry_configuration_by_id(self, mock_update):
+        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        telemetry_config_id = '445cea80-280a-4794-b703-c53e8394a485'
+        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32' \
+                        '/telemetry-configurations/445cea80-280a-4794-b703-c53e8394a485'
+
+        self._logical_interconnect.update_telemetry_configurations(id_or_uri=logical_interconnect_id,
+                                                                   tc_id_or_uri=telemetry_config_id,
+                                                                   configuration=self.telemetry_config)
+
+        mock_update.assert_called_once_with(self.telemetry_config, uri=uri_rest_call, timeout=-1,
+                                            default_values=self.tc_default_values)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_telemetry_configuration_by_uri(self, mock_update):
+        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        telemetry_config_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32' \
+                               '/telemetry-configurations/445cea80-280a-4794-b703-c53e8394a485'
+        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32' \
+                        '/telemetry-configurations/445cea80-280a-4794-b703-c53e8394a485'
+
+        self._logical_interconnect.update_telemetry_configurations(id_or_uri=logical_interconnect_uri,
+                                                                   tc_id_or_uri=telemetry_config_uri,
+                                                                   configuration=self.telemetry_config)
+
+        mock_update.assert_called_once_with(self.telemetry_config, uri=uri_rest_call, timeout=-1,
+                                            default_values=self.tc_default_values)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_telemetry_configuration_by_tc_uri(self, mock_update):
+        telemetry_config_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32' \
+                               '/telemetry-configurations/445cea80-280a-4794-b703-c53e8394a485'
+        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32' \
+                        '/telemetry-configurations/445cea80-280a-4794-b703-c53e8394a485'
+
+        self._logical_interconnect.update_telemetry_configurations(id_or_uri=None,
+                                                                   tc_id_or_uri=telemetry_config_uri,
+                                                                   configuration=self.telemetry_config)
+
+        mock_update.assert_called_once_with(self.telemetry_config, uri=uri_rest_call, timeout=-1,
+                                            default_values=self.tc_default_values)

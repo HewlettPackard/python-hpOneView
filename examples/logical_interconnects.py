@@ -24,7 +24,7 @@ from pprint import pprint
 
 from hpOneView.oneview_client import OneViewClient
 from hpOneView.exceptions import HPOneViewException
-from config_loader import try_load_from_file
+from examples.config_loader import try_load_from_file
 
 config = {
     "ip": "172.16.102.59",
@@ -78,6 +78,10 @@ logical_interconnect = logical_interconnects[0]
 # Get a logical interconnect by name
 logical_interconnect = oneview_client.logical_interconnects.get_by_name(logical_interconnect['name'])
 print("Found logical interconnect by name {name}.\n URI: {uri}").format(**logical_interconnect)
+
+print("Get the Ethernet interconnect settings for the logical interconnect")
+ethernet_settings = oneview_client.logical_interconnects.get_ethernet_settings(logical_interconnect['uri'])
+pprint(ethernet_settings)
 
 # Update the Ethernet interconnect settings for the logical interconnect
 ethernet_settings = logical_interconnect['ethernetSettings'].copy()
@@ -168,6 +172,16 @@ except HPOneViewException as e:
 print("Get the telemetry configuration of the logical interconnect")
 telemetry_configuration_uri = logical_interconnect['telemetryConfiguration']['uri']
 telemetry_configuration = oneview_client.logical_interconnects.get_telemetry_configuration(telemetry_configuration_uri)
+pprint(telemetry_configuration)
+
+print("Update the telemetry configuration")
+telemetry_config = {
+    "sampleCount": 12,
+    "enableTelemetry": True,
+    "sampleInterval": 300
+}
+telemetry_configuration = oneview_client.logical_interconnects.update_telemetry_configurations(
+    configuration=telemetry_config, tc_id_or_uri=telemetry_configuration_uri)
 pprint(telemetry_configuration)
 
 # Update the configuration on the logical interconnect

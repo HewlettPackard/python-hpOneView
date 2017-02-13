@@ -30,7 +30,6 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-
 from hpOneView.resources.resource import ResourceClient
 
 
@@ -56,6 +55,11 @@ class LogicalInterconnects(object):
     SETTINGS_ETHERNET_DEFAULT_VALUES = {
         '200': {"type": "EthernetInterconnectSettingsV3"},
         '300': {"type": "EthernetInterconnectSettingsV201"}
+    }
+
+    SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES = {
+        '200': {"type": "telemetry-configuration"},
+        '300': {"type": "telemetry-configuration"}
     }
 
     def __init__(self, con):
@@ -368,7 +372,7 @@ class LogicalInterconnects(object):
         Returns:
             dict: LIFirmware.
         """
-        firmware_uri = self.__build_firmware_uri(id_or_uri)
+        firmware_uri = self._client.build_subresource_uri(id_or_uri, subresource_path=self.FIRMWARE_PATH)
         return self._client.get(firmware_uri)
 
     def install_firmware(self, firmware_information, id_or_uri):
@@ -384,7 +388,7 @@ class LogicalInterconnects(object):
         Returns:
             dict
         """
-        firmware_uri = self.__build_firmware_uri(id_or_uri)
+        firmware_uri = self._client.build_subresource_uri(id_or_uri, subresource_path=self.FIRMWARE_PATH)
         return self._client.update(firmware_information, firmware_uri)
 
     def get_forwarding_information_base(self, id_or_uri, filter=''):
@@ -455,6 +459,43 @@ class LogicalInterconnects(object):
         """
         uri = self._client.build_uri(id_or_uri) + self.QOS_AGGREGATED_CONFIGURATION
         return self._client.update(qos_configuration, uri=uri, timeout=timeout)
+
+    def update_telemetry_configurations(self, tc_id_or_uri, configuration, id_or_uri=None, timeout=-1):
+        """
+        Updates the telemetry configuration of a logical interconnect. Changes to the telemetry configuration are
+        asynchronously applied to all managed interconnects.
+
+        Args:
+            tc_id_or_uri:
+                Can be either the telemetry configuration id or uri.
+            configuration:
+                The telemetry configuration for the logical interconnect.
+            id_or_uri:
+                Can be either the logical interconnect id or uri.
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
+                OneView, just stops waiting for its completion.
+
+        Returns:
+            dict: The telemetry configuration.
+        """
+        uri = self._client.build_subresource_uri(id_or_uri, tc_id_or_uri, 'telemetry-configurations')
+        return self._client.update(configuration, uri=uri, timeout=timeout,
+                                   default_values=self.SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES)
+
+    def get_ethernet_settings(self, id_or_uri):
+        """
+        Gets the Ethernet interconnect settings for the Logical Interconnect.
+
+        Args:
+            id_or_uri:
+                Can be either the logical interconnect id or uri.
+
+        Returns:
+            dict: Ethernet Interconnect Settings
+        """
+        uri = self._client.build_uri(id_or_uri) + '/ethernetSettings'
+        return self._client.get(uri)
 
     def __build_firmware_uri(self, id_or_uri):
         return self._client.build_uri(id_or_uri) + self.FIRMWARE_PATH
