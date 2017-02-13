@@ -12,6 +12,14 @@ hpOneView.resources.uncategorized.os_deployment_plans module
     :undoc-members:
     :show-inheritance:
 
+hpOneView.resources.uncategorized.os_deployment_servers module
+--------------------------------------------------------------
+
+.. automodule:: hpOneView.resources.uncategorized.os_deployment_servers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView.resources.uncategorized.unmanaged_devices module
 ----------------------------------------------------------
 

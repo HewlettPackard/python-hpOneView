@@ -85,6 +85,7 @@
 <li><a class="reference internal" href="#">hpOneView.resources.uncategorized package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.uncategorized.os_deployment_plans">hpOneView.resources.uncategorized.os_deployment_plans module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.uncategorized.os_deployment_servers">hpOneView.resources.uncategorized.os_deployment_servers module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.uncategorized.unmanaged_devices">hpOneView.resources.uncategorized.unmanaged_devices module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.uncategorized">Module contents</a></li>
 </ul>
@@ -238,6 +239,275 @@ The search is case-insensitive</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Os Deployment plan</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hpOneView.resources.uncategorized.os_deployment_servers">
+<span id="hponeview-resources-uncategorized-os-deployment-servers-module"></span><h2>hpOneView.resources.uncategorized.os_deployment_servers module<a class="headerlink" href="#module-hpOneView.resources.uncategorized.os_deployment_servers" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.uncategorized.os_deployment_servers.</code><code class="descname">OsDeploymentServers</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_servers.html#OsDeploymentServers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/deployment-servers'</em><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_servers.html#OsDeploymentServers.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a Deployment Server using the information provided in the request body. Note: The type of the Deployment
+Server is always assigned as &#8220;Image streamer&#8221;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Deployment Manager resource.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The added resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_servers.html#OsDeploymentServers.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a Deployment Server object based on its UUID or URI.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to delete.</li>
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
+network connectivity or errors on the resource itself. The default is false.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the volume was successfully deleted.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_servers.html#OsDeploymentServers.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the details of the particular OS Deployment Server based on its URI or ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the Os Deployment Server ID or the URI</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Os Deployment Server</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>fields=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>view=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_servers.html#OsDeploymentServers.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list of Deployment Servers based on optional sorting and filtering, and constrained by start and count
+parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+default is no filter; all resources are returned.</li>
+<li><strong>fields</strong> &#8211; Specifies which fields should be returned in the result set.</li>
+<li><strong>query</strong> &#8211; A general query string to narrow the list of resources returned. The default
+is no query - all resources are returned.</li>
+<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+on create time with the oldest entry first.</li>
+<li><strong>view</strong> &#8211; Return a specific subset of the attributes of the resource or collection, by
+specifying the name of a predefined view. The default view is expand - show all
+attributes of the resource and all elements of collections of resources.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Os Deployment Servers</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.get_appliance">
+<code class="descname">get_appliance</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>fields=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_servers.html#OsDeploymentServers.get_appliance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.get_appliance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the particular Image Streamer resource based on its ID or URI.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; Can be either the Os Deployment Server ID or the URI</li>
+<li><strong>fields</strong> &#8211; Specifies which fields should be returned in the result.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Image Streamer resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.get_appliances">
+<code class="descname">get_appliances</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>fields=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>view=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_servers.html#OsDeploymentServers.get_appliances"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.get_appliances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list of all the Image Streamer resources based on optional sorting and filtering, and constrained
+by start and count parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+default is no filter; all resources are returned.</li>
+<li><strong>fields</strong> &#8211; Specifies which fields should be returned in the result set.</li>
+<li><strong>query</strong> &#8211; A general query string to narrow the list of resources returned. The default
+is no query - all resources are returned.</li>
+<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+on create time with the oldest entry first.</li>
+<li><strong>view</strong> &#8211; Return a specific subset of the attributes of the resource or collection, by
+specifying the name of a predefined view. The default view is expand - show all
+attributes of the resource and all elements of collections of resources.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Image Streamer resources associated with the Deployment Servers.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.get_by">
+<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_servers.html#OsDeploymentServers.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.get_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all Os Deployment Servers that match the filter.
+The search is case-insensitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>field</strong> &#8211; field name to filter</li>
+<li><strong>value</strong> &#8211; value to filter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Os Deployment Servers</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.get_by_name">
+<code class="descname">get_by_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_servers.html#OsDeploymentServers.get_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.get_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Os Deployment Server by name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; Name of the Os Deployment Server</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Os Deployment Server</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.get_networks">
+<code class="descname">get_networks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_servers.html#OsDeploymentServers.get_networks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.get_networks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list of all the One View networks.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Networks</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_servers.html#OsDeploymentServers.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the Deployment Server resource. The properties that are omitted (not included as part
+of the request body) are ignored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
+<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with network connectivity or errors on
+the resource itself. The default is false.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Updated resource.</p>
+</td>
 </tr>
 </tbody>
 </table>
