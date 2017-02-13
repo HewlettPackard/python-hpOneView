@@ -1,5 +1,6 @@
 [![PyPI version](https://badge.fury.io/py/hpOneView.svg)](https://badge.fury.io/py/hpOneView)
 [![Build Status](https://travis-ci.org/HewlettPackard/python-hpOneView.svg?branch=master)](https://travis-ci.org/HewlettPackard/python-hpOneView)
+[![Coverage Status](https://coveralls.io/repos/github/HewlettPackard/python-hpOneView/badge.svg)](https://coveralls.io/github/HewlettPackard/python-hpOneView)
 
 # HPE OneView SDK for Python
 
