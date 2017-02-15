@@ -180,3 +180,21 @@ class OsDeploymentServersTest(TestCase):
 
         mock_get.assert_called_once_with('/rest/deployment-servers/image-streamer-appliances/123456')
         self.assertEqual(result, appliance)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_appliance_by_name_called_once(self, mock_get_all):
+        appliances = [{"name": "app1"}, {"name": "app2"}]
+        mock_get_all.return_value = appliances
+
+        result = self._os_deployment_servers.get_appliance_by_name("app2")
+
+        self.assertEqual(result, {"name": "app2"})
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_appliance_by_name_should_return_none_when_not_match(self, mock_get_all):
+        appliances = []
+        mock_get_all.return_value = appliances
+
+        result = self._os_deployment_servers.get_appliance_by_name("app2")
+
+        self.assertEqual(result, None)

@@ -235,3 +235,22 @@ class OsDeploymentServers(object):
             uri += '?fields=' + fields
 
         return self._client.get(uri)
+
+    def get_appliance_by_name(self, appliance_name):
+        """
+        Gets the particular Image Streamer resource based on its name.
+
+        Args:
+            appliance_name:
+                The Image Streamer resource name.
+
+        Returns:
+             dict: Image Streamer resource.
+        """
+        appliances = self.get_appliances()
+
+        if appliances:
+            for appliance in appliances:
+                if appliance['name'] == appliance_name:
+                    return appliance
+        return None
