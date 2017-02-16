@@ -364,7 +364,26 @@
         <span class="k">if</span> <span class="n">fields</span><span class="p">:</span>
             <span class="n">uri</span> <span class="o">+=</span> <span class="s1">&#39;?fields=&#39;</span> <span class="o">+</span> <span class="n">fields</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OsDeploymentServers.get_appliance_by_name"><a class="viewcode-back" href="../../../../hpOneView.resources.uncategorized.html#hpOneView.resources.uncategorized.os_deployment_servers.OsDeploymentServers.get_appliance_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_appliance_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">appliance_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the particular Image Streamer resource based on its name.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            appliance_name:</span>
+<span class="sd">                The Image Streamer resource name.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">             dict: Image Streamer resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">appliances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_appliances</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">appliances</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">appliance</span> <span class="ow">in</span> <span class="n">appliances</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">appliance</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">appliance_name</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">appliance</span>
+        <span class="k">return</span> <span class="kc">None</span></div></div>
 </pre></div>
 
            </div>
