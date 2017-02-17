@@ -253,7 +253,7 @@ class LogicalInterconnects(object):
             configuration: snmp configuration.
 
         Returns:
-            dict: snmp configuration.
+            dict: The Logical Interconnect.
         """
         data = configuration.copy()
         if 'type' not in data:
@@ -284,7 +284,7 @@ class LogicalInterconnects(object):
         Args:
             id_or_uri: Can be either the logical interconnect id or the logical interconnect uri.
         Returns:
-            dict: Port monitor configuration.
+            dict: The Logical Interconnect.
         """
         uri = self._client.build_uri(id_or_uri) + self.PORT_MONITOR_PATH
         return self._client.get(uri)
@@ -477,7 +477,7 @@ class LogicalInterconnects(object):
                 OneView, just stops waiting for its completion.
 
         Returns:
-            dict: The telemetry configuration.
+            dict: The Logical Interconnect.
         """
         uri = self._client.build_subresource_uri(id_or_uri, tc_id_or_uri, 'telemetry-configurations')
         return self._client.update(configuration, uri=uri, timeout=timeout,

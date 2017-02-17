@@ -161,10 +161,10 @@ pprint(monitor_configuration)
 try:
     print("Update the port monitor configuration of a logical interconnect")
     monitor_configuration['enablePortMonitor'] = True
-    monitor_configuration = oneview_client.logical_interconnects.update_port_monitor(
+    logical_interconnect = oneview_client.logical_interconnects.update_port_monitor(
         logical_interconnect_id, monitor_configuration)
     print("  Updated port monitor at uri: {uri}\n  with 'enablePortMonitor': '{enablePortMonitor}'".format(
-        **monitor_configuration))
+        **logical_interconnect['portMonitor']))
 except HPOneViewException as e:
     print(e.msg)
 
@@ -180,9 +180,9 @@ telemetry_config = {
     "enableTelemetry": True,
     "sampleInterval": 300
 }
-telemetry_configuration = oneview_client.logical_interconnects.update_telemetry_configurations(
+logical_interconnect_updated = oneview_client.logical_interconnects.update_telemetry_configurations(
     configuration=telemetry_config, tc_id_or_uri=telemetry_configuration_uri)
-pprint(telemetry_configuration)
+pprint(logical_interconnect_updated)
 
 # Update the configuration on the logical interconnect
 print("Update the configuration on the logical interconnect")
