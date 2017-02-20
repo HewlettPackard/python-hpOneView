@@ -383,7 +383,7 @@
 <span class="sd">            configuration: snmp configuration.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: snmp configuration.</span>
+<span class="sd">            dict: The Logical Interconnect.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">if</span> <span class="s1">&#39;type&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
@@ -414,7 +414,7 @@
 <span class="sd">        Args:</span>
 <span class="sd">            id_or_uri: Can be either the logical interconnect id or the logical interconnect uri.</span>
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: Port monitor configuration.</span>
+<span class="sd">            dict: The Logical Interconnect.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">PORT_MONITOR_PATH</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
@@ -607,7 +607,7 @@
 <span class="sd">                OneView, just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: The telemetry configuration.</span>
+<span class="sd">            dict: The Logical Interconnect.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_subresource_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">tc_id_or_uri</span><span class="p">,</span> <span class="s1">&#39;telemetry-configurations&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
