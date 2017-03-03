@@ -68,6 +68,7 @@ from hpOneView.resources.uncategorized.unmanaged_devices import UnmanagedDevices
 from hpOneView.resources.networking.logical_downlinks import LogicalDownlinks
 from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.facilities.racks import Racks
+from hpOneView.resources.uncategorized.roles import Roles
 from hpOneView.resources.facilities.datacenters import Datacenters
 from hpOneView.resources.fc_sans.managed_sans import ManagedSANs
 from hpOneView.resources.fc_sans.san_managers import SanManagers
@@ -142,6 +143,7 @@ class OneViewClient(object):
         self.__power_devices = None
         self.__unmanaged_devices = None
         self.__racks = None
+        self.__roles = None
         self.__datacenters = None
         self.__san_managers = None
         self.__endpoints = None
@@ -497,6 +499,18 @@ class OneViewClient(object):
         if not self.__switches:
             self.__switches = Switches(self.__connection)
         return self.__switches
+
+    @property
+    def roles(self):
+        """
+        Gets the Roles API client.
+
+        Returns:
+            Roles:
+        """
+        if not self.__roles:
+            self.__roles = Roles(self.__connection)
+        return self.__roles
 
     @property
     def switch_types(self):
