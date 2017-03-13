@@ -13,6 +13,8 @@
 
   
   
+  
+  
 
   
 
@@ -41,6 +43,7 @@
 
 <body class="wy-body-for-nav" role="document">
 
+   
   <div class="wy-grid-for-nav">
 
     
@@ -81,8 +84,11 @@
           
             
             
-                <!-- Local TOC -->
-                <div class="local-toc"></div>
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
             
           
         </div>
@@ -93,8 +99,10 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../../index.html">HPE OneView Python SDK</a>
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HPE OneView Python SDK</a>
+        
       </nav>
 
 
@@ -107,21 +115,38 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../index.html">Module code</a> &raquo;</li>
-      
+        
           <li><a href="../hpOneView.html">hpOneView</a> &raquo;</li>
-      
-    <li>hpOneView.oneview_client</li>
+        
+      <li>hpOneView.oneview_client</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
-          
+            
         
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
@@ -198,6 +223,7 @@
 <span class="kn">from</span> <span class="nn">hpOneView.resources.networking.logical_downlinks</span> <span class="k">import</span> <span class="n">LogicalDownlinks</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.facilities.power_devices</span> <span class="k">import</span> <span class="n">PowerDevices</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.facilities.racks</span> <span class="k">import</span> <span class="n">Racks</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.uncategorized.roles</span> <span class="k">import</span> <span class="n">Roles</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.facilities.datacenters</span> <span class="k">import</span> <span class="n">Datacenters</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.fc_sans.managed_sans</span> <span class="k">import</span> <span class="n">ManagedSANs</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.fc_sans.san_managers</span> <span class="k">import</span> <span class="n">SanManagers</span>
@@ -272,6 +298,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__power_devices</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__unmanaged_devices</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__racks</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__roles</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__datacenters</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__san_managers</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__endpoints</span> <span class="o">=</span> <span class="kc">None</span>
@@ -627,6 +654,18 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__switches</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__switches</span> <span class="o">=</span> <span class="n">Switches</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__switches</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">roles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Roles API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Roles:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__roles</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__roles</span> <span class="o">=</span> <span class="n">Roles</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__roles</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">switch_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1161,6 +1200,9 @@
 </pre></div>
 
            </div>
+           <div class="articleComments">
+            
+           </div>
           </div>
           <footer>
   
@@ -1193,7 +1235,8 @@
             VERSION:'3.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
         };
     </script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>

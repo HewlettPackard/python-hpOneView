@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.activity.tasks &mdash; HPE OneView Python SDK 3.1.0 documentation</title>
+  <title>hpOneView.resources.uncategorized.roles &mdash; HPE OneView Python SDK 3.1.0 documentation</title>
   
 
   
@@ -135,7 +135,7 @@
         
           <li><a href="../../../hpOneView.html">hpOneView</a> &raquo;</li>
         
-      <li>hpOneView.resources.activity.tasks</li>
+      <li>hpOneView.resources.uncategorized.roles</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -152,7 +152,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for hpOneView.resources.activity.tasks</h1><div class="highlight"><pre>
+  <h1>Source code for hpOneView.resources.uncategorized.roles</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1">###</span>
 <span class="c1"># (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP</span>
@@ -185,72 +185,60 @@
 
 <span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
 
-
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">quote</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">ResourceClient</span>
 
 
-<div class="viewcode-block" id="Tasks"><a class="viewcode-back" href="../../../../hpOneView.resources.activity.html#hpOneView.resources.activity.tasks.Tasks">[docs]</a><span class="k">class</span> <span class="nc">Tasks</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Roles"><a class="viewcode-back" href="../../../../hpOneView.resources.uncategorized.html#hpOneView.resources.uncategorized.roles.Roles">[docs]</a><span class="k">class</span> <span class="nc">Roles</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Tasks API client.</span>
-
+<span class="sd">    Roles API client.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/tasks&#39;</span>
+
+    <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/roles&#39;</span>
+    <span class="n">RESOURCES_PATH</span> <span class="o">=</span> <span class="s1">&#39;/resources&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Tasks.get"><a class="viewcode-back" href="../../../../hpOneView.resources.activity.html#hpOneView.resources.activity.tasks.Tasks.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+<div class="viewcode-block" id="Roles.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.uncategorized.html#hpOneView.resources.uncategorized.roles.Roles.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Retrieve a task by its uri.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: task id (or uri)</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: The task.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="n">task</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">task</span></div>
-
-<div class="viewcode-block" id="Tasks.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.activity.html#hpOneView.resources.activity.tasks.Tasks.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets all the tasks based upon filters provided.</span>
-
-<span class="sd">        Note:</span>
-<span class="sd">            Filters are optional.</span>
+<span class="sd">        Gets a list of roles based on optional sorting and filtering and is constrained by start</span>
+<span class="sd">        and count parameters.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            start:</span>
-<span class="sd">                 The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the</span>
-<span class="sd">                 first available item.</span>
+<span class="sd">                The first item to return, using 0-based indexing.</span>
+<span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
 <span class="sd">            count:</span>
-<span class="sd">                The number of resources to return. A count of -1 requests all items. The actual number of items in</span>
-<span class="sd">                the response may differ from the requested count if the sum of start and count exceed the total number</span>
-<span class="sd">                of items.</span>
-<span class="sd">            fields:</span>
-<span class="sd">                 Specifies which fields should be returned in the result set.</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
+<span class="sd">                The actual number of items in the response might differ from the requested</span>
+<span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
 <span class="sd">            filter (list or str):</span>
-<span class="sd">                 A general filter/query string to narrow the list of items returned. The default is no filter; all</span>
-<span class="sd">                 resources are returned.</span>
-<span class="sd">            query:</span>
-<span class="sd">                 A general query string to narrow the list of resources returned. The default is no query (all</span>
-<span class="sd">                 resources are returned).</span>
+<span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
+<span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">            sort:</span>
-<span class="sd">                The sort order of the returned data set. By default, the sort order is based on create time, with the</span>
-<span class="sd">                oldest entry first.</span>
-<span class="sd">            view:</span>
-<span class="sd">                 Returns a specific subset of the attributes of the resource or collection, by specifying the name of a</span>
-<span class="sd">                 predefined view. The default view is expand (show all attributes of the resource and all elements of</span>
-<span class="sd">                 collections of resources).</span>
+<span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
+<span class="sd">                on create time with the oldest entry first.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list: A list of tasks.</span>
+<span class="sd">            list: A list of roles.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span>
-                                    <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Roles.get"><a class="viewcode-back" href="../../../../hpOneView.resources.uncategorized.html#hpOneView.resources.uncategorized.roles.Roles.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the role by its URI or Name.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name_or_uri:</span>
+<span class="sd">                Can be either the Name or the URI.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Role</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name_or_uri</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="n">name_or_uri</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name_or_uri</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
