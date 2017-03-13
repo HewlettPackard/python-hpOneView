@@ -496,6 +496,3 @@ class LogicalInterconnects(object):
         """
         uri = self._client.build_uri(id_or_uri) + '/ethernetSettings'
         return self._client.get(uri)
-
-    def __build_firmware_uri(self, id_or_uri):
-        return self._client.build_uri(id_or_uri) + self.FIRMWARE_PATH

@@ -53,6 +53,7 @@ from hpOneView.resources.facilities.datacenters import Datacenters
 from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
 from hpOneView.resources.servers.server_profiles import ServerProfiles
 from hpOneView.resources.servers.id_pools import IdPools
+from hpOneView.resources.uncategorized.roles import Roles
 from hpOneView.resources.servers.id_pools_ranges import IdPoolsRanges
 from hpOneView.resources.servers.id_pools_ipv4_ranges import IdPoolsIpv4Ranges
 from hpOneView.resources.servers.id_pools_ipv4_subnets import IdPoolsIpv4Subnets
@@ -475,6 +476,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_racks(self):
         racks = self._oneview.racks
         self.assertEqual(racks, self._oneview.racks)
+
+    def test_roles_has_right_type(self):
+        self.assertIsInstance(self._oneview.roles, Roles)
+
+    def test_roles_lazy_loading(self):
+        roles = self._oneview.roles
+        self.assertEqual(roles, self._oneview.roles)
 
     def test_san_managers_has_right_type(self):
         self.assertIsInstance(self._oneview.san_managers, SanManagers)

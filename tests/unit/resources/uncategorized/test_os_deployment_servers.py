@@ -181,6 +181,17 @@ class OsDeploymentServersTest(TestCase):
         mock_get.assert_called_once_with('/rest/deployment-servers/image-streamer-appliances/123456')
         self.assertEqual(result, appliance)
 
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_appliance_called_once_with_fields(self, mock_get):
+        appliance = {"name": "app1"}
+        mock_get.return_value = appliance
+        appliance_id = "123456"
+
+        result = self._os_deployment_servers.get_appliance(appliance_id, fields='field')
+
+        mock_get.assert_called_once_with('/rest/deployment-servers/image-streamer-appliances/123456?fields=field')
+        self.assertEqual(result, appliance)
+
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_appliance_by_name_called_once(self, mock_get_all):
         appliances = [{"name": "app1"}, {"name": "app2"}]
