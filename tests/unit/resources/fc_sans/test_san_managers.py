@@ -31,6 +31,27 @@ from hpOneView.resources.fc_sans.san_managers import SanManagers
 
 TIMEOUT = -1
 
+PROVIDERS = [
+    {
+        "uri": "/rest/fc-sans/providers/0aa1f4e1-3b5e-4233-af1a-f849dc64da69",
+        "name": "Brocade San Plugin",
+        "displayName": "Brocade Network Advisor",
+        "sanType": "Fabric"
+    },
+    {
+        "uri": "/rest/fc-sans/providers/848c191d-c995-4cd5-a7ba-e627435dd5f2",
+        "name": "Cisco San Plugin",
+        "displayName": "Cisco",
+        "sanType": "Fabric"
+    },
+    {
+        "uri": "/rest/fc-sans/providers/5c5c67f5-0f8f-4c85-a54f-f26b1f1332c7",
+        "name": "Direct Attach SAN Plugin",
+        "displayName": "HPE",
+        "sanType": "Fabric"
+    }
+]
+
 
 class SanManagersTest(TestCase):
     def setUp(self):
@@ -133,11 +154,21 @@ class SanManagersTest(TestCase):
         self.assertFalse(provider)
         mock_get_by_name.assert_called_once_with(provider_name)
 
-    @mock.patch.object(ResourceClient, 'get_by_name')
-    def test_get_provider_uri(self, mock_get_by_name):
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_provider_uri(self, mock_get_all):
         provider_name = "Brocade Network Advisor"
-        self._resource.get_provider_uri(provider_name)
-        mock_get_by_name.assert_called_once_with(provider_name)
+        mock_get_all.return_value = PROVIDERS
+
+        result = self._resource.get_provider_uri(provider_name)
+        self.assertEqual(result, PROVIDERS[0]['uri'])
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_provider_uri_should_return_none_when_not_found(self, mock_get_all):
+        provider_name = "Brocade Network Advisor"
+        mock_get_all.return_value = []
+
+        result = self._resource.get_provider_uri(provider_name)
+        self.assertEqual(result, None)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update(self, mock_update):
