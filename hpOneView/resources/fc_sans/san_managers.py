@@ -114,17 +114,18 @@ class SanManagers(object):
         uri = self._provider_client.build_uri(provider_uri_or_id) + "/device-managers"
         return self._client.create(resource=resource, uri=uri, timeout=timeout)
 
-    def get_provider_uri(self, provider_name):
+    def get_provider_uri(self, provider_display_name):
         """
         Gets uri for a specific provider.
 
         Args:
-            provider_name: Name of the provider.
+            provider_display_name: Display name of the provider.
 
         Returns:
             uri
         """
-        return self._provider_client.get_by_name(provider_name)['uri']
+        providers = self._provider_client.get_by('displayName', provider_display_name)
+        return providers[0]['uri'] if providers else None
 
     def get_default_connection_info(self, provider_name):
         """
