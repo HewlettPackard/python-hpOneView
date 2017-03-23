@@ -269,17 +269,18 @@
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_provider_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">provider_uri_or_id</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/device-managers&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SanManagers.get_provider_uri"><a class="viewcode-back" href="../../../../hpOneView.resources.fc_sans.html#hpOneView.resources.fc_sans.san_managers.SanManagers.get_provider_uri">[docs]</a>    <span class="k">def</span> <span class="nf">get_provider_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">provider_name</span><span class="p">):</span>
+<div class="viewcode-block" id="SanManagers.get_provider_uri"><a class="viewcode-back" href="../../../../hpOneView.resources.fc_sans.html#hpOneView.resources.fc_sans.san_managers.SanManagers.get_provider_uri">[docs]</a>    <span class="k">def</span> <span class="nf">get_provider_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">provider_display_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets uri for a specific provider.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            provider_name: Name of the provider.</span>
+<span class="sd">            provider_display_name: Display name of the provider.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            uri</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_provider_client</span><span class="o">.</span><span class="n">get_by_name</span><span class="p">(</span><span class="n">provider_name</span><span class="p">)[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span></div>
+        <span class="n">providers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_provider_client</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="s1">&#39;displayName&#39;</span><span class="p">,</span> <span class="n">provider_display_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">providers</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">providers</span> <span class="k">else</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="SanManagers.get_default_connection_info"><a class="viewcode-back" href="../../../../hpOneView.resources.fc_sans.html#hpOneView.resources.fc_sans.san_managers.SanManagers.get_default_connection_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_default_connection_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">provider_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
