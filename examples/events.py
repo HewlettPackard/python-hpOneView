@@ -23,14 +23,12 @@
 
 from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
-# from hpOneView import extract_id_from_uri
-# from pprint import pprint
 
 config = {
     "ip": "172.16.101.230",
     "credentials": {
         "userName": "administrator",
-        "password": "rainforest"
+        "password": ""
     }
 }
 
