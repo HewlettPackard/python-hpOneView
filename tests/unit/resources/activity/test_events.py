@@ -54,3 +54,31 @@ class EventsTest(TestCase):
     def test_get_by_called_once(self, mock_get_by):
         self._client.get_by('eventTypeID', 'hp.justATest')
         mock_get_by.assert_called_once_with('eventTypeID', 'hp.justATest')
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_create_should_use_given_values(self, mock_create):
+        resource = {
+            "description": "This is a very simple test event",
+            "serviceEventSource": True,
+            "serviceEventDetails": {
+                "caseId": "1234",
+                "primaryContact": "contactDetails",
+                "remoteSupportState": "Submitted"
+            },
+            "severity": "OK",
+            "healthCategory": "PROCESSOR",
+            "eventTypeID": "hp.justATest",
+            "rxTime": "2012-05-14T20:23:56.688Z",
+            "urgency": "None",
+            "eventDetails":
+            [{"eventItemName": "ipv4Address",
+                "eventItemValue": "198.51.100.5",
+                "isThisVarbindData": False,
+                "varBindOrderIndex": -1}]
+        }
+        resource_rest_call = resource.copy()
+        mock_create.return_value = {}
+
+        self._client.create(resource, 30)
+        mock_create.assert_called_once_with(resource_rest_call, timeout=30,
+                                            default_values=self._client.DEFAULT_VALUES)
