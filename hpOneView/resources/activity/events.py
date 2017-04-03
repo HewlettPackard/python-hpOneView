@@ -43,7 +43,6 @@ class Events(object):
     }
 
     def __init__(self, con):
-        self._connection = con
         self._client = ResourceClient(con, self.URI)
 
     def get(self, id_or_uri):

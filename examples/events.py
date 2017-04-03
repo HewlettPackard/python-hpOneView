@@ -25,7 +25,7 @@ from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "172.16.101.230",
+    "ip": "",
     "credentials": {
         "userName": "administrator",
         "password": ""
@@ -33,7 +33,6 @@ config = {
 }
 
 options = {
-    "type": "EventResourceV3",
     "description": "This is a very simple test event",
     "serviceEventSource": "true",
     "serviceEventDetails": {
@@ -68,12 +67,12 @@ for event in events:
 event = _client.events.create(options)
 print("\nCreated event successfully.\n  uri = '%s'" % (event['uri']))
 
-# # Get by Uri
+# Get by Uri
 print("\nFind uri == %s" % ('/rest/events/24'))
 event_by_uri = _client.events.get('/rest/events/24')
 print("uri: '%s' | eventTypeID: '%s' \n" % (event_by_uri['uri'], event_by_uri['eventTypeID']))
 
-# # Filter by state
+# Filter by state
 print("\nGet all events filtering by eventTypeID")
 events = _client.events.get_all(filter="\"eventTypeID='StatusPoll.EnclosureStatus'\"", count=10)
 for event in events:
