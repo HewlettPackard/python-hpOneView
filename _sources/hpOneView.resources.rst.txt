@@ -1,5 +1,5 @@
-hpOneView.resources package
-===========================
+hpOneView\.resources package
+============================
 
 Subpackages
 -----------
@@ -21,16 +21,16 @@ Subpackages
 Submodules
 ----------
 
-hpOneView.resources.resource module
------------------------------------
+hpOneView\.resources\.resource module
+-------------------------------------
 
 .. automodule:: hpOneView.resources.resource
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView.resources.task_monitor module
----------------------------------------
+hpOneView\.resources\.task\_monitor module
+------------------------------------------
 
 .. automodule:: hpOneView.resources.task_monitor
     :members:

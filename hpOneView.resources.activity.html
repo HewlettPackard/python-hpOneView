@@ -91,6 +91,7 @@
 <li><a class="reference internal" href="#">hpOneView.resources.activity package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.activity.alerts">hpOneView.resources.activity.alerts module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.activity.events">hpOneView.resources.activity.events module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.activity.tasks">hpOneView.resources.activity.tasks module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.activity">Module contents</a></li>
 </ul>
@@ -330,6 +331,129 @@ in OneView; it just stops waiting for its completion.</li>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hpOneView.resources.activity.events">
+<span id="hponeview-resources-activity-events-module"></span><h2>hpOneView.resources.activity.events module<a class="headerlink" href="#module-hpOneView.resources.activity.events" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.activity.events.Events">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.activity.events.</code><code class="descname">Events</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/activity/events.html#Events"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.activity.events.Events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="hpOneView.resources.activity.events.Events.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'EventResourceV3'}, u'200': {u'type': u'EventResourceV3'}}</em><a class="headerlink" href="#hpOneView.resources.activity.events.Events.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.activity.events.Events.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/events'</em><a class="headerlink" href="#hpOneView.resources.activity.events.Events.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.activity.events.Events.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/activity/events.html#Events.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.activity.events.Events.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an Event.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.activity.events.Events.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/activity/events.html#Events.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.activity.events.Events.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve an event by its URI or ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; event ID or URI.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The event.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.activity.events.Events.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>view=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/activity/events.html#Events.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.activity.events.Events.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all the events based upon filters provided.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
+first available item.</li>
+<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items. The actual number of items in
+the response may differ from the requested count if the sum of start and count exceed the total number
+of items.</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The default is no filter; all
+resources are returned.</li>
+<li><strong>query</strong> &#8211; A general query string to narrow the list of resources returned. The default is no query (all
+resources are returned).</li>
+<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based on create time, with the
+oldest entry first.</li>
+<li><strong>view</strong> &#8211; Returns a specific subset of the attributes of the resource or collection, by specifying the name of a
+predefined view. The default view is expand (show all attributes of the resource and all elements of
+collections of resources).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of events.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.activity.events.Events.get_by">
+<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/activity/events.html#Events.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.activity.events.Events.get_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all events that match the filter.</p>
+<p>The search is case-insensitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>field</strong> &#8211; Field name to filter.</li>
+<li><strong>value</strong> &#8211; Value to filter.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">List of events.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
 </td>
 </tr>
 </tbody>

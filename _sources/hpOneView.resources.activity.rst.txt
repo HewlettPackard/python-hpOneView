@@ -1,19 +1,27 @@
-hpOneView.resources.activity package
-====================================
+hpOneView\.resources\.activity package
+======================================
 
 Submodules
 ----------
 
-hpOneView.resources.activity.alerts module
-------------------------------------------
+hpOneView\.resources\.activity\.alerts module
+---------------------------------------------
 
 .. automodule:: hpOneView.resources.activity.alerts
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView.resources.activity.tasks module
------------------------------------------
+hpOneView\.resources\.activity\.events module
+---------------------------------------------
+
+.. automodule:: hpOneView.resources.activity.events
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+hpOneView\.resources\.activity\.tasks module
+--------------------------------------------
 
 .. automodule:: hpOneView.resources.activity.tasks
     :members:

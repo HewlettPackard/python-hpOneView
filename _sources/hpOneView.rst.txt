@@ -13,24 +13,24 @@ Subpackages
 Submodules
 ----------
 
-hpOneView.connection module
----------------------------
+hpOneView\.connection module
+----------------------------
 
 .. automodule:: hpOneView.connection
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView.exceptions module
----------------------------
+hpOneView\.exceptions module
+----------------------------
 
 .. automodule:: hpOneView.exceptions
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView.oneview_client module
--------------------------------
+hpOneView\.oneview\_client module
+---------------------------------
 
 .. automodule:: hpOneView.oneview_client
     :members:

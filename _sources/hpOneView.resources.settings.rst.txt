@@ -1,27 +1,27 @@
-hpOneView.resources.settings package
-====================================
+hpOneView\.resources\.settings package
+======================================
 
 Submodules
 ----------
 
-hpOneView.resources.settings.firmware_bundles module
-----------------------------------------------------
+hpOneView\.resources\.settings\.firmware\_bundles module
+--------------------------------------------------------
 
 .. automodule:: hpOneView.resources.settings.firmware_bundles
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView.resources.settings.firmware_drivers module
-----------------------------------------------------
+hpOneView\.resources\.settings\.firmware\_drivers module
+--------------------------------------------------------
 
 .. automodule:: hpOneView.resources.settings.firmware_drivers
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView.resources.settings.scopes module
-------------------------------------------
+hpOneView\.resources\.settings\.scopes module
+---------------------------------------------
 
 .. automodule:: hpOneView.resources.settings.scopes
     :members:

@@ -1,5 +1,5 @@
-hpOneView.image_streamer package
-================================
+hpOneView\.image\_streamer package
+==================================
 
 Subpackages
 -----------
@@ -11,8 +11,8 @@ Subpackages
 Submodules
 ----------
 
-hpOneView.image_streamer.image_streamer_client module
------------------------------------------------------
+hpOneView\.image\_streamer\.image\_streamer\_client module
+----------------------------------------------------------
 
 .. automodule:: hpOneView.image_streamer.image_streamer_client
     :members:

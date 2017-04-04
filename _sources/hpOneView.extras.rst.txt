@@ -1,27 +1,27 @@
-hpOneView.extras package
-========================
+hpOneView\.extras package
+=========================
 
 Submodules
 ----------
 
-hpOneView.extras.comparators module
------------------------------------
+hpOneView\.extras\.comparators module
+-------------------------------------
 
 .. automodule:: hpOneView.extras.comparators
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView.extras.mergers module
--------------------------------
+hpOneView\.extras\.mergers module
+---------------------------------
 
 .. automodule:: hpOneView.extras.mergers
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView.extras.server_profile_utils module
---------------------------------------------
+hpOneView\.extras\.server\_profile\_utils module
+------------------------------------------------
 
 .. automodule:: hpOneView.extras.server_profile_utils
     :members:

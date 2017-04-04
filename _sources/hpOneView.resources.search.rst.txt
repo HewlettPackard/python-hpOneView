@@ -1,11 +1,11 @@
-hpOneView.resources.search package
-==================================
+hpOneView\.resources\.search package
+====================================
 
 Submodules
 ----------
 
-hpOneView.resources.search.labels module
-----------------------------------------
+hpOneView\.resources\.search\.labels module
+-------------------------------------------
 
 .. automodule:: hpOneView.resources.search.labels
     :members:
