@@ -96,6 +96,7 @@ from hpOneView.resources.servers.migratable_vc_domains import MigratableVcDomain
 from hpOneView.resources.networking.sas_logical_interconnect_groups import SasLogicalInterconnectGroups
 from hpOneView.resources.search.labels import Labels
 from hpOneView.resources.activity.alerts import Alerts
+from hpOneView.resources.activity.events import Events
 from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPlans
 from hpOneView.resources.uncategorized.os_deployment_servers import OsDeploymentServers
 from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
@@ -171,6 +172,7 @@ class OneViewClient(object):
         self.__labels = None
         self.__sas_logical_interconnect_groups = None
         self.__alerts = None
+        self.__events = None
         self.__drive_enclures = None
         self.__os_deployment_plans = None
         self.__os_deployment_servers = None
@@ -1006,6 +1008,18 @@ class OneViewClient(object):
         if not self.__alerts:
             self.__alerts = Alerts(self.__connection)
         return self.__alerts
+
+    @property
+    def events(self):
+        """
+        Gets the Events API client.
+
+        Returns:
+            Events:
+        """
+        if not self.__events:
+            self.__events = Events(self.__connection)
+        return self.__events
 
     @property
     def os_deployment_plans(self):

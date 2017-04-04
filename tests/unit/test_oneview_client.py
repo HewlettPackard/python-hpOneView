@@ -69,6 +69,7 @@ from hpOneView.resources.search.labels import Labels
 from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPlans
 from hpOneView.resources.uncategorized.os_deployment_servers import OsDeploymentServers
 from hpOneView.resources.activity.alerts import Alerts
+from hpOneView.resources.activity.events import Events
 from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
 
 from tests.test_utils import mock_builtin
@@ -687,6 +688,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_alerts(self):
         alerts = self._oneview.alerts
         self.assertEqual(alerts, self._oneview.alerts)
+
+    def test_events_has_right_type(self):
+        self.assertIsInstance(self._oneview.events, Events)
+
+    def test_lazy_loading_events(self):
+        events = self._oneview.events
+        self.assertEqual(events, self._oneview.events)
 
     def test_os_deployment_plans_has_right_type(self):
         self.assertIsInstance(self._oneview.os_deployment_plans, OsDeploymentPlans)
