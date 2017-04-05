@@ -197,7 +197,5 @@ class Scopes(object):
         Returns:
             dict: Updated resource.
         """
-        # uri = self._client.build_uri(id_or_uri) + path
-        # print(uri)
         headers = {'Content-Type': 'application/json-patch+json'}
         return self._client.patch(id_or_uri, operation, path, value, timeout=timeout, custom_headers=headers)

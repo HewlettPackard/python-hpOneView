@@ -56,8 +56,7 @@ resource_uri_3 = oneview_client.ethernet_networks.get_by('name', 'Scope OneView 
 print("\n## Create the scope")
 options = {
     "name": "SampleScope",
-    "description": "Sample Scope description",
-    "type": "ScopeV2"
+    "description": "Sample Scope description"
 }
 scope = oneview_client.scopes.create(options)
 pprint(scope)
