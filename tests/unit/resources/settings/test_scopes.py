@@ -148,3 +148,18 @@ class ScopesTest(TestCase):
             information.copy(),
             custom_headers={'Content-Type': 'application/json'},
             timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'patch')
+    def test_patch_called_once(self, mock_patch):
+        uri = '/rest/scopes/main-scope'
+
+        resource_uris = ["/rest/ethernet-networks/ethernet-1", "/rest/ethernet-networks/ethernet-2"]
+        self.resource.patch(uri, 'replace', '/addedResourceUris', resource_uris)
+
+        mock_patch.assert_called_once_with(
+            '/rest/scopes/main-scope',
+            'replace',
+            '/addedResourceUris',
+            ["/rest/ethernet-networks/ethernet-1", "/rest/ethernet-networks/ethernet-2"],
+            custom_headers={'Content-Type': 'application/json-patch+json'},
+            timeout=-1)
