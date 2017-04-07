@@ -253,6 +253,14 @@ class ResourceClientTest(unittest.TestCase):
 
         self.assertEqual(result, [])
 
+    @mock.patch.object(connection, 'get')
+    def test_get_all_should_return_empty_list_when_no_members(self, mock_get):
+        mock_get.return_value = {'nextPageUri': None, 'members': None}
+
+        result = self.resource_client.get_all()
+
+        self.assertEqual(result, [])
+
     @mock.patch.object(connection, 'delete')
     @mock.patch.object(TaskMonitor, 'wait_for_task')
     def test_delete_all_called_once(self, mock_wait4task, mock_delete):

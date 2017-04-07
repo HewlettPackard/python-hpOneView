@@ -704,7 +704,7 @@ class ResourceClient(object):
         return "&filter=" + formated_filter
 
     def __get_members(self, mlist):
-        if mlist and 'members' in mlist:
+        if mlist and 'members' in mlist and mlist['members']:
             return mlist['members']
         else:
             return []
