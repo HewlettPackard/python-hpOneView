@@ -100,6 +100,7 @@ from hpOneView.resources.activity.events import Events
 from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPlans
 from hpOneView.resources.uncategorized.os_deployment_servers import OsDeploymentServers
 from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
+from hpOneView.resources.settings.appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfiguration
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
@@ -177,6 +178,7 @@ class OneViewClient(object):
         self.__os_deployment_plans = None
         self.__os_deployment_servers = None
         self.__certificate_rabbitmq = None
+        self.__appliance_time_and_locale_configuration = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -1056,3 +1058,15 @@ class OneViewClient(object):
         if not self.__certificate_rabbitmq:
             self.__certificate_rabbitmq = CertificateRabbitMQ(self.__connection)
         return self.__certificate_rabbitmq
+
+    @property
+    def appliance_time_and_locale_configuration(self):
+        """
+        Gets the ApplianceTimeAndLocaleConfiguration API client.
+
+        Returns:
+            ApplianceTimeAndLocaleConfiguration:
+        """
+        if not self.__appliance_time_and_locale_configuration:
+            self.__appliance_time_and_locale_configuration = ApplianceTimeAndLocaleConfiguration(self.__connection)
+        return self.__appliance_time_and_locale_configuration
