@@ -46,7 +46,6 @@ class ApplianceTimeAndLocaleConfiguration(object):
     }
 
     def __init__(self, con):
-        self._connection = con
         self._client = ResourceClient(con, self.URI)
 
     def get(self):

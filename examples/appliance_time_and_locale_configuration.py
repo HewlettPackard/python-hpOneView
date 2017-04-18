@@ -43,6 +43,11 @@ time_and_locale = oneview_client.appliance_time_and_locale_configuration.get()
 print("\n## Got appliance time and locale configurations successfully!")
 pprint(time_and_locale)
 
+# Backup original values
+bkp = {}
+bkp['ntpServers'] = time_and_locale['ntpServers']
+bkp['locale'] = time_and_locale['locale']
+
 # Update NTP servers and locale
 # Set to use appliance local time and date server
 time_and_locale['ntpServers'] = ['127.0.0.1']
@@ -57,8 +62,8 @@ pprint(time_and_locale)
 # Note: Changing the locale will only be fully effective after resetting the appliance
 
 # Revert the changes made
-time_and_locale['ntpServers'] = ['16.110.135.123']
-time_and_locale['locale'] = 'en_US.UTF-8'
+time_and_locale['ntpServers'] = bkp['ntpServers']
+time_and_locale['locale'] = bkp['locale']
 time_and_locale.pop('dateTime')
 time_and_locale = oneview_client.appliance_time_and_locale_configuration.update(time_and_locale)
 print("\n## Reverted appliance time and locale configurations successfully!")
