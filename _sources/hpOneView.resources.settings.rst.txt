@@ -4,6 +4,14 @@ hpOneView\.resources\.settings package
 Submodules
 ----------
 
+hpOneView\.resources\.settings\.appliance\_time\_and\_locale\_configuration module
+----------------------------------------------------------------------------------
+
+.. automodule:: hpOneView.resources.settings.appliance_time_and_locale_configuration
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView\.resources\.settings\.firmware\_bundles module
 --------------------------------------------------------
 

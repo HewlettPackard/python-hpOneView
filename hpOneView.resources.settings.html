@@ -90,6 +90,7 @@
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">hpOneView.resources.settings package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.settings.appliance_time_and_locale_configuration">hpOneView.resources.settings.appliance_time_and_locale_configuration module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.firmware_bundles">hpOneView.resources.settings.firmware_bundles module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.firmware_drivers">hpOneView.resources.settings.firmware_drivers module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.scopes">hpOneView.resources.settings.scopes module</a></li>
@@ -163,6 +164,67 @@
 <h1>hpOneView.resources.settings package<a class="headerlink" href="#hponeview-resources-settings-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-hpOneView.resources.settings.appliance_time_and_locale_configuration">
+<span id="hponeview-resources-settings-appliance-time-and-locale-configuration-module"></span><h2>hpOneView.resources.settings.appliance_time_and_locale_configuration module<a class="headerlink" href="#module-hpOneView.resources.settings.appliance_time_and_locale_configuration" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.settings.appliance_time_and_locale_configuration.</code><code class="descname">ApplianceTimeAndLocaleConfiguration</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_time_and_locale_configuration.html#ApplianceTimeAndLocaleConfiguration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>ApplianceTimeAndLocaleConfiguration API client.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'TimeAndLocale'}, u'300': {u'type': u'TimeAndLocale'}}</em><a class="headerlink" href="#hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/appliance/configuration/time-locale'</em><a class="headerlink" href="#hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.get">
+<code class="descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_time_and_locale_configuration.html#ApplianceTimeAndLocaleConfiguration.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the appliance time and locale configuration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">ApplianceTimeAndLocaleConfiguration</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_time_and_locale_configuration.html#ApplianceTimeAndLocaleConfiguration.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the appliance time and locale configuration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated appliance time and locale configuration.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-hpOneView.resources.settings.firmware_bundles">
 <span id="hponeview-resources-settings-firmware-bundles-module"></span><h2>hpOneView.resources.settings.firmware_bundles module<a class="headerlink" href="#module-hpOneView.resources.settings.firmware_bundles" title="Permalink to this headline">¶</a></h2>
