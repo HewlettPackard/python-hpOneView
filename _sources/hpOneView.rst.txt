@@ -6,7 +6,6 @@ Subpackages
 
 .. toctree::
 
-    hpOneView.extras
     hpOneView.image_streamer
     hpOneView.resources
 
