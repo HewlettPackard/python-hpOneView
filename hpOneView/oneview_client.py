@@ -49,6 +49,7 @@ from hpOneView.resources.data_services.metric_streaming import MetricStreaming
 from hpOneView.resources.networking.switches import Switches
 from hpOneView.resources.networking.switch_types import SwitchTypes
 from hpOneView.resources.activity.tasks import Tasks
+from hpOneView.resources.settings.restores import Restores
 from hpOneView.resources.settings.scopes import Scopes
 from hpOneView.resources.servers.enclosures import Enclosures
 from hpOneView.resources.servers.logical_enclosures import LogicalEnclosures
@@ -155,6 +156,7 @@ class OneViewClient(object):
         self.__logical_switch_groups = None
         self.__logical_switches = None
         self.__logical_downlinks = None
+        self.__restores = None
         self.__server_profiles = None
         self.__server_profile_templates = None
         self.__sas_logical_jbods = None
@@ -358,6 +360,18 @@ class OneViewClient(object):
         if not self.__fabrics:
             self.__fabrics = Fabrics(self.__connection)
         return self.__fabrics
+
+    @property
+    def restores(self):
+        """
+        Gets the Restores API client.
+
+        Returns:
+            Restores:
+        """
+        if not self.__restores:
+            self.__restores = Restores(self.__connection)
+        return self.__restores
 
     @property
     def scopes(self):
