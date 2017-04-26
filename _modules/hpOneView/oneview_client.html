@@ -204,6 +204,7 @@
 <span class="kn">from</span> <span class="nn">hpOneView.resources.networking.switches</span> <span class="k">import</span> <span class="n">Switches</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.networking.switch_types</span> <span class="k">import</span> <span class="n">SwitchTypes</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.activity.tasks</span> <span class="k">import</span> <span class="n">Tasks</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.settings.restores</span> <span class="k">import</span> <span class="n">Restores</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.settings.scopes</span> <span class="k">import</span> <span class="n">Scopes</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.servers.enclosures</span> <span class="k">import</span> <span class="n">Enclosures</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.servers.logical_enclosures</span> <span class="k">import</span> <span class="n">LogicalEnclosures</span>
@@ -310,6 +311,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__logical_switch_groups</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__logical_switches</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__logical_downlinks</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__restores</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__server_profiles</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__server_profile_templates</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__sas_logical_jbods</span> <span class="o">=</span> <span class="kc">None</span>
@@ -513,6 +515,18 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fabrics</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__fabrics</span> <span class="o">=</span> <span class="n">Fabrics</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fabrics</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">restores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Restores API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Restores:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__restores</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__restores</span> <span class="o">=</span> <span class="n">Restores</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__restores</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">scopes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

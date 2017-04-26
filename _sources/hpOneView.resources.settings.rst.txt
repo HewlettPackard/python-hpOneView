@@ -28,6 +28,14 @@ hpOneView\.resources\.settings\.firmware\_drivers module
     :undoc-members:
     :show-inheritance:
 
+hpOneView\.resources\.settings\.restores module
+-----------------------------------------------
+
+.. automodule:: hpOneView.resources.settings.restores
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView\.resources\.settings\.scopes module
 ---------------------------------------------
 
