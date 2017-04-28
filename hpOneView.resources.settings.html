@@ -91,6 +91,7 @@
 <li><a class="reference internal" href="#">hpOneView.resources.settings package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.appliance_time_and_locale_configuration">hpOneView.resources.settings.appliance_time_and_locale_configuration module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.settings.backups">hpOneView.resources.settings.backups module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.firmware_bundles">hpOneView.resources.settings.firmware_bundles module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.firmware_drivers">hpOneView.resources.settings.firmware_drivers module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.restores">hpOneView.resources.settings.restores module</a></li>
@@ -219,6 +220,189 @@ in OneView, just stop waiting for its completion.</li>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hpOneView.resources.settings.backups">
+<span id="hponeview-resources-settings-backups-module"></span><h2>hpOneView.resources.settings.backups module<a class="headerlink" href="#module-hpOneView.resources.settings.backups" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.settings.backups.Backups">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.settings.backups.</code><code class="descname">Backups</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/backups.html#Backups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.backups.Backups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Backups API client.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.settings.backups.Backups.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/backups'</em><a class="headerlink" href="#hpOneView.resources.settings.backups.Backups.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.backups.Backups.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/backups.html#Backups.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.backups.Backups.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts backing up the appliance. After completion, the backup file must be downloaded and saved off-appliance.
+Appliance backups can be started at any time, and do not require any special setup to prepare the appliance for
+the backup.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Details of the created backup.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.backups.Backups.download">
+<code class="descname">download</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/backups.html#Backups.download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.backups.Backups.download" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads a backup archive previously created on the appliance. Uploaded backup files cannot be downloaded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> &#8211; ID or URI of the Artifact Bundle.</li>
+<li><strong>file_path</strong> (<em>str</em>) &#8211; Destination file path.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Successfully downloaded.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.backups.Backups.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/backups.html#Backups.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.backups.Backups.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the details of the specified backup.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the backup</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Details of the specified backup.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.backups.Backups.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/backups.html#Backups.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.backups.Backups.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the details for any current appliance backup. Only one backup file is present on the appliance at any
+time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of Backups.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.backups.Backups.get_config">
+<code class="descname">get_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/backups.html#Backups.get_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.backups.Backups.get_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the details of the backup configuration for the remote server and automatic backup schedule.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the backup</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Details of the backup configuration for the remote server and automatic backup schedule.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.backups.Backups.update_config">
+<code class="descname">update_config</code><span class="sig-paren">(</span><em>config</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/backups.html#Backups.update_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.backups.Backups.update_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the remote server configuration and the automatic backup schedule for backup.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>config</strong> (<em>dict</em>) &#8211; Object to update.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Backup details.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.backups.Backups.update_remote_archive">
+<code class="descname">update_remote_archive</code><span class="sig-paren">(</span><em>save_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/backups.html#Backups.update_remote_archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.backups.Backups.update_remote_archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves a backup of the appliance to a previously-configured remote location.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>save_uri</strong> (<em>dict</em>) &#8211; The URI for saving the backup to a previously configured location.</li>
+<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Backup details.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.backups.Backups.upload">
+<code class="descname">upload</code><span class="sig-paren">(</span><em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/backups.html#Backups.upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.backups.Backups.upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uploads an appliance backup file in preparation of a restore. Any existing backup on the appliance is removed.</p>
+<p>After the backup file is uploaded and validated, its details are returned. The URI of the backup can be used to
+start a restore.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_path</strong> (<em>str</em>) &#8211; The local backup filepath</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Details of the uploaded backup.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
 </tbody>
 </table>

@@ -12,6 +12,14 @@ hpOneView\.resources\.settings\.appliance\_time\_and\_locale\_configuration modu
     :undoc-members:
     :show-inheritance:
 
+hpOneView\.resources\.settings\.backups module
+----------------------------------------------
+
+.. automodule:: hpOneView.resources.settings.backups
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView\.resources\.settings\.firmware\_bundles module
 --------------------------------------------------------
 

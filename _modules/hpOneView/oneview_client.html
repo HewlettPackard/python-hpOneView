@@ -245,6 +245,7 @@
 <span class="kn">from</span> <span class="nn">hpOneView.resources.storage.drive_enclosures</span> <span class="k">import</span> <span class="n">DriveEnclosures</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.settings.firmware_drivers</span> <span class="k">import</span> <span class="n">FirmwareDrivers</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.settings.firmware_bundles</span> <span class="k">import</span> <span class="n">FirmwareBundles</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.settings.backups</span> <span class="k">import</span> <span class="n">Backups</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.storage.volumes</span> <span class="k">import</span> <span class="n">Volumes</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.storage.sas_logical_jbod_attachments</span> <span class="k">import</span> <span class="n">SasLogicalJbodAttachments</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.networking.uplink_sets</span> <span class="k">import</span> <span class="n">UplinkSets</span>
@@ -336,6 +337,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__os_deployment_servers</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__certificate_rabbitmq</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__appliance_time_and_locale_configuration</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__backups</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="c1"># TODO: Implement: con.set_trusted_ssl_bundle(args.cert)</span>
 
     <span class="nd">@classmethod</span>
@@ -1238,7 +1240,19 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__appliance_time_and_locale_configuration</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__appliance_time_and_locale_configuration</span> <span class="o">=</span> <span class="n">ApplianceTimeAndLocaleConfiguration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__appliance_time_and_locale_configuration</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__appliance_time_and_locale_configuration</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">backups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Backup API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Backups:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__backups</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__backups</span> <span class="o">=</span> <span class="n">Backups</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__backups</span></div>
 </pre></div>
 
            </div>
