@@ -90,6 +90,7 @@ from hpOneView.resources.storage.storage_volume_attachments import StorageVolume
 from hpOneView.resources.storage.drive_enclosures import DriveEnclosures
 from hpOneView.resources.settings.firmware_drivers import FirmwareDrivers
 from hpOneView.resources.settings.firmware_bundles import FirmwareBundles
+from hpOneView.resources.settings.backups import Backups
 from hpOneView.resources.storage.volumes import Volumes
 from hpOneView.resources.storage.sas_logical_jbod_attachments import SasLogicalJbodAttachments
 from hpOneView.resources.networking.uplink_sets import UplinkSets
@@ -181,6 +182,7 @@ class OneViewClient(object):
         self.__os_deployment_servers = None
         self.__certificate_rabbitmq = None
         self.__appliance_time_and_locale_configuration = None
+        self.__backups = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -1084,3 +1086,15 @@ class OneViewClient(object):
         if not self.__appliance_time_and_locale_configuration:
             self.__appliance_time_and_locale_configuration = ApplianceTimeAndLocaleConfiguration(self.__connection)
         return self.__appliance_time_and_locale_configuration
+
+    @property
+    def backups(self):
+        """
+        Gets the Backup API client.
+
+        Returns:
+            Backups:
+        """
+        if not self.__backups:
+            self.__backups = Backups(self.__connection)
+        return self.__backups
