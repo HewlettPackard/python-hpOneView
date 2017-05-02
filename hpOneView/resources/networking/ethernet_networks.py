@@ -43,7 +43,8 @@ class EthernetNetworks(object):
 
     DEFAULT_VALUES = {
         '200': {"type": "ethernet-networkV3"},
-        '300': {"type": "ethernet-networkV300"}
+        '300': {"type": "ethernet-networkV300"},
+        '500': {"type": "ethernet-networkV300"}
     }
 
     def __init__(self, con):
