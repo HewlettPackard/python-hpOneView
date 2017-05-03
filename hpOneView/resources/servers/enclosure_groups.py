@@ -43,7 +43,8 @@ class EnclosureGroups(object):
 
     DEFAULT_VALUES = {
         '200': {"type": "EnclosureGroupV200"},
-        '300': {"type": "EnclosureGroupV300"}
+        '300': {"type": "EnclosureGroupV300"},
+        '500': {"type": "EnclosureGroupV400"}
     }
 
     def __init__(self, con):
