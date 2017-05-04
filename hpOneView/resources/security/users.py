@@ -44,7 +44,12 @@ class Users(object):
 
     DEFAULT_VALUES = {
         '200': {'type': 'UserAndRoles'},
+<<<<<<< HEAD
         '300': {'type': 'UserAndRoles'}
+=======
+        '300': {'type': 'UserAndRoles'},
+        '500': {'type': 'UserAndRoles'}
+>>>>>>> Adding users resource and tests
     }
 
     def __init__(self, con):
