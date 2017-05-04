@@ -43,7 +43,8 @@ class LogicalInterconnectGroups(object):
 
     DEFAULT_VALUES = {
         '200': {"type": "logical-interconnect-groupV3"},
-        '300': {"type": "logical-interconnect-groupV300"}
+        '300': {"type": "logical-interconnect-groupV300"},
+        '500': {"type": "logical-interconnect-groupV300"}
     }
 
     def __init__(self, con):
