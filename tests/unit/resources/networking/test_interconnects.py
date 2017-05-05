@@ -202,3 +202,20 @@ class InterconnectsTest(unittest.TestCase):
         result = self._interconnects.get_port(interconnect_id, port_id)
 
         self.assertEqual(result, {"mock": "value"})
+
+    @mock.patch.object(ResourceClient, 'update_with_zero_body')
+    def test_update_configuration_by_uri(self, mock_update_with_zero_body):
+        uri_interconnect = '/rest/interconnects/0123456789test'
+        uri_rest_call = '/rest/interconnects/0123456789test/configuration'
+
+        self._interconnects.update_configuration(uri_interconnect)
+
+        mock_update_with_zero_body.assert_called_once_with(uri_rest_call, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_pluggable_module_information(self, mock_get):
+        self._interconnects.get_pluggable_module_information('0123456789test')
+
+        uri = '/rest/interconnects/0123456789test/pluggableModuleInformation'
+
+        mock_get.assert_called_once_with(uri)
