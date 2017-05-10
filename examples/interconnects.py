@@ -34,8 +34,15 @@ config = {
     }
 }
 
-# To run this example you must define a interconnect id
-interconnect_id = "2517d8a0-06a2-4795-b6a4-2e51417474aa"
+# Try load config from a file (if there is a config file)
+config = try_load_from_file(config)
+
+oneview_client = OneViewClient(config)
+
+# To run this example you must define an interconnect, otherwise, it will get the first one automatically
+interconnect_id = ""
+if not interconnect_id:
+    interconnect_id = oneview_client.interconnects.get_all(0, 1)[0]['uri']
 
 port_d1 = {
     "type": "port",
@@ -53,11 +60,6 @@ port_d2 = {
 
 ports_for_update = [port_d1, port_d2]
 
-# Try load config from a file (if there is a config file)
-config = try_load_from_file(config)
-
-oneview_client = OneViewClient(config)
-
 # Get the first two Interconnects
 print("\nGet the first two interconnects")
 try:
@@ -67,7 +69,7 @@ except HPOneViewException as e:
     print(e.msg)
 
 # Get Interconnects Statistics
-print("\nGet an interconnect statistics")
+print("\nGet the interconnect statistics")
 try:
     interconnect_statistics = oneview_client.interconnects.get_statistics(interconnect_id)
     if interconnect_statistics:
