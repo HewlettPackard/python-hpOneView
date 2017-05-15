@@ -27,10 +27,10 @@ from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
@@ -63,6 +63,15 @@ try:
     print("Get a connection_template by name")
     con_template_byname = oneview_client.connection_templates.get_by('name', connection_template_name)[0]
     pprint(con_template_byname)
+except HPOneViewException as e:
+    print(e.msg)
+
+# Update the connection_template retrieved in the last operation
+try:
+    print("Update the retrieved connection_template typicalBandwidth")
+    con_template_byname['bandwidth']['typicalBandwidth'] = 3000
+    con_template_updated = oneview_client.connection_templates.update(con_template_byname)
+    pprint(con_template_updated)
 except HPOneViewException as e:
     print(e.msg)
 
