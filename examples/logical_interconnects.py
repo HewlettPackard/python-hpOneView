@@ -78,10 +78,10 @@ if firmware:
     print("\nInstall the firmware to a logical interconnect that matches the specified ID.")
     firmware_to_install = dict(
         command="Update",
-        sppUri=firmware_driver_uri
+        sppUri=firmware['uri']
     )
     installed_firmware = oneview_client.logical_interconnects.install_firmware(firmware_to_install,
-                                                                               logical_interconnect_id)
+                                                                               logical_interconnect['uri'])
     pprint(installed_firmware)
 
 # Performs a patch operation
