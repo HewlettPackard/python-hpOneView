@@ -97,3 +97,11 @@ class FcoeNetworksTest(TestCase):
         self._fcoe_networks.get(uri)
 
         mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'patch')
+    def test_patch_should_use_user_defined_values(self, mock_patch):
+        mock_patch.return_value = {}
+
+        self._fcoe_networks.patch('/rest/fake/fcoe123', 'replace', '/scopeUris', ['/rest/fake/scope123'], 1)
+        mock_patch.assert_called_once_with('/rest/fake/fcoe123', 'replace', '/scopeUris',
+                                           ['/rest/fake/scope123'], timeout=1)

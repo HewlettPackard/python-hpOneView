@@ -274,6 +274,15 @@ class EthernetNetworksTest(TestCase):
         result = self._ethernet_networks.get_range('TestNetwork', '6-7,9-10')
         self.assertEqual(result, expected_result)
 
+    @mock.patch.object(ResourceClient, 'patch')
+    def test_patch_should_use_user_defined_values(self, mock_patch):
+        mock_patch.return_value = {}
+
+        self._ethernet_networks.patch('/rest/fake/ethernet123', 'replace', '/scopeUris', ['/rest/fake/scope123'], 1)
+        mock_patch.assert_called_once_with('/rest/fake/ethernet123', 'replace', '/scopeUris',
+                                           ['/rest/fake/scope123'], timeout=1)
+
+
     def test_dissociate_values_or_ranges_with_one_value(self):
         expected_result = [1, 2, 3, 4, 5]
         result = self._ethernet_networks.dissociate_values_or_ranges('5')
