@@ -282,7 +282,6 @@ class EthernetNetworksTest(TestCase):
         mock_patch.assert_called_once_with('/rest/fake/ethernet123', 'replace', '/scopeUris',
                                            ['/rest/fake/scope123'], timeout=1)
 
-
     def test_dissociate_values_or_ranges_with_one_value(self):
         expected_result = [1, 2, 3, 4, 5]
         result = self._ethernet_networks.dissociate_values_or_ranges('5')
