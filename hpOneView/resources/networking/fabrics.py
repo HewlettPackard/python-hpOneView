@@ -42,7 +42,8 @@ class Fabrics(object):
     URI = '/rest/fabrics'
 
     DEFAULT_VALUES = {
-        '300': {'type': 'vlan-pool'}
+        '300': {'type': 'vlan-pool'},
+        '500': {'type': 'vlan-pool'}
     }
 
     def __init__(self, con):
