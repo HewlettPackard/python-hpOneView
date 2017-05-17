@@ -34,16 +34,16 @@ config = {
     }
 }
 
-# To run this example you must define a logical interconnect name
+# To run this example, a logical interconnect name is required
 logical_interconnect_name = ""
 
-# To install the firmware driver you must define the firmware_driver_name
+# To install the firmware driver, a firmware driver name is required
 firmware_driver_name = ""
 
 # An Enclosure name must be set to create/delete an interconnect at a given location
 enclosure_name = ""
 
-# An scope name must be set to add to the range
+# Define the scope name to add the logical interconnect to it
 scope_name = ""
 
 # Try load config from a file (if there is a config file)
