@@ -13,6 +13,7 @@ Legacy code under hpOneView which was marked as deprecated is being removed. Thi
 
 #### Features supported with current release:
 - Connection template
+- Datacenter
 - Enclosure group
 - Ethernet network
 - Fabric
