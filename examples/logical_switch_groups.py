@@ -31,12 +31,18 @@ from hpOneView.oneview_client import OneViewClient
 # This resource is only available on C7000 enclosures
 
 config = {
-    "ip": "172.16.102.59",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
+
+# To run the get operations by ID, an id is required.
+lsg_id = "ff94bbb5-c5a6-4f10-ac20-11ecf4cd4ecb"
+
+# To run the scope patch operations in this example, a scope name is required.
+scope_name = "scope1"
 
 options = {
     "name": "OneView Test Logical Switch Group",
@@ -59,25 +65,24 @@ config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
 
 # Get switch type to use in creation of logical switch group
-print("Get switch type to use in creation of logical switch group")
+print("\nGet switch type to use in creation of logical switch group")
 switch_type = oneview_client.switch_types.get_all()[0]
 print("   Found switch type at uri: '{}'".format(switch_type['uri']))
 
 # Create a logical switch group
-print("Create a logical switch group")
+print("\nCreate a logical switch group")
 options['switchMapTemplate']['switchMapEntryTemplates'][0]['permittedSwitchTypeUri'] = switch_type['uri']
 created_lsg = oneview_client.logical_switch_groups.create(options)
 print("   Created logical switch group '{name}' at uri: '{uri}'".format(**created_lsg))
 
 # Get all, with defaults
-print("Get all Logical Switch Groups")
+print("\nGet all Logical Switch Groups")
 lsgs = oneview_client.logical_switch_groups.get_all()
 for lsg in lsgs:
     print("   '{name}' at uri: '{uri}'".format(**lsg))
 
 # Get the first 10 records, sorting by name descending, filtering by name
-print(
-    "Get the first Logical Switch Groups, sorting by name descending, filtering by name")
+print("Get the first Logical Switch Groups, sorting by name descending, filtering by name")
 lsgs = oneview_client.logical_switch_groups.get_all(
     0, 10, sort='name:descending', filter="\"'name'='OneView Test Logical Switch Group'\"")
 for lsg in lsgs:
@@ -85,19 +90,17 @@ for lsg in lsgs:
 
 # Get Logical Switch by property
 lsg_getby = oneview_client.logical_switch_groups.get_by('name', 'OneView Test Logical Switch Group')[0]
-print(
-    "Found logical switch group by name: '{name}' at uri = '{uri}'".format(**lsg_getby))
+print("\nFound logical switch group by name: '{name}' at uri = '{uri}'".format(**lsg_getby))
 
 # Update a logical switch group
-print("Update the name of a logical switch group")
+print("\nUpdate the name of a logical switch group")
 lsg_to_update = created_lsg.copy()
 lsg_to_update["name"] = "Renamed Logical Switch Group"
 updated_lsg = oneview_client.logical_switch_groups.update(lsg_to_update)
 print("   Successfully updated logical switch group with name '{name}'".format(**updated_lsg))
 
 # Update a logical switch group by adding another switch with a relative value of 2
-print(
-    "Update a logical switch group by adding another switch with a relative value of 2")
+print("\nUpdate a logical switch group by adding another switch with a relative value of 2")
 lsg_to_update = updated_lsg.copy()
 switch_options = {
     "logicalLocation": {
@@ -112,10 +115,22 @@ lsg_to_update['switchMapTemplate']['switchMapEntryTemplates'].append(switch_opti
 updated_lsg = oneview_client.logical_switch_groups.update(lsg_to_update)
 pprint(updated_lsg)
 
+# Get scope to be added
+print("\nGet the scope named '%s'." % scope_name)
+scope = oneview_client.scopes.get_by_name(scope_name)
+
+# Performs a patch operation on the Logical Switch Group
+if scope:
+    print("\nPatches the logical switch group assigning the '%s' scope to it." % scope_name)
+    updated_lsg = oneview_client.logical_switch_groups.patch(updated_lsg['uri'],
+                                                             'replace',
+                                                             '/scopeUris',
+                                                             [scope['uri']])
+    pprint(updated_lsg)
+
 # Get by Id
 try:
-    lsg_id = "a98b4190-de9a-4b24-9579-f290d02de54e"
-    print("Get a Logical Switch Group by id '{}'".format(lsg_id))
+    print("\nGet a Logical Switch Group by id '{}'".format(lsg_id))
     lsg_byid = oneview_client.logical_switch_groups.get(lsg_id)
     print("   Found logical switch group '{name}' by id at uri '{uri}'".format(**lsg_byid))
 except HPOneViewException as e:
@@ -123,13 +138,13 @@ except HPOneViewException as e:
 
 # Get by uri
 try:
-    print("Get a Logical Switch Group by uri")
+    print("\nGet a Logical Switch Group by uri")
     lsg_byuri = oneview_client.logical_switch_groups.get(created_lsg["uri"])
     print("   Found logical switch group '{name}' by uri '{uri}'".format(**lsg_byuri))
 except HPOneViewException as e:
     print(e.msg)
 
 # Delete a logical switch group
-print("Delete the created logical switch group")
+print("\nDelete the created logical switch group")
 oneview_client.logical_switch_groups.delete(updated_lsg)
 print("   Successfully deleted logical switch group")
