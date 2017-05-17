@@ -69,7 +69,7 @@ pprint(fabric_byname)
 # These methods are available for API version 300 or later
 if oneview_client.api_version >= 300:
     # Get reserved vlan ID range for the fabric.
-    print("\nGet reserved vlan ID range for the fabric")
+    print("\nGet reserved vlan ID range for the fabric '%s'." % fabric_byname['name'])
     vlan_pool = oneview_client.fabrics.get_reserved_vlan_range(fabric_byname['uri'])
     pprint(vlan_pool)
 
@@ -78,6 +78,6 @@ if oneview_client.api_version >= 300:
         "start": 100,
         "length": 100
     }
-    print("\nUpdate the reserved vlan ID range for the fabric.")
+    print("\nUpdate the reserved vlan ID range for the fabric '%s'." % fabric_byname['name'])
     fabric_byname = oneview_client.fabrics.update_reserved_vlan_range(fabric_byname['uri'], vlan_pool_data)
     pprint(fabric_byname)
