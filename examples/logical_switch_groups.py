@@ -82,7 +82,7 @@ for lsg in lsgs:
     print("   '{name}' at uri: '{uri}'".format(**lsg))
 
 # Get the first 10 records, sorting by name descending, filtering by name
-print("Get the first Logical Switch Groups, sorting by name descending, filtering by name")
+print("\nGet the first Logical Switch Groups, sorting by name descending, filtering by name")
 lsgs = oneview_client.logical_switch_groups.get_all(
     0, 10, sort='name:descending', filter="\"'name'='OneView Test Logical Switch Group'\"")
 for lsg in lsgs:
