@@ -27,10 +27,10 @@ from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
@@ -40,11 +40,12 @@ config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
 
 # An existent Logical Downlink ID is required to run this example
-logical_downlink_id = '246c3202-f4c8-4c92-9266-5e7b01c0598e'
+logical_downlink_id = '5b0f2e7a-394f-47e9-aed0-e4be225e0e19'
+logical_downlink_name = 'LD49f094dd-1732-48c5-9aa8-2ff827578887 (HP VC FlexFabric-20/40 F8 Module)'
 
 # Get logical downlink by id
 try:
-    print("Get logical downlink by id")
+    print("\nGet logical downlink by id")
     log_downlink = oneview_client.logical_downlinks.get(logical_downlink_id)
     pprint(log_downlink)
 except HPOneViewException as e:
@@ -52,24 +53,31 @@ except HPOneViewException as e:
 
 # Get logical downlink by id without Ethernet networks
 try:
-    print("Get logical downlink by id without Ethernet networks")
+    print("\nGet logical downlink by id without Ethernet networks")
     log_downlink_without_ethernet = oneview_client.logical_downlinks.get_without_ethernet(logical_downlink_id)
     pprint(log_downlink_without_ethernet)
 except HPOneViewException as e:
     print(e.msg)
 
+# Get logical downlink by name
+try:
+    print("\nGet logical downlink by name")
+    log_downlink_by_name = oneview_client.logical_downlinks.get_by('name', logical_downlink_name)
+    pprint(log_downlink_by_name)
+except HPOneViewException as e:
+    print(e.msg)
+
 # Get all logical downlinks
-print("Get all logical downlinks")
+print("\nGet all logical downlinks")
 log_downlinks = oneview_client.logical_downlinks.get_all()
 pprint(log_downlinks)
 
 # Get all sorting by name descending
-print("Get all logical downlinks sorting by name")
-log_downlinks_sorted = oneview_client.logical_downlinks.get_all(
-    sort='name:descending')
+print("\nGet all logical downlinks sorting by name")
+log_downlinks_sorted = oneview_client.logical_downlinks.get_all(sort='name:descending')
 pprint(log_downlinks_sorted)
 
 # Get all logical downlinks without Ethernet
-print("Get all logical downlinks without Ethernet")
+print("\nGet all logical downlinks without Ethernet")
 log_downlinks_without_ethernet = oneview_client.logical_downlinks.get_all_without_ethernet()
 pprint(log_downlinks_without_ethernet)
