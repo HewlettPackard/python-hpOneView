@@ -35,7 +35,7 @@ config = {
     }
 }
 
-# To run the get operations by ID, an id must be defined bellow
+# To run the get operations by ID, an ID must be defined bellow
 fabric_id = 'a7896ce7-c11d-4658-829d-142bc66a85e4'
 
 # Try load config from a file (if there is a config file)
