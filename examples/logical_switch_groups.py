@@ -38,7 +38,7 @@ config = {
     }
 }
 
-# To run the get operations by ID, an id is required.
+# To run the get operations by ID, an ID is required.
 lsg_id = "ff94bbb5-c5a6-4f10-ac20-11ecf4cd4ecb"
 
 # To run the scope patch operations in this example, a scope name is required.
@@ -128,11 +128,11 @@ if scope:
                                                              [scope['uri']])
     pprint(updated_lsg)
 
-# Get by Id
+# Get by ID
 try:
-    print("\nGet a Logical Switch Group by id '{}'".format(lsg_id))
+    print("\nGet a Logical Switch Group by ID '{}'".format(lsg_id))
     lsg_byid = oneview_client.logical_switch_groups.get(lsg_id)
-    print("   Found logical switch group '{name}' by id at uri '{uri}'".format(**lsg_byid))
+    print("   Found logical switch group '{name}' by ID at uri '{uri}'".format(**lsg_byid))
 except HPOneViewException as e:
     print(e.msg)
 
