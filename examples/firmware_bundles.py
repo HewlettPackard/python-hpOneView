@@ -29,8 +29,8 @@ from hpOneView.oneview_client import OneViewClient
 config = {
     "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "<oneview_administrator_name>",
-        "password": "<oneview_administrator_password>",
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
@@ -42,6 +42,7 @@ config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
 
 # Upload a firmware bundle
-print("Upload a firmware bundle")
+print("\nUpload a firmware bundle")
 firmware_bundle_information = oneview_client.firmware_bundles.upload(file_path=firmware_path)
+print("\n Upload successful! Firmware information returned: \n")
 pprint(firmware_bundle_information)
