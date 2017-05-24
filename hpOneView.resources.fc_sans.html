@@ -173,26 +173,26 @@
 <p>Endpoints API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.fc_sans.endpoints.Endpoints.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/fc-sans/endpoints'</em><a class="headerlink" href="#hpOneView.resources.fc_sans.endpoints.Endpoints.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/fc-sans/endpoints’</em><a class="headerlink" href="#hpOneView.resources.fc_sans.endpoints.Endpoints.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.fc_sans.endpoints.Endpoints.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>query=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/endpoints.html#Endpoints.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.endpoints.Endpoints.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>query=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/endpoints.html#Endpoints.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.endpoints.Endpoints.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the list of endpoints known by the appliance.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items. The actual number of items in
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items. The actual number of items in
 the response may differ from the requested count if the sum of start and count exceed the total number
 of items.</li>
-<li><strong>query</strong> &#8211; A general query string to narrow the list of resources returned.
+<li><strong>query</strong> – A general query string to narrow the list of resources returned.
 The default is no query - all resources are returned.</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
 </ul>
 </td>
@@ -219,7 +219,7 @@ on create time with the oldest entry first.</li>
 <p>Managed SANs API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/fc-sans/managed-sans'</em><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/fc-sans/managed-sans’</em><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -231,8 +231,8 @@ on create time with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>managed_san_id_or_uri</strong> &#8211; Can be either the Managed SAN ID or URI.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
+<li><strong>managed_san_id_or_uri</strong> – Can be either the Managed SAN ID or URI.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
 OneView, just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -256,8 +256,8 @@ OneView, just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>managed_san_id_or_uri</strong> &#8211; Can be either the Managed SAN ID or URI.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
+<li><strong>managed_san_id_or_uri</strong> – Can be either the Managed SAN ID or URI.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
 OneView, just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -280,7 +280,7 @@ OneView, just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the Managed SAN resource ID or URI.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the Managed SAN resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The Managed SAN resource.</td>
 </tr>
@@ -292,21 +292,21 @@ OneView, just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>query=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>query=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the list of registered Managed SANs</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items. The actual number of items in
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items. The actual number of items in
 the response may differ from the requested count if the sum of start and count exceed the total number
 of items.</li>
-<li><strong>query</strong> &#8211; A general query string to narrow the list of resources returned.
+<li><strong>query</strong> – A general query string to narrow the list of resources returned.
 The default is no query - all resources are returned.</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
 </ul>
 </td>
@@ -329,7 +329,7 @@ on create time with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; Name of the Managed SAN</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – Name of the Managed SAN</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Managed SAN.</td>
 </tr>
@@ -341,22 +341,22 @@ on create time with the oldest entry first.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_endpoints">
-<code class="descname">get_endpoints</code><span class="sig-paren">(</span><em>managed_san_id_or_uri</em>, <em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.get_endpoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_endpoints" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_endpoints</code><span class="sig-paren">(</span><em>managed_san_id_or_uri</em>, <em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.get_endpoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_endpoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of endpoints in a SAN identified by ID.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>managed_san_id_or_uri</strong> &#8211; Can be either the Managed SAN ID or URI.</li>
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+<li><strong>managed_san_id_or_uri</strong> – Can be either the Managed SAN ID or URI.</li>
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items.
 The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
 </ul>
 </td>
@@ -383,7 +383,7 @@ on create time with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wwn</strong> (<em>str</em>) &#8211; The WWN that may be associated with the SAN.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wwn</strong> (<em>str</em>) – The WWN that may be associated with the SAN.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Associations between provided WWNs and the SANs</td>
 </tr>
@@ -398,11 +398,11 @@ on create time with the oldest entry first.</li>
 <code class="descname">update</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>data</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates a Managed SAN.</p>
 <dl class="docutils">
-<dt>It&#8217;s possible to:</dt>
+<dt>It’s possible to:</dt>
 <dd><ul class="first last simple">
 <li>Refresh the Managed SAN.</li>
-<li>Update the Managed SAN&#8217;s publicAttributes.</li>
-<li>Update the Managed SAN&#8217;s policy.</li>
+<li>Update the Managed SAN’s publicAttributes.</li>
+<li>Update the Managed SAN’s policy.</li>
 </ul>
 </dd>
 </dl>
@@ -411,9 +411,9 @@ on create time with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Can be either the Managed SAN resource ID or URI.</li>
-<li><strong>data</strong> &#8211; dict object to update</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>id_or_uri</strong> – Can be either the Managed SAN resource ID or URI.</li>
+<li><strong>data</strong> – dict object to update</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -440,12 +440,12 @@ in OneView, just stop waiting for its completion.</li>
 <p>SAN Managers API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.fc_sans.san_managers.SanManagers.PROVIDER_URI">
-<code class="descname">PROVIDER_URI</code><em class="property"> = u'/rest/fc-sans/providers'</em><a class="headerlink" href="#hpOneView.resources.fc_sans.san_managers.SanManagers.PROVIDER_URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">PROVIDER_URI</code><em class="property"> = u’/rest/fc-sans/providers’</em><a class="headerlink" href="#hpOneView.resources.fc_sans.san_managers.SanManagers.PROVIDER_URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.fc_sans.san_managers.SanManagers.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/fc-sans/device-managers'</em><a class="headerlink" href="#hpOneView.resources.fc_sans.san_managers.SanManagers.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/fc-sans/device-managers’</em><a class="headerlink" href="#hpOneView.resources.fc_sans.san_managers.SanManagers.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -457,9 +457,9 @@ in OneView, just stop waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to add.</li>
-<li><strong>provider_uri_or_id</strong> &#8211; ID or URI of provider.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to add.</li>
+<li><strong>provider_uri_or_id</strong> – ID or URI of provider.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -482,7 +482,7 @@ in OneView, just stop waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the SAN Manager resource ID or URI.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the SAN Manager resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The SAN Manager resource.</td>
 </tr>
@@ -494,21 +494,21 @@ in OneView, just stop waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.fc_sans.san_managers.SanManagers.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>query=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/san_managers.html#SanManagers.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.san_managers.SanManagers.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>query=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/san_managers.html#SanManagers.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.san_managers.SanManagers.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the list of registered SAN Managers.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items. The actual number of items in
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items. The actual number of items in
 the response may differ from the requested count if the sum of start and count exceed the total number
 of items.</li>
-<li><strong>query</strong> &#8211; A general query string to narrow the list of resources returned.
+<li><strong>query</strong> – A general query string to narrow the list of resources returned.
 The default is no query - all resources are returned.</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
 </ul>
 </td>
@@ -531,7 +531,7 @@ on create time with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; Name of the SAN Manager</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – Name of the SAN Manager</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">SAN Manager.</td>
 </tr>
@@ -549,7 +549,7 @@ on create time with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>provider_display_name</strong> &#8211; Name of the Provider Display Name</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>provider_display_name</strong> – Name of the Provider Display Name</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">SAN Manager.</td>
 </tr>
@@ -567,7 +567,7 @@ on create time with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>provider_name</strong> &#8211; Name of the provider.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>provider_name</strong> – Name of the provider.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Default connection information.</td>
 </tr>
@@ -585,7 +585,7 @@ on create time with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>provider_display_name</strong> &#8211; Display name of the provider.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>provider_display_name</strong> – Display name of the provider.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">uri</td>
 </tr>
@@ -602,8 +602,8 @@ on create time with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to delete.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to delete.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -627,8 +627,8 @@ in OneView; it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>id_or_uri</strong> &#8211; Can be either the Device manager ID or URI.</li>
+<li><strong>resource</strong> (<em>dict</em>) – Object to update.</li>
+<li><strong>id_or_uri</strong> – Can be either the Device manager ID or URI.</li>
 </ul>
 </td>
 </tr>

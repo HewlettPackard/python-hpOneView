@@ -171,12 +171,12 @@
 <p>Labels API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.search.labels.Labels.RESOURCES_PATH">
-<code class="descname">RESOURCES_PATH</code><em class="property"> = u'/resources'</em><a class="headerlink" href="#hpOneView.resources.search.labels.Labels.RESOURCES_PATH" title="Permalink to this definition">¶</a></dt>
+<code class="descname">RESOURCES_PATH</code><em class="property"> = u’/resources’</em><a class="headerlink" href="#hpOneView.resources.search.labels.Labels.RESOURCES_PATH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.search.labels.Labels.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/labels'</em><a class="headerlink" href="#hpOneView.resources.search.labels.Labels.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/labels’</em><a class="headerlink" href="#hpOneView.resources.search.labels.Labels.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -187,7 +187,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resource</strong> &#8211; The object containing the resource URI and a list of labels</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resource</strong> – The object containing the resource URI and a list of labels</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Resource Labels</td>
 </tr>
@@ -206,8 +206,8 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to delete.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to delete.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -224,7 +224,7 @@ in OneView, just stop waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; Can be either the label ID or the label URI.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the label ID or the label URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The label.</td>
 </tr>
@@ -236,7 +236,7 @@ in OneView, just stop waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.search.labels.Labels.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/search/labels.html#Labels.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.search.labels.Labels.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/search/labels.html#Labels.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.search.labels.Labels.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of labels based on optional sorting and filtering and is constrained by start
 and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -244,14 +244,14 @@ and count parameters.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items.
 The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
 </ul>
 </td>
@@ -274,7 +274,7 @@ on create time with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resource_uri</strong> &#8211; The resource URI</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resource_uri</strong> – The resource URI</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Resource Labels</td>
 </tr>
@@ -292,7 +292,7 @@ on create time with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resource</strong> (<em>dict</em>) – Object to update.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Resource Labels</td>
 </tr>

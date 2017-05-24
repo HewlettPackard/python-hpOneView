@@ -172,7 +172,7 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="attribute">
 <dt id="hpOneView.resources.activity.alerts.Alerts.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/alerts'</em><a class="headerlink" href="#hpOneView.resources.activity.alerts.Alerts.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/alerts’</em><a class="headerlink" href="#hpOneView.resources.activity.alerts.Alerts.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -183,7 +183,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resource</strong> &#8211; dict object to delete</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resource</strong> – dict object to delete</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Indicates if the resource was successfully deleted.</td>
 </tr>
@@ -201,7 +201,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; alert ID or URI.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – alert ID or URI.</td>
 </tr>
 </tbody>
 </table>
@@ -216,9 +216,9 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter string to narrow the list of items to delete. The default is no filter; all
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter string to narrow the list of items to delete. The default is no filter; all
 resources are deleted.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -241,7 +241,7 @@ in OneView; it just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; alert ID or URI.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – alert ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The alert.</td>
 </tr>
@@ -253,25 +253,25 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.activity.alerts.Alerts.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>view=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/activity/alerts.html#Alerts.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.activity.alerts.Alerts.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>query=u”</em>, <em>sort=u”</em>, <em>view=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/activity/alerts.html#Alerts.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.activity.alerts.Alerts.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets all the alerts based upon filters provided.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
+<li><strong>start</strong> – The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
 first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items. The actual number of items in
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items. The actual number of items in
 the response may differ from the requested count if the sum of start and count exceed the total number
 of items.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The default is no filter; all
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The default is no filter; all
 resources are returned.</li>
-<li><strong>query</strong> &#8211; A general query string to narrow the list of resources returned. The default is no query (all
+<li><strong>query</strong> – A general query string to narrow the list of resources returned. The default is no query (all
 resources are returned).</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based on create time, with the
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based on create time, with the
 oldest entry first.</li>
-<li><strong>view</strong> &#8211; Returns a specific subset of the attributes of the resource or collection, by specifying the name of a
+<li><strong>view</strong> – Returns a specific subset of the attributes of the resource or collection, by specifying the name of a
 predefined view. The default view is expand (show all attributes of the resource and all elements of
 collections of resources).</li>
 </ul>
@@ -297,8 +297,8 @@ collections of resources).</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> &#8211; Field name to filter.</li>
-<li><strong>value</strong> &#8211; Value to filter.</li>
+<li><strong>field</strong> – Field name to filter.</li>
+<li><strong>value</strong> – Value to filter.</li>
 </ul>
 </td>
 </tr>
@@ -321,8 +321,8 @@ collections of resources).</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to update.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -348,12 +348,12 @@ in OneView; it just stops waiting for its completion.</li>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="attribute">
 <dt id="hpOneView.resources.activity.events.Events.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'EventResourceV3'}, u'300': {u'type': u'EventResourceV3'}}</em><a class="headerlink" href="#hpOneView.resources.activity.events.Events.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u‘300’: {u’type’: u’EventResourceV3’}, u‘200’: {u’type’: u’EventResourceV3’}}</em><a class="headerlink" href="#hpOneView.resources.activity.events.Events.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.activity.events.Events.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/events'</em><a class="headerlink" href="#hpOneView.resources.activity.events.Events.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/events’</em><a class="headerlink" href="#hpOneView.resources.activity.events.Events.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -365,8 +365,8 @@ in OneView; it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to create.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -389,7 +389,7 @@ in OneView, just stop waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; event ID or URI.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – event ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The event.</td>
 </tr>
@@ -401,25 +401,25 @@ in OneView, just stop waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.activity.events.Events.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>view=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/activity/events.html#Events.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.activity.events.Events.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>query=u”</em>, <em>sort=u”</em>, <em>view=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/activity/events.html#Events.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.activity.events.Events.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets all the events based upon filters provided.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
+<li><strong>start</strong> – The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
 first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items. The actual number of items in
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items. The actual number of items in
 the response may differ from the requested count if the sum of start and count exceed the total number
 of items.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The default is no filter; all
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The default is no filter; all
 resources are returned.</li>
-<li><strong>query</strong> &#8211; A general query string to narrow the list of resources returned. The default is no query (all
+<li><strong>query</strong> – A general query string to narrow the list of resources returned. The default is no query (all
 resources are returned).</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based on create time, with the
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based on create time, with the
 oldest entry first.</li>
-<li><strong>view</strong> &#8211; Returns a specific subset of the attributes of the resource or collection, by specifying the name of a
+<li><strong>view</strong> – Returns a specific subset of the attributes of the resource or collection, by specifying the name of a
 predefined view. The default view is expand (show all attributes of the resource and all elements of
 collections of resources).</li>
 </ul>
@@ -445,8 +445,8 @@ collections of resources).</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> &#8211; Field name to filter.</li>
-<li><strong>value</strong> &#8211; Value to filter.</li>
+<li><strong>field</strong> – Field name to filter.</li>
+<li><strong>value</strong> – Value to filter.</li>
 </ul>
 </td>
 </tr>
@@ -472,7 +472,7 @@ collections of resources).</li>
 <p>Tasks API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.activity.tasks.Tasks.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/tasks'</em><a class="headerlink" href="#hpOneView.resources.activity.tasks.Tasks.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/tasks’</em><a class="headerlink" href="#hpOneView.resources.activity.tasks.Tasks.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -483,7 +483,7 @@ collections of resources).</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; task id (or uri)</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – task id (or uri)</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The task.</td>
 </tr>
@@ -495,7 +495,7 @@ collections of resources).</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.activity.tasks.Tasks.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>fields=u''</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>view=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/activity/tasks.html#Tasks.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.activity.tasks.Tasks.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>fields=u”</em>, <em>filter=u”</em>, <em>query=u”</em>, <em>sort=u”</em>, <em>view=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/activity/tasks.html#Tasks.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.activity.tasks.Tasks.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets all the tasks based upon filters provided.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -506,19 +506,19 @@ collections of resources).</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
+<li><strong>start</strong> – The first item to return, using 0-based indexing. If not specified, the default is 0 - start with the
 first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items. The actual number of items in
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items. The actual number of items in
 the response may differ from the requested count if the sum of start and count exceed the total number
 of items.</li>
-<li><strong>fields</strong> &#8211; Specifies which fields should be returned in the result set.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The default is no filter; all
+<li><strong>fields</strong> – Specifies which fields should be returned in the result set.</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The default is no filter; all
 resources are returned.</li>
-<li><strong>query</strong> &#8211; A general query string to narrow the list of resources returned. The default is no query (all
+<li><strong>query</strong> – A general query string to narrow the list of resources returned. The default is no query (all
 resources are returned).</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based on create time, with the
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based on create time, with the
 oldest entry first.</li>
-<li><strong>view</strong> &#8211; Returns a specific subset of the attributes of the resource or collection, by specifying the name of a
+<li><strong>view</strong> – Returns a specific subset of the attributes of the resource or collection, by specifying the name of a
 predefined view. The default view is expand (show all attributes of the resource and all elements of
 collections of resources).</li>
 </ul>

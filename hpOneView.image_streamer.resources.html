@@ -176,37 +176,37 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="attribute">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.BACKUPS_PATH">
-<code class="descname">BACKUPS_PATH</code><em class="property"> = u'/rest/artifact-bundles/backups'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.BACKUPS_PATH" title="Permalink to this definition">¶</a></dt>
+<code class="descname">BACKUPS_PATH</code><em class="property"> = u’/rest/artifact-bundles/backups’</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.BACKUPS_PATH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.BACKUP_ARCHIVE_PATH">
-<code class="descname">BACKUP_ARCHIVE_PATH</code><em class="property"> = u'/rest/artifact-bundles/backups/archive'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.BACKUP_ARCHIVE_PATH" title="Permalink to this definition">¶</a></dt>
+<code class="descname">BACKUP_ARCHIVE_PATH</code><em class="property"> = u’/rest/artifact-bundles/backups/archive’</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.BACKUP_ARCHIVE_PATH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'ArtifactsBundle'}}</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u‘300’: {u’type’: u’ArtifactsBundle’}}</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.DEPLOYMENT_GROUPS_URI">
-<code class="descname">DEPLOYMENT_GROUPS_URI</code><em class="property"> = u'/rest/deployment-groups/'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.DEPLOYMENT_GROUPS_URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEPLOYMENT_GROUPS_URI</code><em class="property"> = u’/rest/deployment-groups/’</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.DEPLOYMENT_GROUPS_URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.DOWNLOAD_PATH">
-<code class="descname">DOWNLOAD_PATH</code><em class="property"> = u'/rest/artifact-bundles/download'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.DOWNLOAD_PATH" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DOWNLOAD_PATH</code><em class="property"> = u’/rest/artifact-bundles/download’</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.DOWNLOAD_PATH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.STOP_CREATION_PATH">
-<code class="descname">STOP_CREATION_PATH</code><em class="property"> = u'/stopArtifactCreate'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.STOP_CREATION_PATH" title="Permalink to this definition">¶</a></dt>
+<code class="descname">STOP_CREATION_PATH</code><em class="property"> = u’/stopArtifactCreate’</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.STOP_CREATION_PATH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/artifact-bundles'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/artifact-bundles’</em><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -218,8 +218,8 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to create.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -244,8 +244,8 @@ bundle will exist on the appliance.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Deployment Group to create the backup.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in
+<li><strong>resource</strong> (<em>dict</em>) – Deployment Group to create the backup.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in
 OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -269,8 +269,8 @@ OneView, it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>str</em><em>, </em><em>dict</em>) &#8211; Accept either the resource id  or the entire resource.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in
+<li><strong>resource</strong> (<em>str</em><em>, </em><em>dict</em>) – Accept either the resource id  or the entire resource.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in
 OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -294,8 +294,8 @@ OneView, it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; ID or URI of the Artifact Bundle.</li>
-<li><strong>file_path</strong> (<em>str</em>) &#8211; Destination file path.</li>
+<li><strong>id_or_uri</strong> – ID or URI of the Artifact Bundle.</li>
+<li><strong>file_path</strong> (<em>str</em>) – Destination file path.</li>
 </ul>
 </td>
 </tr>
@@ -318,8 +318,8 @@ OneView, it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; ID or URI of the Artifact Bundle.</li>
-<li><strong>file_path</strong> (<em>str</em>) &#8211; Destination file path.</li>
+<li><strong>id_or_uri</strong> – ID or URI of the Artifact Bundle.</li>
+<li><strong>file_path</strong> (<em>str</em>) – Destination file path.</li>
 </ul>
 </td>
 </tr>
@@ -342,8 +342,8 @@ OneView, it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Deployment Group to extract.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in
+<li><strong>resource</strong> (<em>dict</em>) – Deployment Group to extract.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in
 OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -367,8 +367,8 @@ OneView, it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Artifact Bundle to extract.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in
+<li><strong>resource</strong> (<em>dict</em>) – Artifact Bundle to extract.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation in
 OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -391,7 +391,7 @@ OneView, it just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the Artifact Bundle.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the Artifact Bundle.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The Artifact Bundle.</td>
 </tr>
@@ -403,7 +403,7 @@ OneView, it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/artifact_bundles.html#ArtifactBundles.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.artifact_bundles.ArtifactBundles.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of Artifacts Bundle based on optional sorting and filtering, and constrained by start and count
 parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -411,15 +411,15 @@ parameters.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; <p>The number of resources to return. A count of -1 requests all items.</p>
+<li><strong>count</strong> – <p>The number of resources to return. A count of -1 requests all items.</p>
 <p>The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</p>
 </li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
 </ul>
 </td>
@@ -458,7 +458,7 @@ on create time with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the Artifact Bundle.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the Artifact Bundle.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Backup for an Artifacts Bundle.</td>
 </tr>
@@ -478,8 +478,8 @@ on create time with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> &#8211; Field name to filter.</li>
-<li><strong>value</strong> &#8211; Value to filter.</li>
+<li><strong>field</strong> – Field name to filter.</li>
+<li><strong>value</strong> – Value to filter.</li>
 </ul>
 </td>
 </tr>
@@ -501,7 +501,7 @@ on create time with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; Name of the Artifact Bundle.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – Name of the Artifact Bundle.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The Artifact Bundle.</td>
 </tr>
@@ -520,8 +520,8 @@ on create time with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; ID or URI of the Artifact Bundle.</li>
-<li><strong>task_uri</strong> &#8211; Task URI associated with the Artifact Bundle.</li>
+<li><strong>id_or_uri</strong> – ID or URI of the Artifact Bundle.</li>
+<li><strong>task_uri</strong> – Task URI associated with the Artifact Bundle.</li>
 </ul>
 </td>
 </tr>
@@ -544,8 +544,8 @@ on create time with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to update.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -569,8 +569,8 @@ in OneView, it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>file_path</strong> (<em>str</em>) &#8211; The File Path to restore the Artifact Bundle.</li>
-<li><strong>deployment_groups_id_or_uri</strong> &#8211; ID or URI of the Deployment Groups.</li>
+<li><strong>file_path</strong> (<em>str</em>) – The File Path to restore the Artifact Bundle.</li>
+<li><strong>deployment_groups_id_or_uri</strong> – ID or URI of the Deployment Groups.</li>
 </ul>
 </td>
 </tr>
@@ -592,7 +592,7 @@ in OneView, it just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_path</strong> (<em>str</em>) &#8211; The File Path to restore the Artifact Bundle.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_path</strong> (<em>str</em>) – The File Path to restore the Artifact Bundle.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Artifact bundle.</td>
 </tr>
@@ -613,7 +613,7 @@ in OneView, it just stops waiting for its completion.</li>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="attribute">
 <dt id="hpOneView.image_streamer.resources.build_plans.BuildPlans.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/build-plans'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.build_plans.BuildPlans.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/build-plans’</em><a class="headerlink" href="#hpOneView.image_streamer.resources.build_plans.BuildPlans.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -626,8 +626,8 @@ Deploy or Capture.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to create.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -651,10 +651,10 @@ in OneView, it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> &#8211; dict object to delete</li>
-<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
+<li><strong>resource</strong> – dict object to delete</li>
+<li><strong>force</strong> – If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -677,7 +677,7 @@ in OneView; it just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the Build Plan.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the Build Plan.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The OS Build Plan.</td>
 </tr>
@@ -689,7 +689,7 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.build_plans.BuildPlans.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/build_plans.html#BuildPlans.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.build_plans.BuildPlans.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/build_plans.html#BuildPlans.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.build_plans.BuildPlans.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of OS Build Plan resources based on optional sorting and filtering, and constrained by start and
 count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -697,14 +697,14 @@ count parameters.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items.
 The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
 </ul>
 </td>
@@ -729,8 +729,8 @@ on create time with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> &#8211; Field name to filter.</li>
-<li><strong>value</strong> &#8211; Value to filter.</li>
+<li><strong>field</strong> – Field name to filter.</li>
+<li><strong>value</strong> – Value to filter.</li>
 </ul>
 </td>
 </tr>
@@ -753,8 +753,8 @@ on create time with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to update.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -780,7 +780,7 @@ in OneView, it just stops waiting for its completion.</li>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="attribute">
 <dt id="hpOneView.image_streamer.resources.deployment_groups.DeploymentGroups.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/deployment-groups'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_groups.DeploymentGroups.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/deployment-groups’</em><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_groups.DeploymentGroups.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -791,7 +791,7 @@ in OneView, it just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the Deployment Group.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the Deployment Group.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The Deployment Group.</td>
 </tr>
@@ -803,7 +803,7 @@ in OneView, it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.deployment_groups.DeploymentGroups.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/deployment_groups.html#DeploymentGroups.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_groups.DeploymentGroups.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/deployment_groups.html#DeploymentGroups.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_groups.DeploymentGroups.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of the Deployment Group based on optional sorting and filtering, and constrained by start and count
 parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -811,15 +811,15 @@ parameters.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; <p>The number of resources to return. A count of -1 requests all items.</p>
+<li><strong>count</strong> – <p>The number of resources to return. A count of -1 requests all items.</p>
 <p>The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</p>
 </li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
 </ul>
 </td>
@@ -844,8 +844,8 @@ on create time with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> &#8211; Field name to filter.</li>
-<li><strong>value</strong> &#8211; Value to filter.</li>
+<li><strong>field</strong> – Field name to filter.</li>
+<li><strong>value</strong> – Value to filter.</li>
 </ul>
 </td>
 </tr>
@@ -867,7 +867,7 @@ on create time with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; Name of the Deployment Group.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – Name of the Deployment Group.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The Deployment Group.</td>
 </tr>
@@ -888,7 +888,7 @@ on create time with the oldest entry first.</li>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="attribute">
 <dt id="hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/deployment-plans'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/deployment-plans’</em><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -900,8 +900,8 @@ on create time with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to create.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -925,10 +925,10 @@ in OneView, it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> &#8211; dict object to delete</li>
-<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
+<li><strong>resource</strong> – dict object to delete</li>
+<li><strong>force</strong> – If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -951,7 +951,7 @@ in OneView; it just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the Deployment Plan.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the Deployment Plan.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The Deployment Plan.</td>
 </tr>
@@ -963,7 +963,7 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/deployment_plans.html#DeploymentPlans.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/deployment_plans.html#DeploymentPlans.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of Deployment Plans resources based on optional sorting and filtering, and constrained by start and
 count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -971,14 +971,14 @@ count parameters.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items.
 The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
 </ul>
 </td>
@@ -1003,8 +1003,8 @@ on create time with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> &#8211; Field name to filter.</li>
-<li><strong>value</strong> &#8211; Value to filter.</li>
+<li><strong>field</strong> – Field name to filter.</li>
+<li><strong>value</strong> – Value to filter.</li>
 </ul>
 </td>
 </tr>
@@ -1027,8 +1027,8 @@ on create time with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to update.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -1054,7 +1054,7 @@ in OneView, it just stops waiting for its completion.</li>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="attribute">
 <dt id="hpOneView.image_streamer.resources.golden_images.GoldenImages.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/golden-images'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.golden_images.GoldenImages.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/golden-images’</em><a class="headerlink" href="#hpOneView.image_streamer.resources.golden_images.GoldenImages.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1066,8 +1066,8 @@ in OneView, it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to create.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -1091,10 +1091,10 @@ in OneView, it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> &#8211; dict object to delete</li>
-<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
+<li><strong>resource</strong> – dict object to delete</li>
+<li><strong>force</strong> – If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -1118,8 +1118,8 @@ in OneView; it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; ID or URI of the Golden Image.</li>
-<li><strong>file_path</strong> (<em>str</em>) &#8211; Destination file path.</li>
+<li><strong>id_or_uri</strong> – ID or URI of the Golden Image.</li>
+<li><strong>file_path</strong> (<em>str</em>) – Destination file path.</li>
 </ul>
 </td>
 </tr>
@@ -1143,8 +1143,8 @@ ID.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; ID or URI of the Golden Image.</li>
-<li><strong>file_path</strong> (<em>str</em>) &#8211; File name to save the archive.</li>
+<li><strong>id_or_uri</strong> – ID or URI of the Golden Image.</li>
+<li><strong>file_path</strong> (<em>str</em>) – File name to save the archive.</li>
 </ul>
 </td>
 </tr>
@@ -1166,7 +1166,7 @@ ID.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the Golden Image.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the Golden Image.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The Golden Image.</td>
 </tr>
@@ -1178,22 +1178,22 @@ ID.</p>
 
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.golden_images.GoldenImages.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/golden_images.html#GoldenImages.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.golden_images.GoldenImages.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/golden_images.html#GoldenImages.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.golden_images.GoldenImages.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves a list of Golden Image resources as per the specified parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; <p>The number of resources to return. A count of -1 requests all items.</p>
+<li><strong>count</strong> – <p>The number of resources to return. A count of -1 requests all items.</p>
 <p>The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</p>
 </li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
 </ul>
 </td>
@@ -1218,8 +1218,8 @@ on create time with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> &#8211; Field name to filter.</li>
-<li><strong>value</strong> &#8211; Value to filter.</li>
+<li><strong>field</strong> – Field name to filter.</li>
+<li><strong>value</strong> – Value to filter.</li>
 </ul>
 </td>
 </tr>
@@ -1242,8 +1242,8 @@ on create time with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to update.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -1268,8 +1268,8 @@ be used for the upload.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>file_path</strong> (<em>str</em>) &#8211; File name to upload.</li>
-<li><strong>golden_image_info</strong> (<em>dict</em>) &#8211; Golden Image information.</li>
+<li><strong>file_path</strong> (<em>str</em>) – File name to upload.</li>
+<li><strong>golden_image_info</strong> (<em>dict</em>) – Golden Image information.</li>
 </ul>
 </td>
 </tr>
@@ -1294,7 +1294,7 @@ be used for the upload.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="attribute">
 <dt id="hpOneView.image_streamer.resources.os_volumes.OsVolumes.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/os-volumes'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.os_volumes.OsVolumes.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/os-volumes’</em><a class="headerlink" href="#hpOneView.image_streamer.resources.os_volumes.OsVolumes.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1306,8 +1306,8 @@ be used for the upload.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; ID or URI of the OS Volume.</li>
-<li><strong>file_path</strong> (<em>str</em>) &#8211; Destination file path.</li>
+<li><strong>id_or_uri</strong> – ID or URI of the OS Volume.</li>
+<li><strong>file_path</strong> (<em>str</em>) – Destination file path.</li>
 </ul>
 </td>
 </tr>
@@ -1329,7 +1329,7 @@ be used for the upload.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the OS Volume.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the OS Volume.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The OS Volume.</td>
 </tr>
@@ -1341,7 +1341,7 @@ be used for the upload.</p>
 
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.os_volumes.OsVolumes.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/os_volumes.html#OsVolumes.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.os_volumes.OsVolumes.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/os_volumes.html#OsVolumes.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.os_volumes.OsVolumes.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of the OS Volume based on optional sorting and filtering, and constrained by start and count
 parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1349,15 +1349,15 @@ parameters.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; <p>The number of resources to return. A count of -1 requests all items.</p>
+<li><strong>count</strong> – <p>The number of resources to return. A count of -1 requests all items.</p>
 <p>The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</p>
 </li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
 </ul>
 </td>
@@ -1382,8 +1382,8 @@ on create time with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> &#8211; Field name to filter.</li>
-<li><strong>value</strong> &#8211; Value to filter.</li>
+<li><strong>field</strong> – Field name to filter.</li>
+<li><strong>value</strong> – Value to filter.</li>
 </ul>
 </td>
 </tr>
@@ -1405,7 +1405,7 @@ on create time with the oldest entry first.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; Name of the OS Volume.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – Name of the OS Volume.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The OS Volume.</td>
 </tr>
@@ -1426,7 +1426,7 @@ on create time with the oldest entry first.</li>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="attribute">
 <dt id="hpOneView.image_streamer.resources.plan_scripts.PlanScripts.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/plan-scripts'</em><a class="headerlink" href="#hpOneView.image_streamer.resources.plan_scripts.PlanScripts.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/plan-scripts’</em><a class="headerlink" href="#hpOneView.image_streamer.resources.plan_scripts.PlanScripts.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1434,14 +1434,14 @@ on create time with the oldest entry first.</li>
 <code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/plan_scripts.html#PlanScripts.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.plan_scripts.PlanScripts.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a Plan Script using the information provided in the request body. The plan type can be one of the
 following types: General, deploy and capture. Note: The OS type for the Plan Script is always assigned
-as &#8220;ESXi&#8221;.</p>
+as “ESXi”.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to create.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -1465,10 +1465,10 @@ in OneView, it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> &#8211; dict object to delete</li>
-<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
+<li><strong>resource</strong> – dict object to delete</li>
+<li><strong>force</strong> – If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -1491,7 +1491,7 @@ in OneView; it just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the Plan Script.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the Plan Script.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The Plan Script.</td>
 </tr>
@@ -1503,7 +1503,7 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.plan_scripts.PlanScripts.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/plan_scripts.html#PlanScripts.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.plan_scripts.PlanScripts.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/plan_scripts.html#PlanScripts.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.plan_scripts.PlanScripts.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of Plan Scripts based on optional sorting and filtering, and constrained by start and count
 parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1511,15 +1511,15 @@ parameters.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; <p>The number of resources to return. A count of -1 requests all items.</p>
+<li><strong>count</strong> – <p>The number of resources to return. A count of -1 requests all items.</p>
 <p>The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</p>
 </li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
 </ul>
 </td>
@@ -1544,8 +1544,8 @@ on create time with the oldest entry first.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> &#8211; Field name to filter.</li>
-<li><strong>value</strong> &#8211; Value to filter.</li>
+<li><strong>field</strong> – Field name to filter.</li>
+<li><strong>value</strong> – Value to filter.</li>
 </ul>
 </td>
 </tr>
@@ -1569,9 +1569,9 @@ the selected attributes.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; ID or URI of the Plan Script.</li>
-<li><strong>content</strong> (<em>str</em>) &#8211; Plan Script content.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+<li><strong>id_or_uri</strong> – ID or URI of the Plan Script.</li>
+<li><strong>content</strong> (<em>str</em>) – Plan Script content.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -1595,8 +1595,8 @@ in OneView, it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to update.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Waits for task completion by default. The timeout does not abort the operation
 in OneView, it just stops waiting for its completion.</li>
 </ul>
 </td>

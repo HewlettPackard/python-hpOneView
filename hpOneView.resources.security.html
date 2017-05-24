@@ -172,7 +172,7 @@
 <p>Certificate Authority API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.security.certificate_authority.CertificateAuthority.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/certificates/ca'</em><a class="headerlink" href="#hpOneView.resources.security.certificate_authority.CertificateAuthority.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/certificates/ca’</em><a class="headerlink" href="#hpOneView.resources.security.certificate_authority.CertificateAuthority.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -187,8 +187,8 @@ will be restarted to read the latest certificates.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>alias_name</strong> (<em>str</em>) &#8211; Alias name.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>alias_name</strong> (<em>str</em>) – Alias name.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -241,7 +241,7 @@ of a string.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="attribute">
 <dt id="hpOneView.resources.security.certificate_rabbitmq.CertificateRabbitMQ.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/certificates/client/rabbitmq'</em><a class="headerlink" href="#hpOneView.resources.security.certificate_rabbitmq.CertificateRabbitMQ.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/certificates/client/rabbitmq’</em><a class="headerlink" href="#hpOneView.resources.security.certificate_rabbitmq.CertificateRabbitMQ.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -253,8 +253,8 @@ of a string.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>information</strong> (<em>dict</em>) &#8211; Information to generate the certificate for RabbitMQ clients.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>information</strong> (<em>dict</em>) – Information to generate the certificate for RabbitMQ clients.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -277,7 +277,7 @@ in OneView; it just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>alias_name</strong> &#8211; Key pair associated with the RabbitMQ</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>alias_name</strong> – Key pair associated with the RabbitMQ</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">RabbitMQ certificate</td>
 </tr>
@@ -295,7 +295,7 @@ in OneView; it just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>alias_name</strong> &#8211; Key pair associated with the RabbitMQ</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>alias_name</strong> – Key pair associated with the RabbitMQ</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">RabbitMQ certificate</td>
 </tr>
@@ -316,8 +316,8 @@ Valid key formats are Base64 and PKCS12.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>alias_name</strong> &#8211; Key pair associated with the RabbitMQ</li>
-<li><strong>key_format</strong> &#8211; Valid key formats are Base64 and PKCS12.</li>
+<li><strong>alias_name</strong> – Key pair associated with the RabbitMQ</li>
+<li><strong>key_format</strong> – Valid key formats are Base64 and PKCS12.</li>
 </ul>
 </td>
 </tr>

@@ -176,12 +176,12 @@
 <p>ApplianceTimeAndLocaleConfiguration API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'TimeAndLocale'}, u'300': {u'type': u'TimeAndLocale'}}</em><a class="headerlink" href="#hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u‘300’: {u’type’: u’TimeAndLocale’}, u‘200’: {u’type’: u’TimeAndLocale’}}</em><a class="headerlink" href="#hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/appliance/configuration/time-locale'</em><a class="headerlink" href="#hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/appliance/configuration/time-locale’</em><a class="headerlink" href="#hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -209,8 +209,8 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to update.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -237,7 +237,7 @@ in OneView, just stop waiting for its completion.</li>
 <p>Backups API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.settings.backups.Backups.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/backups'</em><a class="headerlink" href="#hpOneView.resources.settings.backups.Backups.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/backups’</em><a class="headerlink" href="#hpOneView.resources.settings.backups.Backups.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -250,7 +250,7 @@ the backup.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Details of the created backup.</td>
@@ -270,8 +270,8 @@ in OneView, just stop waiting for its completion.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; ID or URI of the Artifact Bundle.</li>
-<li><strong>file_path</strong> (<em>str</em>) &#8211; Destination file path.</li>
+<li><strong>id_or_uri</strong> – ID or URI of the Artifact Bundle.</li>
+<li><strong>file_path</strong> (<em>str</em>) – Destination file path.</li>
 </ul>
 </td>
 </tr>
@@ -293,7 +293,7 @@ in OneView, just stop waiting for its completion.</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the backup</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the backup</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Details of the specified backup.</td>
 </tr>
@@ -328,7 +328,7 @@ time.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the backup</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the backup</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Details of the backup configuration for the remote server and automatic backup schedule.</td>
 </tr>
@@ -347,8 +347,8 @@ time.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>config</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>config</strong> (<em>dict</em>) – Object to update.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -372,8 +372,8 @@ in OneView, just stop waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>save_uri</strong> (<em>dict</em>) &#8211; The URI for saving the backup to a previously configured location.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>save_uri</strong> (<em>dict</em>) – The URI for saving the backup to a previously configured location.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -398,7 +398,7 @@ start a restore.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_path</strong> (<em>str</em>) &#8211; The local backup filepath</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_path</strong> (<em>str</em>) – The local backup filepath</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Details of the uploaded backup.</td>
 </tr>
@@ -420,7 +420,7 @@ start a restore.</p>
 <p>Firmware Bundles API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.settings.firmware_bundles.FirmwareBundles.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/firmware-bundles'</em><a class="headerlink" href="#hpOneView.resources.settings.firmware_bundles.FirmwareBundles.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/firmware-bundles’</em><a class="headerlink" href="#hpOneView.resources.settings.firmware_bundles.FirmwareBundles.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -434,8 +434,8 @@ For the successful upload of a hotfix, ensure its original name and extension ar
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>file_path</strong> &#8211; Full path to firmware.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>file_path</strong> – Full path to firmware.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -462,7 +462,7 @@ in OneView; it just stops waiting for its completion.</li>
 <p>Firmware Drivers API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.settings.firmware_drivers.FirmwareDrivers.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/firmware-drivers'</em><a class="headerlink" href="#hpOneView.resources.settings.firmware_drivers.FirmwareDrivers.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/firmware-drivers’</em><a class="headerlink" href="#hpOneView.resources.settings.firmware_drivers.FirmwareDrivers.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -475,10 +475,10 @@ resource will be deleted even if it is assigned to devices.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to delete</li>
-<li><strong>force</strong> &#8211; If set to true, the operation completes despite any problems with
+<li><strong>resource</strong> (<em>dict</em>) – Object to delete</li>
+<li><strong>force</strong> – If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -501,7 +501,7 @@ in OneView; it just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> &#8211; ID or URI of firmware baseline resource.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> – ID or URI of firmware baseline resource.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Firmware baseline resource.</td>
 </tr>
@@ -513,7 +513,7 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.settings.firmware_drivers.FirmwareDrivers.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/firmware_drivers.html#FirmwareDrivers.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.firmware_drivers.FirmwareDrivers.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/firmware_drivers.html#FirmwareDrivers.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.firmware_drivers.FirmwareDrivers.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a paginated collection of Firmware Drivers. The collection is based on optional sorting and filtering, and
 constrained by start and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -521,14 +521,14 @@ constrained by start and count parameters.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items.
 The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) &#8211; A general filter/query string to narrow the list of items returned. The
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
 default is no filter; all resources are returned.</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
 </ul>
 </td>
@@ -554,8 +554,8 @@ filter the list of resources returned.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> &#8211; Field name to filter.</li>
-<li><strong>value</strong> &#8211; Value to filter.</li>
+<li><strong>field</strong> – Field name to filter.</li>
+<li><strong>value</strong> – Value to filter.</li>
 </ul>
 </td>
 </tr>
@@ -581,12 +581,12 @@ filter the list of resources returned.</p>
 <p>Restore API client for initiate a restore of an appliance and to get the status of the restore operation.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.settings.restores.Restores.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'RESTORE'}, u'300': {u'type': u'RESTORE'}}</em><a class="headerlink" href="#hpOneView.resources.settings.restores.Restores.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u‘300’: {u’type’: u’RESTORE’}, u‘200’: {u’type’: u’RESTORE’}}</em><a class="headerlink" href="#hpOneView.resources.settings.restores.Restores.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.settings.restores.Restores.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/restores'</em><a class="headerlink" href="#hpOneView.resources.settings.restores.Restores.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/restores’</em><a class="headerlink" href="#hpOneView.resources.settings.restores.Restores.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -597,7 +597,7 @@ filter the list of resources returned.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the Restore.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the Restore.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Restore</td>
 </tr>
@@ -634,8 +634,8 @@ the last restore will be returned if there has been a restore.</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> &#8211; Field name to filter.</li>
-<li><strong>value</strong> &#8211; Value to filter.</li>
+<li><strong>field</strong> – Field name to filter.</li>
+<li><strong>value</strong> – Value to filter.</li>
 </ul>
 </td>
 </tr>
@@ -677,8 +677,8 @@ prior to running this command. Only one restore can run at a time.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Config to restore.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Config to restore.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -709,12 +709,12 @@ in OneView, just stop waiting for its completion.</li>
 </div>
 <dl class="attribute">
 <dt id="hpOneView.resources.settings.scopes.Scopes.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'Scope'}}</em><a class="headerlink" href="#hpOneView.resources.settings.scopes.Scopes.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u‘300’: {u’type’: u’Scope’}}</em><a class="headerlink" href="#hpOneView.resources.settings.scopes.Scopes.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.settings.scopes.Scopes.URI">
-<code class="descname">URI</code><em class="property"> = u'/rest/scopes'</em><a class="headerlink" href="#hpOneView.resources.settings.scopes.Scopes.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u’/rest/scopes’</em><a class="headerlink" href="#hpOneView.resources.settings.scopes.Scopes.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -726,8 +726,8 @@ in OneView, just stop waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to create.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to create.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -751,8 +751,8 @@ in OneView, just stop waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> &#8211; dict object to delete</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> – dict object to delete</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>
@@ -775,7 +775,7 @@ in OneView; it just stops waiting for its completion.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> &#8211; ID or URI of the Scope</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the Scope</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Scope</td>
 </tr>
@@ -787,7 +787,7 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.settings.scopes.Scopes.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>sort=u''</em>, <em>query=u''</em>, <em>view=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/scopes.html#Scopes.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.scopes.Scopes.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>sort=u”</em>, <em>query=u”</em>, <em>view=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/scopes.html#Scopes.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.scopes.Scopes.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div>Gets a list of scopes.</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -795,16 +795,16 @@ in OneView; it just stops waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> &#8211; The first item to return, using 0-based indexing.
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
 If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> &#8211; The number of resources to return. A count of -1 requests all items.
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items.
 The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>sort</strong> &#8211; The sort order of the returned data set. By default, the sort order is based
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
-<li><strong>query</strong> &#8211; A general query string to narrow the list of resources returned. The default
+<li><strong>query</strong> – A general query string to narrow the list of resources returned. The default
 is no query - all resources are returned.</li>
-<li><strong>view</strong> &#8211; Returns a specific subset of the attributes of the resource or collection, by
+<li><strong>view</strong> – Returns a specific subset of the attributes of the resource or collection, by
 specifying the name of a predefined view. The default view is expand (show all
 attributes of the resource and all elements of collections of resources).</li>
 </ul>
@@ -828,7 +828,7 @@ attributes of the resource and all elements of collections of resources).</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; Name of the Scope</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – Name of the Scope</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Scope.</td>
 </tr>
@@ -847,8 +847,8 @@ attributes of the resource and all elements of collections of resources).</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) &#8211; Object to update.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>resource</strong> (<em>dict</em>) – Object to update.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
 </ul>
 </td>
@@ -872,9 +872,9 @@ in OneView, just stop waiting for its completion.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> &#8211; Can be either the resource ID or the resource URI.</li>
-<li><strong>resource_assignments</strong> (<em>dict</em>) &#8211; A dict object with a list of resource URIs to be added and a list of resource URIs to be removed.</li>
-<li><strong>timeout</strong> &#8211; Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
+<li><strong>resource_assignments</strong> (<em>dict</em>) – A dict object with a list of resource URIs to be added and a list of resource URIs to be removed.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
 </ul>
 </td>

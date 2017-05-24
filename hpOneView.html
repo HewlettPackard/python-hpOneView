@@ -358,7 +358,7 @@
 <dt id="hpOneView.connection.connection.disable_etag_validation">
 <code class="descname">disable_etag_validation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.disable_etag_validation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.disable_etag_validation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Disable the concurrency control for the PUT and DELETE requests. The requests will be forced without specifying
-an explicit ETag. This method sets an If-Match header of &#8220;*&#8221;.</p>
+an explicit ETag. This method sets an If-Match header of “*”.</p>
 </dd></dl>
 
 <dl class="method">
@@ -368,7 +368,7 @@ an explicit ETag. This method sets an If-Match header of &#8220;*&#8221;.</p>
 
 <dl class="method">
 <dt id="hpOneView.connection.connection.download_to_stream">
-<code class="descname">download_to_stream</code><span class="sig-paren">(</span><em>stream_writer</em>, <em>url</em>, <em>body=u''</em>, <em>method=u'GET'</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.download_to_stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.download_to_stream" title="Permalink to this definition">¶</a></dt>
+<code class="descname">download_to_stream</code><span class="sig-paren">(</span><em>stream_writer</em>, <em>url</em>, <em>body=u”</em>, <em>method=u’GET’</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.download_to_stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.download_to_stream" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -500,7 +500,7 @@ to be uploaded as files</p>
 
 <dl class="method">
 <dt id="hpOneView.connection.connection.set_eula">
-<code class="descname">set_eula</code><span class="sig-paren">(</span><em>supportAccess=u'yes'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.set_eula"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.set_eula" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_eula</code><span class="sig-paren">(</span><em>supportAccess=u’yes’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.set_eula"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.set_eula" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -537,13 +537,13 @@ to be uploaded as files</p>
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewException.msg">
 <code class="descname">msg</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewException.msg" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> &#8211; Exception message.</p>
+<dd><p><em>str</em> – Exception message.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewException.oneview_response">
 <code class="descname">oneview_response</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewException.oneview_response" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> &#8211; OneView rest response.</p>
+<dd><p><em>dict</em> – OneView rest response.</p>
 </dd></dl>
 
 </dd></dl>
@@ -556,7 +556,7 @@ to be uploaded as files</p>
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewInvalidResource.msg">
 <code class="descname">msg</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewInvalidResource.msg" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> &#8211; Exception message.</p>
+<dd><p><em>str</em> – Exception message.</p>
 </dd></dl>
 
 </dd></dl>
@@ -570,7 +570,7 @@ The exception is raised when an associated resource was not found.</p>
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewResourceNotFound.msg">
 <code class="descname">msg</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewResourceNotFound.msg" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> &#8211; Exception message.</p>
+<dd><p><em>str</em> – Exception message.</p>
 </dd></dl>
 
 </dd></dl>
@@ -583,13 +583,13 @@ The exception is raised when an associated resource was not found.</p>
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewTaskError.msg">
 <code class="descname">msg</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewTaskError.msg" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> &#8211; Exception message.</p>
+<dd><p><em>str</em> – Exception message.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewTaskError.error_code">
 <code class="descname">error_code</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewTaskError.error_code" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> &#8211; A code which uniquely identifies the specific error.</p>
+<dd><p><em>str</em> – A code which uniquely identifies the specific error.</p>
 </dd></dl>
 
 </dd></dl>
@@ -602,7 +602,7 @@ The exception is raised when an associated resource was not found.</p>
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewTimeout.msg">
 <code class="descname">msg</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewTimeout.msg" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> &#8211; Exception message.</p>
+<dd><p><em>str</em> – Exception message.</p>
 </dd></dl>
 
 </dd></dl>
@@ -615,7 +615,7 @@ The exception is raised when an associated resource was not found.</p>
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewUnknownType.msg">
 <code class="descname">msg</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewUnknownType.msg" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> &#8211; Exception message.</p>
+<dd><p><em>str</em> – Exception message.</p>
 </dd></dl>
 
 </dd></dl>
@@ -629,7 +629,7 @@ The exception is raised when the data contains an inappropriate value.</p>
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewValueError.msg">
 <code class="descname">msg</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewValueError.msg" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> &#8211; Exception message.</p>
+<dd><p><em>str</em> – Exception message.</p>
 </dd></dl>
 
 </dd></dl>
@@ -758,7 +758,7 @@ The exception is raised when the data contains an inappropriate value.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.image_streamer.html#hpOneView.image_streamer.image_streamer_client.ImageStreamerClient.connection" title="hpOneView.image_streamer.image_streamer_client.ImageStreamerClient.connection">connection</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#hpOneView.connection.connection" title="hpOneView.connection.connection">connection</a></td>
 </tr>
 </tbody>
 </table>
@@ -1030,7 +1030,7 @@ ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, ONEVIEWSDK_IMAGE_STREAMER_
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_name</strong> &#8211; json full path.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_name</strong> – json full path.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
