@@ -48,13 +48,13 @@ PYTHON_VERSION = sys.version_info[:3]
 PY2 = (PYTHON_VERSION[0] == 2)
 if PY2:
     if PYTHON_VERSION < (2, 7, 9):
-        error_message = 'Running unsupported Python version: %s, unexpected errors might occur.'
-        error_message += ' Use of Python v2.7.9+ is advised.'
-        warnings.warn(error_message % '.'.join(map(str, PYTHON_VERSION)), Warning)
+        warning_message = 'Running unsupported Python version: %s, unexpected errors might occur.'
+        warning_message += ' Use of Python v2.7.9+ is advised.'
+        warnings.warn(warning_message % '.'.join(map(str, PYTHON_VERSION)), Warning)
 elif PYTHON_VERSION < (3, 4):
-        error_message = 'Running unsupported Python version> %s, unexpected errors might occur.'
-        error_message += ' Use of Python v3.4+ is advised.'
-        warnings.warn(error_message % '.'.join(map(str, PYTHON_VERSION)), Warning)
+        warning_message = 'Running unsupported Python version> %s, unexpected errors might occur.'
+        warning_message += ' Use of Python v3.4+ is advised.'
+        warnings.warn(warning_message % '.'.join(map(str, PYTHON_VERSION)), Warning)
 
 from hpOneView.common import *
 from hpOneView.connection import *
