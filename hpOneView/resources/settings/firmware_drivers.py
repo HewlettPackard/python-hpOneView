@@ -103,6 +103,24 @@ class FirmwareDrivers(object):
         """
         return self._client.get(id_or_uri)
 
+    def create(self, resource, timeout=-1):
+        """
+        Creates a custom SPP (Service Pack for ProLiant) from an existing SPP and one or more hotfixes that have already
+        been added to the system.
+
+        Args:
+            resource (dict): Object to create.
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView, just stop waiting for its completion.
+
+        Returns:
+            dict: Created resource.
+
+        """
+        print("\n\n RESOURCE: %s" % resource)
+        return self._client.create(resource, timeout=timeout)
+
     def delete(self, resource, force=False, timeout=-1):
         """
         Delete the firmware baseline resource with the specified ID. If force is set to true, the firmware baseline
