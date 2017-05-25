@@ -118,7 +118,6 @@ class FirmwareDrivers(object):
             dict: Created resource.
 
         """
-        print("\n\n RESOURCE: %s" % resource)
         return self._client.create(resource, timeout=timeout)
 
     def delete(self, resource, force=False, timeout=-1):
