@@ -38,10 +38,10 @@ config = {
 }
 
 # # To run this sample you must define the following resources for a Brocade Network Advisor
-manager_host = '172.18.20.1'
-manager_port = 161
-manager_username = 'dcs-SHA'
-manager_password = 'dcsdcsdcs'  # 'hpinvent!'
+manager_host = '<san_manager_hostname_or_ip>'
+manager_port = '<port_number_not_quoted>'
+manager_username = '<san_manager_user_name>'
+manager_password = '<san_manager_password>'
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
