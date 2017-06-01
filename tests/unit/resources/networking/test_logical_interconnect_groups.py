@@ -129,3 +129,13 @@ class LogicalInterconnectGroupsTest(unittest.TestCase):
         self._lig.get_by("name", "test name")
 
         mock_get_by.assert_called_once_with("name", "test name")
+
+    @mock.patch.object(ResourceClient, 'patch')
+    def test_patch_should_use_user_defined_values(self, mock_patch):
+        mock_patch.return_value = {}
+
+        self._lig.patch('rest/fake/lig123', 'replace',
+                        '/scopeUris', ['rest/fake/scope123'], 1)
+
+        mock_patch.assert_called_once_with('rest/fake/lig123', 'replace',
+                                           '/scopeUris', ['rest/fake/scope123'], timeout=1)
