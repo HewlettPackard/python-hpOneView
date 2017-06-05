@@ -29,7 +29,7 @@ from config_loader import try_load_from_file
 config = {
     "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "<username",
+        "userName": "<username>",
         "password": "<password>"
     }
 }
@@ -59,7 +59,7 @@ options_ethernet2 = {
 }
 
 # Scope name to perform the patch operation
-scope_name = "scopeTest"
+scope_name = ""
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
