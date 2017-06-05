@@ -27,10 +27,10 @@ from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username",
+        "password": "<password>"
     }
 }
 
@@ -57,6 +57,10 @@ options_ethernet2 = {
     "privateNetwork": False,
     "connectionTemplateUri": None,
 }
+
+# Scope name to perform the patch operation
+scope_name = "scopeTest"
+
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
@@ -107,6 +111,16 @@ pprint(net_sets)
 print("Get all network sets without Ethernet")
 net_sets_without_ethernet = oneview_client.network_sets.get_all_without_ethernet()
 pprint(net_sets_without_ethernet)
+
+# Adds network set to scope defined
+if scope_name:
+    print("\nGet scope then add the network set to it")
+    scope = oneview_client.scopes.get_by_name(scope_name)
+    net_set_with_scope = oneview_client.network_sets.patch(network_set['uri'],
+                                                           'replace',
+                                                           '/scopeUris',
+                                                           [scope['uri']])
+    pprint(net_set_with_scope)
 
 # Delete network set
 oneview_client.network_sets.delete(network_set)
