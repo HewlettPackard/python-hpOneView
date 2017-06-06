@@ -171,3 +171,12 @@ class LogicalSwitchesTest(unittest.TestCase):
         self._logical_switches.refresh(id)
 
         mock_update_with_zero_body.assert_called_once_with(uri_rest_call, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'patch')
+    def test_patch_should_use_user_defined_values(self, mock_patch):
+        mock_patch.return_value = {}
+
+        self._logical_switches.patch('/rest/fake/fc123', 'replace', '/scopeUris', ['/rest/fake/scope123'], 1)
+
+        mock_patch.assert_called_once_with('/rest/fake/fc123', 'replace', '/scopeUris',
+                                           ['/rest/fake/scope123'], timeout=1)

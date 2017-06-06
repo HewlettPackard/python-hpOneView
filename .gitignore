@@ -45,6 +45,7 @@ nosetests.xml
 #coverage
 coverage.xml
 .coverage
+htmlcov
 
 #virtualenv
 env
