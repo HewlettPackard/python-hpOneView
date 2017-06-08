@@ -117,3 +117,12 @@ class SwitchesTest(unittest.TestCase):
         expected_uri = switch_uri + "/update-ports"
         expected_resource = [{"enabled": False, 'type': 'port'}]
         mock_update.assert_called_once_with(uri=expected_uri, resource=expected_resource)
+
+    @mock.patch.object(ResourceClient, 'patch')
+    def test_patch_should_use_user_defined_values(self, mock_patch):
+        mock_patch.return_value = {}
+
+        self._switches.patch('rest/fake/switches/123', 'replace',
+                             '/scopeUris', ['rest/fake/scope123'], 1)
+        mock_patch.assert_called_once_with('rest/fake/switches/123', 'replace',
+                                           '/scopeUris', ['rest/fake/scope123'], timeout=1)
