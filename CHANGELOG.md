@@ -19,12 +19,19 @@ Legacy code under hpOneView which was marked as deprecated is being removed. Thi
 - Fabric
 - FC network
 - FCOE network
+- Firmware bundle
+- Firmware driver
 - Interconnect
 - Logical downlink
 - Logical interconnect
 - Logical interconnect group
+- Logical switch
+- Logical switch group
+- Network set
 - Rack
+- SAN Manager
 - Scope
+- Switch
 - User
 
 # v3.3.0
