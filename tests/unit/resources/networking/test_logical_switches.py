@@ -176,7 +176,7 @@ class LogicalSwitchesTest(unittest.TestCase):
     def test_patch_should_use_user_defined_values(self, mock_patch):
         mock_patch.return_value = {}
 
-        self._logical_switches.patch('/rest/fake/fc123', 'replace', '/scopeUris', ['/rest/fake/scope123'], 1)
+        self._logical_switches.patch('/rest/logical-switches/fake', 'replace', '/scopeUris', ['/rest/scopes/fake1'], 1)
 
-        mock_patch.assert_called_once_with('/rest/fake/fc123', 'replace', '/scopeUris',
-                                           ['/rest/fake/scope123'], timeout=1)
+        mock_patch.assert_called_once_with('/rest/logical-switches/fake', 'replace', '/scopeUris',
+                                           ['/rest/scopes/fake1'], timeout=1)
