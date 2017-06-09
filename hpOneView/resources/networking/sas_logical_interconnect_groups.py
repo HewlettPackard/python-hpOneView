@@ -44,7 +44,8 @@ class SasLogicalInterconnectGroups(object):
     URI = '/rest/sas-logical-interconnect-groups'
 
     DEFAULT_VALUES = {
-        '300': {'type': 'sas-logical-interconnect-group'}
+        '300': {'type': 'sas-logical-interconnect-group'},
+        '500': {'type': 'sas-logical-interconnect-group'}
     }
 
     def __init__(self, con):
