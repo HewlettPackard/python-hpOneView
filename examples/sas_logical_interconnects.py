@@ -98,10 +98,10 @@ pprint(firmware)
 # Install the firmware to a SAS Logical Interconnect (time-consuming operation)
 print("\nInstall the firmware to a SAS Logical Interconnect that matches the specified ID.")
 firmware_to_install = {
-"command": "Update",
-"force": "false",
-"sppUri": firmware_driver_uri
+    "command": "Update",
+    "force": "false",
+    "sppUri": firmware_driver_uri
 }
 installed_firmware = oneview_client.sas_logical_interconnects.update_firmware(firmware_to_install,
-sas_logical_interconnect_id)
+                                                                              sas_logical_interconnect_id)
 pprint(installed_firmware)
