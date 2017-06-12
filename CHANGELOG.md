@@ -32,6 +32,7 @@ Legacy code under hpOneView which was marked as deprecated is being removed. Thi
 - SAN Manager
 - Scope
 - Switch
+- Uplink set
 - User
 
 # v3.3.0

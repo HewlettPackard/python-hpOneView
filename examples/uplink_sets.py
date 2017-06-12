@@ -40,9 +40,16 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-# To run this example you must define an logical interconnect uri (logicalInterconnectUri) and the ethernet network uri
-logical_interconnect_uri = ''
-ethernet_network_uri = ''
+# To run this example you can define an logical interconnect uri (logicalInterconnectUri) and the ethernet network uri
+# or the example will attempt to retrieve those automatically from the appliance.
+logical_interconnect_uri = None
+ethernet_network_uri = None
+
+# Attempting to get first LI and Ethernet uri and use them for this example
+if logical_interconnect_uri is None:
+    logical_interconnect_uri = oneview_client.logical_interconnects.get_all()[0]['uri']
+if ethernet_network_uri is None:
+    ethernet_network_uri = oneview_client.ethernet_networks.get_all()[0]['uri']
 
 options = {
     "name": "Uplink Set Demo",
@@ -94,7 +101,7 @@ print("\nGet an uplink set by uri")
 uplink_set = oneview_client.uplink_sets.get(created_uplink_set['uri'])
 pprint(uplink_set)
 
-# Remove an ethernet network to the uplink set
+# Remove an ethernet network from the uplink set
 # To run this example you must define an ethernet network uri or ID below
 ethernet_network_id = None
 if ethernet_network_id:
