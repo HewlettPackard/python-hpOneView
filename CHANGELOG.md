@@ -29,9 +29,16 @@ Legacy code under hpOneView which was marked as deprecated is being removed. Thi
 - Logical switch group
 - Network set
 - Rack
-- SAN Manager
+- SAN manager
+- SAS interconnect
+- SAS interconnect type
+- SAS logical interconnect
+- SAS logical interconnect groups
+- SAS logical JBOD
+- SAS logical JBOD attachment
 - Scope
 - Switch
+- Switch type
 - Uplink set
 - User
 
