@@ -26,10 +26,10 @@ from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "172.16.102.59",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
@@ -42,10 +42,10 @@ imported_san = None
 internally_managed_san = None
 
 # You must set the value of the WWN to run the API 300 example
-wwn = ''
+wwn = None
 
 # Get all, with defaults
-print("Get all Managed SANs")
+print("\nGet all Managed SANs")
 managed_sans = oneview_client.managed_sans.get_all()
 
 if managed_sans:
@@ -57,18 +57,18 @@ if managed_sans:
             internally_managed_san = managed_san
 
     # Get a Managed SAN by name
-    print("Get a Managed SAN by name")
+    print("\nGet a Managed SAN by name")
     managed_san_by_name = oneview_client.managed_sans.get_by_name(managed_san['name'])
     pprint(managed_san_by_name)
 
     # Get a Managed SAN by URI
-    print("Get a Managed SAN by URI")
+    print("\nGet a Managed SAN by URI")
     managed_san_by_uri = oneview_client.managed_sans.get(managed_san['uri'])
     pprint(managed_san_by_uri)
 
     if internally_managed_san:
         # Update the Managed SAN's publicAttributes
-        print("Update the Internally Managed SAN's publicAttributes")
+        print("\nUpdate the Internally Managed SAN's publicAttributes")
         public_attributes = {
             "publicAttributes": [{
                 "name": "MetaSan",
@@ -81,7 +81,7 @@ if managed_sans:
         pprint(san_response_update_attr)
 
         # Update the Managed SAN's policy
-        print("Update the Internally Managed SAN's policy")
+        print("\nUpdate the Internally Managed SAN's policy")
         policy = {
             "sanPolicy": {
                 "zoningPolicy": "SingleInitiatorAllTargets",
@@ -97,7 +97,7 @@ if managed_sans:
 
     if imported_san:
         # Refresh the Managed SAN
-        print("Refresh the Imported Managed SAN")
+        print("\nRefresh the Imported Managed SAN")
         refresh_config = {
             "refreshState": "RefreshPending"
         }
@@ -105,25 +105,25 @@ if managed_sans:
         pprint(san_response_refresh)
 
         # Create a SAN endpoints CSV file
-        print("Create a SAN endpoints CSV file")
+        print("\nCreate a SAN endpoints CSV file")
         csv_file_response = oneview_client.managed_sans.create_endpoints_csv_file(imported_san['uri'])
         pprint(csv_file_response)
 
         # Retrieve the endpoints for a SAN
-        print("Get the list of endpoints in the Imported Managed SAN")
+        print("\nGet the list of endpoints in the Imported Managed SAN")
         endpoints = oneview_client.managed_sans.get_endpoints(imported_san['uri'])
         pprint(endpoints)
 
         # Create an unexpected zoning report
-        print("Create an unexpected zoning report")
+        print("\nCreate an unexpected zoning report")
         issues_response = oneview_client.managed_sans.create_issues_report(imported_san['uri'])
         pprint(issues_response)
 
 else:
-    print("No Managed SANs found.")
+    print("\nNo Managed SANs found.")
 
 # This method is available for API version 300 or later
-if oneview_client.api_version >= 300:
+if oneview_client.api_version >= 300 and wwn is not None:
     # Retrieves an association between the provided WWN and the SAN (if any) on which it resides
     print("\nGet a list of associations between provided WWNs and the SANs on which they reside")
     wwns = oneview_client.managed_sans.get_wwn(wwn)
