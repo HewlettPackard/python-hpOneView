@@ -27,6 +27,7 @@ Legacy code under hpOneView which was marked as deprecated is being removed. Thi
 - Logical interconnect group
 - Logical switch
 - Logical switch group
+- Managed SAN
 - Network set
 - Rack
 - SAN manager
