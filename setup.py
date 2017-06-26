@@ -26,10 +26,10 @@ from setuptools import find_packages
 from setuptools import setup
 
 setup(name='hpOneView',
-      version='3.2.1',
+      version='3.2.2',
       description='HPE OneView Python Library',
       url='https://github.com/HewlettPackard/python-hpOneView',
-      download_url="https://github.com/HewlettPackard/python-hpOneView/tarball/v3.2.1",
+      download_url="https://github.com/HewlettPackard/python-hpOneView/tarball/v3.2.2",
       author='Hewlett Packard Enterprise Development LP',
       author_email='oneview-pythonsdk@hpe.com',
       license='MIT',
