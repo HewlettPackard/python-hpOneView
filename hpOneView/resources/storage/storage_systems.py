@@ -226,3 +226,30 @@ class StorageSystems(object):
             return resources_filtered[0]
         else:
             return None
+
+    def get_reachable_ports(self, start=0, count=-1, filter='', query='', sort='', networks=[]):
+        """
+        Gets the storage ports that are connected on the specified networks
+        based on the storage system port's expected network connectivity.
+
+        Returns:
+            list: Reachable Storage Port List.
+        """
+        uri = self.URI + "/reachable-ports"
+
+        if networks:
+            uri = uri + "?networks=" + quote(networks)
+
+        return self._client.get(build_query_uri(start=start, count=count, filter=filter, query=query,
+                                                sort=sort, view=view, uri=uri))
+
+    def get_templates(self, start=0, count=-1, filter='', query='', sort=''):
+        """
+        Gets a list of volume templates. Returns a list of storage templates belonging to the storage system.
+
+        Returns:
+            list: Storage Template List.
+        """
+        uri = self.URI + "/templates"
+        return self._client.get(build_query_uri(start=start, count=count, filter=filter,
+                                                query=query, sort=sort, uri=uri))
