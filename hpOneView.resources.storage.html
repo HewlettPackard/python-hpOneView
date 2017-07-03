@@ -182,17 +182,17 @@
 </div>
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.drive_enclosures.DriveEnclosures.PORT_MAP_PATH">
-<code class="descname">PORT_MAP_PATH</code><em class="property"> = u’/port-map’</em><a class="headerlink" href="#hpOneView.resources.storage.drive_enclosures.DriveEnclosures.PORT_MAP_PATH" title="Permalink to this definition">¶</a></dt>
+<code class="descname">PORT_MAP_PATH</code><em class="property"> = u'/port-map'</em><a class="headerlink" href="#hpOneView.resources.storage.drive_enclosures.DriveEnclosures.PORT_MAP_PATH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.drive_enclosures.DriveEnclosures.REFRESH_STATE_PATH">
-<code class="descname">REFRESH_STATE_PATH</code><em class="property"> = u’/refreshState’</em><a class="headerlink" href="#hpOneView.resources.storage.drive_enclosures.DriveEnclosures.REFRESH_STATE_PATH" title="Permalink to this definition">¶</a></dt>
+<code class="descname">REFRESH_STATE_PATH</code><em class="property"> = u'/refreshState'</em><a class="headerlink" href="#hpOneView.resources.storage.drive_enclosures.DriveEnclosures.REFRESH_STATE_PATH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.drive_enclosures.DriveEnclosures.URI">
-<code class="descname">URI</code><em class="property"> = u’/rest/drive-enclosures’</em><a class="headerlink" href="#hpOneView.resources.storage.drive_enclosures.DriveEnclosures.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u'/rest/drive-enclosures'</em><a class="headerlink" href="#hpOneView.resources.storage.drive_enclosures.DriveEnclosures.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -215,7 +215,7 @@
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.drive_enclosures.DriveEnclosures.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/drive_enclosures.html#DriveEnclosures.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.drive_enclosures.DriveEnclosures.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/drive_enclosures.html#DriveEnclosures.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.drive_enclosures.DriveEnclosures.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets information about all drive enclosures. Filtering and sorting are supported with the retrieval of
 managed storage systems. The following storage system attributes can be used with filtering and sorting
 operation: name, model, serialNumber, firmware, status, managedDomain, and state.</p>
@@ -360,7 +360,7 @@ in OneView; it just stops waiting for its completion.</li>
 </div>
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.sas_logical_jbod_attachments.SasLogicalJbodAttachments.URI">
-<code class="descname">URI</code><em class="property"> = u’/rest/sas-logical-jbod-attachments’</em><a class="headerlink" href="#hpOneView.resources.storage.sas_logical_jbod_attachments.SasLogicalJbodAttachments.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u'/rest/sas-logical-jbod-attachments'</em><a class="headerlink" href="#hpOneView.resources.storage.sas_logical_jbod_attachments.SasLogicalJbodAttachments.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -383,7 +383,7 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.sas_logical_jbod_attachments.SasLogicalJbodAttachments.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/sas_logical_jbod_attachments.html#SasLogicalJbodAttachments.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.sas_logical_jbod_attachments.SasLogicalJbodAttachments.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/sas_logical_jbod_attachments.html#SasLogicalJbodAttachments.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.sas_logical_jbod_attachments.SasLogicalJbodAttachments.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a paginated collection of SAS Logical JBOD Attachments. The collection is based on optional
 sorting and filtering and is constrained by start and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -454,12 +454,12 @@ on create time with the oldest entry first.</li>
 </div>
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.sas_logical_jbods.SasLogicalJbods.DRIVES_PATH">
-<code class="descname">DRIVES_PATH</code><em class="property"> = u’/drives’</em><a class="headerlink" href="#hpOneView.resources.storage.sas_logical_jbods.SasLogicalJbods.DRIVES_PATH" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DRIVES_PATH</code><em class="property"> = u'/drives'</em><a class="headerlink" href="#hpOneView.resources.storage.sas_logical_jbods.SasLogicalJbods.DRIVES_PATH" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.sas_logical_jbods.SasLogicalJbods.URI">
-<code class="descname">URI</code><em class="property"> = u’/rest/sas-logical-jbods’</em><a class="headerlink" href="#hpOneView.resources.storage.sas_logical_jbods.SasLogicalJbods.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u'/rest/sas-logical-jbods'</em><a class="headerlink" href="#hpOneView.resources.storage.sas_logical_jbods.SasLogicalJbods.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -482,7 +482,7 @@ on create time with the oldest entry first.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.sas_logical_jbods.SasLogicalJbods.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/sas_logical_jbods.html#SasLogicalJbods.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.sas_logical_jbods.SasLogicalJbods.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/sas_logical_jbods.html#SasLogicalJbods.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.sas_logical_jbods.SasLogicalJbods.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a paginated collection of SAS logical JBODs based on optional sorting and filtering and constrained by
 start and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -567,7 +567,7 @@ on create time with the oldest entry first.</li>
 <p>Storage Pools API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.storage_pools.StoragePools.URI">
-<code class="descname">URI</code><em class="property"> = u’/rest/storage-pools’</em><a class="headerlink" href="#hpOneView.resources.storage.storage_pools.StoragePools.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u'/rest/storage-pools'</em><a class="headerlink" href="#hpOneView.resources.storage.storage_pools.StoragePools.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -615,7 +615,7 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_pools.StoragePools.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_pools.html#StoragePools.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_pools.StoragePools.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_pools.html#StoragePools.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_pools.StoragePools.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of storage pools. Returns a list of storage pools based on optional sorting and filtering, and
 constrained by start and count parameters. The following storage pool attributes can be used with filtering and
 sorting operation: name, domain, deviceType, deviceSpeed, supportedRAIDLevel, status, and state.</p>
@@ -710,7 +710,7 @@ in OneView; it just stops waiting for its completion.</li>
 <p>Storage Systems API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.storage_systems.StorageSystems.URI">
-<code class="descname">URI</code><em class="property"> = u’/rest/storage-systems’</em><a class="headerlink" href="#hpOneView.resources.storage.storage_systems.StorageSystems.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u'/rest/storage-systems'</em><a class="headerlink" href="#hpOneView.resources.storage.storage_systems.StorageSystems.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -761,7 +761,7 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_systems.StorageSystems.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_systems.html#StorageSystems.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_systems.StorageSystems.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_systems.html#StorageSystems.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_systems.StorageSystems.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets information about all managed storage systems. Filtering and sorting are supported with the retrieval of
 managed storage systems. The following storage system attributes can be used with filtering and sorting
 operation: name, model, serialNumber, firmware, status, managedDomain, and state.</p>
@@ -867,7 +867,7 @@ on create time with the oldest entry first.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_systems.StorageSystems.get_managed_ports">
-<code class="descname">get_managed_ports</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>port_id_or_uri=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_systems.html#StorageSystems.get_managed_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_systems.StorageSystems.get_managed_ports" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_managed_ports</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>port_id_or_uri=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_systems.html#StorageSystems.get_managed_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_systems.StorageSystems.get_managed_ports" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets all ports or a specific managed target port for the specified storage system.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -973,7 +973,7 @@ in OneView; it just stops waiting for its completion.</li>
 <p>Storage Volume Attachments API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments.URI">
-<code class="descname">URI</code><em class="property"> = u’/rest/storage-volume-attachments’</em><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u'/rest/storage-volume-attachments'</em><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -996,7 +996,7 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_attachments.html#StorageVolumeAttachments.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_attachments.html#StorageVolumeAttachments.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of volume attachment resources.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1052,7 +1052,7 @@ on create time with the oldest entry first.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments.get_extra_unmanaged_storage_volumes">
-<code class="descname">get_extra_unmanaged_storage_volumes</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_attachments.html#StorageVolumeAttachments.get_extra_unmanaged_storage_volumes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments.get_extra_unmanaged_storage_volumes" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_extra_unmanaged_storage_volumes</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_attachments.html#StorageVolumeAttachments.get_extra_unmanaged_storage_volumes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments.get_extra_unmanaged_storage_volumes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the list of extra unmanaged storage volumes.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1083,7 +1083,7 @@ on create time with the oldest entry first.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments.get_paths">
-<code class="descname">get_paths</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>path_id_or_uri=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_attachments.html#StorageVolumeAttachments.get_paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments.get_paths" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_paths</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>path_id_or_uri=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_attachments.html#StorageVolumeAttachments.get_paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_attachments.StorageVolumeAttachments.get_paths" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets all paths or a specific attachment path for the specified volume attachment.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1142,12 +1142,12 @@ in OneView; it just stops waiting for its completion.</li>
 <p>Storage Volume Templates API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u‘300’: {u’type’: u’StorageVolumeTemplateV3’}, u‘200’: {u’type’: u’StorageVolumeTemplateV3’}}</em><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'StorageVolumeTemplateV3'}, u'200': {u'type': u'StorageVolumeTemplateV3'}}</em><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.URI">
-<code class="descname">URI</code><em class="property"> = u’/rest/storage-volume-templates’</em><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u'/rest/storage-volume-templates'</em><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1222,7 +1222,7 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_templates.html#StorageVolumeTemplates.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_templates.html#StorageVolumeTemplates.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of storage volume templates.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1331,12 +1331,12 @@ in OneView; it just stops waiting for its completion.</li>
 <p>Volumes API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.volumes.Volumes.DEFAULT_VALUES_SNAPSHOT">
-<code class="descname">DEFAULT_VALUES_SNAPSHOT</code><em class="property"> = {u‘300’: {u’type’: u’Snapshot’}, u‘200’: {u’type’: u’Snapshot’}}</em><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.DEFAULT_VALUES_SNAPSHOT" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES_SNAPSHOT</code><em class="property"> = {u'300': {u'type': u'Snapshot'}, u'200': {u'type': u'Snapshot'}}</em><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.DEFAULT_VALUES_SNAPSHOT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.volumes.Volumes.URI">
-<code class="descname">URI</code><em class="property"> = u’/rest/storage-volumes’</em><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u'/rest/storage-volumes'</em><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -1477,7 +1477,7 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.volumes.Volumes.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a paginated collection of managed volumes. The collection is based on optional
 sorting and filtering and is constrained by start and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1509,7 +1509,7 @@ on create time with the oldest entry first.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.volumes.Volumes.get_attachable_volumes">
-<code class="descname">get_attachable_volumes</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>query=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.get_attachable_volumes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.get_attachable_volumes" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_attachable_volumes</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.get_attachable_volumes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.get_attachable_volumes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the volumes that are connected on the specified networks based on the storage system port’s expected
 network connectivity.</p>
 <dl class="docutils">
@@ -1576,7 +1576,7 @@ on create time with the oldest entry first.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.volumes.Volumes.get_extra_managed_storage_volume_paths">
-<code class="descname">get_extra_managed_storage_volume_paths</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.get_extra_managed_storage_volume_paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.get_extra_managed_storage_volume_paths" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_extra_managed_storage_volume_paths</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.get_extra_managed_storage_volume_paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.get_extra_managed_storage_volume_paths" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the list of extra managed storage volume paths.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1658,7 +1658,7 @@ but required if it passed a snapshot ID.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.volumes.Volumes.get_snapshots">
-<code class="descname">get_snapshots</code><span class="sig-paren">(</span><em>volume_id_or_uri</em>, <em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.get_snapshots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.get_snapshots" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_snapshots</code><span class="sig-paren">(</span><em>volume_id_or_uri</em>, <em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.get_snapshots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.get_snapshots" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets all snapshots of a volume. Returns a list of snapshots based on optional sorting and filtering, and
 constrained by start and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">

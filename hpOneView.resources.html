@@ -232,6 +232,7 @@
 <li class="toctree-l2"><a class="reference internal" href="hpOneView.resources.security.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hpOneView.resources.security.html#module-hpOneView.resources.security.certificate_authority">hpOneView.resources.security.certificate_authority module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hpOneView.resources.security.html#module-hpOneView.resources.security.certificate_rabbitmq">hpOneView.resources.security.certificate_rabbitmq module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hpOneView.resources.security.html#module-hpOneView.resources.security.users">hpOneView.resources.security.users module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hpOneView.resources.security.html#module-hpOneView.resources.security">Module contents</a></li>
 </ul>
 </li>
@@ -301,7 +302,7 @@
 <p>This class implements common functions for HpOneView API rest</p>
 <dl class="method">
 <dt id="hpOneView.resources.resource.ResourceClient.build_subresource_uri">
-<code class="descname">build_subresource_uri</code><span class="sig-paren">(</span><em>resource_id_or_uri=None</em>, <em>subresource_id_or_uri=None</em>, <em>subresource_path=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.build_subresource_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.build_subresource_uri" title="Permalink to this definition">¶</a></dt>
+<code class="descname">build_subresource_uri</code><span class="sig-paren">(</span><em>resource_id_or_uri=None</em>, <em>subresource_id_or_uri=None</em>, <em>subresource_path=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.build_subresource_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.build_subresource_uri" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -467,7 +468,7 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.resource.ResourceClient.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>query=u”</em>, <em>sort=u”</em>, <em>view=u”</em>, <em>fields=u”</em>, <em>uri=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>view=u''</em>, <em>fields=u''</em>, <em>uri=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets all items according with the given arguments.</p>
 <p>More than one request can be send to get the items, regardless the query parameter ‘count’, because the actual
 number of items in the response might differ from the requested count. Some types of resource have a limited
@@ -553,7 +554,7 @@ the collections or resources).</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.resource.ResourceClient.get_collection">
-<code class="descname">get_collection</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>filter=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.get_collection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.get_collection" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_collection</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>filter=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.get_collection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.get_collection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves a collection of resources.</p>
 <p>Use this function when the ‘start’ and ‘count’ parameters are not allowed in the GET call.
 Otherwise, use get_all instead.</p>

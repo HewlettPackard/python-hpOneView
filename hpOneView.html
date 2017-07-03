@@ -262,6 +262,7 @@
 <li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.security.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.security.html#module-hpOneView.resources.security.certificate_authority">hpOneView.resources.security.certificate_authority module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.security.html#module-hpOneView.resources.security.certificate_rabbitmq">hpOneView.resources.security.certificate_rabbitmq module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.security.html#module-hpOneView.resources.security.users">hpOneView.resources.security.users module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.security.html#module-hpOneView.resources.security">Module contents</a></li>
 </ul>
 </li>
@@ -368,7 +369,7 @@ an explicit ETag. This method sets an If-Match header of “*”.</p>
 
 <dl class="method">
 <dt id="hpOneView.connection.connection.download_to_stream">
-<code class="descname">download_to_stream</code><span class="sig-paren">(</span><em>stream_writer</em>, <em>url</em>, <em>body=u”</em>, <em>method=u’GET’</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.download_to_stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.download_to_stream" title="Permalink to this definition">¶</a></dt>
+<code class="descname">download_to_stream</code><span class="sig-paren">(</span><em>stream_writer</em>, <em>url</em>, <em>body=u''</em>, <em>method=u'GET'</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.download_to_stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.download_to_stream" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -500,7 +501,7 @@ to be uploaded as files</p>
 
 <dl class="method">
 <dt id="hpOneView.connection.connection.set_eula">
-<code class="descname">set_eula</code><span class="sig-paren">(</span><em>supportAccess=u’yes’</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.set_eula"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.set_eula" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_eula</code><span class="sig-paren">(</span><em>supportAccess=u'yes'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/connection.html#connection.set_eula"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.connection.connection.set_eula" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -758,7 +759,7 @@ The exception is raised when the data contains an inappropriate value.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.image_streamer.html#hpOneView.image_streamer.image_streamer_client.ImageStreamerClient.connection" title="hpOneView.image_streamer.image_streamer_client.ImageStreamerClient.connection">connection</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#hpOneView.connection.connection" title="hpOneView.connection.connection">connection</a></td>
 </tr>
 </tbody>
 </table>
@@ -1803,6 +1804,22 @@ ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, ONEVIEWSDK_IMAGE_STREAMER_
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.networking.html#hpOneView.resources.networking.uplink_sets.UplinkSets" title="hpOneView.resources.networking.uplink_sets.UplinkSets">UplinkSets</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.users">
+<code class="descname">users</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.users" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the Users API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.security.html#hpOneView.resources.security.users.Users" title="hpOneView.resources.security.users.Users">Users</a></td>
 </tr>
 </tbody>
 </table>

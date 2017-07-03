@@ -20,6 +20,14 @@ hpOneView\.resources\.security\.certificate\_rabbitmq module
     :undoc-members:
     :show-inheritance:
 
+hpOneView\.resources\.security\.users module
+--------------------------------------------
+
+.. automodule:: hpOneView.resources.security.users
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

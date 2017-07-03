@@ -173,12 +173,12 @@
 <p>Endpoints API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.fc_sans.endpoints.Endpoints.URI">
-<code class="descname">URI</code><em class="property"> = u’/rest/fc-sans/endpoints’</em><a class="headerlink" href="#hpOneView.resources.fc_sans.endpoints.Endpoints.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u'/rest/fc-sans/endpoints'</em><a class="headerlink" href="#hpOneView.resources.fc_sans.endpoints.Endpoints.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.fc_sans.endpoints.Endpoints.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>query=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/endpoints.html#Endpoints.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.endpoints.Endpoints.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>query=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/endpoints.html#Endpoints.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.endpoints.Endpoints.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the list of endpoints known by the appliance.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -219,7 +219,7 @@ on create time with the oldest entry first.</li>
 <p>Managed SANs API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.URI">
-<code class="descname">URI</code><em class="property"> = u’/rest/fc-sans/managed-sans’</em><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u'/rest/fc-sans/managed-sans'</em><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -292,7 +292,7 @@ OneView, just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>query=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>query=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the list of registered Managed SANs</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -341,7 +341,7 @@ on create time with the oldest entry first.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_endpoints">
-<code class="descname">get_endpoints</code><span class="sig-paren">(</span><em>managed_san_id_or_uri</em>, <em>start=0</em>, <em>count=-1</em>, <em>filter=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.get_endpoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_endpoints" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_endpoints</code><span class="sig-paren">(</span><em>managed_san_id_or_uri</em>, <em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.get_endpoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_endpoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of endpoints in a SAN identified by ID.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -440,12 +440,12 @@ in OneView, just stop waiting for its completion.</li>
 <p>SAN Managers API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.fc_sans.san_managers.SanManagers.PROVIDER_URI">
-<code class="descname">PROVIDER_URI</code><em class="property"> = u’/rest/fc-sans/providers’</em><a class="headerlink" href="#hpOneView.resources.fc_sans.san_managers.SanManagers.PROVIDER_URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">PROVIDER_URI</code><em class="property"> = u'/rest/fc-sans/providers'</em><a class="headerlink" href="#hpOneView.resources.fc_sans.san_managers.SanManagers.PROVIDER_URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.fc_sans.san_managers.SanManagers.URI">
-<code class="descname">URI</code><em class="property"> = u’/rest/fc-sans/device-managers’</em><a class="headerlink" href="#hpOneView.resources.fc_sans.san_managers.SanManagers.URI" title="Permalink to this definition">¶</a></dt>
+<code class="descname">URI</code><em class="property"> = u'/rest/fc-sans/device-managers'</em><a class="headerlink" href="#hpOneView.resources.fc_sans.san_managers.SanManagers.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -494,7 +494,7 @@ in OneView, just stop waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.fc_sans.san_managers.SanManagers.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>query=u”</em>, <em>sort=u”</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/san_managers.html#SanManagers.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.san_managers.SanManagers.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>query=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/san_managers.html#SanManagers.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.san_managers.SanManagers.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieves the list of registered SAN Managers.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
