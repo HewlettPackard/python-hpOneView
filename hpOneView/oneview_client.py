@@ -102,6 +102,7 @@ from hpOneView.resources.activity.events import Events
 from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPlans
 from hpOneView.resources.uncategorized.os_deployment_servers import OsDeploymentServers
 from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
+from hpOneView.resources.security.users import Users
 from hpOneView.resources.settings.appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfiguration
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
@@ -181,6 +182,7 @@ class OneViewClient(object):
         self.__os_deployment_plans = None
         self.__os_deployment_servers = None
         self.__certificate_rabbitmq = None
+        self.__users = None
         self.__appliance_time_and_locale_configuration = None
         self.__backups = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
@@ -1074,6 +1076,18 @@ class OneViewClient(object):
         if not self.__certificate_rabbitmq:
             self.__certificate_rabbitmq = CertificateRabbitMQ(self.__connection)
         return self.__certificate_rabbitmq
+
+    @property
+    def users(self):
+        """
+        Gets the Users API client.
+
+        Returns:
+            Users:
+        """
+        if not self.__users:
+            self.__users = Users(self.__connection)
+            return self.__users
 
     @property
     def appliance_time_and_locale_configuration(self):
