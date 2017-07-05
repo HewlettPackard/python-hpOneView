@@ -205,6 +205,21 @@ try:
 except HPOneViewException as e:
     print(e.msg)
 
+
+# Generate a new Server Profile Template based on an existing Server Profile
+new_spt = oneview_client.server_profiles.get_new_profile_template(basic_profile['uri'])
+print('\nNew SPT generated:')
+pprint(new_spt)
+
+new_spt['name'] = 'spt_generated_from_sp'
+
+new_spt = oneview_client.server_profile_templates.create(new_spt)
+print('\nNew SPT created successfully.')
+
+oneview_client.server_profile_templates.delete(new_spt)
+print('\nDropped recently created SPT.')
+
+
 # Delete the created server profile
 print("\nDelete the created server profile")
 oneview_client.server_profiles.delete(basic_profile)
