@@ -28,6 +28,7 @@ import mock
 from hpOneView.connection import connection
 from hpOneView.resources.security.users import Users
 from hpOneView.resources.resource import ResourceClient
+from hpOneView.exceptions import HPOneViewException
 
 
 class UsersTest(unittest.TestCase):
@@ -94,6 +95,20 @@ class UsersTest(unittest.TestCase):
     def test_get_by_called_once(self, mock_get):
         self._users.get_by('userName', 'OneViewSDK Test User')
         mock_get.assert_called_once_with('/rest/users/OneViewSDK Test User')
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_by_called_with_role(self, mock_get):
+        self._users.get_by('role', 'fakerole')
+        mock_get.assert_called_once_with('/rest/users/roles/users/fakerole')
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_by_called_with_something_invalid(self, mock_get):
+        try:
+            self._users.get_by('test', 'test')
+        except HPOneViewException as exception:
+            self.assertEqual('Only userName, name and role can be queried for this resource.', exception.args[0])
+        else:
+            self.fail("Expected Exception was not raised")
 
     @mock.patch.object(ResourceClient, 'create_with_zero_body')
     def test_validate_full_name_called_once(self, mock_create_with_zero_body):
