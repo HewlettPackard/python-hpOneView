@@ -1087,7 +1087,7 @@ class OneViewClient(object):
         """
         if not self.__users:
             self.__users = Users(self.__connection)
-            return self.__users
+        return self.__users
 
     @property
     def appliance_time_and_locale_configuration(self):
