@@ -38,6 +38,7 @@ Legacy code under hpOneView which was marked as deprecated is being removed. Thi
 - SAS logical JBOD
 - SAS logical JBOD attachment
 - Scope
+- Server hardware
 - Server profile
 - Server profile template
 - Switch
