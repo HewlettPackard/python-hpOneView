@@ -44,13 +44,6 @@ options = {
     "password": config['storage_system_password']
 }
 
-options_500 = {
-    "hostname": config['storage_system_hostname'],
-    "username": config['storage_system_username'],
-    "password": config['storage_system_password'],
-    "family": config['storage_system_family']
-}
-
 oneview_client = OneViewClient(config)
 
 # Add and update storage system for management
