@@ -28,10 +28,7 @@ import mock
 from hpOneView.connection import connection
 from hpOneView.resources.security.users import Users
 from hpOneView.resources.resource import ResourceClient
-<<<<<<< HEAD
 from hpOneView.exceptions import HPOneViewException
-=======
->>>>>>> Adding users resource and tests
 
 
 class UsersTest(unittest.TestCase):
@@ -99,7 +96,6 @@ class UsersTest(unittest.TestCase):
         self._users.get_by('userName', 'OneViewSDK Test User')
         mock_get.assert_called_once_with('/rest/users/OneViewSDK Test User')
 
-<<<<<<< HEAD
     @mock.patch.object(ResourceClient, 'get')
     def test_get_by_called_with_role(self, mock_get):
         self._users.get_by('role', 'fakerole')
@@ -114,8 +110,6 @@ class UsersTest(unittest.TestCase):
         else:
             self.fail("Expected Exception was not raised")
 
-=======
->>>>>>> Adding users resource and tests
     @mock.patch.object(ResourceClient, 'create_with_zero_body')
     def test_validate_full_name_called_once(self, mock_create_with_zero_body):
 
