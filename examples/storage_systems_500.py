@@ -22,7 +22,6 @@
 ###
 
 from pprint import pprint
-import re
 from hpOneView.oneview_client import OneViewClient
 from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
@@ -63,7 +62,8 @@ except HPOneViewException as e:
 # Adds managed domains and managed pools to StoreServ storage systems
 # This is a one-time only action, after this you cannot change the managed values
 if not storage_system['deviceSpecificAttributes']['managedDomain']:
-    storage_system['deviceSpecificAttributes']['managedDomain'] = storage_system['deviceSpecificAttributes']['discoveredDomains'][0]
+    storage_system['deviceSpecificAttributes']['managedDomain'] = storage_system[
+        'deviceSpecificAttributes']['discoveredDomains'][0]
     for pool in storage_system['deviceSpecificAttributes']['discoveredPools']:
         if pool['domain'] == storage_system['deviceSpecificAttributes']['managedDomain']:
             pool_to_manage = pool

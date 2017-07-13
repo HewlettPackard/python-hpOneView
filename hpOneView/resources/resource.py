@@ -198,7 +198,7 @@ class ResourceClient(object):
         """
 
         uri = self.build_query_uri(start=start, count=count, filter=filter,
-                              query=query, sort=sort, view=view, fields=fields, uri=uri)
+                                   query=query, sort=sort, view=view, fields=fields, uri=uri)
 
         logger.debug('Getting all resources with uri: {0}'.format(uri))
 

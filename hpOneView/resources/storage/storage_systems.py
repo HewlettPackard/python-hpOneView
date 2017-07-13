@@ -30,7 +30,6 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-
 from hpOneView.resources.resource import ResourceClient
 
 
@@ -158,7 +157,7 @@ class StorageSystems(object):
         Returns:
             dict: Details of associated resource.
         """
-        headers = {'If-Match': resource.get('eTag', '*')}
+        headers = {'If-Match': dict(eTag='*')}
         return self._client.delete(resource, force=force, timeout=timeout, custom_headers=headers)
 
     def get_managed_ports(self, id_or_uri, port_id_or_uri=''):
@@ -262,10 +261,14 @@ class StorageSystems(object):
         uri = self._client.build_uri(id_or_uri) + "/reachable-ports"
 
         if networks:
-            uri = uri + "?networks=" + quote(networks)
+            elements = "\'"
+            for n in networks:
+                elements += n + ','
+            elements = elements[:-1] + "\'"
+            uri = uri + "?networks=" + elements
 
         return self._client.get(self._client.build_query_uri(start=start, count=count, filter=filter, query=query,
-                                                sort=sort, uri=uri))
+                                                             sort=sort, uri=uri))
 
     def get_templates(self, id_or_uri, start=0, count=-1, filter='', query='', sort=''):
         """
@@ -276,4 +279,4 @@ class StorageSystems(object):
         """
         uri = self._client.build_uri(id_or_uri) + "/templates"
         return self._client.get(self._client.build_query_uri(start=start, count=count, filter=filter,
-                                                query=query, sort=sort, uri=uri))
+                                                             query=query, sort=sort, uri=uri))
