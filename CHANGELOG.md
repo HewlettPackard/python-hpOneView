@@ -1,4 +1,5 @@
-# v4.0.0
+
+# v4.0.0 (Unreleased)
 #### Notes
 Major release which extends support of the SDK to OneView Rest API version 500 (OneView v3.10).
 
@@ -34,7 +35,7 @@ Legacy code under hpOneView which was marked as deprecated is being removed. Thi
 - SAS interconnect
 - SAS interconnect type
 - SAS logical interconnect
-- SAS logical interconnect groups
+- SAS logical interconnect group
 - SAS logical JBOD
 - SAS logical JBOD attachment
 - Scope
@@ -42,6 +43,7 @@ Legacy code under hpOneView which was marked as deprecated is being removed. Thi
 - Server hardware type
 - Server profile
 - Server profile template
+- Storage system
 - Switch
 - Switch type
 - Uplink set
