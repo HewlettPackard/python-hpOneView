@@ -29,10 +29,10 @@ from config_loader import try_load_from_file
 # This example is compatible only for C7000 enclosures
 
 config = {
-    "ip": "172.16.102.59",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
@@ -85,7 +85,6 @@ try:
 except HPOneViewException as e:
     print(e.msg)
 
-# Update environmental configuration
 print("Retrieve the environmental configuration data for the enclosure")
 try:
     environmental_configuration = oneview_client.enclosures.get_environmental_configuration(enclosure_uri)
