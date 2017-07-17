@@ -642,13 +642,6 @@ uri = {
     'association': '/rest/index/associations',
     'tree': '/rest/index/trees',
     'search-suggestion': '/rest/index/search-suggestions',
-    # 'GetAllNetworks': ('/index/rest/index/resources'
-    #                   '?sort=name:asc&category=fc-networks'
-    #                   '&category=networks&start=0&count=-1'),
-    # 'GetEthNetworks': ('/index/rest/index/resources'
-    #                   '?sort=name:asc&category=networks&start=0&count=-1'),
-    # 'GetFcNetworks': ('/index/rest/index/resources'
-    #                  '?sort=name:asc&category=fc-networks&start=0&count=-1'),
     # ------------------------------------
     #  Logging and Tracking
     # ------------------------------------
