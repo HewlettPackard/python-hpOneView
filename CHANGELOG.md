@@ -7,10 +7,10 @@ Major release which extends support of the SDK to OneView Rest API version 500 (
  1. Extended support of SDK to API500.
  2. Added CHANGELOG and officially adopted Semantic Versioning for the SDK.
  3. Updated example files for most resources for improved readability and usability.
- 4. General cleanup and deprecation of old modules.
+ 4. General cleanup and removal of deprecated methods.
 
 #### Breaking changes
-Legacy code under hpOneView which was marked as deprecated is being removed. This will cause scripts which still use legacy code to stop working. HPE recommends switching to the new modules which are officially supported.
+Legacy code under hpOneView which was marked as deprecated has been removed. This will cause scripts which still use legacy code to stop working. HPE recommends switching to the new modules which are officially supported.
 
 #### Features supported with current release:
 - Connection template

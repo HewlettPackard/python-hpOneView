@@ -800,3 +800,39 @@ class ResourceClient(object):
             merged_resource = merge_resources(data, resource)
 
         return merged_resource or resource
+
+
+def transform_list_to_dict(list):
+    """
+        Transforms a list into a dictionary, putting values as keys
+    Args:
+        id:
+    Returns:
+        dict: dictionary built
+    """
+
+    ret = {}
+
+    for value in list:
+        if isinstance(value, dict):
+            ret.update(value)
+        else:
+            ret[str(value)] = True
+
+    return ret
+
+
+def extract_id_from_uri(id_or_uri):
+    """
+    Extract ID from the end of the URI
+
+    Args:
+        id_or_uri: ID or URI of the OneView resources.
+
+    Returns:
+        str: The string founded after the last "/"
+    """
+    if '/' in id_or_uri:
+        return id_or_uri[id_or_uri.rindex('/') + 1:]
+    else:
+        return id_or_uri
