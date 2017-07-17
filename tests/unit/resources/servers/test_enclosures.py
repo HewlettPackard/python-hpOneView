@@ -86,7 +86,7 @@ class EnclosuresTest(TestCase):
 
         self._enclosures.patch('123a53cz', 'replace', '/name', 'new_name', 1)
         mock_patch.assert_called_once_with('123a53cz', 'replace', '/name', 'new_name',
-                                           custom_headers={u'If-Match': u'*'}, timeout=1)
+                                           custom_headers={'If-Match': '*'}, timeout=1)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_remove_called_once(self, mock_delete):
