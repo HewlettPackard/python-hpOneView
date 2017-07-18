@@ -183,7 +183,7 @@ class StorageSystemsTest(unittest.TestCase):
     @mock.patch.object(ResourceClient, 'delete')
     def test_remove_called_once(self, mock_delete):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        if_match_header = {'If-Match': dict(eTag='*')}
+        if_match_header = {'If-Match': '*'}
         self._storage_systems.remove(id, force=True, timeout=50)
 
         mock_delete.assert_called_once_with(id, force=True, timeout=50, custom_headers=if_match_header)
@@ -191,7 +191,7 @@ class StorageSystemsTest(unittest.TestCase):
     @mock.patch.object(ResourceClient, 'delete')
     def test_remove_called_once_with_defaults(self, mock_delete):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        if_match_header = {'If-Match': dict(eTag='*')}
+        if_match_header = {'If-Match': '*'}
         self._storage_systems.remove(id)
 
         mock_delete.assert_called_once_with(id, force=False, timeout=-1, custom_headers=if_match_header)
