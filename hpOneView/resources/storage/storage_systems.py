@@ -157,7 +157,7 @@ class StorageSystems(object):
         Returns:
             dict: Details of associated resource.
         """
-        headers = {'If-Match': dict(eTag='*')}
+        headers = {'If-Match': '*'}
         return self._client.delete(resource, force=force, timeout=timeout, custom_headers=headers)
 
     def get_managed_ports(self, id_or_uri, port_id_or_uri=''):
