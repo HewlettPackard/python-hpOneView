@@ -44,7 +44,8 @@ class Scopes(object):
     URI = '/rest/scopes'
 
     DEFAULT_VALUES = {
-        '300': {"type": "Scope"}
+        '300': {"type": "Scope"},
+        '500': {"type": "ScopeV2"}
     }
 
     def __init__(self, con):
@@ -178,3 +179,23 @@ class Scopes(object):
         headers = {'Content-Type': 'application/json'}
 
         return self._client.patch_request(uri, resource_assignments, timeout=timeout, custom_headers=headers)
+
+    def patch(self, id_or_uri, operation, path, value, timeout=-1):
+        """
+        Uses the PATCH to update a resource for the given scope.
+
+        Only one operation can be performed in each PATCH call.
+
+        Args:
+            id_or_uri: Can be either the resource ID or the resource URI.
+            operation: Patch operation
+            path: Path
+            value: Value
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            dict: Updated resource.
+        """
+        headers = {'Content-Type': 'application/json-patch+json'}
+        return self._client.patch(id_or_uri, operation, path, value, timeout=timeout, custom_headers=headers)

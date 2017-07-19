@@ -27,10 +27,10 @@ from config_loader import try_load_from_file
 from hpOneView.oneview_client import OneViewClient
 
 config = {
-    "ip": "",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
@@ -44,33 +44,33 @@ datacenter_information = {
     "width": 5000, "depth": 5000
 }
 
-# Add a Data Center
+# Add a Datacenter
 datacenter_added = oneview_client.datacenters.add(datacenter_information)
-print('Added Data Center {name} successfully\n'.format(**datacenter_added))
+print("\nAdded Datacenter '{name}' successfully\n".format(**datacenter_added))
 
-# Retrieve Data Center by URI
+# Retrieve Datacenter by URI
 datacenter = oneview_client.datacenters.get(datacenter_added['uri'])
-print('Get Data Center by URI: retrieved {name} successfully\n'.format(**datacenter))
+print("\nGet Datacenter by URI: retrieved '{name}' successfully\n".format(**datacenter))
 
-# Update the Data Center
-datacenter['name'] = "New Data Center Name"
+# Update the Datacenter
+datacenter['name'] = "New Datacenter Name"
 datacenter = oneview_client.datacenters.update(datacenter)
-print('Data Center {name} updated successfully\n'.format(**datacenter))
+print("\nDatacenter '{name}' updated successfully\n".format(**datacenter))
 
-# Get the Data Center by name
-datacenter_list = oneview_client.datacenters.get_by('name', "New Data Center Name")
-print('Get Data Center device by name: {name}\n'.format(**datacenter))
+# Get the Datacenter by name
+datacenter_list = oneview_client.datacenters.get_by('name', "New Datacenter Name")
+print("\nGet Datacenter device by name: '{name}'\n".format(**datacenter))
 
-# Get the Data Center visual content
-print("Getting the Data Center visual content...")
+# Get the Datacenter visual content
+print("Getting the Datacenter visual content...")
 datacenter_visual_content = oneview_client.datacenters.get_visual_content(datacenter['uri'])
 pprint(datacenter_visual_content)
 
-# Remove added Data Center
+# Remove added Datacenter
 oneview_client.datacenters.remove(datacenter)
-print("\nSuccessfully removed the data center")
+print("\nSuccessfully removed the datacenter")
 
-# Add a data center again and call Remove All
+# Add a datacenter again and call Remove All
 datacenter_added = oneview_client.datacenters.add(datacenter_information)
 oneview_client.datacenters.remove_all(filter="name matches '%'")
-print("\nSuccessfully removed all data centers")
+print("\nSuccessfully removed all datacenters")

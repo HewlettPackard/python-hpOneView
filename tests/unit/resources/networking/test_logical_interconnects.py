@@ -644,3 +644,12 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
         mock_update.assert_called_once_with(self.telemetry_config, uri=uri_rest_call, timeout=-1,
                                             default_values=self.tc_default_values)
+
+    @mock.patch.object(ResourceClient, 'patch')
+    def test_patch_should_use_user_defined_values(self, mock_patch):
+        mock_patch.return_value = {}
+
+        self._logical_interconnect.patch('rest/fake/logicalinterconnect123', 'replace',
+                                         '/scopeUris', ['rest/fake/scope123'], 1)
+        mock_patch.assert_called_once_with('rest/fake/logicalinterconnect123', 'replace',
+                                           '/scopeUris', ['rest/fake/scope123'], timeout=1)

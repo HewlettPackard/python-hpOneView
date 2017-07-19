@@ -29,10 +29,10 @@ from hpOneView.exceptions import HPOneViewException
 from hpOneView.oneview_client import OneViewClient
 
 config = {
-    "ip": "172.16.102.59",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
@@ -40,6 +40,9 @@ config = {
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
+
+# Define the scope name to add the logical interconnect group to it
+scope_name = ""
 
 # Get the interconnect type named 'HP VC FlexFabric 10Gb/24-Port Module' and using the uri in the values for the fields
 # "permittedInterconnectTypeUri" and create a Logical Interconnect Group.
@@ -201,7 +204,7 @@ ligs = oneview_client.logical_interconnect_groups.get_all(
     0, 10, sort='name:descending', filter="\"'name'='OneView Test Logical Interconnect Group'\"")
 pprint(ligs)
 
-# Get Logical Interconnect by property
+# Get Logical Interconnect Group by property
 lig = oneview_client.logical_interconnect_groups.get_by('name', 'OneView Test Logical Interconnect Group')[0]
 print("Found lig by name: '%s'.\n  uri = '%s'" % (lig['name'], lig['uri']))
 
@@ -232,6 +235,16 @@ try:
     pprint(lig_byuri)
 except HPOneViewException as e:
     print(e.msg)
+
+# Performs a patch operation
+scope = oneview_client.scopes.get_by_name(scope_name)
+if scope:
+    print("\nPatches the logical interconnect group adding one scope to it")
+    updated_lig = oneview_client.logical_interconnect_groups.patch(updated_lig['uri'],
+                                                                   'replace',
+                                                                   '/scopeUris',
+                                                                   [scope['uri']])
+    pprint(updated_lig)
 
 # Get default settings
 print("Get the default interconnect settings for a logical interconnect group")

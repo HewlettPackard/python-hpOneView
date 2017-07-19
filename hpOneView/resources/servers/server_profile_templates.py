@@ -56,7 +56,8 @@ class ServerProfileTemplate(object):
 
     DEFAULT_VALUES = {
         '200': {'type': 'ServerProfileTemplateV1'},
-        '300': {'type': 'ServerProfileTemplateV2'}
+        '300': {'type': 'ServerProfileTemplateV2'},
+        '500': {'type': 'ServerProfileTemplateV3'}
     }
 
     def __init__(self, con):

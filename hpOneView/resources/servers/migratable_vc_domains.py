@@ -71,8 +71,7 @@ class MigratableVcDomains(object):
 
         Args:
            migrationInformation: A dict specifying the enclosure, OA username, OA password, VCM username, and VCM
-               password among other things.  Use hpOneView.common.make_migration_information to easily create this
-               dict.
+               password among other things.  Use make_migration_information to easily create this dict.
            timeout: Timeout in seconds.  Waits for task completion by default.  The timeout does not abort the task in
                OneView; just stops waiting for its completion.
 

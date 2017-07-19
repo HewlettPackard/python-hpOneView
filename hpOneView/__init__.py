@@ -56,20 +56,8 @@ elif PYTHON_VERSION < (3, 4):
         warning_message += ' Use of Python v3.4+ is advised.'
         warnings.warn(warning_message % '.'.join(map(str, PYTHON_VERSION)), Warning)
 
-from hpOneView.common import *
 from hpOneView.connection import *
-from hpOneView.servers import *
-from hpOneView.activity import *
-from hpOneView.networking import *
-from hpOneView.security import *
-from hpOneView.settings import *
 from hpOneView.exceptions import *
-from hpOneView.search import *
-from hpOneView.metrics import *
-from hpOneView.storage import *
-from hpOneView.fcsans import *
-from hpOneView.facilities import *
-from hpOneView.uncategorized import *
 
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 

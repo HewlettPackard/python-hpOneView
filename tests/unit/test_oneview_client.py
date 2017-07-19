@@ -73,7 +73,8 @@ from hpOneView.resources.uncategorized.os_deployment_servers import OsDeployment
 from hpOneView.resources.activity.alerts import Alerts
 from hpOneView.resources.activity.events import Events
 from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
-
+from hpOneView.resources.security.users import Users
+from hpOneView.resources.settings.appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfiguration
 from tests.test_utils import mock_builtin
 
 OS_ENVIRON_CONFIG_MINIMAL = {
@@ -732,3 +733,18 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_certificate_rabbitmq(self):
         certificate_rabbitmq = self._oneview.certificate_rabbitmq
         self.assertEqual(certificate_rabbitmq, self._oneview.certificate_rabbitmq)
+
+    def test_users_has_right_type(self):
+        self.assertIsInstance(self._oneview.users, Users)
+
+    def test_lazy_loading_users(self):
+        user = self._oneview.users
+        self.assertEqual(user, self._oneview.users)
+
+    def test_appliance_time_and_locale_configuration_has_right_type(self):
+        self.assertIsInstance(self._oneview.appliance_time_and_locale_configuration,
+                              ApplianceTimeAndLocaleConfiguration)
+
+    def test_lazy_loading_appliance_time_and_locale_configuration(self):
+        appliance_time_and_locale_configuration = self._oneview.appliance_time_and_locale_configuration
+        self.assertEqual(appliance_time_and_locale_configuration, self._oneview.appliance_time_and_locale_configuration)

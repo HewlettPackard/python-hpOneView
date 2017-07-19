@@ -43,7 +43,8 @@ class ServerProfiles(object):
 
     DEFAULT_VALUES = {
         '200': {"type": "ServerProfileV5"},
-        '300': {"type": "ServerProfileV6"}
+        '300': {"type": "ServerProfileV6"},
+        '500': {"type": "ServerProfileV7"}
     }
 
     def __init__(self, con):
@@ -418,3 +419,16 @@ class ServerProfiles(object):
 
         query_string = '&'.join('{}={}'.format(key, kwargs[key]) for key in sorted(kwargs))
         return uri + sufix_path + '?' + query_string
+
+    def get_new_profile_template(self, id_or_uri):
+        """
+        Retrieves the profile template for a given server profile.
+
+        Args:
+            id_or_uri: Can be either the server profile resource ID or URI.
+
+        Returns:
+            dict: Server profile template.
+        """
+        uri = self._client.build_uri(id_or_uri) + '/new-profile-template'
+        return self._client.get(uri)

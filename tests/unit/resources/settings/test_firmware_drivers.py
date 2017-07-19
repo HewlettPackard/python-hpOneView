@@ -93,6 +93,19 @@ class FirmwareDriversTest(TestCase):
         self.resource.get(firmware_id)
         mock_get.assert_called_once_with(firmware_id)
 
+    @mock.patch.object(ResourceClient, 'create')
+    def test_create_should_use_given_values(self, mock_create):
+        resource = {
+            'customBaselineName': 'FirmwareDriver1_Example',
+            'baselineUri': '/rest/fakespp',
+            'hotfixUris': ['/rest/fakehotfix']
+        }
+        resource_rest_call = resource.copy()
+        mock_create.return_value = {}
+
+        self.resource.create(resource, 30)
+        mock_create.assert_called_once_with(resource_rest_call, timeout=30)
+
     @mock.patch.object(ResourceClient, 'delete')
     def test_remove(self, mock_delete):
         fake_firmware = dict(name='Service Pack for ProLiant.iso')

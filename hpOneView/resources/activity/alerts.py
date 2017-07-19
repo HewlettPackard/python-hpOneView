@@ -31,8 +31,7 @@ from future import standard_library
 standard_library.install_aliases()
 
 
-from hpOneView.resources.resource import ResourceClient
-from hpOneView import extract_id_from_uri
+from hpOneView.resources.resource import ResourceClient, extract_id_from_uri
 
 
 class Alerts(object):

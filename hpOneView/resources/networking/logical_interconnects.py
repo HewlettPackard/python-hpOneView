@@ -49,17 +49,20 @@ class LogicalInterconnects(object):
 
     SETTINGS_DEFAULT_VALUES = {
         '200': {"type": "InterconnectSettingsV3"},
-        '300': {"type": "InterconnectSettingsV201"}
+        '300': {"type": "InterconnectSettingsV201"},
+        '500': {"type": "InterconnectSettingsV201"}
     }
 
     SETTINGS_ETHERNET_DEFAULT_VALUES = {
         '200': {"type": "EthernetInterconnectSettingsV3"},
-        '300': {"type": "EthernetInterconnectSettingsV201"}
+        '300': {"type": "EthernetInterconnectSettingsV201"},
+        '500': {"type": "EthernetInterconnectSettingsV201"}
     }
 
     SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES = {
         '200': {"type": "telemetry-configuration"},
-        '300': {"type": "telemetry-configuration"}
+        '300': {"type": "telemetry-configuration"},
+        '500': {"type": "telemetry-configuration"}
     }
 
     def __init__(self, con):
@@ -496,3 +499,22 @@ class LogicalInterconnects(object):
         """
         uri = self._client.build_uri(id_or_uri) + '/ethernetSettings'
         return self._client.get(uri)
+
+    def patch(self, id_or_uri, operation, path, value, timeout=-1):
+        """
+        Uses the PATCH to update a resource for a given logical interconnect.
+
+        Only one operation can be performed in each PATCH call.
+
+        Args:
+            id_or_uri: Can be either the resource ID or the resource URI.
+            operation: Patch operation
+            path: Path
+            value: Value
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            dict: Updated resource.
+        """
+        return self._client.patch(id_or_uri, operation, path, value, timeout=timeout)

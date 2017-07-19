@@ -1,3 +1,55 @@
+
+# v4.0.0 (Unreleased)
+#### Notes
+Major release which extends support of the SDK to OneView Rest API version 500 (OneView v3.10).
+
+#### Major changes
+ 1. Extended support of SDK to API500.
+ 2. Added CHANGELOG and officially adopted Semantic Versioning for the SDK.
+ 3. Updated example files for most resources for improved readability and usability.
+ 4. General cleanup and removal of deprecated methods and classes.
+
+#### Breaking changes
+Legacy code under hpOneView which was marked as deprecated has been removed. This will cause scripts which still use legacy code to stop working. HPE recommends switching to the new modules which are officially supported.
+
+#### Features supported with current release:
+- Connection template
+- Datacenter
+- Enclosure
+- Enclosure group
+- Ethernet network
+- Fabric
+- FC network
+- FCOE network
+- Firmware bundle
+- Firmware driver
+- Interconnect
+- Logical downlink
+- Logical interconnect
+- Logical interconnect group
+- Logical switch
+- Logical switch group
+- Managed SAN
+- Network set
+- Rack
+- SAN manager
+- SAS interconnect
+- SAS interconnect type
+- SAS logical interconnect
+- SAS logical interconnect group
+- SAS logical JBOD
+- SAS logical JBOD attachment
+- Scope
+- Server hardware
+- Server hardware type
+- Server profile
+- Server profile template
+- Storage system
+- Switch
+- Switch type
+- Uplink set
+- User
+
 # v3.3.0
 ### Version highlights:
 1. Added CHANGELOG to track versions, issues and improvements.

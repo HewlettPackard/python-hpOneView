@@ -43,7 +43,8 @@ class FcoeNetworks(object):
 
     DEFAULT_VALUES = {
         '200': {"type": "fcoe-network"},
-        '300': {"type": "fcoe-networkV300"}
+        '300': {"type": "fcoe-networkV300"},
+        '500': {"type": "fcoe-networkV300"}
     }
 
     def __init__(self, con):
@@ -146,3 +147,22 @@ class FcoeNetworks(object):
             list: A list of FCoE networks.
         """
         return self._client.get_by(field, value)
+
+    def patch(self, id_or_uri, operation, path, value, timeout=-1):
+        """
+        Uses the PATCH to update the given resource.
+
+        Only one operation can be performed in each PATCH call.
+
+        Args:
+            id_or_uri: Can be either the resource ID or the resource URI.
+            operation: Patch operation
+            path: Path
+            value: Value
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            dict: Updated resource.
+        """
+        return self._client.patch(id_or_uri, operation, path, value, timeout=timeout)

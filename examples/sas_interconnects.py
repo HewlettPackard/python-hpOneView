@@ -29,10 +29,10 @@ from config_loader import try_load_from_file
 # This resource is only available on HPE Synergy
 
 config = {
-    "ip": "172.16.102.164",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
@@ -42,7 +42,7 @@ config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
 
 # Get all, with defaults
-print("Get all SAS Interconnects")
+print("\nGet all SAS Interconnects")
 all_sas_interconnects = oneview_client.sas_interconnects.get_all()
 pprint(all_sas_interconnects)
 

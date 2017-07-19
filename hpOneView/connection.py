@@ -49,7 +49,6 @@ import os
 import ssl
 import time
 
-from hpOneView.common import uri, get_members, get_member, make_eula_dict, make_initial_password_change_dict
 from hpOneView.exceptions import HPOneViewException
 
 logger = logging.getLogger(__name__)
@@ -527,3 +526,179 @@ class connection(object):
         an explicit ETag. This method sets an If-Match header of "*".
         """
         self._headers['If-Match'] = '*'
+
+
+uri = {
+    # ------------------------------------
+    # Settings
+    # ------------------------------------
+    'globalSettings': '/rest/global-settings',
+    'vol-tmplate-policy': '/rest/global-settings/StorageVolumeTemplateRequired',
+    'eulaStatus': '/rest/appliance/eula/status',
+    'eulaSave': '/rest/appliance/eula/save',
+    'serviceAccess': '/rest/appliance/settings/enableServiceAccess',
+    'service': '/rest/appliance/settings/serviceaccess',
+    'applianceNetworkInterfaces': '/rest/appliance/network-interfaces',
+    'healthStatus': '/rest/appliance/health-status',
+    'version': '/rest/version',
+    'supportDump': '/rest/appliance/support-dumps',
+    'backups': '/rest/backups',
+    'archive': '/rest/backups/archive',
+    'dev-read-community-str': '/rest/appliance/device-read-community-string',
+    'licenses': '/rest/licenses',
+    'nodestatus': '/rest/appliance/nodeinfo/status',
+    'nodeversion': '/rest/appliance/nodeinfo/version',
+    'shutdown': '/rest/appliance/shutdown',
+    'trap': '/rest/appliance/trap-destinations',
+    'restores': '/rest/restores',
+    'domains': '/rest/domains',
+    'schema': '/rest/domains/schema',
+    'progress': '/rest/appliance/progress',
+    'appliance-firmware': '/rest/appliance/firmware/image',
+    'fw-pending': '/rest/appliance/firmware/pending',
+    # ------------------------------------
+    # Security
+    # ------------------------------------
+    'activeSessions': '/rest/active-user-sessions',
+    'loginSessions': '/rest/login-sessions',
+    'users': '/rest/users',
+    'userRole': '/rest/users/role',
+    'changePassword': '/rest/users/changePassword',
+    'roles': '/rest/roles',
+    'category-actions': '/rest/authz/category-actions',
+    'role-category-actions': '/rest/authz/role-category-actions',
+    'validator': '/rest/authz/validator',
+    # ------------------------------------
+    # Facilities
+    # ------------------------------------
+    'datacenters': '/rest/datacenters',
+    'powerDevices': '/rest/power-devices',
+    'powerDevicesDiscover': '/rest/power-devices/discover',
+    'racks': '/rest/racks',
+    # ------------------------------------
+    # Systems
+    # ------------------------------------
+    'servers': '/rest/server-hardware',
+    'server-hardware-types': '/rest/server-hardware-types',
+    'enclosures': '/rest/enclosures',
+    'enclosureGroups': '/rest/enclosure-groups',
+    'enclosurePreview': '/rest/enclosure-preview',
+    'fwUpload': '/rest/firmware-bundles',
+    'fwDrivers': '/rest/firmware-drivers',
+    # ------------------------------------
+    # Connectivity
+    # ------------------------------------
+    'conn': '/rest/connections',
+    'ct': '/rest/connection-templates',
+    'enet': '/rest/ethernet-networks',
+    'fcnet': '/rest/fc-networks',
+    'nset': '/rest/network-sets',
+    'li': '/rest/logical-interconnects',
+    'lig': '/rest/logical-interconnect-groups',
+    'ic': '/rest/interconnects',
+    'ictype': '/rest/interconnect-types',
+    'uplink-sets': '/rest/uplink-sets',
+    'ld': '/rest/logical-downlinks',
+    'idpool': '/rest/id-pools',
+    'vmac-pool': '/rest/id-pools/vmac',
+    'vwwn-pool': '/rest/id-pools/vwwn',
+    'vsn-pool': '/rest/id-pools/vsn',
+    # ------------------------------------
+    #  Server Profiles
+    # ------------------------------------
+    'profiles': '/rest/server-profiles',
+    'profile-templates': '/rest/server-profile-templates',
+    'profile-networks': '/rest/server-profiles/available-networks',
+    'profile-networks-schema': '/rest/server-profiles/available-networks/schema',
+    'profile-available-servers': '/rest/server-profiles/available-servers',
+    'profile-available-servers-schema': '/rest/server-profiles/available-servers/schema',
+    'profile-available-storage-system': '/rest/server-profiles/available-storage-system',
+    'profile-available-storage-systems': '/rest/server-profiles/available-storage-systems',
+    'profile-available-targets': '/rest/server-profiles/available-targets',
+    'profile-messages-schema': '/rest/server-profiles/messages/schema',
+    'profile-ports': '/rest/server-profiles/profile-ports',
+    'profile-ports-schema': '/rest/server-profiles/profile-ports/schema',
+    'profile-schema': '/rest/server-profiles/schema',
+    # ------------------------------------
+    #  Health
+    # ------------------------------------
+    'alerts': '/rest/alerts',
+    'events': '/rest/events',
+    'audit-logs': '/rest/audit-logs',
+    'audit-logs-download': '/rest/audit-logs/download',
+    # ------------------------------------
+    #  Certificates
+    # ------------------------------------
+    'certificates': '/rest/certificates',
+    'ca': '/rest/certificates/ca',
+    'crl': '/rest/certificates/ca/crl',
+    'rabbitmq-kp': '/rest/certificates/client/rabbitmq/keypair',
+    'rabbitmq': '/rest/certificates/client/rabbitmq',
+    'cert-https': '/rest/certificates/https',
+    # ------------------------------------
+    #  Searching and Indexing
+    # ------------------------------------
+    'resource': '/rest/index/resources',
+    'association': '/rest/index/associations',
+    'tree': '/rest/index/trees',
+    'search-suggestion': '/rest/index/search-suggestions',
+    # ------------------------------------
+    #  Logging and Tracking
+    # ------------------------------------
+    'task': '/rest/tasks',
+    # ------------------------------------
+    # Storage
+    # ------------------------------------
+    'storage-pools': '/rest/storage-pools',
+    'storage-systems': '/rest/storage-systems',
+    'storage-volumes': '/rest/storage-volumes',
+    'vol-templates': '/rest/storage-volume-templates',
+    'connectable-vol': '/rest/storage-volume-templates/connectable-volume-templates',
+    'attachable-volumes': '/rest/storage-volumes/attachable-volumes',
+    # ------------------------------------
+    # FC-SANS
+    # ------------------------------------
+    'device-managers': '/rest/fc-sans/device-managers',
+    'managed-sans': '/rest/fc-sans/managed-sans',
+    'providers': '/rest/fc-sans/providers',
+    # ------------------------------------
+    # Metrcs
+    # ------------------------------------
+    'metricsCapabilities': '/rest/metrics/capability',
+    'metricsConfiguration': '/rest/metrics/configuration',
+    # ------------------------------------
+    # Uncategorized
+    # ------------------------------------
+    'unmanaged-devices': '/rest/unmanaged-devices'
+}
+
+############################################################################
+# Utility to print resource to standard output
+############################################################################
+
+
+def get_members(mlist):
+    if not mlist:
+        return []
+    if not mlist['members']:
+        return []
+    return mlist['members']
+
+
+def get_member(mlist):
+    if not mlist:
+        return None
+    if not mlist['members']:
+        return None
+    return mlist['members'][0]
+
+
+def make_eula_dict(supportAccess):
+    return {'supportAccess': supportAccess}
+
+
+def make_initial_password_change_dict(userName, oldPassword, newPassword):
+    return {
+        'userName': userName,
+        'oldPassword': oldPassword,
+        'newPassword': newPassword}

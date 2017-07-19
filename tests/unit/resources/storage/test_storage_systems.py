@@ -183,16 +183,18 @@ class StorageSystemsTest(unittest.TestCase):
     @mock.patch.object(ResourceClient, 'delete')
     def test_remove_called_once(self, mock_delete):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        if_match_header = {'If-Match': '*'}
         self._storage_systems.remove(id, force=True, timeout=50)
 
-        mock_delete.assert_called_once_with(id, force=True, timeout=50)
+        mock_delete.assert_called_once_with(id, force=True, timeout=50, custom_headers=if_match_header)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_remove_called_once_with_defaults(self, mock_delete):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        if_match_header = {'If-Match': '*'}
         self._storage_systems.remove(id)
 
-        mock_delete.assert_called_once_with(id, force=False, timeout=-1)
+        mock_delete.assert_called_once_with(id, force=False, timeout=-1, custom_headers=if_match_header)
 
     @mock.patch.object(ResourceClient, 'get_by')
     def test_get_by_called_once(self, mock_get_by):
@@ -238,3 +240,41 @@ class StorageSystemsTest(unittest.TestCase):
         result = self._storage_systems.get_by_ip_hostname("30.0.0.0")
         get_all.assert_called_once()
         self.assertIsNone(result)
+
+    @mock.patch.object(ResourceClient, 'get_all')
+    def test_get_by_hostname(self, get_all):
+        get_all.return_value = [
+            {"hostname": "10.0.0.0",
+             "username": "username"},
+            {"hostname": "20.0.0.0",
+             "username": "username"}
+        ]
+
+        result = self._storage_systems.get_by_hostname("20.0.0.0")
+        get_all.assert_called_once()
+        self.assertEqual(
+            {"hostname": "20.0.0.0",
+             "username": "username"}, result)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_reachable_ports_called_once(self, mock_get):
+        storage_systems_uri = "/rest/storage-systems/TXQ1010306"
+        reachable_ports_uri = "/rest/storage-systems/TXQ1010306/reachable-ports?start=0&count=-1"
+        self._storage_systems.get_reachable_ports(storage_systems_uri)
+        mock_get.assert_called_once_with(reachable_ports_uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_reachable_ports_called_once_with_networks(self, mock_get):
+        storage_systems_uri = "/rest/storage-systems/TXQ1010306"
+        networks = ['rest/net1', 'rest/net2']
+        reachable_ports_uri = "/rest/storage-systems/TXQ1010306/reachable-ports" \
+                              "?networks='rest/net1,rest/net2'&start=0&count=-1"
+        self._storage_systems.get_reachable_ports(storage_systems_uri, networks=networks)
+        mock_get.assert_called_once_with(reachable_ports_uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_templates_called_once(self, mock_get):
+        storage_systems_uri = "/rest/storage-systems/TXQ1010306"
+        templates_uri = "/rest/storage-systems/TXQ1010306/templates?start=0&count=-1"
+        self._storage_systems.get_templates(storage_systems_uri)
+        mock_get.assert_called_once_with(templates_uri)

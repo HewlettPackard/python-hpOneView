@@ -27,10 +27,10 @@ from config_loader import try_load_from_file
 from hpOneView.oneview_client import OneViewClient
 
 config = {
-    "ip": "",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
@@ -56,6 +56,9 @@ options_bulk = {
     },
     "type": "bulk-ethernet-network"
 }
+
+# Scope name to perform the patch operation
+scope_name = ""
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
@@ -134,6 +137,15 @@ for uri in uplink_group_uris:
     uplink_groups.append(oneview_client.uplink_sets.get(uri))
 pprint(uplink_groups)
 
+# Adds ethernet to scope defined
+if scope_name:
+    print("\nGet scope then add the network to it")
+    scope = oneview_client.scopes.get_by_name(scope_name)
+    ethernet_with_scope = oneview_client.ethernet_networks.patch(ethernet_network_uri,
+                                                                 'replace',
+                                                                 '/scopeUris',
+                                                                 [scope['uri']])
+    pprint(ethernet_with_scope)
 
 # Delete bulk ethernet networks
 print("\nDelete bulk ethernet networks")

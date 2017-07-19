@@ -28,10 +28,10 @@ from config_loader import try_load_from_file
 # This resource is only available on HPE Synergy
 
 config = {
-    "ip": "172.16.102.59",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
@@ -83,26 +83,26 @@ data = {
     "interconnectBaySet": 1
 }
 sas_lig_created = oneview_client.sas_logical_interconnect_groups.create(data)
-print("SAS Logical Interconnect Group '{name}' created successfully.\n  uri = '{uri}'".format(**sas_lig_created))
+print("\nSAS Logical Interconnect Group '{name}' created successfully.\n  uri = '{uri}'".format(**sas_lig_created))
 
 # Get all SAS Logical Interconnect Groups
-print("Get all SAS Logical Interconnect Groups")
+print("\nGet all SAS Logical Interconnect Groups")
 sas_ligs = oneview_client.sas_logical_interconnect_groups.get_all()
 for sas_lig in sas_ligs:
-    print("   '{name}' at uri: {uri}".format(**sas_lig))
+    print("\n   '{name}' at uri: {uri}".format(**sas_lig))
 
 # Get a SAS Logical Interconnect Group by URI
-print("Get a SAS Logical Interconnect Group by URI")
+print("\nGet a SAS Logical Interconnect Group by URI")
 sas_lig_found_by_uri = oneview_client.sas_logical_interconnect_groups.get(sas_lig_created['uri'])
 pprint(sas_lig_found_by_uri)
 
 # Get a SAS Logical Interconnect Group by name
-print("Get a SAS Logical Interconnect Group by name")
+print("\nGet a SAS Logical Interconnect Group by name")
 sas_lig_found_by_name = oneview_client.sas_logical_interconnect_groups.get_by('name', data['name'])
-print("   '{name}' at uri: {uri}".format(**sas_lig_found_by_name[0]))
+print("\n   '{name}' at uri: {uri}".format(**sas_lig_found_by_name[0]))
 
 # Update the SAS Logical Interconnect Group
-print("Update the SAS Logical Interconnect Group")
+print("\nUpdate the SAS Logical Interconnect Group")
 resource_to_update = sas_lig_created.copy()
 resource_to_update['name'] = 'Test SAS Logical Interconnect Group - Renamed'
 
@@ -111,4 +111,4 @@ pprint(sas_lig_updated)
 
 # Delete the SAS Logical Interconnect Group
 oneview_client.sas_logical_interconnect_groups.delete(sas_lig_updated)
-print("SAS Logical Interconnect Group deleted successfully")
+print("\nSAS Logical Interconnect Group deleted successfully")

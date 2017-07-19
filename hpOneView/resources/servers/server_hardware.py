@@ -424,3 +424,17 @@ class ServerHardware(object):
         """
         uri = self._client.build_uri(id_or_uri) + "/remoteConsoleUrl"
         return self._client.get(uri)
+
+    def get_physical_server_hardware(self, id_or_uri):
+        """
+        Information describing an 'SDX' partition including a list of physical server blades represented by a server
+        hardware. Used with SDX enclosures only.
+
+        Args:
+            id_or_uri: Can be either the server hardware resource ID or URI.
+
+        Returns:
+            Resource
+        """
+        uri = self._client.build_uri(id_or_uri) + "/physicalServerHardware"
+        return self._client.get(uri)

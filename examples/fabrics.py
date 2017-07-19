@@ -28,14 +28,14 @@ from hpOneView.exceptions import HPOneViewException
 from hpOneView.oneview_client import OneViewClient
 
 config = {
-    "ip": "",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
-# To run this example you must to defined here a fabric id
+# To run the get operations by ID, an ID must be defined bellow
 fabric_id = 'a7896ce7-c11d-4658-829d-142bc66a85e4'
 
 # Try load config from a file (if there is a config file)
@@ -69,8 +69,8 @@ pprint(fabric_byname)
 # These methods are available for API version 300 or later
 if oneview_client.api_version >= 300:
     # Get reserved vlan ID range for the fabric.
-    print("\nGet reserved vlan ID range for the fabric")
-    vlan_pool = oneview_client.fabrics.get_reserved_vlan_range(fabric_id)
+    print("\nGet reserved vlan ID range for the fabric '%s'." % fabric_byname['name'])
+    vlan_pool = oneview_client.fabrics.get_reserved_vlan_range(fabric_byname['uri'])
     pprint(vlan_pool)
 
     # Update the reserved vlan ID range for the fabric
@@ -78,6 +78,6 @@ if oneview_client.api_version >= 300:
         "start": 100,
         "length": 100
     }
-    print("\nUpdate the reserved vlan ID range for the fabric.")
-    fabric_byname = oneview_client.fabrics.update_reserved_vlan_range(fabric_id, vlan_pool_data)
+    print("\nUpdate the reserved vlan ID range for the fabric '%s'." % fabric_byname['name'])
+    fabric_byname = oneview_client.fabrics.update_reserved_vlan_range(fabric_byname['uri'], vlan_pool_data)
     pprint(fabric_byname)

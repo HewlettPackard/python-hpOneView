@@ -28,10 +28,10 @@ from config_loader import try_load_from_file
 # This resource is only available on HPE Synergy
 
 config = {
-    "ip": "172.16.102.59",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
@@ -40,7 +40,7 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-print("Get all SAS logical JBODs")
+print("\nGet all SAS logical JBODs")
 all_sas_logical_jbods = oneview_client.sas_logical_jbods.get_all()
 pprint(all_sas_logical_jbods)
 

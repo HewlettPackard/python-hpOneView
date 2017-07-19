@@ -119,3 +119,11 @@ class NetworkSetsTest(unittest.TestCase):
         self._network_sets.get_all_without_ethernet(2, 500, filter, sort)
 
         mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort)
+
+    @mock.patch.object(ResourceClient, 'patch')
+    def test_patch_should_use_user_defined_values(self, mock_patch):
+        mock_patch.return_value = {}
+
+        self._network_sets.patch('/rest/fake/ns123', 'replace', '/scopeUris', ['/rest/fake/scope123'], 1)
+        mock_patch.assert_called_once_with('/rest/fake/ns123', 'replace', '/scopeUris',
+                                           ['/rest/fake/scope123'], timeout=1)

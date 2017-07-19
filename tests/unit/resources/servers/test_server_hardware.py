@@ -336,3 +336,12 @@ class ServerHardwareTest(TestCase):
                                            '/uidState',
                                            'On',
                                            timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_physical_server_hardware(self, mock_get):
+        uri_server_hardware = '/rest/server-hardware/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/server-hardware/ad28cf21-8b15-4f92-bdcf-51cb2042db32/physicalServerHardware'
+
+        self._server_hardware.get_physical_server_hardware(uri_server_hardware)
+
+        mock_get.assert_called_once_with(uri_rest_call)

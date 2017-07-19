@@ -27,10 +27,10 @@ from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
@@ -39,28 +39,30 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
+# Add the ID of the switch to be retrieved
+switch_id = 'd017f9e4-e967-42ee-aacc-d6ad5797a175'
+
 # Get all supported switch types
-print("Get all supported switch types")
+print("\nGet all supported switch types:")
 switch_types = oneview_client.switch_types.get_all()
 pprint(switch_types, depth=2)
 
 # Get all sorting by name descending
-print("Get all switch-types sorting by name")
+print("\nGet all switch-types sorting by name:")
 switch_types_sorted = oneview_client.switch_types.get_all(
     sort='name:descending')
 pprint(switch_types_sorted, depth=2)
 
 # Get by Id
 try:
-    print("Get a switch_types by id")
-    switch_types_byid = oneview_client.switch_types.get(
-        'deb37db8-7822-4adb-8c1d-0c34d2fc11ca')
+    print("\nGet a switch_types by id:")
+    switch_types_byid = oneview_client.switch_types.get(switch_id)
     pprint(switch_types_byid, depth=1)
 except HPOneViewException as e:
     print(e.msg)
 
 # Get by name
-print("Get a switch_types by name")
+print("\nGet a switch_types by name:")
 switch_type_byname = oneview_client.switch_types.get_by(
-    'name', 'Cisco Nexus 6xxx')[0]
+    'name', switch_types[0]['name'])[0]
 pprint(switch_type_byname, depth=1)

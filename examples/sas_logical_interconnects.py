@@ -28,10 +28,10 @@ from config_loader import try_load_from_file
 # This resource is only available on HPE Synergy
 
 config = {
-    "ip": "172.16.102.59",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
@@ -47,28 +47,13 @@ config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
 
 # Get by ID
-print("Get a SAS Logical Interconnect by ID")
-sas_logical_interconnect = oneview_client.sas_logical_interconnects.get(sas_logical_interconnect_id)
-pprint(sas_logical_interconnect)
-
-# Get installed firmware
-print("Get the installed firmware for a SAS Logical Interconnect that matches the specified ID.")
-firmware = oneview_client.sas_logical_interconnects.get_firmware(sas_logical_interconnect_id)
-pprint(firmware)
-
-# # Install the firmware to a SAS Logical Interconnect (time-consuming operation)
-# print("Install the firmware to a SAS Logical Interconnect that matches the specified ID.")
-# firmware_to_install = {
-#     "command": "Update",
-#     "force": "false",
-#     "sppUri": firmware_driver_uri
-# }
-# installed_firmware = oneview_client.sas_logical_interconnects.update_firmware(firmware_to_install,
-#                                                                               sas_logical_interconnect_id)
-# pprint(installed_firmware)
+if sas_logical_interconnect_id:
+    print("\nGet a SAS Logical Interconnect by ID")
+    sas_logical_interconnect = oneview_client.sas_logical_interconnects.get(sas_logical_interconnect_id)
+    pprint(sas_logical_interconnect)
 
 # Get all SAS Logical Interconnects
-print("Get all SAS Logical Interconnects")
+print("\nGet all SAS Logical Interconnects")
 logical_interconnects = oneview_client.sas_logical_interconnects.get_all()
 for sas_logical_interconnect in logical_interconnects:
     print('  Name: {name}'.format(**sas_logical_interconnect))
@@ -76,31 +61,47 @@ for sas_logical_interconnect in logical_interconnects:
 sas_logical_interconnect = logical_interconnects[0]
 
 # Re-applies the configuration on the SAS Logical Interconnect
-print("Re-applies the configuration on the SAS Logical Interconnect")
+print("\nRe-applies the configuration on the SAS Logical Interconnect")
 sas_logical_interconnect = oneview_client.sas_logical_interconnects.update_configuration(
     sas_logical_interconnect['uri'])
-print("  Done.")
+print("\n  Done.")
 
 # Return the SAS Logical Interconnect to a consistent state
-print("Return the SAS Logical Interconnect to a consistent state")
+print("\nReturn the SAS Logical Interconnect to a consistent state")
 sas_logical_interconnect = oneview_client.sas_logical_interconnects.update_compliance(sas_logical_interconnect['uri'])
-print("  Done. The current consistency state is {consistencyStatus}.".format(**sas_logical_interconnect))
+print("\n  Done. The current consistency state is {consistencyStatus}.".format(**sas_logical_interconnect))
 
 # Return the SAS Logical Interconnect list to a consistent state
-print("Return the SAS Logical Interconnect list to a consistent state")
+print("\nReturn the SAS Logical Interconnect list to a consistent state")
 compliance_uris = [
     "/rest/sas-logical-interconnects/" + sas_logical_interconnect_id
 ]
 sas_logical_interconnect = oneview_client.sas_logical_interconnects.update_compliance_all(compliance_uris)
-print("  Done. The current consistency state is {consistencyStatus}.".format(**sas_logical_interconnect))
+print("\n  Done. The current consistency state is {consistencyStatus}.".format(**sas_logical_interconnect))
 
-# # Replace Drive Enclosure (This example only works with real hardware)
-# print("Replacing Drive Enclosure")
-# drive_replacement = {
-#     "oldSerialNumber": "S46016710000J4524YPT",
-#     "newSerialNumber": "S46016710001J4524YPT"
-# }
-# drive_replacement_output = oneview_client.sas_logical_interconnects.replace_drive_enclosure(
-#     drive_replacement,
-#     sas_logical_interconnect['uri'])
-# pprint(drive_replacement_output)
+# Replace Drive Enclosure (This example only works with real hardware)
+print("\nReplacing Drive Enclosure")
+drive_replacement = {
+    "oldSerialNumber": "S46016710000J4524YPT",
+    "newSerialNumber": "S46016710001J4524YPT"
+}
+drive_replacement_output = oneview_client.sas_logical_interconnects.replace_drive_enclosure(
+    drive_replacement,
+    sas_logical_interconnect['uri'])
+pprint(drive_replacement_output)
+
+# Get installed firmware
+print("\nGet the installed firmware for a SAS Logical Interconnect that matches the specified ID.")
+firmware = oneview_client.sas_logical_interconnects.get_firmware(sas_logical_interconnect_id)
+pprint(firmware)
+
+# Install the firmware to a SAS Logical Interconnect (time-consuming operation)
+print("\nInstall the firmware to a SAS Logical Interconnect that matches the specified ID.")
+firmware_to_install = {
+    "command": "Update",
+    "force": "false",
+    "sppUri": firmware_driver_uri
+}
+installed_firmware = oneview_client.sas_logical_interconnects.update_firmware(firmware_to_install,
+                                                                              sas_logical_interconnect_id)
+pprint(installed_firmware)

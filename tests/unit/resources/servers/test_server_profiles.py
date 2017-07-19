@@ -222,3 +222,11 @@ class ServerProfilesTest(TestCase):
         self._resource.get_available_targets(enclosureGroupUri=enclosure_group_uri,
                                              serverHardwareTypeUri=server_hardware_type_uri)
         mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_new_profile_template(self, mock_get):
+        server_uri = "/rest/server-profiles/4ff2327f-7638-4b66-ad9d-283d4940a4ae"
+        uri = "/rest/server-profiles/4ff2327f-7638-4b66-ad9d-283d4940a4ae/new-profile-template"
+
+        self._resource.get_new_profile_template(server_uri)
+        mock_get.assert_called_once_with(uri)

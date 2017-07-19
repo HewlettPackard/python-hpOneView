@@ -187,6 +187,16 @@ if oneview_client.api_version >= 300:
     p = oneview_client.server_hardware.get_all_firmwares(filter="serverName='0000A66103, bay 3'")
     pprint(p)
 
+if oneview_client.api_version >= 500:
+    # Get information describing an 'SDX' partition including a list of physical server blades represented by a
+    # server hardware. Only supported by SDX enclosures.
+    print("Get SDX physical server hardware")
+    try:
+        sdx_server = oneview_client.server_hardware.get_physical_server_hardware(server_hardware_id)
+        pprint(sdx_server)
+    except HPOneViewException as e:
+        print(e.msg)
+
 # Remove rack server
-oneview_client.enclosures.remove(server)
+oneview_client.server_hardware.remove(server)
 print("Server removed successfully")

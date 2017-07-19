@@ -44,7 +44,8 @@ class Users(object):
 
     DEFAULT_VALUES = {
         '200': {'type': 'UserAndRoles'},
-        '300': {'type': 'UserAndRoles'}
+        '300': {'type': 'UserAndRoles'},
+        '500': {'type': 'UserAndRoles'}
     }
 
     def __init__(self, con):

@@ -270,3 +270,32 @@ class Interconnects(object):
         """
         uri = self._client.build_subresource_uri(id_or_uri, port_id_or_uri, "ports")
         return self._client.get(uri)
+
+    def get_pluggable_module_information(self, id_or_uri):
+        """
+        Gets all the pluggable module information.
+
+        Args:
+            id_or_uri: Can be either the interconnect id or uri.
+
+        Returns:
+            array: dicts of the pluggable module information.
+        """
+        uri = self._client.build_uri(id_or_uri) + "/pluggableModuleInformation"
+        return self._client.get(uri)
+
+    def update_configuration(self, id_or_uri, timeout=-1):
+        """
+        Reapplies the appliance's configuration on the interconnect. This includes running the same configure steps
+        that were performed as part of the interconnect add by the enclosure.
+
+        Args:
+            id_or_uri: Can be either the resource ID or the resource URI.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            Interconnect
+        """
+        uri = self._client.build_uri(id_or_uri) + "/configuration"
+        return self._client.update_with_zero_body(uri, timeout=timeout)

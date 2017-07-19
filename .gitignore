@@ -33,6 +33,7 @@ pip-log.txt
 .coverage
 .tox
 nosetests.xml
+htmlcov
 
 # Translations
 *.mo
@@ -45,6 +46,7 @@ nosetests.xml
 #coverage
 coverage.xml
 .coverage
+htmlcov
 
 #virtualenv
 env

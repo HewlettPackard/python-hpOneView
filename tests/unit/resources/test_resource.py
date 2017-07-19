@@ -31,7 +31,7 @@ from hpOneView.connection import connection
 from hpOneView.exceptions import HPOneViewUnknownType, HPOneViewException, HPOneViewValueError
 from hpOneView.resources.resource import merge_resources, merge_default_values
 from hpOneView.resources.resource import ResourceClient, RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor, \
-    RESOURCE_CLIENT_TASK_EXPECTED, RESOURCE_ID_OR_URI_REQUIRED
+    RESOURCE_CLIENT_TASK_EXPECTED, RESOURCE_ID_OR_URI_REQUIRED, transform_list_to_dict, extract_id_from_uri
 
 
 class ResourceTest(unittest.TestCase):
@@ -1323,3 +1323,37 @@ class ResourceClientTest(unittest.TestCase):
         result = self.resource_client.download(uri, file_path)
 
         self.assertFalse(result)
+
+    def test_transform_list_to_dict(self):
+        list = ['one', 'two', {'tree': 3}, 'four', 5]
+
+        dict_transformed = transform_list_to_dict(list=list)
+
+        self.assertEqual(dict_transformed,
+                         {'5': True,
+                          'four': True,
+                          'one': True,
+                          'tree': 3,
+                          'two': True})
+
+    def test_extract_id_from_uri(self):
+        uri = '/rest/plan-scripts/3518be0e-17c1-4189-8f81-83f3724f6155'
+        id = '3518be0e-17c1-4189-8f81-83f3724f6155'
+        extracted_id = extract_id_from_uri(uri)
+        self.assertEqual(id, extracted_id)
+
+    def test_extract_id_from_uri_with_extra_slash(self):
+        uri = '/rest/plan-scripts/3518be0e-17c1-4189-8f81-83f3724f6155/'
+        extracted_id = extract_id_from_uri(uri)
+        self.assertEqual(extracted_id, '')
+
+    def test_extract_id_from_uri_passing_id(self):
+        uri = '3518be0e-17c1-4189-8f81-83f3724f6155'
+        extracted_id = extract_id_from_uri(uri)
+        self.assertEqual(extracted_id, '3518be0e-17c1-4189-8f81-83f3724f6155')
+
+    def test_extract_id_from_uri_unsupported(self):
+        # This example is not supported yet
+        uri = '/rest/plan-scripts/3518be0e-17c1-4189-8f81-83f3724f6155/otherthing'
+        extracted_id = extract_id_from_uri(uri)
+        self.assertEqual(extracted_id, 'otherthing')

@@ -39,39 +39,39 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-server_hardware_id = '2CC18AED-9725-4726-ABEC-DEB829B68C4C'
+server_hardware_type_id = 'F9D1B4B0-F8BB-4FB7-B973-4882A547F081'
 
 # Get the first 10 records, sorting by name descending
-print("Get the first 10 server hardware types, sorting by name descending, filtering by name")
+print("\nGet the first 10 server hardware types, sorting by name descending, filtering by name")
 server_hardware_types = oneview_client.server_hardware_types.get_all(0, 10, sort='name:descending')
 pprint(server_hardware_types, depth=2)
 
 # Get all, with defaults
-print("Get all server hardware types")
+print("\nGet all server hardware types")
 server_hardware_types = oneview_client.server_hardware_types.get_all()
 pprint(server_hardware_types, depth=3)
 
 # Get by uri
 try:
-    print("Get a Server Hardware Type by uri")
-    uri = '/rest/server-hardware-types/' + server_hardware_id
-    server_hardware_type_byuri = oneview_client.server_hardware_types.get(uri)
-    pprint(server_hardware_type_byuri, depth=2)
+    print("\nGet a Server Hardware Type by uri")
+    uri = '/rest/server-hardware-types/' + server_hardware_type_id
+    server_hardware_type_by_uri = oneview_client.server_hardware_types.get(uri)
+    pprint(server_hardware_type_by_uri, depth=2)
 except HPOneViewException as e:
     print(e.msg)
 
 # Get by Id and update
 try:
-    print("Get a Server Hardware Type by id")
-    server_hardware_type_byid = oneview_client.server_hardware_types.get(server_hardware_id)
-    pprint(server_hardware_type_byid, depth=2)
+    print("\nGet a Server Hardware Type by id")
+    server_hardware_type_by_id = oneview_client.server_hardware_types.get(server_hardware_type_id)
+    pprint(server_hardware_type_by_id, depth=2)
     update = {
         'description': "Updated Description"
     }
     server_hardware_type_updated = oneview_client.server_hardware_types.update(
         update,
-        server_hardware_type_byid['uri'])
-    print("Server Hardware type '{}' updated: \n 'description': '{}'".format(
+        server_hardware_type_by_id['uri'])
+    print("\nServer Hardware type '{}' updated: \n 'description': '{}'".format(
         server_hardware_type_updated['name'],
         server_hardware_type_updated['description']))
 except HPOneViewException as e:
@@ -79,9 +79,9 @@ except HPOneViewException as e:
 
 # Get by ID and delete server hardware type
 try:
-    print("Get a Server Hardware Type by id")
-    server_hardware_type_delete = oneview_client.server_hardware_types.get(server_hardware_id)
+    print("\nGet a Server Hardware Type by id")
+    server_hardware_type_delete = oneview_client.server_hardware_types.get(server_hardware_type_id)
     oneview_client.server_hardware_types.delete(server_hardware_type_delete)
-    print("successfully deleted Server Hardware Type")
+    print("  successfully deleted Server Hardware Type")
 except HPOneViewException as e:
     print(e.msg)

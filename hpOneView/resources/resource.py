@@ -96,9 +96,9 @@ class ResourceClient(object):
         self._uri = uri
         self._task_monitor = TaskMonitor(con)
 
-    def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None):
+    def build_query_uri(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None):
         """
-        Gets all items according with the given arguments.
+        Builds the URI given the parameters.
 
         More than one request can be send to get the items, regardless the query parameter 'count', because the actual
         number of items in the response might differ from the requested count. Some types of resource have a limited
@@ -137,8 +137,9 @@ class ResourceClient(object):
                 A specific URI (optional)
 
         Returns:
-            list: A list of items matching the specified filter.
+            uri: The complete uri
         """
+
         if filter:
             filter = self.__make_query_filter(filter)
 
@@ -161,6 +162,43 @@ class ResourceClient(object):
 
         uri = "{0}{1}start={2}&count={3}{4}{5}{6}{7}{8}".format(path, symbol, start, count, filter, query, sort,
                                                                 view, fields)
+
+        return uri
+
+    def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None):
+        """
+        Gets all items according with the given arguments.
+
+        Args:
+            start:
+                The first item to return, using 0-based indexing.
+                If not specified, the default is 0 - start with the first available item.
+            count:
+                The number of resources to return. A count of -1 requests all items (default).
+            filter (list or str):
+                A general filter/query string to narrow the list of items returned. The default is no
+                filter; all resources are returned.
+            query:
+                A single query parameter can do what would take multiple parameters or multiple GET requests using
+                filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.
+            sort:
+                The sort order of the returned data set. By default, the sort order is based on create time with the
+                oldest entry first.
+            view:
+                Returns a specific subset of the attributes of the resource or collection by specifying the name of a
+                predefined view. The default view is expand (show all attributes of the resource and all elements of
+                the collections or resources).
+            fields:
+                Name of the fields.
+            uri:
+                A specific URI (optional)
+
+        Returns:
+            list: A list of items matching the specified filter.
+        """
+
+        uri = self.build_query_uri(start=start, count=count, filter=filter,
+                                   query=query, sort=sort, view=view, fields=fields, uri=uri)
 
         logger.debug('Getting all resources with uri: {0}'.format(uri))
 
@@ -762,3 +800,39 @@ class ResourceClient(object):
             merged_resource = merge_resources(data, resource)
 
         return merged_resource or resource
+
+
+def transform_list_to_dict(list):
+    """
+        Transforms a list into a dictionary, putting values as keys
+    Args:
+        id:
+    Returns:
+        dict: dictionary built
+    """
+
+    ret = {}
+
+    for value in list:
+        if isinstance(value, dict):
+            ret.update(value)
+        else:
+            ret[str(value)] = True
+
+    return ret
+
+
+def extract_id_from_uri(id_or_uri):
+    """
+    Extract ID from the end of the URI
+
+    Args:
+        id_or_uri: ID or URI of the OneView resources.
+
+    Returns:
+        str: The string founded after the last "/"
+    """
+    if '/' in id_or_uri:
+        return id_or_uri[id_or_uri.rindex('/') + 1:]
+    else:
+        return id_or_uri

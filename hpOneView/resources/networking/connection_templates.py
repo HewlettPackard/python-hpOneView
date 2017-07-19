@@ -43,7 +43,8 @@ class ConnectionTemplates(object):
 
     DEFAULT_VALUES = {
         '200': {"type": "connection-template"},
-        '300': {"type": "connection-template"}
+        '300': {"type": "connection-template"},
+        '500': {"type": "connection-template"}
     }
 
     def __init__(self, con):

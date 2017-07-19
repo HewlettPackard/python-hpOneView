@@ -30,7 +30,6 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-
 from hpOneView.resources.resource import ResourceClient
 
 
@@ -158,7 +157,8 @@ class StorageSystems(object):
         Returns:
             dict: Details of associated resource.
         """
-        return self._client.delete(resource, force=force, timeout=timeout)
+        headers = {'If-Match': '*'}
+        return self._client.delete(resource, force=force, timeout=timeout, custom_headers=headers)
 
     def get_managed_ports(self, id_or_uri, port_id_or_uri=''):
         """
@@ -212,6 +212,8 @@ class StorageSystems(object):
         """
         Retrieve a storage system by its IP.
 
+        Works only with API version <= 300.
+
         Args:
             ip_hostname: Storage system IP or hostname.
 
@@ -226,3 +228,55 @@ class StorageSystems(object):
             return resources_filtered[0]
         else:
             return None
+
+    def get_by_hostname(self, hostname):
+        """
+        Retrieve a storage system by its hostname.
+
+        Works only in API500 onwards.
+
+        Args:
+            hostname: Storage system hostname.
+
+        Returns:
+            dict
+        """
+        resources = self._client.get_all()
+
+        resources_filtered = [x for x in resources if x['hostname'] == hostname]
+
+        if resources_filtered:
+            return resources_filtered[0]
+        else:
+            return None
+
+    def get_reachable_ports(self, id_or_uri, start=0, count=-1, filter='', query='', sort='', networks=[]):
+        """
+        Gets the storage ports that are connected on the specified networks
+        based on the storage system port's expected network connectivity.
+
+        Returns:
+            list: Reachable Storage Port List.
+        """
+        uri = self._client.build_uri(id_or_uri) + "/reachable-ports"
+
+        if networks:
+            elements = "\'"
+            for n in networks:
+                elements += n + ','
+            elements = elements[:-1] + "\'"
+            uri = uri + "?networks=" + elements
+
+        return self._client.get(self._client.build_query_uri(start=start, count=count, filter=filter, query=query,
+                                                             sort=sort, uri=uri))
+
+    def get_templates(self, id_or_uri, start=0, count=-1, filter='', query='', sort=''):
+        """
+        Gets a list of volume templates. Returns a list of storage templates belonging to the storage system.
+
+        Returns:
+            list: Storage Template List.
+        """
+        uri = self._client.build_uri(id_or_uri) + "/templates"
+        return self._client.get(self._client.build_query_uri(start=start, count=count, filter=filter,
+                                                             query=query, sort=sort, uri=uri))
