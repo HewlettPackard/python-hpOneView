@@ -204,7 +204,6 @@
 <span class="kn">import</span> <span class="nn">ssl</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="kn">from</span> <span class="nn">hpOneView.common</span> <span class="k">import</span> <span class="n">uri</span><span class="p">,</span> <span class="n">get_members</span><span class="p">,</span> <span class="n">get_member</span><span class="p">,</span> <span class="n">make_eula_dict</span><span class="p">,</span> <span class="n">make_initial_password_change_dict</span>
 <span class="kn">from</span> <span class="nn">hpOneView.exceptions</span> <span class="k">import</span> <span class="n">HPOneViewException</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -682,6 +681,182 @@
 <span class="sd">        an explicit ETag. This method sets an If-Match header of &quot;*&quot;.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="p">[</span><span class="s1">&#39;If-Match&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span></div></div>
+
+
+<span class="n">uri</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="c1"># Settings</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="s1">&#39;globalSettings&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/global-settings&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;vol-tmplate-policy&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/global-settings/StorageVolumeTemplateRequired&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;eulaStatus&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/appliance/eula/status&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;eulaSave&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/appliance/eula/save&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;serviceAccess&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/appliance/settings/enableServiceAccess&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;service&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/appliance/settings/serviceaccess&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;applianceNetworkInterfaces&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/appliance/network-interfaces&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;healthStatus&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/appliance/health-status&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/version&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;supportDump&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/appliance/support-dumps&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;backups&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/backups&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;archive&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/backups/archive&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;dev-read-community-str&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/appliance/device-read-community-string&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;licenses&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/licenses&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;nodestatus&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/appliance/nodeinfo/status&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;nodeversion&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/appliance/nodeinfo/version&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;shutdown&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/appliance/shutdown&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;trap&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/appliance/trap-destinations&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;restores&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/restores&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;domains&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/domains&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;schema&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/domains/schema&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;progress&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/appliance/progress&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;appliance-firmware&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/appliance/firmware/image&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fw-pending&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/appliance/firmware/pending&#39;</span><span class="p">,</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="c1"># Security</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="s1">&#39;activeSessions&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/active-user-sessions&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;loginSessions&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/login-sessions&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;users&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/users&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;userRole&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/users/role&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;changePassword&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/users/changePassword&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;roles&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/roles&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;category-actions&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/authz/category-actions&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;role-category-actions&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/authz/role-category-actions&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;validator&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/authz/validator&#39;</span><span class="p">,</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="c1"># Facilities</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="s1">&#39;datacenters&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/datacenters&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;powerDevices&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/power-devices&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;powerDevicesDiscover&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/power-devices/discover&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;racks&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/racks&#39;</span><span class="p">,</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="c1"># Systems</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="s1">&#39;servers&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/server-hardware&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;server-hardware-types&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/server-hardware-types&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;enclosures&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/enclosures&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;enclosureGroups&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/enclosure-groups&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;enclosurePreview&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/enclosure-preview&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fwUpload&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/firmware-bundles&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fwDrivers&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/firmware-drivers&#39;</span><span class="p">,</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="c1"># Connectivity</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="s1">&#39;conn&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/connections&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ct&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/connection-templates&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;enet&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/ethernet-networks&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fcnet&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/fc-networks&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;nset&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/network-sets&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;li&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/logical-interconnects&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;lig&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/logical-interconnect-groups&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ic&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/interconnects&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ictype&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/interconnect-types&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;uplink-sets&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/uplink-sets&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ld&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/logical-downlinks&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;idpool&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/id-pools&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;vmac-pool&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/id-pools/vmac&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;vwwn-pool&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/id-pools/vwwn&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;vsn-pool&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/id-pools/vsn&#39;</span><span class="p">,</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="c1">#  Server Profiles</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="s1">&#39;profiles&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/server-profiles&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;profile-templates&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/server-profile-templates&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;profile-networks&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/server-profiles/available-networks&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;profile-networks-schema&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/server-profiles/available-networks/schema&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;profile-available-servers&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/server-profiles/available-servers&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;profile-available-servers-schema&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/server-profiles/available-servers/schema&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;profile-available-storage-system&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/server-profiles/available-storage-system&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;profile-available-storage-systems&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/server-profiles/available-storage-systems&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;profile-available-targets&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/server-profiles/available-targets&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;profile-messages-schema&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/server-profiles/messages/schema&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;profile-ports&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/server-profiles/profile-ports&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;profile-ports-schema&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/server-profiles/profile-ports/schema&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;profile-schema&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/server-profiles/schema&#39;</span><span class="p">,</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="c1">#  Health</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="s1">&#39;alerts&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/alerts&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;events&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/events&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;audit-logs&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/audit-logs&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;audit-logs-download&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/audit-logs/download&#39;</span><span class="p">,</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="c1">#  Certificates</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="s1">&#39;certificates&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/certificates&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ca&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/certificates/ca&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;crl&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/certificates/ca/crl&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;rabbitmq-kp&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/certificates/client/rabbitmq/keypair&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;rabbitmq&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/certificates/client/rabbitmq&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;cert-https&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/certificates/https&#39;</span><span class="p">,</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="c1">#  Searching and Indexing</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="s1">&#39;resource&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/index/resources&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;association&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/index/associations&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;tree&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/index/trees&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;search-suggestion&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/index/search-suggestions&#39;</span><span class="p">,</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="c1">#  Logging and Tracking</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/tasks&#39;</span><span class="p">,</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="c1"># Storage</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="s1">&#39;storage-pools&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/storage-pools&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;storage-systems&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/storage-systems&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;storage-volumes&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/storage-volumes&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;vol-templates&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/storage-volume-templates&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;connectable-vol&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/storage-volume-templates/connectable-volume-templates&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;attachable-volumes&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/storage-volumes/attachable-volumes&#39;</span><span class="p">,</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="c1"># FC-SANS</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="s1">&#39;device-managers&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/fc-sans/device-managers&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;managed-sans&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/fc-sans/managed-sans&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;providers&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/fc-sans/providers&#39;</span><span class="p">,</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="c1"># Metrcs</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="s1">&#39;metricsCapabilities&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/metrics/capability&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;metricsConfiguration&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/metrics/configuration&#39;</span><span class="p">,</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="c1"># Uncategorized</span>
+    <span class="c1"># ------------------------------------</span>
+    <span class="s1">&#39;unmanaged-devices&#39;</span><span class="p">:</span> <span class="s1">&#39;/rest/unmanaged-devices&#39;</span>
+<span class="p">}</span>
+
+<span class="c1">############################################################################</span>
+<span class="c1"># Utility to print resource to standard output</span>
+<span class="c1">############################################################################</span>
+
+
+<div class="viewcode-block" id="get_members"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.get_members">[docs]</a><span class="k">def</span> <span class="nf">get_members</span><span class="p">(</span><span class="n">mlist</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">mlist</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">mlist</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="k">return</span> <span class="n">mlist</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="get_member"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.get_member">[docs]</a><span class="k">def</span> <span class="nf">get_member</span><span class="p">(</span><span class="n">mlist</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">mlist</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">mlist</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">mlist</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="make_eula_dict"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.make_eula_dict">[docs]</a><span class="k">def</span> <span class="nf">make_eula_dict</span><span class="p">(</span><span class="n">supportAccess</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;supportAccess&#39;</span><span class="p">:</span> <span class="n">supportAccess</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="make_initial_password_change_dict"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.make_initial_password_change_dict">[docs]</a><span class="k">def</span> <span class="nf">make_initial_password_change_dict</span><span class="p">(</span><span class="n">userName</span><span class="p">,</span> <span class="n">oldPassword</span><span class="p">,</span> <span class="n">newPassword</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;userName&#39;</span><span class="p">:</span> <span class="n">userName</span><span class="p">,</span>
+        <span class="s1">&#39;oldPassword&#39;</span><span class="p">:</span> <span class="n">oldPassword</span><span class="p">,</span>
+        <span class="s1">&#39;newPassword&#39;</span><span class="p">:</span> <span class="n">newPassword</span><span class="p">}</span></div>
 </pre></div>
 
            </div>

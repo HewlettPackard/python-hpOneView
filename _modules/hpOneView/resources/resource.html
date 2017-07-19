@@ -251,9 +251,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span> <span class="o">=</span> <span class="n">uri</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_task_monitor</span> <span class="o">=</span> <span class="n">TaskMonitor</span><span class="p">(</span><span class="n">con</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ResourceClient.get_all"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceClient.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ResourceClient.build_query_uri"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceClient.build_query_uri">[docs]</a>    <span class="k">def</span> <span class="nf">build_query_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets all items according with the given arguments.</span>
+<span class="sd">        Builds the URI given the parameters.</span>
 
 <span class="sd">        More than one request can be send to get the items, regardless the query parameter &#39;count&#39;, because the actual</span>
 <span class="sd">        number of items in the response might differ from the requested count. Some types of resource have a limited</span>
@@ -292,8 +292,9 @@
 <span class="sd">                A specific URI (optional)</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list: A list of items matching the specified filter.</span>
+<span class="sd">            uri: The complete uri</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="nb">filter</span><span class="p">:</span>
             <span class="nb">filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__make_query_filter</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
 
@@ -316,6 +317,43 @@
 
         <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}{1}</span><span class="s2">start=</span><span class="si">{2}</span><span class="s2">&amp;count=</span><span class="si">{3}{4}{5}{6}{7}{8}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">sort</span><span class="p">,</span>
                                                                 <span class="n">view</span><span class="p">,</span> <span class="n">fields</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">uri</span></div>
+
+<div class="viewcode-block" id="ResourceClient.get_all"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceClient.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets all items according with the given arguments.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start:</span>
+<span class="sd">                The first item to return, using 0-based indexing.</span>
+<span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
+<span class="sd">            count:</span>
+<span class="sd">                The number of resources to return. A count of -1 requests all items (default).</span>
+<span class="sd">            filter (list or str):</span>
+<span class="sd">                A general filter/query string to narrow the list of items returned. The default is no</span>
+<span class="sd">                filter; all resources are returned.</span>
+<span class="sd">            query:</span>
+<span class="sd">                A single query parameter can do what would take multiple parameters or multiple GET requests using</span>
+<span class="sd">                filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.</span>
+<span class="sd">            sort:</span>
+<span class="sd">                The sort order of the returned data set. By default, the sort order is based on create time with the</span>
+<span class="sd">                oldest entry first.</span>
+<span class="sd">            view:</span>
+<span class="sd">                Returns a specific subset of the attributes of the resource or collection by specifying the name of a</span>
+<span class="sd">                predefined view. The default view is expand (show all attributes of the resource and all elements of</span>
+<span class="sd">                the collections or resources).</span>
+<span class="sd">            fields:</span>
+<span class="sd">                Name of the fields.</span>
+<span class="sd">            uri:</span>
+<span class="sd">                A specific URI (optional)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of items matching the specified filter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_query_uri</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span>
+                                   <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Getting all resources with uri: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uri</span><span class="p">))</span>
 
@@ -917,6 +955,42 @@
             <span class="n">merged_resource</span> <span class="o">=</span> <span class="n">merge_resources</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">merged_resource</span> <span class="ow">or</span> <span class="n">resource</span></div></div>
+
+
+<div class="viewcode-block" id="transform_list_to_dict"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.transform_list_to_dict">[docs]</a><span class="k">def</span> <span class="nf">transform_list_to_dict</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transforms a list into a dictionary, putting values as keys</span>
+<span class="sd">    Args:</span>
+<span class="sd">        id:</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: dictionary built</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">ret</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ret</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="extract_id_from_uri"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.extract_id_from_uri">[docs]</a><span class="k">def</span> <span class="nf">extract_id_from_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract ID from the end of the URI</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        id_or_uri: ID or URI of the OneView resources.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: The string founded after the last &quot;/&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;/&#39;</span> <span class="ow">in</span> <span class="n">id_or_uri</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">id_or_uri</span><span class="p">[</span><span class="n">id_or_uri</span><span class="o">.</span><span class="n">rindex</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">id_or_uri</span></div>
 </pre></div>
 
            </div>

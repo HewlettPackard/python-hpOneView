@@ -301,6 +301,53 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>This class implements common functions for HpOneView API rest</p>
 <dl class="method">
+<dt id="hpOneView.resources.resource.ResourceClient.build_query_uri">
+<code class="descname">build_query_uri</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>view=u''</em>, <em>fields=u''</em>, <em>uri=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.build_query_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.build_query_uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds the URI given the parameters.</p>
+<p>More than one request can be send to get the items, regardless the query parameter ‘count’, because the actual
+number of items in the response might differ from the requested count. Some types of resource have a limited
+number of items returned on each call. For those resources, additional calls are made to the API to retrieve
+any other items matching the given filter. The actual number of items can also differ from the requested call
+if the requested number of items would take too long.</p>
+<p>The use of optional parameters for OneView 2.0 is described at:
+<a class="reference external" href="http://h17007.www1.hpe.com/docs/enterprise/servers/oneview2.0/cic-api/en/api-docs/current/index.html">http://h17007.www1.hpe.com/docs/enterprise/servers/oneview2.0/cic-api/en/api-docs/current/index.html</a></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Single quote - “’” - inside a query parameter is not supported by OneView API.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items (default).</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The default is no
+filter; all resources are returned.</li>
+<li><strong>query</strong> – A single query parameter can do what would take multiple parameters or multiple GET requests using
+filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.</li>
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based on create time with the
+oldest entry first.</li>
+<li><strong>view</strong> – Returns a specific subset of the attributes of the resource or collection by specifying the name of a
+predefined view. The default view is expand (show all attributes of the resource and all elements of
+the collections or resources).</li>
+<li><strong>fields</strong> – Name of the fields.</li>
+<li><strong>uri</strong> – A specific URI (optional)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The complete uri</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">uri</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.resource.ResourceClient.build_subresource_uri">
 <code class="descname">build_subresource_uri</code><span class="sig-paren">(</span><em>resource_id_or_uri=None</em>, <em>subresource_id_or_uri=None</em>, <em>subresource_path=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.build_subresource_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.build_subresource_uri" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -470,17 +517,6 @@ in OneView; it just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.resource.ResourceClient.get_all">
 <code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>view=u''</em>, <em>fields=u''</em>, <em>uri=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets all items according with the given arguments.</p>
-<p>More than one request can be send to get the items, regardless the query parameter ‘count’, because the actual
-number of items in the response might differ from the requested count. Some types of resource have a limited
-number of items returned on each call. For those resources, additional calls are made to the API to retrieve
-any other items matching the given filter. The actual number of items can also differ from the requested call
-if the requested number of items would take too long.</p>
-<p>The use of optional parameters for OneView 2.0 is described at:
-<a class="reference external" href="http://h17007.www1.hpe.com/docs/enterprise/servers/oneview2.0/cic-api/en/api-docs/current/index.html">http://h17007.www1.hpe.com/docs/enterprise/servers/oneview2.0/cic-api/en/api-docs/current/index.html</a></p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Single quote - “’” - inside a query parameter is not supported by OneView API.</p>
-</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -796,6 +832,24 @@ in OneView; it just stops waiting for its completion.</li>
 </dd></dl>
 
 <dl class="function">
+<dt id="hpOneView.resources.resource.extract_id_from_uri">
+<code class="descclassname">hpOneView.resources.resource.</code><code class="descname">extract_id_from_uri</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#extract_id_from_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.extract_id_from_uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract ID from the end of the URI</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the OneView resources.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The string founded after the last “/”</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="hpOneView.resources.resource.merge_default_values">
 <code class="descclassname">hpOneView.resources.resource.</code><code class="descname">merge_default_values</code><span class="sig-paren">(</span><em>resource_list</em>, <em>default_values</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#merge_default_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.merge_default_values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate a new list where each item of original resource_list will be merged with the default_values.</p>
@@ -839,6 +893,25 @@ the original value will be maintained.</li>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hpOneView.resources.resource.transform_list_to_dict">
+<code class="descclassname">hpOneView.resources.resource.</code><code class="descname">transform_list_to_dict</code><span class="sig-paren">(</span><em>list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#transform_list_to_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.transform_list_to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Transforms a list into a dictionary, putting values as keys</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dictionary built</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
 </tbody>
 </table>

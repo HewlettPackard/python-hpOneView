@@ -275,7 +275,7 @@ all attributes of the resource and all elements of collections of resources).</l
 <p>Enclosure Groups API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.servers.enclosure_groups.EnclosureGroups.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'EnclosureGroupV300'}, u'200': {u'type': u'EnclosureGroupV200'}}</em><a class="headerlink" href="#hpOneView.resources.servers.enclosure_groups.EnclosureGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'EnclosureGroupV300'}, u'200': {u'type': u'EnclosureGroupV200'}, u'500': {u'type': u'EnclosureGroupV400'}}</em><a class="headerlink" href="#hpOneView.resources.servers.enclosure_groups.EnclosureGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -2069,8 +2069,7 @@ OneView; just stops waiting for its completion.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>migrationInformation</strong> – A dict specifying the enclosure, OA username, OA password, VCM username, and VCM
-password among other things.  Use hpOneView.common.make_migration_information to easily create this
-dict.</li>
+password among other things.  Use make_migration_information to easily create this dict.</li>
 <li><strong>timeout</strong> – Timeout in seconds.  Waits for task completion by default.  The timeout does not abort the task in
 OneView; just stops waiting for its completion.</li>
 </ul>
@@ -2326,6 +2325,23 @@ will prompt for credentials. This is not supported on G7/iLO3 or earlier servers
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server hardware resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">URL</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_physical_server_hardware">
+<code class="descname">get_physical_server_hardware</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_physical_server_hardware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_physical_server_hardware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Information describing an ‘SDX’ partition including a list of physical server blades represented by a server
+hardware. Used with SDX enclosures only.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server hardware resource ID or URI.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Resource</td>
 </tr>
 </tbody>
 </table>
@@ -2754,7 +2770,7 @@ server profile template. Any drift in configuration consistency between the serv
 profile(s) is monitored and made visible on both the server profile template and the associated server profile(s).</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'ServerProfileTemplateV2'}, u'200': {u'type': u'ServerProfileTemplateV1'}}</em><a class="headerlink" href="#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'ServerProfileTemplateV2'}, u'200': {u'type': u'ServerProfileTemplateV1'}, u'500': {u'type': u'ServerProfileTemplateV3'}}</em><a class="headerlink" href="#hpOneView.resources.servers.server_profile_templates.ServerProfileTemplate.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -3008,7 +3024,7 @@ simple as a name or description change or more complex changes around the networ
 <p>Server Profile API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'ServerProfileV6'}, u'200': {u'type': u'ServerProfileV5'}}</em><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'ServerProfileV6'}, u'200': {u'type': u'ServerProfileV5'}, u'500': {u'type': u'ServerProfileV7'}}</em><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -3387,6 +3403,24 @@ consistent with its template.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server profile resource ID or URI.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Server Profile Health.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_new_profile_template">
+<code class="descname">get_new_profile_template</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_new_profile_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_new_profile_template" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the profile template for a given server profile.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server profile resource ID or URI.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Server profile template.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>

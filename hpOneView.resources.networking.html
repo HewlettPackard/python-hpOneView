@@ -192,7 +192,7 @@
 <p>Connection Templates API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.connection_templates.ConnectionTemplates.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'connection-template'}, u'200': {u'type': u'connection-template'}}</em><a class="headerlink" href="#hpOneView.resources.networking.connection_templates.ConnectionTemplates.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'connection-template'}, u'200': {u'type': u'connection-template'}, u'500': {u'type': u'connection-template'}}</em><a class="headerlink" href="#hpOneView.resources.networking.connection_templates.ConnectionTemplates.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -331,7 +331,7 @@ OneView, just stops waiting for its completion.</li>
 <p>Ethernet Networks API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'ethernet-networkV300'}, u'200': {u'type': u'ethernet-networkV3'}}</em><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'ethernet-networkV300'}, u'200': {u'type': u'ethernet-networkV3'}, u'500': {u'type': u'ethernet-networkV300'}}</em><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -595,6 +595,35 @@ The search is case-insensitive.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.patch">
+<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses the PATCH to update the given resource.</p>
+<p>Only one operation can be performed in each PATCH call.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
+<li><strong>operation</strong> – Patch operation</li>
+<li><strong>path</strong> – Path</li>
+<li><strong>value</strong> – Value</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates an Ethernet network.</p>
@@ -626,7 +655,7 @@ in OneView; it just stops waiting for its completion.</li>
 <p>Fabrics API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.fabrics.Fabrics.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'vlan-pool'}}</em><a class="headerlink" href="#hpOneView.resources.networking.fabrics.Fabrics.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'vlan-pool'}, u'500': {u'type': u'vlan-pool'}}</em><a class="headerlink" href="#hpOneView.resources.networking.fabrics.Fabrics.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -774,7 +803,7 @@ on the resource itself. The default is false.</li>
 <p>Fibre Channel networks API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.fc_networks.FcNetworks.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'fc-networkV300'}, u'200': {u'type': u'fc-networkV2'}}</em><a class="headerlink" href="#hpOneView.resources.networking.fc_networks.FcNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'fc-networkV300'}, u'200': {u'type': u'fc-networkV2'}, u'500': {u'type': u'fc-networkV300'}}</em><a class="headerlink" href="#hpOneView.resources.networking.fc_networks.FcNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -912,6 +941,35 @@ on create time with the oldest entry first.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.networking.fc_networks.FcNetworks.patch">
+<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/fc_networks.html#FcNetworks.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.fc_networks.FcNetworks.patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses the PATCH to update the given resource.</p>
+<p>Only one operation can be performed in each PATCH call.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
+<li><strong>operation</strong> – Patch operation</li>
+<li><strong>path</strong> – Path</li>
+<li><strong>value</strong> – Value</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.networking.fc_networks.FcNetworks.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/fc_networks.html#FcNetworks.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.fc_networks.FcNetworks.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates a Fibre Channel network.</p>
@@ -948,7 +1006,7 @@ in OneView, just stop waiting for its completion.</li>
 <p>FCoE Networks API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.fcoe_networks.FcoeNetworks.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'fcoe-networkV300'}, u'200': {u'type': u'fcoe-network'}}</em><a class="headerlink" href="#hpOneView.resources.networking.fcoe_networks.FcoeNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'fcoe-networkV300'}, u'200': {u'type': u'fcoe-network'}, u'500': {u'type': u'fcoe-networkV300'}}</em><a class="headerlink" href="#hpOneView.resources.networking.fcoe_networks.FcoeNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -1072,6 +1130,35 @@ on create time with the oldest entry first.</li>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.fcoe_networks.FcoeNetworks.patch">
+<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/fcoe_networks.html#FcoeNetworks.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.fcoe_networks.FcoeNetworks.patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses the PATCH to update the given resource.</p>
+<p>Only one operation can be performed in each PATCH call.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
+<li><strong>operation</strong> – Patch operation</li>
+<li><strong>path</strong> – Path</li>
+<li><strong>value</strong> – Value</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
 </td>
 </tr>
 </tbody>
@@ -1414,6 +1501,24 @@ The search is case-insensitive</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.networking.interconnects.Interconnects.get_pluggable_module_information">
+<code class="descname">get_pluggable_module_information</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnects.html#Interconnects.get_pluggable_module_information"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnects.Interconnects.get_pluggable_module_information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all the pluggable module information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the interconnect id or uri.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dicts of the pluggable module information.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.networking.interconnects.Interconnects.get_port">
 <code class="descname">get_port</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>port_id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnects.html#Interconnects.get_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnects.Interconnects.get_port" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets an interconnect port.</p>
@@ -1562,6 +1667,29 @@ in OneView; it just stops waiting for its completion.</li>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.interconnects.Interconnects.update_configuration">
+<code class="descname">update_configuration</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnects.html#Interconnects.update_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnects.Interconnects.update_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reapplies the appliance’s configuration on the interconnect. This includes running the same configure steps
+that were performed as part of the interconnect add by the enclosure.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Interconnect</p>
 </td>
 </tr>
 </tbody>
@@ -1867,7 +1995,7 @@ on create time with the oldest entry first.</li>
 <p>Logical Interconnect Groups API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'logical-interconnect-groupV300'}, u'200': {u'type': u'logical-interconnect-groupV3'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'logical-interconnect-groupV300'}, u'200': {u'type': u'logical-interconnect-groupV3'}, u'500': {u'type': u'logical-interconnect-groupV300'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -2037,6 +2165,35 @@ on create time with the oldest entry first.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.patch">
+<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnect_groups.html#LogicalInterconnectGroups.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses the PATCH to update a resource for a given logical interconnect group.</p>
+<p>Only one operation can be performed in each PATCH call.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
+<li><strong>operation</strong> – Patch operation</li>
+<li><strong>path</strong> – Path</li>
+<li><strong>value</strong> – Value</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnect_groups.html#LogicalInterconnectGroups.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates a logical interconnect group.</p>
@@ -2098,17 +2255,17 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_DEFAULT_VALUES">
-<code class="descname">SETTINGS_DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'InterconnectSettingsV201'}, u'200': {u'type': u'InterconnectSettingsV3'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SETTINGS_DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'InterconnectSettingsV201'}, u'200': {u'type': u'InterconnectSettingsV3'}, u'500': {u'type': u'InterconnectSettingsV201'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_ETHERNET_DEFAULT_VALUES">
-<code class="descname">SETTINGS_ETHERNET_DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'EthernetInterconnectSettingsV201'}, u'200': {u'type': u'EthernetInterconnectSettingsV3'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_ETHERNET_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SETTINGS_ETHERNET_DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'EthernetInterconnectSettingsV201'}, u'200': {u'type': u'EthernetInterconnectSettingsV3'}, u'500': {u'type': u'EthernetInterconnectSettingsV201'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_ETHERNET_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES">
-<code class="descname">SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'telemetry-configuration'}, u'200': {u'type': u'telemetry-configuration'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'telemetry-configuration'}, u'200': {u'type': u'telemetry-configuration'}, u'500': {u'type': u'telemetry-configuration'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -2473,6 +2630,35 @@ and Update (which does a Stage and Activate in a sequential manner).</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.patch">
+<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses the PATCH to update a resource for a given logical interconnect.</p>
+<p>Only one operation can be performed in each PATCH call.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
+<li><strong>operation</strong> – Patch operation</li>
+<li><strong>path</strong> – Path</li>
+<li><strong>value</strong> – Value</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_compliance">
 <code class="descname">update_compliance</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.update_compliance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_compliance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns logical interconnects to a consistent state. The current logical interconnect state is
@@ -2732,7 +2918,7 @@ OneView, just stops waiting for its completion.</li>
 </div>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'logical-switch-groupV300'}, u'200': {u'type': u'logical-switch-group'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'logical-switch-groupV300'}, u'200': {u'type': u'logical-switch-group'}, u'500': {u'type': u'logical-switch-groupV300'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -2868,6 +3054,35 @@ on create time with the oldest entry first.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.patch">
+<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switch_groups.html#LogicalSwitchGroups.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses the PATCH to update a resource for a given logical switch group.</p>
+<p>Only one operation can be performed in each PATCH call.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
+<li><strong>operation</strong> – Patch operation</li>
+<li><strong>path</strong> – Path</li>
+<li><strong>value</strong> – Value</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switch_groups.html#LogicalSwitchGroups.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates a logical switch group.</p>
@@ -2908,7 +3123,7 @@ in OneView; it just stops waiting for its completion.</li>
 </div>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_switches.LogicalSwitches.SWITCH_DEFAULT_VALUES">
-<code class="descname">SWITCH_DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'logical-switchV300'}, u'200': {u'type': u'logical-switch'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_switches.LogicalSwitches.SWITCH_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SWITCH_DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'logical-switchV300'}, u'200': {u'type': u'logical-switch'}, u'500': {u'type': u'logical-switchV300'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_switches.LogicalSwitches.SWITCH_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -3045,6 +3260,35 @@ on create time with the oldest entry first.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.networking.logical_switches.LogicalSwitches.patch">
+<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switches.html#LogicalSwitches.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switches.LogicalSwitches.patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses the PATCH to update a resource for a given logical switch group.</p>
+<p>Only one operation can be performed in each PATCH call.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
+<li><strong>operation</strong> – Patch operation</li>
+<li><strong>path</strong> – Path</li>
+<li><strong>value</strong> – Value</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.networking.logical_switches.LogicalSwitches.refresh">
 <code class="descname">refresh</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switches.html#LogicalSwitches.refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switches.LogicalSwitches.refresh" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Refresh action reclaims the top-of-rack switches in a logical switch.</p>
@@ -3106,7 +3350,7 @@ in OneView, just stop waiting for its completion.</li>
 <p>Network Sets API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.network_sets.NetworkSets.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'network-setV300'}, u'200': {u'type': u'network-set'}}</em><a class="headerlink" href="#hpOneView.resources.networking.network_sets.NetworkSets.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'network-setV300'}, u'200': {u'type': u'network-set'}, u'500': {u'type': u'network-setV300'}}</em><a class="headerlink" href="#hpOneView.resources.networking.network_sets.NetworkSets.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -3282,6 +3526,35 @@ on create time with the oldest entry first.</li>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Network set excluding Ethernet networks.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.network_sets.NetworkSets.patch">
+<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/network_sets.html#NetworkSets.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.network_sets.NetworkSets.patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses the PATCH to update the given resource.</p>
+<p>Only one operation can be performed in each PATCH call.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
+<li><strong>operation</strong> – Patch operation</li>
+<li><strong>path</strong> – Path</li>
+<li><strong>value</strong> – Value</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -3571,7 +3844,7 @@ collections of resources).</li>
 </div>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'sas-logical-interconnect-group'}}</em><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'sas-logical-interconnect-group'}, u'500': {u'type': u'sas-logical-interconnect-group'}}</em><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -4219,6 +4492,35 @@ on create time with the oldest entry first.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.networking.switches.Switches.patch">
+<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/switches.html#Switches.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.switches.Switches.patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses the PATCH to update a resource for a given logical switch.</p>
+<p>Only one operation can be performed in each PATCH call.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
+<li><strong>operation</strong> – Patch operation</li>
+<li><strong>path</strong> – Path</li>
+<li><strong>value</strong> – Value</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.networking.switches.Switches.update_ports">
 <code class="descname">update_ports</code><span class="sig-paren">(</span><em>ports</em>, <em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/switches.html#Switches.update_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.switches.Switches.update_ports" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the switch ports. Only the ports under the management of OneView and those that are unlinked are
@@ -4259,7 +4561,7 @@ supported for update.</p>
 <p>Uplink Sets API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'uplink-setV300'}, u'200': {u'type': u'uplink-setV3'}}</em><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'uplink-setV300'}, u'200': {u'type': u'uplink-setV3'}, u'500': {u'type': u'uplink-setV300'}}</em><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
