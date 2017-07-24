@@ -182,7 +182,8 @@ class LogicalEnclosures(object):
         Returns:
             dict: Updated logical enclosure.
         """
-        return self._client.patch(id_or_uri, operation, path, value, timeout=timeout)
+        headers = {'If-Match': '*'}
+        return self._client.patch(id_or_uri, operation, path, value, timeout=timeout, custom_headers=headers)
 
     def update_configuration(self, id_or_uri, timeout=-1):
         """

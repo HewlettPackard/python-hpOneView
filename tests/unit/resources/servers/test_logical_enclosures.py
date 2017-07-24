@@ -130,7 +130,7 @@ class LogicalEnclosuresTest(TestCase):
         self._logical_enclosures.patch(
             '123a53cz', 'replace', '/name', 'new_name', 1)
         mock_patch.assert_called_once_with(
-            '123a53cz', 'replace', '/name', 'new_name', timeout=1)
+            '123a53cz', 'replace', '/name', 'new_name', timeout=1, custom_headers={u'If-Match': u'*'})
 
     @mock.patch.object(ResourceClient, 'update_with_zero_body')
     def test_update_configuration_by_uri(self, mock_update_with_zero_body):
