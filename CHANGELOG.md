@@ -45,6 +45,7 @@ Legacy code under hpOneView which was marked as deprecated has been removed. Thi
 - Server hardware type
 - Server profile
 - Server profile template
+- Storage pool
 - Storage system
 - Switch
 - Switch type

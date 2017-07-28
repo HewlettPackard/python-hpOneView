@@ -22,8 +22,8 @@
 ###
 
 from pprint import pprint
-from hpOneView.oneview_client import OneViewClient
 from hpOneView.exceptions import HPOneViewException
+from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
 
 config = {

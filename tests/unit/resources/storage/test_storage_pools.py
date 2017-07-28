@@ -99,3 +99,13 @@ class StoragePoolsTest(unittest.TestCase):
         self._storage_pools.get_by("name", "test name")
 
         mock_get_by.assert_called_once_with("name", "test name")
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_update_called_once(self, mock_update):
+        storage_pool = {
+            "name": "SSD",
+            "uri": "rest/fake/pool",
+            "raidLevel": "RAID5"
+        }
+        self._storage_pools.update(storage_pool, 70)
+        mock_update.assert_called_once_with(storage_pool, timeout=70)

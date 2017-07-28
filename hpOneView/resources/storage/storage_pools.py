@@ -134,3 +134,44 @@ class StoragePools(object):
             list: A list of storage pools.
         """
         return self._client.get_by(field, value)
+
+    def get_reachable_storage_pools(self, start=0, count=-1, filter='', query='', sort='', networks=[]):
+        """
+        Gets the storage pools that are connected on the specified networks
+        based on the storage system port's expected network connectivity.
+
+        Returns:
+            list: Reachable Storage Pools List.
+        """
+        uri = self.URI + "/reachable-storage-pools"
+
+        if networks:
+            elements = "\'"
+            for n in networks:
+                elements += n + ','
+            elements = elements[:-1] + "\'"
+            uri = uri + "?networks=" + elements
+
+        return self._client.get(self._client.build_query_uri(start=start, count=count, filter=filter, query=query,
+                                                             sort=sort, uri=uri))
+
+    def update(self, resource, timeout=-1):
+        """
+        Updates a storage pool.
+        It can be used to manage/unmanage a storage pool, update attributes or to request a refresh.
+        To manage or unmanage a storage pool: Set the isManaged attribute true to manage or false to unmanage.
+        Attempting to unmanage a StoreVirtual pool is not allowed and the attempt will return a task error.
+        To request a refresh set the "requestingRefresh" attribute to true. No other attribute update can be performed
+        while also requesting a refresh of the pool.
+
+        Args:
+            resource (dict):
+                Object to update.
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            dict: Updated storage system.
+        """
+        return self._client.update(resource, timeout=timeout)
