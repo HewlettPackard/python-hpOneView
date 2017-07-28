@@ -672,6 +672,23 @@ on create time with the oldest entry first.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.storage.storage_pools.StoragePools.get_reachable_storage_pools">
+<code class="descname">get_reachable_storage_pools</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>networks=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_pools.html#StoragePools.get_reachable_storage_pools"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_pools.StoragePools.get_reachable_storage_pools" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the storage pools that are connected on the specified networks
+based on the storage system port’s expected network connectivity.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Reachable Storage Pools List.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.storage.storage_pools.StoragePools.remove">
 <code class="descname">remove</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_pools.html#StoragePools.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_pools.StoragePools.remove" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes an imported storage pool from OneView.</p>
@@ -689,6 +706,36 @@ in OneView; it just stops waiting for its completion.</li>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Details of associated resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.storage.storage_pools.StoragePools.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_pools.html#StoragePools.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_pools.StoragePools.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates a storage pool.
+It can be used to manage/unmanage a storage pool, update attributes or to request a refresh.
+To manage or unmanage a storage pool: Set the isManaged attribute true to manage or false to unmanage.
+Attempting to unmanage a StoreVirtual pool is not allowed and the attempt will return a task error.
+To request a refresh set the “requestingRefresh” attribute to true. No other attribute update can be performed
+while also requesting a refresh of the pool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) – Object to update.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated storage system.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>

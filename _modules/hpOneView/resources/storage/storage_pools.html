@@ -288,7 +288,48 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of storage pools.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StoragePools.get_reachable_storage_pools"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.storage_pools.StoragePools.get_reachable_storage_pools">[docs]</a>    <span class="k">def</span> <span class="nf">get_reachable_storage_pools</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">networks</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the storage pools that are connected on the specified networks</span>
+<span class="sd">        based on the storage system port&#39;s expected network connectivity.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: Reachable Storage Pools List.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/reachable-storage-pools&quot;</span>
+
+        <span class="k">if</span> <span class="n">networks</span><span class="p">:</span>
+            <span class="n">elements</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\&#39;</span><span class="s2">&quot;</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">networks</span><span class="p">:</span>
+                <span class="n">elements</span> <span class="o">+=</span> <span class="n">n</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span>
+            <span class="n">elements</span> <span class="o">=</span> <span class="n">elements</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&#39;</span><span class="s2">&quot;</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="n">uri</span> <span class="o">+</span> <span class="s2">&quot;?networks=&quot;</span> <span class="o">+</span> <span class="n">elements</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_query_uri</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+                                                             <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="StoragePools.update"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.storage_pools.StoragePools.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates a storage pool.</span>
+<span class="sd">        It can be used to manage/unmanage a storage pool, update attributes or to request a refresh.</span>
+<span class="sd">        To manage or unmanage a storage pool: Set the isManaged attribute true to manage or false to unmanage.</span>
+<span class="sd">        Attempting to unmanage a StoreVirtual pool is not allowed and the attempt will return a task error.</span>
+<span class="sd">        To request a refresh set the &quot;requestingRefresh&quot; attribute to true. No other attribute update can be performed</span>
+<span class="sd">        while also requesting a refresh of the pool.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resource (dict):</span>
+<span class="sd">                Object to update.</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Updated storage system.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
