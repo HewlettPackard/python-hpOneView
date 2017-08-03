@@ -28,10 +28,10 @@ from config_loader import try_load_from_file
 # This resource is only available on HPE Synergy
 
 config = {
-    "ip": "172.16.102.59",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 

@@ -15,6 +15,7 @@ Legacy code under hpOneView which was marked as deprecated has been removed. Thi
 #### Features supported with current release:
 - Connection template
 - Datacenter
+- Drive enclosure
 - Enclosure
 - Enclosure group
 - Ethernet network
