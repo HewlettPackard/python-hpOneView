@@ -49,6 +49,7 @@ Legacy code under hpOneView which was marked as deprecated has been removed. Thi
 - Server profile template
 - Storage pool
 - Storage system
+- Storage volume attachment
 - Switch
 - Switch type
 - Uplink set
