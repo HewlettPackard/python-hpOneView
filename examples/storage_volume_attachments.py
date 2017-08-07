@@ -52,7 +52,6 @@ volume_attachments = oneview_client.storage_volume_attachments.get_all()
 for attachment in volume_attachments:
     print('\n#### Storage Volume Attachment info:')
     pprint(attachment)
-    # print("   'hostName': '{hostName}' at uri: '{uri}'".format(**attachment))
 
 # Get all storage volume attachments filtering by storage volume URI
 try:
