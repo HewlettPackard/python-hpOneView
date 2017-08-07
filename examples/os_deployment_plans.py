@@ -27,10 +27,10 @@ from config_loader import try_load_from_file
 from hpOneView.oneview_client import OneViewClient
 
 config = {
-    "ip": "",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "",
-        "password": ""
+        "userName": "<user>",
+        "password": "<password>"
     }
 }
 
@@ -42,19 +42,18 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-
-print("Get an Os Deployment Plan by ID:")
-os_deployment_plan = oneview_client.os_deployment_plans.get(os_deployment_plan_id)
-pprint(os_deployment_plan)
-
-print("Get Os Deployment Plans by Filter:")
+print("\nGet Os Deployment Plans by Filter:")
 os_deployment_plans = oneview_client.os_deployment_plans.get_by('deploymentType', 'I3S')
 pprint(os_deployment_plans)
 
-print("Get the Os Deployment Plan by Name:")
+print("\nGet the Os Deployment Plan by Name:")
 os_deployment_plans = oneview_client.os_deployment_plans.get_by_name('Deployment Plan')
 pprint(os_deployment_plans)
 
-print("Get all Os Deployment Plans:")
+print("\nGet all Os Deployment Plans:")
 os_deployment_plans_all = oneview_client.os_deployment_plans.get_all()
 pprint(os_deployment_plans_all)
+
+print("\nGet an Os Deployment Plan by ID:")
+os_deployment_plan = oneview_client.os_deployment_plans.get(os_deployment_plan_id)
+pprint(os_deployment_plan)

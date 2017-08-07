@@ -34,6 +34,7 @@ Legacy code under hpOneView which was marked as deprecated has been removed. Thi
 - Logical switch group
 - Managed SAN
 - Network set
+- OS deployment plan
 - Rack
 - SAN manager
 - SAS interconnect
