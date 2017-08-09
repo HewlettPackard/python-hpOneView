@@ -1240,7 +1240,7 @@ in OneView; it just stops waiting for its completion.</li>
 <p>Storage Volume Templates API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'StorageVolumeTemplateV3'}, u'200': {u'type': u'StorageVolumeTemplateV3'}}</em><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'StorageVolumeTemplateV3'}, u'300': {u'type': u'StorageVolumeTemplateV3'}}</em><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -1429,13 +1429,38 @@ in OneView; it just stops waiting for its completion.</li>
 <p>Volumes API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.volumes.Volumes.DEFAULT_VALUES_SNAPSHOT">
-<code class="descname">DEFAULT_VALUES_SNAPSHOT</code><em class="property"> = {u'300': {u'type': u'Snapshot'}, u'200': {u'type': u'Snapshot'}}</em><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.DEFAULT_VALUES_SNAPSHOT" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES_SNAPSHOT</code><em class="property"> = {u'500': {}, u'200': {u'type': u'Snapshot'}, u'300': {u'type': u'Snapshot'}}</em><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.DEFAULT_VALUES_SNAPSHOT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.volumes.Volumes.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/storage-volumes'</em><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.storage.volumes.Volumes.add_from_existing">
+<code class="descname">add_from_existing</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.add_from_existing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.add_from_existing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a volume that already exists in the Storage system</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) – Object to create.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Added resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.volumes.Volumes.create">
@@ -1475,6 +1500,37 @@ in OneView, just stop waiting for its completion.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.storage.volumes.Volumes.create_from_snapshot">
+<code class="descname">create_from_snapshot</code><span class="sig-paren">(</span><em>data</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.create_from_snapshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.create_from_snapshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new volume on the storage system from a snapshot of a volume.
+A volume template must also be specified when creating a volume from a snapshot.</p>
+<p>The global setting “StorageVolumeTemplateRequired” controls whether or
+not root volume templates can be used to provision volumes.
+The value of this setting defaults to “false”.
+If the value is set to “true”, then only templates with an “isRoot” value of “false”
+can be used to provision a volume.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<em>dict</em>) – Object to create.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created data.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.storage.volumes.Volumes.create_snapshot">
 <code class="descname">create_snapshot</code><span class="sig-paren">(</span><em>volume_id_or_uri</em>, <em>snapshot</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.create_snapshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.create_snapshot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a snapshot for the specified volume.</p>
@@ -1502,7 +1558,7 @@ OneView, just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.volumes.Volumes.delete">
-<code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>export_only=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.delete" title="Permalink to this definition">¶</a></dt>
+<code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>export_only=None</em>, <em>suppress_device_updates=None</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a managed volume.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1514,7 +1570,10 @@ OneView, just stops waiting for its completion.</li>
 network connectivity or errors on the resource itself. The default is false.</li>
 <li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
-<li><strong>export_only</strong> – By default, volumes will be deleted from OneView, and storage system.
+<li><strong>export_only</strong> – Valid prior to API500. By default, volumes will be deleted from OneView, and storage system.
+To delete the volume from OneView only, you must set its value to True.
+Setting its value to False has the same behavior as the default behavior.</li>
+<li><strong>suppress_device_updates</strong> – Valid API500 onwards. By default, volumes will be deleted from OneView, and storage system.
 To delete the volume from OneView only, you must set its value to True.
 Setting its value to False has the same behavior as the default behavior.</li>
 </ul>

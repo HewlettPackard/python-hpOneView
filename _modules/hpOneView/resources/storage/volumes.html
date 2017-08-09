@@ -201,7 +201,8 @@
 
     <span class="n">DEFAULT_VALUES_SNAPSHOT</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;200&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Snapshot&quot;</span><span class="p">},</span>
-        <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Snapshot&quot;</span><span class="p">}</span>
+        <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Snapshot&quot;</span><span class="p">},</span>
+        <span class="s1">&#39;500&#39;</span><span class="p">:</span> <span class="p">{}</span>
     <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
@@ -287,6 +288,47 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="Volumes.add_from_existing"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.volumes.Volumes.add_from_existing">[docs]</a>    <span class="k">def</span> <span class="nf">add_from_existing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a volume that already exists in the Storage system</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resource (dict):</span>
+<span class="sd">                Object to create.</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stop waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Added resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/from-existing&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Volumes.create_from_snapshot"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.volumes.Volumes.create_from_snapshot">[docs]</a>    <span class="k">def</span> <span class="nf">create_from_snapshot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a new volume on the storage system from a snapshot of a volume.</span>
+<span class="sd">        A volume template must also be specified when creating a volume from a snapshot.</span>
+
+<span class="sd">        The global setting &quot;StorageVolumeTemplateRequired&quot; controls whether or</span>
+<span class="sd">        not root volume templates can be used to provision volumes.</span>
+<span class="sd">        The value of this setting defaults to &quot;false&quot;.</span>
+<span class="sd">        If the value is set to &quot;true&quot;, then only templates with an &quot;isRoot&quot; value of &quot;false&quot;</span>
+<span class="sd">        can be used to provision a volume.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (dict):</span>
+<span class="sd">                Object to create.</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stop waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Created data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/from-snapshot&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="Volumes.update"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.volumes.Volumes.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates properties of a volume.</span>
@@ -307,7 +349,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Volumes.delete"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.volumes.Volumes.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">export_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="Volumes.delete"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.volumes.Volumes.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">export_only</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">suppress_device_updates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deletes a managed volume.</span>
 
@@ -321,14 +363,22 @@
 <span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
 <span class="sd">                in OneView; it just stops waiting for its completion.</span>
 <span class="sd">            export_only:</span>
-<span class="sd">                By default, volumes will be deleted from OneView, and storage system.</span>
+<span class="sd">                Valid prior to API500. By default, volumes will be deleted from OneView, and storage system.</span>
+<span class="sd">                To delete the volume from OneView only, you must set its value to True.</span>
+<span class="sd">                Setting its value to False has the same behavior as the default behavior.</span>
+<span class="sd">            suppress_device_updates:</span>
+<span class="sd">                Valid API500 onwards. By default, volumes will be deleted from OneView, and storage system.</span>
 <span class="sd">                To delete the volume from OneView only, you must set its value to True.</span>
 <span class="sd">                Setting its value to False has the same behavior as the default behavior.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Indicates if the volume was successfully deleted.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">custom_headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;exportOnly&quot;</span><span class="p">:</span> <span class="n">export_only</span><span class="p">}</span>
+        <span class="n">custom_headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;If-Match&#39;</span><span class="p">:</span> <span class="s1">&#39;*&#39;</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">suppress_device_updates</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">custom_headers</span><span class="p">[</span><span class="s1">&#39;suppressDeviceUpdates&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">suppress_device_updates</span>
+        <span class="k">elif</span> <span class="n">export_only</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">custom_headers</span><span class="p">[</span><span class="s1">&#39;exportOnly&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">export_only</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__build_volume_snapshot_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">volume_id_or_uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">snapshot_id_or_uri</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -422,7 +472,8 @@
 <span class="sd">            dict: Details of associated volume.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;If-Match&#39;</span><span class="p">:</span> <span class="s1">&#39;*&#39;</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Volumes.get_snapshot_by"><a class="viewcode-back" href="../../../../hpOneView.resources.storage.html#hpOneView.resources.storage.volumes.Volumes.get_snapshot_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_snapshot_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">volume_id_or_uri</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
