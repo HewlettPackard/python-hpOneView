@@ -46,7 +46,8 @@ class Volumes(object):
 
     DEFAULT_VALUES_SNAPSHOT = {
         '200': {"type": "Snapshot"},
-        '300': {"type": "Snapshot"}
+        '300': {"type": "Snapshot"},
+        '500': {}
     }
 
     def __init__(self, con):
@@ -132,6 +133,47 @@ class Volumes(object):
         """
         return self._client.create(resource, timeout=timeout)
 
+    def add_from_existing(self, resource, timeout=-1):
+        """
+        Adds a volume that already exists in the Storage system
+
+        Args:
+            resource (dict):
+                Object to create.
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView, just stop waiting for its completion.
+
+        Returns:
+            dict: Added resource.
+        """
+        uri = self.URI + "/from-existing"
+        return self._client.create(resource, uri=uri, timeout=timeout)
+
+    def create_from_snapshot(self, data, timeout=-1):
+        """
+        Creates a new volume on the storage system from a snapshot of a volume.
+        A volume template must also be specified when creating a volume from a snapshot.
+
+        The global setting "StorageVolumeTemplateRequired" controls whether or
+        not root volume templates can be used to provision volumes.
+        The value of this setting defaults to "false".
+        If the value is set to "true", then only templates with an "isRoot" value of "false"
+        can be used to provision a volume.
+
+        Args:
+            data (dict):
+                Object to create.
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView, just stop waiting for its completion.
+
+        Returns:
+            dict: Created data.
+        """
+        uri = self.URI + "/from-snapshot"
+        return self._client.create(data, uri=uri, timeout=timeout)
+
     def update(self, resource, force=False, timeout=-1):
         """
         Updates properties of a volume.
@@ -152,7 +194,7 @@ class Volumes(object):
         """
         return self._client.update(resource, timeout=timeout, force=force)
 
-    def delete(self, resource, force=False, export_only=False, timeout=-1):
+    def delete(self, resource, force=False, export_only=None, suppress_device_updates=None, timeout=-1):
         """
         Deletes a managed volume.
 
@@ -166,14 +208,22 @@ class Volumes(object):
                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
             export_only:
-                By default, volumes will be deleted from OneView, and storage system.
+                Valid prior to API500. By default, volumes will be deleted from OneView, and storage system.
+                To delete the volume from OneView only, you must set its value to True.
+                Setting its value to False has the same behavior as the default behavior.
+            suppress_device_updates:
+                Valid API500 onwards. By default, volumes will be deleted from OneView, and storage system.
                 To delete the volume from OneView only, you must set its value to True.
                 Setting its value to False has the same behavior as the default behavior.
 
         Returns:
             bool: Indicates if the volume was successfully deleted.
         """
-        custom_headers = {"exportOnly": export_only}
+        custom_headers = {'If-Match': '*'}
+        if suppress_device_updates is not None:
+            custom_headers['suppressDeviceUpdates'] = suppress_device_updates
+        elif export_only is not None:
+            custom_headers['exportOnly'] = export_only
         return self._client.delete(resource, force=force, timeout=timeout, custom_headers=custom_headers)
 
     def __build_volume_snapshot_uri(self, volume_id_or_uri=None, snapshot_id_or_uri=None):
@@ -267,7 +317,8 @@ class Volumes(object):
             dict: Details of associated volume.
 
         """
-        return self._client.delete(resource, force=force, timeout=timeout)
+        headers = {'If-Match': '*'}
+        return self._client.delete(resource, force=force, timeout=timeout, custom_headers=headers)
 
     def get_snapshot_by(self, volume_id_or_uri, field, value):
         """
