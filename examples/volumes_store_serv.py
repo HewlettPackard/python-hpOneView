@@ -22,7 +22,6 @@
 ###
 
 from pprint import pprint
-import time
 
 from config_loader import try_load_from_file
 from hpOneView.exceptions import HPOneViewException

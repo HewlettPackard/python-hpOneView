@@ -155,9 +155,11 @@ class Volumes(object):
         Creates a new volume on the storage system from a snapshot of a volume.
         A volume template must also be specified when creating a volume from a snapshot.
 
-        The global setting "StorageVolumeTemplateRequired" controls whether or not root volume templates can be used to provision volumes.
+        The global setting "StorageVolumeTemplateRequired" controls whether or
+        not root volume templates can be used to provision volumes.
         The value of this setting defaults to "false".
-        If the value is set to "true", then only templates with an "isRoot" value of "false" can be used to provision a volume.
+        If the value is set to "true", then only templates with an "isRoot" value of "false"
+        can be used to provision a volume.
 
         Args:
             data (dict):
