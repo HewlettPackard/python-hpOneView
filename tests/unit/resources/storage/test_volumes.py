@@ -104,7 +104,7 @@ class VolumesTest(unittest.TestCase):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         self._volumes.delete(id, force=False, timeout=-1)
 
-        expected_headers = {"exportOnly": False}
+        expected_headers = {"If-Match": '*'}
         mock_delete.assert_called_once_with(id, force=False, timeout=-1, custom_headers=expected_headers)
 
     @mock.patch.object(ResourceClient, 'delete')
@@ -115,11 +115,19 @@ class VolumesTest(unittest.TestCase):
         mock_delete.assert_called_once_with(mock.ANY, force=True, timeout=mock.ANY, custom_headers=mock.ANY)
 
     @mock.patch.object(ResourceClient, 'delete')
-    def test_delete_only_from_oneview_called_once(self, mock_delete):
+    def test_delete_only_from_oneview_called_once_api300(self, mock_delete):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         self._volumes.delete(id, export_only=True)
 
-        expected_headers = {"exportOnly": True}
+        expected_headers = {'If-Match': '*', "exportOnly": True}
+        mock_delete.assert_called_once_with(id, force=mock.ANY, timeout=mock.ANY, custom_headers=expected_headers)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_delete_only_from_oneview_called_once_api500(self, mock_delete):
+        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._volumes.delete(id, suppress_device_updates=True)
+
+        expected_headers = {'If-Match': '*', "suppressDeviceUpdates": True}
         mock_delete.assert_called_once_with(id, force=mock.ANY, timeout=mock.ANY, custom_headers=expected_headers)
 
     @mock.patch.object(ResourceClient, 'get_all')
@@ -188,9 +196,10 @@ class VolumesTest(unittest.TestCase):
             'type': 'SnapshotV3',
             'uri': '/rest/storage-volumes/280FF951-F007-478F-AC29-E4655FC/snapshots/78216B75-3CC4-4444-B5B-13046'
         }
+        expected_headers = {"If-Match": '*'}
         self._volumes.delete_snapshot(resource, force=True, timeout=50)
 
-        mock_delete.assert_called_once_with(resource, force=True, timeout=50)
+        mock_delete.assert_called_once_with(resource, force=True, timeout=50, custom_headers=expected_headers)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_snapshot_called_once_with_defaults(self, mock_delete):
@@ -199,9 +208,11 @@ class VolumesTest(unittest.TestCase):
             'type': 'SnapshotV3',
             'uri': '/rest/storage-volumes/280FF951-F007-478F-AC29-E4655FC/snapshots/78216B75-3CC4-4444-B5B-13046'
         }
+        expected_headers = {"If-Match": '*'}
+
         self._volumes.delete_snapshot(resource)
 
-        mock_delete.assert_called_once_with(resource, force=False, timeout=-1)
+        mock_delete.assert_called_once_with(resource, force=False, timeout=-1, custom_headers=expected_headers)
 
     @mock.patch.object(ResourceClient, 'get_by')
     def test_get_snapshot_by_called_once(self, mock_get_by):
@@ -264,3 +275,19 @@ class VolumesTest(unittest.TestCase):
 
         expected_uri = '/rest/storage-volumes/attachable-volumes'
         mock_get_all.assert_called_once_with(0, -1, uri=expected_uri, filter='', query='', sort='')
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_create_from_snapshot_called_once(self, mock_create):
+        data = {
+            'fake': 'data'
+        }
+        self._volumes.create_from_snapshot(data)
+        mock_create.assert_called_once_with(data, uri='/rest/storage-volumes/from-snapshot', timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_add_from_existing_called_once(self, mock_create):
+        data = {
+            'fake': 'data'
+        }
+        self._volumes.add_from_existing(data)
+        mock_create.assert_called_once_with(data, uri='/rest/storage-volumes/from-existing', timeout=-1)
