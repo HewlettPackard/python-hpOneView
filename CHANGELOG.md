@@ -52,6 +52,7 @@ Legacy code under hpOneView which was marked as deprecated has been removed. Thi
 - Storage system
 - Storage volume
 - Storage volume attachment
+- Storage volume template
 - Switch
 - Switch type
 - Uplink set

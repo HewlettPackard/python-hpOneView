@@ -116,6 +116,31 @@ class StorageVolumeTemplates(object):
         uri = self.URI + "/connectable-volume-templates"
         return self._client.get(uri)
 
+    def get_reachable_volume_templates(self):
+        """
+        Gets the storage templates that are connected on the specified networks based on the storage system
+        port's expected network connectivity.
+
+        Returns:
+            list: Storage volume templates.
+        """
+        uri = self.URI + "/reachable-volume-templates"
+        return self._client.get(uri)
+
+    def get_compatible_systems(self, id_or_uri):
+        """
+        Retrieves a collection of all storage systems that is applicable to this storage volume template.
+
+        Args:
+            id_or_uri:
+                Can be either the power device id or the uri
+
+        Returns:
+            list: Storage systems.
+        """
+        uri = self._client.build_uri(id_or_uri) + "/compatible-systems"
+        return self._client.get(uri)
+
     def delete(self, resource, force=False, timeout=-1):
         """
         Deletes the specified storage volume template.
@@ -132,7 +157,7 @@ class StorageVolumeTemplates(object):
         Returns:
             bool: Indicates if the resource was successfully deleted.
         """
-        custom_headers = {'Accept-Language': 'en_US'}
+        custom_headers = {'Accept-Language': 'en_US', 'If-Match': '*'}
         return self._client.delete(resource, force=force, timeout=timeout, custom_headers=custom_headers)
 
     def update(self, resource, timeout=-1):

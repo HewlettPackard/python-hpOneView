@@ -84,18 +84,32 @@ class StorageVolumeTemplatesTest(unittest.TestCase):
     def test_delete_called_once(self, mock_delete):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         self._storage_volume_templates.delete(id, force=True, timeout=50)
-        mock_delete.assert_called_once_with(id, force=True, timeout=50, custom_headers={'Accept-Language': 'en_US'})
+        mock_delete.assert_called_once_with(id, force=True, timeout=50, custom_headers={
+            'Accept-Language': 'en_US', 'If-Match': '*'})
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once_with_defaults(self, mock_delete):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         self._storage_volume_templates.delete(id)
-        mock_delete.assert_called_once_with(id, force=False, timeout=-1, custom_headers={'Accept-Language': 'en_US'})
+        mock_delete.assert_called_once_with(id, force=False, timeout=-1, custom_headers={
+            'Accept-Language': 'en_US', 'If-Match': '*'})
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_connectable_volume_templates_called_once(self, mock_get):
         uri = '/rest/storage-volume-templates/connectable-volume-templates'
         self._storage_volume_templates.get_connectable_volume_templates()
+        mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_reachable_volume_templates_called_once(self, mock_get):
+        uri = '/rest/storage-volume-templates/reachable-volume-templates'
+        self._storage_volume_templates.get_reachable_volume_templates()
+        mock_get.assert_called_once_with(uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_compatible_systems_called_once(self, mock_get):
+        uri = '/rest/storage-volume-templates/fake/compatible-systems'
+        self._storage_volume_templates.get_compatible_systems('/rest/storage-volume-templates/fake')
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(ResourceClient, 'update')
