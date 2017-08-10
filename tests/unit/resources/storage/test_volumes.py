@@ -109,6 +109,18 @@ class VolumesTest(unittest.TestCase):
         mock_delete.assert_called_once_with(uri, force=False, timeout=-1, custom_headers=expected_headers)
 
     @mock.patch.object(ResourceClient, 'delete')
+    def test_delete_by_resource_called_once(self, mock_delete):
+        resource = {
+            'uri': '/rest/storage-volumes/fake',
+            'name': 'VOLUME_FAKE'
+        }
+        uri = '/rest/storage-volumes/fake'
+        self._volumes.delete(resource, force=False, timeout=-1)
+
+        expected_headers = {"If-Match": '*'}
+        mock_delete.assert_called_once_with(uri, force=False, timeout=-1, custom_headers=expected_headers)
+
+    @mock.patch.object(ResourceClient, 'delete')
     def test_delete_with_force_called_once(self, mock_delete):
         uri = '/rest/storage-volumes/fake'
         self._volumes.delete(uri, force=True)
