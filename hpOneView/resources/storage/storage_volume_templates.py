@@ -104,7 +104,7 @@ class StorageVolumeTemplates(object):
         """
         return self._client.get(id_or_uri)
 
-    def get_connectable_volume_templates(self):
+    def get_connectable_volume_templates(self, start=0, count=-1, filter='', query='', sort=''):
         """
         Gets the storage volume templates that are available on the specified networks based on the storage system
         port's expected network connectivity. If there are no storage volume templates that meet the specified
@@ -114,9 +114,11 @@ class StorageVolumeTemplates(object):
             list: Storage volume templates.
         """
         uri = self.URI + "/connectable-volume-templates"
-        return self._client.get(uri)
 
-    def get_reachable_volume_templates(self):
+        get_uri = self._client.build_query_uri(start=start, count=count, filter=filter, query=query, sort=sort, uri=uri)
+        return self._client.get(get_uri)
+
+    def get_reachable_volume_templates(self, start=0, count=-1, filter='', query='', sort='', networks=[]):
         """
         Gets the storage templates that are connected on the specified networks based on the storage system
         port's expected network connectivity.
@@ -125,7 +127,16 @@ class StorageVolumeTemplates(object):
             list: Storage volume templates.
         """
         uri = self.URI + "/reachable-volume-templates"
-        return self._client.get(uri)
+
+        if networks:
+            elements = "\'"
+            for n in networks:
+                elements += n + ','
+            elements = elements[:-1] + "\'"
+            uri = uri + "?networks=" + elements
+
+        get_uri = self._client.build_query_uri(start=start, count=count, filter=filter, query=query, sort=sort, uri=uri)
+        return self._client.get(get_uri)
 
     def get_compatible_systems(self, id_or_uri):
         """
