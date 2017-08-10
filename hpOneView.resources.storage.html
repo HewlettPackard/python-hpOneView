@@ -1240,7 +1240,7 @@ in OneView; it just stops waiting for its completion.</li>
 <p>Storage Volume Templates API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'StorageVolumeTemplateV3'}, u'200': {u'type': u'StorageVolumeTemplateV3'}}</em><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'StorageVolumeTemplateV3'}, u'300': {u'type': u'StorageVolumeTemplateV3'}}</em><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -1394,7 +1394,7 @@ on create time with the oldest entry first.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get_connectable_volume_templates">
-<code class="descname">get_connectable_volume_templates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_templates.html#StorageVolumeTemplates.get_connectable_volume_templates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get_connectable_volume_templates" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_connectable_volume_templates</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_templates.html#StorageVolumeTemplates.get_connectable_volume_templates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get_connectable_volume_templates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the storage volume templates that are available on the specified networks based on the storage system
 port’s expected network connectivity. If there are no storage volume templates that meet the specified
 connectivity criteria, an empty collection will be returned.</p>
@@ -1412,7 +1412,7 @@ connectivity criteria, an empty collection will be returned.</p>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get_reachable_volume_templates">
-<code class="descname">get_reachable_volume_templates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_templates.html#StorageVolumeTemplates.get_reachable_volume_templates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get_reachable_volume_templates" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_reachable_volume_templates</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>networks=[]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/storage_volume_templates.html#StorageVolumeTemplates.get_reachable_volume_templates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.storage_volume_templates.StorageVolumeTemplates.get_reachable_volume_templates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the storage templates that are connected on the specified networks based on the storage system
 port’s expected network connectivity.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1464,7 +1464,7 @@ in OneView; it just stops waiting for its completion.</li>
 <p>Volumes API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.storage.volumes.Volumes.DEFAULT_VALUES_SNAPSHOT">
-<code class="descname">DEFAULT_VALUES_SNAPSHOT</code><em class="property"> = {u'300': {u'type': u'Snapshot'}, u'200': {u'type': u'Snapshot'}, u'500': {}}</em><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.DEFAULT_VALUES_SNAPSHOT" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES_SNAPSHOT</code><em class="property"> = {u'200': {u'type': u'Snapshot'}, u'300': {u'type': u'Snapshot'}, u'500': {}}</em><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.DEFAULT_VALUES_SNAPSHOT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
