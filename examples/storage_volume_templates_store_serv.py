@@ -39,12 +39,18 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-storage_pool_name = '/rest/storage-pools/6BC7B518-BFB8-41A0-B173-A7C801352530'
+storage_pool_name = 'FST_CPG1'
+
+# Get the storage pool by name to use in options
+storage_pool = oneview_client.storage_pools.get_by('name', storage_pool_name)[0]
+
+# Gets the first Root Storage Volume Template available to use in options
+root_template = oneview_client.storage_volume_templates.get_all(filter="\"isRoot='True'\"")[0]
 
 options = {
     "name": "vt1",
     "description": "",
-    "rootTemplateUri": "/rest/storage-volume-templates/c190e350-9378-4785-9dca-a7c801352542",
+    "rootTemplateUri": root_template['uri'],
     "properties": {
         "name": {
             "meta": {
@@ -101,7 +107,7 @@ options = {
             "format": "x-uri-reference",
             "required": True,
             "description": "A common provisioning group URI reference",
-            "default": storage_pool_name
+            "default": storage_pool['uri']
         },
         "snapshotPool": {
             "meta": {
@@ -111,7 +117,7 @@ options = {
             "type": "string",
             "title": "Snapshot Pool",
             "format": "x-uri-reference",
-            "default": storage_pool_name,
+            "default": storage_pool['uri'],
             "description": "A URI reference to the common provisioning group used to create snapshots"
         },
         "provisioningType": {
