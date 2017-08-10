@@ -101,34 +101,49 @@ class VolumesTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_by_id_called_once(self, mock_delete):
-        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        id = 'fake'
+        uri = '/rest/storage-volumes/fake'
         self._volumes.delete(id, force=False, timeout=-1)
 
         expected_headers = {"If-Match": '*'}
-        mock_delete.assert_called_once_with(id, force=False, timeout=-1, custom_headers=expected_headers)
+        mock_delete.assert_called_once_with(uri, force=False, timeout=-1, custom_headers=expected_headers)
+
+    @mock.patch.object(ResourceClient, 'delete')
+    def test_delete_by_resource_called_once(self, mock_delete):
+        resource = {
+            'uri': '/rest/storage-volumes/fake',
+            'name': 'VOLUME_FAKE'
+        }
+        uri = '/rest/storage-volumes/fake'
+        self._volumes.delete(resource, force=False, timeout=-1)
+
+        expected_headers = {"If-Match": '*'}
+        mock_delete.assert_called_once_with(uri, force=False, timeout=-1, custom_headers=expected_headers)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_with_force_called_once(self, mock_delete):
-        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        self._volumes.delete(id, force=True)
+        uri = '/rest/storage-volumes/fake'
+        self._volumes.delete(uri, force=True)
 
         mock_delete.assert_called_once_with(mock.ANY, force=True, timeout=mock.ANY, custom_headers=mock.ANY)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_only_from_oneview_called_once_api300(self, mock_delete):
-        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        self._volumes.delete(id, export_only=True)
+        uri = '/rest/storage-volumes/fake'
+        self._volumes.delete(uri, export_only=True)
 
         expected_headers = {'If-Match': '*', "exportOnly": True}
-        mock_delete.assert_called_once_with(id, force=mock.ANY, timeout=mock.ANY, custom_headers=expected_headers)
+        mock_delete.assert_called_once_with(uri, force=mock.ANY, timeout=mock.ANY, custom_headers=expected_headers)
 
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_only_from_oneview_called_once_api500(self, mock_delete):
-        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        self._volumes.delete(id, suppress_device_updates=True)
+        uri = '/rest/storage-volumes/fake'
+        extended_uri = '/rest/storage-volumes/fake?suppressDeviceUpdates=true'
+        self._volumes.delete(uri, suppress_device_updates=True)
 
-        expected_headers = {'If-Match': '*', "suppressDeviceUpdates": True}
-        mock_delete.assert_called_once_with(id, force=mock.ANY, timeout=mock.ANY, custom_headers=expected_headers)
+        expected_headers = {'If-Match': '*'}
+        mock_delete.assert_called_once_with(extended_uri, force=mock.ANY,
+                                            timeout=mock.ANY, custom_headers=expected_headers)
 
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_snapshots_called_once(self, mock_get_all):

@@ -220,11 +220,15 @@ class Volumes(object):
             bool: Indicates if the volume was successfully deleted.
         """
         custom_headers = {'If-Match': '*'}
-        if suppress_device_updates is not None:
-            custom_headers['suppressDeviceUpdates'] = suppress_device_updates
-        elif export_only is not None:
-            custom_headers['exportOnly'] = export_only
-        return self._client.delete(resource, force=force, timeout=timeout, custom_headers=custom_headers)
+        if 'uri' in resource:
+            uri = resource['uri']
+        else:
+            uri = self._client.build_uri(resource)
+        if suppress_device_updates:
+            uri += '?suppressDeviceUpdates=true'
+        if export_only:
+            custom_headers['exportOnly'] = True
+        return self._client.delete(uri, force=force, timeout=timeout, custom_headers=custom_headers)
 
     def __build_volume_snapshot_uri(self, volume_id_or_uri=None, snapshot_id_or_uri=None):
         if snapshot_id_or_uri and "/" in snapshot_id_or_uri:

@@ -159,5 +159,5 @@ if oneview_client.volumes.delete(volume):
 if oneview_client.volumes.delete(volume_from_snapshot):
     print("The volume that was previously created with from Snaphsot was deleted from OneView and storage system")
 
-if managed_volume and oneview_client.volumes.delete(managed_volume, supress_device_updates=True):
+if managed_volume and oneview_client.volumes.delete(managed_volume, suppress_device_updates=True):
     print("The unamanged volume that was previously added using the name was deleted from OneView only")
