@@ -81,9 +81,10 @@ class ServerProfilesTest(TestCase):
     @mock.patch.object(ResourceClient, 'update')
     def test_update(self, mock_update):
         uri = "/rest/server-profiles/4ff2327f-7638-4b66-ad9d-283d4940a4ae"
-        template = dict(name="Server Profile Test", macType="Virtual")
+        template = dict(name="Server Profile Test", macType="Virtual",
+                        enclosureUri='/rest/fake', enclosureBay=3)
 
-        expected_template = template.copy()
+        expected_template = dict(name="Server Profile Test", macType="Virtual")
 
         self._resource.update(resource=template, id_or_uri=uri)
         mock_update.assert_called_once_with(resource=expected_template, uri=uri,

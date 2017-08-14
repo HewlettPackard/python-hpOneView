@@ -76,6 +76,10 @@ class ServerProfiles(object):
         Returns:
             dict: The server profile resource.
         """
+        # Removes related fields to serverHardware in case of unassign
+        if resource.get('serverHardwareUri') is None:
+            resource.pop('enclosureBay', None)
+            resource.pop('enclosureUri', None)
         return self._client.update(resource=resource, uri=id_or_uri, default_values=self.DEFAULT_VALUES)
 
     def patch(self, id_or_uri, operation, path, value, timeout=-1):
