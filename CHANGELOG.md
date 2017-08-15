@@ -12,6 +12,9 @@ Major release which extends support of the SDK to OneView Rest API version 500 (
 #### Breaking changes
 Legacy code under hpOneView which was marked as deprecated has been removed. This will cause scripts which still use legacy code to stop working. HPE recommends switching to the new modules which are officially supported.
 
+#### Bug fixes & Enhancements
+- [#300](https://github.com/HewlettPackard/python-hpOneView/issues/300) Unable to unassign Server Hardware from a Server Profile
+
 #### Features supported with current release:
 - Connection template
 - Datacenter
