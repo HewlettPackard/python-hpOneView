@@ -5,7 +5,7 @@ Major release which extends support of the SDK to OneView Rest API version 500 (
 
 #### Major changes
  1. Extended support of SDK to API500.
- 2. Added CHANGELOG and officially adopted Semantic Versioning for the SDK.
+ 2. Officially adopted [Semantic Versioning](http://semver.org/) for the SDK.
  3. Updated example files for most resources for improved readability and usability.
  4. General cleanup and removal of deprecated methods and classes.
 
