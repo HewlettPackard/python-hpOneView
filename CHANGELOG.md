@@ -28,6 +28,8 @@ Legacy code under hpOneView which was marked as deprecated has been removed. Thi
 - Firmware bundle
 - Firmware driver
 - Interconnect
+- Interconnect link topologies
+- Interconnect types
 - Internal link set
 - Logical downlink
 - Logical enclosure
