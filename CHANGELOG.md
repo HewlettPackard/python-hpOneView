@@ -1,5 +1,5 @@
 
-# v4.0.0 (Unreleased)
+# v4.0.0
 #### Notes
 Major release which extends support of the SDK to OneView Rest API version 500 (OneView v3.10).
 
@@ -28,6 +28,8 @@ Legacy code under hpOneView which was marked as deprecated has been removed. Thi
 - Firmware bundle
 - Firmware driver
 - Interconnect
+- Interconnect link topology
+- Interconnect type
 - Internal link set
 - Logical downlink
 - Logical enclosure
