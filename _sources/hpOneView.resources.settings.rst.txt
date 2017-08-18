@@ -4,6 +4,14 @@ hpOneView\.resources\.settings package
 Submodules
 ----------
 
+hpOneView\.resources\.settings\.appliance\_node\_information module
+-------------------------------------------------------------------
+
+.. automodule:: hpOneView.resources.settings.appliance_node_information
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView\.resources\.settings\.appliance\_time\_and\_locale\_configuration module
 ----------------------------------------------------------------------------------
 

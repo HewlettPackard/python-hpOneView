@@ -90,6 +90,7 @@
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">hpOneView.resources.settings package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.settings.appliance_node_information">hpOneView.resources.settings.appliance_node_information module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.appliance_time_and_locale_configuration">hpOneView.resources.settings.appliance_time_and_locale_configuration module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.backups">hpOneView.resources.settings.backups module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.firmware_bundles">hpOneView.resources.settings.firmware_bundles module</a></li>
@@ -167,6 +168,53 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="module-hpOneView.resources.settings.appliance_node_information">
+<span id="hponeview-resources-settings-appliance-node-information-module"></span><h2>hpOneView.resources.settings.appliance_node_information module<a class="headerlink" href="#module-hpOneView.resources.settings.appliance_node_information" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.settings.appliance_node_information.ApplianceNodeInformation">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.settings.appliance_node_information.</code><code class="descname">ApplianceNodeInformation</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_node_information.html#ApplianceNodeInformation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_node_information.ApplianceNodeInformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>ApplianceNodeInformation API client.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.settings.appliance_node_information.ApplianceNodeInformation.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/appliance/nodeinfo'</em><a class="headerlink" href="#hpOneView.resources.settings.appliance_node_information.ApplianceNodeInformation.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_node_information.ApplianceNodeInformation.get_status">
+<code class="descname">get_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_node_information.html#ApplianceNodeInformation.get_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_node_information.ApplianceNodeInformation.get_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves node’s status information</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Node’s status information</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_node_information.ApplianceNodeInformation.get_version">
+<code class="descname">get_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_node_information.html#ApplianceNodeInformation.get_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_node_information.ApplianceNodeInformation.get_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves node’s version information</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Node’s version information</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-hpOneView.resources.settings.appliance_time_and_locale_configuration">
 <span id="hponeview-resources-settings-appliance-time-and-locale-configuration-module"></span><h2>hpOneView.resources.settings.appliance_time_and_locale_configuration module<a class="headerlink" href="#module-hpOneView.resources.settings.appliance_time_and_locale_configuration" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -176,7 +224,7 @@
 <p>ApplianceTimeAndLocaleConfiguration API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'TimeAndLocale'}, u'200': {u'type': u'TimeAndLocale'}}</em><a class="headerlink" href="#hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'TimeAndLocale'}, u'300': {u'type': u'TimeAndLocale'}}</em><a class="headerlink" href="#hpOneView.resources.settings.appliance_time_and_locale_configuration.ApplianceTimeAndLocaleConfiguration.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -607,7 +655,7 @@ filter the list of resources returned.</p>
 <p>Restore API client for initiate a restore of an appliance and to get the status of the restore operation.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.settings.restores.Restores.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'RESTORE'}, u'200': {u'type': u'RESTORE'}}</em><a class="headerlink" href="#hpOneView.resources.settings.restores.Restores.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'RESTORE'}, u'300': {u'type': u'RESTORE'}}</em><a class="headerlink" href="#hpOneView.resources.settings.restores.Restores.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
