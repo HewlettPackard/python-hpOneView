@@ -74,6 +74,7 @@ from hpOneView.resources.activity.alerts import Alerts
 from hpOneView.resources.activity.events import Events
 from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
 from hpOneView.resources.security.users import Users
+from hpOneView.resources.settings.appliance_node_information import ApplianceNodeInformation
 from hpOneView.resources.settings.appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfiguration
 from tests.test_utils import mock_builtin
 
@@ -740,6 +741,14 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_users(self):
         user = self._oneview.users
         self.assertEqual(user, self._oneview.users)
+
+    def test_appliance_node_information_has_right_type(self):
+        self.assertIsInstance(self._oneview.appliance_node_information,
+                              ApplianceNodeInformation)
+
+    def test_lazy_loading_appliance_node_information(self):
+        appliance_node_information = self._oneview.appliance_node_information
+        self.assertEqual(appliance_node_information, self._oneview.appliance_node_information)
 
     def test_appliance_time_and_locale_configuration_has_right_type(self):
         self.assertIsInstance(self._oneview.appliance_time_and_locale_configuration,

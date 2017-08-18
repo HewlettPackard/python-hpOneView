@@ -1,3 +1,7 @@
+# v4.1.0 (Unreleased)
+
+#### New Resources:
+   - Appliance node information
 
 # v4.0.0
 #### Notes
