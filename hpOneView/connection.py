@@ -479,8 +479,11 @@ class connection(object):
     # Login/Logout to/from appliance
     ###########################################################################
     def login(self, cred, verbose=False):
-        if self._validateVersion is False:
-            self.validateVersion()
+        try:
+            if self._validateVersion is False:
+                self.validateVersion()
+        except Exception as e:
+            raise HPOneViewException(str(e))
 
         self._cred = cred
         try:

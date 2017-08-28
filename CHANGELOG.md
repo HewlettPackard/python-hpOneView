@@ -3,6 +3,9 @@
 #### New Resources:
    - Appliance node information
 
+#### Bug fixes & Enhancements
+- [#309](https://github.com/HewlettPackard/python-hpOneView/issues/309) HPOneViewException not raised when connection with paused VM fails
+
 # v4.0.0
 #### Notes
 Major release which extends support of the SDK to OneView Rest API version 500 (OneView v3.10).
