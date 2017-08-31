@@ -14,6 +14,7 @@ from __future__ import unicode_literals
 from builtins import open
 from builtins import str
 from future import standard_library
+from future.utils import raise_from
 
 standard_library.install_aliases()
 
@@ -483,7 +484,7 @@ class connection(object):
             if self._validateVersion is False:
                 self.validateVersion()
         except Exception as e:
-            raise HPOneViewException(str(e))
+            raise_from(HPOneViewException('Failure during login attempt.'), e)
 
         self._cred = cred
         try:
