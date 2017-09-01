@@ -1,7 +1,10 @@
-# v4.1.0 (Unreleased)
+# v4.1.0
 
 #### New Resources:
    - Appliance node information
+
+#### Bug fixes & Enhancements
+- [#309](https://github.com/HewlettPackard/python-hpOneView/issues/309) HPOneViewException not raised when connection with paused VM fails
 
 # v4.0.0
 #### Notes

@@ -14,6 +14,7 @@ from __future__ import unicode_literals
 from builtins import open
 from builtins import str
 from future import standard_library
+from future.utils import raise_from
 
 standard_library.install_aliases()
 
@@ -479,8 +480,11 @@ class connection(object):
     # Login/Logout to/from appliance
     ###########################################################################
     def login(self, cred, verbose=False):
-        if self._validateVersion is False:
-            self.validateVersion()
+        try:
+            if self._validateVersion is False:
+                self.validateVersion()
+        except Exception as e:
+            raise_from(HPOneViewException('Failure during login attempt.'), e)
 
         self._cred = cred
         try:
