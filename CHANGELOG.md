@@ -1,10 +1,12 @@
 # v4.1.0
 
 #### New Resources:
-   - Appliance node information
+- Appliance node information
+- Index resource
 
 #### Bug fixes & Enhancements
 - [#309](https://github.com/HewlettPackard/python-hpOneView/issues/309) HPOneViewException not raised when connection with paused VM fails
+- [#312](https://github.com/HewlettPackard/python-hpOneView/issues/312) Could not find mappings for OneView's Index Resources
 
 # v4.0.0
 #### Notes

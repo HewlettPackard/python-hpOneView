@@ -96,6 +96,7 @@ from hpOneView.resources.storage.sas_logical_jbod_attachments import SasLogicalJ
 from hpOneView.resources.networking.uplink_sets import UplinkSets
 from hpOneView.resources.servers.migratable_vc_domains import MigratableVcDomains
 from hpOneView.resources.networking.sas_logical_interconnect_groups import SasLogicalInterconnectGroups
+from hpOneView.resources.search.index_resources import IndexResources
 from hpOneView.resources.search.labels import Labels
 from hpOneView.resources.activity.alerts import Alerts
 from hpOneView.resources.activity.events import Events
@@ -175,6 +176,7 @@ class OneViewClient(object):
         self.__managed_sans = None
         self.__migratable_vc_domains = None
         self.__sas_interconnects = None
+        self.__index_resources = None
         self.__labels = None
         self.__sas_logical_interconnect_groups = None
         self.__alerts = None
@@ -1018,6 +1020,18 @@ class OneViewClient(object):
         if not self.__labels:
             self.__labels = Labels(self.__connection)
         return self.__labels
+
+    @property
+    def index_resources(self):
+        """
+        Gets the Index Resources API client.
+
+        Returns:
+            IndexResources:
+        """
+        if not self.__index_resources:
+            self.__index_resources = IndexResources(self.__connection)
+        return self.__index_resources
 
     @property
     def alerts(self):
