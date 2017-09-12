@@ -56,7 +56,7 @@ class IndexResourcesTest(unittest.TestCase):
         filter = 'name=TestName'
         sort = 'name:ascending'
 
-        expected_uri = '/rest/index/resources?&count=500&filter=name%3DTestName&sort=name%3Aascending&start=2'
+        expected_uri = '/rest/index/resources?count=500&filter=name=TestName&sort=name:ascending&start=2'
 
         self._resource.get_all(start=2, count=500, filter=filter, sort=sort)
         mock_get_all.assert_called_once_with(expected_uri)
@@ -66,7 +66,7 @@ class IndexResourcesTest(unittest.TestCase):
         filter = 'name=TestName'
         sort = 'name:ascending'
 
-        expected_uri = '/rest/index/resources?&count=500&filter=name%3DTestName&sort=name%3Aascending&start=2'
+        expected_uri = '/rest/index/resources?count=500&filter=name=TestName&sort=name:ascending&start=2'
 
         self._resource.get_all(start=2, count=500, filter=filter, sort=sort)
         mock_get_all.assert_called_once_with(expected_uri)
@@ -81,7 +81,7 @@ class IndexResourcesTest(unittest.TestCase):
     @mock.patch.object(ResourceClient, 'get')
     def test_get_aggregated_called_once(self, mock_get_aggregated):
 
-        expected_uri = '/rest/index/resources/aggregated?&attribute=Model&attribute=State&category=server-hardware&childLimit=6'
+        expected_uri = '/rest/index/resources/aggregated?attribute=Model&attribute=State&category=server-hardware&childLimit=6'
 
         self._resource.get_aggregated(['Model', 'State'], 'server-hardware')
         mock_get_aggregated.assert_called_once_with(expected_uri)

@@ -99,6 +99,8 @@ class IndexResources(object):
         uri += self.__list_or_str_to_query(user_query, 'userQuery')
         uri += self.__list_or_str_to_query(view, 'view')
 
+        uri = uri.replace('?&', '?')
+
         response = self._client.get(uri)
 
         if response and 'members' in response and response['members']:
@@ -154,6 +156,8 @@ class IndexResources(object):
         uri += self.__list_or_str_to_query(query, 'query')
         uri += self.__list_or_str_to_query(user_query, 'userQuery')
 
+        uri = uri.replace('?&', '?')
+
         return self._client.get(uri)
 
     def __list_or_str_to_query(self, list_or_str, field_name):
@@ -163,6 +167,5 @@ class IndexResources(object):
                 for f in list_or_str:
                     formated_query = formated_query + "&{0}=".format(field_name) + ''.join(quote(str(f)))
             else:
-                formated_query = "&{0}=".format(field_name) + ''.join(quote(str(list_or_str)))
-
+                formated_query = "&{0}=".format(field_name) + str(list_or_str)
         return formated_query

@@ -36,7 +36,6 @@ config = {
 attribute = 'Model'
 category = 'server-hardware'
 
-
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
