@@ -251,6 +251,7 @@
 <span class="kn">from</span> <span class="nn">hpOneView.resources.networking.uplink_sets</span> <span class="k">import</span> <span class="n">UplinkSets</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.servers.migratable_vc_domains</span> <span class="k">import</span> <span class="n">MigratableVcDomains</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.networking.sas_logical_interconnect_groups</span> <span class="k">import</span> <span class="n">SasLogicalInterconnectGroups</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.search.index_resources</span> <span class="k">import</span> <span class="n">IndexResources</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.search.labels</span> <span class="k">import</span> <span class="n">Labels</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.activity.alerts</span> <span class="k">import</span> <span class="n">Alerts</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.activity.events</span> <span class="k">import</span> <span class="n">Events</span>
@@ -330,6 +331,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__managed_sans</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__migratable_vc_domains</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__sas_interconnects</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__index_resources</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__labels</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__sas_logical_interconnect_groups</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__alerts</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1173,6 +1175,18 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__labels</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__labels</span> <span class="o">=</span> <span class="n">Labels</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__labels</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">index_resources</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Index Resources API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            IndexResources:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__index_resources</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__index_resources</span> <span class="o">=</span> <span class="n">IndexResources</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__index_resources</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">alerts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

@@ -4,6 +4,14 @@ hpOneView\.resources\.search package
 Submodules
 ----------
 
+hpOneView\.resources\.search\.index\_resources module
+-----------------------------------------------------
+
+.. automodule:: hpOneView.resources.search.index_resources
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView\.resources\.search\.labels module
 -------------------------------------------
 
