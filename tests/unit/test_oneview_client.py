@@ -67,6 +67,7 @@ from hpOneView.resources.storage.volumes import Volumes
 from hpOneView.resources.storage.drive_enclosures import DriveEnclosures
 from hpOneView.resources.storage.sas_logical_jbod_attachments import SasLogicalJbodAttachments
 from hpOneView.resources.networking.internal_link_sets import InternalLinkSets
+from hpOneView.resources.search.index_resources import IndexResources
 from hpOneView.resources.search.labels import Labels
 from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPlans
 from hpOneView.resources.uncategorized.os_deployment_servers import OsDeploymentServers
@@ -692,6 +693,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_internal_link_sets(self):
         internal_links = self._oneview.internal_link_sets
         self.assertEqual(internal_links, self._oneview.internal_link_sets)
+
+    def test_index_resources_has_right_type(self):
+        self.assertIsInstance(self._oneview.index_resources, IndexResources)
+
+    def test_lazy_loading_index_resources(self):
+        index_resources = self._oneview.index_resources
+        self.assertEqual(index_resources, self._oneview.index_resources)
 
     def test_labels_has_right_type(self):
         self.assertIsInstance(self._oneview.labels, Labels)
