@@ -238,18 +238,25 @@ The following summarizes code structure and naming conventions for the OneView r
 - **Examples:** The example is named with the same name of the resource module: **fc_networks**.
 - **Tests:**  The unit test folders follow the same structure of the resources. The name of the test modules should start with "test," for example: **test_fc_networks**.
 
-## Feature Requests
-
-If you have a need not being met by the current implementation, please let us know (via a new issue).
-This feedback is crucial for us to deliver a useful product. Do not assume that we have already thought of everything, because we assure you that is not the case.
-
 ## Testing
 
-We have already packaged everything you need to do to verify if the code is passing the tests.
-The tox script wraps the unit tests execution against Python 2 and 3, flake8 validation, and the test coverage report generation.
+When contributing code to this project, we require tests to accompany the code being delivered.
+That ensures a higher standing of quality, and also helps to avoid minor mistakes and future regressions.
 
-Run the following command:
+When writing the unit tests, the standard approach we follow is to use the python library [unittest.mock](https://docs.python.org/3/library/unittest.mock.html) to patch all calls that would be made to a OneView appliance and return mocked values.
+
+We have packaged everything required to verify if the code is passing the tests in a tox file.
+The tox call runs all unit tests against Python 2 and 3, runs a flake8 validation, and generates the test coverage report.
+
+To run it, use the following command:
 
 ```
 $ tox
 ```
+
+You can also check out examples of tests for different resources in the [tests](tests) folder.
+
+## Feature Requests
+
+If you have a need not being met by the current implementation, please let us know (via a new issue).
+This feedback is crucial for us to deliver a useful product. Do not assume that we have already thought of everything, because we assure you that is not the case.
