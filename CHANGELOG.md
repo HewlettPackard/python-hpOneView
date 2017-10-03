@@ -2,6 +2,9 @@
 #### Notes
 Added endpoints-support.md to track the supported and tested endpoints for the different HPE OneView REST APIs
 
+#### Bug fixes & Enhancements
+- [#320](https://github.com/HewlettPackard/python-hpOneView/issues/320) Issue with pickling HPOneViewException
+
 # v4.2.0
 #### New Resources:
 - Index resource
