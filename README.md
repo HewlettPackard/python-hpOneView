@@ -219,12 +219,13 @@ except HPOneViewException as e:
     print(e.msg) # has the entire JSON result from OneView, or the error message.
 ```
 
-## Contributing
+## Contributing and feature requests
 
-You know the drill. Fork it, branch it, change it, commit it, and pull-request it.
-We are passionate about improving this project, and are glad to accept help to make it better. However, keep the following in mind:
+**Contributing:** You know the drill. Fork it, branch it, change it, commit it, and pull-request it. We are passionate about improving this project, and glad to accept help to make it better.
 
-We reserve the right to reject changes that we feel do not fit the scope of this project. For feature additions, please open an issue to discuss your ideas before doing the work.
+**NOTE:** We reserve the right to reject changes that we feel do not fit the scope of this project. For feature additions, please open an issue to discuss your ideas before doing the work.
+
+**Feature Requests:** If you have needs not being met by the current implementation, please let us know (via a new issue). This feedback is crucial for us to deliver a useful product. Do not assume we have already thought of everything, because we assure you that is not the case.
 
 #### Naming Convention for OneView Resources
 
@@ -238,7 +239,7 @@ The following summarizes code structure and naming conventions for the OneView r
 - **Examples:** The example is named with the same name of the resource module: **fc_networks**.
 - **Tests:**  The unit test folders follow the same structure of the resources. The name of the test modules should start with "test," for example: **test_fc_networks**.
 
-## Testing
+#### Testing
 
 When contributing code to this project, we require tests to accompany the code being delivered.
 That ensures a higher standing of quality, and also helps to avoid minor mistakes and future regressions.
@@ -256,7 +257,10 @@ $ tox
 
 You can also check out examples of tests for different resources in the [tests](tests) folder.
 
-## Feature Requests
+## License
 
-If you have a need not being met by the current implementation, please let us know (via a new issue).
-This feedback is crucial for us to deliver a useful product. Do not assume that we have already thought of everything, because we assure you that is not the case.
+This project is licensed under the MIT license. Please see [LICENSE](LICENSE) for more information.
+
+## Version and changes
+
+To view history and notes for this version, view the [Changelog](CHANGELOG.md).
