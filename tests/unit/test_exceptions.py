@@ -24,6 +24,9 @@ import traceback
 import unittest
 import logging
 import mock
+import os
+import tempfile
+import pickle
 
 from hpOneView.exceptions import handle_exceptions
 from hpOneView.exceptions import HPOneViewException
@@ -118,6 +121,32 @@ class ExceptionsTest(unittest.TestCase):
         self.assertEqual(exception.msg, "The given data is empty!")
         self.assertEqual(exception.oneview_response, None)
         self.assertEqual(exception.args[0], "The given data is empty!")
+
+    def test_pickle_HPOneViewException_dict(self):
+        message = {"msg": "test message"}
+        exception = HPOneViewException(message)
+        tempf = tempfile.NamedTemporaryFile(delete=False)
+        with tempf as f:
+            pickle.dump(exception, f)
+
+        with open(tempf.name, 'rb') as f:
+            exception = pickle.load(f)
+
+        os.remove(tempf.name)
+        self.assertEqual('HPOneViewException', exception.__class__.__name__)
+
+    def test_pickle_HPOneViewException_message(self):
+        message = "test message"
+        exception = HPOneViewException(message)
+        tempf = tempfile.NamedTemporaryFile(delete=False)
+        with tempf as f:
+            pickle.dump(exception, f)
+
+        with open(tempf.name, 'rb') as f:
+            exception = pickle.load(f)
+
+        os.remove(tempf.name)
+        self.assertEqual('HPOneViewException', exception.__class__.__name__)
 
     @mock.patch.object(traceback, 'print_exception')
     @mock.patch.object(logging, 'error')

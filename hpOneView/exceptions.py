@@ -67,7 +67,7 @@ class HPOneViewException(Exception):
        oneview_response (dict): OneView rest response.
    """
 
-    def __init__(self, data):
+    def __init__(self, data, error=None):
         self.msg = None
         self.oneview_response = None
 
