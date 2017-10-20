@@ -52,7 +52,7 @@ A status of the HPE OneView REST interfaces that have been implemented in this P
 
 ## SDK Documentation
 
-The latest version of the SDK documentation can be found in the [SDK Documentation section] (https://hewlettpackard.github.io/python-hpOneView/index.html).
+The latest version of the SDK documentation can be found in the [SDK Documentation section](https://hewlettpackard.github.io/python-hpOneView/index.html).
 
 ## Logging
 
