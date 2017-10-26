@@ -102,8 +102,10 @@ from hpOneView.resources.activity.events import Events
 from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPlans
 from hpOneView.resources.uncategorized.os_deployment_servers import OsDeploymentServers
 from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
+from hpOneView.resources.security.login_details import Login_Details
 from hpOneView.resources.security.roles import Roles
 from hpOneView.resources.security.users import Users
+from hpOneView.resources.security.version_details import Version_Details
 from hpOneView.resources.settings.appliance_node_information import ApplianceNodeInformation
 from hpOneView.resources.settings.appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfiguration
 
@@ -189,6 +191,8 @@ class OneViewClient(object):
         self.__appliance_time_and_locale_configuration = None
         self.__appliance_node_information = None
         self.__backups = None
+        self.__login_details = None
+	self.__version_details = None	
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -1140,3 +1144,27 @@ class OneViewClient(object):
         if not self.__backups:
             self.__backups = Backups(self.__connection)
         return self.__backups
+
+    @property
+    def login_details(self):
+        """
+        Gets the login details
+
+        Returns:
+        List of login details
+        """
+        if not self.__login_details:
+            self.__login_details = Login_Details(self.__connection)
+        return self.__login_details
+   
+    @property
+    def version_details(self):
+        """
+        Gets the version details
+
+        Returns:
+        supported version_details
+        """
+        if not self.__version_details:
+            self.__version_details = Version_Details(self.__connection)
+        return self.__version_details
