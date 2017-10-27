@@ -31,10 +31,9 @@ standard_library.install_aliases()
 
 
 from hpOneView.resources.resource import ResourceClient
-from hpOneView.exceptions import HPOneViewException
 
 
-class Login_Details(object):
+class LoginDetails(object):
     """
     list login details.
 
@@ -52,7 +51,7 @@ class Login_Details(object):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
 
-    def get_all(self):
+    def get(self):
         """
         List the login details
 

@@ -65,6 +65,7 @@ from hpOneView.resources.storage.storage_volume_templates import StorageVolumeTe
 from hpOneView.resources.storage.volumes import Volumes
 from hpOneView.resources.storage.drive_enclosures import DriveEnclosures
 from hpOneView.resources.storage.sas_logical_jbod_attachments import SasLogicalJbodAttachments
+from hpOneView.resources.security.login_details import LoginDetails
 from hpOneView.resources.networking.internal_link_sets import InternalLinkSets
 from hpOneView.resources.search.index_resources import IndexResources
 from hpOneView.resources.search.labels import Labels
@@ -611,6 +612,13 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_sas_logical_interconnect_groups(self):
         sas_logical_interconnect_groups = self._oneview.sas_logical_interconnect_groups
         self.assertEqual(sas_logical_interconnect_groups, self._oneview.sas_logical_interconnect_groups)
+
+    def test_login_details_has_right_type(self):
+        self.assertIsInstance(self._oneview.login_details, LoginDetails)
+
+    def test_lazy_loading_login_details(self):
+        login_details = self._oneview.login_details
+        self.assertEqual(login_details, self._oneview.login_details)
 
     def test_unmanaged_devices_has_right_type(self):
         self.assertIsInstance(self._oneview.unmanaged_devices, UnmanagedDevices)

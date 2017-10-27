@@ -23,14 +23,13 @@
 
 from pprint import pprint
 from hpOneView.oneview_client import OneViewClient
-from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "16.124.133.232",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": "ecosystem"
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
@@ -48,7 +47,8 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-login_detail=oneview_client.login_details.get_all()
+print("\n Querying system for login details\n")
+login_detail = oneview_client.login_details.get()
+
 print("\n Login details are \n")
 pprint(login_detail)
-

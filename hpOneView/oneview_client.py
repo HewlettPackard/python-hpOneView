@@ -105,7 +105,6 @@ from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitM
 from hpOneView.resources.security.login_details import Login_Details
 from hpOneView.resources.security.roles import Roles
 from hpOneView.resources.security.users import Users
-from hpOneView.resources.security.version_details import Version_Details
 from hpOneView.resources.settings.appliance_node_information import ApplianceNodeInformation
 from hpOneView.resources.settings.appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfiguration
 
@@ -192,7 +191,6 @@ class OneViewClient(object):
         self.__appliance_node_information = None
         self.__backups = None
         self.__login_details = None
-	self.__version_details = None	
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
@@ -1154,17 +1152,5 @@ class OneViewClient(object):
         List of login details
         """
         if not self.__login_details:
-            self.__login_details = Login_Details(self.__connection)
+            self.__login_details = LoginDetails(self.__connection)
         return self.__login_details
-   
-    @property
-    def version_details(self):
-        """
-        Gets the version details
-
-        Returns:
-        supported version_details
-        """
-        if not self.__version_details:
-            self.__version_details = Version_Details(self.__connection)
-        return self.__version_details

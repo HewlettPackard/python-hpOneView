@@ -21,34 +21,24 @@
 # THE SOFTWARE.
 ###
 
-from pprint import pprint
-from hpOneView.oneview_client import OneViewClient
-from hpOneView.exceptions import HPOneViewException
-from config_loader import try_load_from_file
+import unittest
 
-config = {
-    "ip": "16.124.133.232",
-    "credentials": {
-        "userName": "administrator",
-        "password": "ecosystem"
-    }
-}
+import mock
 
-options = {
-    "name": "OneViewSDK Test Version details",
-    "connectionTemplateUri": None,
-    "autoLoginRedistribution": True,
-    "fabricType": "FabricAttach",
-    "linkStabilityTime": 30,
-}
+from hpOneView.connection import connection
+from hpOneView.resources.security.login_details import LoginDetails
+from hpOneView.resources.resource import ResourceClient
 
 
-# Try load config from a file (if there is a config file)
-config = try_load_from_file(config)
+class LoginDetailsTest(unittest.TestCase):
+    def setUp(self):
+        self.host = '127.0.0.1'
+        self.connection = connection(self.host)
+        self._login_details = LoginDetails(self.connection)
 
-oneview_client = OneViewClient(config)
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_called_once(self, mock_get):
+        
+        self._login_details.get()
 
-version_detail=oneview_client.version_details.get_all()
-print("\n Version details are \n")
-pprint(version_detail)
-
+        mock_get.assert_called_once_with()
