@@ -523,55 +523,6 @@
 <div class="viewcode-block" id="connection.patch"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.patch">[docs]</a>    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__do_rest_call</span><span class="p">(</span><span class="s1">&#39;PATCH&#39;</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="connection.get_entities_byrange"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.get_entities_byrange">[docs]</a>    <span class="k">def</span> <span class="nf">get_entities_byrange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">new_uri</span> <span class="o">=</span> <span class="n">uri</span> <span class="o">+</span> <span class="s1">&#39;?filter=&quot;</span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">field</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">%20&gt;%20</span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">xmin</span> \
-                      <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&quot;&amp;filter=&quot;</span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">field</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">%20&lt;%20</span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">xmax</span> \
-                      <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&quot;&amp;start=0&amp;count=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
-        <span class="n">body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">new_uri</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">get_members</span><span class="p">(</span><span class="n">body</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="connection.get_entities_byfield"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.get_entities_byfield">[docs]</a>    <span class="k">def</span> <span class="nf">get_entities_byfield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">new_uri</span> <span class="o">=</span> <span class="n">uri</span> <span class="o">+</span> <span class="s1">&#39;?start=0&amp;count=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> \
-                      <span class="o">+</span> <span class="s1">&#39;&amp;filter=&#39;</span> <span class="o">+</span> <span class="n">field</span> <span class="o">+</span> <span class="s1">&#39;=</span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">value</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">new_uri</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">new_uri</span><span class="p">)</span>
-            <span class="k">raise</span>
-        <span class="k">return</span> <span class="n">get_members</span><span class="p">(</span><span class="n">body</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="connection.get_entity_byfield"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.get_entity_byfield">[docs]</a>    <span class="k">def</span> <span class="nf">get_entity_byfield</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">new_uri</span> <span class="o">=</span> <span class="n">uri</span> <span class="o">+</span> <span class="s1">&#39;?filter=&quot;</span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">field</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">%20=%20</span><span class="se">\&#39;</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">value</span> \
-                      <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&quot;&amp;start=0&amp;count=&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">new_uri</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">new_uri</span><span class="p">)</span>
-            <span class="k">raise</span>
-        <span class="k">return</span> <span class="n">get_member</span><span class="p">(</span><span class="n">body</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="connection.conditional_post"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.conditional_post">[docs]</a>    <span class="k">def</span> <span class="nf">conditional_post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">task</span><span class="p">,</span> <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
-        <span class="k">except</span> <span class="n">HPOneViewException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="c1"># this may have failed because the entity already exists,</span>
-            <span class="c1"># unfortunately there is not a uniform way to report this,</span>
-            <span class="c1"># so we just try to find an existing entity with the same name</span>
-            <span class="c1"># and return it assuming all names are unique (which is a</span>
-            <span class="c1"># reasonable assumption)</span>
-            <span class="k">if</span> <span class="s1">&#39;DUPLICATE&#39;</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">errorCode</span> <span class="ow">and</span> <span class="s1">&#39;NAME&#39;</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">errorCode</span><span class="p">:</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_entity_byfield</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">body</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
-                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                    <span class="c1"># Didn&#39;t find the entity, raise exception</span>
-                    <span class="k">raise</span> <span class="n">e</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">entity</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="n">e</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">e</span>
-        <span class="k">return</span> <span class="n">entity</span></div>
-
     <span class="k">def</span> <span class="nf">__body_content_is_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="s1">&#39;category&#39;</span> <span class="ow">in</span> <span class="n">body</span> <span class="ow">and</span> <span class="n">body</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;tasks&#39;</span>
 
