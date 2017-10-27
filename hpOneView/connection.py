@@ -368,55 +368,6 @@ class connection(object):
     def patch(self, uri, body, custom_headers=None):
         return self.__do_rest_call('PATCH', uri, body, custom_headers=custom_headers)
 
-    def get_entities_byrange(self, uri, field, xmin, xmax, count=-1):
-        new_uri = uri + '?filter="\'' + field + '\'%20>%20\'' + xmin \
-                      + '\'"&filter="\'' + field + '\'%20<%20\'' + xmax \
-                      + '\'"&start=0&count=' + str(count)
-        body = self.get(new_uri)
-        return get_members(body)
-
-    def get_entities_byfield(self, uri, field, value, count=-1):
-        new_uri = uri + '?start=0&count=' + str(count) \
-                      + '&filter=' + field + '=\'' + value + '\''
-        try:
-            body = self.get(new_uri)
-        except:
-            print(new_uri)
-            raise
-        return get_members(body)
-
-    def get_entity_byfield(self, uri, field, value, count=-1):
-        new_uri = uri + '?filter="\'' + field + '\'%20=%20\'' + value \
-                      + '\'"&start=0&count=' + str(count)
-
-        try:
-            body = self.get(new_uri)
-        except:
-            print(new_uri)
-            raise
-        return get_member(body)
-
-    def conditional_post(self, uri, body):
-        try:
-            task, entity = self.post(uri, body)
-        except HPOneViewException as e:
-            # this may have failed because the entity already exists,
-            # unfortunately there is not a uniform way to report this,
-            # so we just try to find an existing entity with the same name
-            # and return it assuming all names are unique (which is a
-            # reasonable assumption)
-            if 'DUPLICATE' in e.errorCode and 'NAME' in e.errorCode:
-                try:
-                    entity = self.get_entity_byfield(uri, 'name', body['name'])
-                except Exception:
-                    # Didn't find the entity, raise exception
-                    raise e
-                if not entity:
-                    raise e
-            else:
-                raise e
-        return entity
-
     def __body_content_is_task(self, body):
         return isinstance(body, dict) and 'category' in body and body['category'] == 'tasks'
 
