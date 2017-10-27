@@ -51,7 +51,7 @@ class LoginDetails(object):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
 
-    def get(self):
+    def get_login_details(self):
         """
         List the login details
 

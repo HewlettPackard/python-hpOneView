@@ -38,7 +38,5 @@ class LoginDetailsTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_called_once(self, mock_get):
-        
-        self._login_details.get()
-
-        mock_get.assert_called_once_with()
+        self._login_details.get_login_details()
+        mock_get.assert_called_once_with(LoginDetails.URI)
