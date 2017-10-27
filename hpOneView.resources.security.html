@@ -92,6 +92,7 @@
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.security.certificate_authority">hpOneView.resources.security.certificate_authority module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.security.certificate_rabbitmq">hpOneView.resources.security.certificate_rabbitmq module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.security.roles">hpOneView.resources.security.roles module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.security.users">hpOneView.resources.security.users module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.security">Module contents</a></li>
 </ul>
@@ -335,6 +336,76 @@ Valid key formats are Base64 and PKCS12.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-hpOneView.resources.security.roles">
+<span id="hponeview-resources-security-roles-module"></span><h2>hpOneView.resources.security.roles module<a class="headerlink" href="#module-hpOneView.resources.security.roles" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.security.roles.Roles">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.security.roles.</code><code class="descname">Roles</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/security/roles.html#Roles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.security.roles.Roles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Roles API client.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.security.roles.Roles.RESOURCES_PATH">
+<code class="descname">RESOURCES_PATH</code><em class="property"> = u'/resources'</em><a class="headerlink" href="#hpOneView.resources.security.roles.Roles.RESOURCES_PATH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.security.roles.Roles.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/roles'</em><a class="headerlink" href="#hpOneView.resources.security.roles.Roles.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.security.roles.Roles.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>name_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/security/roles.html#Roles.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.security.roles.Roles.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the role by its URI or Name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name_or_uri</strong> – Can be either the Name or the URI.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Role</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.security.roles.Roles.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/security/roles.html#Roles.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.security.roles.Roles.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a list of roles based on optional sorting and filtering and is constrained by start
+and count parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items.
+The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
+default is no filter; all resources are returned.</li>
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
+on create time with the oldest entry first.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of roles.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-hpOneView.resources.security.users">
 <span id="hponeview-resources-security-users-module"></span><h2>hpOneView.resources.security.users module<a class="headerlink" href="#module-hpOneView.resources.security.users" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -344,7 +415,7 @@ Valid key formats are Base64 and PKCS12.</p>
 <p>Users API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.security.users.Users.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'300': {u'type': u'UserAndRoles'}, u'200': {u'type': u'UserAndRoles'}, u'500': {u'type': u'UserAndRoles'}}</em><a class="headerlink" href="#hpOneView.resources.security.users.Users.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'500': {u'type': u'UserAndRoles'}, u'300': {u'type': u'UserAndRoles'}, u'200': {u'type': u'UserAndRoles'}}</em><a class="headerlink" href="#hpOneView.resources.security.users.Users.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">

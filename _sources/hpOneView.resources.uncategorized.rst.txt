@@ -20,14 +20,6 @@ hpOneView\.resources\.uncategorized\.os\_deployment\_servers module
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.resources\.uncategorized\.roles module
--------------------------------------------------
-
-.. automodule:: hpOneView.resources.uncategorized.roles
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 hpOneView\.resources\.uncategorized\.unmanaged\_devices module
 --------------------------------------------------------------
 
