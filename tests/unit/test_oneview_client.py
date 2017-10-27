@@ -55,7 +55,6 @@ from hpOneView.resources.facilities.datacenters import Datacenters
 from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
 from hpOneView.resources.servers.server_profiles import ServerProfiles
 from hpOneView.resources.servers.id_pools import IdPools
-from hpOneView.resources.uncategorized.roles import Roles
 from hpOneView.resources.servers.id_pools_ranges import IdPoolsRanges
 from hpOneView.resources.servers.id_pools_ipv4_ranges import IdPoolsIpv4Ranges
 from hpOneView.resources.servers.id_pools_ipv4_subnets import IdPoolsIpv4Subnets
@@ -74,6 +73,7 @@ from hpOneView.resources.uncategorized.os_deployment_servers import OsDeployment
 from hpOneView.resources.activity.alerts import Alerts
 from hpOneView.resources.activity.events import Events
 from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
+from hpOneView.resources.security.roles import Roles
 from hpOneView.resources.security.users import Users
 from hpOneView.resources.settings.appliance_node_information import ApplianceNodeInformation
 from hpOneView.resources.settings.appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfiguration
