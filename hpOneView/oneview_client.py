@@ -69,7 +69,6 @@ from hpOneView.resources.uncategorized.unmanaged_devices import UnmanagedDevices
 from hpOneView.resources.networking.logical_downlinks import LogicalDownlinks
 from hpOneView.resources.facilities.power_devices import PowerDevices
 from hpOneView.resources.facilities.racks import Racks
-from hpOneView.resources.uncategorized.roles import Roles
 from hpOneView.resources.facilities.datacenters import Datacenters
 from hpOneView.resources.fc_sans.managed_sans import ManagedSANs
 from hpOneView.resources.fc_sans.san_managers import SanManagers
@@ -103,6 +102,7 @@ from hpOneView.resources.activity.events import Events
 from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPlans
 from hpOneView.resources.uncategorized.os_deployment_servers import OsDeploymentServers
 from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
+from hpOneView.resources.security.roles import Roles
 from hpOneView.resources.security.users import Users
 from hpOneView.resources.settings.appliance_node_information import ApplianceNodeInformation
 from hpOneView.resources.settings.appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfiguration

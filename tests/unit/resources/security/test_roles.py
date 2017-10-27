@@ -21,13 +21,13 @@
 # THE SOFTWARE.
 ###
 
-from unittest import TestCase
 
 import mock
 
+from unittest import TestCase
 from hpOneView.connection import connection
 from hpOneView.resources.resource import ResourceClient
-from hpOneView.resources.uncategorized.roles import Roles
+from hpOneView.resources.security.roles import Roles
 
 
 class RolesTest(TestCase):
