@@ -102,7 +102,7 @@ from hpOneView.resources.activity.events import Events
 from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPlans
 from hpOneView.resources.uncategorized.os_deployment_servers import OsDeploymentServers
 from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
-from hpOneView.resources.security.login_details import Login_Details
+from hpOneView.resources.security.login_details import LoginDetails
 from hpOneView.resources.security.roles import Roles
 from hpOneView.resources.security.users import Users
 from hpOneView.resources.settings.appliance_node_information import ApplianceNodeInformation
