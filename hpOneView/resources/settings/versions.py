@@ -45,10 +45,10 @@ class Versions(object):
 
     def get_version(self):
         """
-        Retrieves current version and minimum version.
-
-        Note:
-            This request does not require Auth or X-Api-Version headers
+        Returns the range of possible API versions supported by the appliance.
+        The response contains the current version and the minimum version.
+        The current version is the recommended version to specify in the REST header.
+        The other versions are supported for backward compatibility, but might not support the most current features.
 
         Returns:
             dict: version

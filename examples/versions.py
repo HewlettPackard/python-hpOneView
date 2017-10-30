@@ -38,7 +38,7 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
-# Get a current version and the minimum version
-print("Get a current version and the minimum version")
+# Get the current version and the minimum version
+print("Get the current version and the minimum version")
 version = oneview_client.versions.get_version()
 pprint(version)
