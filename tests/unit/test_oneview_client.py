@@ -78,6 +78,7 @@ from hpOneView.resources.security.roles import Roles
 from hpOneView.resources.security.users import Users
 from hpOneView.resources.settings.appliance_node_information import ApplianceNodeInformation
 from hpOneView.resources.settings.appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfiguration
+from hpOneView.resources.settings.versions import Versions
 from tests.test_utils import mock_builtin
 
 OS_ENVIRON_CONFIG_MINIMAL = {
@@ -883,3 +884,11 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_appliance_time_and_locale_configuration(self):
         appliance_time_and_locale_configuration = self._oneview.appliance_time_and_locale_configuration
         self.assertEqual(appliance_time_and_locale_configuration, self._oneview.appliance_time_and_locale_configuration)
+
+    def test_should_get_appliance_current_version_and_minimum_version(self):
+        self.assertIsInstance(self._oneview.versions,
+                              Versions)
+
+    def test_lazy_loading_appliance_version_information(self):
+        versions = self._oneview.versions
+        self.assertEqual(versions, self._oneview.versions)
