@@ -35,11 +35,11 @@ config = {
 }
 
 # You can also use sessionID instead of passing username and password credentials. See json below.
-# Be sure to inform a valid and active sessionID. 
+# Be sure to inform a valid and active sessionID.
 # config_session = {
 #     "ip": "172.16.102.59",
 #     "credentials": {
-#         "sessionID":"123"
+#         "sessionID": "123"
 #     }
 # }
 

@@ -890,7 +890,7 @@ class ConnectionTest(unittest.TestCase):
         mock_get.side_effect = [{'minimumVersion': 300, 'currentVersion': 400}]
         mock_put.return_value = {'cat': 'task'}, {'sessionID': '123'}
 
-        self.connection.login({"sessionID":"123"})
+        self.connection.login({"sessionID": "123"})
 
         self.assertEqual(self.connection.get_session_id(), '123')
         self.assertEqual(self.connection.get_session(), True)
@@ -901,7 +901,7 @@ class ConnectionTest(unittest.TestCase):
         mock_get.side_effect = [{'minimumVersion': 300, 'currentVersion': 400}]
         mock_put.side_effect = HPOneViewException("Failed")
 
-        self.assertRaises(HPOneViewException, self.connection.login, {"sessionID":"123"})
+        self.assertRaises(HPOneViewException, self.connection.login, {"sessionID": "123"})
 
     @patch.object(connection, 'get')
     def test_validate_version_exceeding_minimum(self, mock_get):

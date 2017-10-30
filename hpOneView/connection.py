@@ -441,7 +441,7 @@ class connection(object):
         try:
             if self._cred.get("sessionID"):
                 self.set_session_id(self._cred["sessionID"])
-                task, body = self.put(uri['loginSessions'], None)    
+                task, body = self.put(uri['loginSessions'], None)
             else:
                 task, body = self.post(uri['loginSessions'], self._cred)
         except HPOneViewException:

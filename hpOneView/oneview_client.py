@@ -229,16 +229,16 @@ class OneViewClient(object):
 
         if sessionID:
             config = dict(ip=ip,
-                      image_streamer_ip=image_streamer_ip,
-                      api_version=api_version,
-                      credentials=dict(sessionID=sessionID),
-                      proxy=proxy)
+                          image_streamer_ip=image_streamer_ip,
+                          api_version=api_version,
+                          credentials=dict(sessionID=sessionID),
+                          proxy=proxy)
         else:
             config = dict(ip=ip,
-                      image_streamer_ip=image_streamer_ip,
-                      api_version=api_version,
-                      credentials=dict(userName=username, authLoginDomain=auth_login_domain, password=password),
-                      proxy=proxy)
+                          image_streamer_ip=image_streamer_ip,
+                          api_version=api_version,
+                          credentials=dict(userName=username, authLoginDomain=auth_login_domain, password=password),
+                          proxy=proxy)
 
         return cls(config)
 
