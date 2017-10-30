@@ -33,15 +33,6 @@ config = {
     }
 }
 
-options = {
-    "name": "OneViewSDK Test LOGIN details",
-    "connectionTemplateUri": None,
-    "autoLoginRedistribution": True,
-    "fabricType": "FabricAttach",
-    "linkStabilityTime": 30,
-}
-
-
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 

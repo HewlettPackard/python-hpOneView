@@ -41,12 +41,6 @@ class LoginDetails(object):
 
     URI = '/rest/logindetails'
 
-    DEFAULT_VALUES = {
-        '200': {'type': 'logindetails'},
-        '300': {'type': 'logindetails'},
-        '500': {'type': 'logindetails'}
-    }
-
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
@@ -54,9 +48,6 @@ class LoginDetails(object):
     def get_login_details(self):
         """
         List the login details
-
-        Args:
-            id_or_uri: ID or URI.
 
         Returns:
             dict: login details.
