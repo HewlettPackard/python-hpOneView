@@ -108,6 +108,7 @@ OS_ENVIRON_CONFIG_FULL_WITH_SESSIONID = {
     'ONEVIEWSDK_PROXY': '172.16.100.195:9999'
 }
 
+
 class OneViewClientTest(unittest.TestCase):
     def __mock_file_open(self, json_config_content):
         # Simulates a TextIOWrapper (file output)
