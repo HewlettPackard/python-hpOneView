@@ -119,7 +119,6 @@ oneview_client = OneViewClient.from_environment_variables()
 ### Dictionary
 
 You can also set the configuration using a dictionary:
-Note: In case you already have an active and valid login session and want to reuse it, just inform the sessionID in the Credentials.
 
 ```python
 config = {
@@ -132,6 +131,8 @@ config = {
 
 oneview_client = OneViewClient(config)
 ```
+
+Note: In case you already have an active and valid login session and want to reuse it, just inform the sessionID in the Credentials.
 
 :lock: Tip: Check the file permissions because the password is stored in clear-text.
 
