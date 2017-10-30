@@ -3,6 +3,7 @@
 Added endpoints-support.md to track the supported and tested endpoints for the different HPE OneView REST APIs
 
 #### Bug fixes & Enhancements
+- [#273](https://github.com/HewlettPackard/python-hpOneView/issues/273) and [#324](https://github.com/HewlettPackard/python-hpOneView/issues/324) Enabling authentication using sessionID
 - [#317](https://github.com/HewlettPackard/python-hpOneView/issues/317) Resource "Roles" should be under "Security" instead of "Uncategorized"
 - [#320](https://github.com/HewlettPackard/python-hpOneView/issues/320) Issue with pickling HPOneViewException
 - [#330](https://github.com/HewlettPackard/python-hpOneView/issues/330) Remove unused/legacy code from connection.py

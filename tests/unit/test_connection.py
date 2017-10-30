@@ -885,6 +885,17 @@ class ConnectionTest(unittest.TestCase):
         self.assertRaises(HPOneViewException, self.connection.login, {})
 
     @patch.object(connection, 'get')
+    @patch.object(connection, 'put')
+    def test_login_sessionID(self, mock_post, mock_get):
+        mock_get.side_effect = [{'minimumVersion': 300, 'currentVersion': 400}]
+        mock_post.return_value = {'cat': 'task'}, {'sessionID': '123'}
+
+        self.connection.login({})
+
+        self.assertEqual(self.connection.get_session_id(), '123')
+        self.assertEqual(self.connection.get_session(), True)
+
+    @patch.object(connection, 'get')
     def test_validate_version_exceeding_minimum(self, mock_get):
         self.connection._apiVersion = 300
         mock_get.side_effect = [{'minimumVersion': 400, 'currentVersion': 400}]

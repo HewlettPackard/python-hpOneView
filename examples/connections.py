@@ -34,6 +34,16 @@ config = {
     }
 }
 
+# You can also use sessionID instead of passing username and password credentials. See json below.
+# Be sure to inform a valid and active sessionID. 
+# config_session = {
+#     "ip": "172.16.102.59",
+#     "credentials": {
+#         "sessionID":"123"
+#     }
+# }
+
+
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 

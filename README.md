@@ -69,6 +69,17 @@ Connection properties for accessing the OneView appliance can be set in a JSON f
 Before running the samples or your own scripts, you must create the JSON file.
 An example can be found at: [OneView configuration sample](examples/config-rename.json).
 
+Note: In case you already have an active and valid login session and want to reuse it, just inform the sessionID in the Credentials.
+
+```python
+config = {
+    "ip": "172.16.102.82",
+    "credentials": {
+        "sessionID": "123"
+    }
+}
+```
+
 Once you have created the JSON file, you can initialize the OneViewClient:
 
 ```python
@@ -84,8 +95,12 @@ Configuration can also be stored in environment variables:
 ```bash
 # Required
 export ONEVIEWSDK_IP='172.16.102.82'
+
 export ONEVIEWSDK_USERNAME='Administrator'
 export ONEVIEWSDK_PASSWORD='secret123'
+# Or sessionID
+export ONEVIEWSDK_SESSIONID='123'
+
 
 # Optional
 export ONEVIEWSDK_API_VERSION='300'
@@ -104,6 +119,7 @@ oneview_client = OneViewClient.from_environment_variables()
 ### Dictionary
 
 You can also set the configuration using a dictionary:
+Note: In case you already have an active and valid login session and want to reuse it, just inform the sessionID in the Credentials.
 
 ```python
 config = {
