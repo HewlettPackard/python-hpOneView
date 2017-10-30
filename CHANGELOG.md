@@ -165,6 +165,7 @@ Bugfixes and corrections.
  - Racks
  - Logical switch group
  - Logical switch
+ - Login Details
  - Switch
  - Power devices
  - Server profile
