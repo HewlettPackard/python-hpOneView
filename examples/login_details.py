@@ -41,5 +41,5 @@ oneview_client = OneViewClient(config)
 print("\n Querying system for login details\n")
 login_detail = oneview_client.login_details.get_login_details()
 
-print("\n Login details are \n")
+print("\n Login details are: \n")
 pprint(login_detail)
