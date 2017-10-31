@@ -1,6 +1,9 @@
-# v4.2.1 (Unreleased)
+# 4.3.0 (Unreleased)
 #### Notes
 Added endpoints-support.md to track the supported and tested endpoints for the different HPE OneView REST APIs
+
+#### New Resources:
+- Login details
 
 #### Bug fixes & Enhancements
 - [#317](https://github.com/HewlettPackard/python-hpOneView/issues/317) Resource "Roles" should be under "Security" instead of "Uncategorized"
@@ -165,7 +168,6 @@ Bugfixes and corrections.
  - Racks
  - Logical switch group
  - Logical switch
- - Login Details
  - Switch
  - Power devices
  - Server profile
