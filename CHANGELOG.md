@@ -1,4 +1,4 @@
-# 4.3.0 (Unreleased)
+# 4.3.0
 #### Notes
 Added endpoints-support.md to track the supported and tested endpoints for the different HPE OneView REST APIs
 
