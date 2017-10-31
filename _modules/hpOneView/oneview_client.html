@@ -257,6 +257,7 @@
 <span class="kn">from</span> <span class="nn">hpOneView.resources.uncategorized.os_deployment_plans</span> <span class="k">import</span> <span class="n">OsDeploymentPlans</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.uncategorized.os_deployment_servers</span> <span class="k">import</span> <span class="n">OsDeploymentServers</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.security.certificate_rabbitmq</span> <span class="k">import</span> <span class="n">CertificateRabbitMQ</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.security.login_details</span> <span class="k">import</span> <span class="n">LoginDetails</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.security.roles</span> <span class="k">import</span> <span class="n">Roles</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.security.users</span> <span class="k">import</span> <span class="n">Users</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.settings.appliance_node_information</span> <span class="k">import</span> <span class="n">ApplianceNodeInformation</span>
@@ -344,6 +345,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__appliance_time_and_locale_configuration</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__appliance_node_information</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__backups</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__login_details</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="c1"># TODO: Implement: con.set_trusted_ssl_bundle(args.cert)</span>
 
 <div class="viewcode-block" id="OneViewClient.from_json_file"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.oneview_client.OneViewClient.from_json_file">[docs]</a>    <span class="nd">@classmethod</span>
@@ -1294,7 +1296,19 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__backups</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__backups</span> <span class="o">=</span> <span class="n">Backups</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__backups</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__backups</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">login_details</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the login details</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        List of login details</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__login_details</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__login_details</span> <span class="o">=</span> <span class="n">LoginDetails</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__login_details</span></div>
 </pre></div>
 
            </div>
