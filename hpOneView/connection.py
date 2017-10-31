@@ -443,6 +443,7 @@ class connection(object):
                 self.set_session_id(self._cred["sessionID"])
                 task, body = self.put(uri['loginSessions'], None)
             else:
+                self._cred.pop("sessionID", None)
                 task, body = self.post(uri['loginSessions'], self._cred)
         except HPOneViewException:
             logger.exception('Login failed')

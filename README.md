@@ -69,7 +69,7 @@ Connection properties for accessing the OneView appliance can be set in a JSON f
 Before running the samples or your own scripts, you must create the JSON file.
 An example can be found at: [OneView configuration sample](examples/config-rename.json).
 
-Note: If you have an active and valid login session and want to use it, define the sessionID in the Credentials. When sessionID is defined, username and password will be disregarded. 
+Note: If you have an active and valid login session and want to use it, define the sessionID in the Credentials. When sessionID is defined, you can remove username and password from your JSON (they will be disregarded anyway).
 
 Once you have created the JSON file, you can initialize the OneViewClient:
 
@@ -101,7 +101,7 @@ export ONEVIEWSDK_PROXY='<proxy_host>:<proxy_port>'
 
 :lock: Tip: Make sure no unauthorized person has access to the environment variables, since the password is stored in clear-text.
 
-Note: If you have an active and valid login session and want to use it, define the ONEVIEWSDK_SESSIONID. When sessionID is defined, username and password will be disregarded.
+Note: If you have an active and valid login session and want to use it, define the ONEVIEWSDK_SESSIONID. When sessionID is defined, it will be used for authentication and username and password will be disregarded.
 
 Once you have defined the environment variables, you can initialize the OneViewClient using the following code snippet:
 
@@ -111,22 +111,32 @@ oneview_client = OneViewClient.from_environment_variables()
 
 ### Dictionary
 
-You can also set the configuration using a dictionary:
+You can also set the configuration using a dictionary. As described above, for authentication you can use username/password:
+
 
 ```python
 config = {
     "ip": "172.16.102.82",
     "credentials": {
         "userName": "Administrator",
-        "password": "secret123",
-        "sessionID": ""
+        "password": "secret123"
+    }
+}
+```
+
+ or if you have an active and valid login session and want to use it, define the sessionID in the Credentials:
+
+
+```python
+config = {
+    "ip": "172.16.102.82",
+    "credentials": {
+        "sessionID": "123"
     }
 }
 
 oneview_client = OneViewClient(config)
 ```
-
-Note: If you have an active and valid login session and want to use it, define the sessionID in the Credentials. When sessionID is defined, username and password will be disregarded.
 
 :lock: Tip: Check the file permissions because the password is stored in clear-text.
 

@@ -181,6 +181,21 @@ class OneViewClientTest(unittest.TestCase):
 
     @mock.patch.object(connection, 'login')
     @mock.patch(mock_builtin('open'))
+    def test_from_json_file_with_only_sessionID(self, mock_open, mock_login):
+        json_config_content = u"""{
+          "ip": "172.16.102.59",
+          "credentials": {
+            "sessionID": "123"
+          }
+        }"""
+        mock_open.return_value = self.__mock_file_open(json_config_content)
+        oneview_client = OneViewClient.from_json_file("config.json")
+
+        self.assertIsInstance(oneview_client, OneViewClient)
+        self.assertEqual("172.16.102.59", oneview_client.connection.get_host())
+
+    @mock.patch.object(connection, 'login')
+    @mock.patch(mock_builtin('open'))
     def test_default_api_version(self, mock_open, mock_login):
         json_config_content = u"""{
           "ip": "172.16.102.59",
@@ -299,6 +314,21 @@ class OneViewClientTest(unittest.TestCase):
                                           'credentials':
                                               {'userName': 'admin',
                                                'password': 'secret123',
+                                               'authLoginDomain': '',
+                                               'sessionID': '123'}})
+
+    @mock.patch.dict('os.environ', OS_ENVIRON_CONFIG_MINIMAL_WITH_SESSIONID)
+    @mock.patch.object(OneViewClient, '__init__')
+    def test_from_environment_variables_is_passing_right_arguments_to_the_constructor_with_only_sessionID(self, mock_cls):
+        mock_cls.return_value = None
+        OneViewClient.from_environment_variables()
+        mock_cls.assert_called_once_with({'api_version': 300,
+                                          'proxy': '',
+                                          'ip': '172.16.100.199',
+                                          'image_streamer_ip': '',
+                                          'credentials':
+                                              {'userName': '',
+                                               'password': '',
                                                'authLoginDomain': '',
                                                'sessionID': '123'}})
 
