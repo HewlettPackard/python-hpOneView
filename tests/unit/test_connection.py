@@ -885,6 +885,44 @@ class ConnectionTest(unittest.TestCase):
         self.assertRaises(HPOneViewException, self.connection.login, {})
 
     @patch.object(connection, 'get')
+    @patch.object(connection, 'put')
+    def test_login_sessionID(self, mock_put, mock_get):
+        mock_get.side_effect = [{'minimumVersion': 300, 'currentVersion': 400}]
+        mock_put.return_value = {'cat': 'task'}, {'sessionID': '123'}
+
+        self.connection.login({"sessionID": "123"})
+
+        self.assertEqual(self.connection.get_session_id(), '123')
+        self.assertEqual(self.connection.get_session(), True)
+
+    @patch.object(connection, 'get')
+    @patch.object(connection, 'put')
+    def test_login_username_password_sessionID(self, mock_put, mock_get):
+        mock_get.side_effect = [{'minimumVersion': 300, 'currentVersion': 400}]
+        mock_put.return_value = {'cat': 'task'}, {'sessionID': '123'}
+
+        self.connection.login({"userName": "administrator", "password": "", "sessionID": "123"})
+
+        self.assertEqual(self.connection.get_session_id(), '123')
+        self.assertEqual(self.connection.get_session(), True)
+
+    @patch.object(connection, 'get')
+    @patch.object(connection, 'put')
+    def test_login_with_exception_in_put(self, mock_put, mock_get):
+        mock_get.side_effect = [{'minimumVersion': 300, 'currentVersion': 400}]
+        mock_put.side_effect = HPOneViewException("Failed")
+
+        self.assertRaises(HPOneViewException, self.connection.login, {"sessionID": "123"})
+
+    @patch.object(connection, 'get')
+    @patch.object(connection, 'put')
+    def test_login_with_exception_in_put_username_password_sessionID(self, mock_put, mock_get):
+        mock_get.side_effect = [{'minimumVersion': 300, 'currentVersion': 400}]
+        mock_put.side_effect = HPOneViewException("Failed")
+
+        self.assertRaises(HPOneViewException, self.connection.login, {"userName": "administrator", "password": "", "sessionID": "123"})
+
+    @patch.object(connection, 'get')
     def test_validate_version_exceeding_minimum(self, mock_get):
         self.connection._apiVersion = 300
         mock_get.side_effect = [{'minimumVersion': 400, 'currentVersion': 400}]

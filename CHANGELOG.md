@@ -6,8 +6,10 @@ Added endpoints-support.md to track the supported and tested endpoints for the d
 - Login details
 
 #### Bug fixes & Enhancements
+- [#273](https://github.com/HewlettPackard/python-hpOneView/issues/273) OneViewClient doesn't allow using a token (sessionId)
 - [#317](https://github.com/HewlettPackard/python-hpOneView/issues/317) Resource "Roles" should be under "Security" instead of "Uncategorized"
 - [#320](https://github.com/HewlettPackard/python-hpOneView/issues/320) Issue with pickling HPOneViewException
+- [#324](https://github.com/HewlettPackard/python-hpOneView/issues/324) Is it possible to login with session token?
 - [#330](https://github.com/HewlettPackard/python-hpOneView/issues/330) Remove unused/legacy code from connection.py
 
 # v4.2.0
@@ -128,7 +130,7 @@ Bugfixes and corrections.
    - Developer friendly interface
    - Standardization for building new endpoint clients
    - Core client implementation
-   - Support for Pythonâ€™s logging library
+   - Support for Python’s logging library
    - Added possibility to load connection settings from configuration file
    - Simple access to OneView API endpoints through OneViewClient module
  3. Added developer-focused samples

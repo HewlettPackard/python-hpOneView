@@ -26,13 +26,17 @@ from hpOneView.oneview_client import OneViewClient
 from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
+# You can use username/password or sessionID for authentication.
+# Be sure to inform a valid and active sessionID.
 config = {
-    "ip": "172.16.102.59",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>",
+        "sessionID": "<sessionID>"
     }
 }
+
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)

@@ -69,6 +69,8 @@ Connection properties for accessing the OneView appliance can be set in a JSON f
 Before running the samples or your own scripts, you must create the JSON file.
 An example can be found at: [OneView configuration sample](examples/config-rename.json).
 
+Note: If you have an active and valid login session and want to use it, define the sessionID in the Credentials. When sessionID is defined, you can remove username and password from your JSON (they will be disregarded anyway).
+
 Once you have created the JSON file, you can initialize the OneViewClient:
 
 ```python
@@ -84,8 +86,12 @@ Configuration can also be stored in environment variables:
 ```bash
 # Required
 export ONEVIEWSDK_IP='172.16.102.82'
+
 export ONEVIEWSDK_USERNAME='Administrator'
 export ONEVIEWSDK_PASSWORD='secret123'
+# Or sessionID
+export ONEVIEWSDK_SESSIONID='123'
+
 
 # Optional
 export ONEVIEWSDK_API_VERSION='300'
@@ -95,6 +101,8 @@ export ONEVIEWSDK_PROXY='<proxy_host>:<proxy_port>'
 
 :lock: Tip: Make sure no unauthorized person has access to the environment variables, since the password is stored in clear-text.
 
+Note: If you have an active and valid login session and want to use it, define the ONEVIEWSDK_SESSIONID. When a sessionID is defined, it will be used for authentication (username and password will be ignored in this case).
+
 Once you have defined the environment variables, you can initialize the OneViewClient using the following code snippet:
 
 ```python
@@ -103,7 +111,8 @@ oneview_client = OneViewClient.from_environment_variables()
 
 ### Dictionary
 
-You can also set the configuration using a dictionary:
+You can also set the configuration using a dictionary. As described above, for authentication you can use username/password:
+
 
 ```python
 config = {
@@ -111,6 +120,18 @@ config = {
     "credentials": {
         "userName": "Administrator",
         "password": "secret123"
+    }
+}
+```
+
+ or if you have an active and valid login session and want to use it, define the sessionID in the Credentials:
+
+
+```python
+config = {
+    "ip": "172.16.102.82",
+    "credentials": {
+        "sessionID": "123"
     }
 }
 
