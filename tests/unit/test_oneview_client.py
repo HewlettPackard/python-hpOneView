@@ -103,6 +103,8 @@ OS_ENVIRON_CONFIG_FULL = {
 OS_ENVIRON_CONFIG_FULL_WITH_SESSIONID = {
     'ONEVIEWSDK_IP': '172.16.100.199',
     'ONEVIEWSDK_IMAGE_STREAMER_IP': '172.172.172.172',
+    'ONEVIEWSDK_USERNAME': 'admin',
+    'ONEVIEWSDK_PASSWORD': 'secret123',
     'ONEVIEWSDK_SESSIONID': '123',
     'ONEVIEWSDK_API_VERSION': '201',
     'ONEVIEWSDK_PROXY': '172.16.100.195:9999'
@@ -158,6 +160,25 @@ class OneViewClientTest(unittest.TestCase):
 
         self.assertIsInstance(oneview_client, OneViewClient)
         self.assertEqual("172.16.102.59", oneview_client.connection.get_host())
+
+    @mock.patch.object(connection, 'login')
+    @mock.patch(mock_builtin('open'))
+    def test_from_json_file_with_sessionID(self, mock_open, mock_login):
+        json_config_content = u"""{
+          "ip": "172.16.102.59",
+          "credentials": {
+            "userName": "administrator",
+            "authLoginDomain": "",
+            "password": "",
+            "sessionID": "123"
+          }
+        }"""
+        mock_open.return_value = self.__mock_file_open(json_config_content)
+        oneview_client = OneViewClient.from_json_file("config.json")
+
+        self.assertIsInstance(oneview_client, OneViewClient)
+        self.assertEqual("172.16.102.59", oneview_client.connection.get_host())
+        self.assertEqual("123", oneview_client.connection.get_session_id())
 
     @mock.patch.object(connection, 'login')
     @mock.patch(mock_builtin('open'))
@@ -237,12 +258,15 @@ class OneViewClientTest(unittest.TestCase):
     def test_from_full_environment_variables_with_sessionID(self, mock_set_proxy, mock_login):
         oneview_client = OneViewClient.from_environment_variables()
 
-        mock_login.assert_called_once_with(dict(sessionID='123'))
+        mock_login.assert_called_once_with(dict(userName='admin',
+                                                password='secret123',
+                                                sessionID='123'))
         mock_set_proxy.assert_called_once_with('172.16.100.195', 9999)
 
         self.assertEqual(201, oneview_client.connection._apiVersion)
+        self.assertEqual("123", oneview_client.connection.get_session_id())
         self.assertEqual(oneview_client.create_image_streamer_client().connection.get_host(),
-                         OS_ENVIRON_CONFIG_FULL['ONEVIEWSDK_IMAGE_STREAMER_IP'])
+                         OS_ENVIRON_CONFIG_FULL_WITH_SESSIONID['ONEVIEWSDK_IMAGE_STREAMER_IP'])
 
     @mock.patch.dict('os.environ', OS_ENVIRON_CONFIG_FULL)
     @mock.patch.object(OneViewClient, '__init__')
@@ -268,7 +292,9 @@ class OneViewClientTest(unittest.TestCase):
                                           'ip': '172.16.100.199',
                                           'image_streamer_ip': '172.172.172.172',
                                           'credentials':
-                                              {'sessionID': '123'}})
+                                              {'password': 'secret123',
+                                               'userName': 'admin',
+                                               'sessionID': '123'}})
 
     @mock.patch.object(connection, 'login')
     def test_create_image_streamer_client_without_image_streamer_ip(self, mock_login):

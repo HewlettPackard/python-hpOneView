@@ -227,18 +227,11 @@ class OneViewClient(object):
         proxy = os.environ.get('ONEVIEWSDK_PROXY', '')
         sessionID = os.environ.get('ONEVIEWSDK_SESSIONID', '')
 
-        if sessionID:
-            config = dict(ip=ip,
-                          image_streamer_ip=image_streamer_ip,
-                          api_version=api_version,
-                          credentials=dict(sessionID=sessionID),
-                          proxy=proxy)
-        else:
-            config = dict(ip=ip,
-                          image_streamer_ip=image_streamer_ip,
-                          api_version=api_version,
-                          credentials=dict(userName=username, authLoginDomain=auth_login_domain, password=password),
-                          proxy=proxy)
+        config = dict(ip=ip,
+                      image_streamer_ip=image_streamer_ip,
+                      api_version=api_version,
+                      credentials=dict(userName=username, authLoginDomain=auth_login_domain, password=password, sessionID=sessionID),
+                      proxy=proxy)
 
         return cls(config)
 
