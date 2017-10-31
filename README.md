@@ -101,7 +101,7 @@ export ONEVIEWSDK_PROXY='<proxy_host>:<proxy_port>'
 
 :lock: Tip: Make sure no unauthorized person has access to the environment variables, since the password is stored in clear-text.
 
-Note: If you have an active and valid login session and want to use it, define the ONEVIEWSDK_SESSIONID. When sessionID is defined, it will be used for authentication and username and password will be disregarded.
+Note: If you have an active and valid login session and want to use it, define the ONEVIEWSDK_SESSIONID. When a sessionID is defined, it will be used for authentication (username and password will be ignored in this case).
 
 Once you have defined the environment variables, you can initialize the OneViewClient using the following code snippet:
 
