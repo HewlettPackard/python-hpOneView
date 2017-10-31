@@ -223,7 +223,7 @@ class OneViewClientTest(unittest.TestCase):
         mock_login.assert_called_once_with(dict(userName='admin',
                                                 password='secret123',
                                                 authLoginDomain='',
-                                                sessionID= ''))
+                                                sessionID=''))
         mock_set_proxy.assert_not_called()
         self.assertEqual(300, oneview_client.connection._apiVersion)
 
