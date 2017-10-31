@@ -178,7 +178,6 @@ class OneViewClientTest(unittest.TestCase):
 
         self.assertIsInstance(oneview_client, OneViewClient)
         self.assertEqual("172.16.102.59", oneview_client.connection.get_host())
-        self.assertEqual("123", oneview_client.connection.get_session_id())
 
     @mock.patch.object(connection, 'login')
     @mock.patch(mock_builtin('open'))
@@ -223,7 +222,8 @@ class OneViewClientTest(unittest.TestCase):
 
         mock_login.assert_called_once_with(dict(userName='admin',
                                                 password='secret123',
-                                                authLoginDomain=''))
+                                                authLoginDomain='',
+                                                sessionID= ''))
         mock_set_proxy.assert_not_called()
         self.assertEqual(300, oneview_client.connection._apiVersion)
 
@@ -233,7 +233,10 @@ class OneViewClientTest(unittest.TestCase):
     def test_from_minimal_environment_variables_with_sessionID(self, mock_set_proxy, mock_login):
         oneview_client = OneViewClient.from_environment_variables()
 
-        mock_login.assert_called_once_with(dict(sessionID='123'))
+        mock_login.assert_called_once_with(dict(userName='',
+                                                password='',
+                                                authLoginDomain='',
+                                                sessionID='123'))
         mock_set_proxy.assert_not_called()
         self.assertEqual(300, oneview_client.connection._apiVersion)
 
@@ -245,7 +248,8 @@ class OneViewClientTest(unittest.TestCase):
 
         mock_login.assert_called_once_with(dict(userName='admin',
                                                 password='secret123',
-                                                authLoginDomain='authdomain'))
+                                                authLoginDomain='authdomain',
+                                                sessionID=''))
         mock_set_proxy.assert_called_once_with('172.16.100.195', 9999)
 
         self.assertEqual(201, oneview_client.connection._apiVersion)
@@ -260,11 +264,11 @@ class OneViewClientTest(unittest.TestCase):
 
         mock_login.assert_called_once_with(dict(userName='admin',
                                                 password='secret123',
+                                                authLoginDomain='',
                                                 sessionID='123'))
         mock_set_proxy.assert_called_once_with('172.16.100.195', 9999)
 
         self.assertEqual(201, oneview_client.connection._apiVersion)
-        self.assertEqual("123", oneview_client.connection.get_session_id())
         self.assertEqual(oneview_client.create_image_streamer_client().connection.get_host(),
                          OS_ENVIRON_CONFIG_FULL_WITH_SESSIONID['ONEVIEWSDK_IMAGE_STREAMER_IP'])
 
@@ -278,9 +282,10 @@ class OneViewClientTest(unittest.TestCase):
                                           'ip': '172.16.100.199',
                                           'image_streamer_ip': '172.172.172.172',
                                           'credentials':
-                                              {'password': 'secret123',
+                                              {'userName': 'admin',
+                                               'password': 'secret123',
                                                'authLoginDomain': 'authdomain',
-                                               'userName': 'admin'}})
+                                               'sessionID': ''}})
 
     @mock.patch.dict('os.environ', OS_ENVIRON_CONFIG_FULL_WITH_SESSIONID)
     @mock.patch.object(OneViewClient, '__init__')
@@ -292,8 +297,9 @@ class OneViewClientTest(unittest.TestCase):
                                           'ip': '172.16.100.199',
                                           'image_streamer_ip': '172.172.172.172',
                                           'credentials':
-                                              {'password': 'secret123',
-                                               'userName': 'admin',
+                                              {'userName': 'admin',
+                                               'password': 'secret123',
+                                               'authLoginDomain': '',
                                                'sessionID': '123'}})
 
     @mock.patch.object(connection, 'login')
