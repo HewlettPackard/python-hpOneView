@@ -35,6 +35,6 @@ class VersionsTest(unittest.TestCase):
         self._client = Versions(self.connection)
 
     @mock.patch.object(ResourceClient, 'get')
-    def test_get_with_uri_called_once(self, mock_get):         
+    def test_get_with_uri_called_once(self, mock_get):
         self._client.get_version()
         mock_get.assert_called_once_with('/rest/version')
