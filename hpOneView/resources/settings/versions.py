@@ -51,7 +51,7 @@ class Versions(object):
         The other versions are supported for backward compatibility, but might not support the most current features.
 
         Returns:
-            dict: version
+            dict: The minimum and maximum supported API versions.
         """
         version = self._client.get(self.URI)
         return version

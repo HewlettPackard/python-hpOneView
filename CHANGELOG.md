@@ -1,3 +1,7 @@
+# 4.4.0(Unreleased)
+#### New Resources:
+- Version
+
 # 4.3.0
 #### Notes
 Added endpoints-support.md to track the supported and tested endpoints for the different HPE OneView REST APIs
@@ -130,7 +134,7 @@ Bugfixes and corrections.
    - Developer friendly interface
    - Standardization for building new endpoint clients
    - Core client implementation
-   - Support for Python’s logging library
+   - Support for Python's logging library
    - Added possibility to load connection settings from configuration file
    - Simple access to OneView API endpoints through OneViewClient module
  3. Added developer-focused samples
