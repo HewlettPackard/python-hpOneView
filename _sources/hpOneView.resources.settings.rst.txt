@@ -60,6 +60,14 @@ hpOneView\.resources\.settings\.scopes module
     :undoc-members:
     :show-inheritance:
 
+hpOneView\.resources\.settings\.versions module
+-----------------------------------------------
+
+.. automodule:: hpOneView.resources.settings.versions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

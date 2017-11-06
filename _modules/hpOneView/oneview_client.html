@@ -262,6 +262,7 @@
 <span class="kn">from</span> <span class="nn">hpOneView.resources.security.users</span> <span class="k">import</span> <span class="n">Users</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.settings.appliance_node_information</span> <span class="k">import</span> <span class="n">ApplianceNodeInformation</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.settings.appliance_time_and_locale_configuration</span> <span class="k">import</span> <span class="n">ApplianceTimeAndLocaleConfiguration</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.settings.versions</span> <span class="k">import</span> <span class="n">Versions</span>
 
 <span class="n">ONEVIEW_CLIENT_INVALID_PROXY</span> <span class="o">=</span> <span class="s1">&#39;Invalid Proxy format&#39;</span>
 
@@ -344,6 +345,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__users</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__appliance_time_and_locale_configuration</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__appliance_node_information</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__versions</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__backups</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__login_details</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="c1"># TODO: Implement: con.set_trusted_ssl_bundle(args.cert)</span>
@@ -1286,6 +1288,18 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__appliance_time_and_locale_configuration</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__appliance_time_and_locale_configuration</span> <span class="o">=</span> <span class="n">ApplianceTimeAndLocaleConfiguration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__appliance_time_and_locale_configuration</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">versions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the Version API client.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Version:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__versions</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__versions</span> <span class="o">=</span> <span class="n">Versions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__versions</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">backups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
