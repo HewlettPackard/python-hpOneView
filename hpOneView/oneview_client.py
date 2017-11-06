@@ -107,6 +107,7 @@ from hpOneView.resources.security.roles import Roles
 from hpOneView.resources.security.users import Users
 from hpOneView.resources.settings.appliance_node_information import ApplianceNodeInformation
 from hpOneView.resources.settings.appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfiguration
+from hpOneView.resources.settings.versions import Versions
 
 ONEVIEW_CLIENT_INVALID_PROXY = 'Invalid Proxy format'
 
@@ -189,6 +190,7 @@ class OneViewClient(object):
         self.__users = None
         self.__appliance_time_and_locale_configuration = None
         self.__appliance_node_information = None
+        self.__versions = None
         self.__backups = None
         self.__login_details = None
         # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
@@ -1131,6 +1133,18 @@ class OneViewClient(object):
         if not self.__appliance_time_and_locale_configuration:
             self.__appliance_time_and_locale_configuration = ApplianceTimeAndLocaleConfiguration(self.__connection)
         return self.__appliance_time_and_locale_configuration
+
+    @property
+    def versions(self):
+        """
+        Gets the Version API client.
+
+        Returns:
+            Version:
+        """
+        if not self.__versions:
+            self.__versions = Versions(self.__connection)
+        return self.__versions
 
     @property
     def backups(self):
