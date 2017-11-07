@@ -22,7 +22,7 @@
 # THE SOFTWARE.
 ###
 
-from hpOneView import *
+from hpOneView.oneview_client import OneViewClient
 from functools import partial
 import amqp
 import amqp.spec
@@ -113,39 +113,34 @@ def recv(host, route):
     ch.close()
     conn.close()
 
-
-def login(con, credential):
-    # Login with givin credentials
-    try:
-        con.login(credential)
-    except:
-        print('Login failed')
-
-
-def acceptEULA(con):
+def acceptEULA(oneview_client):
     # See if we need to accept the EULA before we try to log in
-    con.get_eula_status()
+    eula_status = oneview_client.connection.get_eula_status()
     try:
-        if con.get_eula_status() is True:
-            con.set_eula('no')
+        if eula_status is True:
+            oneview_client.connection.set_eula('no')
     except Exception as e:
         print('EXCEPTION:')
         print(e)
 
 
-def getCertCa(sec):
-    cert = sec.get_cert_ca()
+def getCertCa(oneview_client):
+    cert = oneview_client.certificate_authority.get()
     ca = open('caroot.pem', 'w+')
     ca.write(cert)
     ca.close()
 
 
-def genRabbitCa(sec):
-    sec.gen_rabbitmq_internal_signed_ca()
+def genRabbitCa(oneview_client):
+    certificate_ca_signed_client = {
+        "commonName": "default",
+        "type": "RabbitMqClientCertV2"
+    }
+    oneview_client.certificate_rabbitmq.generate(certificate_ca_signed_client)
 
 
-def getRabbitKp(sec):
-    cert = sec.get_rabbitmq_kp()
+def getRabbitKp(oneview_client):
+    cert = oneview_client.certificate_rabbitmq.get_key_pair('default')
     ca = open('client.pem', 'w+')
     ca.write(cert['base64SSLCertData'])
     ca.close()
@@ -175,22 +170,25 @@ def main():
                         action='store_true',
                         help='Download the required keys and certs then exit')
     args = parser.parse_args()
-    credential = {'userName': args.user, 'password': args.passwd}
+    config = {
+        "ip": args.host,
+        "credentials": {
+            "userName": args.user,
+            "password": args.passwd
+        }
+    }
 
-    con = connection(args.host)
-    sec = security(con)
-
-    login(con, credential)
-    acceptEULA(con)
+    oneview_client = OneViewClient(config)
+    acceptEULA(oneview_client)
 
     # Generate the RabbitMQ keypair (only needs to be done one time)
     if args.gen:
-        genRabbitCa(sec)
+        genRabbitCa(oneview_client)
         sys.exit()
 
     if args.down:
-        getCertCa(sec)
-        getRabbitKp(sec)
+        getCertCa(oneview_client)
+        getRabbitKp(oneview_client)
         sys.exit()
 
     recv(args.host, args.route)
