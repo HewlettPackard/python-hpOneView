@@ -364,8 +364,8 @@
 |<sub>/rest/restores/failures</sub>                                                       | GET      | :white_check_mark:   | :white_check_mark:   |                      |
 |<sub>/rest/restores/{id}</sub>                                                           | GET      | :white_check_mark:   | :white_check_mark:   |                      |
 |     **Roles**                                                                                                                                     |
-|<sub>/rest/roles</sub>                                                                   | GET      | :black_square_button: | :black_square_button: |:black_square_button:
-|<sub>/rest/roles/{roleName}</sub>                                                        | GET      | :black_square_button: | :black_square_button: |:black_square_button:
+|<sub>/rest/roles</sub>                                                                   | GET      | :white_check_mark: | :white_check_mark: |
+|<sub>/rest/roles/{roleName}</sub>                                                        | GET      | :white_check_mark: | :white_check_mark: |
 |     **SAN Managers**                                                                                                                             |
 |<sub>/rest/fc-sans/device-managers</sub>                                                 | GET      | :white_check_mark:   | :heavy_minus_sign:   | :white_check_mark:   |
 |<sub>/rest/fc-sans/device-managers/{id}</sub>                                            | GET      | :white_check_mark:   | :heavy_minus_sign:   | :white_check_mark:   |
