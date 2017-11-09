@@ -3,8 +3,7 @@
 | Item | Meaning |
 | ------------------ | --------------------------------------------- |
 |  :white_check_mark: | Endpoint implemented in the Python SDK and tested for this API version :tada: |
-|  :black_square_button: | Endpoint to be implemented (backlog)                                 |
-|  :black_circle:        | Endpoint considered as 'out-of-scope' for the Python SDK               |
+|  :heavy_multiplication_x:  | Endpoint considered as 'out-of-scope' for the Python SDK               |
 |  :heavy_minus_sign: | Endpoint not available for this API Version |
 
 <br />
@@ -93,7 +92,7 @@
 |<sub>/rest/enclosures/{id}/utilization</sub>                                             | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |     **Endpoints**                                                                                                                                |
 |<sub>/rest/fc-sans/endpoints</sub>                                                       | GET      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/fc-sans/endpoints/{id}</sub>                                                  | GET      |  :heavy_minus_sign:  | :black_circle: | :black_circle:
+|<sub>/rest/fc-sans/endpoints/{id}</sub>                                                  | GET      |  :heavy_minus_sign:  | :heavy_multiplication_x: | :heavy_multiplication_x:
 |     **Ethernet Networks**                                                                                                                         |
 |<sub>/rest/ethernet-networks</sub>                                                       | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/ethernet-networks</sub>                                                       | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
@@ -215,10 +214,10 @@
 |<sub>/rest/labels/resources/**</sub>                                                     | DELETE   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/labels/{id}</sub>                                                             | GET      | :white_check_mark:   | :white_check_mark:   |
 |     **Licenses**                                                                                                                                 |
-|<sub>/rest/licenses</sub>                                                                |GET       | :black_circle: | :black_circle: | :black_circle: |
-|<sub>/rest/licenses</sub>                                                                |POST      | :black_circle: | :black_circle: | :black_circle: |
-|<sub>/rest/licenses/{id}</sub>                                                           |GET       | :black_circle: | :black_circle: | :black_circle: |
-|<sub>/rest/licenses/{licenseId}</sub>                                                    |GET       | :black_circle: | :black_circle: | :black_circle: |
+|<sub>/rest/licenses</sub>                                                                |GET       | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |
+|<sub>/rest/licenses</sub>                                                                |POST      | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |
+|<sub>/rest/licenses/{id}</sub>                                                           |GET       | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |
+|<sub>/rest/licenses/{licenseId}</sub>                                                    |GET       | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |
 |     **Logical Downlinks**                                                                                                                         |
 |<sub>/rest/logical-downlinks</sub>                                                       |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-downlinks/{id}</sub>                                                  |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
@@ -257,7 +256,7 @@
 |<sub>/rest/logical-interconnects/{id}/firmware</sub>                                     | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-interconnects/{id}/forwarding-information-base</sub>                  | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-interconnects/{id}/forwarding-information-base</sub>                  | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/logical-interconnects/{id}/forwarding-information-base/{dumpFileName}.{suffix}</sub>      | GET      |  :black_circle:  | :black_circle:   | :black_circle:   |
+|<sub>/rest/logical-interconnects/{id}/forwarding-information-base/{dumpFileName}.{suffix}</sub>      | GET      |  :heavy_multiplication_x:  | :heavy_multiplication_x:   | :heavy_multiplication_x:   |
 |<sub>/rest/logical-interconnects/{id}/internalNetworks</sub>                             | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-interconnects/{id}/internalVlans</sub>                                | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-interconnects/{id}/qos-aggregated-configuration</sub>                 | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
@@ -265,14 +264,14 @@
 |<sub>/rest/logical-interconnects/{id}/settings</sub>                                     | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-interconnects/{id}/snmp-configuration</sub>                           | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-interconnects/{id}/snmp-configuration</sub>                           | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/logical-interconnects/{id}/support-dumps</sub>                                | POST     |  :black_circle:  | :black_circle:   | :black_circle:   |
+|<sub>/rest/logical-interconnects/{id}/support-dumps</sub>                                | POST     |  :heavy_multiplication_x:  | :heavy_multiplication_x:   | :heavy_multiplication_x:   |
 |<sub>/rest/logical-interconnects/{id}/unassignedUplinkPortsForPortMonitor</sub>          | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-interconnects/{id}/configuration</sub>                                | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-interconnects/{id}/port-monitor</sub>                                 | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-interconnects/{id}/port-monitor</sub>                                 | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-interconnects/{id}/telemetry-configurations/{tcId}</sub>              | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-interconnects/{id}/telemetry-configurations/{tcId}</sub>              | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/logical-interconnects/compliance</sub>                                        | POST     | :black_circle:       | :black_circle:       | :black_circle:       |
+|<sub>/rest/logical-interconnects/compliance</sub>                                        | POST     | :heavy_multiplication_x:       | :heavy_multiplication_x:       | :heavy_multiplication_x:       |
 |<sub>/rest/logical-interconnects/{id}</sub>                                              | PATCH    | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:   |
 |     **Logical Switch Groups**                                                                                                                     |
 |<sub>/rest/logical-switch-groups</sub>                                                   | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
@@ -347,7 +346,7 @@
 |<sub>/rest/power-devices/{id}/uidState</sub>                                             | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/power-devices/{id}/utilization</sub>                                          | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |     **Providers**                                                                                                                                     |
-|<sub>/rest/fc-sans/providers</sub>                                                       | GET      | :black_circle:     | :black_circle: |     |
+|<sub>/rest/fc-sans/providers</sub>                                                       | GET      | :heavy_multiplication_x:     | :heavy_multiplication_x: |     |
 |<sub>/rest/fc-sans/providers/{id}</sub>                                                  | GET      | :heavy_minus_sign: | :white_check_mark: |    |
 |<sub>/rest/fc-sans/providers/{id}/device-managers</sub>                                  | POST     | :heavy_minus_sign: | :white_check_mark: |    |
 |     **Racks**                                                                                                                                     |
