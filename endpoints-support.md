@@ -348,8 +348,8 @@
 |<sub>/rest/power-devices/{id}/utilization</sub>                                          | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |     **Providers**                                                                                                                                     |
 |<sub>/rest/fc-sans/providers</sub>                                                       | GET      | :black_circle:     | :black_circle: |     |
-|<sub>/rest/fc-sans/providers/{id}</sub>                                                  | GET      | :heavy_minus_sign: | :black_circle: |     |
-|<sub>/rest/fc-sans/providers/{id}/device-managers</sub>                                  | POST     | :heavy_minus_sign: | :black_circle: |     |
+|<sub>/rest/fc-sans/providers/{id}</sub>                                                  | GET      | :heavy_minus_sign: | :white_check_mark: |    |
+|<sub>/rest/fc-sans/providers/{id}/device-managers</sub>                                  | POST     | :heavy_minus_sign: | :white_check_mark: |    |
 |     **Racks**                                                                                                                                     |
 |<sub>/rest/racks</sub>                                                                   | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/racks</sub>                                                                   | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
