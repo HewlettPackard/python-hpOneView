@@ -217,7 +217,7 @@
 |<sub>/rest/licenses</sub>                                                                |GET       | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |
 |<sub>/rest/licenses</sub>                                                                |POST      | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |
 |<sub>/rest/licenses/{id}</sub>                                                           |GET       | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |
-|<sub>/rest/licenses/{licenseId}</sub>                                                    |GET       | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |
+|<sub>/rest/licenses/{licenseId}</sub>                                                    |DELETE    | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |
 |     **Logical Downlinks**                                                                                                                         |
 |<sub>/rest/logical-downlinks</sub>                                                       |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-downlinks/{id}</sub>                                                  |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
@@ -418,7 +418,7 @@
 |<sub>/rest/server-hardware/{id}/environmentalConfiguration</sub>                         | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/server-hardware/{id}/environmentalConfiguration</sub>                         | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/server-hardware/{id}/iloSsoUrl</sub>                                          | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/server-hardware/{id}/javaRemoteConsole</sub>                                  | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/server-hardware/{id}/javaRemoteConsoleUrl</sub>                               | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/server-hardware/{id}/mpFirmwareVersion</sub>                                  | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/server-hardware/{id}/physicalServerHardware</sub>                             | GET      | :heavy_minus_sign:   | :heavy_minus_sign:   | :white_check_mark:   |
 |<sub>/rest/server-hardware/{id}/powerState</sub>                                         | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
