@@ -2,6 +2,9 @@
 #### New Resources:
 - Version
 
+#### Bug fixes & Enhancements
+- [#332](https://github.com/HewlettPackard/python-hpOneView/issues/332) example scmb.py is broken with v4.x libray
+
 # 4.3.0
 #### Notes
 Added endpoints-support.md to track the supported and tested endpoints for the different HPE OneView REST APIs
