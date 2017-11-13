@@ -24,11 +24,12 @@
 
 from hpOneView.oneview_client import OneViewClient
 from functools import partial
+
 import amqp
 import amqp.spec
+import datetime
 import json
 import ssl
-import datetime
 
 
 def callback(channel, msg):
