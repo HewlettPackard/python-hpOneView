@@ -113,6 +113,7 @@ def recv(host, route):
     ch.close()
     conn.close()
 
+
 def acceptEULA(oneview_client):
     # See if we need to accept the EULA before we try to log in
     eula_status = oneview_client.connection.get_eula_status()

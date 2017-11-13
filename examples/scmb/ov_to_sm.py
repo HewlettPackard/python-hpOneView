@@ -23,18 +23,20 @@
 ###
 
 from hpOneView.oneview_client import OneViewClient
+from base64 import b64encode
 from functools import partial
+from pprint import pprint
+
 import amqp
 import amqp.spec
+import datetime
+import http
 import json
 import ssl
-import datetime
-from pprint import pprint
-from base64 import b64encode
+import time
 
 smhost = None
 smhead = None
-act = None
 
 
 def sm_do_http(method, path, body):
@@ -101,21 +103,30 @@ def new_incident(desc, sev):
 
 
 def print_alert(uri):
-    alerts = act.get_alerts()
+    alerts = oneview_client.alerts.get_all()
     for alert in alerts:
         if alert['uri'] == uri:
             pprint(alert)
 
 
 def update_alert(uri, smid):
-    alerts = act.get_alerts()
+    alerts = oneview_client.alerts.get_all()
     notes = 'Case automatically loged in HPE Service Manager with ID: ' + smid
     for alert in alerts:
         if alert['uri'] == uri:
-            amap = common.make_alertMap_dict(notes, alert['eTag'])
-            act.update_alert(alert, amap)
+            oneview_client.alerts.update(create_alert_map(notes, alert['eTag']), alert['uris'])
             return True
     return False
+
+
+def create_alert_map(notes, etag):
+    return {
+        'alertState': 'Active',
+        'assignedToUser': 'None',
+        'alertUrgency': 'None',
+        'notes': notes,
+        'eTag': etag
+    }
 
 
 def get_incidents():
@@ -259,7 +270,7 @@ def getRabbitKp(oneview_client):
 
 
 def main():
-    global smhost, smhead, act
+    global smhost, smhead, oneview_client
 
     if amqp.VERSION < (2, 1, 4):
         print("WARNING: This script has been tested only with amqp 2.1.4, "
