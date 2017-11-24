@@ -96,6 +96,7 @@ export ONEVIEWSDK_SESSIONID='123'
 # Optional
 export ONEVIEWSDK_API_VERSION='300'
 export ONEVIEWSDK_AUTH_LOGIN_DOMAIN='authdomain'
+export ONEVIEWSDK_SSL_CERTIFICATE='<path_to_cert.crt_file>'
 export ONEVIEWSDK_PROXY='<proxy_host>:<proxy_port>'
 ```
 
@@ -139,6 +140,33 @@ oneview_client = OneViewClient(config)
 ```
 
 :lock: Tip: Check the file permissions because the password is stored in clear-text.
+
+### SSL Server Certificate
+
+To enable the SDK to establish a SSL connection to the HPE OneView server, it is necessary to generate a CA Cert file containing the server credentials.
+
+1. Fetch the HPE OneView Appliance CA certificate
+
+Example:
+
+```bash
+$ openssl s_client -showcerts -host <host> -port 443
+```
+
+Copy the server certificate content from `-----BEGIN CERTIFICATE-----` to `-----END CERTIFICATE-----` (inclusive) into a `<file_name>.crt` file.
+
+2. Declare the CA Certificate location when creating a `config` dictionary
+
+```python
+config = {
+    "ip": "172.16.102.82",
+    "credentials": {
+        "userName": "Administrator",
+        "password": "secret123"
+    },
+    "ssl_certificate": "/home/python-hpOneView/my_ov_certificate.crt"
+}
+```
 
 ### Proxy
 

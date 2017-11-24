@@ -64,3 +64,6 @@ docs/source/*
 !docs/source/conf.py
 !docs/source/index.rst
 .vscode
+
+#certificate files
+*.crt
