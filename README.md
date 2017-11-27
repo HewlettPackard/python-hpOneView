@@ -145,18 +145,28 @@ oneview_client = OneViewClient(config)
 
 To enable the SDK to establish a SSL connection to the HPE OneView server, it is necessary to generate a CA Cert file containing the server credentials.
 
-1. Fetch the HPE OneView Appliance CA certificate
-
-Example:
-
+1. Fetch the HPE OneView Appliance CA certificate.
 ```bash
 $ openssl s_client -showcerts -host <host> -port 443
 ```
 
-Copy the server certificate content from `-----BEGIN CERTIFICATE-----` to `-----END CERTIFICATE-----` (inclusive) into a `<file_name>.crt` file.
+2. Copy the server certificate wrapped with a header line and a footer line into a `<file_name>.crt` file.
+```
+-----BEGIN CERTIFICATE-----
+... (HPE OneView Appliance certificate in base64 PEM encoding) ...
+-----END CERTIFICATE-----
+```
+When using HPE Image Streamer, the server certificate for the HPE Image Streamer should also be added to the certificates file. Example:
+```
+-----BEGIN CERTIFICATE-----
+... (HPE OneView Appliance certificate in base64 PEM encoding) ...
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+... (HPE Image Streamer Appliance certificate in base64 PEM encoding) ...
+-----END CERTIFICATE-----
+```
 
-2. Declare the CA Certificate location when creating a `config` dictionary
-
+3. Declare the CA Certificate location when creating a `config` dictionary.
 ```python
 config = {
     "ip": "172.16.102.82",

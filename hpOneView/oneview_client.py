@@ -286,7 +286,8 @@ class OneViewClient(object):
         """
         image_streamer = ImageStreamerClient(self.__image_streamer_ip,
                                              self.__connection.get_session_id(),
-                                             self.__connection._apiVersion)
+                                             self.__connection._apiVersion,
+                                             self.__connection._sslBundle)
 
         return image_streamer
 

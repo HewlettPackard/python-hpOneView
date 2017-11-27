@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*
-
 ###
 # (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
 #
@@ -68,6 +67,7 @@ class connection(object):
         self._proxyPort = None
         self._doProxy = False
         self._sslTrustAll = True
+        self._sslBundle = sslBundle
         self._sslTrustedBundle = self.set_trusted_ssl_bundle(sslBundle)
         self._nextPage = None
         self._prevPage = None
@@ -91,7 +91,7 @@ class connection(object):
         self._doProxy = True
 
     def set_trusted_ssl_bundle(self, sslBundle):
-        if sslBundle is not False:
+        if sslBundle:
             self._sslTrustAll = False
         return sslBundle
 
