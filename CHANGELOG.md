@@ -1,9 +1,13 @@
-# 4.4.0(Unreleased)
+# 4.4.0
+#### Notes
+Enabled usage of a CA Certificate file for establishing a SSL connection to the HPE OneView Appliance.
+
 #### New Resources:
 - Version
 
 #### Bug fixes & Enhancements
 - [#332](https://github.com/HewlettPackard/python-hpOneView/issues/332) example scmb.py is broken with v4.x libray
+- [#339](https://github.com/HewlettPackard/python-hpOneView/issues/339) Validate secure connection to OneView using a certificate file
 
 # 4.3.0
 #### Notes

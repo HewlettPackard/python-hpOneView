@@ -44,8 +44,8 @@ from hpOneView.image_streamer.resources.deployment_groups import DeploymentGroup
 
 
 class ImageStreamerClient(object):
-    def __init__(self, ip, session_id, api_version):
-        self.__connection = connection(ip, api_version)
+    def __init__(self, ip, session_id, api_version, sslBundle=False):
+        self.__connection = connection(ip, api_version, sslBundle)
         self.__connection.set_session_id(session_id)
         self.__golden_images = None
         self.__plan_scripts = None

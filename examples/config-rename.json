@@ -1,7 +1,8 @@
 {
   "ip": "172.16.102.59",
   "image_streamer_ip": "172.16.102.60",
-  "api_version": 300,
+  "api_version": 500,
+  "ssl_certificate": "",
   "credentials": {
     "userName": "administrator",
     "authLoginDomain": "",

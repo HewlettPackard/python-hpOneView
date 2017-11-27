@@ -297,6 +297,7 @@ class OneViewClientTest(unittest.TestCase):
         mock_cls.assert_called_once_with({'api_version': 201,
                                           'proxy': '172.16.100.195:9999',
                                           'ip': '172.16.100.199',
+                                          'ssl_certificate': '',
                                           'image_streamer_ip': '172.172.172.172',
                                           'credentials':
                                               {'userName': 'admin',
@@ -313,6 +314,7 @@ class OneViewClientTest(unittest.TestCase):
                                           'proxy': '172.16.100.195:9999',
                                           'ip': '172.16.100.199',
                                           'image_streamer_ip': '172.172.172.172',
+                                          'ssl_certificate': '',
                                           'credentials':
                                               {'userName': 'admin',
                                                'password': 'secret123',
@@ -328,6 +330,7 @@ class OneViewClientTest(unittest.TestCase):
                                           'proxy': '',
                                           'ip': '172.16.100.199',
                                           'image_streamer_ip': '',
+                                          'ssl_certificate': '',
                                           'credentials':
                                               {'userName': '',
                                                'password': '',

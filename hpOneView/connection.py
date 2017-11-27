@@ -1,24 +1,4 @@
 # -*- coding: utf-8 -*
-
-"""
-connection.py
-~~~~~~~~~~~~~~
-
-This module maintains communication with the appliance.
-"""
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
-
-from builtins import open
-from builtins import str
-from future import standard_library
-from future.utils import raise_from
-
-standard_library.install_aliases()
-
-
 ###
 # (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
 #
@@ -41,6 +21,23 @@ standard_library.install_aliases()
 # THE SOFTWARE.
 ###
 
+"""
+connection.py
+~~~~~~~~~~~~~~
+
+This module maintains communication with the appliance.
+"""
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
+from builtins import open
+from builtins import str
+from future import standard_library
+
+standard_library.install_aliases()
+
 import http.client
 import json
 import logging
@@ -49,6 +46,7 @@ import mmap  # so we can upload the iso without having to load it in memory
 import os
 import ssl
 import time
+import traceback
 
 from hpOneView.exceptions import HPOneViewException
 
@@ -56,7 +54,7 @@ logger = logging.getLogger(__name__)
 
 
 class connection(object):
-    def __init__(self, applianceIp, api_version=300):
+    def __init__(self, applianceIp, api_version=300, sslBundle=False):
         self._session = None
         self._host = applianceIp
         self._cred = None
@@ -68,8 +66,9 @@ class connection(object):
         self._proxyHost = None
         self._proxyPort = None
         self._doProxy = False
-        self._sslTrustedBundle = None
         self._sslTrustAll = True
+        self._sslBundle = sslBundle
+        self._sslTrustedBundle = self.set_trusted_ssl_bundle(sslBundle)
         self._nextPage = None
         self._prevPage = None
         self._numTotalRecords = 0
@@ -92,8 +91,9 @@ class connection(object):
         self._doProxy = True
 
     def set_trusted_ssl_bundle(self, sslBundle):
-        self._sslTrustAll = False
-        self._sslTrustedBundle = sslBundle
+        if sslBundle:
+            self._sslTrustAll = False
+        return sslBundle
 
     def get_session(self):
         return self._session
@@ -434,8 +434,8 @@ class connection(object):
         try:
             if self._validateVersion is False:
                 self.validateVersion()
-        except Exception as e:
-            raise_from(HPOneViewException('Failure during login attempt.'), e)
+        except Exception:
+            raise(HPOneViewException('Failure during login attempt.\n %s' % traceback.format_exc()))
 
         self._cred = cred
         try:

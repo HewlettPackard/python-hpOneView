@@ -116,7 +116,7 @@ class OneViewClient(object):
     DEFAULT_API_VERSION = 300
 
     def __init__(self, config):
-        self.__connection = connection(config["ip"], config.get('api_version', self.DEFAULT_API_VERSION))
+        self.__connection = connection(config["ip"], config.get('api_version', self.DEFAULT_API_VERSION), config.get('ssl_certificate', False))
         self.__image_streamer_ip = config.get("image_streamer_ip")
         self.__set_proxy(config)
         self.__connection.login(config["credentials"])
@@ -193,7 +193,6 @@ class OneViewClient(object):
         self.__versions = None
         self.__backups = None
         self.__login_details = None
-        # TODO: Implement: con.set_trusted_ssl_bundle(args.cert)
 
     @classmethod
     def from_json_file(cls, file_name):
@@ -217,7 +216,8 @@ class OneViewClient(object):
         Construct OneViewClient using environment variables.
 
         Allowed variables: ONEVIEWSDK_IP (required), ONEVIEWSDK_USERNAME (required), ONEVIEWSDK_PASSWORD (required),
-        ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, ONEVIEWSDK_IMAGE_STREAMER_IP, ONEVIEWSDK_SESSIONID and ONEVIEWSDK_PROXY.
+        ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, ONEVIEWSDK_IMAGE_STREAMER_IP, ONEVIEWSDK_SESSIONID, ONEVIEWSDK_SSL_CERTIFICATE
+        and ONEVIEWSDK_PROXY.
 
         Returns:
             OneViewClient:
@@ -225,6 +225,7 @@ class OneViewClient(object):
         ip = os.environ.get('ONEVIEWSDK_IP', '')
         image_streamer_ip = os.environ.get('ONEVIEWSDK_IMAGE_STREAMER_IP', '')
         api_version = int(os.environ.get('ONEVIEWSDK_API_VERSION', OneViewClient.DEFAULT_API_VERSION))
+        ssl_certificate = os.environ.get('ONEVIEWSDK_SSL_CERTIFICATE', '')
         username = os.environ.get('ONEVIEWSDK_USERNAME', '')
         auth_login_domain = os.environ.get('ONEVIEWSDK_AUTH_LOGIN_DOMAIN', '')
         password = os.environ.get('ONEVIEWSDK_PASSWORD', '')
@@ -234,6 +235,7 @@ class OneViewClient(object):
         config = dict(ip=ip,
                       image_streamer_ip=image_streamer_ip,
                       api_version=api_version,
+                      ssl_certificate=ssl_certificate,
                       credentials=dict(userName=username, authLoginDomain=auth_login_domain, password=password, sessionID=sessionID),
                       proxy=proxy)
 
@@ -284,7 +286,8 @@ class OneViewClient(object):
         """
         image_streamer = ImageStreamerClient(self.__image_streamer_ip,
                                              self.__connection.get_session_id(),
-                                             self.__connection._apiVersion)
+                                             self.__connection._apiVersion,
+                                             self.__connection._sslBundle)
 
         return image_streamer
 
