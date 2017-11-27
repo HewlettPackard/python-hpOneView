@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.connection &mdash; HPE OneView Python SDK 4.3.0 documentation</title>
+  <title>hpOneView.connection &mdash; HPE OneView Python SDK 4.4.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
 
   
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="HPE OneView Python SDK 4.3.0 documentation" href="../../index.html"/>
+    <link rel="top" title="HPE OneView Python SDK 4.4.0 documentation" href="../../index.html"/>
         <link rel="up" title="hpOneView" href="../hpOneView.html"/> 
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                4.3.0
+                4.4.0
               </div>
             
           
@@ -154,26 +154,6 @@
             
   <h1>Source code for hpOneView.connection</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">connection.py</span>
-<span class="sd">~~~~~~~~~~~~~~</span>
-
-<span class="sd">This module maintains communication with the appliance.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
-
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">open</span>
-<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
-<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
-<span class="kn">from</span> <span class="nn">future.utils</span> <span class="k">import</span> <span class="n">raise_from</span>
-
-<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
-
-
 <span class="c1">###</span>
 <span class="c1"># (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP</span>
 <span class="c1">#</span>
@@ -196,6 +176,23 @@
 <span class="c1"># THE SOFTWARE.</span>
 <span class="c1">###</span>
 
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">connection.py</span>
+<span class="sd">~~~~~~~~~~~~~~</span>
+
+<span class="sd">This module maintains communication with the appliance.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
+
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">open</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">str</span>
+<span class="kn">from</span> <span class="nn">future</span> <span class="k">import</span> <span class="n">standard_library</span>
+
+<span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
+
 <span class="kn">import</span> <span class="nn">http.client</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -204,6 +201,7 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">ssl</span>
 <span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
 
 <span class="kn">from</span> <span class="nn">hpOneView.exceptions</span> <span class="k">import</span> <span class="n">HPOneViewException</span>
 
@@ -211,7 +209,7 @@
 
 
 <div class="viewcode-block" id="connection"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection">[docs]</a><span class="k">class</span> <span class="nc">connection</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">applianceIp</span><span class="p">,</span> <span class="n">api_version</span><span class="o">=</span><span class="mi">300</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">applianceIp</span><span class="p">,</span> <span class="n">api_version</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">sslBundle</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_host</span> <span class="o">=</span> <span class="n">applianceIp</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cred</span> <span class="o">=</span> <span class="kc">None</span>
@@ -223,8 +221,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_proxyHost</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_proxyPort</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_doProxy</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_sslTrustedBundle</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sslTrustAll</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sslBundle</span> <span class="o">=</span> <span class="n">sslBundle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sslTrustedBundle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_trusted_ssl_bundle</span><span class="p">(</span><span class="n">sslBundle</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nextPage</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_prevPage</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_numTotalRecords</span> <span class="o">=</span> <span class="mi">0</span>
@@ -247,8 +246,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_doProxy</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="connection.set_trusted_ssl_bundle"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.set_trusted_ssl_bundle">[docs]</a>    <span class="k">def</span> <span class="nf">set_trusted_ssl_bundle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sslBundle</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_sslTrustAll</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_sslTrustedBundle</span> <span class="o">=</span> <span class="n">sslBundle</span></div>
+        <span class="k">if</span> <span class="n">sslBundle</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sslTrustAll</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">sslBundle</span></div>
 
 <div class="viewcode-block" id="connection.get_session"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.get_session">[docs]</a>    <span class="k">def</span> <span class="nf">get_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span></div>
@@ -589,8 +589,8 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validateVersion</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">validateVersion</span><span class="p">()</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">raise_from</span><span class="p">(</span><span class="n">HPOneViewException</span><span class="p">(</span><span class="s1">&#39;Failure during login attempt.&#39;</span><span class="p">),</span> <span class="n">e</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">raise</span><span class="p">(</span><span class="n">HPOneViewException</span><span class="p">(</span><span class="s1">&#39;Failure during login attempt.</span><span class="se">\n</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_cred</span> <span class="o">=</span> <span class="n">cred</span>
         <span class="k">try</span><span class="p">:</span>
@@ -852,7 +852,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'4.3.0',
+            VERSION:'4.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

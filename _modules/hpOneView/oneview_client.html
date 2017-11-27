@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.oneview_client &mdash; HPE OneView Python SDK 4.3.0 documentation</title>
+  <title>hpOneView.oneview_client &mdash; HPE OneView Python SDK 4.4.0 documentation</title>
   
 
   
@@ -33,7 +33,7 @@
 
   
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="HPE OneView Python SDK 4.3.0 documentation" href="../../index.html"/>
+    <link rel="top" title="HPE OneView Python SDK 4.4.0 documentation" href="../../index.html"/>
         <link rel="up" title="hpOneView" href="../hpOneView.html"/> 
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                4.3.0
+                4.4.0
               </div>
             
           
@@ -271,7 +271,7 @@
     <span class="n">DEFAULT_API_VERSION</span> <span class="o">=</span> <span class="mi">300</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span> <span class="o">=</span> <span class="n">connection</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;ip&quot;</span><span class="p">],</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;api_version&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_API_VERSION</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span> <span class="o">=</span> <span class="n">connection</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;ip&quot;</span><span class="p">],</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;api_version&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_API_VERSION</span><span class="p">),</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ssl_certificate&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__image_streamer_ip</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;image_streamer_ip&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__set_proxy</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;credentials&quot;</span><span class="p">])</span>
@@ -348,7 +348,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__versions</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__backups</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__login_details</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="c1"># TODO: Implement: con.set_trusted_ssl_bundle(args.cert)</span>
 
 <div class="viewcode-block" id="OneViewClient.from_json_file"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.oneview_client.OneViewClient.from_json_file">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_json_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
@@ -372,7 +371,8 @@
 <span class="sd">        Construct OneViewClient using environment variables.</span>
 
 <span class="sd">        Allowed variables: ONEVIEWSDK_IP (required), ONEVIEWSDK_USERNAME (required), ONEVIEWSDK_PASSWORD (required),</span>
-<span class="sd">        ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, ONEVIEWSDK_IMAGE_STREAMER_IP, ONEVIEWSDK_SESSIONID and ONEVIEWSDK_PROXY.</span>
+<span class="sd">        ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, ONEVIEWSDK_IMAGE_STREAMER_IP, ONEVIEWSDK_SESSIONID, ONEVIEWSDK_SSL_CERTIFICATE</span>
+<span class="sd">        and ONEVIEWSDK_PROXY.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            OneViewClient:</span>
@@ -380,6 +380,7 @@
         <span class="n">ip</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ONEVIEWSDK_IP&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="n">image_streamer_ip</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ONEVIEWSDK_IMAGE_STREAMER_IP&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="n">api_version</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ONEVIEWSDK_API_VERSION&#39;</span><span class="p">,</span> <span class="n">OneViewClient</span><span class="o">.</span><span class="n">DEFAULT_API_VERSION</span><span class="p">))</span>
+        <span class="n">ssl_certificate</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ONEVIEWSDK_SSL_CERTIFICATE&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="n">username</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ONEVIEWSDK_USERNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="n">auth_login_domain</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ONEVIEWSDK_AUTH_LOGIN_DOMAIN&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="n">password</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ONEVIEWSDK_PASSWORD&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
@@ -389,6 +390,7 @@
         <span class="n">config</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">ip</span><span class="o">=</span><span class="n">ip</span><span class="p">,</span>
                       <span class="n">image_streamer_ip</span><span class="o">=</span><span class="n">image_streamer_ip</span><span class="p">,</span>
                       <span class="n">api_version</span><span class="o">=</span><span class="n">api_version</span><span class="p">,</span>
+                      <span class="n">ssl_certificate</span><span class="o">=</span><span class="n">ssl_certificate</span><span class="p">,</span>
                       <span class="n">credentials</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">userName</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">authLoginDomain</span><span class="o">=</span><span class="n">auth_login_domain</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span> <span class="n">sessionID</span><span class="o">=</span><span class="n">sessionID</span><span class="p">),</span>
                       <span class="n">proxy</span><span class="o">=</span><span class="n">proxy</span><span class="p">)</span>
 
@@ -439,7 +441,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">image_streamer</span> <span class="o">=</span> <span class="n">ImageStreamerClient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__image_streamer_ip</span><span class="p">,</span>
                                              <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">get_session_id</span><span class="p">(),</span>
-                                             <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">_apiVersion</span><span class="p">)</span>
+                                             <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">_apiVersion</span><span class="p">,</span>
+                                             <span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="o">.</span><span class="n">_sslBundle</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">image_streamer</span></div>
 
@@ -1359,7 +1362,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'4.3.0',
+            VERSION:'4.4.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
