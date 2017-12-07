@@ -98,6 +98,7 @@ export ONEVIEWSDK_API_VERSION='300'
 export ONEVIEWSDK_AUTH_LOGIN_DOMAIN='authdomain'
 export ONEVIEWSDK_SSL_CERTIFICATE='<path_to_cert.crt_file>'
 export ONEVIEWSDK_PROXY='<proxy_host>:<proxy_port>'
+export ONEVIEWSDK_CONNECTION_TIMEOUT='<connection time-out in seconds>'
 ```
 
 :lock: Tip: Make sure no unauthorized person has access to the environment variables, since the password is stored in clear-text.
@@ -243,6 +244,20 @@ build_plans = image_streamer_client.build_plans.get_all()
 ```
 
 You can find more usage examples in the folder ```/examples/image_streamer```
+
+### OneView Connection Timeout
+By default the system timeout is used when connecting to OneView.  If you want to change this,
+then the timeout can be set by either:
+
+1. Setting the appropriate environment variable:
+```bash
+export ONEVIEWSDK_CONNECTION_TIMEOUT='<connection time-out in seconds>'
+```
+
+2. Setting the time-out in the JSON configuration file using the following syntax:
+```json
+"timeout": <timeout in seconds>
+```
 
 ## Exception handling
 

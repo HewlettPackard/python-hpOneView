@@ -116,7 +116,8 @@ class OneViewClient(object):
     DEFAULT_API_VERSION = 300
 
     def __init__(self, config):
-        self.__connection = connection(config["ip"], config.get('api_version', self.DEFAULT_API_VERSION), config.get('ssl_certificate', False))
+        self.__connection = connection(config["ip"], config.get('api_version', self.DEFAULT_API_VERSION), config.get('ssl_certificate', False),
+                                       config.get('timeout'))
         self.__image_streamer_ip = config.get("image_streamer_ip")
         self.__set_proxy(config)
         self.__connection.login(config["credentials"])
@@ -216,8 +217,8 @@ class OneViewClient(object):
         Construct OneViewClient using environment variables.
 
         Allowed variables: ONEVIEWSDK_IP (required), ONEVIEWSDK_USERNAME (required), ONEVIEWSDK_PASSWORD (required),
-        ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, ONEVIEWSDK_IMAGE_STREAMER_IP, ONEVIEWSDK_SESSIONID, ONEVIEWSDK_SSL_CERTIFICATE
-        and ONEVIEWSDK_PROXY.
+        ONEVIEWSDK_AUTH_LOGIN_DOMAIN, ONEVIEWSDK_API_VERSION, ONEVIEWSDK_IMAGE_STREAMER_IP, ONEVIEWSDK_SESSIONID, ONEVIEWSDK_SSL_CERTIFICATE,
+        ONEVIEWSDK_CONNECTION_TIMEOUT and ONEVIEWSDK_PROXY.
 
         Returns:
             OneViewClient:
@@ -231,13 +232,14 @@ class OneViewClient(object):
         password = os.environ.get('ONEVIEWSDK_PASSWORD', '')
         proxy = os.environ.get('ONEVIEWSDK_PROXY', '')
         sessionID = os.environ.get('ONEVIEWSDK_SESSIONID', '')
+        timeout = os.environ.get('ONEVIEWSDK_CONNECTION_TIMEOUT')
 
         config = dict(ip=ip,
                       image_streamer_ip=image_streamer_ip,
                       api_version=api_version,
                       ssl_certificate=ssl_certificate,
                       credentials=dict(userName=username, authLoginDomain=auth_login_domain, password=password, sessionID=sessionID),
-                      proxy=proxy)
+                      proxy=proxy, timeout=timeout)
 
         return cls(config)
 
