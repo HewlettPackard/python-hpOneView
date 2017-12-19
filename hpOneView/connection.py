@@ -54,7 +54,7 @@ logger = logging.getLogger(__name__)
 
 
 class connection(object):
-    def __init__(self, applianceIp, api_version=300, sslBundle=False):
+    def __init__(self, applianceIp, api_version=300, sslBundle=False, timeout=None):
         self._session = None
         self._host = applianceIp
         self._cred = None
@@ -74,6 +74,7 @@ class connection(object):
         self._numTotalRecords = 0
         self._numDisplayedRecords = 0
         self._validateVersion = False
+        self._timeout = timeout
 
     def validateVersion(self):
         version = self.get(uri['version'])
@@ -148,6 +149,9 @@ class connection(object):
                     conn.close()
                 time.sleep(1)
                 continue
+            except http.client.HTTPException:
+                raise HPOneViewException('Failure during login attempt.\n %s' % traceback.format_exc())
+
         return resp, body
 
     def download_to_stream(self, stream_writer, url, body='', method='GET', custom_headers=None):
@@ -182,6 +186,8 @@ class connection(object):
                     conn.close()
                 time.sleep(1)
                 continue
+            except http.client.HTTPException:
+                raise HPOneViewException('Failure during login attempt.\n %s' % traceback.format_exc())
 
         return successful_connected
 
@@ -209,22 +215,27 @@ class connection(object):
             context.load_verify_locations(self._sslTrustedBundle)
             if self._doProxy is False:
                 conn = http.client.HTTPSConnection(self._host,
-                                                   context=context)
+                                                   context=context,
+                                                   timeout=self._timeout)
             else:
                 conn = http.client.HTTPSConnection(self._proxyHost,
                                                    self._proxyPort,
-                                                   context=context)
+                                                   context=context,
+                                                   timeout=self._timeout)
                 conn.set_tunnel(self._host, 443)
         else:
             context.verify_mode = ssl.CERT_NONE
             if self._doProxy is False:
                 conn = http.client.HTTPSConnection(self._host,
-                                                   context=context)
+                                                   context=context,
+                                                   timeout=self._timeout)
             else:
                 conn = http.client.HTTPSConnection(self._proxyHost,
                                                    self._proxyPort,
-                                                   context=context)
+                                                   context=context,
+                                                   timeout=self._timeout)
                 conn.set_tunnel(self._host, 443)
+
         return conn
 
     def _open(self, name, mode):

@@ -29,7 +29,7 @@ import shutil
 import os.path
 
 from mock import patch, call, Mock, ANY
-from http.client import HTTPSConnection, BadStatusLine
+from http.client import HTTPSConnection, BadStatusLine, HTTPException
 from hpOneView.connection import connection
 from hpOneView.exceptions import HPOneViewException
 
@@ -604,6 +604,20 @@ class ConnectionTest(unittest.TestCase):
         else:
             self.fail()
 
+    @patch.object(connection, 'get_connection')
+    def test_download_to_stream_with_timeout_error(self, mock_get_connection):
+
+        mock_conn = mock_get_connection.return_value = Mock()
+        mock_response = Mock()
+        mock_conn.getresponse.side_effect = [HTTPException('timed out'), mock_response]
+
+        mock_stream = Mock()
+
+        with self.assertRaises(HPOneViewException) as context:
+            resp, body = self.connection.download_to_stream(mock_stream, '/rest/download.zip')
+
+        self.assertTrue('timed out' in context.exception.msg)
+
     @patch.object(mmap, 'mmap')
     @patch.object(shutil, 'copyfileobj')
     @patch.object(os.path, 'getsize')
@@ -857,6 +871,18 @@ class ConnectionTest(unittest.TestCase):
                                               'Accept': 'application/json'})
 
         mock_conn.close.assert_has_calls([call(), call()])
+
+    @patch.object(connection, 'get_connection')
+    def test_do_http_with_timeout_error(self, mock_get_connection):
+
+        mock_conn = mock_get_connection.return_value = Mock()
+        mock_response = Mock()
+        mock_conn.getresponse.side_effect = [HTTPException('timed out'), mock_response]
+
+        with self.assertRaises(HPOneViewException) as context:
+            resp, body = self.connection.do_http('POST', '/rest/test', 'body')
+
+        self.assertTrue('timed out' in context.exception.msg)
 
     @patch.object(connection, 'get')
     @patch.object(connection, 'post')

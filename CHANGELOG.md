@@ -1,3 +1,8 @@
+# 4.4.1 (Unreleased)
+#### Notes
+Added the capability to set a connection timeout when connecting to the HPE OneView Appliance
+
+
 # 4.4.0
 #### Notes
 Enabled usage of a CA Certificate file for establishing a SSL connection to the HPE OneView Appliance.

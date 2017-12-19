@@ -99,7 +99,8 @@ OS_ENVIRON_CONFIG_FULL = {
     'ONEVIEWSDK_PASSWORD': 'secret123',
     'ONEVIEWSDK_API_VERSION': '201',
     'ONEVIEWSDK_AUTH_LOGIN_DOMAIN': 'authdomain',
-    'ONEVIEWSDK_PROXY': '172.16.100.195:9999'
+    'ONEVIEWSDK_PROXY': '172.16.100.195:9999',
+    'ONEVIEWSDK_CONNECTION_TIMEOUT': '20'
 }
 
 OS_ENVIRON_CONFIG_FULL_WITH_SESSIONID = {
@@ -109,7 +110,9 @@ OS_ENVIRON_CONFIG_FULL_WITH_SESSIONID = {
     'ONEVIEWSDK_PASSWORD': 'secret123',
     'ONEVIEWSDK_SESSIONID': '123',
     'ONEVIEWSDK_API_VERSION': '201',
-    'ONEVIEWSDK_PROXY': '172.16.100.195:9999'
+    'ONEVIEWSDK_PROXY': '172.16.100.195:9999',
+    'ONEVIEWSDK_CONNECTION_TIMEOUT': '20'
+
 }
 
 
@@ -296,6 +299,7 @@ class OneViewClientTest(unittest.TestCase):
         OneViewClient.from_environment_variables()
         mock_cls.assert_called_once_with({'api_version': 201,
                                           'proxy': '172.16.100.195:9999',
+                                          'timeout': '20',
                                           'ip': '172.16.100.199',
                                           'ssl_certificate': '',
                                           'image_streamer_ip': '172.172.172.172',
@@ -312,6 +316,7 @@ class OneViewClientTest(unittest.TestCase):
         OneViewClient.from_environment_variables()
         mock_cls.assert_called_once_with({'api_version': 201,
                                           'proxy': '172.16.100.195:9999',
+                                          'timeout': '20',
                                           'ip': '172.16.100.199',
                                           'image_streamer_ip': '172.172.172.172',
                                           'ssl_certificate': '',
@@ -328,6 +333,7 @@ class OneViewClientTest(unittest.TestCase):
         OneViewClient.from_environment_variables()
         mock_cls.assert_called_once_with({'api_version': 300,
                                           'proxy': '',
+                                          'timeout': None,
                                           'ip': '172.16.100.199',
                                           'image_streamer_ip': '',
                                           'ssl_certificate': '',
