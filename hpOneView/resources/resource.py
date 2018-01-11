@@ -48,13 +48,7 @@ RESOURCE_CLIENT_TASK_EXPECTED = "Failed: Expected a TaskResponse."
 RESOURCE_ID_OR_URI_REQUIRED = 'It is required to inform the Resource ID or URI.'
 
 
-logger = logging.getLogger('hpOneView')
-
-handler = logging.StreamHandler()
-formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(name)-12s %(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-logger.setLevel(logging.DEBUG)
+logger = logging.getLogger('__name__')
 
 def merge_resources(resource1, resource2):
     """
