@@ -48,8 +48,13 @@ RESOURCE_CLIENT_TASK_EXPECTED = "Failed: Expected a TaskResponse."
 RESOURCE_ID_OR_URI_REQUIRED = 'It is required to inform the Resource ID or URI.'
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('hpOneView')
 
+handler = logging.StreamHandler()
+formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(name)-12s %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.DEBUG)
 
 def merge_resources(resource1, resource2):
     """
@@ -96,7 +101,7 @@ class ResourceClient(object):
         self._uri = uri
         self._task_monitor = TaskMonitor(con)
 
-    def build_query_uri(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None):
+    def build_query_uri(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', scopeUris='', uri=None):
         """
         Builds the URI given the parameters.
 
@@ -155,17 +160,20 @@ class ResourceClient(object):
         if fields:
             fields = "&fields=" + quote(fields)
 
+	if scopeUris:
+	    scopeUris = "&scopeUris=" + quote(scopeUris)
+
         path = uri if uri else self._uri
         self.__validate_resource_uri(path)
 
         symbol = '?' if '?' not in path else '&'
 
-        uri = "{0}{1}start={2}&count={3}{4}{5}{6}{7}{8}".format(path, symbol, start, count, filter, query, sort,
-                                                                view, fields)
+        uri = "{0}{1}start={2}&count={3}{4}{5}{6}{7}{8}{9}".format(path, symbol, start, count, filter, query, sort,
+                                                                view, fields, scopeUris)
 
         return uri
 
-    def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None):
+    def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None, scopeUris=''):
         """
         Gets all items according with the given arguments.
 
@@ -192,13 +200,15 @@ class ResourceClient(object):
                 Name of the fields.
             uri:
                 A specific URI (optional)
+	    scopeUris:
+
 
         Returns:
             list: A list of items matching the specified filter.
         """
 
         uri = self.build_query_uri(start=start, count=count, filter=filter,
-                                   query=query, sort=sort, view=view, fields=fields, uri=uri)
+                                   query=query, sort=sort, view=view, fields=fields, uri=uri,scopeUris=scopeUris)
 
         logger.debug('Getting all resources with uri: {0}'.format(uri))
 
