@@ -46,7 +46,8 @@ class LogicalSwitches(object):
     SWITCH_DEFAULT_VALUES = {
         '200': {"type": "logical-switch"},
         '300': {"type": "logical-switchV300"},
-        '500': {"type": "logical-switchV300"}
+        '500': {"type": "logical-switchV300"},
+        '600': {"type": "logical-switchV4"}
     }
 
     def __init__(self, con):
