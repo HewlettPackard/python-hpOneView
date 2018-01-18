@@ -44,7 +44,14 @@ class EthernetNetworks(object):
     DEFAULT_VALUES = {
         '200': {"type": "ethernet-networkV3"},
         '300': {"type": "ethernet-networkV300"},
-        '500': {"type": "ethernet-networkV300"}
+        '500': {"type": "ethernet-networkV300"},
+        '600': {"type": "ethernet-networkV4"}
+    }
+    BULK_DEFAULT_VALUES = {
+        '200': {"type": "bulk-ethernet-network"},
+        '300': {"type": "bulk-ethernet-network"},
+        '500': {"type": "bulk-ethernet-network"},
+        '600': {"type": "bulk-ethernet-networkV1"}
     }
 
     def __init__(self, con):
@@ -139,10 +146,8 @@ class EthernetNetworks(object):
             list: List of created Ethernet Networks.
 
         """
-        data = {"type": "bulk-ethernet-network"}
-        data.update(resource)
         uri = self.URI + '/bulk'
-        self._client.create(data, uri=uri, timeout=timeout)
+        self._client.create(resource, uri=uri, timeout=timeout,default_values=self.BULK_DEFAULT_VALUES)
 
         return self.get_range(resource['namePrefix'], resource['vlanIdRange'])
 
