@@ -51,7 +51,7 @@ class EnclosureGroups(object):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
 
-    def get_all(self, start=0, count=-1, filter='', sort=''):
+    def get_all(self, start=0, count=-1, filter='', sort='', scopeUris=''):
         """
         Gets a list of enclosure groups.
 
@@ -69,11 +69,14 @@ class EnclosureGroups(object):
             sort:
                 The sort order of the returned data set. By default, the sort order is based
                 on create time with the oldest entry first.
+            scopeUris:
+                An expression to restrict the resources returned according to the scopes to
+                which they are assigned.
 
         Returns:
             list: A list of enclosure groups.
         """
-        return self._client.get_all(start, count, filter=filter, sort=sort)
+        return self._client.get_all(start, count, filter=filter, sort=sort, scopeUris=scopeUris)
 
     def get(self, id_or_uri):
         """

@@ -133,6 +133,8 @@ class ResourceClient(object):
                 the collections or resources).
             fields:
                 Name of the fields.
+            scopeUris:
+                An expression to restrict the resources returned according to the scopes to which they are assigned.
             uri:
                 A specific URI (optional)
             scope_uris:
