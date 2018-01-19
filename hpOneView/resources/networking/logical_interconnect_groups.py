@@ -71,6 +71,9 @@ class LogicalInterconnectGroups(object):
             sort:
                 The sort order of the returned data set. By default, the sort order is based
                 on create time with the oldest entry first.
+            scopeUris:
+                An expression to restrict the resources returned according to the scopes to
+                which they are assigned.
 
         Returns:
             list: A list of logical interconnect groups.
