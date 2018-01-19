@@ -96,7 +96,7 @@ class ResourceClient(object):
         self._uri = uri
         self._task_monitor = TaskMonitor(con)
 
-    def build_query_uri(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', scopeUris='', uri=None):
+    def build_query_uri(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', scope_uris='', uri=None):
         """
         Builds the URI given the parameters.
 
@@ -135,7 +135,7 @@ class ResourceClient(object):
                 Name of the fields.
             uri:
                 A specific URI (optional)
-            scopeUris:
+            scope_uris:
                 An expression to restrict the resources returned according to the scopes to
                 which they are assigned.
 
@@ -158,8 +158,8 @@ class ResourceClient(object):
         if fields:
             fields = "&fields=" + quote(fields)
 
-        if scopeUris:
-            scopeUris = "&scopeUris=" + quote(scopeUris)
+        if scope_uris:
+            scope_uris = "&scope_uris=" + quote(scope_uris)
 
         path = uri if uri else self._uri
         self.__validate_resource_uri(path)
@@ -167,11 +167,11 @@ class ResourceClient(object):
         symbol = '?' if '?' not in path else '&'
 
         uri = "{0}{1}start={2}&count={3}{4}{5}{6}{7}{8}{9}".format(path, symbol, start, count, filter, query, sort,
-                                                                   view, fields, scopeUris)
+                                                                   view, fields, scope_uris)
 
         return uri
 
-    def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', scopeUris='', uri=None):
+    def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', scope_uris='', uri=None):
         """
         Gets all items according with the given arguments.
 
@@ -198,7 +198,7 @@ class ResourceClient(object):
                 Name of the fields.
             uri:
                 A specific URI (optional)
-            scopeUris:
+            scope_uris:
                 An expression to restrict the resources returned according to the scopes to
                 which they are assigned.
 
@@ -207,7 +207,7 @@ class ResourceClient(object):
         """
 
         uri = self.build_query_uri(start=start, count=count, filter=filter,
-                                   query=query, sort=sort, view=view, fields=fields, scopeUris=scopeUris, uri=uri)
+                                   query=query, sort=sort, view=view, fields=fields, scope_uris=scope_uris, uri=uri)
 
         logger.debug('Getting all resources with uri: {0}'.format(uri))
 
