@@ -96,7 +96,7 @@ class ResourceClient(object):
         self._uri = uri
         self._task_monitor = TaskMonitor(con)
 
-    def build_query_uri(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', scope_uris='', uri=None):
+    def build_query_uri(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None, scope_uris=''):
         """
         Builds the URI given the parameters.
 
@@ -171,7 +171,7 @@ class ResourceClient(object):
 
         return uri
 
-    def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', scope_uris='', uri=None):
+    def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None, scope_uris=''):
         """
         Gets all items according with the given arguments.
 
@@ -207,7 +207,7 @@ class ResourceClient(object):
         """
 
         uri = self.build_query_uri(start=start, count=count, filter=filter,
-                                   query=query, sort=sort, view=view, fields=fields, scope_uris=scope_uris, uri=uri)
+                                   query=query, sort=sort, view=view, fields=fields, uri=uri, scope_uris=scope_uris)
 
         logger.debug('Getting all resources with uri: {0}'.format(uri))
 

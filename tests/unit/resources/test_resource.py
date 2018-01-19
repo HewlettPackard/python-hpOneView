@@ -99,7 +99,7 @@ class ResourceClientTest(unittest.TestCase):
         mock_get.return_value = {"members": [{"member": "member"}]}
 
         result = self.resource_client.get_all(
-            1, 500, filter, query, sort, view, 'name,owner,modified', scope_uris)
+            1, 500, filter, query, sort, view, 'name,owner,modified', scope_uris=scope_uris)
 
         uri = '{resource_uri}?start=1' \
               '&count=500' \
