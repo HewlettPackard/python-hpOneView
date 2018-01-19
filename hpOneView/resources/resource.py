@@ -196,7 +196,8 @@ class ResourceClient(object):
             uri:
                 A specific URI (optional)
             scopeUris:
-
+                An expression to restrict the resources returned according to the scopes to
+                which they are assigned.
 
         Returns:
             list: A list of items matching the specified filter.
