@@ -50,6 +50,7 @@ RESOURCE_ID_OR_URI_REQUIRED = 'It is required to inform the Resource ID or URI.'
 
 logger = logging.getLogger('__name__')
 
+
 def merge_resources(resource1, resource2):
     """
     Updates a copy of resource1 with resource2 values and returns the merged dictionary.
@@ -154,8 +155,8 @@ class ResourceClient(object):
         if fields:
             fields = "&fields=" + quote(fields)
 
-	if scopeUris:
-	    scopeUris = "&scopeUris=" + quote(scopeUris)
+        if scopeUris:
+            scopeUris = "&scopeUris=" + quote(scopeUris)
 
         path = uri if uri else self._uri
         self.__validate_resource_uri(path)
@@ -163,7 +164,7 @@ class ResourceClient(object):
         symbol = '?' if '?' not in path else '&'
 
         uri = "{0}{1}start={2}&count={3}{4}{5}{6}{7}{8}{9}".format(path, symbol, start, count, filter, query, sort,
-                                                                view, fields, scopeUris)
+                                                                   view, fields, scopeUris)
 
         return uri
 
@@ -194,7 +195,7 @@ class ResourceClient(object):
                 Name of the fields.
             uri:
                 A specific URI (optional)
-	    scopeUris:
+            scopeUris:
 
 
         Returns:
@@ -202,7 +203,7 @@ class ResourceClient(object):
         """
 
         uri = self.build_query_uri(start=start, count=count, filter=filter,
-                                   query=query, sort=sort, view=view, fields=fields, uri=uri,scopeUris=scopeUris)
+                                   query=query, sort=sort, view=view, fields=fields, uri=uri, scopeUris=scopeUris)
 
         logger.debug('Getting all resources with uri: {0}'.format(uri))
 
