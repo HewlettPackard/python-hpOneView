@@ -48,7 +48,7 @@ RESOURCE_CLIENT_TASK_EXPECTED = "Failed: Expected a TaskResponse."
 RESOURCE_ID_OR_URI_REQUIRED = 'It is required to inform the Resource ID or URI.'
 
 
-logger = logging.getLogger('__name__')
+logger = logging.getLogger(__name__)
 
 
 def merge_resources(resource1, resource2):
@@ -135,6 +135,9 @@ class ResourceClient(object):
                 Name of the fields.
             uri:
                 A specific URI (optional)
+            scopeUris:
+                An expression to restrict the resources returned according to the scopes to
+                which they are assigned.
 
         Returns:
             uri: The complete uri
@@ -168,7 +171,7 @@ class ResourceClient(object):
 
         return uri
 
-    def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None, scopeUris=''):
+    def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', scopeUris='', uri=None):
         """
         Gets all items according with the given arguments.
 
@@ -204,7 +207,7 @@ class ResourceClient(object):
         """
 
         uri = self.build_query_uri(start=start, count=count, filter=filter,
-                                   query=query, sort=sort, view=view, fields=fields, uri=uri, scopeUris=scopeUris)
+                                   query=query, sort=sort, view=view, fields=fields, scopeUris=scopeUris, uri=uri)
 
         logger.debug('Getting all resources with uri: {0}'.format(uri))
 
