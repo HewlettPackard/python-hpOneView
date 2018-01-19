@@ -46,7 +46,8 @@ class UplinkSets(object):
     DEFAULT_VALUES = {
         '200': {"type": "uplink-setV3"},
         '300': {"type": "uplink-setV300"},
-        '500': {"type": "uplink-setV300"}
+        '500': {"type": "uplink-setV300"},
+        '600': {"type": "uplink-setV4"}
     }
 
     def __init__(self, con):
