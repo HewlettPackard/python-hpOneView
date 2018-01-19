@@ -40,10 +40,11 @@ class SasLogicalInterconnectGroupsTest(unittest.TestCase):
     def test_get_all_called_once(self, mock_get_all):
         filter = 'name=TestName'
         sort = 'name:ascending'
+        scope_uris = 'TestScope'
 
-        self._resource.get_all(2, 500, filter, sort)
+        self._resource.get_all(2, 500, filter, sort, scope_uris)
 
-        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort)
+        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort, scope_uris=scope_uris)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_by_id_called_once(self, mock_get):

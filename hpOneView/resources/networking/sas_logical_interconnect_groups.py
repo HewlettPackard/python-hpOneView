@@ -45,13 +45,14 @@ class SasLogicalInterconnectGroups(object):
 
     DEFAULT_VALUES = {
         '300': {'type': 'sas-logical-interconnect-group'},
-        '500': {'type': 'sas-logical-interconnect-group'}
+        '500': {'type': 'sas-logical-interconnect-group'},
+        '600': {'type': 'sas-logical-interconnect-groupV2'},
     }
 
     def __init__(self, con):
         self._client = ResourceClient(con, self.URI)
 
-    def get_all(self, start=0, count=-1, filter='', sort=''):
+    def get_all(self, start=0, count=-1, filter='', sort='', scope_uris=''):
         """
         Gets a paginated collection of SAS logical interconnect groups. The collection is based
         on optional sorting and filtering and is constrained by start and count parameters.
@@ -70,11 +71,15 @@ class SasLogicalInterconnectGroups(object):
             sort:
                 The sort order of the returned data set. By default, the sort order is based
                 on create time with the oldest entry first.
+            scope_uris:
+                An expression to restrict the resources returned according to the scopes to
+                which they are assigned.
+
 
         Returns:
             list: A list of SAS logical interconnect groups.
         """
-        return self._client.get_all(start, count, filter=filter, sort=sort)
+        return self._client.get_all(start, count, filter=filter, sort=sort, scope_uris=scope_uris)
 
     def get(self, id_or_uri):
         """

@@ -40,15 +40,16 @@ class LogicalInterconnectGroupsTest(unittest.TestCase):
     def test_get_all_called_once(self, mock_get_all):
         filter = 'name=TestName'
         sort = 'name:ascending'
+        scope_uris = 'TestScope'
 
-        self._lig.get_all(2, 500, filter, sort)
+        self._lig.get_all(2, 500, filter, sort, scope_uris)
 
-        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort)
+        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort, scope_uris=scope_uris)
 
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_all_called_once_with_default(self, mock_get_all):
         self._lig.get_all()
-        mock_get_all.assert_called_once_with(0, -1, filter='', sort='')
+        mock_get_all.assert_called_once_with(0, -1, filter='', sort='', scope_uris='')
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_by_id_called_once(self, mock_get):

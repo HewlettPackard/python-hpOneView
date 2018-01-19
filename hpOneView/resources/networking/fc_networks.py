@@ -44,7 +44,8 @@ class FcNetworks(object):
     DEFAULT_VALUES = {
         '200': {'type': 'fc-networkV2'},
         '300': {"type": "fc-networkV300"},
-        '500': {"type": "fc-networkV300"}
+        '500': {"type": "fc-networkV300"},
+        '600': {"type": "fc-networkV4"}
     }
 
     def __init__(self, con):

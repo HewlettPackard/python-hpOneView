@@ -94,11 +94,12 @@ class ResourceClientTest(unittest.TestCase):
         sort = 'name:ascending'
         query = "name NE 'WrongName'"
         view = '"{view-name}"'
+        scope_uris = '/rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a'
 
         mock_get.return_value = {"members": [{"member": "member"}]}
 
         result = self.resource_client.get_all(
-            1, 500, filter, query, sort, view, 'name,owner,modified')
+            1, 500, filter, query, sort, view, 'name,owner,modified', scope_uris=scope_uris)
 
         uri = '{resource_uri}?start=1' \
               '&count=500' \
@@ -106,7 +107,8 @@ class ResourceClientTest(unittest.TestCase):
               '&query=name%20NE%20%27WrongName%27' \
               '&sort=name%3Aascending' \
               '&view=%22%7Bview-name%7D%22' \
-              '&fields=name%2Cowner%2Cmodified'.format(resource_uri=self.URI)
+              '&fields=name%2Cowner%2Cmodified' \
+              '&scope_uris=/rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a'.format(resource_uri=self.URI)
 
         self.assertEqual([{'member': 'member'}], result)
         mock_get.assert_called_once_with(uri)
