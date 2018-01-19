@@ -200,13 +200,14 @@
 
     <span class="n">DEFAULT_VALUES</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;sas-logical-interconnect-group&#39;</span><span class="p">},</span>
-        <span class="s1">&#39;500&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;sas-logical-interconnect-group&#39;</span><span class="p">}</span>
+        <span class="s1">&#39;500&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;sas-logical-interconnect-group&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;600&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;sas-logical-interconnect-groupV2&#39;</span><span class="p">},</span>
     <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
 
-<div class="viewcode-block" id="SasLogicalInterconnectGroups.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="SasLogicalInterconnectGroups.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">scope_uris</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a paginated collection of SAS logical interconnect groups. The collection is based</span>
 <span class="sd">        on optional sorting and filtering and is constrained by start and count parameters.</span>
@@ -225,11 +226,15 @@
 <span class="sd">            sort:</span>
 <span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
 <span class="sd">                on create time with the oldest entry first.</span>
+<span class="sd">            scope_uris:</span>
+<span class="sd">                An expression to restrict the resources returned according to the scopes to</span>
+<span class="sd">                which they are assigned.</span>
+
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of SAS logical interconnect groups.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">scope_uris</span><span class="o">=</span><span class="n">scope_uris</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SasLogicalInterconnectGroups.get"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

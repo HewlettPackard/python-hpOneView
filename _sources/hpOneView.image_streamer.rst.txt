@@ -1,13 +1,6 @@
 hpOneView\.image\_streamer package
 ==================================
 
-Subpackages
------------
-
-.. toctree::
-
-    hpOneView.image_streamer.resources
-
 Submodules
 ----------
 
