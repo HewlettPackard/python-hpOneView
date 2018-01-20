@@ -74,7 +74,7 @@ data = {
 
 # Create a Enclosure Group
 print("Create a Enclosure Group")
-if oneview_client.api_version <=500:
+if oneview_client.api_version <= 500:
     options = {"stackingMode": "Enclosure"}
     options.update(data)
     created_eg = oneview_client.enclosure_groups.create(options)
@@ -95,12 +95,14 @@ if len(result) > 0:
 else:
     print("No Enclosure Group found.")
 
-# Get Enclosure Group by scopeUris
-if oneview_client.api_version ==600:
-    eg_by_scopeuris = oneview_client.enclosure_groups.get_all(scopeUris="\"'/rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a'\"")
-    print("Found Enclosure Group by scopeUris: '%s'.\n  uri = '%s'" % (eg_by_scopeuris[0]['name'], eg_by_scopeuris[0]['uri']))
-    pprint(eg_by_scopeuris)
-
+# Get Enclosure Group by scope_uris
+if oneview_client.api_version == 600:
+    eg_by_scope_uris = oneview_client.enclosure_groups.get_all(scope_uris="\"'/rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a'\"")
+    if len(eg_by_scope_uris) > 0:
+        print("Found Enclosure Group by scope_uris: '%s'.\n  uri = '%s'" % (eg_by_scope_uris[0]['name'], eg_by_scope_uris[0]['uri']))
+        pprint(eg_by_scope_uris)
+    else:
+        print("No Enclosure Group found.")
 
 # Update an Enclosure Group
 print("Update an Enclosure Group")

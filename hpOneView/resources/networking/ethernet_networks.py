@@ -147,7 +147,7 @@ class EthernetNetworks(object):
 
         """
         uri = self.URI + '/bulk'
-        self._client.create(resource, uri=uri, timeout=timeout,default_values=self.BULK_DEFAULT_VALUES)
+        self._client.create(resource, uri=uri, timeout=timeout, default_values=self.BULK_DEFAULT_VALUES)
 
         return self.get_range(resource['namePrefix'], resource['vlanIdRange'])
 
