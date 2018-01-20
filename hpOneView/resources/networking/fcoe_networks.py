@@ -45,7 +45,7 @@ class FcoeNetworks(object):
         '200': {"type": "fcoe-network"},
         '300': {"type": "fcoe-networkV300"},
         '500': {"type": "fcoe-networkV300"},
-        '600': {"type": "fcoe-networkV4"} 
+        '600': {"type": "fcoe-networkV4"}
     }
 
     def __init__(self, con):
