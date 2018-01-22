@@ -7,6 +7,7 @@ Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
 - Connection template
 - FC network
 - Interconnect type
+- Internal link set
 - Logical interconnect group
 - SAS logical interconnect group
 

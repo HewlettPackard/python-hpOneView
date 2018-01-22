@@ -204,8 +204,8 @@
 |<sub>/rest/interconnects/{id}/update-ports</sub>                                         | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/interconnects/{id}/nameServers</sub>                                          | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |     **Internal Link Sets**                                                                                                                       |
-|<sub>/rest/internal-link-sets</sub>                                                      | GET      | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/internal-link-sets/{id}</sub>                                                 | GET      | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/internal-link-sets</sub>                                                      | GET      | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  |
+|<sub>/rest/internal-link-sets/{id}</sub>                                                 | GET      | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:  |
 |     **Labels**                                                                                                                                   |
 |<sub>/rest/labels</sub>                                                                  | GET      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/labels/resources</sub>                                                        | POST     | :white_check_mark:   | :white_check_mark:   |
@@ -326,7 +326,7 @@
 |<sub>/rest/os-deployment-servers/image-streamer-appliances</sub>                         | GET      | :heavy_minus_sign:   | :white_check_mark:   |                      |
 |<sub>/rest/os-deployment-servers/image-streamer-appliances/{id}</sub>                    | GET      | :heavy_minus_sign:   | :white_check_mark:   |                      |
 |<sub>/rest/os-deployment-servers/network</sub>                                           | GET      | :heavy_minus_sign:   | :white_check_mark:   |                      |
-|<sub>/rest/deployment-servers/security-mode/security-compatibility-checker</sub>         | POST     | :heavy_minus_sign:   | :heavy_minus_sign:   |                       
+|<sub>/rest/deployment-servers/security-mode/security-compatibility-checker</sub>         | POST     | :heavy_minus_sign:   | :heavy_minus_sign:   |
 |<sub>/rest/os-deployment-servers/{id}</sub>                                              | GET      | :heavy_minus_sign:   | :white_check_mark:   |                      |
 |<sub>/rest/os-deployment-servers/{id}</sub>                                              | PUT      | :heavy_minus_sign:   | :white_check_mark:   |                      |
 |<sub>/rest/os-deployment-servers/{id}</sub>                                              | DELETE   | :heavy_minus_sign:   | :white_check_mark:   |                      |
