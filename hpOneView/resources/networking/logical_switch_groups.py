@@ -48,7 +48,7 @@ class LogicalSwitchGroups(object):
         '200': {"type": "logical-switch-group"},
         '300': {"type": "logical-switch-groupV300"},
         '500': {"type": "logical-switch-groupV300"},
-        '600': {"type": "LogicalSwitchGroupCollectionV4"}
+        '600': {"type": "logical-switch-groupV4"}
     }
 
     def __init__(self, con):
