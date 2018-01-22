@@ -240,3 +240,45 @@ class EnclosuresTest(TestCase):
 
         mock_get.assert_called_once_with('/rest/enclosures/09USE7335NW3',
                                          fields=None, filter=None, refresh=False, view=None)
+
+    @mock.patch.object(ResourceClient, 'create')
+    def test_generate_csr(self, mock_create):
+        id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest'
+        csr_data = {
+            "type": "CertificateDtoV2",
+            "organization": "Acme Corp.",
+            "organizationalUnit": "IT",
+            "locality": "Townburgh",
+            "state": "Mississippi",
+            "country": "US",
+            "email": "admin@example.com"
+        }
+        headers = {'Content-Type': 'application/json'}
+
+        self._enclosures.generate_csr(csr_data, id_enclosure)
+
+        mock_create.assert_called_once_with(csr_data, uri=uri_rest_call, custom_headers=headers)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_csr(self, mock_get):
+        id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest'
+
+        self._enclosures.get_csr(id_enclosure)
+
+        mock_get.assert_called_once_with(uri_rest_call)
+
+    @mock.patch.object(ResourceClient, 'update')
+    def test_import_certificate(self, mock_update):
+        id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest'
+        certificate_data = {
+            "type": "CertificateDataV2",
+            "base64Data": "-----BEGIN CERTIFICATE----- encoded data here -----END CERTIFICATE-----"
+        }
+        headers = {'Content-Type': 'application/json'}
+
+        self._enclosures.import_certificate(certificate_data, id_enclosure)
+
+        mock_update.assert_called_once_with(certificate_data, uri=uri_rest_call, custom_headers=headers)
