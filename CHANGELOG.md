@@ -1,15 +1,24 @@
 # 4.5.0 (Unreleased)
 #### Notes
 Added the capability to set a connection timeout when connecting to the HPE OneView Appliance
+
 Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
 
 #### Features supported with current release:
 - Connection template
+- Enclosure group
+- Ethernet network
 - FC network
+- FCoE network
 - Interconnect type
 - Logical interconnect group
+- Logical switch
+- SAS interconnect type
 - SAS logical interconnect group
 - SAS logical interconnect
+- Switch type
+- Uplink set
+
 
 # 4.4.0
 #### Notes
