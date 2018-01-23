@@ -9,6 +9,7 @@ Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
 - Enclosure group
 - Ethernet network
 - FC network
+- FCoE network
 - Interconnect type
 - Logical interconnect group
 - Logical switch
