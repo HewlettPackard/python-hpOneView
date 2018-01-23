@@ -85,7 +85,7 @@ class LogicalEnclosures(object):
         """
         return self._client.delete(resource, force=force, timeout=timeout)
 
-    def get_all(self, start=0, count=-1, filter='', sort=''):
+    def get_all(self, start=0, count=-1, filter='', sort='', scope_uris=''):
         """
         Returns a list of logical enclosures matching the specified filter. A maximum of 40 logical enclosures are
         returned to the caller. Additional calls can be made to retrieve any other logical enclosures matching the
@@ -105,11 +105,14 @@ class LogicalEnclosures(object):
             sort:
                 The sort order of the returned data set. By default, the sort order is based
                 on create time with the oldest entry first.
+            scope_uris:
+                An expression to restrict the resources returned according to the scopes to
+                which they are assigned.
 
         Returns:
             list: A list of logical enclosures.
         """
-        return self._client.get_all(start, count, filter=filter, sort=sort)
+        return self._client.get_all(start, count, filter=filter, sort=sort, scope_uris=scope_uris)
 
     def get_by(self, field, value):
         """
@@ -182,8 +185,7 @@ class LogicalEnclosures(object):
         Returns:
             dict: Updated logical enclosure.
         """
-        headers = {'If-Match': '*'}
-        return self._client.patch(id_or_uri, operation, path, value, timeout=timeout, custom_headers=headers)
+        return self._client.patch(id_or_uri, operation, path, value, timeout=timeout)
 
     def update_configuration(self, id_or_uri, timeout=-1):
         """

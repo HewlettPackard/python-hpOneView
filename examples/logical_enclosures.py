@@ -38,7 +38,6 @@ config = {
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
-
 try:
     # The valid enclosure URIs need to be inserted sorted by URI
     # The number of enclosure URIs must be equal to the enclosure count in the enclosure group
@@ -46,7 +45,8 @@ try:
         enclosureUris=[],
         enclosureGroupUri="",
         forceInstallFirmware=False,
-        name="LogicalEnclosure2"
+        name="LogicalEnclosure2",
+        initialScopeUris=["/rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a", "/rest/scopes/e9dde1f2-69d5-461b-871d-1790aebbc519"]
     )
 
     # Get enclosure group for creating logical enclosure
@@ -98,8 +98,8 @@ print("   Done.")
 # Get logical enclosure by id
 try:
     logical_enclosure_by_id = oneview_client.logical_enclosures.get(
-        "acb17b89-6724-4602-818a-1ee20ed4ec60")
-    print("Got logical enclosure '{}' by id: 'acb17b89-6724-4602-818a-1ee20ed4ec60'\n   uri: '{}'".format(
+        "5a136d8e-d44a-42f9-bf28-5c93a93f8663")
+    print("Got logical enclosure '{}' by id: '5a136d8e-d44a-42f9-bf28-5c93a93f8663'\n   uri: '{}'".format(
         logical_enclosure_by_id['name'], logical_enclosure_by_id['uri']))
 except HPOneViewException as e:
     print(e.msg)
@@ -117,6 +117,14 @@ try:
     print("Got logical enclosure by name '{name}'\n   uri: '{uri}'".format(**logical_enclosure_by_name))
 except HPOneViewException as e:
     print(e.msg)
+# Get Logical Enclosure by scope_uris
+if oneview_client.api_version == 600:
+    le_by_scope_uris = oneview_client.logical_enclosures.get_all(scope_uris="\"'/rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a'\"")
+    if len(le_by_scope_uris) > 0:
+        print("Got Logical Enclosure by scope_uris: '%s'.\n  uri = '%s'" % (le_by_scope_uris[0]['name'], le_by_scope_uris[0]['uri']))
+        pprint(le_by_scope_uris)
+    else:
+        print("No Logical Enclosure found by scope_uris")
 
 # Update configuration
 print("Reapply the appliance's configuration to the logical enclosure")
@@ -177,7 +185,7 @@ if oneview_client.api_version >= 300:
             operation="replace",
             path="/firmware",
             value={
-                "firmwareBaselineUri": "/rest/firmware-drivers/SPPgen9snap6_2016_0405_87",
+                "firmwareBaselineUri": "/rest/firmware-drivers/spp-2017_04_0-SPP2017040_2017_0420_14",
                 "firmwareUpdateOn": "EnclosureOnly",
                 "forceInstallFirmware": "true",
                 "validateIfLIFirmwareUpdateIsNonDisruptive": "true",
