@@ -43,7 +43,6 @@ oneview_client = OneViewClient(config)
 
 data = {
     "name": "Enclosure Group 1",
-    "stackingMode": "Enclosure",
     "interconnectBayMappings":
         [
             {
@@ -75,7 +74,12 @@ data = {
 
 # Create a Enclosure Group
 print("Create a Enclosure Group")
-created_eg = oneview_client.enclosure_groups.create(data)
+if oneview_client.api_version <= 500:
+    options = {"stackingMode": "Enclosure"}
+    options.update(data)
+    created_eg = oneview_client.enclosure_groups.create(options)
+else:
+    created_eg = oneview_client.enclosure_groups.create(data)
 pprint(created_eg)
 
 # Get the first 10 records, sorting by name descending
@@ -91,9 +95,19 @@ if len(result) > 0:
 else:
     print("No Enclosure Group found.")
 
+# Get Enclosure Group by scope_uris
+if oneview_client.api_version == 600:
+    eg_by_scope_uris = oneview_client.enclosure_groups.get_all(scope_uris="\"'/rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a'\"")
+    if len(eg_by_scope_uris) > 0:
+        print("Found Enclosure Group by scope_uris: '%s'.\n  uri = '%s'" % (eg_by_scope_uris[0]['name'], eg_by_scope_uris[0]['uri']))
+        pprint(eg_by_scope_uris)
+    else:
+        print("No Enclosure Group found.")
+
 # Update an Enclosure Group
 print("Update an Enclosure Group")
-eg_to_update = created_eg.copy()
+result = oneview_client.enclosure_groups.get_by('name', 'Enclosure Group 1')
+eg_to_update = result[0]
 eg_to_update["name"] = "Renamed Enclosure Group"
 updated_eg = oneview_client.enclosure_groups.update(eg_to_update)
 pprint(updated_eg)
@@ -106,7 +120,7 @@ pprint(egs)
 # Get by Id
 try:
     print("Get an Enclosure Group by id")
-    eg_byid = oneview_client.enclosure_groups.get('54184fae-42d5-4248-a732-cfe5115f7857')
+    eg_byid = oneview_client.enclosure_groups.get('293e8efe-c6b1-4783-bf88-2d35a8e49071')
     pprint(eg_byid)
 except HPOneViewException as e:
     print(e.msg)

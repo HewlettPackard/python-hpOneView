@@ -54,7 +54,6 @@ class EthernetNetworksTest(TestCase):
             "purpose": "Management",
             "connectionTemplateUri": None,
             "smartLink": False,
-            "type": "ethernet-networkV3",
             "privateNetwork": False
         }
         resource_rest_call = resource.copy()
@@ -89,8 +88,7 @@ class EthernetNetworksTest(TestCase):
             'bandwidth': {
                 'maximumBandwidth': 10000,
                 'typicalBandwidth': 2000
-            },
-            'type': 'bulk-ethernet-network'
+            }
         }
         resource_rest_call = resource.copy()
         mock_create.return_value = {}
@@ -99,7 +97,7 @@ class EthernetNetworksTest(TestCase):
         self._ethernet_networks.create_bulk(resource, 27)
 
         mock_create.assert_called_once_with(
-            resource_rest_call, uri='/rest/ethernet-networks/bulk', timeout=27)
+            resource_rest_call, uri='/rest/ethernet-networks/bulk', timeout=27, default_values=self._ethernet_networks.BULK_DEFAULT_VALUES)
         mock_get_all.assert_called_once_with(
             0, -1, filter='"\'name\' matches \'TestNetwork\\_%\'"', sort='vlanId:ascending')
 
@@ -112,7 +110,6 @@ class EthernetNetworksTest(TestCase):
             'vlanId': None,
             'privateNetwork': True,
             'ethernetNetworkType': 'Untagged',
-            'type': 'ethernet-networkV3',
             'purpose': 'General'
         }
         resource_rest_call = resource.copy()

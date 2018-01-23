@@ -41,7 +41,7 @@ options = {
     "purpose": "General",
     "smartLink": False,
     "privateNetwork": False,
-    "connectionTemplateUri": None,
+    "connectionTemplateUri": None
 }
 
 options_bulk = {
@@ -53,8 +53,7 @@ options_bulk = {
     "bandwidth": {
         "maximumBandwidth": 10000,
         "typicalBandwidth": 2000
-    },
-    "type": "bulk-ethernet-network"
+    }
 }
 
 # Scope name to perform the patch operation
