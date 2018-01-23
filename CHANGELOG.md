@@ -16,8 +16,10 @@ Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
 - Logical switch
 - SAS interconnect type
 - SAS logical interconnect group
+- SAS logical interconnect
 - Switch type
 - Uplink set
+
 
 # 4.4.0
 #### Notes
