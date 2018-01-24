@@ -44,7 +44,7 @@ class Enclosures(object):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
 
-    def get_all(self, start=0, count=-1, filter='', sort=''):
+    def get_all(self, start=0, count=-1, filter='', sort='', scope_uris=None):
         """
         Gets a paginated collection of Enclosures. The collection is based on optional sorting and filtering, and
         constrained by start and count parameters.
@@ -67,7 +67,7 @@ class Enclosures(object):
         Returns:
             list: A list of Enclosures.
         """
-        return self._client.get_all(start, count, filter=filter, sort=sort)
+        return self._client.get_all(start, count, filter=filter, sort=sort, scope_uris=scope_uris)
 
     def get_by(self, field, value):
         """

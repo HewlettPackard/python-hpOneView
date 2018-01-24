@@ -40,16 +40,17 @@ class EnclosuresTest(TestCase):
     def test_get_all_called_once(self, mock_get_all):
         filter = 'name=TestName'
         sort = 'name:ascending'
+        scope_uris = 'rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a'
 
-        self._enclosures.get_all(2, 500, filter, sort)
+        self._enclosures.get_all(2, 500, filter, sort, scope_uris)
 
-        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort)
+        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort, scope_uris=scope_uris)
 
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_all_called_once_with_default_values(self, mock_get_all):
         self._enclosures.get_all()
 
-        mock_get_all.assert_called_once_with(0, -1, filter='', sort='')
+        mock_get_all.assert_called_once_with(0, -1, filter='', sort='', scope_uris=None)
 
     @mock.patch.object(ResourceClient, 'get_by')
     def test_get_by_called_once(self, mock_get_by):
