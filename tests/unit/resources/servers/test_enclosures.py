@@ -246,7 +246,7 @@ class EnclosuresTest(TestCase):
     def test_generate_csr(self, mock_create):
         bay_number = 1
         id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest?bayNumber=%d' % (bay_number)
         csr_data = {
             'type': 'CertificateDtoV2',
             'organization': 'Acme Corp.',
@@ -266,7 +266,7 @@ class EnclosuresTest(TestCase):
     def test_get_csr(self, mock_get):
         bay_number = 1
         id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest?bayNumber=%d' % (bay_number)
 
         self._enclosures.get_csr(id_enclosure, bay_number=bay_number)
 
@@ -276,7 +276,7 @@ class EnclosuresTest(TestCase):
     def test_import_certificate(self, mock_update):
         bay_number = 1
         id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest'
+        uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest?bayNumber=%d' % (bay_number)
         certificate_data = {
             'type': 'CertificateDataV2',
             'base64Data': '-----BEGIN CERTIFICATE----- encoded data here -----END CERTIFICATE-----'
