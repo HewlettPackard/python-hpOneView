@@ -44,7 +44,7 @@ class Enclosures(object):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
 
-    def get_all(self, start=0, count=-1, filter='', sort='', scope_uris=None):
+    def get_all(self, start=0, count=-1, filter='', sort='', scope_uris=''):
         """
         Gets a paginated collection of Enclosures. The collection is based on optional sorting and filtering, and
         constrained by start and count parameters.
@@ -339,7 +339,7 @@ class Enclosures(object):
         Args:
             csr_data: Dictionary with csr details.
             id_or_uri: Can be either the resource ID or the resource URI.
-            bay_number: OA from which a the CSR should be generated.
+            bay_number: OA from which the CSR should be generated.
 
         Returns:
             Enclosure.
@@ -359,7 +359,7 @@ class Enclosures(object):
 
         Args:
             id_or_uri: Can be either the resource ID or the resource URI.
-            bay_number: OA to retrieve a previously generated CSR.
+            bay_number: OA to retrieve the previously generated CSR.
 
         Returns:
             dict

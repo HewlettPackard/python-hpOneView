@@ -6,19 +6,19 @@ Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
 
 #### Features supported with current release:
 - Connection template
-- Enclosure group
 - Enclosure
+- Enclosure group
 - Ethernet network
 - FC network
 - FCoE network
 - Interconnect type
 - Internal link set
 - Logical interconnect group
-- Logical Switch Groups
 - Logical switch
+- Logical switch group
 - SAS interconnect type
-- SAS logical interconnect group
 - SAS logical interconnect
+- SAS logical interconnect group
 - Switch type
 - Uplink set
 

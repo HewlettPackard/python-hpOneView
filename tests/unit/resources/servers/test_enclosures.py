@@ -50,7 +50,7 @@ class EnclosuresTest(TestCase):
     def test_get_all_called_once_with_default_values(self, mock_get_all):
         self._enclosures.get_all()
 
-        mock_get_all.assert_called_once_with(0, -1, filter='', sort='', scope_uris=None)
+        mock_get_all.assert_called_once_with(0, -1, filter='', sort='', scope_uris='')
 
     @mock.patch.object(ResourceClient, 'get_by')
     def test_get_by_called_once(self, mock_get_by):
@@ -244,42 +244,45 @@ class EnclosuresTest(TestCase):
 
     @mock.patch.object(ResourceClient, 'create')
     def test_generate_csr(self, mock_create):
+        bay_number = 1
         id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest'
         csr_data = {
-            "type": "CertificateDtoV2",
-            "organization": "Acme Corp.",
-            "organizationalUnit": "IT",
-            "locality": "Townburgh",
-            "state": "Mississippi",
-            "country": "US",
-            "email": "admin@example.com"
+            'type': 'CertificateDtoV2',
+            'organization': 'Acme Corp.',
+            'organizationalUnit': 'IT',
+            'locality': 'Townburgh',
+            'state': 'Mississippi',
+            'country': 'US',
+            'email': 'admin@example.com'
         }
         headers = {'Content-Type': 'application/json'}
 
-        self._enclosures.generate_csr(csr_data, id_enclosure)
+        self._enclosures.generate_csr(csr_data, id_enclosure, bay_number=bay_number)
 
         mock_create.assert_called_once_with(csr_data, uri=uri_rest_call, custom_headers=headers)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_csr(self, mock_get):
+        bay_number = 1
         id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest'
 
-        self._enclosures.get_csr(id_enclosure)
+        self._enclosures.get_csr(id_enclosure, bay_number=bay_number)
 
         mock_get.assert_called_once_with(uri_rest_call)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_import_certificate(self, mock_update):
+        bay_number = 1
         id_enclosure = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest'
         certificate_data = {
-            "type": "CertificateDataV2",
-            "base64Data": "-----BEGIN CERTIFICATE----- encoded data here -----END CERTIFICATE-----"
+            'type': 'CertificateDataV2',
+            'base64Data': '-----BEGIN CERTIFICATE----- encoded data here -----END CERTIFICATE-----'
         }
         headers = {'Content-Type': 'application/json'}
 
-        self._enclosures.import_certificate(certificate_data, id_enclosure)
+        self._enclosures.import_certificate(certificate_data, id_enclosure, bay_number=bay_number)
 
         mock_update.assert_called_once_with(certificate_data, uri=uri_rest_call, custom_headers=headers)
