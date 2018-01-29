@@ -44,14 +44,16 @@ class ServerProfiles(object):
     DEFAULT_VALUES = {
         '200': {"type": "ServerProfileV5"},
         '300': {"type": "ServerProfileV6"},
-        '500': {"type": "ServerProfileV7"}
+        '500': {"type": "ServerProfileV7"},
+        '600': {"type": "ServerProfileV8"},
+
     }
 
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
 
-    def create(self, resource, timeout=-1):
+    def create(self, resource, timeout=-1, force=''):
         """
         Creates a server profile using the information provided in the resource parameter.
 
@@ -59,19 +61,22 @@ class ServerProfiles(object):
             resource (dict): Object to create.
             timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView, just stop waiting for its completion.
+            force (Query Parameter): Comma separated list of flags for ignoring specific warning.
 
         Returns:
             dict: Created server profile.
         """
-        return self._client.create(resource=resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
+        uri = self.__build_uri_with_query_string({"force":force})
+        return self._client.create(resource=resource, uri=uri, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
-    def update(self, resource, id_or_uri):
+    def update(self, resource, id_or_uri, force=''):
         """
         Allows the configuration of a server profile object to be modified.
 
         Args:
             id_or_uri: Can be either the server profile id or the server profile uri.
             resource (dict): Object to update.
+            force (Query Parameter): Comma separated list of flags for ignoring specific warning.
 
         Returns:
             dict: The server profile resource.
@@ -80,7 +85,9 @@ class ServerProfiles(object):
         if resource.get('serverHardwareUri') is None:
             resource.pop('enclosureBay', None)
             resource.pop('enclosureUri', None)
-        return self._client.update(resource=resource, uri=id_or_uri, default_values=self.DEFAULT_VALUES)
+
+        uri = self. __build_uri_with_query_string({'force': force}, id_or_uri=id_or_uri)
+        return self._client.update(resource=resource, uri=uri, default_values=self.DEFAULT_VALUES)
 
     def patch(self, id_or_uri, operation, path, value, timeout=-1):
         """
