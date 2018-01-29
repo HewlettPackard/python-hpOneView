@@ -66,7 +66,7 @@ class ServerProfiles(object):
         Returns:
             dict: Created server profile.
         """
-        uri = self.__build_uri_with_query_string({"force":force})
+        uri = self.__build_uri_with_query_string({"force": force})
         return self._client.create(resource=resource, uri=uri, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def update(self, resource, id_or_uri, force=''):
@@ -423,7 +423,7 @@ class ServerProfiles(object):
         uri = self.__build_uri_with_query_string(kwargs, '/available-targets')
         return self._client.get(uri)
 
-    def __build_uri_with_query_string(self, kwargs, sufix_path, id_or_uri=None):
+    def __build_uri_with_query_string(self, kwargs, sufix_path='', id_or_uri=None):
         uri = self.URI
         if id_or_uri:
             uri = self._client.build_uri(id_or_uri)
