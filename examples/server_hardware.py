@@ -90,7 +90,6 @@ if oneview_client.api_version >= 600:
         "password": config['server_password'],
         "licensingIntent": "OneView",
         "configurationState": "Managed",
-        "initialScopeUris": ["/rest/scopes/7a7db914-ca1d-4112-9189-4ce1a4774ce3"]
     }
     server_mult = oneview_client.server_hardware.add_multiple(options_to_add_mult)
 else:
