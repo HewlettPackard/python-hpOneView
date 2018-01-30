@@ -174,6 +174,27 @@ class ServerHardware(object):
         """
         return self._client.create(information, timeout=timeout)
 
+    def add_multiple(self, information, timeout=-1):
+        """
+        Adds multiple rackmount servers for management by the appliance. This API initiates the asynchronous addition of
+        supported server models.
+
+        Note: Servers in an enclosure are added by adding the enclosure resource. This is
+        only supported on appliances that support rackmounted servers.
+
+        This is only supported for api version 600
+
+        Args:
+            information (dict): Objects to create
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            dict: Created rackmount servers.
+        """
+        uri = self._client.build_uri(self.URI) + "/discovery"
+        return self._client.create(information, uri=uri, timeout=timeout)
+
     def get(self, id_or_uri):
         """
         Gets a server hardware resource by ID or by URI.

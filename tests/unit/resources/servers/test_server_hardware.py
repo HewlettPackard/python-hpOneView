@@ -86,6 +86,17 @@ class ServerHardwareTest(TestCase):
         self._server_hardware.add(information)
         mock_create.assert_called_once_with(information.copy(), timeout=-1)
 
+    @mock.patch.object(ResourceClient, 'create')
+    def test_add_multiple_called_once(self, mock_create):
+        information = {
+            "licensingIntent": "OneView",
+            "configurationState": "Managed"
+        }
+        mock_create.return_value = {}
+
+        self._server_hardware.add_multiple(information)
+        mock_create.assert_called_once_with(information.copy(), timeout=-1, uri="/rest/server-hardware/discovery")
+
     @mock.patch.object(ResourceClient, 'get')
     def test_get_called_once(self, mock_get):
         self._server_hardware.get('3518be0e-17c1-4189-8f81-83f3724f6155')
