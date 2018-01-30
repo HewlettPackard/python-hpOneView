@@ -92,10 +92,9 @@ if oneview_client.api_version >= 600:
         "configurationState": "Managed",
         "initialScopeUris": ["/rest/scopes/7a7db914-ca1d-4112-9189-4ce1a4774ce3"]
     }
-    try:
-        server_mult = oneview_client.server_hardware.add_multiple(options2)
-    except HPOneViewException as e:
-        print(e.msg)
+    server_mult = oneview_client.server_hardware.add_multiple(options_to_add_mult)
+else:
+    print("\nCANNOT CREATE MULTIPLE SERVERS! Endpoint supported for REST API Versions 600 and above only.\n")
 
 # Get recently added server hardware resource by uri
 server_byId = oneview_client.server_hardware.get(server['uri'])
