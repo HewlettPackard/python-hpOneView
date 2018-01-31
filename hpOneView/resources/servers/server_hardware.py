@@ -158,11 +158,11 @@ class ServerHardware(object):
 
     def add(self, information, timeout=-1):
         """
-        Adds a rackmount server for management by the appliance. This API initiates the asynchronous addition of
+        Adds a rack-mount server for management by the appliance. This API initiates the asynchronous addition of
         supported server models.
 
         Note: Servers in an enclosure are added by adding the enclosure resource. This is
-        only supported on appliances that support rackmounted servers.
+        only supported on appliances that support rack-mounted servers.
 
         Args:
             information (dict): Object to create
@@ -170,9 +170,30 @@ class ServerHardware(object):
                 in OneView; it just stops waiting for its completion.
 
         Returns:
-            dict: Created rackmount server.
+            dict: Created rack-mount server.
         """
         return self._client.create(information, timeout=timeout)
+
+    def add_multiple_servers(self, information, timeout=-1):
+        """
+        Adds multiple rack-mount servers for management by the appliance. This API initiates the asynchronous addition of
+        supported server models.
+
+        Note: Servers in an enclosure are added by adding the enclosure resource. This is
+        only supported on appliances that support rack-mounted servers.
+
+        This is only supported for api version 600
+
+        Args:
+            information (dict): Objects to create
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            dict: Created rack-mount servers.
+        """
+        uri = self._client.build_uri(self.URI) + "/discovery"
+        return self._client.create(information, uri=uri, timeout=timeout)
 
     def get(self, id_or_uri):
         """
@@ -204,7 +225,7 @@ class ServerHardware(object):
     def remove(self, resource, force=False, timeout=-1):
         """
         Removes the rackserver with the specified URI.
-        Note: This operation is only supported on appliances that support rackmounted servers.
+        Note: This operation is only supported on appliances that support rack-mounted servers.
 
         Args:
             resource (dict):

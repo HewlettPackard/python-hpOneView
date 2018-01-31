@@ -47,7 +47,7 @@ options = {
 
 # Set the server_hardware_id to run this example.
 # server_hardware_id example: 37333036-3831-4753-4831-30315838524E
-server_hardware_id = "34323937-3431-4732-3230-313130364747"
+server_hardware_id = "30303437-3034-4D32-3230-313133334752"
 
 oneview_client = OneViewClient(config)
 
@@ -81,6 +81,19 @@ for serv in server_hardware_all:
 server = oneview_client.server_hardware.add(options)
 print("Added rack mount server '%s'.\n  uri = '%s'" %
       (server['name'], server['uri']))
+
+# Create Multiple rack-mount servers
+if oneview_client.api_version >= 600:
+    options_to_add_multiple_server = {
+        "mpHostsAndRanges": config['server_mpHostsAndRanges'],
+        "username": config['server_username'],
+        "password": config['server_password'],
+        "licensingIntent": "OneView",
+        "configurationState": "Managed",
+    }
+    multiple_server = oneview_client.server_hardware.add_multiple_servers(options_to_add_multiple_server)
+else:
+    print("\nCANNOT CREATE MULTIPLE SERVERS! Endpoint supported for REST API Versions 600 and above only.\n")
 
 # Get recently added server hardware resource by uri
 server_byId = oneview_client.server_hardware.get(server['uri'])
