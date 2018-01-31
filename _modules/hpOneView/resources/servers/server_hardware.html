@@ -313,11 +313,11 @@
 
 <div class="viewcode-block" id="ServerHardware.add"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">information</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Adds a rackmount server for management by the appliance. This API initiates the asynchronous addition of</span>
+<span class="sd">        Adds a rack-mount server for management by the appliance. This API initiates the asynchronous addition of</span>
 <span class="sd">        supported server models.</span>
 
 <span class="sd">        Note: Servers in an enclosure are added by adding the enclosure resource. This is</span>
-<span class="sd">        only supported on appliances that support rackmounted servers.</span>
+<span class="sd">        only supported on appliances that support rack-mounted servers.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            information (dict): Object to create</span>
@@ -325,9 +325,30 @@
 <span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            dict: Created rackmount server.</span>
+<span class="sd">            dict: Created rack-mount server.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">information</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ServerHardware.add_multiple_servers"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.add_multiple_servers">[docs]</a>    <span class="k">def</span> <span class="nf">add_multiple_servers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">information</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds multiple rack-mount servers for management by the appliance. This API initiates the asynchronous addition of</span>
+<span class="sd">        supported server models.</span>
+
+<span class="sd">        Note: Servers in an enclosure are added by adding the enclosure resource. This is</span>
+<span class="sd">        only supported on appliances that support rack-mounted servers.</span>
+
+<span class="sd">        This is only supported for api version 600</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            information (dict): Objects to create</span>
+<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Created rack-mount servers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/discovery&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">information</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ServerHardware.get"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -359,7 +380,7 @@
 <div class="viewcode-block" id="ServerHardware.remove"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_hardware.ServerHardware.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes the rackserver with the specified URI.</span>
-<span class="sd">        Note: This operation is only supported on appliances that support rackmounted servers.</span>
+<span class="sd">        Note: This operation is only supported on appliances that support rack-mounted servers.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            resource (dict):</span>
