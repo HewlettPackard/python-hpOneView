@@ -174,7 +174,7 @@ class ServerHardware(object):
         """
         return self._client.create(information, timeout=timeout)
 
-    def add_multiple(self, information, timeout=-1):
+    def add_multiple_servers(self, information, timeout=-1):
         """
         Adds multiple rack-mount servers for management by the appliance. This API initiates the asynchronous addition of
         supported server models.

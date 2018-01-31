@@ -87,15 +87,16 @@ class ServerHardwareTest(TestCase):
         mock_create.assert_called_once_with(information.copy(), timeout=-1)
 
     @mock.patch.object(ResourceClient, 'create')
-    def test_add_multiple_called_once(self, mock_create):
+    def test_add_multiple_servers_called_once(self, mock_create):
+        uri = "/rest/server-hardware/discovery"
         information = {
             "licensingIntent": "OneView",
             "configurationState": "Managed"
         }
         mock_create.return_value = {}
 
-        self._server_hardware.add_multiple(information)
-        mock_create.assert_called_once_with(information.copy(), timeout=-1, uri="/rest/server-hardware/discovery")
+        self._server_hardware.add_multiple_servers(information)
+        mock_create.assert_called_once_with(information.copy(), timeout=-1, uri=uri)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_called_once(self, mock_get):

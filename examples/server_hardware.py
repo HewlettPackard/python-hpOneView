@@ -84,14 +84,14 @@ print("Added rack mount server '%s'.\n  uri = '%s'" %
 
 # Create Multiple rack-mount servers
 if oneview_client.api_version >= 600:
-    options_to_add_mult = {
+    options_to_add_multiple_server = {
         "mpHostsAndRanges": config['server_mpHostsAndRanges'],
         "username": config['server_username'],
         "password": config['server_password'],
         "licensingIntent": "OneView",
         "configurationState": "Managed",
     }
-    server_mult = oneview_client.server_hardware.add_multiple(options_to_add_mult)
+    multiple_server = oneview_client.server_hardware.add_multiple_servers(options_to_add_multiple_server)
 else:
     print("\nCANNOT CREATE MULTIPLE SERVERS! Endpoint supported for REST API Versions 600 and above only.\n")
 
