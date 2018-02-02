@@ -16,7 +16,7 @@ Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
 - Logical interconnect group
 - Logical switch
 - Logical switch group
-- Managed san
+- Managed SAN
 - SAS interconnect type
 - SAS logical interconnect
 - SAS logical interconnect group
