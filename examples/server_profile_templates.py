@@ -103,7 +103,7 @@ if oneview_client.api_version >= 300:
         template["uri"], server_hardware_type_uri_for_transformation, enclosure_group_uri_for_transformation)
     pprint(transformation)
 
-#Get available networks
+# Get available networks
 print("\nGet available networks")
 available_networks = oneview_client.server_profile_templates.get_available_networks(
     enclosureGroupUri=enclosure_group_uri, serverHardwareTypeUri=server_hardware_type_uri)
