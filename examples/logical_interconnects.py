@@ -85,7 +85,8 @@ if firmware:
     pprint(installed_firmware)
 
 # Performs a patch operation
-if scope:
+# Endpoint supported only in api-versions 500 and below.
+if scope and (oneview_client.api_version <= 500):
     print("\nPatches the logical interconnect adding one scope to it")
     updated_logical_interconnect = oneview_client.logical_interconnects.patch(logical_interconnect['uri'],
                                                                               'replace',
@@ -145,17 +146,19 @@ internal_vlans = oneview_client.logical_interconnects.get_internal_vlans(logical
 pprint(internal_vlans)
 
 # Update the interconnect settings
-print("\nUpdates the interconnect settings on the logical interconnect")
-interconnect_settings = {
-    'ethernetSettings': logical_interconnect['ethernetSettings'].copy(),
-    'fcoeSettings': {}
-}
-interconnect_settings['ethernetSettings']['macRefreshInterval'] = 7
-logical_interconnect = oneview_client.logical_interconnects.update_settings(logical_interconnect['uri'],
-                                                                            interconnect_settings)
-print("Updated interconnect settings on the logical interconnect")
-print("  with attribute 'macRefreshInterval' = {macRefreshInterval}".format(**logical_interconnect['ethernetSettings']))
-pprint(logical_interconnect)
+# End-point supported only in api-versions 500 and below.
+if oneview_client.api_version <= 500:
+    print("\nUpdates the interconnect settings on the logical interconnect")
+    interconnect_settings = {
+        'ethernetSettings': logical_interconnect['ethernetSettings'].copy(),
+        'fcoeSettings': {}
+    }
+    interconnect_settings['ethernetSettings']['macRefreshInterval'] = 7
+    logical_interconnect = oneview_client.logical_interconnects.update_settings(logical_interconnect['uri'],
+                                                                                interconnect_settings)
+    print("Updated interconnect settings on the logical interconnect")
+    print("  with attribute 'macRefreshInterval' = {macRefreshInterval}".format(**logical_interconnect['ethernetSettings']))
+    pprint(logical_interconnect)
 
 # Get the SNMP configuration for the logical interconnect
 print("\nGet the SNMP configuration for the logical interconnect")
