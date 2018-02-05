@@ -22,6 +22,7 @@ Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
 - SAS logical interconnect
 - SAS logical interconnect group
 - Server hardware
+- Server profile template
 - Switch
 - Switch type
 - Tasks
