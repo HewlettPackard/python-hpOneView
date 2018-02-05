@@ -109,7 +109,7 @@ print("\nTrying to retrieve scope named '%s'." % scope_name)
 scope = oneview_client.scopes.get_by_name(scope_name)
 
 # Performs a patch operation on the Logical Switch
-if scope:
+if scope and oneview_client.api_version == 500:
     print("\nPatches the switch assigning the '%s' scope to it." % scope_name)
     switch_by_uri = oneview_client.switches.patch(switch_by_uri['uri'],
                                                   'replace',
@@ -131,3 +131,11 @@ if oneview_client.api_version >= 300:
         print("  Done.")
     except HPOneViewException as e:
         print(e.msg)
+
+# Delete the migrated switch
+print("\nDelete a switch:\n")
+try:
+    oneview_client.switches.delete(switch_by_id)
+    print("Successfully deleted the switch")
+except HPOneViewException as e:
+    print(e.msg)
