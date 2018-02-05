@@ -254,7 +254,7 @@ class ServerProfileTemplate(object):
             dict: The server profile resource.
         """
         query_string = '&'.join('{}={}'.format(key, value)
-                                for key, value in sorted(kwargs.items()) if value)
+                                for key, value in kwargs.items() if value)
         uri = self.URI + "{}?{}".format("/available-networks", query_string)
 
         return self._client.get(id_or_uri=uri)
