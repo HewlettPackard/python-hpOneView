@@ -61,7 +61,7 @@ class ServerProfiles(object):
             resource (dict): Object to create.
             timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView, just stop waiting for its completion.
-            force (Query Parameter): Comma separated list of flags for ignoring specific warning.
+            force: Comma separated list of flags for ignoring specific warning.
 
         Returns:
             dict: Created server profile.
@@ -76,7 +76,7 @@ class ServerProfiles(object):
         Args:
             id_or_uri: Can be either the server profile id or the server profile uri.
             resource (dict): Object to update.
-            force (Query Parameter): Comma separated list of flags for ignoring specific warning.
+            force: Comma separated list of flags for ignoring specific warning.
 
         Returns:
             dict: The server profile resource.
@@ -312,24 +312,23 @@ class ServerProfiles(object):
         server profile, along with their respective ports.
 
         Args:
-           enclosureGroupUri (str):
-               The URI of the enclosure group associated with the resource.
-           functionType (str):
-               The FunctionType (Ethernet or FibreChannel) to filter the list of networks returned.
-           serverHardwareTypeUri (str):
-               The URI of the server hardware type associated with the resource.
-           serverHardwareUri (str):
-               The URI of the server hardware associated with the resource.
-           view (str):
-               Returns a specific subset of the attributes of the resource or collection, by specifying the name of a
-               predefined view. The default view is expand (show all attributes of the resource and all elements of
-               collections of resources).
+           enclosureGroupUri (str): The URI of the enclosure group associated with the resource.
+           functionType (str): The FunctionType (Ethernet or FibreChannel) to filter the list of networks returned.
+           serverHardwareTypeUri (str): The URI of the server hardware type associated with the resource.
+           serverHardwareUri (str): The URI of the server hardware associated with the resource.
+           view (str): Returns a specific subset of the attributes of the resource or collection, by
+               specifying the name of a predefined view. The default view is expand (show all attributes
+               of the resource and all elements of collections of resources).
 
                Values:
                    Ethernet
                        Specifies that the connection is to an Ethernet network or a network set.
                    FibreChannel
                        Specifies that the connection is to a Fibre Channel network.
+           profileUri (str): If the URI of the server profile is provided the list of available networks will
+               include only networks that share a scope with the server profile.
+           scopeUris (str): An expression to restrict the resources returned according to the scopes
+               to which they are assigned
 
         Returns:
             list: Available networks.
@@ -342,12 +341,11 @@ class ServerProfiles(object):
         Retrieves the list of available servers.
 
         Args:
-           enclosureGroupUri (str):
-               The URI of the enclosure group associated with the resource.
-           serverHardwareTypeUri (str):
-               The URI of the server hardware type associated with the resource.
-           profileUri (str):
-               The URI of the server profile resource.
+           enclosureGroupUri (str): The URI of the enclosure group associated with the resource.
+           serverHardwareTypeUri (str): The URI of the server hardware type associated with the resource.
+           profileUri (str): The URI of the server profile resource.
+           scopeUris (str): An expression to restrict the resources returned according to
+               the scopes to which they are assigned.
 
         Returns:
             list: Available servers.
@@ -410,12 +408,11 @@ class ServerProfiles(object):
         profile.
 
         Args:
-           enclosureGroupUri (str):
-               The URI of the enclosure group associated with the resource.
-           serverHardwareTypeUri (str):
-               The URI of the server hardware type associated with the resource.
-           profileUri (str):
-               The URI of the server profile associated with the resource.
+           enclosureGroupUri (str): The URI of the enclosure group associated with the resource.
+           serverHardwareTypeUri (str): The URI of the server hardware type associated with the resource.
+           profileUri (str): The URI of the server profile associated with the resource.
+           scopeUris (str): An expression to restrict the resources returned according to
+               the scopes to which they are assigned.
 
         Returns:
             list: List of available servers and bays.
