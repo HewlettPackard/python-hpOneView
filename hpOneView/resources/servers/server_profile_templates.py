@@ -235,23 +235,22 @@ class ServerProfileTemplate(object):
         The scopeUris parameter is ignored when the profileTemplateUri is specified.
 
         Args:
-            enclosureGroupUri:
-                The URI of the enclosure group is required when the serverHardwareTypeUri specifies a blade server.
-            profileTemplateUri:
-                 If the URI of the server profile template is provided the list of available
-                 networks will include only networks that share a scope with the server profile template.
-            scopeUris:
-                An expression to restrict the resources returned according to the scopes to which they are assigned.
-            serverHardwareTypeUri:
-                 If the server hardware type specifies a rack server, the list of available network includes all
-                 networks that are applicable for the specified server hardware type. If the server hardware type
-                 specifies a blade server, the enclosureGroupUri parameter must be specified, and the list of
-                 available networks includes all networks that are applicable for the specified server hardware type
-                 and all empty bays within the enclosure group that can support the specified server hardware type.
+            enclosureGroupUri: The URI of the enclosure group is required when the serverHardwareTypeUri
+                specifies a blade server.
+            profileTemplateUri: If the URI of the server profile template is provided the list of available
+                networks will include only networks that share a scope with the server profile template.
+            scopeUris: An expression to restrict the resources returned according to the scopes
+                to which they are assigned.
+            serverHardwareTypeUri: If the server hardware type specifies a rack server, the list of
+                available network includes all networks that are applicable for the specified server hardware type.
+                If the server hardware type specifies a blade server, the enclosureGroupUri parameter must be
+                specified, and the list of available networks includes all networks that are applicable for the
+                specified server hardware type and all empty bays within the enclosure group that can support
+                the specified server hardware type.
             view: The FunctionType (Ethernet or FibreChannel) to filter the list of networks returned.
 
         Returns:
-            dict: The server profile resource.
+            dict: Dictionary with available networks details.
         """
         query_string = '&'.join('{}={}'.format(key, value)
                                 for key, value in kwargs.items() if value)
