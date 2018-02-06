@@ -102,7 +102,7 @@ class ServerProfileTemplateTest(TestCase):
         template = dict(name="BL460c Gen8 1")
 
         self._resource.delete(resource=template, timeout=TIMEOUT)
-        mock_delete.assert_called_once_with(resource=template, timeout=TIMEOUT, force=True)
+        mock_delete.assert_called_once_with(resource=template, timeout=TIMEOUT, force=False)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_new_profile(self, mock_get):
