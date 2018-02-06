@@ -60,7 +60,7 @@ try:
     enclosure_uris = []
     for i in range(0, enclosure_count):
         enclosure_uris.append(enclosures[i]["uri"])
-    options["enclosureUris"] = enclosure_uris
+    options["enclosureUris"] = sorted(enclosure_uris)
 
     # Create a logical enclosure
     # This method is only available on HPE Synergy.
