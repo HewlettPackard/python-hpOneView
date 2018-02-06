@@ -50,19 +50,22 @@ class LogicalInterconnects(object):
     SETTINGS_DEFAULT_VALUES = {
         '200': {"type": "InterconnectSettingsV3"},
         '300': {"type": "InterconnectSettingsV201"},
-        '500': {"type": "InterconnectSettingsV201"}
+        '500': {"type": "InterconnectSettingsV201"},
+        '600': {"type": "InterconnectSettingsV201"}
     }
 
     SETTINGS_ETHERNET_DEFAULT_VALUES = {
         '200': {"type": "EthernetInterconnectSettingsV3"},
         '300': {"type": "EthernetInterconnectSettingsV201"},
-        '500': {"type": "EthernetInterconnectSettingsV201"}
+        '500': {"type": "EthernetInterconnectSettingsV201"},
+        '600': {"type": "EthernetInterconnectSettingsV4"}
     }
 
     SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES = {
         '200': {"type": "telemetry-configuration"},
         '300': {"type": "telemetry-configuration"},
-        '500': {"type": "telemetry-configuration"}
+        '500': {"type": "telemetry-configuration"},
+        '600': {"type": "telemetry-configuration"}
     }
 
     def __init__(self, con):

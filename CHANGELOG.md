@@ -13,6 +13,7 @@ Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
 - FCoE network
 - Interconnect type
 - Internal link set
+- Logical interconnect
 - Logical interconnect group
 - Logical switch
 - Logical switch group
