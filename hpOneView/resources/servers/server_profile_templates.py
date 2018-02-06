@@ -79,9 +79,8 @@ class ServerProfileTemplate(object):
                 requested count if the sum of start and count exceeds the total number of items, or if returning the
                 requested number of items would take too long.
             filter (list or str): A general filter/query string to narrow the list of items returned. The default is no filter; all
-                resources are returned.
-                Filters are supported for the name, description, affinity, macType, wwnType, serialNumberType, status,
-                serverHardwareTypeUri, enclosureGroupUri, and firmware.firmwareBaselineUri attributes.
+                resources are returned. Filters are supported for the name, description, affinity, macType, wwnType,
+                serialNumberType, status, serverHardwareTypeUri, enclosureGroupUri, and firmware.firmwareBaselineUri attributes.
             sort: The sort order of the returned data set. By default, the sort order is based
                 on create time with the oldest entry first.
             scope_uris: An expression to restrict the resources returned according to the scopes to which they are assigned.
