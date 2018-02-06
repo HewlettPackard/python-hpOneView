@@ -142,9 +142,8 @@ class ServerProfileTemplate(object):
 
         Args:
             resource (dict): Object to create.
-            timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView, just stop waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not
+                abort the operation in OneView, just stop waiting for its completion.
             force: If set to true, the operation will ignore warnings for SAN storage.
 
         Returns:
@@ -163,6 +162,7 @@ class ServerProfileTemplate(object):
         Args:
             id_or_uri: Can be either the template id or the template uri.
             resource (dict): Object to update.
+            force: If set to true, the operation will ignore warnings for SAN storage.
 
         Returns:
             dict: The server profile template resource.
@@ -170,15 +170,16 @@ class ServerProfileTemplate(object):
         return self._client.update(resource=resource, uri=id_or_uri,
                                    default_values=self.DEFAULT_VALUES, force=force)
 
-    def delete(self, resource, timeout=-1, force=True):
+    def delete(self, resource, timeout=-1, force=False):
         """
         Deletes a server profile template object from the appliance based on its profile template UUID.
 
         Args:
             resource: Object to delete.
-            timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView; it just stops waiting for its completion.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort
+                the operation in OneView; it just stops waiting for its completion.
+            force: If set to true, the operation completes despite any problems with network connectivity
+                or errors on the resource itself.
 
         Returns:
             bool: Indicates whether the resource was successfully deleted.
