@@ -43,9 +43,11 @@ class ServerProfileTemplateTest(TestCase):
     def test_get_all(self, mock_get_all):
         query_filter = 'name=TestName'
         sort = 'name:ascending'
-
-        self._resource.get_all(start=2, count=500, filter=query_filter, sort=sort)
-        mock_get_all.assert_called_once_with(start=2, count=500, filter=query_filter, sort=sort)
+        scope_uris = 'rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a'
+        self._resource.get_all(
+            start=2, count=500, filter=query_filter, sort=sort, scope_uris=scope_uris)
+        mock_get_all.assert_called_once_with(
+            start=2, count=500, filter=query_filter, sort=sort, scope_uris=scope_uris)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_by_id(self, mock_get):
@@ -71,11 +73,13 @@ class ServerProfileTemplateTest(TestCase):
 
     @mock.patch.object(ResourceClient, 'create')
     def test_create(self, mock_create):
+        uri = "/rest/server-profile-templates?force=True"
         template = dict(name="BL460c Gen8 1")
 
         self._resource.create(resource=template, timeout=TIMEOUT)
         mock_create.assert_called_once_with(
             resource=template,
+            uri=uri,
             timeout=TIMEOUT,
             default_values=ServerProfileTemplate.DEFAULT_VALUES
         )
@@ -89,7 +93,8 @@ class ServerProfileTemplateTest(TestCase):
         mock_update.assert_called_once_with(
             resource=template,
             uri=uri,
-            default_values=ServerProfileTemplate.DEFAULT_VALUES
+            default_values=ServerProfileTemplate.DEFAULT_VALUES,
+            force=True
         )
 
     @mock.patch.object(ResourceClient, 'delete')
@@ -97,7 +102,7 @@ class ServerProfileTemplateTest(TestCase):
         template = dict(name="BL460c Gen8 1")
 
         self._resource.delete(resource=template, timeout=TIMEOUT)
-        mock_delete.assert_called_once_with(resource=template, timeout=TIMEOUT)
+        mock_delete.assert_called_once_with(resource=template, timeout=TIMEOUT, force=False)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_new_profile(self, mock_get):
@@ -122,3 +127,11 @@ class ServerProfileTemplateTest(TestCase):
                                           server_hardware_type_uri=server_hardware_type_uri)
 
         mock_get.assert_called_once_with(id_or_uri=expected_uri)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_available_networks(self, mock_get):
+        template_uri = "/rest/server-profile-templates/6fee02f3-b7c7-42bd-a528-04341e16bad6"
+        uri = '/rest/server-profile-templates/available-networks?profileTemplateUri={}'.format(template_uri)
+
+        self._resource.get_available_networks(profileTemplateUri=template_uri)
+        mock_get.assert_called_once_with(id_or_uri=uri)
