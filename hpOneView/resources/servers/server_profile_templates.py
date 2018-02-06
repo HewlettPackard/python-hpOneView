@@ -70,27 +70,21 @@ class ServerProfileTemplate(object):
         count parameters.
 
         Args:
-            start:
-                The first item to return, using 0-based indexing.
-                If not specified, the default is 0 - start with the first available item.
-            count:
-                The number of resources to return.
-                Providing a -1 for the count parameter will restrict the result set size to 64 server profile
-                templates. The maximum number of profile templates is restricted to 256, that is, if user requests more
-                than 256, this will be internally limited to 256.
+            start: The first item to return, using 0-based indexing. If not specified, the default
+                is 0 - start with the first available item.
+            count: The number of resources to return. Providing a -1 for the count parameter will restrict
+                the result set size to 64 server profile templates. The maximum number of profile templates
+                is restricted to 256, that is, if user requests more than 256, this will be internally limited to 256.
                 The actual number of items in the response might differ from the
                 requested count if the sum of start and count exceeds the total number of items, or if returning the
                 requested number of items would take too long.
-            filter (list or str):
-                A general filter/query string to narrow the list of items returned. The default is no filter; all
+            filter (list or str): A general filter/query string to narrow the list of items returned. The default is no filter; all
                 resources are returned.
                 Filters are supported for the name, description, affinity, macType, wwnType, serialNumberType, status,
                 serverHardwareTypeUri, enclosureGroupUri, and firmware.firmwareBaselineUri attributes.
-            sort:
-                The sort order of the returned data set. By default, the sort order is based
+            sort: The sort order of the returned data set. By default, the sort order is based
                 on create time with the oldest entry first.
-            scope_uris:
-                An expression to restrict the resources returned according to the scopes to which they are assigned.
+            scope_uris: An expression to restrict the resources returned according to the scopes to which they are assigned.
 
         Returns:
             list: A list of server profile templates.
