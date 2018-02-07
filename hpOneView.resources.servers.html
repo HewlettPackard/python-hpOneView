@@ -1829,7 +1829,7 @@ in OneView; it just stops waiting for its completion.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/logical_enclosures.html#LogicalEnclosures.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em>, <em>scope_uris=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/logical_enclosures.html#LogicalEnclosures.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.logical_enclosures.LogicalEnclosures.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of logical enclosures matching the specified filter. A maximum of 40 logical enclosures are
 returned to the caller. Additional calls can be made to retrieve any other logical enclosures matching the
 filter. Valid filter parameters include attributes of a Logical Enclosure resource.</p>
@@ -1847,6 +1847,8 @@ count if the sum of start and count exceeds the total number of items.</li>
 default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
+<li><strong>scope_uris</strong> – An expression to restrict the resources returned according to the scopes to
+which they are assigned.</li>
 </ul>
 </td>
 </tr>
