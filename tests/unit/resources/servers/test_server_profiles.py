@@ -70,24 +70,28 @@ class ServerProfilesTest(TestCase):
 
     @mock.patch.object(ResourceClient, 'create')
     def test_create(self, mock_create):
+        force = ""
+        uri = "/rest/server-profiles?force=%s" % (force)
         template = dict(name="Server Profile Test")
 
         expected_template = template.copy()
 
         self._resource.create(resource=template, timeout=TIMEOUT)
-        mock_create.assert_called_once_with(resource=expected_template, timeout=TIMEOUT,
+        mock_create.assert_called_once_with(resource=expected_template, uri=uri, timeout=TIMEOUT,
                                             default_values=self._resource.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update(self, mock_update):
+        force = ""
         uri = "/rest/server-profiles/4ff2327f-7638-4b66-ad9d-283d4940a4ae"
+        rest_uri = "/rest/server-profiles/4ff2327f-7638-4b66-ad9d-283d4940a4ae?force=%s" % (force)
         template = dict(name="Server Profile Test", macType="Virtual",
                         enclosureUri='/rest/fake', enclosureBay=3)
 
         expected_template = dict(name="Server Profile Test", macType="Virtual")
 
         self._resource.update(resource=template, id_or_uri=uri)
-        mock_update.assert_called_once_with(resource=expected_template, uri=uri,
+        mock_update.assert_called_once_with(resource=expected_template, uri=rest_uri,
                                             default_values=self._resource.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'delete')

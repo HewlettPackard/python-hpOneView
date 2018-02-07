@@ -109,10 +109,12 @@ print("\nGet a server profile by uri")
 profile = oneview_client.server_profiles.get(profile_uri)
 pprint(profile)
 
-# Retrieve ServerProfile schema
-print("\nRetrieve the generated ServerProfile schema")
-schema = oneview_client.server_profiles.get_schema()
-pprint(schema)
+if oneview_client.api_version <= 500:
+    # Retrieve ServerProfile schema
+    # This method available only for API version <= 500
+    print("\nRetrieve the generated ServerProfile schema")
+    schema = oneview_client.server_profiles.get_schema()
+    pprint(schema)
 
 try:
     # Server profile compliance preview
