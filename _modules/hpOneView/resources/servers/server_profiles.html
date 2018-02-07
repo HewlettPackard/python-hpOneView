@@ -199,14 +199,16 @@
     <span class="n">DEFAULT_VALUES</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;200&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ServerProfileV5&quot;</span><span class="p">},</span>
         <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ServerProfileV6&quot;</span><span class="p">},</span>
-        <span class="s1">&#39;500&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ServerProfileV7&quot;</span><span class="p">}</span>
+        <span class="s1">&#39;500&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ServerProfileV7&quot;</span><span class="p">},</span>
+        <span class="s1">&#39;600&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;ServerProfileV8&quot;</span><span class="p">},</span>
+
     <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ServerProfiles.create"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="ServerProfiles.create"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a server profile using the information provided in the resource parameter.</span>
 
@@ -214,19 +216,22 @@
 <span class="sd">            resource (dict): Object to create.</span>
 <span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
 <span class="sd">                in OneView, just stop waiting for its completion.</span>
+<span class="sd">            force: Comma separated list of flags for ignoring specific warning.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Created server profile.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_uri_with_query_string</span><span class="p">({</span><span class="s2">&quot;force&quot;</span><span class="p">:</span> <span class="n">force</span><span class="p">})</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ServerProfiles.update"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+<div class="viewcode-block" id="ServerProfiles.update"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Allows the configuration of a server profile object to be modified.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            id_or_uri: Can be either the server profile id or the server profile uri.</span>
 <span class="sd">            resource (dict): Object to update.</span>
+<span class="sd">            force: Comma separated list of flags for ignoring specific warning.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: The server profile resource.</span>
@@ -235,7 +240,9 @@
         <span class="k">if</span> <span class="n">resource</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;serverHardwareUri&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">resource</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;enclosureBay&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="n">resource</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;enclosureUri&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="p">)</span></div>
+
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span> <span class="n">__build_uri_with_query_string</span><span class="p">({</span><span class="s1">&#39;force&#39;</span><span class="p">:</span> <span class="n">force</span><span class="p">},</span> <span class="n">id_or_uri</span><span class="o">=</span><span class="n">id_or_uri</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="o">=</span><span class="n">resource</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ServerProfiles.patch"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.server_profiles.ServerProfiles.patch">[docs]</a>    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -460,24 +467,23 @@
 <span class="sd">        server profile, along with their respective ports.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">           enclosureGroupUri (str):</span>
-<span class="sd">               The URI of the enclosure group associated with the resource.</span>
-<span class="sd">           functionType (str):</span>
-<span class="sd">               The FunctionType (Ethernet or FibreChannel) to filter the list of networks returned.</span>
-<span class="sd">           serverHardwareTypeUri (str):</span>
-<span class="sd">               The URI of the server hardware type associated with the resource.</span>
-<span class="sd">           serverHardwareUri (str):</span>
-<span class="sd">               The URI of the server hardware associated with the resource.</span>
-<span class="sd">           view (str):</span>
-<span class="sd">               Returns a specific subset of the attributes of the resource or collection, by specifying the name of a</span>
-<span class="sd">               predefined view. The default view is expand (show all attributes of the resource and all elements of</span>
-<span class="sd">               collections of resources).</span>
+<span class="sd">           enclosureGroupUri (str): The URI of the enclosure group associated with the resource.</span>
+<span class="sd">           functionType (str): The FunctionType (Ethernet or FibreChannel) to filter the list of networks returned.</span>
+<span class="sd">           serverHardwareTypeUri (str): The URI of the server hardware type associated with the resource.</span>
+<span class="sd">           serverHardwareUri (str): The URI of the server hardware associated with the resource.</span>
+<span class="sd">           view (str): Returns a specific subset of the attributes of the resource or collection, by</span>
+<span class="sd">               specifying the name of a predefined view. The default view is expand (show all attributes</span>
+<span class="sd">               of the resource and all elements of collections of resources).</span>
 
 <span class="sd">               Values:</span>
 <span class="sd">                   Ethernet</span>
 <span class="sd">                       Specifies that the connection is to an Ethernet network or a network set.</span>
 <span class="sd">                   FibreChannel</span>
 <span class="sd">                       Specifies that the connection is to a Fibre Channel network.</span>
+<span class="sd">           profileUri (str): If the URI of the server profile is provided the list of available networks will</span>
+<span class="sd">               include only networks that share a scope with the server profile.</span>
+<span class="sd">           scopeUris (str): An expression to restrict the resources returned according to the scopes</span>
+<span class="sd">               to which they are assigned</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list: Available networks.</span>
@@ -490,12 +496,11 @@
 <span class="sd">        Retrieves the list of available servers.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">           enclosureGroupUri (str):</span>
-<span class="sd">               The URI of the enclosure group associated with the resource.</span>
-<span class="sd">           serverHardwareTypeUri (str):</span>
-<span class="sd">               The URI of the server hardware type associated with the resource.</span>
-<span class="sd">           profileUri (str):</span>
-<span class="sd">               The URI of the server profile resource.</span>
+<span class="sd">           enclosureGroupUri (str): The URI of the enclosure group associated with the resource.</span>
+<span class="sd">           serverHardwareTypeUri (str): The URI of the server hardware type associated with the resource.</span>
+<span class="sd">           profileUri (str): The URI of the server profile resource.</span>
+<span class="sd">           scopeUris (str): An expression to restrict the resources returned according to</span>
+<span class="sd">               the scopes to which they are assigned.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list: Available servers.</span>
@@ -558,12 +563,11 @@
 <span class="sd">        profile.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">           enclosureGroupUri (str):</span>
-<span class="sd">               The URI of the enclosure group associated with the resource.</span>
-<span class="sd">           serverHardwareTypeUri (str):</span>
-<span class="sd">               The URI of the server hardware type associated with the resource.</span>
-<span class="sd">           profileUri (str):</span>
-<span class="sd">               The URI of the server profile associated with the resource.</span>
+<span class="sd">           enclosureGroupUri (str): The URI of the enclosure group associated with the resource.</span>
+<span class="sd">           serverHardwareTypeUri (str): The URI of the server hardware type associated with the resource.</span>
+<span class="sd">           profileUri (str): The URI of the server profile associated with the resource.</span>
+<span class="sd">           scopeUris (str): An expression to restrict the resources returned according to</span>
+<span class="sd">               the scopes to which they are assigned.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list: List of available servers and bays.</span>
@@ -571,7 +575,7 @@
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__build_uri_with_query_string</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="s1">&#39;/available-targets&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">__build_uri_with_query_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">sufix_path</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__build_uri_with_query_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">sufix_path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span>
         <span class="k">if</span> <span class="n">id_or_uri</span><span class="p">:</span>
             <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span>

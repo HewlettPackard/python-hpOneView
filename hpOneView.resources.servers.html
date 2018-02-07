@@ -3163,7 +3163,7 @@ simple as a name or description change or more complex changes around the networ
 <p>Server Profile API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'ServerProfileV5'}, u'300': {u'type': u'ServerProfileV6'}, u'500': {u'type': u'ServerProfileV7'}}</em><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'ServerProfileV5'}, u'300': {u'type': u'ServerProfileV6'}, u'500': {u'type': u'ServerProfileV7'}, u'600': {u'type': u'ServerProfileV8'}}</em><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -3173,7 +3173,7 @@ simple as a name or description change or more complex changes around the networ
 
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.create">
-<code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.create" title="Permalink to this definition">¶</a></dt>
+<code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em>, <em>force=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates a server profile using the information provided in the resource parameter.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -3183,6 +3183,7 @@ simple as a name or description change or more complex changes around the networ
 <li><strong>resource</strong> (<em>dict</em>) – Object to create.</li>
 <li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView, just stop waiting for its completion.</li>
+<li><strong>force</strong> – Comma separated list of flags for ignoring specific warning.</li>
 </ul>
 </td>
 </tr>
@@ -3331,9 +3332,9 @@ server profile, along with their respective ports.</p>
 <li><strong>functionType</strong> (<em>str</em>) – The FunctionType (Ethernet or FibreChannel) to filter the list of networks returned.</li>
 <li><strong>serverHardwareTypeUri</strong> (<em>str</em>) – The URI of the server hardware type associated with the resource.</li>
 <li><strong>serverHardwareUri</strong> (<em>str</em>) – The URI of the server hardware associated with the resource.</li>
-<li><strong>view</strong> (<em>str</em>) – <p>Returns a specific subset of the attributes of the resource or collection, by specifying the name of a
-predefined view. The default view is expand (show all attributes of the resource and all elements of
-collections of resources).</p>
+<li><strong>view</strong> (<em>str</em>) – <p>Returns a specific subset of the attributes of the resource or collection, by
+specifying the name of a predefined view. The default view is expand (show all attributes
+of the resource and all elements of collections of resources).</p>
 <dl class="docutils">
 <dt>Values:</dt>
 <dd><dl class="first last docutils">
@@ -3345,6 +3346,10 @@ collections of resources).</p>
 </dd>
 </dl>
 </li>
+<li><strong>profileUri</strong> (<em>str</em>) – If the URI of the server profile is provided the list of available networks will
+include only networks that share a scope with the server profile.</li>
+<li><strong>scopeUris</strong> (<em>str</em>) – An expression to restrict the resources returned according to the scopes
+to which they are assigned</li>
 </ul>
 </td>
 </tr>
@@ -3370,6 +3375,8 @@ collections of resources).</p>
 <li><strong>enclosureGroupUri</strong> (<em>str</em>) – The URI of the enclosure group associated with the resource.</li>
 <li><strong>serverHardwareTypeUri</strong> (<em>str</em>) – The URI of the server hardware type associated with the resource.</li>
 <li><strong>profileUri</strong> (<em>str</em>) – The URI of the server profile resource.</li>
+<li><strong>scopeUris</strong> (<em>str</em>) – An expression to restrict the resources returned according to
+the scopes to which they are assigned.</li>
 </ul>
 </td>
 </tr>
@@ -3456,6 +3463,8 @@ profile.</p>
 <li><strong>enclosureGroupUri</strong> (<em>str</em>) – The URI of the enclosure group associated with the resource.</li>
 <li><strong>serverHardwareTypeUri</strong> (<em>str</em>) – The URI of the server hardware type associated with the resource.</li>
 <li><strong>profileUri</strong> (<em>str</em>) – The URI of the server profile associated with the resource.</li>
+<li><strong>scopeUris</strong> (<em>str</em>) – An expression to restrict the resources returned according to
+the scopes to which they are assigned.</li>
 </ul>
 </td>
 </tr>
@@ -3676,7 +3685,7 @@ for a “test” operation. Not used by “copy”, “move”, or “remove”.
 
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.update" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>id_or_uri</em>, <em>force=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allows the configuration of a server profile object to be modified.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -3685,6 +3694,7 @@ for a “test” operation. Not used by “copy”, “move”, or “remove”.
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>id_or_uri</strong> – Can be either the server profile id or the server profile uri.</li>
 <li><strong>resource</strong> (<em>dict</em>) – Object to update.</li>
+<li><strong>force</strong> – Comma separated list of flags for ignoring specific warning.</li>
 </ul>
 </td>
 </tr>
