@@ -38,7 +38,6 @@ config = {
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
-
 try:
     # The valid enclosure URIs need to be inserted sorted by URI
     # The number of enclosure URIs must be equal to the enclosure count in the enclosure group
@@ -60,7 +59,7 @@ try:
     enclosure_uris = []
     for i in range(0, enclosure_count):
         enclosure_uris.append(enclosures[i]["uri"])
-    options["enclosureUris"] = enclosure_uris
+    options["enclosureUris"] = sorted(enclosure_uris)
 
     # Create a logical enclosure
     # This method is only available on HPE Synergy.
@@ -117,6 +116,14 @@ try:
     print("Got logical enclosure by name '{name}'\n   uri: '{uri}'".format(**logical_enclosure_by_name))
 except HPOneViewException as e:
     print(e.msg)
+# Get Logical Enclosure by scope_uris
+if oneview_client.api_version == 600:
+    le_by_scope_uris = oneview_client.logical_enclosures.get_all(scope_uris="\"'/rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a'\"")
+    if len(le_by_scope_uris) > 0:
+        print("Got Logical Enclosure by scope_uris: '%s'.\n  uri = '%s'" % (le_by_scope_uris[0]['name'], le_by_scope_uris[0]['uri']))
+        pprint(le_by_scope_uris)
+    else:
+        print("No Logical Enclosure found by scope_uris")
 
 # Update configuration
 print("Reapply the appliance's configuration to the logical enclosure")
