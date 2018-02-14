@@ -127,11 +127,12 @@ class LogicalEnclosuresTest(TestCase):
     @mock.patch.object(ResourceClient, 'patch')
     def test_patch_should_use_user_defined_values(self, mock_patch):
         mock_patch.return_value = {}
+        custom_headers = {}
 
         self._logical_enclosures.patch(
-            '123a53cz', 'replace', '/name', 'new_name', 1)
+            '123a53cz', 'replace', '/name', 'new_name', 1, custom_headers=custom_headers)
         mock_patch.assert_called_once_with(
-            '123a53cz', 'replace', '/name', 'new_name', timeout=1)
+            '123a53cz', 'replace', '/name', 'new_name', timeout=1, custom_headers=custom_headers)
 
     @mock.patch.object(ResourceClient, 'update_with_zero_body')
     def test_update_configuration_by_uri(self, mock_update_with_zero_body):
