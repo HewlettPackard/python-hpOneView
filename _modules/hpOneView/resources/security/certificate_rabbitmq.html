@@ -208,8 +208,8 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: RabbitMQ certificate generated</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">information</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">information</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
 
 <div class="viewcode-block" id="CertificateRabbitMQ.get"><a class="viewcode-back" href="../../../../hpOneView.resources.security.html#hpOneView.resources.security.certificate_rabbitmq.CertificateRabbitMQ.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -220,8 +220,8 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: RabbitMQ certificate</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">alias_name</span><span class="p">)</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">alias_name</span><span class="p">)</span>
 
 <div class="viewcode-block" id="CertificateRabbitMQ.get_key_pair"><a class="viewcode-back" href="../../../../hpOneView.resources.security.html#hpOneView.resources.security.certificate_rabbitmq.CertificateRabbitMQ.get_key_pair">[docs]</a>    <span class="k">def</span> <span class="nf">get_key_pair</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -233,8 +233,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: RabbitMQ certificate</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/keypair/&quot;</span> <span class="o">+</span> <span class="n">alias_name</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/keypair/&quot;</span> <span class="o">+</span> <span class="n">alias_name</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
 
 <div class="viewcode-block" id="CertificateRabbitMQ.get_keys"><a class="viewcode-back" href="../../../../hpOneView.resources.security.html#hpOneView.resources.security.certificate_rabbitmq.CertificateRabbitMQ.get_keys">[docs]</a>    <span class="k">def</span> <span class="nf">get_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias_name</span><span class="p">,</span> <span class="n">key_format</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -248,8 +248,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: RabbitMQ certificate</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/keys/&quot;</span> <span class="o">+</span> <span class="n">alias_name</span> <span class="o">+</span> <span class="s2">&quot;?format=&quot;</span> <span class="o">+</span> <span class="n">key_format</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/keys/&quot;</span> <span class="o">+</span> <span class="n">alias_name</span> <span class="o">+</span> <span class="s2">&quot;?format=&quot;</span> <span class="o">+</span> <span class="n">key_format</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
 </pre></div>
 
            </div>

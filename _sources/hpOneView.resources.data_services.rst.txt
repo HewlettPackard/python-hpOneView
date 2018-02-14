@@ -1,11 +1,11 @@
-hpOneView\.resources\.data\_services package
-============================================
+hpOneView.resources.data\_services package
+==========================================
 
 Submodules
 ----------
 
-hpOneView\.resources\.data\_services\.metric\_streaming module
---------------------------------------------------------------
+hpOneView.resources.data\_services.metric\_streaming module
+-----------------------------------------------------------
 
 .. automodule:: hpOneView.resources.data_services.metric_streaming
     :members:

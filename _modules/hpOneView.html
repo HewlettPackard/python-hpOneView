@@ -237,8 +237,8 @@
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">cert</span><span class="p">:</span>
         <span class="n">con</span><span class="o">.</span><span class="n">set_trusted_ssl_bundle</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">cert</span><span class="p">)</span>
     <span class="n">credential</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;userName&#39;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">passwd</span><span class="p">}</span>
-    <span class="n">con</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">credential</span><span class="p">)</span>
-    <span class="n">con</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span></div>
+    <span class="n">con</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">credential</span><span class="p">)</span></div>
+    <span class="n">con</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>

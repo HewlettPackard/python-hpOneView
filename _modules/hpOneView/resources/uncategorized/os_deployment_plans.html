@@ -220,8 +220,8 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">             list: Os Deployment plans</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">)</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">)</span>
 
 <div class="viewcode-block" id="OsDeploymentPlans.get"><a class="viewcode-back" href="../../../../hpOneView.resources.uncategorized.html#hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -233,8 +233,8 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Os Deployment plan</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span>
 
 <div class="viewcode-block" id="OsDeploymentPlans.get_by"><a class="viewcode-back" href="../../../../hpOneView.resources.uncategorized.html#hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.get_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -247,8 +247,8 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            list: Os Deployment plans</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
 <div class="viewcode-block" id="OsDeploymentPlans.get_by_name"><a class="viewcode-back" href="../../../../hpOneView.resources.uncategorized.html#hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.get_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -260,8 +260,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Os Deployment plan</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">os_deployment_plan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">os_deployment_plan</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div></div>
+        <span class="n">os_deployment_plan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span></div></div>
+        <span class="k">return</span> <span class="n">os_deployment_plan</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 
            </div>

@@ -217,8 +217,8 @@
             <span class="s1">&#39;iloLicenseType&#39;</span><span class="p">:</span> <span class="n">iloLicenseType</span><span class="p">,</span>
             <span class="s1">&#39;enclosureGroupUri&#39;</span><span class="p">:</span> <span class="n">enclosureGroupUri</span><span class="p">,</span>
             <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;migratable-vc-domains&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="s1">&#39;migratable-vc-domains&#39;</span>
-        <span class="p">}</span></div>
+            <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="s1">&#39;migratable-vc-domains&#39;</span></div>
+        <span class="p">}</span>
 
 <div class="viewcode-block" id="MigratableVcDomains.test_compatibility"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.migratable_vc_domains.MigratableVcDomains.test_compatibility">[docs]</a>    <span class="k">def</span> <span class="nf">test_compatibility</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">migrationInformation</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -232,8 +232,8 @@
 
 <span class="sd">        Returns: dict: a migration report.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">migrationInformation</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">migrationInformation</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MigratableVcDomains.get_migration_report"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.migratable_vc_domains.MigratableVcDomains.get_migration_report">[docs]</a>    <span class="k">def</span> <span class="nf">get_migration_report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -244,8 +244,8 @@
 
 <span class="sd">        Returns: dict: a migration report.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span></div>
+</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MigratableVcDomains.migrate"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.migratable_vc_domains.MigratableVcDomains.migrate">[docs]</a>    <span class="k">def</span> <span class="nf">migrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -269,8 +269,8 @@
         <span class="c1"># call build_uri manually since .update(...) doesn&#39;t do it and the URI is not to be included in the body when</span>
         <span class="c1"># requesting a migration</span>
         <span class="n">complete_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">migrationInformation</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">complete_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">migrationInformation</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">complete_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MigratableVcDomains.delete"><a class="viewcode-back" href="../../../../hpOneView.resources.servers.html#hpOneView.resources.servers.migratable_vc_domains.MigratableVcDomains.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -283,8 +283,8 @@
 
 <span class="sd">        Returns: bool: Indicates if the migration report was successfully deleted.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div></div>
+</div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
 </pre></div>
 
            </div>

@@ -1,59 +1,59 @@
-hpOneView\.image\_streamer\.resources package
-=============================================
+hpOneView.image\_streamer.resources package
+===========================================
 
 Submodules
 ----------
 
-hpOneView\.image\_streamer\.resources\.artifact\_bundles module
----------------------------------------------------------------
+hpOneView.image\_streamer.resources.artifact\_bundles module
+------------------------------------------------------------
 
 .. automodule:: hpOneView.image_streamer.resources.artifact_bundles
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.image\_streamer\.resources\.build\_plans module
-----------------------------------------------------------
+hpOneView.image\_streamer.resources.build\_plans module
+-------------------------------------------------------
 
 .. automodule:: hpOneView.image_streamer.resources.build_plans
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.image\_streamer\.resources\.deployment\_groups module
-----------------------------------------------------------------
+hpOneView.image\_streamer.resources.deployment\_groups module
+-------------------------------------------------------------
 
 .. automodule:: hpOneView.image_streamer.resources.deployment_groups
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.image\_streamer\.resources\.deployment\_plans module
----------------------------------------------------------------
+hpOneView.image\_streamer.resources.deployment\_plans module
+------------------------------------------------------------
 
 .. automodule:: hpOneView.image_streamer.resources.deployment_plans
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.image\_streamer\.resources\.golden\_images module
-------------------------------------------------------------
+hpOneView.image\_streamer.resources.golden\_images module
+---------------------------------------------------------
 
 .. automodule:: hpOneView.image_streamer.resources.golden_images
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.image\_streamer\.resources\.os\_volumes module
----------------------------------------------------------
+hpOneView.image\_streamer.resources.os\_volumes module
+------------------------------------------------------
 
 .. automodule:: hpOneView.image_streamer.resources.os_volumes
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.image\_streamer\.resources\.plan\_scripts module
------------------------------------------------------------
+hpOneView.image\_streamer.resources.plan\_scripts module
+--------------------------------------------------------
 
 .. automodule:: hpOneView.image_streamer.resources.plan_scripts
     :members:

@@ -1,18 +1,11 @@
-hpOneView\.image\_streamer package
-==================================
-
-Subpackages
------------
-
-.. toctree::
-
-    hpOneView.image_streamer.resources
+hpOneView.image\_streamer package
+=================================
 
 Submodules
 ----------
 
-hpOneView\.image\_streamer\.image\_streamer\_client module
-----------------------------------------------------------
+hpOneView.image\_streamer.image\_streamer\_client module
+--------------------------------------------------------
 
 .. automodule:: hpOneView.image_streamer.image_streamer_client
     :members:

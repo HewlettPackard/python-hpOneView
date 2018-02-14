@@ -260,8 +260,8 @@
 
         <span class="k">if</span> <span class="n">response</span> <span class="ow">and</span> <span class="s1">&#39;members&#39;</span> <span class="ow">in</span> <span class="n">response</span> <span class="ow">and</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[]</span></div>
+        <span class="k">else</span><span class="p">:</span></div>
+            <span class="k">return</span> <span class="p">[]</span>
 
 <div class="viewcode-block" id="IndexResources.get"><a class="viewcode-back" href="../../../../hpOneView.resources.search.html#hpOneView.resources.search.index_resources.IndexResources.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -273,8 +273,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: The index resource.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="n">uri</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="n">uri</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
 
 <div class="viewcode-block" id="IndexResources.get_aggregated"><a class="viewcode-back" href="../../../../hpOneView.resources.search.html#hpOneView.resources.search.index_resources.IndexResources.get_aggregated">[docs]</a>    <span class="k">def</span> <span class="nf">get_aggregated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">child_limit</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">user_query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -312,8 +312,8 @@
         <span class="n">uri</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__list_or_str_to_query</span><span class="p">(</span><span class="n">user_query</span><span class="p">,</span> <span class="s1">&#39;userQuery&#39;</span><span class="p">)</span>
 
         <span class="n">uri</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;?&amp;&#39;</span><span class="p">,</span> <span class="s1">&#39;?&#39;</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__list_or_str_to_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_or_str</span><span class="p">,</span> <span class="n">field_name</span><span class="p">):</span>
         <span class="n">formated_query</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
@@ -322,8 +322,8 @@
                 <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">list_or_str</span><span class="p">:</span>
                     <span class="n">formated_query</span> <span class="o">=</span> <span class="n">formated_query</span> <span class="o">+</span> <span class="s2">&quot;&amp;</span><span class="si">{0}</span><span class="s2">=&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">quote</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">)))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">formated_query</span> <span class="o">=</span> <span class="s2">&quot;&amp;</span><span class="si">{0}</span><span class="s2">=&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">list_or_str</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">formated_query</span></div>
+                <span class="n">formated_query</span> <span class="o">=</span> <span class="s2">&quot;&amp;</span><span class="si">{0}</span><span class="s2">=&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">list_or_str</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">formated_query</span>
 </pre></div>
 
            </div>

@@ -188,7 +188,7 @@
 <dl class="class">
 <dt id="hpOneView.resources.networking.connection_templates.ConnectionTemplates">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.connection_templates.</code><code class="descname">ConnectionTemplates</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/connection_templates.html#ConnectionTemplates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.connection_templates.ConnectionTemplates" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Connection Templates API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.connection_templates.ConnectionTemplates.DEFAULT_VALUES">
@@ -327,7 +327,7 @@ OneView, just stops waiting for its completion.</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.ethernet_networks.</code><code class="descname">EthernetNetworks</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Ethernet Networks API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.BULK_DEFAULT_VALUES">
@@ -427,15 +427,15 @@ in OneView; it just stops waiting for its completion.</li>
 <code class="descname">dissociate_values_or_ranges</code><span class="sig-paren">(</span><em>vlan_id_range</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks.dissociate_values_or_ranges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.dissociate_values_or_ranges" title="Permalink to this definition">¶</a></dt>
 <dd><p>Build a list of vlan ids given a combination of ranges and/or values</p>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enet</span><span class="o">.</span><span class="n">dissociate_values_or_ranges</span><span class="p">(</span><span class="s1">&#39;1-2,5&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enet</span><span class="o">.</span><span class="n">dissociate_values_or_ranges</span><span class="p">(</span><span class="s1">&#39;1-2,5&#39;</span><span class="p">)</span>
 <span class="go">    [1, 2, 5]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enet</span><span class="o">.</span><span class="n">dissociate_values_or_ranges</span><span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enet</span><span class="o">.</span><span class="n">dissociate_values_or_ranges</span><span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">)</span>
 <span class="go">    [1, 2, 3, 4, 5]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enet</span><span class="o">.</span><span class="n">dissociate_values_or_ranges</span><span class="p">(</span><span class="s1">&#39;4-5,7-8&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enet</span><span class="o">.</span><span class="n">dissociate_values_or_ranges</span><span class="p">(</span><span class="s1">&#39;4-5,7-8&#39;</span><span class="p">)</span>
 <span class="go">    [4, 5, 7, 8]</span>
 </pre></div>
 </div>
@@ -569,12 +569,12 @@ The search is case-insensitive.</p>
 <code class="descname">get_range</code><span class="sig-paren">(</span><em>name_prefix</em>, <em>vlan_id_range</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks.get_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get_range" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of Ethernet Networks that match the ‘given name_prefix’ and the ‘vlan_id_range’.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enet</span><span class="o">.</span><span class="n">get_range</span><span class="p">(</span><span class="s1">&#39;Enet_name&#39;</span><span class="p">,</span> <span class="s1">&#39;1-2,5&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enet</span><span class="o">.</span><span class="n">get_range</span><span class="p">(</span><span class="s1">&#39;Enet_name&#39;</span><span class="p">,</span> <span class="s1">&#39;1-2,5&#39;</span><span class="p">)</span>
 <span class="go">    # The result contains the ethernet network with names:</span>
 <span class="go">    [&#39;Enet_name_1&#39;, &#39;Enet_name_2&#39;, &#39;Enet_name_5&#39;]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enet</span><span class="o">.</span><span class="n">get_range</span><span class="p">(</span><span class="s1">&#39;Enet_name&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">enet</span><span class="o">.</span><span class="n">get_range</span><span class="p">(</span><span class="s1">&#39;Enet_name&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span>
 <span class="go">    # The result contains the ethernet network with names:</span>
 <span class="go">    [&#39;Enet_name_1&#39;, &#39;Enet_name_2&#39;]</span>
 </pre></div>
@@ -656,7 +656,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.fabrics.Fabrics">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.fabrics.</code><code class="descname">Fabrics</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/fabrics.html#Fabrics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.fabrics.Fabrics" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Fabrics API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.fabrics.Fabrics.DEFAULT_VALUES">
@@ -804,7 +804,7 @@ on the resource itself. The default is false.</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.fc_networks.FcNetworks">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.fc_networks.</code><code class="descname">FcNetworks</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/fc_networks.html#FcNetworks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.fc_networks.FcNetworks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Fibre Channel networks API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.fc_networks.FcNetworks.DEFAULT_VALUES">
@@ -1007,7 +1007,7 @@ in OneView, just stop waiting for its completion.</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.fcoe_networks.FcoeNetworks">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.fcoe_networks.</code><code class="descname">FcoeNetworks</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/fcoe_networks.html#FcoeNetworks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.fcoe_networks.FcoeNetworks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>FCoE Networks API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.fcoe_networks.FcoeNetworks.DEFAULT_VALUES">
@@ -1203,7 +1203,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.interconnect_link_topologies.InterconnectLinkTopologies">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.interconnect_link_topologies.</code><code class="descname">InterconnectLinkTopologies</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnect_link_topologies.html#InterconnectLinkTopologies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnect_link_topologies.InterconnectLinkTopologies" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Interconnect Link Topologies API client.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -1298,7 +1298,7 @@ The search is case-insensitive</p>
 <dl class="class">
 <dt id="hpOneView.resources.networking.interconnect_types.InterconnectTypes">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.interconnect_types.</code><code class="descname">InterconnectTypes</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnect_types.html#InterconnectTypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnect_types.InterconnectTypes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Interconnect Types API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.interconnect_types.InterconnectTypes.URI">
@@ -1389,7 +1389,7 @@ on create time with the oldest entry first.</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.interconnects.Interconnects">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.interconnects.</code><code class="descname">Interconnects</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/interconnects.html#Interconnects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.interconnects.Interconnects" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Interconnects API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.interconnects.Interconnects.URI">
@@ -1761,7 +1761,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.internal_link_sets.InternalLinkSets">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.internal_link_sets.</code><code class="descname">InternalLinkSets</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/internal_link_sets.html#InternalLinkSets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.internal_link_sets.InternalLinkSets" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Internal Link Sets API client.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -1861,7 +1861,7 @@ The search is case-insensitive.</p>
 <dl class="class">
 <dt id="hpOneView.resources.networking.logical_downlinks.LogicalDownlinks">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.logical_downlinks.</code><code class="descname">LogicalDownlinks</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_downlinks.html#LogicalDownlinks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_downlinks.LogicalDownlinks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Logical Downlinks API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_downlinks.LogicalDownlinks.URI">
@@ -1996,7 +1996,7 @@ on create time with the oldest entry first.</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.logical_interconnect_groups.</code><code class="descname">LogicalInterconnectGroups</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnect_groups.html#LogicalInterconnectGroups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Logical Interconnect Groups API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnect_groups.LogicalInterconnectGroups.DEFAULT_VALUES">
@@ -2233,7 +2233,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.logical_interconnects.</code><code class="descname">LogicalInterconnects</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Logical Interconnects API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.FIRMWARE_PATH">
@@ -2917,7 +2917,7 @@ OneView, just stops waiting for its completion.</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.logical_switch_groups.</code><code class="descname">LogicalSwitchGroups</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switch_groups.html#LogicalSwitchGroups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Logical Switch Groups API client.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -3122,7 +3122,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.logical_switches.LogicalSwitches">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.logical_switches.</code><code class="descname">LogicalSwitches</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switches.html#LogicalSwitches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switches.LogicalSwitches" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Logical Switches API client.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -3353,7 +3353,7 @@ in OneView, just stop waiting for its completion.</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.network_sets.NetworkSets">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.network_sets.</code><code class="descname">NetworkSets</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/network_sets.html#NetworkSets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.network_sets.NetworkSets" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Network Sets API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.network_sets.NetworkSets.DEFAULT_VALUES">
@@ -3600,7 +3600,7 @@ in OneView; it just stops waiting for its completion.</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.sas_interconnect_types.SasInterconnectTypes">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.sas_interconnect_types.</code><code class="descname">SasInterconnectTypes</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnect_types.html#SasInterconnectTypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnect_types.SasInterconnectTypes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>SAS Interconnect Types API client.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -3694,7 +3694,7 @@ on create time with the oldest entry first.</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.sas_interconnects.SasInterconnects">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.sas_interconnects.</code><code class="descname">SasInterconnects</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>SAS Interconnects API client.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -3843,7 +3843,7 @@ collections of resources).</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.sas_logical_interconnect_groups.</code><code class="descname">SasLogicalInterconnectGroups</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnect_groups.html#SasLogicalInterconnectGroups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnect_groups.SasLogicalInterconnectGroups" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>SAS Logical Interconnect Groups API client.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -4023,7 +4023,7 @@ in OneView, just stop waiting for its completion.</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.sas_logical_interconnects.</code><code class="descname">SasLogicalInterconnects</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>SAS Logical Interconnects API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.URI">
@@ -4258,7 +4258,7 @@ of a SAS Logical Interconnect.</p>
 <dl class="class">
 <dt id="hpOneView.resources.networking.switch_types.SwitchTypes">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.switch_types.</code><code class="descname">SwitchTypes</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/switch_types.html#SwitchTypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.switch_types.SwitchTypes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Switch Types API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.switch_types.SwitchTypes.URI">
@@ -4349,7 +4349,7 @@ on create time with the oldest entry first.</li>
 <dl class="class">
 <dt id="hpOneView.resources.networking.switches.Switches">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.switches.</code><code class="descname">Switches</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/switches.html#Switches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.switches.Switches" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Switches API client.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -4566,7 +4566,7 @@ supported for update.</p>
 <dl class="class">
 <dt id="hpOneView.resources.networking.uplink_sets.UplinkSets">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.networking.uplink_sets.</code><code class="descname">UplinkSets</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/uplink_sets.html#UplinkSets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Uplink Sets API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.DEFAULT_VALUES">

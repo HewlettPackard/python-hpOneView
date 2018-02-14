@@ -1,67 +1,67 @@
-hpOneView\.resources\.settings package
-======================================
+hpOneView.resources.settings package
+====================================
 
 Submodules
 ----------
 
-hpOneView\.resources\.settings\.appliance\_node\_information module
--------------------------------------------------------------------
+hpOneView.resources.settings.appliance\_node\_information module
+----------------------------------------------------------------
 
 .. automodule:: hpOneView.resources.settings.appliance_node_information
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.resources\.settings\.appliance\_time\_and\_locale\_configuration module
-----------------------------------------------------------------------------------
+hpOneView.resources.settings.appliance\_time\_and\_locale\_configuration module
+-------------------------------------------------------------------------------
 
 .. automodule:: hpOneView.resources.settings.appliance_time_and_locale_configuration
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.resources\.settings\.backups module
-----------------------------------------------
+hpOneView.resources.settings.backups module
+-------------------------------------------
 
 .. automodule:: hpOneView.resources.settings.backups
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.resources\.settings\.firmware\_bundles module
---------------------------------------------------------
+hpOneView.resources.settings.firmware\_bundles module
+-----------------------------------------------------
 
 .. automodule:: hpOneView.resources.settings.firmware_bundles
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.resources\.settings\.firmware\_drivers module
---------------------------------------------------------
+hpOneView.resources.settings.firmware\_drivers module
+-----------------------------------------------------
 
 .. automodule:: hpOneView.resources.settings.firmware_drivers
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.resources\.settings\.restores module
------------------------------------------------
+hpOneView.resources.settings.restores module
+--------------------------------------------
 
 .. automodule:: hpOneView.resources.settings.restores
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.resources\.settings\.scopes module
----------------------------------------------
+hpOneView.resources.settings.scopes module
+------------------------------------------
 
 .. automodule:: hpOneView.resources.settings.scopes
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.resources\.settings\.versions module
------------------------------------------------
+hpOneView.resources.settings.versions module
+--------------------------------------------
 
 .. automodule:: hpOneView.resources.settings.versions
     :members:

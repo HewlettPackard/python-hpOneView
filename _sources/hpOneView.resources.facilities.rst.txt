@@ -1,27 +1,27 @@
-hpOneView\.resources\.facilities package
-========================================
+hpOneView.resources.facilities package
+======================================
 
 Submodules
 ----------
 
-hpOneView\.resources\.facilities\.datacenters module
-----------------------------------------------------
+hpOneView.resources.facilities.datacenters module
+-------------------------------------------------
 
 .. automodule:: hpOneView.resources.facilities.datacenters
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.resources\.facilities\.power\_devices module
--------------------------------------------------------
+hpOneView.resources.facilities.power\_devices module
+----------------------------------------------------
 
 .. automodule:: hpOneView.resources.facilities.power_devices
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.resources\.facilities\.racks module
-----------------------------------------------
+hpOneView.resources.facilities.racks module
+-------------------------------------------
 
 .. automodule:: hpOneView.resources.facilities.racks
     :members:

@@ -1,27 +1,27 @@
-hpOneView\.resources\.uncategorized package
-===========================================
+hpOneView.resources.uncategorized package
+=========================================
 
 Submodules
 ----------
 
-hpOneView\.resources\.uncategorized\.os\_deployment\_plans module
------------------------------------------------------------------
+hpOneView.resources.uncategorized.os\_deployment\_plans module
+--------------------------------------------------------------
 
 .. automodule:: hpOneView.resources.uncategorized.os_deployment_plans
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.resources\.uncategorized\.os\_deployment\_servers module
--------------------------------------------------------------------
+hpOneView.resources.uncategorized.os\_deployment\_servers module
+----------------------------------------------------------------
 
 .. automodule:: hpOneView.resources.uncategorized.os_deployment_servers
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.resources\.uncategorized\.unmanaged\_devices module
---------------------------------------------------------------
+hpOneView.resources.uncategorized.unmanaged\_devices module
+-----------------------------------------------------------
 
 .. automodule:: hpOneView.resources.uncategorized.unmanaged_devices
     :members:

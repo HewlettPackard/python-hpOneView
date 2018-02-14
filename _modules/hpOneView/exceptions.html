@@ -195,8 +195,8 @@
 <div class="viewcode-block" id="handle_exceptions"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.exceptions.handle_exceptions">[docs]</a><span class="k">def</span> <span class="nf">handle_exceptions</span><span class="p">(</span><span class="n">exception_type</span><span class="p">,</span> <span class="n">exception_value</span><span class="p">,</span> <span class="n">exception_traceback</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">):</span>
     <span class="n">message</span> <span class="o">=</span> <span class="n">__get_message</span><span class="p">(</span><span class="n">exception_value</span><span class="p">,</span> <span class="n">exception_type</span><span class="p">)</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Uncaught Exception: </span><span class="si">%s</span><span class="s2"> with message: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">exception_type</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span>
-    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exception</span><span class="p">(</span><span class="n">exception_type</span><span class="p">,</span> <span class="n">exception_value</span><span class="p">,</span> <span class="n">exception_traceback</span><span class="p">)</span></div>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Uncaught Exception: </span><span class="si">%s</span><span class="s2"> with message: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">exception_type</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span></div>
+    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exception</span><span class="p">(</span><span class="n">exception_type</span><span class="p">,</span> <span class="n">exception_value</span><span class="p">,</span> <span class="n">exception_traceback</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">__get_message</span><span class="p">(</span><span class="n">exception_value</span><span class="p">,</span> <span class="n">exception_type</span><span class="p">):</span>
@@ -236,8 +236,8 @@
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">oneview_response</span><span class="p">:</span>
             <span class="ne">Exception</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">oneview_response</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="ne">Exception</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span></div>
+        <span class="k">else</span><span class="p">:</span></div>
+            <span class="ne">Exception</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="HPOneViewInvalidResource"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.exceptions.HPOneViewInvalidResource">[docs]</a><span class="k">class</span> <span class="nc">HPOneViewInvalidResource</span><span class="p">(</span><span class="n">HPOneViewException</span><span class="p">):</span>
@@ -246,8 +246,8 @@
 
 <span class="sd">    Attributes:</span>
 <span class="sd">       msg (str): Exception message.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span></div>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+    <span class="k">pass</span>
 
 
 <div class="viewcode-block" id="HPOneViewTaskError"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.exceptions.HPOneViewTaskError">[docs]</a><span class="k">class</span> <span class="nc">HPOneViewTaskError</span><span class="p">(</span><span class="n">HPOneViewException</span><span class="p">):</span>
@@ -260,8 +260,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">HPOneViewTaskError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">error_code</span> <span class="o">=</span> <span class="n">error_code</span></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HPOneViewTaskError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_code</span> <span class="o">=</span> <span class="n">error_code</span>
 
 
 <div class="viewcode-block" id="HPOneViewUnknownType"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.exceptions.HPOneViewUnknownType">[docs]</a><span class="k">class</span> <span class="nc">HPOneViewUnknownType</span><span class="p">(</span><span class="n">HPOneViewException</span><span class="p">):</span>
@@ -270,8 +270,8 @@
 
 <span class="sd">    Attributes:</span>
 <span class="sd">       msg (str): Exception message.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span></div>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+    <span class="k">pass</span>
 
 
 <div class="viewcode-block" id="HPOneViewTimeout"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.exceptions.HPOneViewTimeout">[docs]</a><span class="k">class</span> <span class="nc">HPOneViewTimeout</span><span class="p">(</span><span class="n">HPOneViewException</span><span class="p">):</span>
@@ -280,8 +280,8 @@
 
 <span class="sd">    Attributes:</span>
 <span class="sd">       msg (str): Exception message.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span></div>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+    <span class="k">pass</span>
 
 
 <div class="viewcode-block" id="HPOneViewValueError"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.exceptions.HPOneViewValueError">[docs]</a><span class="k">class</span> <span class="nc">HPOneViewValueError</span><span class="p">(</span><span class="n">HPOneViewException</span><span class="p">):</span>
@@ -291,8 +291,8 @@
 
 <span class="sd">    Attributes:</span>
 <span class="sd">       msg (str): Exception message.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span></div>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+    <span class="k">pass</span>
 
 
 <div class="viewcode-block" id="HPOneViewResourceNotFound"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.exceptions.HPOneViewResourceNotFound">[docs]</a><span class="k">class</span> <span class="nc">HPOneViewResourceNotFound</span><span class="p">(</span><span class="n">HPOneViewException</span><span class="p">):</span>
@@ -302,8 +302,8 @@
 
 <span class="sd">    Attributes:</span>
 <span class="sd">       msg (str): Exception message.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span></div>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+    <span class="k">pass</span>
 </pre></div>
 
            </div>

@@ -1,43 +1,43 @@
-hpOneView\.resources\.security package
-======================================
+hpOneView.resources.security package
+====================================
 
 Submodules
 ----------
 
-hpOneView\.resources\.security\.certificate\_authority module
--------------------------------------------------------------
+hpOneView.resources.security.certificate\_authority module
+----------------------------------------------------------
 
 .. automodule:: hpOneView.resources.security.certificate_authority
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.resources\.security\.certificate\_rabbitmq module
-------------------------------------------------------------
+hpOneView.resources.security.certificate\_rabbitmq module
+---------------------------------------------------------
 
 .. automodule:: hpOneView.resources.security.certificate_rabbitmq
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.resources\.security\.login\_details module
------------------------------------------------------
+hpOneView.resources.security.login\_details module
+--------------------------------------------------
 
 .. automodule:: hpOneView.resources.security.login_details
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.resources\.security\.roles module
---------------------------------------------
+hpOneView.resources.security.roles module
+-----------------------------------------
 
 .. automodule:: hpOneView.resources.security.roles
     :members:
     :undoc-members:
     :show-inheritance:
 
-hpOneView\.resources\.security\.users module
---------------------------------------------
+hpOneView.resources.security.users module
+-----------------------------------------
 
 .. automodule:: hpOneView.resources.security.users
     :members:

@@ -219,8 +219,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
 
 <div class="viewcode-block" id="TaskMonitor.get_current_seconds"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.task_monitor.TaskMonitor.get_current_seconds">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_current_seconds</span><span class="p">():</span>
-        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span></div>
+    <span class="k">def</span> <span class="nf">get_current_seconds</span><span class="p">():</span></div>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
 
 <div class="viewcode-block" id="TaskMonitor.wait_for_task"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.task_monitor.TaskMonitor.wait_for_task">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -241,8 +241,8 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Waiting for task. Task state: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;taskState&#39;</span><span class="p">)))</span>
 
         <span class="n">task_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_task_response</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Task completed&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">task_response</span></div>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Task completed&#39;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">task_response</span>
 
 <div class="viewcode-block" id="TaskMonitor.get_completed_task"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.task_monitor.TaskMonitor.get_completed_task">[docs]</a>    <span class="k">def</span> <span class="nf">get_completed_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -256,8 +256,8 @@
 <span class="sd">            dict: TaskResource</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__wait_task_completion</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">task</span><span class="p">)</span></div>
+</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__wait_task_completion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">task</span><span class="p">:</span>
@@ -360,8 +360,8 @@
                         <span class="k">return</span> <span class="kc">True</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="n">error</span>
-
-        <span class="k">return</span> <span class="kc">False</span></div>
+</div>
+        <span class="k">return</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="TaskMonitor.get"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.task_monitor.TaskMonitor.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -374,8 +374,8 @@
 <span class="sd">            task dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">task</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">task</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">task</span></div>
+        <span class="n">task</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">task</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">])</span></div>
+        <span class="k">return</span> <span class="n">task</span>
 
 <div class="viewcode-block" id="TaskMonitor.get_associated_resource"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.task_monitor.TaskMonitor.get_associated_resource">[docs]</a>    <span class="k">def</span> <span class="nf">get_associated_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -412,8 +412,8 @@
 
         <span class="k">if</span> <span class="n">resource_uri</span><span class="p">:</span>
             <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resource_uri</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">task</span><span class="p">,</span> <span class="n">entity</span></div></div>
+</div></div>
+        <span class="k">return</span> <span class="n">task</span><span class="p">,</span> <span class="n">entity</span>
 </pre></div>
 
            </div>
