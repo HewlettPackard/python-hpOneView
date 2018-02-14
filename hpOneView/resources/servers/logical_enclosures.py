@@ -169,7 +169,7 @@ class LogicalEnclosures(object):
         """
         return self._client.update(resource, timeout=timeout)
 
-    def patch(self, id_or_uri, operation, path, value, timeout=-1):
+    def patch(self, id_or_uri, operation, path, value, timeout=-1, custom_headers=None):
         """
         Updates the given logical enclosure's attributes that are passed in the parameters. The PATCH operation
         partially updates the resource. The support operation in this context is the firmware update.
@@ -181,11 +181,13 @@ class LogicalEnclosures(object):
             value: Value
             timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
+            custom_headers: Dictionary with custom headers.
 
         Returns:
             dict: Updated logical enclosure.
         """
-        return self._client.patch(id_or_uri, operation, path, value, timeout=timeout)
+        return self._client.patch(id_or_uri, operation, path, value, timeout=timeout,
+                                  custom_headers=custom_headers)
 
     def update_configuration(self, id_or_uri, timeout=-1):
         """
