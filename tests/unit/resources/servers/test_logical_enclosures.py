@@ -127,7 +127,7 @@ class LogicalEnclosuresTest(TestCase):
     @mock.patch.object(ResourceClient, 'patch')
     def test_patch_should_use_user_defined_values(self, mock_patch):
         mock_patch.return_value = {}
-        custom_headers = {}
+        custom_headers = {'If-Match': '*'}
 
         self._logical_enclosures.patch(
             '123a53cz', 'replace', '/name', 'new_name', 1, custom_headers=custom_headers)
