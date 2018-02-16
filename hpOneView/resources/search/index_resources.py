@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2017-2018) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -88,25 +88,18 @@ class IndexResources(object):
         uri = self.URI + '?'
 
         uri += self.__list_or_str_to_query(category, 'category')
-        uri += self.__list_or_str_to_query(count, 'count')
         uri += self.__list_or_str_to_query(fields, 'fields')
         uri += self.__list_or_str_to_query(filter, 'filter')
         uri += self.__list_or_str_to_query(padding, 'padding')
         uri += self.__list_or_str_to_query(query, 'query')
         uri += self.__list_or_str_to_query(reference_uri, 'referenceUri')
         uri += self.__list_or_str_to_query(sort, 'sort')
-        uri += self.__list_or_str_to_query(start, 'start')
         uri += self.__list_or_str_to_query(user_query, 'userQuery')
         uri += self.__list_or_str_to_query(view, 'view')
 
         uri = uri.replace('?&', '?')
 
-        response = self._client.get(uri)
-
-        if response and 'members' in response and response['members']:
-            return response['members']
-        else:
-            return []
+        return self._client.get_all(start=start, count=count, uri=uri)
 
     def get(self, uri):
         """
