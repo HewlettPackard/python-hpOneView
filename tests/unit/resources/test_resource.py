@@ -108,7 +108,7 @@ class ResourceClientTest(unittest.TestCase):
               '&sort=name%3Aascending' \
               '&view=%22%7Bview-name%7D%22' \
               '&fields=name%2Cowner%2Cmodified' \
-              '&scope_uris=/rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a'.format(resource_uri=self.URI)
+              '&scopeUris=/rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a'.format(resource_uri=self.URI)
 
         self.assertEqual([{'member': 'member'}], result)
         mock_get.assert_called_once_with(uri)

@@ -159,7 +159,7 @@ class ResourceClient(object):
             fields = "&fields=" + quote(fields)
 
         if scope_uris:
-            scope_uris = "&scope_uris=" + quote(scope_uris)
+            scope_uris = "&scopeUris=" + quote(scope_uris)
 
         path = uri if uri else self._uri
         self.__validate_resource_uri(path)
