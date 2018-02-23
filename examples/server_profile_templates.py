@@ -111,9 +111,11 @@ print(available_networks)
 
 # Get Server Profile Template by scope_uris
 if oneview_client.api_version == 600:
-    server_profile_templates_by_scope_uris = oneview_client.server_profile_templates.get_all(scope_uris="\"'/rest/scopes/3bb0c754-fd38-45af-be8a-4d4419de06e9'\"")
+    server_profile_templates_by_scope_uris = oneview_client.server_profile_templates.get_all(
+        scope_uris="\"'/rest/scopes/3bb0c754-fd38-45af-be8a-4d4419de06e9'\"")
     if len(server_profile_templates_by_scope_uris) > 0:
-        print("Found Server Profile Template Group by scope_uris: '%s'.\n  uri = '%s'" % (server_profile_templates_by_scope_uris[0]['name'], server_profile_templates_by_scope_uris[0]['uri']))
+        print("Found Server Profile Template Group by scope_uris: '%s'.\n  uri = '%s'" % (server_profile_templates_by_scope_uris[0]['name'],
+                                                                                          server_profile_templates_by_scope_uris[0]['uri']))
         pprint(server_profile_templates_by_scope_uris)
     else:
         print("No Server Profile Template Group found.")

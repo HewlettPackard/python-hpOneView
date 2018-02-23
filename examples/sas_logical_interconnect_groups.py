@@ -103,10 +103,11 @@ print("\n   '{name}' at uri: {uri}".format(**sas_lig_found_by_name[0]))
 
 # Get SAS Interconnect Group by scope_uris
 if oneview_client.api_version == 600:
-    sas_logical_interconnect_groups_by_scope_uris = oneview_client.sas_logical_interconnect_groups.get_all(scope_uris="\"'/rest/scopes/3bb0c754-fd38-45af-be8a-4d4419de06e9'\"")
-    if len(sas_logical_interconnect_groups_by_scope_uris) > 0:
-        print("Found SAS Interconnect Group by scope_uris: '%s'.\n  uri = '%s'" % (sas_logical_interconnect_groups_by_scope_uris[0]['name'], sas_logical_interconnect_groups_by_scope_uris[0]['uri']))
-        pprint(sas_logical_interconnect_groups_by_scope_uris)
+    sas_lig_by_scope_uris = oneview_client.sas_logical_interconnect_groups.get_all(
+        scope_uris="\"'/rest/scopes/3bb0c754-fd38-45af-be8a-4d4419de06e9'\"")
+    if len(sas_lig_by_scope_uris) > 0:
+        print("Found SAS Interconnect Group by scope_uris: '%s'.\n  uri = '%s'" % (sas_lig_by_scope_uris[0]['name'], sas_lig_by_scope_uris[0]['uri']))
+        pprint(sas_lig_by_scope_uris)
     else:
         print("No SAS Interconnect Group found.")
 
