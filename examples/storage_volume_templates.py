@@ -44,7 +44,7 @@ options = {
     "provisioning": {
         "capacity": "235834383322",
         "provisionType": "Thin",
-        "storagePoolUri": "" },
+        "storagePoolUri": ""},
     "description": "sample description"
 }
 

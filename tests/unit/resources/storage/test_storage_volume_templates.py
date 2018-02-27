@@ -102,7 +102,7 @@ class StorageVolumeTemplatesTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_reachable_volume_templates_called_once(self, mock_get):
-        uri = '/rest/storage-volume-templates/reachable-volume-templates?networks=\'/rest/fake\'&start=0&count=-1'
+        uri = '/rest/storage-volume-templates/reachable-volume-templates?networks=\'/rest/fake\'&start=0&count=-1&privateAllowedOnly=False'
         self._storage_volume_templates.get_reachable_volume_templates(networks=['/rest/fake'])
         mock_get.assert_called_once_with(uri)
 
