@@ -41,12 +41,11 @@ oneview_client = OneViewClient(config)
 
 options = {
     "name": "OneView Test Volume Template",
-    "provisioning":
-        {
-            "capacity": "235834383322",
-            "provisionType": "Thin",
-            "storagePoolUri": ""
-        }
+    "provisioning": {
+        "capacity": "235834383322",
+        "provisionType": "Thin",
+        "storagePoolUri": "" },
+    "description": "sample description"
 }
 
 oneview_client = OneViewClient(config)
@@ -56,6 +55,7 @@ print("Find or add storage pool to use in template")
 storage_pools = oneview_client.storage_pools.get_all()
 storage_pool_added = False
 storage_system_added = False
+
 if storage_pools:
     storage_pool = storage_pools[0]
     print("   Found storage pool '{name}' at uri: '{uri}".format(**storage_pool))
@@ -119,7 +119,7 @@ for template in volume_templates:
 
 # Get storage volume template by id
 try:
-    template_id = "71e74304-0697-4fd7-997b-2385fe98b5b4"
+    template_id = volume_template["uri"].split("/")[-1]
     print("Get storage volume template by id: '{}'".format(template_id))
     volume_template_byid = oneview_client.storage_volume_templates.get(template_id)
     print("   Found '{name}' at uri: {uri}".format(**volume_template_byid))

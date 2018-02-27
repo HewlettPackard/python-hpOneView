@@ -115,10 +115,12 @@ class StorageVolumeTemplates(object):
         """
         uri = self.URI + "/connectable-volume-templates"
 
-        get_uri = self._client.build_query_uri(start=start, count=count, filter=filter, query=query, sort=sort, uri=uri)
+        get_uri = self._client.build_query_uri(start=start, count=count, filter=filter,
+                                               query=query, sort=sort, uri=uri)
         return self._client.get(get_uri)
 
-    def get_reachable_volume_templates(self, start=0, count=-1, filter='', query='', sort='', networks=[]):
+    def get_reachable_volume_templates(self, start=0, count=-1, filter='', query='', sort='',
+                                       networks=None, scope_uris='', private_allowed_only=False):
         """
         Gets the storage templates that are connected on the specified networks based on the storage system
         port's expected network connectivity.
@@ -135,7 +137,11 @@ class StorageVolumeTemplates(object):
             elements = elements[:-1] + "\'"
             uri = uri + "?networks=" + elements
 
-        get_uri = self._client.build_query_uri(start=start, count=count, filter=filter, query=query, sort=sort, uri=uri)
+        get_uri = self._client.build_query_uri(start=start, count=count, filter=filter,
+                                               query=query, sort=sort, uri=uri, scope_uris=scope_uris)
+
+        get_uri += '&privateAllowedOnly={}'.format(private_allowed_only)
+
         return self._client.get(get_uri)
 
     def get_compatible_systems(self, id_or_uri):
