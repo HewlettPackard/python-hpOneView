@@ -27,18 +27,20 @@ from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "16.124.133.232",
+    "ip": "172.16.102.59",
     "credentials": {
         "userName": "administrator",
-        "password": "ecosystem"
-    },
-    "api_version": 500
+        "password": ""
+    }
 }
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
+
+networks = "/rest/fcoe-networks/7f0f74a0-4957-47ac-81c1-f573aa6d83de"
+scope_uris = "/rest/scopes/63d1ca81-95b3-41f1-a1ee-f9e1bc2d635f"
 
 # Request body for create operation
 # Supported from API version >= 500
@@ -117,7 +119,7 @@ options = {
                 "Full",
                 "Thin Deduplication"
             ],
-            "meta":  {
+            "meta": {
                 "locked": "true",
                 "createOnly": "true"
             },
@@ -219,11 +221,10 @@ volume_template_byname = oneview_client.storage_volume_templates.get_by('name', 
 print("   Found '{name}' at uri: {uri}".format(**volume_template_byname))
 
 # Gets the storage templates that are connected on the specified networks
+# scoper_uris and private_allowed_only parameters supported only with API version > 600
 print("Get torage templates that are connected on the specified networks")
-storage_templates=oneview_client.storage_volume_templates.get_reachable_volume_templates(
-    networks="/rest/fcoe-networks/7f0f74a0-4957-47ac-81c1-f573aa6d83de,",
-    scope_uris="/rest/scopes/63d1ca81-95b3-41f1-a1ee-f9e1bc2d635f",
-    private_allowed_only=False)
+storage_templates = oneview_client.storage_volume_templates.get_reachable_volume_templates(
+    networks=networks, scope_uris=scope_uris, private_allowed_only=False)
 print(storage_templates)
 
 # Retrieves all storage systems that is applicable to the storage volume template.
