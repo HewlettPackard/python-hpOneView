@@ -257,10 +257,14 @@ lig_settings = oneview_client.logical_interconnect_groups.get_settings(created_l
 pprint(lig_settings)
 
 # Get Logical Interconnect Group by scope_uris
-if oneview_client.api_version == 600:
+if oneview_client.api_version >= 600:
     lig_by_scope_uris = oneview_client.logical_interconnect_groups.get_all(scope_uris="\"'/rest/scopes/3bb0c754-fd38-45af-be8a-4d4419de06e9'\"")
     if len(lig_by_scope_uris) > 0:
-        print("Found Logical Interconnect Group by scope_uris: '%s'.\n  uri = '%s'" % (lig_by_scope_uris[0]['name'], lig_by_scope_uris[0]['uri']))
+        print("Found %d Logical Interconnect Groups" % (len(lig_by_scope_uris)))
+        i = 0
+        while i < len(lig_by_scope_uris):
+            print("Found Logical Interconnect Group by scope_uris: '%s'.\n  uri = '%s'" % (lig_by_scope_uris[i]['name'], lig_by_scope_uris[i]['uri']))
+            i += 1
         pprint(lig_by_scope_uris)
     else:
         print("No Logical Interconnect Group found.")
