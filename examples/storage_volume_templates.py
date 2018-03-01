@@ -221,7 +221,7 @@ volume_template_byname = oneview_client.storage_volume_templates.get_by('name', 
 print("   Found '{name}' at uri: {uri}".format(**volume_template_byname))
 
 # Gets the storage templates that are connected on the specified networks
-# scoper_uris and private_allowed_only parameters supported only with API version > 600
+# scoper_uris and private_allowed_only parameters supported only with API version >= 600
 print("Get torage templates that are connected on the specified networks")
 storage_templates = oneview_client.storage_volume_templates.get_reachable_volume_templates(
     networks=networks, scope_uris=scope_uris, private_allowed_only=False)
