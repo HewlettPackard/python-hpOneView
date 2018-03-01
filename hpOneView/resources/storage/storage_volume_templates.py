@@ -130,18 +130,10 @@ class StorageVolumeTemplates(object):
         """
         uri = self.URI + "/reachable-volume-templates"
 
-        if networks:
-            elements = "\'"
-            for n in networks:
-                elements += n + ','
-            elements = elements[:-1] + "\'"
-            uri = uri + "?networks=" + elements
+        uri += "?networks={}&privateAllowedOnly={}".format(networks, private_allowed_only)
 
         get_uri = self._client.build_query_uri(start=start, count=count, filter=filter,
                                                query=query, sort=sort, uri=uri, scope_uris=scope_uris)
-
-        get_uri += '&privateAllowedOnly={}'.format(private_allowed_only)
-
         return self._client.get(get_uri)
 
     def get_compatible_systems(self, id_or_uri):

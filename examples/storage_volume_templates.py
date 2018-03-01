@@ -27,11 +27,12 @@ from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "172.16.102.59",
+    "ip": "16.124.133.232",
     "credentials": {
         "userName": "administrator",
-        "password": ""
-    }
+        "password": "ecosystem"
+    },
+    "api_version": 600
 }
 
 # Try load config from a file (if there is a config file)
@@ -41,10 +42,11 @@ oneview_client = OneViewClient(config)
 
 options = {
     "name": "OneView Test Volume Template",
-    "provisioning": {
-        "capacity": "235834383322",
-        "provisionType": "Thin",
-        "storagePoolUri": ""},
+    "properties": {},
+#    "provisioning": {},
+#        "capacity": "235834383322",
+#        "provisionType": "Thin",
+#        "storagePoolUri": ""},
     "description": "sample description"
 }
 
@@ -101,7 +103,8 @@ else:
 
 # Create storage volume template
 print("Create storage volume template")
-options['provisioning']['storagePoolUri'] = storage_pool['uri']
+#options["provisioning"]["storagePoolUri"] = storage_pool["uri"]
+print options
 volume_template = oneview_client.storage_volume_templates.create(options)
 pprint(volume_template)
 
@@ -117,9 +120,10 @@ volume_templates = oneview_client.storage_volume_templates.get_all()
 for template in volume_templates:
     print("   '{name}' at uri: {uri}".format(**template))
 
+template_id = volume_template["uri"].split("/")[-1]
+
 # Get storage volume template by id
 try:
-    template_id = volume_template["uri"].split("/")[-1]
     print("Get storage volume template by id: '{}'".format(template_id))
     volume_template_byid = oneview_client.storage_volume_templates.get(template_id)
     print("   Found '{name}' at uri: {uri}".format(**volume_template_byid))
@@ -135,6 +139,19 @@ print("   Found '{name}' at uri: {uri}".format(**volume_template_by_uri))
 print("Get storage volume template by 'name': '{name}'".format(**volume_template))
 volume_template_byname = oneview_client.storage_volume_templates.get_by('name', volume_template['name'])[0]
 print("   Found '{name}' at uri: {uri}".format(**volume_template_byname))
+
+# Gets the storage templates that are connected on the specified networks
+#print("Storage templates that are connected on the specified networks")
+#storage_templates=oneview_client.storage_volume_templates.get_reachable_volume_templates(
+#    networks='/rest/fcoe-networks/7f0f74a0-4957-47ac-81c1-f573aa6d83de',
+#    scope_uris='/rest/scopes/63d1ca81-95b3-41f1-a1ee-f9e1bc2d635f',
+#    private_allowed_only=False)
+#print(storage_templates)
+
+# Retrieves all storage systems that is applicable to the storage volume template.
+#print("Storage systems that is applicable to the storage volume template")
+#storage_systems = oneview_client.storage_volume_templates.get_compatible_systems(id_or_uri=template_id)
+#print(storage_systems)
 
 # Remove storage volume template
 print("Delete storage volume template")
