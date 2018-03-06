@@ -39,14 +39,98 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
+networks = "/rest/fcoe-networks/7f0f74a0-4957-47ac-81c1-f573aa6d83de"
+scope_uris = "/rest/scopes/63d1ca81-95b3-41f1-a1ee-f9e1bc2d635f"
+
+# Request body for create operation
+# Supported from API version >= 500
 options = {
-    "name": "OneView Test Volume Template",
-    "provisioning":
-        {
-            "capacity": "235834383322",
-            "provisionType": "Thin",
-            "storagePoolUri": ""
+    "rootTemplateUri": "/rest/storage-volume-templates/5dbaf127-053b-4988-82fe-a80800eef1f3",
+    "properties": {
+        "name": {
+            "title": "Volume name",
+            "description": "A volume name between 1 and 100 characters",
+            "meta": {"locked": "false"},
+            "type": "string",
+            "required": "true",
+            "maxLength": 100,
+            "minLength": 1},
+
+        "size": {
+            "meta": {
+                "locked": "false",
+                "semanticType": "capacity"
+            },
+            "type": "integer",
+            "title": "Capacity",
+            "default": 1073741824,
+            "maximum": 17592186044416,
+            "minimum": 268435456,
+            "required": "true",
+            "description": "The capacity of the volume in bytes"
+        },
+        "description": {
+            "meta": {
+                "locked": "false"
+            },
+            "type": "string",
+            "title": "Description",
+            "default": "",
+            "maxLength": 2000,
+            "minLength": 0,
+            "description": "A description for the volume"
+        },
+        "isShareable": {
+            "meta": {
+                "locked": "false"
+            },
+            "type": "boolean",
+            "title": "Is Shareable",
+            "default": "false",
+            "description": "The shareability of the volume"
+        },
+        "storagePool": {
+            "meta": {
+                "locked": "false",
+                "createOnly": "true",
+                "semanticType": "device-storage-pool"
+            },
+            "type": "string",
+            "title": "Storage Pool",
+            "format": "x-uri-reference",
+            "required": "true",
+            "description": "A common provisioning group URI reference",
+            "default": "/rest/storage-pools/0DB2A6C7-04D3-4830-9229-A80800EEF1F1"
+        },
+        "snapshotPool": {
+            "meta": {
+                "locked": "true",
+                "semanticType": "device-snapshot-storage-pool"
+            },
+            "type": "string",
+            "title": "Snapshot Pool",
+            "format": "x-uri-reference",
+            "default": "/rest/storage-pools/0DB2A6C7-04D3-4830-9229-A80800EEF1F1",
+            "description": "A URI reference to the common provisioning group used to create snapshots"
+        },
+        "provisioningType": {
+            "enum": [
+                "Thin",
+                "Full",
+                "Thin Deduplication"
+            ],
+            "meta": {
+                "locked": "true",
+                "createOnly": "true"
+            },
+            "type": "string",
+            "title": "Provisioning Type",
+            "default": "Thin",
+            "description": "The provisioning type for the volume"
         }
+    },
+    "name": "test_02",
+    "description": "desc"
 }
 
 oneview_client = OneViewClient(config)
@@ -101,9 +185,10 @@ else:
 
 # Create storage volume template
 print("Create storage volume template")
-options['provisioning']['storagePoolUri'] = storage_pool['uri']
 volume_template = oneview_client.storage_volume_templates.create(options)
 pprint(volume_template)
+
+template_id = volume_template["uri"].split('/')[-1]
 
 # Update storage volume template
 print("Update '{name}' at uri: {uri}".format(**volume_template))
@@ -119,7 +204,6 @@ for template in volume_templates:
 
 # Get storage volume template by id
 try:
-    template_id = "71e74304-0697-4fd7-997b-2385fe98b5b4"
     print("Get storage volume template by id: '{}'".format(template_id))
     volume_template_byid = oneview_client.storage_volume_templates.get(template_id)
     print("   Found '{name}' at uri: {uri}".format(**volume_template_byid))
@@ -135,6 +219,19 @@ print("   Found '{name}' at uri: {uri}".format(**volume_template_by_uri))
 print("Get storage volume template by 'name': '{name}'".format(**volume_template))
 volume_template_byname = oneview_client.storage_volume_templates.get_by('name', volume_template['name'])[0]
 print("   Found '{name}' at uri: {uri}".format(**volume_template_byname))
+
+# Gets the storage templates that are connected on the specified networks
+# scoper_uris and private_allowed_only parameters supported only with API version >= 600
+print("Get torage templates that are connected on the specified networks")
+storage_templates = oneview_client.storage_volume_templates.get_reachable_volume_templates(
+    networks=networks, scope_uris=scope_uris, private_allowed_only=False)
+print(storage_templates)
+
+# Retrieves all storage systems that is applicable to the storage volume template.
+print("Get storage systems that is applicable to the storage volume template")
+storage_systems = oneview_client.storage_volume_templates.get_compatible_systems(
+    id_or_uri=template_id)
+print(storage_systems)
 
 # Remove storage volume template
 print("Delete storage volume template")
