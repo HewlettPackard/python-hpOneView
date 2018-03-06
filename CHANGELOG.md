@@ -1,4 +1,4 @@
-# 4.5.0 (Unreleased)
+# 4.5.0 
 #### Notes
 Added the capability to set a connection timeout when connecting to the HPE OneView Appliance
 
@@ -29,7 +29,7 @@ Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
 - Storage volume template
 - Switch
 - Switch type
-- Tasks
+- Task
 - Uplink set
 
 # 4.4.0
