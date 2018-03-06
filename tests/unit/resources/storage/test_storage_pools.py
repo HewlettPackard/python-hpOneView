@@ -109,3 +109,10 @@ class StoragePoolsTest(unittest.TestCase):
         }
         self._storage_pools.update(storage_pool, 70)
         mock_update.assert_called_once_with(storage_pool, timeout=70)
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_reachable_storage_pools_called_once(self, mock_get):
+        reachable_pools_uri = "/rest/storage-pools/reachable-storage-pools?networks='/rest/fake'&start=0&count=-1"
+
+        self._storage_pools.get_reachable_storage_pools(networks=['/rest/fake'])
+        mock_get.assert_called_once_with(reachable_pools_uri)
