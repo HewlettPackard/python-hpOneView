@@ -80,24 +80,17 @@ class BuildPlansTest(TestCase):
         mock_create.return_value = {}
 
         self._client.create(information)
-
-        expected_data = {
-            "type": "OeBuildPlan",
-            "name": "OS Build Plan Name",
-        }
-        mock_create.assert_called_once_with(expected_data, timeout=-1)
+        mock_create.assert_called_once_with(information, timeout=-1, default_values=self._client.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'create')
     def test_create_called_once_with_provided_type(self, mock_create):
         information = {
-            "type": "OeBuildPlan",
             "name": "OS Build Plan Name",
         }
-        expected_data = information.copy()
         mock_create.return_value = {}
 
         self._client.create(information)
-        mock_create.assert_called_once_with(expected_data, timeout=-1)
+        mock_create.assert_called_once_with(information, timeout=-1, default_values=self._client.DEFAULT_VALUES)
 
     @mock.patch.object(ResourceClient, 'update')
     def test_update_called_once(self, mock_update):

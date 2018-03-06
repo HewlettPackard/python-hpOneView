@@ -36,12 +36,15 @@ from hpOneView.resources.resource import ResourceClient
 class BuildPlans(object):
     URI = '/rest/build-plans'
 
+    DEFAULT_VALUES = {
+        '300': {'type': 'OeBuildPlan'},
+        '500': {'type': 'OeBuildPlanV5'},
+        '600': {'type': 'OeBuildPlanV5'}
+    }
+
     def __init__(self, con):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
-        self.__default_values = {
-            'type': 'OeBuildPlan',
-        }
 
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
@@ -110,9 +113,7 @@ class BuildPlans(object):
             dict: Created OS Build Plan.
 
         """
-        data = self.__default_values.copy()
-        data.update(resource)
-        return self._client.create(data, timeout=timeout)
+        return self._client.create(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
     def update(self, resource, timeout=-1):
         """
