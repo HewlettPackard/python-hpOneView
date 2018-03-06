@@ -157,6 +157,22 @@ try:
 except HPOneViewException as e:
     print(e.msg)
 
+try:
+    # Get Enclosure by scope_uris
+    if oneview_client.api_version >= 600:
+        enclosures_by_scope_uris = oneview_client.enclosures.get_all(scope_uris="\"'/rest/scopes/3bb0c754-fd38-45af-be8a-4d4419de06e9'\"")
+        if len(enclosures_by_scope_uris) > 0:
+            print("Found %d Enclosures" % (len(enclosures_by_scope_uris)))
+            i = 0
+            while i < len(enclosures_by_scope_uris):
+                print("Found Enclosures by scope_uris: '%s'.\n  uri = '%s'" % (enclosures_by_scope_uris[i]['name'], enclosures_by_scope_uris[i]['uri']))
+                i += 1
+            pprint(enclosures_by_scope_uris)
+        else:
+            print("No Enclosures Group found.")
+except HPOneViewException as e:
+    print(e.msg)
+
 # Import a CA signed certificate to the enclosure.
 try:
     # This action requires a certificate(CA signed) file path to be declared.

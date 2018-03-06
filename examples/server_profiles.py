@@ -170,6 +170,21 @@ except HPOneViewException as e:
     print(e.msg)
 
 try:
+    # Get the all Ethernet networks associated with a server hardware type, enclosure group and scopeuris
+    if oneview_client.api_version >= 600:
+        enclosure_group_uri = "/rest/enclosure-groups/8cf8fd62-ad9f-4946-abf7-6dac9cb59253"
+        server_hardware_type_uri = "/rest/server-hardware-types/B342B5D4-387D-4DEB-ADBB-9D7256DF2A47"
+        available_networks = oneview_client.server_profiles.get_available_networks(enclosureGroupUri=enclosure_group_uri,
+                                                                                   serverHardwareTypeUri=server_hardware_type_uri, view='Ethernet',
+                                                                                   scope_uris="\"'/rest/scopes/3bb0c754-fd38-45af-be8a-4d4419de06e9'\"")
+        if len(available_networks) > 0:
+            pprint(available_networks)
+        else:
+            print("No Server Profiles Group found.")
+except HPOneViewException as e:
+    print(e.msg)
+
+try:
     # Get the list of available servers
     print("\nList all available servers associated with a server hardware type and enclosure group")
     available_servers = oneview_client.server_profiles.get_available_servers(
