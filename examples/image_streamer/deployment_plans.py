@@ -69,15 +69,15 @@ deployment_plans = image_streamer_client.deployment_plans.get_all()
 for deployment_plan in deployment_plans:
     print(deployment_plan['name'])
 
-if oneview_client.api_version >= 600:
-    # Get the list of ServerProfile and ServerProfileTemplate URI that are using OEDP {id}
-    print("\nGet the list of ServerProfile and ServerProfileTemplate URI that are using OEDP {id}")
-    deployment_osdp = image_streamer_client.deployment_plans.get_osdp(deployment_plan_created['id'])
-    pprint(deployment_osdp)
-
 if oneview_client.api_version >= 500:
     # Get the list of ServerProfile and ServerProfileTemplate URI that are using OEDP {id}
     print("\nGet the list of ServerProfile and ServerProfileTemplate URI that are using OEDP {id}")
+    deployment_usedby = image_streamer_client.deployment_plans.get_usedby(deployment_plan_created['id'])
+    pprint(deployment_usedby)
+
+if oneview_client.api_version >= 600:
+    # Get the list of ServerProfile and ServerProfileTemplate URI that are using OEDP {id}
+    print("\nGet the OSDP of a Deployment Plan ")
     deployment_osdp = image_streamer_client.deployment_plans.get_osdp(deployment_plan_created['id'])
     pprint(deployment_osdp)
 
