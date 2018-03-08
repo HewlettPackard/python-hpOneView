@@ -1,4 +1,11 @@
-# 4.5.0 
+# 4.6.0 (Unreleased)
+#### Notes
+Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
+
+#### Features supported with current release:
+- Deployment plan
+
+# 4.5.0
 #### Notes
 Added the capability to set a connection timeout when connecting to the HPE OneView Appliance
 

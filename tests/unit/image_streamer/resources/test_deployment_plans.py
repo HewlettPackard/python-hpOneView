@@ -110,6 +110,20 @@ class DeploymentPlansTest(TestCase):
         self._client.update(information)
         mock_update.assert_called_once_with(expected_data, timeout=-1)
 
+    @mock.patch.object(ResourceClient, 'get_osdp')
+    def test_osdp_called_once(self, mock_get_osdp):
+        self._client.get_osdp('3518be0e-17c1-4189-8f81-83f3724f6155')
+
+        expected_uri = '/rest/deployment-plans/3518be0e-17c1-4189-8f81-83f3724f6155/osdp/'
+        mock_get_osdp.assert_called_once_with(uri=expected_uri, timeout=-1)
+
+    @mock.patch.object(ResourceClient, 'get_usedby')
+    def test_osdp_called_once(self, mock_get_usedby):
+        self._client.get_usedby('3518be0e-17c1-4189-8f81-83f3724f6155')
+
+        expected_uri = '/rest/deployment-plans/3518be0e-17c1-4189-8f81-83f3724f6155/usedby/'
+        mock_get_usedby.assert_called_once_with(uri=expected_uri, timeout=-1)
+
     @mock.patch.object(ResourceClient, 'delete')
     def test_delete_called_once(self, mock_delete):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'

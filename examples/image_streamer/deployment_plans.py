@@ -39,6 +39,9 @@ deployment_plan_information = {
     "oeBuildPlanURI": "/rest/build-plans/1beb9333-66a8-48d5-82b6-1bda1a81582a",
 }
 
+if oneview_client.api_version >= 500:
+    deployment_plan_information["type"] = "OEDeploymentPlanV5"
+
 # Create a Deployment Plan
 print("Create a Deployment Plan")
 deployment_plan_created = image_streamer_client.deployment_plans.create(deployment_plan_information)
@@ -65,6 +68,18 @@ print("\nGet all Deployment Plans")
 deployment_plans = image_streamer_client.deployment_plans.get_all()
 for deployment_plan in deployment_plans:
     print(deployment_plan['name'])
+
+if oneview_client.api_version >= 600:
+    # Get the list of ServerProfile and ServerProfileTemplate URI that are using OEDP {id}
+    print("\nGet the list of ServerProfile and ServerProfileTemplate URI that are using OEDP {id}")
+    deployment_osdp = image_streamer_client.deployment_plans.get_osdp(deployment_plan_created['id'])
+    pprint(deployment_osdp)
+
+if oneview_client.api_version >= 500:
+    # Get the list of ServerProfile and ServerProfileTemplate URI that are using OEDP {id}
+    print("\nGet the list of ServerProfile and ServerProfileTemplate URI that are using OEDP {id}")
+    deployment_osdp = image_streamer_client.deployment_plans.get_osdp(deployment_plan_created['id'])
+    pprint(deployment_osdp)
 
 # Delete the Deployment Plan
 print("\nDelete the Deployment Plan")
