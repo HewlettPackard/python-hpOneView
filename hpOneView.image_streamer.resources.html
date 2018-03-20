@@ -1024,6 +1024,42 @@ on create time with the oldest entry first.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.get_osdp">
+<code class="descname">get_osdp</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/deployment_plans.html#DeploymentPlans.get_osdp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.get_osdp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves facts about Server Profiles and Server Profile Templates that are using Deployment Plan based on the ID or URI provided.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the Deployment Plan.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Server Profiles and Server Profile Templates</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.get_usedby">
+<code class="descname">get_usedby</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/deployment_plans.html#DeploymentPlans.get_usedby"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.get_usedby" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the OS deployment plan details from OneView for a deployment plan resource based on the ID or URI provided.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the Deployment Plan.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The OS Deployment Plan.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.update">
 <code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/deployment_plans.html#DeploymentPlans.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the properties of the Deployment Plan.</p>

@@ -283,6 +283,32 @@
 <span class="sd">        &quot;&quot;&quot;</span></div>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
 
+<div class="viewcode-block" id="DeploymentPlans.get_osdp"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.get_osdp">[docs]</a>    <span class="k">def</span> <span class="nf">get_osdp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves facts about Server Profiles and Server Profile Templates that are using Deployment Plan based on the ID or URI provided.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: ID or URI of the Deployment Plan.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Server Profiles and Server Profile Templates</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_subresource_uri</span><span class="p">(</span><span class="n">resource_id_or_uri</span><span class="o">=</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">subresource_path</span><span class="o">=</span><span class="s2">&quot;osdp&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DeploymentPlans.get_usedby"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.get_usedby">[docs]</a>    <span class="k">def</span> <span class="nf">get_usedby</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the OS deployment plan details from OneView for a deployment plan resource based on the ID or URI provided.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: ID or URI of the Deployment Plan.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: The OS Deployment Plan.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_subresource_uri</span><span class="p">(</span><span class="n">resource_id_or_uri</span><span class="o">=</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">subresource_path</span><span class="o">=</span><span class="s2">&quot;usedby&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+
 <div class="viewcode-block" id="DeploymentPlans.delete"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.deployment_plans.DeploymentPlans.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deletes the Deployment Plan.</span>
