@@ -128,6 +128,32 @@ class DeploymentPlans(object):
         """
         return self._client.update(resource, timeout=timeout)
 
+    def get_osdp(self, id_or_uri):
+        """
+        Retrieves facts about Server Profiles and Server Profile Templates that are using Deployment Plan based on the ID or URI provided.
+
+        Args:
+            id_or_uri: ID or URI of the Deployment Plan.
+
+        Returns:
+            dict: Server Profiles and Server Profile Templates
+        """
+        uri = self._client.build_subresource_uri(resource_id_or_uri=id_or_uri, subresource_path="osdp")
+        return self._client.get(uri)
+
+    def get_usedby(self, id_or_uri):
+        """
+        Retrieves the OS deployment plan details from OneView for a deployment plan resource based on the ID or URI provided.
+
+        Args:
+            id_or_uri: ID or URI of the Deployment Plan.
+
+        Returns:
+            dict: The OS Deployment Plan.
+        """
+        uri = self._client.build_subresource_uri(resource_id_or_uri=id_or_uri, subresource_path="usedby")
+        return self._client.get(uri)
+
     def delete(self, resource, force=False, timeout=-1):
         """
         Deletes the Deployment Plan.
