@@ -130,37 +130,23 @@ class DeploymentPlans(object):
 
     def get_osdp(self, id_or_uri):
         """
-        Retrieves all OS Deployment Plans on a Deployment Plan resource based on the ID or URI provided.
+        Retrieves facts about Server Profiles and Server Profile Templates that are using Deployment Plan based on the ID or URI provided.
 
         Args:
             id_or_uri: ID or URI of the Deployment Plan.
-            start:
-                The first item to return, using 0-based indexing.
-                If not specified, the default is 0 - start with the first available item.
-            count:
-                The number of resources to return. A count of -1 requests all items.
-                The actual number of items in the response might differ from the requested
-                count if the sum of start and count exceeds the total number of items.
 
         Returns:
-            dict: The OS Deployment Plan.
+            dict: Server Profiles and Server Profile Templates
         """
         uri = self._client.build_subresource_uri(resource_id_or_uri=id_or_uri, subresource_path="osdp")
         return self._client.get(uri)
 
     def get_usedby(self, id_or_uri):
         """
-        Retrieves all OS Deployment Plans on a Deployment Plan resource based on the ID or URI provided.
+        Retrieves the OS deployment plan details from OneView for a deployment plan resource based on the ID or URI provided.
 
         Args:
             id_or_uri: ID or URI of the Deployment Plan.
-            start:
-                The first item to return, using 0-based indexing.
-                If not specified, the default is 0 - start with the first available item.
-            count:
-                The number of resources to return. A count of -1 requests all items.
-                The actual number of items in the response might differ from the requested
-                count if the sum of start and count exceeds the total number of items.
 
         Returns:
             dict: The OS Deployment Plan.
