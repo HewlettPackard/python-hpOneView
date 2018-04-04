@@ -136,7 +136,7 @@ class StoragePools(object):
         return self._client.get_by(field, value)
 
     def get_reachable_storage_pools(self, start=0, count=-1, filter='', query='', sort='',
-                                    networks=None, scope_exclusions=None, scope_uris=None):
+                                    networks=None, scope_exclusions=None, scope_uris=''):
         """
         Gets the storage pools that are connected on the specified networks
         based on the storage system port's expected network connectivity.
@@ -155,7 +155,9 @@ class StoragePools(object):
 
         if scope_exclusions:
             storage_pools_uris = ",".join(scope_exclusions)
-            uri += "scopeExclusions={}".format(storage_pools_uris)
+            uri += "?scopeExclusions={}".format(storage_pools_uris)
+
+        print(uri, count)
 
         return self._client.get(self._client.build_query_uri(start=start, count=count, filter=filter, query=query,
                                                              sort=sort, uri=uri, scope_uris=scope_uris))
