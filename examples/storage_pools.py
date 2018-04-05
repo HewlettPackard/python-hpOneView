@@ -27,13 +27,14 @@ from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "10.30.5.89",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "sijeesh",
-        "password": "ecosystem"
-    },
-    "api_version" :500
+        "userName": "<username>",
+        "password": "<password>"
+    }
 }
+scope_uris = '/rest/scopes/754e0dce-3cbd-4188-8923-edf86f068bf7'
+storage_pool_uris = ['/rest/storage-pools/5F9CA89B-C632-4F09-BC55-A8AA00DA5C4A']
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
@@ -62,24 +63,27 @@ else:
         s_system['name'], s_system['uri']))
 
 # Find and add unmanaged storage pool for management
+# Create and delete operations supports only with API version 300 and below.
 if oneview_client.api_version <= 300:
     pool_name = ''
     storage_pool_add = {}
+
     print("Find and add unmanaged storage pool for management")
     for pool in s_system['unmanagedPools']:
-       	if pool['domain'] == s_system['managedDomain']:
-	    pool_name = pool['name']
-	    break
+        if pool['domain'] == s_system['managedDomain']:
+            pool_name = pool['name']
+            break
+
     if pool_name:
-	print("   Found pool '{}'".format(pool_name))
-	options = {
-	    "storageSystemUri": s_system['uri'],
-	    "poolName": pool_name
-	}
-	storage_pool_add = oneview_client.storage_pools.add(options)
-	print("   Successfully added pool")
+        print("   Found pool '{}'".format(pool_name))
+        options = {
+            "storageSystemUri": s_system['uri'],
+            "poolName": pool_name
+        }
+        storage_pool_add = oneview_client.storage_pools.add(options)
+        print("   Successfully added pool")
     else:
-	print("   No available unmanaged storage pools to add")
+        print("   No available unmanaged storage pools to add")
 
     # Remove storage pool
     if storage_pool_add:
@@ -87,16 +91,15 @@ if oneview_client.api_version <= 300:
         oneview_client.storage_pools.remove(storage_pool_add)
         print("   Done.")
 
-# Get all reachable storage pools
+# Get all the reachable storage pools filtered by scope uris.
 print("Get all reachable storage pools")
-scope_uris = '/rest/scopes/754e0dce-3cbd-4188-8923-edf86f068bf7'
 reachable_storage_pools = oneview_client.storage_pools.get_reachable_storage_pools(scope_uris=scope_uris)
 print(reachable_storage_pools)
 
-# Get all reachable storage pools
+# Get all reachable storage pools by passing a set of storage pools uris
+# to exclude those storage pools from scope validation checks.
 print("Get all reachable storage pools")
-pool_uris = ['/rest/storage-pools/5F9CA89B-C632-4F09-BC55-A8AA00DA5C4A']
-reachable_storage_pools = oneview_client.storage_pools.get_reachable_storage_pools(scope_exclusions=pool_uris)
+reachable_storage_pools = oneview_client.storage_pools.get_reachable_storage_pools(scope_exclusions=storage_pool_uris)
 print(reachable_storage_pools)
 
 # Get all managed storage pools
@@ -123,7 +126,7 @@ pprint(storage_pool_by_uri)
 
 # Get storage pool by id and update it
 try:
-    pool_id = '5F9CA89B-C632-4F09-BC55-A8AA00DA5C4A'
+    pool_id = storage_pool_uris[0].split('/')[2]
     storage_pool_by_id = oneview_client.storage_pools.get(pool_id)
     print("Got storage pool '{}' by id '{}' at\n   uri: '{}'".format(
         storage_pool_by_id['name'], pool_id, storage_pool_by_id['uri']))
@@ -136,8 +139,6 @@ try:
 
 except HPOneViewException as e:
     print(e.msg)
-
-
 
 # Remove storage system, if it was added
 if storage_system_added:
