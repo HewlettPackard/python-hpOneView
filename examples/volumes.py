@@ -61,7 +61,7 @@ options = {
     "properties": {
         "storagePool": storage_pool['uri'],
         "size": 1024 * 1024 * 1024,  # 1GB
-        "isSharable": False,
+        "isShareable": False,
         "snapshotPool": storage_pool['uri'],
         "provisioningType": "Thin",
         "name": "ONEVIEW_SDK_TEST_VOLUME_TYPE_1"
@@ -165,7 +165,5 @@ pprint(attachable_volumes)
 print("\nDelete the recently created volumes")
 if oneview_client.volumes.delete(new_volume):
     print("The volume, that was previously created with a Storage Pool, was deleted from OneView and storage system")
-if oneview_client.volumes.delete(volume_with_snapshot_pool):
-    print("The volume, that was previously created with a Snapshot Pool, was deleted from OneView and storage system")
 if unmanaged_volume_wwn and oneview_client.volumes.delete(volume_added_with_wwn, export_only=True):
     print("The volume, that was previously added using the WWN of the volume, was deleted from OneView")
