@@ -280,20 +280,14 @@ class VolumesTest(unittest.TestCase):
         query = 'availableNetworks IN [/rest/fc-networks/123-45-67,/rest/fc-networks/111-222-333]'
         scope_uris = ['/rest/scopes/e4a23533-9a72-4375-8cd3-a523016df852',
                       '/rest/scopes/7799327d-6d79-4eb2-b969-a523016df869']
-        connections = [{'networkUri': '/rest/fc-networks/90bd0f63-3aab-49e2-a45f-a52500b46616',
-                        'proxyName': '20:19:50:EB:1A:0F:0E:B6', 'initiatorName': '10:00:62:01:F8:70:00:0E'},
-                       {'networkUri': '/rest/fc-networks/8acd0f62-1aab-49e2-a45a-d22500b4acdb',
-                        'proxyName': '20:18:40:EB:1A:0F:0E:C7', 'initiatorName': '10:00:72:01:F8:70:00:0F'}]
+        connections = [{'networkUri': '/rest/fc-networks/90bd0f63-3aab-49e2-a45f-a52500b46616'},
+                       {'networkUri': '/rest/fc-networks/8acd0f62-1aab-49e2-a45a-d22500b4acdb'}]
 
         self._volumes.get_attachable_volumes(2, 500, filter, query, sort, scope_uris, connections)
 
-        expected_uri = "/rest/storage-volumes/attachable-volumes?connections=[{" \
-                       "'proxyName': '20:19:50:EB:1A:0F:0E:B6', " \
-                       "'networkUri': '/rest/fc-networks/90bd0f63-3aab-49e2-a45f-a52500b46616', " \
-                       "'initiatorName': '10:00:62:01:F8:70:00:0E'}, " \
-                       "{'proxyName': '20:18:40:EB:1A:0F:0E:C7', " \
-                       "'networkUri': '/rest/fc-networks/8acd0f62-1aab-49e2-a45a-d22500b4acdb', " \
-                       "'initiatorName': '10:00:72:01:F8:70:00:0F'}]"
+        expected_uri = "/rest/storage-volumes/attachable-volumes?connections=" \
+                       "[{'networkUri': '/rest/fc-networks/90bd0f63-3aab-49e2-a45f-a52500b46616'}, " \
+                       "{'networkUri': '/rest/fc-networks/8acd0f62-1aab-49e2-a45a-d22500b4acdb'}]"
         mock_get_all.assert_called_once_with(2, 500, uri=expected_uri, filter=filter, query=query, sort=sort,
                                              scope_uris=scope_uris)
 
