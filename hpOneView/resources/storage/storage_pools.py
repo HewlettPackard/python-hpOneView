@@ -174,7 +174,8 @@ class StoragePools(object):
 
         if scope_exclusions:
             storage_pools_uris = ",".join(scope_exclusions)
-            uri += "?scopeExclusions={}".format(storage_pools_uris)
+            uri = uri + "?" if "?" not in uri else uri + "&"
+            uri += "scopeExclusions={}".format(storage_pools_uris)
 
         return self._client.get(self._client.build_query_uri(start=start, count=count, filter=filter, query=query,
                                                              sort=sort, uri=uri, scope_uris=scope_uris))

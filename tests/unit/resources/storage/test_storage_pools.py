@@ -112,7 +112,8 @@ class StoragePoolsTest(unittest.TestCase):
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_reachable_storage_pools_called_once(self, mock_get):
-        reachable_pools_uri = "/rest/storage-pools/reachable-storage-pools?networks='/rest/fake'&start=0&count=-1"
-
-        self._storage_pools.get_reachable_storage_pools(networks=['/rest/fake'])
-        mock_get.assert_called_once_with(reachable_pools_uri)
+        query_params = "networks='/rest/networks/fake'&scopeExclusions=/rest/scope/fake"
+        uri = "/rest/storage-pools/reachable-storage-pools?" + query_params + "&start=0&count=-1"
+        self._storage_pools.get_reachable_storage_pools(networks=['/rest/networks/fake'],
+                                                        scope_exclusions=['/rest/scope/fake'])
+        mock_get.assert_called_once_with(uri)

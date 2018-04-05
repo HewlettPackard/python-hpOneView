@@ -92,13 +92,13 @@ if oneview_client.api_version <= 300:
         print("   Done.")
 
 # Get all the reachable storage pools filtered by scope uris.
-print("Get all reachable storage pools")
+print("Get all reachable storage pools filtered by scopes")
 reachable_storage_pools = oneview_client.storage_pools.get_reachable_storage_pools(scope_uris=scope_uris)
 print(reachable_storage_pools)
 
 # Get all reachable storage pools by passing a set of storage pools uris
 # to exclude those storage pools from scope validation checks.
-print("Get all reachable storage pools")
+print("Get all reachable storage pools by passing a set of storage pool uris to exclude from scope validation.")
 reachable_storage_pools = oneview_client.storage_pools.get_reachable_storage_pools(scope_exclusions=storage_pool_uris)
 print(reachable_storage_pools)
 
