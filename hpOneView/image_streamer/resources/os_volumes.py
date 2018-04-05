@@ -120,3 +120,8 @@ class OsVolumes(object):
         """
         uri = self.URI + "/archive/" + extract_id_from_uri(id_or_uri)
         return self._client.download(uri, file_path)
+
+    def get_storage(self, id_or_uri):
+
+        uri = self.URI + "/{}/storage".format(id_or_uri)
+        return self._client.get(uri)
