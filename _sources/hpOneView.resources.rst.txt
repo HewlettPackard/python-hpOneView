@@ -1,6 +1,23 @@
 hpOneView.resources package
 ===========================
 
+Subpackages
+-----------
+
+.. toctree::
+
+    hpOneView.resources.activity
+    hpOneView.resources.data_services
+    hpOneView.resources.facilities
+    hpOneView.resources.fc_sans
+    hpOneView.resources.networking
+    hpOneView.resources.search
+    hpOneView.resources.security
+    hpOneView.resources.servers
+    hpOneView.resources.settings
+    hpOneView.resources.storage
+    hpOneView.resources.uncategorized
+
 Submodules
 ----------
 

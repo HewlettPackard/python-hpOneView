@@ -25,23 +25,16 @@
   
 
   
-  
     <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="HPE OneView Python SDK 4.5.0 documentation" href="../../index.html"/>
-        <link rel="up" title="hpOneView" href="../hpOneView.html"/> 
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="search" title="Search" href="../../search.html" /> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -98,7 +91,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">HPE OneView Python SDK</a>
@@ -106,9 +99,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -139,8 +133,6 @@
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -238,37 +230,37 @@
                 <span class="k">raise</span> <span class="n">HPOneViewException</span><span class="p">(</span><span class="s1">&#39;Unsupported API Version&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;currentVersion&#39;</span> <span class="ow">in</span> <span class="n">version</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apiVersion</span> <span class="o">&gt;</span> <span class="n">version</span><span class="p">[</span><span class="s1">&#39;currentVersion&#39;</span><span class="p">]:</span>
-                <span class="k">raise</span> <span class="n">HPOneViewException</span><span class="p">(</span><span class="s1">&#39;Unsupported API Version&#39;</span><span class="p">)</span></div>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_validateVersion</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">raise</span> <span class="n">HPOneViewException</span><span class="p">(</span><span class="s1">&#39;Unsupported API Version&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validateVersion</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="connection.set_proxy"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.set_proxy">[docs]</a>    <span class="k">def</span> <span class="nf">set_proxy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proxyHost</span><span class="p">,</span> <span class="n">proxyPort</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_proxyHost</span> <span class="o">=</span> <span class="n">proxyHost</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_proxyPort</span> <span class="o">=</span> <span class="n">proxyPort</span></div>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_doProxy</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_proxyPort</span> <span class="o">=</span> <span class="n">proxyPort</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_doProxy</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="connection.set_trusted_ssl_bundle"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.set_trusted_ssl_bundle">[docs]</a>    <span class="k">def</span> <span class="nf">set_trusted_ssl_bundle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sslBundle</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">sslBundle</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_sslTrustAll</span> <span class="o">=</span> <span class="kc">False</span></div>
-        <span class="k">return</span> <span class="n">sslBundle</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sslTrustAll</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">sslBundle</span></div>
 
-<div class="viewcode-block" id="connection.get_session"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.get_session">[docs]</a>    <span class="k">def</span> <span class="nf">get_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span>
+<div class="viewcode-block" id="connection.get_session"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.get_session">[docs]</a>    <span class="k">def</span> <span class="nf">get_session</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span></div>
 
-<div class="viewcode-block" id="connection.get_session_id"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.get_session_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_session_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;auth&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="connection.get_session_id"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.get_session_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_session_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;auth&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="connection.set_session_id"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.set_session_id">[docs]</a>    <span class="k">def</span> <span class="nf">set_session_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session_id</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="p">[</span><span class="s1">&#39;auth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">session_id</span></div>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="p">[</span><span class="s1">&#39;auth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">session_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="connection.get_host"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.get_host">[docs]</a>    <span class="k">def</span> <span class="nf">get_host</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_host</span>
+<div class="viewcode-block" id="connection.get_host"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.get_host">[docs]</a>    <span class="k">def</span> <span class="nf">get_host</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_host</span></div>
 
-<div class="viewcode-block" id="connection.get_by_uri"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.get_by_uri">[docs]</a>    <span class="k">def</span> <span class="nf">get_by_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xuri</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">xuri</span><span class="p">)</span>
+<div class="viewcode-block" id="connection.get_by_uri"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.get_by_uri">[docs]</a>    <span class="k">def</span> <span class="nf">get_by_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xuri</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">xuri</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="connection.make_url"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.make_url">[docs]</a>    <span class="k">def</span> <span class="nf">make_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="s1">&#39;https://</span><span class="si">%s%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_host</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+<div class="viewcode-block" id="connection.make_url"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.make_url">[docs]</a>    <span class="k">def</span> <span class="nf">make_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;https://</span><span class="si">%s%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_host</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="connection.do_http"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.do_http">[docs]</a>    <span class="k">def</span> <span class="nf">do_http</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">http_headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -306,8 +298,8 @@
                 <span class="k">continue</span>
             <span class="k">except</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">HTTPException</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">HPOneViewException</span><span class="p">(</span><span class="s1">&#39;Failure during login attempt.</span><span class="se">\n</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
-</div>
-        <span class="k">return</span> <span class="n">resp</span><span class="p">,</span> <span class="n">body</span>
+
+        <span class="k">return</span> <span class="n">resp</span><span class="p">,</span> <span class="n">body</span></div>
 
 <div class="viewcode-block" id="connection.download_to_stream"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.download_to_stream">[docs]</a>    <span class="k">def</span> <span class="nf">download_to_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream_writer</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">http_headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -343,8 +335,8 @@
                 <span class="k">continue</span>
             <span class="k">except</span> <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">HTTPException</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">HPOneViewException</span><span class="p">(</span><span class="s1">&#39;Failure during login attempt.</span><span class="se">\n</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
-</div>
-        <span class="k">return</span> <span class="n">successful_connected</span>
+
+        <span class="k">return</span> <span class="n">successful_connected</span></div>
 
     <span class="k">def</span> <span class="nf">__handle_download_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resp</span><span class="p">,</span> <span class="n">conn</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
@@ -390,8 +382,8 @@
                                                    <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span>
                                                    <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span><span class="p">)</span>
                 <span class="n">conn</span><span class="o">.</span><span class="n">set_tunnel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_host</span><span class="p">,</span> <span class="mi">443</span><span class="p">)</span>
-</div>
-        <span class="k">return</span> <span class="n">conn</span>
+
+        <span class="k">return</span> <span class="n">conn</span></div>
 
     <span class="k">def</span> <span class="nf">_open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
@@ -423,8 +415,8 @@
         <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="s1">&#39;--&#39;</span> <span class="o">+</span> <span class="n">BOUNDARY</span> <span class="o">+</span> <span class="s1">&#39;--&#39;</span> <span class="o">+</span> <span class="n">CRLF</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
         <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">CRLF</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
         <span class="n">fout</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="n">fin</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
-        <span class="k">return</span> <span class="n">content_type</span>
+        <span class="n">fin</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">content_type</span></div>
 
 <div class="viewcode-block" id="connection.post_multipart_with_response_handling"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.post_multipart_with_response_handling">[docs]</a>    <span class="k">def</span> <span class="nf">post_multipart_with_response_handling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">baseName</span><span class="p">):</span>
         <span class="n">resp</span><span class="p">,</span> <span class="n">body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_multipart</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">baseName</span><span class="p">)</span>
@@ -435,8 +427,8 @@
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__body_content_is_task</span><span class="p">(</span><span class="n">body</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">body</span><span class="p">,</span> <span class="n">body</span>
-</div>
-        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">body</span>
+
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">body</span></div>
 
 <div class="viewcode-block" id="connection.post_multipart"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.post_multipart">[docs]</a>    <span class="k">def</span> <span class="nf">post_multipart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">baseName</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">content_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encode_multipart_formdata</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">baseName</span><span class="p">,</span>
@@ -481,8 +473,8 @@
 
         <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">HPOneViewException</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
-</div>
-        <span class="k">return</span> <span class="n">response</span><span class="p">,</span> <span class="n">body</span>
+
+        <span class="k">return</span> <span class="n">response</span><span class="p">,</span> <span class="n">body</span></div>
 
     <span class="c1">###########################################################################</span>
     <span class="c1"># Utility functions for making requests - the HTTP verbs</span>
@@ -501,38 +493,38 @@
             <span class="k">if</span> <span class="s1">&#39;total&#39;</span> <span class="ow">in</span> <span class="n">body</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_numTotalRecords</span> <span class="o">=</span> <span class="n">body</span><span class="p">[</span><span class="s1">&#39;total&#39;</span><span class="p">]</span>
             <span class="k">if</span> <span class="s1">&#39;count&#39;</span> <span class="ow">in</span> <span class="n">body</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_numDisplayedRecords</span> <span class="o">=</span> <span class="n">body</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span></div>
-        <span class="k">return</span> <span class="n">body</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_numDisplayedRecords</span> <span class="o">=</span> <span class="n">body</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">body</span></div>
 
 <div class="viewcode-block" id="connection.getNextPage"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.getNextPage">[docs]</a>    <span class="k">def</span> <span class="nf">getNextPage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nextPage</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">get_members</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_nextPage</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">get_members</span><span class="p">(</span><span class="n">body</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="connection.getPrevPage"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.getPrevPage">[docs]</a>    <span class="k">def</span> <span class="nf">getPrevPage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_prevPage</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">get_members</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_prevPage</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">get_members</span><span class="p">(</span><span class="n">body</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="connection.getLastPage"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.getLastPage">[docs]</a>    <span class="k">def</span> <span class="nf">getLastPage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nextPage</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">members</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNextPage</span><span class="p">()</span></div>
-        <span class="k">return</span> <span class="n">members</span>
+            <span class="n">members</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNextPage</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">members</span></div>
 
 <div class="viewcode-block" id="connection.getFirstPage"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.getFirstPage">[docs]</a>    <span class="k">def</span> <span class="nf">getFirstPage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prevPage</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">members</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPrevPage</span><span class="p">()</span></div>
-        <span class="k">return</span> <span class="n">members</span>
+            <span class="n">members</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPrevPage</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">members</span></div>
 
-<div class="viewcode-block" id="connection.delete"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__do_rest_call</span><span class="p">(</span><span class="s1">&#39;DELETE&#39;</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="p">{},</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span>
+<div class="viewcode-block" id="connection.delete"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__do_rest_call</span><span class="p">(</span><span class="s1">&#39;DELETE&#39;</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="p">{},</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="connection.put"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__do_rest_call</span><span class="p">(</span><span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span>
+<div class="viewcode-block" id="connection.put"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.put">[docs]</a>    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__do_rest_call</span><span class="p">(</span><span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="connection.post"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__do_rest_call</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span>
+<div class="viewcode-block" id="connection.post"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.post">[docs]</a>    <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__do_rest_call</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="connection.patch"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.patch">[docs]</a>    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__do_rest_call</span><span class="p">(</span><span class="s1">&#39;PATCH&#39;</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span>
+<div class="viewcode-block" id="connection.patch"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.patch">[docs]</a>    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__do_rest_call</span><span class="p">(</span><span class="s1">&#39;PATCH&#39;</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__body_content_is_task</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="s1">&#39;category&#39;</span> <span class="ow">in</span> <span class="n">body</span> <span class="ow">and</span> <span class="n">body</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;tasks&#39;</span>
@@ -576,13 +568,13 @@
     <span class="c1">###########################################################################</span>
     <span class="c1"># EULA</span>
     <span class="c1">###########################################################################</span>
-<div class="viewcode-block" id="connection.get_eula_status"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.get_eula_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_eula_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">[</span><span class="s1">&#39;eulaStatus&#39;</span><span class="p">])</span>
+<div class="viewcode-block" id="connection.get_eula_status"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.get_eula_status">[docs]</a>    <span class="k">def</span> <span class="nf">get_eula_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">[</span><span class="s1">&#39;eulaStatus&#39;</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="connection.set_eula"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.set_eula">[docs]</a>    <span class="k">def</span> <span class="nf">set_eula</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">supportAccess</span><span class="o">=</span><span class="s1">&#39;yes&#39;</span><span class="p">):</span>
         <span class="n">eula</span> <span class="o">=</span> <span class="n">make_eula_dict</span><span class="p">(</span><span class="n">supportAccess</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">uri</span><span class="p">[</span><span class="s1">&#39;eulaSave&#39;</span><span class="p">],</span> <span class="n">eula</span><span class="p">)</span></div>
-        <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">uri</span><span class="p">[</span><span class="s1">&#39;eulaSave&#39;</span><span class="p">],</span> <span class="n">eula</span><span class="p">)</span>
+        <span class="k">return</span></div>
 
     <span class="c1">###########################################################################</span>
     <span class="c1"># Initial Setup</span>
@@ -590,8 +582,8 @@
 <div class="viewcode-block" id="connection.change_initial_password"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.change_initial_password">[docs]</a>    <span class="k">def</span> <span class="nf">change_initial_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">newPassword</span><span class="p">):</span>
         <span class="n">password</span> <span class="o">=</span> <span class="n">make_initial_password_change_dict</span><span class="p">(</span><span class="s1">&#39;Administrator&#39;</span><span class="p">,</span>
                                                      <span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="n">newPassword</span><span class="p">)</span>
-        <span class="c1"># This will throw an exception if the password is already changed</span></div>
-        <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">uri</span><span class="p">[</span><span class="s1">&#39;changePassword&#39;</span><span class="p">],</span> <span class="n">password</span><span class="p">)</span>
+        <span class="c1"># This will throw an exception if the password is already changed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">uri</span><span class="p">[</span><span class="s1">&#39;changePassword&#39;</span><span class="p">],</span> <span class="n">password</span><span class="p">)</span></div>
 
     <span class="c1">###########################################################################</span>
     <span class="c1"># Login/Logout to/from appliance</span>
@@ -619,8 +611,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="p">[</span><span class="s1">&#39;auth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">auth</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="n">verbose</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">((</span><span class="s1">&#39;Session Key: &#39;</span> <span class="o">+</span> <span class="n">auth</span><span class="p">))</span></div>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Logged in successfully&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">((</span><span class="s1">&#39;Session Key: &#39;</span> <span class="o">+</span> <span class="n">auth</span><span class="p">))</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Logged in successfully&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="connection.logout"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.logout">[docs]</a>    <span class="k">def</span> <span class="nf">logout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="c1"># resp, body = self.do_http(method, uri[&#39;loginSessions&#39;] \</span>
@@ -634,8 +626,8 @@
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Logged Out&#39;</span><span class="p">)</span>
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="p">[</span><span class="s1">&#39;auth&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Logged out successfully&#39;</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Logged out successfully&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="connection.enable_etag_validation"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.enable_etag_validation">[docs]</a>    <span class="k">def</span> <span class="nf">enable_etag_validation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -643,15 +635,15 @@
 <span class="sd">        processed only if the provided entity tag in the body matches the latest entity tag stored for the resource.</span>
 
 <span class="sd">        The eTag validation is enabled by default.</span>
-<span class="sd">        &quot;&quot;&quot;</span></div>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;If-Match&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;If-Match&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="connection.disable_etag_validation"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.connection.disable_etag_validation">[docs]</a>    <span class="k">def</span> <span class="nf">disable_etag_validation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Disable the concurrency control for the PUT and DELETE requests. The requests will be forced without specifying</span>
 <span class="sd">        an explicit ETag. This method sets an If-Match header of &quot;*&quot;.</span>
-<span class="sd">        &quot;&quot;&quot;</span></div></div>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="p">[</span><span class="s1">&#39;If-Match&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_headers</span><span class="p">[</span><span class="s1">&#39;If-Match&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span></div></div>
 
 
 <span class="n">uri</span> <span class="o">=</span> <span class="p">{</span>
@@ -807,33 +799,31 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">mlist</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">mlist</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="p">[]</span></div>
-    <span class="k">return</span> <span class="n">mlist</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="k">return</span> <span class="n">mlist</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="get_member"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.get_member">[docs]</a><span class="k">def</span> <span class="nf">get_member</span><span class="p">(</span><span class="n">mlist</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">mlist</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">mlist</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
-    <span class="k">return</span> <span class="n">mlist</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">mlist</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="make_eula_dict"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.make_eula_dict">[docs]</a><span class="k">def</span> <span class="nf">make_eula_dict</span><span class="p">(</span><span class="n">supportAccess</span><span class="p">):</span></div>
-    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;supportAccess&#39;</span><span class="p">:</span> <span class="n">supportAccess</span><span class="p">}</span>
+<div class="viewcode-block" id="make_eula_dict"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.make_eula_dict">[docs]</a><span class="k">def</span> <span class="nf">make_eula_dict</span><span class="p">(</span><span class="n">supportAccess</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;supportAccess&#39;</span><span class="p">:</span> <span class="n">supportAccess</span><span class="p">}</span></div>
 
 
 <div class="viewcode-block" id="make_initial_password_change_dict"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.connection.make_initial_password_change_dict">[docs]</a><span class="k">def</span> <span class="nf">make_initial_password_change_dict</span><span class="p">(</span><span class="n">userName</span><span class="p">,</span> <span class="n">oldPassword</span><span class="p">,</span> <span class="n">newPassword</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s1">&#39;userName&#39;</span><span class="p">:</span> <span class="n">userName</span><span class="p">,</span>
-        <span class="s1">&#39;oldPassword&#39;</span><span class="p">:</span> <span class="n">oldPassword</span><span class="p">,</span></div>
-        <span class="s1">&#39;newPassword&#39;</span><span class="p">:</span> <span class="n">newPassword</span><span class="p">}</span>
+        <span class="s1">&#39;oldPassword&#39;</span><span class="p">:</span> <span class="n">oldPassword</span><span class="p">,</span>
+        <span class="s1">&#39;newPassword&#39;</span><span class="p">:</span> <span class="n">newPassword</span><span class="p">}</span></div>
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -864,6 +854,7 @@
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
             VERSION:'4.5.0',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -881,14 +872,13 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
   
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>
