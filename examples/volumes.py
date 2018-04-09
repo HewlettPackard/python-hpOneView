@@ -162,6 +162,16 @@ print("\nGet all the attachable volumes which are managed by the appliance")
 attachable_volumes = oneview_client.volumes.get_attachable_volumes()
 pprint(attachable_volumes)
 
+print("\nGet the attachable volumes which are managed by the appliance with scopes and connections")
+scope_uris = ['/rest/scopes/e4a23533-9a72-4375-8cd3-a523016df852', '/rest/scopes/7799327d-6d79-4eb2-b969-a523016df869']
+
+connections = [{'networkUri': '/rest/fc-networks/90bd0f63-3aab-49e2-a45f-a52500b46616',
+                'proxyName': '20:19:50:EB:1A:0F:0E:B6', 'initiatorName': '10:00:62:01:F8:70:00:0E'},
+               {'networkUri': '/rest/fc-networks/8acd0f62-1aab-49e2-a45a-d22500b4acdb',
+                'proxyName': '20:18:40:EB:1A:0F:0E:C7', 'initiatorName': '10:00:72:01:F8:70:00:0F'}]
+attachable_volumes = oneview_client.volumes.get_attachable_volumes(scope_uris=scope_uris, connections=connections)
+pprint(attachable_volumes)
+
 print("\nDelete the recently created volumes")
 if oneview_client.volumes.delete(new_volume):
     print("The volume, that was previously created with a Storage Pool, was deleted from OneView and storage system")
