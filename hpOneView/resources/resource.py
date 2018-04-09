@@ -168,7 +168,6 @@ class ResourceClient(object):
 
         uri = "{0}{1}start={2}&count={3}{4}{5}{6}{7}{8}{9}".format(path, symbol, start, count, filter, query, sort,
                                                                    view, fields, scope_uris)
-
         return uri
 
     def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None, scope_uris=''):
