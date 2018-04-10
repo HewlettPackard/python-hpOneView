@@ -33,6 +33,8 @@ config = {
         "password": "<password>"
     }
 }
+scope_uris = '/rest/scopes/754e0dce-3cbd-4188-8923-edf86f068bf7'
+storage_pool_uris = ['/rest/storage-pools/5F9CA89B-C632-4F09-BC55-A8AA00DA5C4A']
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
@@ -61,23 +63,44 @@ else:
         s_system['name'], s_system['uri']))
 
 # Find and add unmanaged storage pool for management
-pool_name = ''
-storage_pool_add = {}
-print("Find and add unmanaged storage pool for management")
-for pool in s_system['unmanagedPools']:
-    if pool['domain'] == s_system['managedDomain']:
-        pool_name = pool['name']
-        break
-if pool_name:
-    print("   Found pool '{}'".format(pool_name))
-    options = {
-        "storageSystemUri": s_system['uri'],
-        "poolName": pool_name
-    }
-    storage_pool_add = oneview_client.storage_pools.add(options)
-    print("   Successfully added pool")
-else:
-    print("   No available unmanaged storage pools to add")
+# Create and delete operations supports only with API version 300 and below.
+if oneview_client.api_version <= 300:
+    pool_name = ''
+    storage_pool_add = {}
+
+    print("Find and add unmanaged storage pool for management")
+    for pool in s_system['unmanagedPools']:
+        if pool['domain'] == s_system['managedDomain']:
+            pool_name = pool['name']
+            break
+
+    if pool_name:
+        print("   Found pool '{}'".format(pool_name))
+        options = {
+            "storageSystemUri": s_system['uri'],
+            "poolName": pool_name
+        }
+        storage_pool_add = oneview_client.storage_pools.add(options)
+        print("   Successfully added pool")
+    else:
+        print("   No available unmanaged storage pools to add")
+
+    # Remove storage pool
+    if storage_pool_add:
+        print("Remove recently added storage pool")
+        oneview_client.storage_pools.remove(storage_pool_add)
+        print("   Done.")
+
+# Get all the reachable storage pools filtered by scope uris.
+print("Get all reachable storage pools filtered by scopes")
+reachable_storage_pools = oneview_client.storage_pools.get_reachable_storage_pools(scope_uris=scope_uris)
+print(reachable_storage_pools)
+
+# Get all reachable storage pools by passing a set of storage pools uris
+# to exclude those storage pools from scope validation checks.
+print("Get all reachable storage pools by passing a set of storage pool uris to exclude from scope validation.")
+reachable_storage_pools = oneview_client.storage_pools.get_reachable_storage_pools(scope_exclusions=storage_pool_uris)
+print(reachable_storage_pools)
 
 # Get all managed storage pools
 print("Get all managed storage pools")
@@ -101,21 +124,21 @@ print("Got storage pool '{}' by   uri: '{}'".format(
     storage_pool_by_uri['name'], storage_pool_by_uri['uri']))
 pprint(storage_pool_by_uri)
 
-# Get storage pool by id
+# Get storage pool by id and update it
 try:
-    storage_pool_by_id = oneview_client.storage_pools.get(
-        'CFA635CC-A9FB-4883-9B4B-BF65FA68FA57')
-    print("Got storage pool '{}' by id 'CFA635CC-A9FB-4883-9B4B-BF65FA68FA57' at\n   uri: '{}'".format(
-        storage_pool_by_id['name'], storage_pool_by_id['uri']))
+    pool_id = storage_pool_uris[0].split('/')[2]
+    storage_pool_by_id = oneview_client.storage_pools.get(pool_id)
+    print("Got storage pool '{}' by id '{}' at\n   uri: '{}'".format(
+        storage_pool_by_id['name'], pool_id, storage_pool_by_id['uri']))
     pprint(storage_pool_by_id)
+
+    print('Update storage pool description with new description "new description"')
+    storage_pool_by_id['description'] = "new description"
+    oneview_client.storage_pools.update(storage_pool_by_id)
+    print('Updated storage pool description')
+
 except HPOneViewException as e:
     print(e.msg)
-
-# Remove storage pool
-if storage_pool_add:
-    print("Remove recently added storage pool")
-    oneview_client.storage_pools.remove(storage_pool_add)
-    print("   Done.")
 
 # Remove storage system, if it was added
 if storage_system_added:
