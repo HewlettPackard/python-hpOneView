@@ -72,7 +72,7 @@ for plan_script_item in plan_scripts:
     print(plan_script_item['name'])
 print("***** done *****\n")
 
-# Get used by and read only 
+# Get used by and read only
 print("Gets builds plans which uses a particular read only plan script")
 build_plans = image_streamer_client.plan_scripts.get_usedby_and_readonly("cbfd487e-3d92-4eb4-b877-f9ea7c16a271")
 for build_plan_item in build_plans:

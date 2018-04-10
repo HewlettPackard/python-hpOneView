@@ -615,10 +615,10 @@
 |<sub> /rest/os-volumes/{id}</sub>                                         | GET              | :white_check_mark: |
 |<sub> /rest/os-volumes/archive/{id}</sub>                                 | GET              | :white_check_mark: |
 |     **Plan Scripts**                                                                                             |
-|<sub> /rest/plan-scripts</sub>                                            | POST             | :white_check_mark: |
-|<sub> /rest/plan-scripts/differences/{id}</sub>                           | POST             | :white_check_mark: |
-|<sub> /rest/plan-scripts</sub>                                            | GET              | :white_check_mark: |
-|<sub> /rest/plan-scripts/{id}</sub>                                       | GET              | :white_check_mark: |
-|<sub> /rest/plan-scripts/{id}</sub>                                       | PUT              | :white_check_mark: |
-|<sub> /rest/plan-scripts/{id}</sub>                                       | DELETE           | :white_check_mark: |
-
+|<sub> /rest/plan-scripts</sub>                                            | POST             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts/differences/{id}</sub>                           | POST             | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts</sub>                                            | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |\
+|<sub> /rest/plan-scripts/{id}</sub>                                       | GET              | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts/{id}</sub>                                       | PUT              | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts/{id}</sub>                                       | DELETE           | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub> /rest/plan-scripts/{id}/usedby/readonly</sub>                       | GET              | :heavy_minus_sign: | :heavy_minus_sign: | :heavy_minus_sign: | :white_check_mark: |
