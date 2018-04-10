@@ -1719,7 +1719,7 @@ on create time with the oldest entry first.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.storage.volumes.Volumes.get_attachable_volumes">
-<code class="descname">get_attachable_volumes</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.get_attachable_volumes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.get_attachable_volumes" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_attachable_volumes</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>scope_uris=u''</em>, <em>connections=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/storage/volumes.html#Volumes.get_attachable_volumes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.storage.volumes.Volumes.get_attachable_volumes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the volumes that are connected on the specified networks based on the storage system port’s expected
 network connectivity.</p>
 <dl class="docutils">
@@ -1746,6 +1746,9 @@ default is no filter; all resources are returned.</li>
 is no query; all resources are returned.</li>
 <li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
+<li><strong>connections</strong> – A list of dicts specifics the connections used by the attachable volumes. Needs network uri, initiatoer
+name and optional proxy name</li>
+<li><strong>scope_uris</strong> – A list specifics the list of scope uris used by the attachable volumed.</li>
 </ul>
 </td>
 </tr>
