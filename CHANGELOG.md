@@ -1,6 +1,7 @@
 # 4.6.0 (Unreleased)
 #### Notes
 Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
+- Plan Scripts
 
 #### Features supported with current release:
 - Deployment plan
