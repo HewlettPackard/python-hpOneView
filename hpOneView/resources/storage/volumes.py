@@ -388,7 +388,7 @@ class Volumes(object):
         uri = self.URI + '/repair'
         return self._client.create(data, uri=uri, timeout=timeout, custom_headers=custom_headers)
 
-    def get_attachable_volumes(self, start=0, count=-1, filter='', query='', sort=''):
+    def get_attachable_volumes(self, start=0, count=-1, filter='', query='', sort='', scope_uris='', connections=''):
         """
         Gets the volumes that are connected on the specified networks based on the storage system port's expected
         network connectivity.
@@ -414,9 +414,16 @@ class Volumes(object):
             sort:
                 The sort order of the returned data set. By default, the sort order is based
                 on create time with the oldest entry first.
+            connections:
+                A list of dicts specifics the connections used by the attachable volumes. Needs network uri, initiatoer
+                name and optional proxy name
+            scope_uris:
+                A list specifics the list of scope uris used by the attachable volumed.
 
         Returns:
             list: A list of attachable volumes that the appliance manages.
         """
         uri = self.URI + '/attachable-volumes'
-        return self._client.get_all(start, count, filter=filter, query=query, sort=sort, uri=uri)
+        if connections:
+            uri += str('?' + 'connections=' + connections.__str__())
+        return self._client.get_all(start, count, filter=filter, query=query, sort=sort, uri=uri, scope_uris=scope_uris)
