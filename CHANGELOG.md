@@ -4,8 +4,9 @@ Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
 
 #### Features supported with current release:
 - Deployment plan
-- Storage volume
+- Interconnect
 - Storage pool
+- Storage volume
 
 # 4.5.0
 #### Notes
