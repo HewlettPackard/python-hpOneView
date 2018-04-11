@@ -135,10 +135,30 @@ class StoragePools(object):
         """
         return self._client.get_by(field, value)
 
-    def get_reachable_storage_pools(self, start=0, count=-1, filter='', query='', sort='', networks=[]):
+    def get_reachable_storage_pools(self, start=0, count=-1, filter='', query='', sort='',
+                                    networks=None, scope_exclusions=None, scope_uris=''):
         """
         Gets the storage pools that are connected on the specified networks
         based on the storage system port's expected network connectivity.
+
+        Args:
+            start: The first item to return, using 0-based indexing. If not specified,
+                the default is 0 - start with the first available item.
+            count: The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
+            filter: A general filter/query string to narrow the list of items returned.
+                The default is no filter - all resources are returned.
+            sort: The sort order of the returned data set. By default, the sort order
+                is based on create time with the oldest entry first.
+            query: A general query string to narrow the list of resources returned.
+                The default is no query - all resources are returned.
+            networks: Specifies the comma-separated list of network URIs used by the
+                reachable storage pools.
+            scope_exclusions: Specifies the comma-separated list of storage-pools URIs
+                that will be excluded from the scope validation checks.
+            scope_uris: Specifies the comma-separated list of scope URIs used by the
+                reachable storage pools.
 
         Returns:
             list: Reachable Storage Pools List.
@@ -152,8 +172,13 @@ class StoragePools(object):
             elements = elements[:-1] + "\'"
             uri = uri + "?networks=" + elements
 
+        if scope_exclusions:
+            storage_pools_uris = ",".join(scope_exclusions)
+            uri = uri + "?" if "?" not in uri else uri + "&"
+            uri += "scopeExclusions={}".format(storage_pools_uris)
+
         return self._client.get(self._client.build_query_uri(start=start, count=count, filter=filter, query=query,
-                                                             sort=sort, uri=uri))
+                                                             sort=sort, uri=uri, scope_uris=scope_uris))
 
     def update(self, resource, timeout=-1):
         """

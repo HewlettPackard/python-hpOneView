@@ -278,18 +278,25 @@ class VolumesTest(unittest.TestCase):
         filter = 'name=TestName'
         sort = 'name:ascending'
         query = 'availableNetworks IN [/rest/fc-networks/123-45-67,/rest/fc-networks/111-222-333]'
+        scope_uris = ['/rest/scopes/e4a23533-9a72-4375-8cd3-a523016df852',
+                      '/rest/scopes/7799327d-6d79-4eb2-b969-a523016df869']
+        connections = [{'networkUri': '/rest/fc-networks/90bd0f63-3aab-49e2-a45f-a52500b46616'},
+                       {'networkUri': '/rest/fc-networks/8acd0f62-1aab-49e2-a45a-d22500b4acdb'}]
 
-        self._volumes.get_attachable_volumes(2, 500, filter, query, sort)
+        self._volumes.get_attachable_volumes(2, 500, filter, query, sort, scope_uris, connections)
 
-        expected_uri = '/rest/storage-volumes/attachable-volumes'
-        mock_get_all.assert_called_once_with(2, 500, uri=expected_uri, filter=filter, query=query, sort=sort)
+        expected_uri = "/rest/storage-volumes/attachable-volumes?connections=" \
+                       "[{'networkUri': '/rest/fc-networks/90bd0f63-3aab-49e2-a45f-a52500b46616'}, " \
+                       "{'networkUri': '/rest/fc-networks/8acd0f62-1aab-49e2-a45a-d22500b4acdb'}]"
+        mock_get_all.assert_called_once_with(2, 500, uri=expected_uri, filter=filter, query=query, sort=sort,
+                                             scope_uris=scope_uris)
 
     @mock.patch.object(ResourceClient, 'get_all')
     def test_get_attachable_volumes_called_with_default_values(self, mock_get_all):
         self._volumes.get_attachable_volumes()
 
         expected_uri = '/rest/storage-volumes/attachable-volumes'
-        mock_get_all.assert_called_once_with(0, -1, uri=expected_uri, filter='', query='', sort='')
+        mock_get_all.assert_called_once_with(0, -1, uri=expected_uri, filter='', query='', sort='', scope_uris='')
 
     @mock.patch.object(ResourceClient, 'create')
     def test_create_from_snapshot_called_once(self, mock_create):
