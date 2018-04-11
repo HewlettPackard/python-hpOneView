@@ -32,8 +32,8 @@ oneview_client = OneViewClient.from_json_file(EXAMPLE_CONFIG_FILE)
 image_streamer_client = oneview_client.create_image_streamer_client()
 
 os_volumes_information = {
-    "name": "OSVolume-5",
-    "id": "57f2d803-9c11-4f9a-bc02-71804a0fcc3e"
+    "name": "OSVolume-33",
+    "id": "c1252cc6-76f7-4644-a879-dfe3251ea985"
 }
 destination_archive_path = './archive_log.txt'
 
@@ -55,6 +55,10 @@ print("\nGet the OS Volumes by Name")
 os_volume = image_streamer_client.os_volumes.get_by_name(os_volumes_information['name'])
 pprint(os_volume)
 
+# Get storage details
+print("Get storage details")
+storage = image_streamer_client.os_volumes.get_storage(os_volumes_information['id'])
+pprint(storage)
 
 # Retrieve archived logs of the OS Volume
 print("Retrieve archived logs of the OS Volume")
@@ -62,3 +66,5 @@ if image_streamer_client.os_volumes.download_archive(os_volume['uri'], destinati
     print("  File downloaded successfully.")
 else:
     print("  Error downloading the file.")
+
+

@@ -123,5 +123,5 @@ class OsVolumes(object):
 
     def get_storage(self, id_or_uri):
 
-        uri = self.URI + "/{}/storage".format(id_or_uri)
+        uri = self.URI + "/{}/storage".format(extract_id_from_uri(id_or_uri))
         return self._client.get(uri)
