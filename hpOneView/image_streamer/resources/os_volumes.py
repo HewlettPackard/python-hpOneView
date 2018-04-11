@@ -122,6 +122,14 @@ class OsVolumes(object):
         return self._client.download(uri, file_path)
 
     def get_storage(self, id_or_uri):
+        """
+        Get storage details of an OS Volume.
 
+        Args:
+            id_or_uri: ID or URI of the OS Volume.
+
+        Returns:
+            dict: Storage details
+        """
         uri = self.URI + "/{}/storage".format(extract_id_from_uri(id_or_uri))
         return self._client.get(uri)

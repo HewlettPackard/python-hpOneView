@@ -55,7 +55,7 @@ print("\nGet the OS Volumes by Name")
 os_volume = image_streamer_client.os_volumes.get_by_name(os_volumes_information['name'])
 pprint(os_volume)
 
-# Get storage details
+# Get storage details (available only with API version 600 and above)
 print("Get storage details")
 storage = image_streamer_client.os_volumes.get_storage(os_volumes_information['id'])
 pprint(storage)
@@ -66,5 +66,3 @@ if image_streamer_client.os_volumes.download_archive(os_volume['uri'], destinati
     print("  File downloaded successfully.")
 else:
     print("  Error downloading the file.")
-
-
