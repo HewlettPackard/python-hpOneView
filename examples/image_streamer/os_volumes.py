@@ -66,5 +66,3 @@ if image_streamer_client.os_volumes.download_archive(os_volume['uri'], destinati
     print("  File downloaded successfully.")
 else:
     print("  Error downloading the file.")
-
-
