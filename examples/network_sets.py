@@ -112,8 +112,8 @@ print("Get all network sets without Ethernet")
 net_sets_without_ethernet = oneview_client.network_sets.get_all_without_ethernet()
 pprint(net_sets_without_ethernet)
 
-# Adds network set to scope defined
-if scope_name:
+# Adds network set to scope defined only for V300 and V500
+if scope_name and 300 <= oneview_client.api_version <= 500:
     print("\nGet scope then add the network set to it")
     scope = oneview_client.scopes.get_by_name(scope_name)
     net_set_with_scope = oneview_client.network_sets.patch(network_set['uri'],

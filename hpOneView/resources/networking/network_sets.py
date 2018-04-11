@@ -43,7 +43,8 @@ class NetworkSets(object):
     DEFAULT_VALUES = {
         '200': {"type": "network-set"},
         '300': {"type": "network-setV300"},
-        '500': {"type": "network-setV300"}
+        '500': {"type": "network-setV300"},
+        '600': {"type": "network-setV4"}
     }
 
     def __init__(self, con):
