@@ -91,6 +91,6 @@ class OsVolumesTest(TestCase):
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_storage(self, mock_get):
-        uri = '/rest/os-volumes/3518be0e-17c1-4189-8f81-83f3724f6155/storage'
-        self._client.get(uri)
+        volume_id = '3518be0e-17c1-4189-8f81-83f3724f6155'
+        self._client.get_storage(volume_id)
         mock_get.assert_called_once_with('/rest/os-volumes/3518be0e-17c1-4189-8f81-83f3724f6155/storage')
