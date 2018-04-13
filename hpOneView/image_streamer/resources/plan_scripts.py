@@ -168,3 +168,16 @@ class PlanScripts(object):
         """
         uri = self.URI + "/differences/" + extract_id_from_uri(id_or_uri)
         return self._client.create(content, uri=uri, timeout=timeout)
+
+    def get_usedby_and_readonly(self, id):
+        """
+        Gets the build plans details os teh selected plan script as per the selected attributes.
+
+        Args:
+            id: ID of the Plan Script.
+
+        Returns:
+            array of build plans
+        """
+        uri = self.URI + "/" + id + "/usedby/readonly"
+        return self._client.get(uri)

@@ -125,3 +125,10 @@ class PlanScriptsTest(TestCase):
         mock_create.assert_called_once_with("content",
                                             timeout=-1,
                                             uri='/rest/plan-scripts/differences/3518be0e-17c1-4189-8f81-83f3724f6155')
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_usedby_and_readonly(self, mock_get):
+        self._client.get_usedby_and_readonly('cbfd487e-3d92-4eb4-b877-f9ea7c16a271')
+
+        mock_get.assert_called_once_with(
+            '/rest/plan-scripts/cbfd487e-3d92-4eb4-b877-f9ea7c16a271/usedby/readonly')

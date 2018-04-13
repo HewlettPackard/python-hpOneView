@@ -39,6 +39,9 @@ plan_script_information = {
     "content": 'echo "test script"'
 }
 
+# plan script which is used by buils plans and is readonly
+plan_script_id_readyonly = "590746df-7354-42aa-8887-e1ea122f7ed6"
+
 # Create a Plan Script
 print("Create a Plan Script")
 plan_script = image_streamer_client.plan_scripts.create(plan_script_information)
@@ -71,6 +74,13 @@ plan_scripts = image_streamer_client.plan_scripts.get_all()
 for plan_script_item in plan_scripts:
     print(plan_script_item['name'])
 print("***** done *****\n")
+
+# Get used by and read only
+print("Gets builds plans which uses a particular read only plan script")
+build_plans = image_streamer_client.plan_scripts.get_usedby_and_readonly(plan_script_id_readyonly)
+for build_plan_item in build_plans:
+    print(build_plan_item["name"])
+print("**********done***********\n")
 
 # Delete the Plan Script
 print("Delete the Plan Script")

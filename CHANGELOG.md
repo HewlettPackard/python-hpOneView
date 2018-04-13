@@ -8,6 +8,7 @@ Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
 - Interconnect
 - Network set
 - OS deployment plan
+- Plan script
 - Storage pool
 - Storage volume
 
