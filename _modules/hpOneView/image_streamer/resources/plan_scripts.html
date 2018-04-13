@@ -314,7 +314,20 @@
 <span class="sd">            dict: Script differences.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/differences/&quot;</span> <span class="o">+</span> <span class="n">extract_id_from_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PlanScripts.get_usedby_and_readonly"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.plan_scripts.PlanScripts.get_usedby_and_readonly">[docs]</a>    <span class="k">def</span> <span class="nf">get_usedby_and_readonly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the build plans details os teh selected plan script as per the selected attributes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id: ID of the Plan Script.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            array of build plans</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nb">id</span> <span class="o">+</span> <span class="s2">&quot;/usedby/readonly&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
