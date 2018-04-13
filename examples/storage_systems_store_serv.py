@@ -67,14 +67,15 @@ if not storage_system['deviceSpecificAttributes']['managedDomain']:
     for pool in storage_system['deviceSpecificAttributes']['discoveredPools']:
         if pool['domain'] == storage_system['deviceSpecificAttributes']['managedDomain']:
             pool_to_manage = pool
+            storage_system['deviceSpecificAttributes']['discoveredPools'].remove(pool)
             pprint(pool_to_manage)
             break
     storage_system['deviceSpecificAttributes']['managedPools'] = [pool_to_manage]
     oneview_client.storage_systems.update(storage_system)
     print("\nUpdated 'managedDomain' to '{}' so storage system can be managed".format(
           storage_system['deviceSpecificAttributes']['managedDomain']))
-    print("\nManaged storage pool '{}' at uri: '{}'".format(storage_system[
-          'managedPools'][0]['name'], storage_system['deviceSpecificAttributes']['managedPools'][0]['uri']))
+    print("\nManaged storage pool '{}' at uri: '{}'".format(storage_system['deviceSpecificAttributes'][
+          'managedPools'][0]['name'], storage_system['deviceSpecificAttributes']['managedPools'][0]['uuid']))
 
 # Get all managed storage systems
 print("\nGet all managed storage systems")
@@ -82,14 +83,14 @@ storage_systems_all = oneview_client.storage_systems.get_all()
 for ss in storage_systems_all:
     print("   '{}' at uri: '{}'".format(ss['name'], ss['uri']))
 
-# Get maximum of 5 storage systems which belong to model of type 'HP_3PAR
-# 7200', sorted by freeCapacity in descending order.
+# Get maximum of 5 storage systems which belong to family of type 'StoreServ',
+# sorted by freeCapacity in descending order.
 print(
-    "Get maximum of 5 storage systems which belong to model of type 'HP_3PAR 7200,' sorted by freeCapacity in "
+    "Get maximum of 5 storage systems which belong to family of type StoreServ, sorted by freeCapacity in "
     "descending order.")
-filter = 'model=HP_3PAR 7200'
+filter = 'family=StoreServ'
 storage_systems_filtered = oneview_client.storage_systems.get_all(
-    0, 5, filter="\"'name'='ThreePAR7200-5718'\"", sort='freeCapacity:desc')
+    0, 5, filter="\"'family'='StoreServ'\"", sort='freeCapacity:desc')
 for ss in storage_systems_filtered:
     print("   '{}' at uri: '{}'".format(ss['name'], ss['uri']))
 if not storage_systems_filtered:
