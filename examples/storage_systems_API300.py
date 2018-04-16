@@ -22,8 +22,9 @@
 ###
 
 from pprint import pprint
-from hpOneView.exceptions import HPOneViewException
+import re
 from hpOneView.oneview_client import OneViewClient
+from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
@@ -38,43 +39,42 @@ config = {
 config = try_load_from_file(config)
 
 options = {
-    "hostname": config['storage_system_hostname'],
+    "ip_hostname": config['storage_system_hostname'],
     "username": config['storage_system_username'],
-    "password": config['storage_system_password'],
-    "family": config['storage_system_family']
+    "password": config['storage_system_password']
 }
 
 oneview_client = OneViewClient(config)
 
 # Add and update storage system for management
-try:
-    storage_system = oneview_client.storage_systems.add(options)
-    print("\nAdded storage system '%s'.\n   uri = '%s'" %
-          (storage_system['name'], storage_system['uri']))
-except HPOneViewException as e:
-    storage_system = oneview_client.storage_systems.get_by_hostname(options['hostname'])
-    if storage_system:
-        print("\nStorage system '%s' was already added.\n   uri = '%s'" %
-              (storage_system['name'], storage_system['uri']))
-    else:
-        print(e.msg)
+storage_system = oneview_client.storage_systems.add(options)
+print("\nAdded storage system '%s'.\n   uri = '%s'" %
+      (storage_system['name'], storage_system['uri']))
+storage_system['managedDomain'] = storage_system['unmanagedDomains'][0]
+storage_system = oneview_client.storage_systems.update(storage_system)
+print("\nUpdated 'managedDomain' to '{}' so storage system can be managed".format(
+    storage_system['managedDomain']))
 
-# Adds managed domains and managed pools to StoreServ storage systems
-# This is a one-time only action, after this you cannot change the managed values
-if not storage_system['deviceSpecificAttributes']['managedDomain']:
-    storage_system['deviceSpecificAttributes']['managedDomain'] = storage_system[
-        'deviceSpecificAttributes']['discoveredDomains'][0]
-    for pool in storage_system['deviceSpecificAttributes']['discoveredPools']:
-        if pool['domain'] == storage_system['deviceSpecificAttributes']['managedDomain']:
+
+# Add storage pool to be managed
+try:
+    print("\nAdd first storage pool from unmanaged storage pools to be managed")
+    for pool in storage_system['unmanagedPools']:
+        if pool['domain'] == storage_system['managedDomain']:
             pool_to_manage = pool
-            pprint(pool_to_manage)
             break
-    storage_system['deviceSpecificAttributes']['managedPools'] = [pool_to_manage]
-    oneview_client.storage_systems.update(storage_system)
-    print("\nUpdated 'managedDomain' to '{}' so storage system can be managed".format(
-          storage_system['deviceSpecificAttributes']['managedDomain']))
+    storage_system['managedPools'] = [{
+        "type": pool_to_manage['type'],
+        "domain": pool_to_manage['domain'],
+        "name": pool_to_manage['name'],
+        "deviceType": pool_to_manage['deviceType']
+    }]
+    storage_system = oneview_client.storage_systems.update(
+        storage_system)
     print("\nManaged storage pool '{}' at uri: '{}'".format(storage_system[
-          'managedPools'][0]['name'], storage_system['deviceSpecificAttributes']['managedPools'][0]['uri']))
+          'managedPools'][0]['name'], storage_system['managedPools'][0]['uri']))
+except HPOneViewException as e:
+    print(e.msg)
 
 # Get all managed storage systems
 print("\nGet all managed storage systems")
@@ -114,13 +114,53 @@ try:
 except HPOneViewException as e:
     print(e.msg)
 
-print("\nGet all reachable storage ports which are managed by the storage system")
-reachable_ports = oneview_client.storage_systems.get_reachable_ports(storage_system['uri'])
-pprint(reachable_ports)
+# Add managed ports
+ports_to_manage = []
+for port in storage_system['unmanagedPorts']:
+    if port['actualNetworkSanUri'] != "unknown":
+        port_to_manage = {
+            "type": port['type'],
+            "name": port['name'],
+            "portName": port['portName'],
+            "portWwn": port['portWwn'],
+            "expectedNetworkUri": port['actualNetworkSanUri'],
+            "actualNetworkUri": port['actualNetworkUri'],
+            "actualNetworkSanUri": port['actualNetworkUri'],
+            "groupName": port['groupName'],
+            "protocolType": port['protocolType'],
+            "label": port['label']
+        }
+        ports_to_manage.append(port_to_manage)
+storage_system['managedPorts'] = ports_to_manage
+storage_system = oneview_client.storage_systems.update(storage_system)
+print("\nSuccessfully added ports to be managed")
 
-print("\nGet templates related to a storage system")
-templates = oneview_client.storage_systems.get_templates(storage_system['uri'])
-pprint(templates)
+# Get managed ports for specified storage system
+print("\nGet all managed ports for storage system at uri '{}'".format(
+    storage_system['uri']))
+managed_ports = oneview_client.storage_systems.get_managed_ports(
+    storage_system['uri'])
+for port in managed_ports['members']:
+    print("   '{}' at uri: {}".format(port['name'], port['uri']))
+
+# Get managed target port for specified storage system
+print("\nGet managed port by uri")
+managed_port_by_uri = oneview_client.storage_systems.get_managed_ports(
+    storage_system['uri'], storage_system['managedPorts'][0]['uri'])
+print("   '{}' at uri: {}".format(
+    managed_port_by_uri['name'], managed_port_by_uri['uri']))
+
+# Get managed target port for specified storage system by id
+try:
+    port_id = re.sub("/rest/storage-systems/TXQ1010307/managedPorts/",
+                     '', storage_system['managedPorts'][0]['uri'])
+    print("\nGet managed port by id: '{}'".format(port_id))
+    managed_port_by_id = oneview_client.storage_systems.get_managed_ports(
+        'TXQ1010307', port_id)
+    print("   '{}' at uri: {}".format(
+        managed_port_by_id['name'], managed_port_by_id['uri']))
+except HPOneViewException as e:
+    print(e.msg)
 
 # Remove storage system
 print("\nRemove storage system")
