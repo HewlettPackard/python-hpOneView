@@ -65,7 +65,7 @@ try:
             break
     storage_system['managedPools'] = [{
         "type": pool_to_manage['type'],
-        "domain": pool_to_manage['type'],
+        "domain": pool_to_manage['domain'],
         "name": pool_to_manage['name'],
         "deviceType": pool_to_manage['deviceType']
     }]
