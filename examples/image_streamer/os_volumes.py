@@ -62,7 +62,7 @@ pprint(storage)
 
 # Retrieve archived logs of the OS Volume
 print("Retrieve archived logs of the OS Volume")
-if image_streamer_client.os_volumes.download_archive(os_volume['uri'], destination_archive_path):
+if image_streamer_client.os_volumes.download_archive(os_volume['name'], destination_archive_path):
     print("  File downloaded successfully.")
 else:
     print("  Error downloading the file.")

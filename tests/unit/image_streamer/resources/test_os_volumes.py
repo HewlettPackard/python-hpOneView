@@ -82,12 +82,11 @@ class OsVolumesTest(TestCase):
 
     @mock.patch.object(ResourceClient, 'download')
     def test_download_archive_called_once_with_uri(self, mock_download):
-        uri = '/rest/os-volumes/archive/3518be0e-17c1-4189-8f81-83f3724f6155'
+        name = "fake"
+        uri = '/rest/os-volumes/archive/fake'
 
-        self._client.download_archive(uri, "~/archive.log")
-
-        mock_download.assert_called_once_with('/rest/os-volumes/archive/3518be0e-17c1-4189-8f81-83f3724f6155',
-                                              '~/archive.log')
+        self._client.download_archive(name, "~/archive.log")
+        mock_download.assert_called_once_with(uri, '~/archive.log')
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_storage(self, mock_get):
