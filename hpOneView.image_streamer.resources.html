@@ -1335,14 +1335,14 @@ be used for the upload.</p>
 
 <dl class="method">
 <dt id="hpOneView.image_streamer.resources.os_volumes.OsVolumes.download_archive">
-<code class="descname">download_archive</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/os_volumes.html#OsVolumes.download_archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.os_volumes.OsVolumes.download_archive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Download the details of the archived OS Volume.</p>
+<code class="descname">download_archive</code><span class="sig-paren">(</span><em>name</em>, <em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/os_volumes.html#OsVolumes.download_archive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.os_volumes.OsVolumes.download_archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download archived logs of the OS Volume.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – ID or URI of the OS Volume.</li>
+<li><strong>name</strong> – Name of the OS Volume.</li>
 <li><strong>file_path</strong> (<em>str</em>) – Destination file path.</li>
 </ul>
 </td>
@@ -1444,6 +1444,24 @@ on create time with the oldest entry first.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – Name of the OS Volume.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The OS Volume.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.image_streamer.resources.os_volumes.OsVolumes.get_storage">
+<code class="descname">get_storage</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/image_streamer/resources/os_volumes.html#OsVolumes.get_storage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.image_streamer.resources.os_volumes.OsVolumes.get_storage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get storage details of an OS Volume.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the OS Volume.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Storage details</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>

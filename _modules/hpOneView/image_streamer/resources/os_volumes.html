@@ -254,19 +254,32 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_by_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="OsVolumes.download_archive"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.os_volumes.OsVolumes.download_archive">[docs]</a>    <span class="k">def</span> <span class="nf">download_archive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
+<div class="viewcode-block" id="OsVolumes.download_archive"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.os_volumes.OsVolumes.download_archive">[docs]</a>    <span class="k">def</span> <span class="nf">download_archive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Download the details of the archived OS Volume.</span>
+<span class="sd">        Download archived logs of the OS Volume.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: ID or URI of the OS Volume.</span>
+<span class="sd">            name: Name of the OS Volume.</span>
 <span class="sd">            file_path (str): Destination file path.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: Indicates if the resource was successfully downloaded.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/archive/&quot;</span> <span class="o">+</span> <span class="n">extract_id_from_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span></div></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/archive/&quot;</span> <span class="o">+</span> <span class="n">name</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OsVolumes.get_storage"><a class="viewcode-back" href="../../../../hpOneView.image_streamer.resources.html#hpOneView.image_streamer.resources.os_volumes.OsVolumes.get_storage">[docs]</a>    <span class="k">def</span> <span class="nf">get_storage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get storage details of an OS Volume.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: ID or URI of the OS Volume.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Storage details</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/</span><span class="si">{}</span><span class="s2">/storage&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">extract_id_from_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
