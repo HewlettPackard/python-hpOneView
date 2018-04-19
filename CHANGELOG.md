@@ -9,6 +9,7 @@ Updated support for HPE Synergy Image Streamer REST API 500/600.
 - Interconnect
 - Network set
 - OS deployment plan
+- OS volume
 - Plan script
 - Storage pool
 - Storage system

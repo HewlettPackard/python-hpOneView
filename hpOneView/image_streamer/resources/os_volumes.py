@@ -107,16 +107,29 @@ class OsVolumes(object):
         """
         return self._client.get_by_name(name)
 
-    def download_archive(self, id_or_uri, file_path):
+    def download_archive(self, name, file_path):
         """
-        Download the details of the archived OS Volume.
+        Download archived logs of the OS Volume.
 
         Args:
-            id_or_uri: ID or URI of the OS Volume.
+            name: Name of the OS Volume.
             file_path (str): Destination file path.
 
         Returns:
             bool: Indicates if the resource was successfully downloaded.
         """
-        uri = self.URI + "/archive/" + extract_id_from_uri(id_or_uri)
+        uri = self.URI + "/archive/" + name
         return self._client.download(uri, file_path)
+
+    def get_storage(self, id_or_uri):
+        """
+        Get storage details of an OS Volume.
+
+        Args:
+            id_or_uri: ID or URI of the OS Volume.
+
+        Returns:
+            dict: Storage details
+        """
+        uri = self.URI + "/{}/storage".format(extract_id_from_uri(id_or_uri))
+        return self._client.get(uri)
