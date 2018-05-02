@@ -35,13 +35,13 @@ config = {
 }
 
 # To run this example, a logical interconnect name is required
-logical_interconnect_name = ""
+logical_interconnect_name = "nonSAS_LE_1-nonSAS_LIG_1"
 
 # To install the firmware driver, a firmware driver name is required
 firmware_driver_name = ""
 
 # An Enclosure name must be set to create/delete an interconnect at a given location
-enclosure_name = ""
+enclosure_name = "0000A66101"
 
 # Define the scope name to add the logical interconnect to it
 scope_name = ""

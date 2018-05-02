@@ -1,4 +1,4 @@
-# 4.6.0 (Unreleased)
+# 4.6.0
 #### Notes
 Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
 Updated support for HPE Synergy Image Streamer REST API 500/600.
