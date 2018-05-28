@@ -104,7 +104,6 @@ from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPl
 from hpOneView.resources.uncategorized.os_deployment_servers import OsDeploymentServers
 from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
 from hpOneView.resources.security.login_details import LoginDetails
-from hpOneView.resources.security.login_domains import LoginDomains
 from hpOneView.resources.security.roles import Roles
 from hpOneView.resources.security.users import Users
 from hpOneView.resources.settings.appliance_node_information import ApplianceNodeInformation
@@ -196,7 +195,6 @@ class OneViewClient(object):
         self.__versions = None
         self.__backups = None
         self.__login_details = None
-        self.__login_domains = None
         self.__licenses = None
 
     @classmethod
@@ -1180,27 +1178,12 @@ class OneViewClient(object):
         return self.__login_details
 
     @property
-    def login_domains(self):
-        """
-        Gets the login domains
-        
-        Returns:
-        List of login domains
-        """
-        if not self.__login_domains:
-            self.__login_domains = LoginDomains(self.__connection)
-        return self.__login_domains
-
-    @property
     def licenses(self):
         """
         Gets all the licenses
-        
         Returns:
         List of licenses
         """
         if not self.__licenses:
             self.__licenses = Licenses(self.__connection)
         return self.__licenses
-
- 

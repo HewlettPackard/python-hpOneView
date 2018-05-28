@@ -47,7 +47,6 @@ class Licenses(object):
         '600': {"type": "LicenseListV500"}
     }
 
-
     def __init__(self, con):
         self._client = ResourceClient(con, self.URI)
 
@@ -67,37 +66,21 @@ class Licenses(object):
         """
         return self._client.create(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
 
-
-    def get_licenses(self):
+    def get_by_id(self, id_or_uri):
         """
-        Returns the range of possible API versions supported by the appliance.
-        The response contains the current version and the minimum version.
-        The current version is the recommended version to specify in the REST header.
-        The other versions are supported for backward compatibility, but might not support the most current features.
-
-        Returns:
-            dict: The minimum and maximum supported API versions.
-        """
-        licenses = self._client.get(self.URI)
-        return licenses
-
-
-    def get_license_id(self, id_or_uri):
-        """
-        Gets the Fibre Channel network with the specified ID.
+        Gets the License with the specified ID.
 
         Args:
-            id_or_uri: ID or URI of Fibre Channel network.
+            id_or_uri: ID or URI of License.
 
         Returns:
-            dict: The Fibre Channel network.
+            dict: The License.
         """
         return self._client.get(id_or_uri)
 
     def delete(self, id_or_uri):
         """
-        Deletes a Fibre Channel network.
-        Any deployed connections that are using the network are placed in the 'Failed' state.
+        Deletes a License.
 
         Args:
             resource: dict object to delete
@@ -113,4 +96,29 @@ class Licenses(object):
 
         """
         return self._client.delete(id_or_uri)
- 
+
+    def get_all(self, start=0, count=-1, filter='', sort=''):
+        """
+        Gets all the licenses loaded on the appliance. The collection is based on optional
+        sorting and filtering and is constrained by start and count parameters.
+
+        Args:
+            start:
+                The first item to return, using 0-based indexing.
+                If not specified, the default is 0 - start with the first available item.
+            count:
+                The number of resources to return. A count of -1 requests all items.
+
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
+            filter (list or str):
+                A general filter/query string to narrow the list of items returned. The
+                default is no filter; all resources are returned.
+            sort:
+                The sort order of the returned data set. By default, the sort order is based
+                on create time with the oldest entry first.
+
+        Returns:
+            list: A list of Licenses.
+        """
+        return self._client.get_all(start, count, filter=filter, sort=sort)

@@ -23,8 +23,6 @@
 
 from config_loader import try_load_from_file
 from hpOneView.oneview_client import OneViewClient
-from hpOneView.exceptions import HPOneViewException
-from config_loader import try_load_from_file
 from pprint import pprint
 
 config = {
@@ -35,42 +33,43 @@ config = {
     }
 }
 
-# License ID to perform a get by ID
-license_id = ""
-
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
 
-
-
-
-# Get all licenses 
-print("\n Licenses are: \n")
-licenses = oneview_client.licenses.get_licenses()
-key = licenses['members'][0]['key']
-
-
+# Example license Key to be used
+# ACDE B9MA H9PY CHW3 U7B5 HWW5 Y9JL KMPL B89H MZVU DXAU 2CSM GHTG L762 KQL7 EG5M KJVT D5KM AFVW TT5J F77K NXWW BPSM YF26 28JS EWTZ X36Q
+# M5G7 WZJL HH5Q L975 SNJT 288F ADT2 LK44 56UG V8MC 2K9X 7KG2 F6AD EMVA 9GEB 95Y6 XBM3 HVDY LBSS PU24 KEWY JSJC FPZC 2JJE
+# ZLAB\"24R2-02192-002 T1111A HP_OneView_w/o_iLO_Explicit_Feature J4E8IAMANEON\"
 
 options = {
-    "key": "ACDE B9MA H9PY CHW3 U7B5 HWW5 Y9JL KMPL B89H MZVU DXAU 2CSM GHTG L762 KQL7 EG5M KJVT D5KM AFVW TT5J F77K NXWW BPSM YF26 28JS EWTZ X36Q M5G7 WZJL HH5Q L975 SNJT 288F ADT2 LK44 56UG V8MC 2K9X 7KG2 F6AD EMVA 9GEB 95Y6 XBM3 HVDY LBSS PU24 KEWY JSJC FPZC 2JJE ZLAB\"24R2-02192-002 T1111A HP_OneView_w/o_iLO_Explicit_Feature J4E8IAMANEON\"",
+    "key": "Use the example key mentioned above",
     "type": "LicenseV500"
 }
 
-
-# Add a License 
+# Add a License
 license = oneview_client.licenses.create(options)
-print("\nLicense added '%s' successfully.\n  uri = '%s'" % (license['key'], license['type']))
+print("\n\nLicense added '%s' successfully.\n" % license['key'])
 
+# Get all licenses
+print("\n\n\n\n **********   Displaying all the Licenses loaded on DCS:  ********** \n\n\n\n")
+licenses = oneview_client.licenses.get_all()
+pprint(licenses)
 
-# Get License ID
-
-uri = licenses['members'][0]['uri']
-print uri;
-print("\n Licenses are: \n")
-license = oneview_client.licenses.get_license_id(uri)
-print license
+# Get License by ID
+print("\n\n ************   Getting the ID to fetch the license by ID:  ************ \n")
+uri = license['uri']
+print uri
+print("\n License fetched by ID is: \n")
+license = oneview_client.licenses.get_by_id(uri)
+pprint(license)
 
 # Delete License by ID
-#oneview_client.licenses.delete(uri)
+print ("\n\n   ********** Delete the license by ID:  **********")
+print uri
+oneview_client.licenses.delete(uri)
+
+print("\n Check if the license is Deleted: \n")
+lic = oneview_client.licenses.get_by_id(uri)
+pprint(lic)
