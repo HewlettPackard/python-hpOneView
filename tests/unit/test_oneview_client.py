@@ -80,6 +80,7 @@ from hpOneView.resources.settings.appliance_node_information import ApplianceNod
 from hpOneView.resources.settings.appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfiguration
 from hpOneView.resources.settings.versions import Versions
 from tests.test_utils import mock_builtin
+from hpOneView.resources.settings.licenses import Licenses
 
 OS_ENVIRON_CONFIG_MINIMAL = {
     'ONEVIEWSDK_IP': '172.16.100.199',
