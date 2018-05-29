@@ -740,6 +740,9 @@ class OneViewClientTest(unittest.TestCase):
         login_details = self._oneview.login_details
         self.assertEqual(login_details, self._oneview.login_details)
 
+    def test_licenses_has_right_type(self):
+        self.assertIsInstance(self._oneview.licenses, Licenses)
+
     def test_unmanaged_devices_has_right_type(self):
         self.assertIsInstance(self._oneview.unmanaged_devices, UnmanagedDevices)
 
