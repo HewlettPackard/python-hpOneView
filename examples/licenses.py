@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2018) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -38,13 +38,13 @@ config = {
 config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
 
-# Example license Key to be used
+# Example license Key
 # ACDE B9MA H9PY CHW3 U7B5 HWW5 Y9JL KMPL B89H MZVU DXAU 2CSM GHTG L762 KQL7 EG5M KJVT D5KM AFVW TT5J F77K NXWW BPSM YF26 28JS EWTZ X36Q
 # M5G7 WZJL HH5Q L975 SNJT 288F ADT2 LK44 56UG V8MC 2K9X 7KG2 F6AD EMVA 9GEB 95Y6 XBM3 HVDY LBSS PU24 KEWY JSJC FPZC 2JJE
 # ZLAB\"24R2-02192-002 T1111A HP_OneView_w/o_iLO_Explicit_Feature J4E8IAMANEON\"
 
 options = {
-    "key": "Your license key",
+    "key": "<your license Key>",
     "type": "LicenseV500"
 }
 
