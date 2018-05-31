@@ -44,7 +44,7 @@ oneview_client = OneViewClient(config)
 # ZLAB\"24R2-02192-002 T1111A HP_OneView_w/o_iLO_Explicit_Feature J4E8IAMANEON\"
 
 options = {
-    "key": "Use the example key mentioned above",
+    "key": "Your license key",
     "type": "LicenseV500"
 }
 
@@ -53,12 +53,11 @@ license = oneview_client.licenses.create(options)
 print("\n\nLicense added '%s' successfully.\n" % license['key'])
 
 # Get all licenses
-print("\n\n\n\n **********   Displaying all the Licenses loaded on DCS:  ********** \n\n\n\n")
+print("\n\n\n\n **********   Displaying all the Licenses loaded on the appliance:  ********** \n\n\n\n")
 licenses = oneview_client.licenses.get_all()
 pprint(licenses)
 
 # Get License by ID
-print("\n\n ************   Getting the ID to fetch the license by ID:  ************ \n")
 uri = license['uri']
 print uri
 print("\n License fetched by ID is: \n")
