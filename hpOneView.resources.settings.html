@@ -89,6 +89,7 @@
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.backups">hpOneView.resources.settings.backups module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.firmware_bundles">hpOneView.resources.settings.firmware_bundles module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.firmware_drivers">hpOneView.resources.settings.firmware_drivers module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.settings.licenses">hpOneView.resources.settings.licenses module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.restores">hpOneView.resources.settings.restores module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.scopes">hpOneView.resources.settings.scopes module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.versions">hpOneView.resources.settings.versions module</a></li>
@@ -642,6 +643,129 @@ filter the list of resources returned.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-hpOneView.resources.settings.licenses">
+<span id="hponeview-resources-settings-licenses-module"></span><h2>hpOneView.resources.settings.licenses module<a class="headerlink" href="#module-hpOneView.resources.settings.licenses" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.settings.licenses.Licenses">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.settings.licenses.</code><code class="descname">Licenses</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/licenses.html#Licenses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.licenses.Licenses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Licenses. Gets a list of all license resources that are known by the appliance.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.settings.licenses.Licenses.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'LicenseList'}, u'300': {u'type': u'LicenseList'}, u'500': {u'type': u'LicenseListV500'}, u'600': {u'type': u'LicenseListV500'}}</em><a class="headerlink" href="#hpOneView.resources.settings.licenses.Licenses.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.settings.licenses.Licenses.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/licenses'</em><a class="headerlink" href="#hpOneView.resources.settings.licenses.Licenses.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.licenses.Licenses.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/licenses.html#Licenses.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.licenses.Licenses.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a license to the appliance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) – Object to create.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.licenses.Licenses.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/licenses.html#Licenses.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.licenses.Licenses.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a License.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> – dict object to delete</li>
+<li><strong>force</strong> – If set to true, the operation completes despite any problems with
+network connectivity or errors on the resource itself. The default is false.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.licenses.Licenses.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/licenses.html#Licenses.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.licenses.Licenses.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all the licenses loaded on the appliance. The collection is based on optional
+sorting and filtering and is constrained by start and count parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> – <p>The number of resources to return. A count of -1 requests all items.</p>
+<p>The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</p>
+</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
+default is no filter; all resources are returned.</li>
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
+on create time with the oldest entry first.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of Licenses.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.licenses.Licenses.get_by_id">
+<code class="descname">get_by_id</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/licenses.html#Licenses.get_by_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.licenses.Licenses.get_by_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the License with the specified ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of License.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The License.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-hpOneView.resources.settings.restores">
 <span id="hponeview-resources-settings-restores-module"></span><h2>hpOneView.resources.settings.restores module<a class="headerlink" href="#module-hpOneView.resources.settings.restores" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -1083,9 +1207,7 @@ The other versions are supported for backward compatibility, but might not suppo
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enableSticky();
-          
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script> 
 

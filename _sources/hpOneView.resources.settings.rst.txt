@@ -44,6 +44,14 @@ hpOneView.resources.settings.firmware\_drivers module
     :undoc-members:
     :show-inheritance:
 
+hpOneView.resources.settings.licenses module
+--------------------------------------------
+
+.. automodule:: hpOneView.resources.settings.licenses
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView.resources.settings.restores module
 --------------------------------------------
 

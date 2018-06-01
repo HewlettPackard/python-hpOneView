@@ -147,7 +147,7 @@
   <h1>Source code for hpOneView.oneview_client</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1">###</span>
-<span class="c1"># (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP</span>
+<span class="c1"># (C) Copyright (2012-2018) Hewlett Packard Enterprise Development LP</span>
 <span class="c1">#</span>
 <span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
 <span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
@@ -198,6 +198,7 @@
 <span class="kn">from</span> <span class="nn">hpOneView.resources.activity.tasks</span> <span class="k">import</span> <span class="n">Tasks</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.settings.restores</span> <span class="k">import</span> <span class="n">Restores</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.settings.scopes</span> <span class="k">import</span> <span class="n">Scopes</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.settings.licenses</span> <span class="k">import</span> <span class="n">Licenses</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.servers.enclosures</span> <span class="k">import</span> <span class="n">Enclosures</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.servers.logical_enclosures</span> <span class="k">import</span> <span class="n">LogicalEnclosures</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.servers.enclosure_groups</span> <span class="k">import</span> <span class="n">EnclosureGroups</span>
@@ -341,6 +342,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__versions</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__backups</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__login_details</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__licenses</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="OneViewClient.from_json_file"><a class="viewcode-back" href="../../hpOneView.html#hpOneView.oneview_client.OneViewClient.from_json_file">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_json_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
@@ -1320,7 +1322,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__login_details</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">__login_details</span> <span class="o">=</span> <span class="n">LoginDetails</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__login_details</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__login_details</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">licenses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets all the licenses</span>
+<span class="sd">        Returns:</span>
+<span class="sd">        List of licenses</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__licenses</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__licenses</span> <span class="o">=</span> <span class="n">Licenses</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__licenses</span></div>
 </pre></div>
 
            </div>
@@ -1375,9 +1388,7 @@
 
   <script type="text/javascript">
       jQuery(function () {
-          
-          SphinxRtdTheme.Navigation.enableSticky();
-          
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script> 
 

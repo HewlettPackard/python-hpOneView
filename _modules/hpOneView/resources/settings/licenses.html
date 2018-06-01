@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.security.roles &mdash; HPE OneView Python SDK 4.6.0 documentation</title>
+  <title>hpOneView.resources.settings.licenses &mdash; HPE OneView Python SDK 4.6.0 documentation</title>
   
 
   
@@ -129,7 +129,7 @@
         
           <li><a href="../../../hpOneView.html">hpOneView</a> &raquo;</li>
         
-      <li>hpOneView.resources.security.roles</li>
+      <li>hpOneView.resources.settings.licenses</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -144,10 +144,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for hpOneView.resources.security.roles</h1><div class="highlight"><pre>
+  <h1>Source code for hpOneView.resources.settings.licenses</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1">###</span>
-<span class="c1"># (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP</span>
+<span class="c1"># (C) Copyright (2012-2018) Hewlett Packard Enterprise Development LP</span>
 <span class="c1">#</span>
 <span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
 <span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
@@ -177,26 +177,77 @@
 
 <span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
 
-<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">quote</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">ResourceClient</span>
 
 
-<div class="viewcode-block" id="Roles"><a class="viewcode-back" href="../../../../hpOneView.resources.security.html#hpOneView.resources.security.roles.Roles">[docs]</a><span class="k">class</span> <span class="nc">Roles</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Licenses"><a class="viewcode-back" href="../../../../hpOneView.resources.settings.html#hpOneView.resources.settings.licenses.Licenses">[docs]</a><span class="k">class</span> <span class="nc">Licenses</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Roles API client.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    Licenses. Gets a list of all license resources that are known by the appliance.</span>
 
-    <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/roles&#39;</span>
-    <span class="n">RESOURCES_PATH</span> <span class="o">=</span> <span class="s1">&#39;/resources&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/licenses&#39;</span>
+
+    <span class="n">DEFAULT_VALUES</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;200&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;LicenseList&#39;</span><span class="p">},</span>
+        <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;LicenseList&quot;</span><span class="p">},</span>
+        <span class="s1">&#39;500&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;LicenseListV500&quot;</span><span class="p">},</span>
+        <span class="s1">&#39;600&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;LicenseListV500&quot;</span><span class="p">}</span>
+    <span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Roles.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.security.html#hpOneView.resources.security.roles.Roles.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="Licenses.create"><a class="viewcode-back" href="../../../../hpOneView.resources.settings.html#hpOneView.resources.settings.licenses.Licenses.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets a list of roles based on optional sorting and filtering and is constrained by start</span>
-<span class="sd">        and count parameters.</span>
+<span class="sd">        Add a license to the appliance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resource (dict): Object to create.</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView, just stop waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Created resource.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Licenses.get_by_id"><a class="viewcode-back" href="../../../../hpOneView.resources.settings.html#hpOneView.resources.settings.licenses.Licenses.get_by_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_by_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the License with the specified ID.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: ID or URI of License.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: The License.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Licenses.delete"><a class="viewcode-back" href="../../../../hpOneView.resources.settings.html#hpOneView.resources.settings.licenses.Licenses.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deletes a License.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resource: dict object to delete</span>
+<span class="sd">            force:</span>
+<span class="sd">                 If set to true, the operation completes despite any problems with</span>
+<span class="sd">                 network connectivity or errors on the resource itself. The default is false.</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Indicates if the resource was successfully deleted.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Licenses.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.settings.html#hpOneView.resources.settings.licenses.Licenses.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets all the licenses loaded on the appliance. The collection is based on optional</span>
+<span class="sd">        sorting and filtering and is constrained by start and count parameters.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            start:</span>
@@ -204,6 +255,7 @@
 <span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
 <span class="sd">            count:</span>
 <span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
+
 <span class="sd">                The actual number of items in the response might differ from the requested</span>
 <span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
 <span class="sd">            filter (list or str):</span>
@@ -214,23 +266,9 @@
 <span class="sd">                on create time with the oldest entry first.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list: A list of roles.</span>
+<span class="sd">            list: A list of Licenses.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Roles.get"><a class="viewcode-back" href="../../../../hpOneView.resources.security.html#hpOneView.resources.security.roles.Roles.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name_or_uri</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the role by its URI or Name.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            name_or_uri:</span>
-<span class="sd">                Can be either the Name or the URI.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: Role</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">name_or_uri</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="n">name_or_uri</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name_or_uri</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>
