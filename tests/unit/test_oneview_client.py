@@ -80,6 +80,7 @@ from hpOneView.resources.settings.appliance_node_information import ApplianceNod
 from hpOneView.resources.settings.appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfiguration
 from hpOneView.resources.settings.versions import Versions
 from tests.test_utils import mock_builtin
+from hpOneView.resources.settings.licenses import Licenses
 
 OS_ENVIRON_CONFIG_MINIMAL = {
     'ONEVIEWSDK_IP': '172.16.100.199',
@@ -739,6 +740,9 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_login_details(self):
         login_details = self._oneview.login_details
         self.assertEqual(login_details, self._oneview.login_details)
+
+    def test_licenses_has_right_type(self):
+        self.assertIsInstance(self._oneview.licenses, Licenses)
 
     def test_unmanaged_devices_has_right_type(self):
         self.assertIsInstance(self._oneview.unmanaged_devices, UnmanagedDevices)

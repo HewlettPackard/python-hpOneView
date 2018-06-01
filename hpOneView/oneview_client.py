@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2018) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -51,6 +51,7 @@ from hpOneView.resources.networking.switch_types import SwitchTypes
 from hpOneView.resources.activity.tasks import Tasks
 from hpOneView.resources.settings.restores import Restores
 from hpOneView.resources.settings.scopes import Scopes
+from hpOneView.resources.settings.licenses import Licenses
 from hpOneView.resources.servers.enclosures import Enclosures
 from hpOneView.resources.servers.logical_enclosures import LogicalEnclosures
 from hpOneView.resources.servers.enclosure_groups import EnclosureGroups
@@ -194,6 +195,7 @@ class OneViewClient(object):
         self.__versions = None
         self.__backups = None
         self.__login_details = None
+        self.__licenses = None
 
     @classmethod
     def from_json_file(cls, file_name):
@@ -1174,3 +1176,14 @@ class OneViewClient(object):
         if not self.__login_details:
             self.__login_details = LoginDetails(self.__connection)
         return self.__login_details
+
+    @property
+    def licenses(self):
+        """
+        Gets all the licenses
+        Returns:
+        List of licenses
+        """
+        if not self.__licenses:
+            self.__licenses = Licenses(self.__connection)
+        return self.__licenses

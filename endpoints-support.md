@@ -217,10 +217,10 @@
 |<sub>/rest/labels/resources/**</sub>                                                     | DELETE   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/labels/{id}</sub>                                                             | GET      | :white_check_mark:   | :white_check_mark:   |
 |     **Licenses**                                                                                                                                 |
-|<sub>/rest/licenses</sub>                                                                |GET       | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |
-|<sub>/rest/licenses</sub>                                                                |POST      | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |
-|<sub>/rest/licenses/{id}</sub>                                                           |GET       | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |
-|<sub>/rest/licenses/{licenseId}</sub>                                                    |DELETE    | :heavy_multiplication_x: | :heavy_multiplication_x: | :heavy_multiplication_x: |
+|<sub>/rest/licenses</sub>                                                                |GET       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub>/rest/licenses</sub>                                                                |POST      | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub>/rest/licenses/{id}</sub>                                                           |GET       | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+|<sub>/rest/licenses/{licenseId}</sub>                                                    |DELETE    | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 |     **Logical Downlinks**                                                                                                                         |
 |<sub>/rest/logical-downlinks</sub>                                                       |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/logical-downlinks/{id}</sub>                                                  |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |

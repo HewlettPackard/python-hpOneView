@@ -1,3 +1,10 @@
+# 4.7.0 (Unreleased)
+#### Notes
+Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
+
+#### New Resources:
+- License
+
 # 4.6.0
 #### Notes
 Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
