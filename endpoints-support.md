@@ -21,12 +21,12 @@
 | Endpoints                                                                       | Verb     | V200 | V300 | V500 |V600
 | --------------------------------------------------------------------------------------- | -------- | :------------------: | :------------------: | :------------------: | :------------------: |
 |     **Alerts**                                                                                                                                   |
-|<sub>/rest/alerts	</sub>                                                                |GET       | :white_check_mark:    | :white_check_mark:   |
-|<sub>/rest/alerts	</sub>                                                                |DELETE    | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/alerts/{id}	</sub>                                                            |GET       | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/alerts/{id}	</sub>                                                            |PUT       | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/alerts/{id}	</sub>                                                            |DELETE    | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/alerts/AlertChangeLog/{id}</sub>                                              |DELETE    | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/alerts	</sub>                                                                |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/alerts	</sub>                                                                |DELETE    | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/alerts/{id}	</sub>                                                            |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/alerts/{id}	</sub>                                                            |PUT       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/alerts/{id}	</sub>                                                            |DELETE    | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/alerts/AlertChangeLog/{id}</sub>                                              |DELETE    | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |     **Appliance Time and Locale Configuration**                                                                                                                                   |
 |<sub>/rest/appliance/configuration/time-locale</sub>                                     |GET       | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/appliance/configuration/time-locale</sub>                                     |POST      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
