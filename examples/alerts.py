@@ -23,7 +23,7 @@
 
 from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
-from hpOneView import extract_id_from_uri
+from hpOneView.resources.resource import extract_id_from_uri
 from pprint import pprint
 
 config = {
@@ -43,7 +43,7 @@ _client = OneViewClient(config)
 print("\nGetting the first 5 alerts")
 alerts = _client.alerts.get_all(0, 5)
 for alert in alerts:
-    "uri: '{uri}' | type: '{type}' | alertState: '{alertState}'".format(**alert)
+    print("uri: '{uri}' | type: '{type}' | alertState: '{alertState}'".format(**alert))
 
 # Get a specific alert (first of the list that was obtained in previous item)
 print("\nGet a specific alert")
