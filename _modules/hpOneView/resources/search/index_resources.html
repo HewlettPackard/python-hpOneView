@@ -146,7 +146,7 @@
   <h1>Source code for hpOneView.resources.search.index_resources</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1">###</span>
-<span class="c1"># (C) Copyright (2017) Hewlett Packard Enterprise Development LP</span>
+<span class="c1"># (C) Copyright (2017-2018) Hewlett Packard Enterprise Development LP</span>
 <span class="c1">#</span>
 <span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
 <span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
@@ -234,25 +234,18 @@
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s1">&#39;?&#39;</span>
 
         <span class="n">uri</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__list_or_str_to_query</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="s1">&#39;category&#39;</span><span class="p">)</span>
-        <span class="n">uri</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__list_or_str_to_query</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">)</span>
         <span class="n">uri</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__list_or_str_to_query</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="s1">&#39;fields&#39;</span><span class="p">)</span>
         <span class="n">uri</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__list_or_str_to_query</span><span class="p">(</span><span class="nb">filter</span><span class="p">,</span> <span class="s1">&#39;filter&#39;</span><span class="p">)</span>
         <span class="n">uri</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__list_or_str_to_query</span><span class="p">(</span><span class="n">padding</span><span class="p">,</span> <span class="s1">&#39;padding&#39;</span><span class="p">)</span>
         <span class="n">uri</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__list_or_str_to_query</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s1">&#39;query&#39;</span><span class="p">)</span>
         <span class="n">uri</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__list_or_str_to_query</span><span class="p">(</span><span class="n">reference_uri</span><span class="p">,</span> <span class="s1">&#39;referenceUri&#39;</span><span class="p">)</span>
         <span class="n">uri</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__list_or_str_to_query</span><span class="p">(</span><span class="n">sort</span><span class="p">,</span> <span class="s1">&#39;sort&#39;</span><span class="p">)</span>
-        <span class="n">uri</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__list_or_str_to_query</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="s1">&#39;start&#39;</span><span class="p">)</span>
         <span class="n">uri</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__list_or_str_to_query</span><span class="p">(</span><span class="n">user_query</span><span class="p">,</span> <span class="s1">&#39;userQuery&#39;</span><span class="p">)</span>
         <span class="n">uri</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__list_or_str_to_query</span><span class="p">(</span><span class="n">view</span><span class="p">,</span> <span class="s1">&#39;view&#39;</span><span class="p">)</span>
 
         <span class="n">uri</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;?&amp;&#39;</span><span class="p">,</span> <span class="s1">&#39;?&#39;</span><span class="p">)</span>
 
-        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">response</span> <span class="ow">and</span> <span class="s1">&#39;members&#39;</span> <span class="ow">in</span> <span class="n">response</span> <span class="ow">and</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="n">response</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[]</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="IndexResources.get"><a class="viewcode-back" href="../../../../hpOneView.resources.search.html#hpOneView.resources.search.index_resources.IndexResources.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
