@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2018) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -51,25 +51,24 @@ class IndexResourcesTest(unittest.TestCase):
         self.connection = connection(self.host)
         self._resource = IndexResources(self.connection)
 
-    @mock.patch.object(ResourceClient, 'get', return_value=dict(members='test'))
+    @mock.patch.object(ResourceClient, 'get_all', return_value=dict(members='test'))
     def test_get_all_called_once(self, mock_get_all):
         filter = 'name=TestName'
         sort = 'name:ascending'
 
-        expected_uri = '/rest/index/resources?count=500&filter=name=TestName&sort=name:ascending&start=2'
+        expected_uri = '/rest/index/resources?filter=name=TestName&sort=name:ascending'
 
         self._resource.get_all(start=2, count=500, filter=filter, sort=sort)
-        mock_get_all.assert_called_once_with(expected_uri)
+        mock_get_all.assert_called_once_with(start=2, count=500, uri=expected_uri)
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceClient, 'get_all')
     def test_get_all_called_once_without_results(self, mock_get_all):
         filter = 'name=TestName'
         sort = 'name:ascending'
 
-        expected_uri = '/rest/index/resources?count=500&filter=name=TestName&sort=name:ascending&start=2'
-
+        expected_uri = '/rest/index/resources?filter=name=TestName&sort=name:ascending'
         self._resource.get_all(start=2, count=500, filter=filter, sort=sort)
-        mock_get_all.assert_called_once_with(expected_uri)
+        mock_get_all.assert_called_once_with(start=2, count=500, uri=expected_uri)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_called_once(self, mock_get):
