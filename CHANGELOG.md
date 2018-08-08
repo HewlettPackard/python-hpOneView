@@ -1,4 +1,10 @@
-# 4.7.1
+# 4.7.1 (Unreleased)
+#### Notes
+Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
+
+#### Features supported with current release:
+- Firmware Bundle
+
 #### Bug fixes
 - [#364] (https://github.com/HewlettPackard/python-hpOneView/issues/364) Bug in index_resources.get_all()
 

@@ -629,6 +629,7 @@ class ConnectionTest(unittest.TestCase):
         self.connection.post_multipart(uri='/rest/resources/',
                                        fields=None,
                                        files="/a/path/filename.zip",
+                                       custom_headers={'initialScopeUris': '/rest/scopes/fake'},
                                        baseName="archive.zip")
 
         internal_conn = self.connection.get_connection.return_value
@@ -646,10 +647,12 @@ class ConnectionTest(unittest.TestCase):
         self.connection.post_multipart(uri='/rest/resources/',
                                        fields=None,
                                        files="/a/path/filename.zip",
+                                       custom_headers={'initialScopeUris': '/rest/scopes/fake'},
                                        baseName="archive.zip")
 
         expected_putheader_calls = [
             call('uploadfilename', 'archive.zip'),
+            call(u'initialScopeUris', '/rest/scopes/fake'),
             call('auth', 'LTIxNjUzMjc0OTUzzHoF7eEkZLEUWVA-fuOZP4VGA3U8e67E'),
             call('Content-Type', 'multipart/form-data; boundary=----------ThIs_Is_tHe_bouNdaRY_$'),
             call('Content-Length', 2621440),
@@ -669,6 +672,7 @@ class ConnectionTest(unittest.TestCase):
         self.connection.post_multipart(uri='/rest/resources/',
                                        fields=None,
                                        files="/a/path/filename.zip",
+                                       custom_headers={'initialScopeUris': '/rest/scopes/fake'},
                                        baseName="archive.zip")
 
         expected_mmap_read_calls = [
@@ -689,6 +693,7 @@ class ConnectionTest(unittest.TestCase):
         self.connection.post_multipart(uri='/rest/resources/',
                                        fields=None,
                                        files="/a/path/filename.zip",
+                                       custom_headers={'initialScopeUris': '/rest/scopes/fake'},
                                        baseName="archive.zip")
 
         expected_conn_send_calls = [
@@ -710,6 +715,7 @@ class ConnectionTest(unittest.TestCase):
         self.connection.post_multipart(uri='/rest/resources/',
                                        fields=None,
                                        files="/a/path/filename.zip",
+                                       custom_headers={'initialScopeUris': '/rest/scopes/fake'},
                                        baseName="archive.zip")
 
         mock_rm.assert_called_once_with('/a/path/filename.zip.b64')
@@ -727,6 +733,7 @@ class ConnectionTest(unittest.TestCase):
             self.connection.post_multipart(uri='/rest/resources/',
                                            fields=None,
                                            files="/a/path/filename.zip",
+                                           custom_headers={'initialScopeUris': '/rest/scopes/fake'},
                                            baseName="archive.zip")
         except HPOneViewException as e:
             self.assertEqual(e.msg, "An error occurred.")
@@ -745,6 +752,7 @@ class ConnectionTest(unittest.TestCase):
         response, body = self.connection.post_multipart(uri='/rest/resources/',
                                                         fields=None,
                                                         files="/a/path/filename.zip",
+                                                        custom_headers={'initialScopeUris': '/rest/scopes/fake'},
                                                         baseName="archive.zip")
 
         self.assertEqual(body, self.expected_response_body)
@@ -764,6 +772,7 @@ class ConnectionTest(unittest.TestCase):
         response, body = self.connection.post_multipart(uri='/rest/resources/',
                                                         fields=None,
                                                         files="/a/path/filename.zip",
+                                                        custom_headers={'initialScopeUris': '/rest/scopes/fake'},
                                                         baseName="archive.zip")
 
         self.assertTrue(body)
@@ -775,7 +784,7 @@ class ConnectionTest(unittest.TestCase):
         mock_response.getheader.return_value = None
         mock_post_multipart.return_value = mock_response, "content"
 
-        task, body = self.connection.post_multipart_with_response_handling("uri", "filepath", "basename")
+        task, body = self.connection.post_multipart_with_response_handling("uri", "filepath", "custom_headers", "basename")
 
         self.assertFalse(task)
         self.assertEqual(body, "content")
@@ -789,7 +798,7 @@ class ConnectionTest(unittest.TestCase):
         mock_post_multipart.return_value = mock_response, "content"
         mock_get.return_value = fake_task
 
-        task, body = self.connection.post_multipart_with_response_handling("uri", "filepath", "basename")
+        task, body = self.connection.post_multipart_with_response_handling("uri", "filepath", "custom_headers", "basename")
 
         self.assertEqual(task, fake_task)
         self.assertEqual(body, "content")
@@ -799,7 +808,7 @@ class ConnectionTest(unittest.TestCase):
         fake_task = {"category": "tasks"}
         mock_post_multipart.return_value = Mock(status=200), fake_task
 
-        task, body = self.connection.post_multipart_with_response_handling("uri", "filepath", "basename")
+        task, body = self.connection.post_multipart_with_response_handling("uri", "filepath", "custom_headers", "basename")
 
         self.assertEqual(task, fake_task)
         self.assertEqual(body, fake_task)
@@ -808,7 +817,7 @@ class ConnectionTest(unittest.TestCase):
     def test_post_multipart_with_response_handling_when_status_200_and_body_is_not_task(self, mock_post_multipart):
         mock_post_multipart.return_value = Mock(status=200), "content"
 
-        task, body = self.connection.post_multipart_with_response_handling("uri", "filepath", "basename")
+        task, body = self.connection.post_multipart_with_response_handling("uri", "filepath", "custom_headers", "basename")
 
         self.assertFalse(task)
         self.assertEqual(body, "content")

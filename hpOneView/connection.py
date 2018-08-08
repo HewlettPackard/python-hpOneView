@@ -271,8 +271,8 @@ class connection(object):
         fin.close()
         return content_type
 
-    def post_multipart_with_response_handling(self, uri, file_path, baseName):
-        resp, body = self.post_multipart(uri, None, file_path, baseName)
+    def post_multipart_with_response_handling(self, uri, file_path, custom_headers, baseName):
+        resp, body = self.post_multipart(uri, None, file_path, custom_headers, baseName)
 
         if resp.status == 202:
             task = self.__get_task_from_response(resp, body)
@@ -283,7 +283,7 @@ class connection(object):
 
         return None, body
 
-    def post_multipart(self, uri, fields, files, baseName, verbose=False):
+    def post_multipart(self, uri, fields, files, custom_headers, baseName, verbose=False):
         content_type = self.encode_multipart_formdata(fields, files, baseName,
                                                       verbose)
         inputfile = self._open(files + '.b64', 'rb')
@@ -295,6 +295,7 @@ class connection(object):
         conn.connect()
         conn.putrequest('POST', uri)
         conn.putheader('uploadfilename', baseName)
+        conn.putheader('initialScopeUris', custom_headers['initialScopeUris'])
         conn.putheader('auth', self._headers['auth'])
         conn.putheader('Content-Type', content_type)
         totalSize = os.path.getsize(files + '.b64')

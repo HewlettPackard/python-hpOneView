@@ -35,7 +35,10 @@ config = {
 }
 
 # To run this example you must define a path to a valid file
-firmware_path = "<path_to_firmware_bundle>"
+firmware_path = "/home/madhav/SPP2017072.2017_0921.4.iso"
+
+# Use the below option to specify additional request headers as required
+custom_headers = {'initialScopeUris': '/rest/scopes/bf3e77e3-3248-41b3-aaee-5d83b6ac4b49'}
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
@@ -43,6 +46,6 @@ oneview_client = OneViewClient(config)
 
 # Upload a firmware bundle
 print("\nUpload a firmware bundle")
-firmware_bundle_information = oneview_client.firmware_bundles.upload(file_path=firmware_path)
+firmware_bundle_information = oneview_client.firmware_bundles.upload(file_path=firmware_path, custom_headers=custom_headers)
 print("\n Upload successful! Firmware information returned: \n")
 pprint(firmware_bundle_information)

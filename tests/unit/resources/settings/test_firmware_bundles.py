@@ -42,4 +42,4 @@ class FirmwareBundlesTest(unittest.TestCase):
 
         self._firmware_bundles.upload(firmware_path)
 
-        mock_upload.assert_called_once_with(firmware_path, timeout=-1)
+        mock_upload.assert_called_once_with(firmware_path, custom_headers=None, timeout=-1)
