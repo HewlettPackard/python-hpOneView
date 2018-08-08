@@ -28,7 +28,7 @@ from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "",
+    "ip": "10.30.5.228",
     "credentials": {
         "userName": "administrator",
         "password": "ecosystem"
@@ -36,7 +36,7 @@ config = {
 }
 
 options = {
-    "name": "OneViewSDK Test FC Network",
+    "name": "fc_test",
     "connectionTemplateUri": None,
     "autoLoginRedistribution": True,
     "fabricType": "FabricAttach",
@@ -44,7 +44,7 @@ options = {
 }
 
 # Scope name to perform the patch operation
-scope_name = ""
+scope_name = "sample"
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
@@ -53,73 +53,68 @@ oneview_client = OneViewClient(config)
 
 connection = oneview_client.connection
 
+#Create FcNetWorks object
 fc_network = FcNetworks(connection, options)
 
-additional_params = {}
-fc_network.create(additional_params)
+#Create a FcNetWork with the options provided
+try:
+  fc_network.create()
+except HPOneViewException, e:
+  print(e[0])
 
-#Get the data of a fc network
-fc_netwok_data = fc_network.get()
-
-
-# Create a FC Network
-#fc_network = oneview_client.fc_networks.create(options)
-print("\nCreated fc-network '%s' successfully.\n  uri = '%s'" % (fc_network['name'], fc_network['uri']))
+#Get data of the created fc network
+data = fc_network.get()
+print(data)
 
 # Find recently created network by name
-#fc_network = oneview_client.fc_networks.get_by('name', 'OneViewSDK Test FC Network')[0]
-print("\nFound fc-network by name: '%s'.\n  uri = '%s'" % (fc_network['name'], fc_network['uri']))
+data = fc_network.get_by_name(options['name'])
+print("\nFound fc-network by name: '%s'.\n  uri = '%s'" % (data['name'], data['uri']))
 
 # Update autoLoginRedistribution from recently created network
-#fc_network['autoLoginRedistribution'] = False
-#fc_network = oneview_client.fc_networks.update(fc_network)
-print("\nUpdated fc-network '%s' successfully.\n  uri = '%s'" % (fc_network['name'], fc_network['uri']))
-print("  with attribute {'autoLoginRedistribution': %s}" % fc_network['autoLoginRedistribution'])
+data_to_update = {'autoLoginRedistribution': False,
+          'name':'Updated FC'}
+resource = fc_network.update(data=data_to_update)
+print("\nUpdated fc-network '%s' successfully.\n  uri = '%s'" % (resource['name'], resource['uri']))
+print("  with attribute {'autoLoginRedistribution': %s}" % resource['autoLoginRedistribution'])
 
 # Get all, with defaults
 print("\nGet all fc-networks")
-#fc_nets = oneview_client.fc_networks.get_all()
-#pprint(fc_nets)
+fc_nets = fc_network.get_all()
+pprint(fc_nets)
 
 # Filter by name
 print("\nGet all fc-networks filtering by name")
-#fc_nets_filtered = oneview_client.fc_networks.get_all(filter="\"'name'='OneViewSDK Test FC Network'\"")
-#pprint(fc_nets_filtered)
+fc_nets_filtered = fc_network.get_all(filter="\"'name'='Updated FC'\"")
+pprint(fc_nets_filtered)
 
 # Get all sorting by name descending
-#print("\nGet all fc-networks sorting by name")
-#fc_nets_sorted = oneview_client.fc_networks.get_all(sort='name:descending')
-#pprint(fc_nets_sorted)
+print("\nGet all fc-networks sorting by name")
+fc_nets_sorted = fc_network.get_all(sort='name:descending')
+pprint(fc_nets_sorted)
 
 # Get the first 10 records
 print("\nGet the first ten fc-networks")
-#fc_nets_limited = oneview_client.fc_networks.get_all(0, 10)
-#pprint(fc_nets_limited)
+fc_nets_limited = fc_network.get_all(0, 10)
+pprint(fc_nets_limited)
 
-# Get by Id
-#if fc_network_id:
-#    try:
-#        print("\nGet a fc-network by id")
-#        fc_nets_byid = oneview_client.fc_networks.get(fc_network_id)
-#        pprint(fc_nets_byid)
-#    except HPOneViewException as e:
-#        print(e.msg)
-
-# Get by Uri
+# Get by uri
 print("\nGet a fc-network by uri")
-#fc_nets_by_uri = oneview_client.fc_networks.get(fc_network['uri'])
-#pprint(fc_nets_by_uri)
+fc_nets_by_uri = fc_network.get_by_uri(resource['uri'])
+pprint(fc_nets_by_uri)
 
 # Adds ethernet to scope defined
-#if scope_name:
-#    print("\nGet scope then add the network to it")
-#    scope = oneview_client.scopes.get_by_name(scope_name)
-#    fc_with_scope = oneview_client.fc_networks.patch(fc_network['uri'],
-#                                                     'replace',
-#                                                     '/scopeUris',
-#                                                     [scope['uri']])
-#    pprint(fc_with_scope)
+if scope_name:
+    print("\nGet scope then add the network to it")
+    scope = oneview_client.scopes.get_by_name(scope_name) # TODO: This has to updated
+    try: 
+        fc_with_scope = fc_network.patch(resource['uri'],
+                                         'replace',
+                                         '/scopeUris',
+                                         [scope['uri']])
+        pprint(fc_with_scope)
+    except HPOneViewException, e:
+        print(e)
 
 # Delete the created network
-#oneview_client.fc_networks.delete(fc_network)
-#print("\nSuccessfully deleted fc-network")
+fc_network.delete()
+print("\nSuccessfully deleted fc-network")
