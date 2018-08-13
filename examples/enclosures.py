@@ -22,18 +22,23 @@
 ###
 
 from pprint import pprint
+
 from hpOneView.oneview_client import OneViewClient
-from hpOneView.exceptions import HPOneViewException
+from hpOneView.exceptions import HPOneViewException, HPOneViewTaskError
 from config_loader import try_load_from_file
 
 # This example is compatible only for C7000 enclosures
 
 config = {
-    "ip": "<oneview_ip>",
+    "ip": "10.30.5.228",
     "credentials": {
-        "userName": "<username>",
-        "password": "<password>"
-    }
+        "userName": "administrator",
+        "password": "ecosystem"
+    },
+    "enclosure_group_uri": "/rest/enclosure-groups/00bdf757-7ce2-4ffd-be7e-1a568dd8ecfc",
+    "enclosure_hostname": "172.18.1.11",
+    "enclosure_username": "dcs",
+    "enclosure_password": "dcs"
 }
 
 # Declare a CA signed certificate file path.
@@ -44,6 +49,7 @@ config = try_load_from_file(config)
 
 # The hostname, enclosure group URI, username, and password must be set on the configuration file
 options = {
+    "name": "Encl1-Updated-Updated-Updated",
     "enclosureGroupUri": config['enclosure_group_uri'],
     "hostname": config['enclosure_hostname'],
     "username": config['enclosure_username'],
@@ -51,46 +57,47 @@ options = {
     "licensingIntent": "OneView"
 }
 
+# Get OneView client
 oneview_client = OneViewClient(config)
 
-# Add an Enclosure
-enclosure = oneview_client.enclosures.add(options)
-enclosure_uri = enclosure['uri']
-print("Added enclosure '{name}'.\n  URI = '{uri}'".format(**enclosure))
+# Add an enclosure 
+try:
+    # This will return an enclosure object
+    enclosure = oneview_client.enclosures.add(options)
+    print("Added enclosure '{name}'.\n  URI = '{uri}'".format(**enclosure.data))
+except HPOneViewTaskError, e:
+    print(e)
+    #Get the reosurce by name
+    enclosure = oneview_client.enclosures.get_by_name(options['name'])
 
-# Perform a patch operation, replacing the name of the enclosure
-enclosure_name = enclosure['name'] + "-Updated"
+# Perform a patch operation on the enclosure, replacing the name of the enclosure
+enclosure_name = "Encl1-Updated-11"
 print("Updating the enclosure to have a name of " + enclosure_name)
-enclosure = oneview_client.enclosures.patch(enclosure_uri, 'replace', '/name', enclosure_name)
-print("  Done.\n  URI = '{uri}', name = {name}".format(**enclosure))
-
-# Find the recently added enclosure by name
-print("Find an enclosure by name")
-enclosure = oneview_client.enclosures.get_by('name', enclosure['name'])[0]
-print("  URI = '{uri}'".format(**enclosure))
+enclosure.patch('replace', '/name', enclosure_name)
+print("  Done.\n  URI = '{uri}', name = {name}".format(**enclosure.data))
 
 # Get by URI
 print("Find an enclosure by URI")
-enclosure = oneview_client.enclosures.get(enclosure_uri)
-pprint(enclosure)
+enclosure = enclosure.get_by_uri(enclosure.data['uri'])
+pprint(enclosure.data)
 
 # Get all enclosures
 print("Get all enclosures")
-enclosures = oneview_client.enclosures.get_all()
+enclosures = enclosure.get_all()
 for enc in enclosures:
     print('  {name}'.format(**enc))
 
 # Update configuration
 print("Reapplying the appliance's configuration on the enclosure")
 try:
-    oneview_client.enclosures.update_configuration(enclosure_uri)
+    enclosure.update_configuration()
     print("  Done.")
 except HPOneViewException as e:
     print(e.msg)
 
 print("Retrieve the environmental configuration data for the enclosure")
 try:
-    environmental_configuration = oneview_client.enclosures.get_environmental_configuration(enclosure_uri)
+    environmental_configuration = enclosure.get_environmental_configuration()
     print("  Enclosure calibratedMaxPower = {calibratedMaxPower}".format(**environmental_configuration))
 except HPOneViewException as e:
     print(e.msg)
@@ -99,7 +106,7 @@ except HPOneViewException as e:
 print("Refreshing the enclosure")
 try:
     refresh_state = {"refreshState": "RefreshPending"}
-    enclosure = oneview_client.enclosures.refresh_state(enclosure_uri, refresh_state)
+    enclosure.refresh_state(refresh_state)
     print("  Done")
 except HPOneViewException as e:
     print(e.msg)
@@ -107,15 +114,15 @@ except HPOneViewException as e:
 # Get the enclosure script
 print("Get the enclosure script")
 try:
-    script = oneview_client.enclosures.get_script(enclosure_uri)
+    script = enclosure.get_script()
     pprint(script)
 except HPOneViewException as e:
     print(e.msg)
 
-# Buid the SSO URL parameters
+#### Buid the SSO URL parameters
 print("Build the SSO (Single Sign-On) URL parameters for the enclosure")
 try:
-    sso_url_parameters = oneview_client.enclosures.get_sso(enclosure_uri, 'Active')
+    sso_url_parameters = enclosure.get_sso('Active')
     pprint(sso_url_parameters)
 except HPOneViewException as e:
     print(e.msg)
@@ -123,10 +130,9 @@ except HPOneViewException as e:
 # Get Statistics specifying parameters
 print("Get the enclosure statistics")
 try:
-    enclosure_statistics = oneview_client.enclosures.get_utilization(enclosure_uri,
-                                                                     fields='AveragePower',
-                                                                     filter='startDate=2016-06-30T03:29:42.000Z',
-                                                                     view='day')
+    enclosure_statistics = enclosure.get_utilization(fields='AveragePower',
+                                                     filter='startDate=2016-06-30T03:29:42.000Z',
+                                                     view='day')
     pprint(enclosure_statistics)
 except HPOneViewException as e:
     print(e.msg)
@@ -143,14 +149,14 @@ csr_data = {
     "commonName": ""
 }
 try:
-    oneview_client.enclosures.generate_csr(csr_data, enclosure_uri, bay_number=bay_number)
+    enclosure.generate_csr(csr_data, bay_number=bay_number)
     print("Generated CSR for the enclosure.")
 except HPOneViewException as e:
     print(e.msg)
 
 # Get the certificate Signing Request (CSR) that was generated by previous POST.
 try:
-    csr = oneview_client.enclosures.get_csr(enclosure_uri, bay_number=bay_number)
+    csr = enclosure.get_csr(bay_number=bay_number)
     with open('enclosure.csr', 'w') as csr_file:
             csr_file.write(csr["base64Data"])
     print("Saved CSR(generated by previous POST) to 'enclosure.csr' file")
@@ -160,7 +166,7 @@ except HPOneViewException as e:
 try:
     # Get Enclosure by scope_uris
     if oneview_client.api_version >= 600:
-        enclosures_by_scope_uris = oneview_client.enclosures.get_all(scope_uris="\"'/rest/scopes/3bb0c754-fd38-45af-be8a-4d4419de06e9'\"")
+        enclosures_by_scope_uris = enclosure.get_all(scope_uris="\"'/rest/scopes/3bb0c754-fd38-45af-be8a-4d4419de06e9'\"")
         if len(enclosures_by_scope_uris) > 0:
             print("Found %d Enclosures" % (len(enclosures_by_scope_uris)))
             i = 0
@@ -185,11 +191,11 @@ try:
             "base64Data": certificate
         }
 
-        oneview_client.enclosures.import_certificate(certificate_data, enclosure_uri, bay_number=bay_number)
+        enclosure.import_certificate(certificate_data, enclosure_uri, bay_number=bay_number)
         print("Imported Signed Certificate  to the enclosure.")
 except HPOneViewException as e:
     print(e.msg)
 
 # Remove the recently added enclosure
-oneview_client.enclosures.remove(enclosure)
+enclosure.remove()
 print("Enclosure removed successfully")

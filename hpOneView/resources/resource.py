@@ -38,8 +38,8 @@ from urllib.parse import quote
 from functools import update_wrapper, partial
 
 from hpOneView.resources.task_monitor import TaskMonitor
-from hpOneView.exceptions import HPOneViewUnknownType, HPOneViewException
-from hpOneView.exceptions import HPOneViewValueError
+from hpOneView.exceptions import HPOneViewUnknownType, HPOneViewException, HPOneViewMissingUniqueIdentifiers
+from hpOneView.exceptions import HPOneViewValueError, HPOneViewResourceNotFound
 
 RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED = 'Resource was not provided'
 RESOURCE_CLIENT_INVALID_FIELD = 'Invalid field was provided'
@@ -50,6 +50,7 @@ RESOURCE_CLIENT_TASK_EXPECTED = "Failed: Expected a TaskResponse."
 RESOURCE_ID_OR_URI_REQUIRED = 'It is required to inform the Resource ID or URI.'
 UNAVAILABLE_METHOD = "Method is not available for this resource"
 MISSING_UNIQUE_IDENTIFIERS = "Missing unique identifiers(URI/Name) for the resource"
+RESOURCE_DOES_NOT_EXISTS = "Resource does not exists with provided unique identifiers"
 
 logger = logging.getLogger(__name__)
 
@@ -74,14 +75,22 @@ class Resource(object):
     """
     This class implements common functions for HpOneView API rest
     """
-
+    # Base URI for the rest calls
     URI = '/rest'
+
+    # Unique identifiers to query the resource
+    UNIQUE_IDENTIFIERS = ['uri', 'name']
+
+    # Add fields to be removed from the request body of a post request
+    EXCLUDE_FROM_REQUEST = []
+
+    # Default values required for the api versions
     DEFAULT_VALUES = {}
 
-    def __init__(self, connection, data):
+    def __init__(self, connection, data=None):
 
         self._connection = connection
-        self.data = data
+        self.data = data if data else {}
         self._merge_default_values()
         self._task_monitor = TaskMonitor(connection)
 
@@ -163,26 +172,37 @@ class Resource(object):
         """
         Retrieve data from OneView and update resource data
         """
-        uri =  self.data.get('uri')
-        name = self.data.get('name')
-
-        if not uri and not name:
+        #Check for unique identifier in the resource data
+        if not any(key in self.data for key in self.UNIQUE_IDENTIFIERS):
             raise HPOneViewMissingUniqueIdentifiers(MISSING_UNIQUE_IDENTIFIERS)
-        
-        if uri:
-            self.data.update(self.do_get(uri))
 
-        if name:
-            self.data.update(self.get_by_name(name))
+        resource_data = None
 
-        return self.data
+        if 'uri' in self.UNIQUE_IDENTIFIERS and self.data.get('uri'):
+            uri =  self.data['uri']
+            if self.URI in uri:
+                resource_data = self.do_get(uri)        
+        else:
+            for identifier in self.UNIQUE_IDENTIFIERS:
+                identifier_value = self.data.get(identifier)
+                
+                if identifier_value:     
+                    result = self.get_by(identifier, identifier_value)
+                    if result and isinstance(result, list):
+                        resource_data = result[0]
+                        break   
+
+        if not resource_data:
+            raise HPOneViewResourceNotFound(RESOURCE_DOES_NOT_EXISTS) 
+
+        self.data.update(resource_data)
 
     @ensure_resource_client
     def get(self):
         """
         Return resource data
         """  
-        return self.data
+        return self
 
     def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', scope_uris=''):
         """
@@ -251,7 +271,9 @@ class Resource(object):
         """
         logger.debug('Create with zero body (uri = %s)' % self.URI)
 
-        return self.do_post(self.URI, {}, timeout, custom_headers)
+        self.do_post(self.URI, {}, timeout, custom_headers)
+
+        return self
 
     def create(self, data=None, timeout=-1, custom_headers=None):
         """
@@ -268,14 +290,18 @@ class Resource(object):
         Returns:
             Created resource.
         """
-        uri = self.self.URI
+        uri = self.URI
         resource = deepcopy(self.data)
-        resource.update(data)
+
+        if data:
+            resource.update(data)
  
         logger.debug('Create (uri = %s, resource = %s)' %
                     (uri, str(resource)))
 
-        return self.do_post(uri, resource, timeout, custom_headers)          
+        self.data = self.do_post(uri, resource, timeout, custom_headers)
+
+        return self
 
     def delete_all(self, filter, force=False, timeout=-1):
         """
@@ -417,7 +443,9 @@ class Resource(object):
         if force:
             uri += '?force=True'
 
-        return self.do_put(uri, resource, timeout, custom_headers)
+        self.data = self.do_put(uri, resource, timeout, custom_headers)
+
+        return self
          
     def patch(self, operation, path, value, timeout=-1, custom_headers=None):
         """
@@ -437,9 +465,10 @@ class Resource(object):
         """
         patch_request_body = [{'op': operation, 'path': path, 'value': value}]
 
-        return self._patch_request(body=patch_request_body,
-                                  timeout=timeout,
-                                  custom_headers=custom_headers)
+        self.data = self._patch_request(body=patch_request_body,
+                                        timeout=timeout,
+                                        custom_headers=custom_headers)
+        return self
 
     @ensure_resource_client
     def _patch_request(self, body, timeout=-1, custom_headers=None):
@@ -488,7 +517,7 @@ class Resource(object):
 
         filter = "\"{0}='{1}'\"".format(field, value)
         results = self.get_all(filter=filter)
-
+        print('get all', results)
         # Workaround when the OneView filter does not work, it will filter again
         if "." not in field:
             # This filter only work for the first level
@@ -510,14 +539,17 @@ class Resource(object):
         if not result:
             return None
         else:
-            return result[0]
+            self.data = result[0]
+            return self
 
     def get_by_uri(self, uri):
         """
         Retrieve a resource by its id  
         """
         self. __validate_resource_uri(uri)
-        return self.do_get(uri)
+        self.data = self.do_get(uri)
+         
+        return self
 
     @ensure_resource_client
     def get_utilization(self, fields=None, filter=None, refresh=False, view=None):
@@ -690,6 +722,10 @@ class Resource(object):
         """
         Method to support post requests of the resource 
         """ 
+
+        for field in self.EXCLUDE_FROM_REQUEST:
+            resource.pop(field, None) 
+
         task, entity = self._connection.post(uri, resource, custom_headers=custom_headers)
 
         if not task:
@@ -1532,6 +1568,41 @@ class ResourceClient(object):
             merged_resource = merge_resources(data, resource)
 
         return merged_resource or resource
+
+
+def merge_resources(resource1, resource2):
+    """
+    Updates a copy of resource1 with resource2 values and returns the merged dictionary.
+
+    Args:
+        resource1: original resource
+        resource2: resource to update resource1
+
+    Returns:
+        dict: merged resource
+    """
+    merged = resource1.copy()
+    merged.update(resource2)
+    return merged
+
+
+def merge_default_values(resource_list, default_values):
+    """
+    Generate a new list where each item of original resource_list will be merged with the default_values.
+
+    Args:
+        resource_list: list with items to be merged
+        default_values: properties to be merged with each item list. If the item already contains some property
+            the original value will be maintained.
+
+    Returns:
+        list: list containing each item merged with default_values
+    """
+
+    def merge_item(resource):
+        return merge_resources(default_values, resource)
+
+    return lmap(merge_item, resource_list)
 
 
 def transform_list_to_dict(list):

@@ -29,6 +29,7 @@ from future import standard_library
 
 standard_library.install_aliases()
 
+from copy import deepcopy
 
 from hpOneView.resources.resource import Resource, ensure_resource_client
 
@@ -40,8 +41,8 @@ class Enclosures(Resource):
     """
     URI = '/rest/enclosures'
 
-    def __init__(self, connection, options):
-        super(FcNetworks, self).__init__(connection, options)
+    def __init__(self, connection, options=None):
+        super(Enclosures, self).__init__(connection, options)
 
    
     def add(self, information, timeout=-1):
@@ -64,8 +65,15 @@ class Enclosures(Resource):
             dict: Enclosure.
 
         """
-        return self.create(information, timeout=timeout)
-  
+        self.EXCLUDE_FROM_REQUEST = ['name'] 
+        return self.create(data=information, timeout=timeout)
+
+    def remove(self):
+        """
+        Remove enclosure
+        """
+        self.delete()
+
     @ensure_resource_client
     def update_configuration(self, timeout=-1):
         """
@@ -112,7 +120,7 @@ class Enclosures(Resource):
             Settings that describe the environmental configuration.
         """
         uri = '{}/environmentalConfiguration'.format(self.data['uri'])
-        return self.do_put(uri, configuration, timeout)
+        return self.do_put(uri, configuration, timeout, None)
 
     @ensure_resource_client
     def refresh_state(self, configuration, timeout=-1):
@@ -131,7 +139,7 @@ class Enclosures(Resource):
             Enclosure
         """
         uri = "{}/refreshState".format(self.data['uri'])
-        return self.do_put(uri, configuration, timeout)
+        return self.do_put(uri, configuration, timeout, None)
 
     @ensure_resource_client
     def get_script(self):
@@ -223,4 +231,4 @@ class Enclosures(Resource):
             uri += "?bayNumber=%d" % (bay_number)
 
         headers = {'Content-Type': 'application/json'}
-        return self.do_put(uri, certificate_data, headers)
+        return self.do_put(uri, certificate_data, -1, headers)

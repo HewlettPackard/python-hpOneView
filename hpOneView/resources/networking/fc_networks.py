@@ -48,7 +48,7 @@ class FcNetworks(Resource):
         '600': {"type": "fc-networkV4"}
     }
 
-    def __init__(self, connection, options):
+    def __init__(self, connection, options=None):
         super(FcNetworks, self).__init__(connection, options)
 
 
