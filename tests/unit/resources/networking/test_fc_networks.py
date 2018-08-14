@@ -43,7 +43,6 @@ class FcNetworksTest(unittest.TestCase):
         sort = 'name:ascending'
 
         self._fc_networks.get_all(2, 500, filter, sort)
-
         mock_get_all.assert_called_once_with(2, 500, filter, sort)
 
     @mock.patch.object(Resource, 'create')
@@ -79,28 +78,19 @@ class FcNetworksTest(unittest.TestCase):
 
     @mock.patch.object(Resource, 'delete')
     def test_delete_called_once(self, mock_delete):
-        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        self._fc_networks.delete(id, force=False, timeout=-1)
-
-        mock_delete.assert_called_once_with(id, force=False, timeout=-1)
+        self._fc_networks.delete(force=False, timeout=-1)
+        mock_delete.assert_called_once_with(force=False, timeout=-1)
 
     @mock.patch.object(Resource, 'get_by')
     def test_get_by_called_once(self, mock_get_by):
         self._fc_networks.get_by('name', 'OneViewSDK "Test FC Network')
-
         mock_get_by.assert_called_once_with('name', 'OneViewSDK "Test FC Network')
 
-    @mock.patch.object(Resource, 'get')
-    def test_get_called_once(self, mock_get):
-        self._fc_networks.get('3518be0e-17c1-4189-8f81-83f3724f6155')
-
-        mock_get.assert_called_once_with('3518be0e-17c1-4189-8f81-83f3724f6155')
-
-    @mock.patch.object(Resource, 'get')
+    @mock.patch.object(Resource, 'get_by_uri')
     def test_get_with_uri_called_once(self, mock_get):
         uri = '/rest/fc-networks/3518be0e-17c1-4189-8f81-83f3724f6155'
-        self._fc_networks.get(uri)
 
+        self._fc_networks.get_by_uri(uri)
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(Resource, 'patch')

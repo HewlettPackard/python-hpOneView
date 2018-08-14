@@ -70,7 +70,7 @@ except HPOneViewTaskError, e:
     # Get the reosurce by name
     enclosure = oneview_client.enclosures.get_by_name(options['name'])
 
-# Perform a patch operation on the enclosure, replacing the name of the enclosure
+# Perform a patch operation on the enclosure, replacing name of the enclosure
 enclosure_name = "Encl1-Updated-11"
 print("Updating the enclosure to have a name of " + enclosure_name)
 enclosure.patch('replace', '/name', enclosure_name)

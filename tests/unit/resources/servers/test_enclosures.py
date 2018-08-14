@@ -44,19 +44,16 @@ class EnclosuresTest(TestCase):
         scope_uris = 'rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a'
 
         self._enclosures.get_all(2, 500, filter, sort, scope_uris=scope_uris)
-
         mock_get_all.assert_called_once_with(2, 500, filter, sort, scope_uris=scope_uris)
 
     @mock.patch.object(Resource, 'get_all')
     def test_get_all_called_once_with_default_values(self, mock_get_all):
         self._enclosures.get_all(0, -1)
-
         mock_get_all.assert_called_once_with(0, -1)
 
     @mock.patch.object(Resource, 'get_by')
     def test_get_by_called_once(self, mock_get_by):
         self._enclosures.get_by('name', 'OneViewSDK-Test-Enclosure')
-
         mock_get_by.assert_called_once_with('name', 'OneViewSDK-Test-Enclosure')
 
     @mock.patch.object(Resource, 'create')
@@ -69,17 +66,11 @@ class EnclosuresTest(TestCase):
         self._enclosures.add(information)
         mock_create.assert_called_once_with(data=information.copy(), timeout=-1)
 
-    @mock.patch.object(Resource, 'get')
-    def test_get_called_once(self, mock_get):
-        self._enclosures.get('3518be0e-17c1-4189-8f81-83f3724f6155')
-
-        mock_get.assert_called_once_with('3518be0e-17c1-4189-8f81-83f3724f6155')
-
-    @mock.patch.object(Resource, 'get')
+    @mock.patch.object(Resource, 'get_by_uri')
     def test_get_with_uri_called_once(self, mock_get):
         uri = '/rest/enclosures/3518be0e-17c1-4189-8f81-83f3724f6155'
-        self._enclosures.get(uri)
 
+        self._enclosures.get_by_uri(uri)
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(Resource, 'patch')
@@ -92,20 +83,17 @@ class EnclosuresTest(TestCase):
     @mock.patch.object(Resource, 'delete')
     def test_remove_called_once(self, mock_delete):
         self._enclosures.remove(force=False)
-
         mock_delete.assert_called_once_with(force=False)
 
     @mock.patch.object(Resource, 'delete')
     def test_remove_called_once_with_force(self, mock_delete):
         self._enclosures.remove(force=True)
-
         mock_delete.assert_called_once_with(force=True)
 
     @mock.patch.object(Resource, 'load_resource')
     @mock.patch.object(Resource, 'update_with_zero_body')
     def test_update_configuration_by_uri(self, mock_update_with_zero_body, load_resource):
         self._enclosures.update_configuration()
-
         mock_update_with_zero_body.assert_called_once_with(path='/configuration', timeout=-1)
 
     @mock.patch.object(Resource, 'load_resource')
@@ -114,7 +102,6 @@ class EnclosuresTest(TestCase):
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/environmentalConfiguration'
 
         self._enclosures.get_environmental_configuration()
-
         mock_get.assert_called_once_with(uri_rest_call)
 
     @mock.patch.object(Resource, 'load_resource')
@@ -123,7 +110,6 @@ class EnclosuresTest(TestCase):
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/environmentalConfiguration'
 
         self._enclosures.get_environmental_configuration()
-
         mock_get.assert_called_once_with(uri_rest_call)
 
     @mock.patch.object(Resource, 'load_resource')
@@ -134,7 +120,6 @@ class EnclosuresTest(TestCase):
         configuration_rest_call = configuration.copy()
 
         self._enclosures.update_environmental_configuration(configuration, timeout=-1)
-
         mock_put.assert_called_once_with(uri_rest_call, configuration_rest_call, -1, None)
 
     @mock.patch.object(Resource, 'load_resource')
@@ -176,7 +161,6 @@ class EnclosuresTest(TestCase):
     @mock.patch.object(Resource, 'get_utilization')
     def test_get_utilization_by_uri_with_defaults(self, mock_get):
         self._enclosures.get_utilization('/rest/enclosures/09USE7335NW3')
-
         mock_get.assert_called_once_with('/rest/enclosures/09USE7335NW3')
 
     @mock.patch.object(Resource, 'load_resource')
@@ -196,7 +180,6 @@ class EnclosuresTest(TestCase):
         headers = {'Content-Type': 'application/json'}
 
         self._enclosures.generate_csr(csr_data, bay_number=bay_number)
-
         mock_post.assert_called_once_with(uri_rest_call, csr_data, -1, headers)
 
     @mock.patch.object(Resource, 'load_resource')
@@ -220,5 +203,4 @@ class EnclosuresTest(TestCase):
         headers = {'Content-Type': 'application/json'}
 
         self._enclosures.import_certificate(certificate_data, bay_number=bay_number)
-
         mock_put.assert_called_once_with(uri_rest_call, certificate_data, -1, headers)

@@ -55,19 +55,19 @@ logger = logging.getLogger(__name__)
 
 
 class EnsureResourceClient(object):
-        """
-        Decorator class to make sure the resource client
-        """
-        def __init__(self, func):
-            update_wrapper(self, func)
-            self.func = func
+    """
+    Decorator class to sync resource data with server
+    """
+    def __init__(self, func):
+        update_wrapper(self, func)
+        self.func = func
 
-        def __get__(self, obj, objtype):
-            return partial(self.__call__, obj)
+    def __get__(self, obj, objtype):
+        return partial(self.__call__, obj)
 
-        def __call__(self, obj, *args, **kwargs):
-            obj.load_resource()
-            return self.func(obj, *args, **kwargs)
+    def __call__(self, obj, *args, **kwargs):
+        obj.load_resource()
+        return self.func(obj, *args, **kwargs)
 
 
 # Decorator to ensure the resource client
@@ -76,7 +76,7 @@ ensure_resource_client = EnsureResourceClient
 
 class Resource(object):
     """
-    This class implements common functions for HpOneView API rest
+    Base class for OneView resources
     """
     # Base URI for the rest calls
     URI = '/rest'
@@ -84,18 +84,51 @@ class Resource(object):
     # Unique identifiers to query the resource
     UNIQUE_IDENTIFIERS = ['uri', 'name']
 
-    # Add fields to be removed from the request body of a post request
+    # Add fields to be removed from the request body
     EXCLUDE_FROM_REQUEST = []
 
     # Default values required for the api versions
     DEFAULT_VALUES = {}
 
     def __init__(self, connection, data=None):
-
+        # OneView connection object
         self._connection = connection
+
+        # Resource data
         self.data = data if data else {}
+
+        # Merge resoure data with the default values
         self._merge_default_values()
+
         self._task_monitor = TaskMonitor(connection)
+
+    def load_resource(self):
+        """
+        Retrieve data from OneView and update resource data
+        """
+        # Check for unique identifier in the resource data
+        if not any(key in self.data for key in self.UNIQUE_IDENTIFIERS):
+            raise exceptions.HPOneViewMissingUniqueIdentifiers(MISSING_UNIQUE_IDENTIFIERS)
+
+        resource_data = None
+
+        if 'uri' in self.UNIQUE_IDENTIFIERS and self.data.get('uri'):
+            uri = self.data['uri']
+            resource_data = self.do_get(uri)
+        else:
+            for identifier in self.UNIQUE_IDENTIFIERS:
+                identifier_value = self.data.get(identifier)
+
+                if identifier_value:
+                    result = self.get_by(identifier, identifier_value)
+                    if result and isinstance(result, list):
+                        resource_data = result[0]
+                        break
+
+        if not resource_data:
+            raise exceptions.HPOneViewResourceNotFound(RESOURCE_DOES_NOT_EXISTS)
+
+        self.data.update(resource_data)
 
     def build_query_uri(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None, scope_uris=''):
         """
@@ -170,42 +203,6 @@ class Resource(object):
         uri = "{0}{1}start={2}&count={3}{4}{5}{6}{7}{8}{9}".format(path, symbol, start, count, filter, query, sort,
                                                                    view, fields, scope_uris)
         return uri
-
-    def load_resource(self):
-        """
-        Retrieve data from OneView and update resource data
-        """
-        # Check for unique identifier in the resource data
-        if not any(key in self.data for key in self.UNIQUE_IDENTIFIERS):
-            raise exceptions.HPOneViewMissingUniqueIdentifiers(MISSING_UNIQUE_IDENTIFIERS)
-
-        resource_data = None
-
-        if 'uri' in self.UNIQUE_IDENTIFIERS and self.data.get('uri'):
-            uri = self.data['uri']
-            if self.URI in uri:
-                resource_data = self.do_get(uri)
-        else:
-            for identifier in self.UNIQUE_IDENTIFIERS:
-                identifier_value = self.data.get(identifier)
-
-                if identifier_value:
-                    result = self.get_by(identifier, identifier_value)
-                    if result and isinstance(result, list):
-                        resource_data = result[0]
-                        break
-
-        if not resource_data:
-            raise exceptions.HPOneViewResourceNotFound(RESOURCE_DOES_NOT_EXISTS)
-
-        self.data.update(resource_data)
-
-    @ensure_resource_client
-    def get(self):
-        """
-        Return resource data
-        """
-        return self
 
     def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', scope_uris=''):
         """
@@ -336,7 +333,9 @@ class Resource(object):
 
     @ensure_resource_client
     def delete(self, force=False, timeout=-1, custom_headers=None):
-
+        """
+        Deletes current resource
+        """
         if self.data and 'uri' in self.data and self.data['uri']:
             uri = self.data['uri']
         else:
@@ -364,7 +363,8 @@ class Resource(object):
                      (self.URI, self.URI))
         return self._connection.get(self.URI + '/schema')
 
-    def get_collection(self, id_or_uri, filter=''):
+    @ensure_resource_client
+    def get_collection(self, filter=''):
         """
         Retrieves a collection of resources.
 
@@ -374,7 +374,6 @@ class Resource(object):
         Optional filtering criteria may be specified.
 
         Args:
-            id_or_uri: Can be either the resource ID or the resource URI.
             filter (list or str): General filter/query string.
 
         Returns:
@@ -384,9 +383,10 @@ class Resource(object):
             filter = self.__make_query_filter(filter)
             filter = "?" + filter[1:]
 
-        uri = "{uri}{filter}".format(uri=self.build_uri(id_or_uri), filter=filter)
+        uri = "{uri}{filter}".format(uri=self.data['uri'], filter=filter)
         logger.debug('Get resource collection (uri = %s)' % uri)
         response = self._connection.get(uri)
+
         return self.__get_members(response)
 
     @ensure_resource_client
@@ -395,8 +395,6 @@ class Resource(object):
         Makes a PUT request to update a resource when no request body is required.
 
         Args:
-            uri:
-                Can be either the resource ID or the resource URI.
             timeout:
                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
@@ -519,7 +517,7 @@ class Resource(object):
 
         filter = "\"{0}='{1}'\"".format(field, value)
         results = self.get_all(filter=filter)
-        print('get all', results)
+
         # Workaround when the OneView filter does not work, it will filter again
         if "." not in field:
             # This filter only work for the first level
@@ -559,8 +557,6 @@ class Resource(object):
         Retrieves historical utilization data for the specified resource, metrics, and time span.
 
         Args:
-            id_or_uri:
-                Resource identification
             fields:
                 Name of the supported metric(s) to be retrieved in the format METRIC[,METRIC]...
                 If unspecified, all metrics supported are returned.
@@ -648,7 +644,6 @@ class Resource(object):
         Creates a report and returns the output.
 
         Args:
-            uri: URI
             timeout:
                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
@@ -667,17 +662,6 @@ class Resource(object):
 
         return task['taskOutput']
 
-    def build_uri(self, id_or_uri):
-        if not id_or_uri:
-            logger.exception(RESOURCE_CLIENT_INVALID_ID)
-            raise ValueError(RESOURCE_CLIENT_INVALID_ID)
-
-        if "/" in id_or_uri:
-            self.__validate_resource_uri(id_or_uri)
-            return id_or_uri
-        else:
-            return self.URI + "/" + id_or_uri
-
     def build_subresource_uri(self, resource_id_or_uri=None, subresource_id_or_uri=None, subresource_path=''):
         if subresource_id_or_uri and "/" in subresource_id_or_uri:
             return subresource_id_or_uri
@@ -694,25 +678,6 @@ class Resource(object):
                 uri = uri[:-1]
 
             return uri
-
-    def __validate_resource_uri(self, path):
-        if self.URI not in path:
-            logger.exception('Get by uri : unrecognized uri: (%s)' % path)
-            raise exceptions.HPOneViewUnknownType(UNRECOGNIZED_URI)
-
-    def __make_query_filter(self, filters):
-        if isinstance(filters, list):
-            formated_filter = "&filter=".join(quote(f) for f in filters)
-        else:
-            formated_filter = quote(filters)
-
-        return "&filter=" + formated_filter
-
-    def __get_members(self, mlist):
-        if mlist and 'members' in mlist and mlist['members']:
-            return mlist['members']
-        else:
-            return []
 
     def do_get(self, uri):
         """
@@ -739,7 +704,7 @@ class Resource(object):
 
     def do_put(self, uri, resource, timeout, custom_headers):
         """
-        Method to support the put requests of the resource
+        Method to support put requests of the resource
         """
         self.__validate_resource_uri(uri)
 
@@ -749,6 +714,84 @@ class Resource(object):
             return body
 
         return self._task_monitor.wait_for_task(task, timeout)
+
+    def merge_resources(self, resource_to_merge):
+        """
+        Updates a copy of resource1 with resource2 values and returns the merged dictionary.
+
+        Args:
+            resource_to_merge: data to update resource
+
+        Returns:
+            dict: merged resource
+        """
+        merged = deepcopy(self.data)
+        merged.update(resource_to_merge)
+        return merged
+
+    def upload(self, file_path, uri=None, timeout=-1):
+        """
+        Makes a multipart request.
+
+        Args:
+            file_path:
+                File to upload.
+            uri:
+                A specific URI (optional).
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            dict: Response body.
+        """
+        if not uri:
+            uri = self.URI
+
+        self.__validate_resource_uri(uri)
+
+        upload_file_name = os.path.basename(file_path)
+        task, entity = self._connection.post_multipart_with_response_handling(uri, file_path, upload_file_name)
+
+        if not task:
+            return entity
+
+        return self._task_monitor.wait_for_task(task, timeout)
+
+    def download(self, uri, file_path):
+        """
+        Downloads the contents of the requested URI to a stream.
+
+        Args:
+            uri: URI
+            file_path: File path destination
+
+        Returns:
+            bool: Indicates if the file was successfully downloaded.
+        """
+        self.__validate_resource_uri(uri)
+
+        with open(file_path, 'wb') as file:
+            return self._connection.download_to_stream(file, uri)
+
+    def __validate_resource_uri(self, path):
+        if self.URI not in path:
+            logger.exception('Get by uri : unrecognized uri: (%s)' % path)
+            raise exceptions.HPOneViewUnknownType(UNRECOGNIZED_URI)
+
+    def __make_query_filter(self, filters):
+        if isinstance(filters, list):
+            formated_filter = "&filter=".join(quote(f) for f in filters)
+        else:
+            formated_filter = quote(filters)
+
+        return "&filter=" + formated_filter
+
+    def __get_members(self, mlist):
+        if mlist and 'members' in mlist and mlist['members']:
+            return mlist['members']
+        else:
+            return []
 
     def __do_requests_to_getall(self, uri, requested_count):
         items = []
@@ -784,63 +827,8 @@ class Resource(object):
             values = self.DEFAULT_VALUES.get(api_version, {}).copy()
             self.data.update(values)
 
-    def merge_resources(self, resource_to_merge):
-        """
-        Updates a copy of resource1 with resource2 values and returns the merged dictionary.
-
-        Args:
-            resource1: original resource
-            resource2: resource to update resource1
-
-        Returns:
-            dict: merged resource
-        """
-        merged = deepcopy(self.data)
-        merged.update(resource_to_merge)
-        return merged
-
-    def upload(self, file_path, uri=None, timeout=-1):
-        """
-        Makes a multipart request.
-
-        Args:
-            file_path:
-                File to upload.
-            uri:
-                A specific URI (optional).
-            timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView; it just stops waiting for its completion.
-
-        Returns:
-            dict: Response body.
-        """
-        if not uri:
-            uri = self.URI
-
-        upload_file_name = os.path.basename(file_path)
-        task, entity = self._connection.post_multipart_with_response_handling(uri, file_path, upload_file_name)
-
-        if not task:
-            return entity
-
-        return self._task_monitor.wait_for_task(task, timeout)
-
-    def download(self, uri, file_path):
-        """
-        Downloads the contents of the requested URI to a stream.
-
-        Args:
-            uri: URI
-            file_path: File path destination
-
-        Returns:
-            bool: Indicates if the file was successfully downloaded.
-        """
-        with open(file_path, 'wb') as file:
-            return self._connection.download_to_stream(file, uri)
-
-    def unavailable_method(self):
+    @staticmethod
+    def unavailable_method():
         """
         Raise exception if method is not available for the resource
         """
