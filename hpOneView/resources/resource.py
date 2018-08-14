@@ -662,6 +662,17 @@ class Resource(object):
 
         return task['taskOutput']
 
+    def build_uri(self, id_or_uri):
+        if not id_or_uri:
+            logger.exception(RESOURCE_CLIENT_INVALID_ID)
+            raise ValueError(RESOURCE_CLIENT_INVALID_ID)
+
+        if "/" in id_or_uri:
+            self.__validate_resource_uri(id_or_uri)
+            return id_or_uri
+        else:
+            return self._uri + "/" + id_or_uri
+
     def build_subresource_uri(self, resource_id_or_uri=None, subresource_id_or_uri=None, subresource_path=''):
         if subresource_id_or_uri and "/" in subresource_id_or_uri:
             return subresource_id_or_uri
