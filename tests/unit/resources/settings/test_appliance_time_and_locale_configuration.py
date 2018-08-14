@@ -52,4 +52,4 @@ class ApplianceTimeAndLocaleConfigurationTest(unittest.TestCase):
             'uri': None
         }
         self._time_and_locale.update(resource)
-        mock_create.assert_called_once_with(resource, timeout=-1, default_values=self._time_and_locale.DEFAULT_VALUES)
+        mock_create.assert_called_once_with(resource, force=False, timeout=-1, default_values=self._time_and_locale.DEFAULT_VALUES)

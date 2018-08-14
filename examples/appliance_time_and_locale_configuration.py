@@ -50,12 +50,12 @@ bkp['locale'] = time_and_locale['locale']
 
 # Update NTP servers and locale
 # Set to use appliance local time and date server
-time_and_locale['ntpServers'] = ['127.0.0.1']
+# time_and_locale['ntpServers'] = ['127.0.0.1']
 # Set locale to Chinese (China) with charset UTF-8
 time_and_locale['locale'] = 'zh_CN.UTF-8'
 # Remove the date and time, we do not want to update it manually
 time_and_locale.pop('dateTime')
-time_and_locale = oneview_client.appliance_time_and_locale_configuration.update(time_and_locale)
+time_and_locale = oneview_client.appliance_time_and_locale_configuration.update(time_and_locale, force=False)
 print("\n## Updated appliance time and locale configurations successfully!")
 pprint(time_and_locale)
 

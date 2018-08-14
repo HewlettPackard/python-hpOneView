@@ -57,7 +57,7 @@ class ApplianceTimeAndLocaleConfiguration(object):
         """
         return self._client.get(self.URI)
 
-    def update(self, resource, timeout=-1):
+    def update(self, resource, force=False, timeout=-1):
         """
         Updates the appliance time and locale configuration.
 
@@ -71,4 +71,4 @@ class ApplianceTimeAndLocaleConfiguration(object):
             dict: Updated appliance time and locale configuration.
 
         """
-        return self._client.create(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
+        return self._client.create(resource, force=force, timeout=timeout, default_values=self.DEFAULT_VALUES)

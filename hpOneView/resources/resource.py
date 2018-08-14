@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- ccding: utf-8 -*-
 ###
 # (C) Copyright (2012-2018) Hewlett Packard Enterprise Development LP
 #
@@ -408,7 +408,7 @@ class ResourceClient(object):
 
         return self.__do_post(uri, {}, timeout, custom_headers)
 
-    def create(self, resource, uri=None, timeout=-1, custom_headers=None, default_values={}):
+    def create(self, resource, force=False, uri=None, timeout=-1, custom_headers=None, default_values={}):
         """
         Makes a POST request to create a resource when a request body is required.
 
@@ -441,6 +441,9 @@ class ResourceClient(object):
 
         if not uri:
             uri = self._uri
+
+        if force:
+            uri += '?force=True'
 
         logger.debug('Create (uri = %s, resource = %s)' %
                      (uri, str(resource)))
