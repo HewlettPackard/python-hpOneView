@@ -471,7 +471,7 @@ class Resource(object):
         return self
 
     @ensure_resource_client
-    def _patch_request(self, body, timeout=-1, custom_headers=None):
+    def patch_request(self, body, timeout=-1, custom_headers=None):
         """
         Uses the PATCH to update a resource.
 

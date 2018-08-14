@@ -83,10 +83,10 @@ class Enclosures(Resource):
         """
         patch_request_body = [{'op': operation, 'path': path, 'value': value}]
 
-        headers = {'If-Match': '*'} 
-        self.data = self._patch_request(body=patch_request_body,
-                                        timeout=timeout,
-                                        custom_headers=headers)
+        headers = {'If-Match': '*'}
+        self.data = self.patch_request(body=patch_request_body,
+                                       timeout=timeout,
+                                       custom_headers=headers)
         return self
 
     def remove(self, force=False):

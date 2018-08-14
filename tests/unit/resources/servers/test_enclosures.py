@@ -73,12 +73,14 @@ class EnclosuresTest(TestCase):
         self._enclosures.get_by_uri(uri)
         mock_get.assert_called_once_with(uri)
 
-    @mock.patch.object(Resource, 'patch')
-    def test_patch_should_use_user_defined_values(self, mock_patch):
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'patch_request')
+    def test_patch_should_use_user_defined_values(self, mock_patch, load_resource):
         mock_patch.return_value = {}
 
-        self._enclosures.patch('123a53cz', 'replace', '/name', 'new_name', 1)
-        mock_patch.assert_called_once_with('123a53cz', 'replace', '/name', 'new_name', 1)
+        self._enclosures.patch('replace', '/name', 'new_name', 1)
+        mock_patch.assert_called_once_with(body=[{u'path': '/name', u'value': 'new_name', u'op': 'replace'}],
+                                           custom_headers={u'If-Match': u'*'}, timeout=1)
 
     @mock.patch.object(Resource, 'delete')
     def test_remove_called_once(self, mock_delete):

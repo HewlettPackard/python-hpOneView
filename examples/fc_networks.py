@@ -27,12 +27,11 @@ from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "10.30.5.228",
+    "ip": "",
     "credentials": {
-        "userName": "administrator",
-        "password": "ecosystem"
+        "userName": "",
+        "password": ""
     },
-    "api_version": 600
 }
 
 options = {

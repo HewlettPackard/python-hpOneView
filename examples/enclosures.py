@@ -30,16 +30,15 @@ from config_loader import try_load_from_file
 # This example is compatible only for C7000 enclosures
 
 config = {
-    "ip": "10.30.5.228",
+    "ip": "",
     "credentials": {
-        "userName": "administrator",
-        "password": "ecosystem"
+        "userName": "",
+        "password": ""
     },
-    "enclosure_group_uri": "/rest/enclosure-groups/00bdf757-7ce2-4ffd-be7e-1a568dd8ecfc",
-    "enclosure_hostname": "172.18.1.11",
-    "enclosure_username": "dcs",
-    "enclosure_password": "dcs",
-    "api_version": 600
+    "enclosure_group_uri": "",
+    "enclosure_hostname": "",
+    "enclosure_username": "",
+    "enclosure_password": "",
 }
 
 # Declare a CA signed certificate file path.
