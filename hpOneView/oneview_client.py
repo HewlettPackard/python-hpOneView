@@ -341,9 +341,7 @@ class OneViewClient(object):
         Returns:
             FcNetworks:
         """
-        if not self.__fc_networks:
-            self.__fc_networks = FcNetworks(self.__connection)
-        return self.__fc_networks
+        return FcNetworks(self.__connection)
 
     @property
     def fcoe_networks(self):
@@ -618,9 +616,7 @@ class OneViewClient(object):
         Returns:
             Enclosures:
         """
-        if not self.__enclosures:
-            self.__enclosures = Enclosures(self.__connection)
-        return self.__enclosures
+        return Enclosures(self.__connection)
 
     @property
     def logical_enclosures(self):

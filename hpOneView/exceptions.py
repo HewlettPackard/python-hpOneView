@@ -149,3 +149,25 @@ class HPOneViewResourceNotFound(HPOneViewException):
        msg (str): Exception message.
     """
     pass
+
+
+class HPOneViewUnavailableMethod(HPOneViewException):
+    """
+    OneView Unavailable Method Exception.
+    The exception is raised when a method is not available for the resource class.
+
+    Attributes:
+       msg (str): Exception message.
+    """
+    pass
+
+
+class HPOneViewMissingUniqueIdentifiers(HPOneViewException):
+    """
+    OneView Missing Unique Identifiers Exception.
+    The exception is raised when unique identifiers are missing for the resource
+
+    Attributes:
+       msg (str): Exception message.
+    """
+    pass

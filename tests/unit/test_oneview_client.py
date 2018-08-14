@@ -387,10 +387,6 @@ class OneViewClientTest(unittest.TestCase):
     def test_fc_networks_has_value(self):
         self.assertIsNotNone(self._oneview.fc_networks)
 
-    def test_lazy_loading_fc_networks(self):
-        fcn = self._oneview.fc_networks
-        self.assertEqual(fcn, self._oneview.fc_networks)
-
     def test_connection_type(self):
         self.assertIsInstance(self._oneview.connection, connection)
 
@@ -437,10 +433,6 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_metric_streaming(self):
         metric = self._oneview.metric_streaming
         self.assertEqual(metric, self._oneview.metric_streaming)
-
-    def test_lazy_loading_enclosures(self):
-        enclosures = self._oneview.enclosures
-        self.assertEqual(enclosures, self._oneview.enclosures)
 
     def test_lazy_loading_switches(self):
         switches = self._oneview.switches
