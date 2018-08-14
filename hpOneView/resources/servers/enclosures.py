@@ -29,8 +29,6 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-from copy import deepcopy
-
 from hpOneView.resources.resource import Resource, ensure_resource_client
 
 
@@ -44,7 +42,6 @@ class Enclosures(Resource):
     def __init__(self, connection, options=None):
         super(Enclosures, self).__init__(connection, options)
 
-   
     def add(self, information, timeout=-1):
         """
         C7000:
@@ -65,14 +62,14 @@ class Enclosures(Resource):
             dict: Enclosure.
 
         """
-        self.EXCLUDE_FROM_REQUEST = ['name'] 
+        self.EXCLUDE_FROM_REQUEST = ['name']
         return self.create(data=information, timeout=timeout)
 
-    def remove(self):
+    def remove(self, force=False):
         """
         Remove enclosure
         """
-        self.delete()
+        self.delete(force=force)
 
     @ensure_resource_client
     def update_configuration(self, timeout=-1):

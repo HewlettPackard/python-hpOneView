@@ -150,6 +150,7 @@ class HPOneViewResourceNotFound(HPOneViewException):
     """
     pass
 
+
 class HPOneViewUnavailableMethod(HPOneViewException):
     """
     OneView Unavailable Method Exception.
@@ -160,6 +161,7 @@ class HPOneViewUnavailableMethod(HPOneViewException):
     """
     pass
 
+
 class HPOneViewMissingUniqueIdentifiers(HPOneViewException):
     """
     OneView Missing Unique Identifiers Exception.
@@ -169,4 +171,3 @@ class HPOneViewMissingUniqueIdentifiers(HPOneViewException):
        msg (str): Exception message.
     """
     pass
-

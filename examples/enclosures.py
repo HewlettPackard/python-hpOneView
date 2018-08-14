@@ -60,14 +60,14 @@ options = {
 # Get OneView client
 oneview_client = OneViewClient(config)
 
-# Add an enclosure 
+# Add an enclosure
 try:
     # This will return an enclosure object
     enclosure = oneview_client.enclosures.add(options)
     print("Added enclosure '{name}'.\n  URI = '{uri}'".format(**enclosure.data))
 except HPOneViewTaskError, e:
     print(e)
-    #Get the reosurce by name
+    # Get the reosurce by name
     enclosure = oneview_client.enclosures.get_by_name(options['name'])
 
 # Perform a patch operation on the enclosure, replacing the name of the enclosure
@@ -119,7 +119,7 @@ try:
 except HPOneViewException as e:
     print(e.msg)
 
-#### Buid the SSO URL parameters
+# Buid the SSO URL parameters
 print("Build the SSO (Single Sign-On) URL parameters for the enclosure")
 try:
     sso_url_parameters = enclosure.get_sso('Active')
@@ -191,7 +191,7 @@ try:
             "base64Data": certificate
         }
 
-        enclosure.import_certificate(certificate_data, enclosure_uri, bay_number=bay_number)
+        enclosure.import_certificate(certificate_data, enclosure.data['uri'], bay_number=bay_number)
         print("Imported Signed Certificate  to the enclosure.")
 except HPOneViewException as e:
     print(e.msg)

@@ -50,5 +50,3 @@ class FcNetworks(Resource):
 
     def __init__(self, connection, options=None):
         super(FcNetworks, self).__init__(connection, options)
-
-

@@ -38,8 +38,7 @@ from urllib.parse import quote
 from functools import update_wrapper, partial
 
 from hpOneView.resources.task_monitor import TaskMonitor
-from hpOneView.exceptions import HPOneViewUnknownType, HPOneViewException, HPOneViewMissingUniqueIdentifiers
-from hpOneView.exceptions import HPOneViewValueError, HPOneViewResourceNotFound
+from hpOneView import exceptions
 
 RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED = 'Resource was not provided'
 RESOURCE_CLIENT_INVALID_FIELD = 'Invalid field was provided'
@@ -56,7 +55,9 @@ logger = logging.getLogger(__name__)
 
 
 class EnsureResourceClient(object):
-
+        """
+        Decorator class to make sure the resource client
+        """
         def __init__(self, func):
             update_wrapper(self, func)
             self.func = func
@@ -68,8 +69,10 @@ class EnsureResourceClient(object):
             obj.load_resource()
             return self.func(obj, *args, **kwargs)
 
-#Decorator to ensure the resource client
-ensure_resource_client= EnsureResourceClient
+
+# Decorator to ensure the resource client
+ensure_resource_client = EnsureResourceClient
+
 
 class Resource(object):
     """
@@ -172,28 +175,28 @@ class Resource(object):
         """
         Retrieve data from OneView and update resource data
         """
-        #Check for unique identifier in the resource data
+        # Check for unique identifier in the resource data
         if not any(key in self.data for key in self.UNIQUE_IDENTIFIERS):
-            raise HPOneViewMissingUniqueIdentifiers(MISSING_UNIQUE_IDENTIFIERS)
+            raise exceptions.HPOneViewMissingUniqueIdentifiers(MISSING_UNIQUE_IDENTIFIERS)
 
         resource_data = None
 
         if 'uri' in self.UNIQUE_IDENTIFIERS and self.data.get('uri'):
-            uri =  self.data['uri']
+            uri = self.data['uri']
             if self.URI in uri:
-                resource_data = self.do_get(uri)        
+                resource_data = self.do_get(uri)
         else:
             for identifier in self.UNIQUE_IDENTIFIERS:
                 identifier_value = self.data.get(identifier)
-                
-                if identifier_value:     
+
+                if identifier_value:
                     result = self.get_by(identifier, identifier_value)
                     if result and isinstance(result, list):
                         resource_data = result[0]
-                        break   
+                        break
 
         if not resource_data:
-            raise HPOneViewResourceNotFound(RESOURCE_DOES_NOT_EXISTS) 
+            raise exceptions.HPOneViewResourceNotFound(RESOURCE_DOES_NOT_EXISTS)
 
         self.data.update(resource_data)
 
@@ -201,7 +204,7 @@ class Resource(object):
     def get(self):
         """
         Return resource data
-        """  
+        """
         return self
 
     def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', scope_uris=''):
@@ -295,9 +298,8 @@ class Resource(object):
 
         if data:
             resource.update(data)
- 
-        logger.debug('Create (uri = %s, resource = %s)' %
-                    (uri, str(resource)))
+
+        logger.debug('Create (uri = %s, resource = %s)' % (uri, str(resource)))
 
         self.data = self.do_post(uri, resource, timeout, custom_headers)
 
@@ -344,7 +346,7 @@ class Resource(object):
         if force:
             uri += '?force=True'
 
-        logger.debug("Delete resource (uri = %s)" %(str(uri)))
+        logger.debug("Delete resource (uri = %s)" % (str(uri)))
 
         task, body = self._connection.delete(uri, custom_headers=custom_headers)
 
@@ -405,9 +407,9 @@ class Resource(object):
             Updated resource.
         """
         if path:
-          uri = '{}/{}'.format(self.URI, path)
+            uri = '{}/{}'.format(self.URI, path)
         else:
-          uri = self.data['uri']
+            uri = self.data['uri']
 
         logger.debug('Update with zero length body (uri = %s)' % uri)
 
@@ -446,7 +448,7 @@ class Resource(object):
         self.data = self.do_put(uri, resource, timeout, custom_headers)
 
         return self
-         
+
     def patch(self, operation, path, value, timeout=-1, custom_headers=None):
         """
         Uses the PATCH to update a resource.
@@ -544,11 +546,11 @@ class Resource(object):
 
     def get_by_uri(self, uri):
         """
-        Retrieve a resource by its id  
+        Retrieve a resource by its id
         """
         self. __validate_resource_uri(uri)
         self.data = self.do_get(uri)
-         
+
         return self
 
     @ensure_resource_client
@@ -659,7 +661,7 @@ class Resource(object):
         task, _ = self._connection.post(uri, {})
 
         if not task:
-            raise HPOneViewException(RESOURCE_CLIENT_TASK_EXPECTED)
+            raise exceptions.HPOneViewException(RESOURCE_CLIENT_TASK_EXPECTED)
 
         task = self._task_monitor.get_completed_task(task, timeout)
 
@@ -681,7 +683,7 @@ class Resource(object):
             return subresource_id_or_uri
         else:
             if not resource_id_or_uri:
-                raise HPOneViewValueError(RESOURCE_ID_OR_URI_REQUIRED)
+                raise exceptions.HPOneViewValueError(RESOURCE_ID_OR_URI_REQUIRED)
 
             resource_uri = self.build_uri(resource_id_or_uri)
 
@@ -696,7 +698,7 @@ class Resource(object):
     def __validate_resource_uri(self, path):
         if self.URI not in path:
             logger.exception('Get by uri : unrecognized uri: (%s)' % path)
-            raise HPOneViewUnknownType(UNRECOGNIZED_URI)
+            raise exceptions.HPOneViewUnknownType(UNRECOGNIZED_URI)
 
     def __make_query_filter(self, filters):
         if isinstance(filters, list):
@@ -714,17 +716,19 @@ class Resource(object):
 
     def do_get(self, uri):
         """
-        Method to support get requests of the resource      
+        Method to support get requests of the resource
         """
-        return self._connection.get(uri) 
+        self.__validate_resource_uri(uri)
+        return self._connection.get(uri)
 
     def do_post(self, uri, resource, timeout, custom_headers):
         """
-        Method to support post requests of the resource 
-        """ 
+        Method to support post requests of the resource
+        """
+        self.__validate_resource_uri(uri)
 
         for field in self.EXCLUDE_FROM_REQUEST:
-            resource.pop(field, None) 
+            resource.pop(field, None)
 
         task, entity = self._connection.post(uri, resource, custom_headers=custom_headers)
 
@@ -737,6 +741,8 @@ class Resource(object):
         """
         Method to support the put requests of the resource
         """
+        self.__validate_resource_uri(uri)
+
         task, body = self._connection.put(uri, resource, custom_headers=custom_headers)
 
         if not task:
@@ -771,19 +777,14 @@ class Resource(object):
 
     def _merge_default_values(self):
         """
-        Pick the default values for the api version and append that with resource data    
+        Pick the default values for the api version and append that with resource data
         """
         if self.DEFAULT_VALUES:
             api_version = str(self._connection._apiVersion)
             values = self.DEFAULT_VALUES.get(api_version, {}).copy()
             self.data.update(values)
 
-    def __validate_resource_uri(self, path):
-        if self.URI not in path:
-            logger.exception('Get by uri : unrecognized uri: (%s)' % path)
-            raise HPOneViewUnknownType(UNRECOGNIZED_URI)
-    
-    def merge_resources(resource_to_merge):
+    def merge_resources(self, resource_to_merge):
         """
         Updates a copy of resource1 with resource2 values and returns the merged dictionary.
 
@@ -843,7 +844,7 @@ class Resource(object):
         """
         Raise exception if method is not available for the resource
         """
-        raise HPOneViewUnavailableMethod(UNAVAILABLE_METHOD)
+        raise exceptions.HPOneViewUnavailableMethod(UNAVAILABLE_METHOD)
 
 
 class ResourceClient(object):
@@ -1014,7 +1015,7 @@ class ResourceClient(object):
                 uri = resource['uri']
             else:
                 logger.exception(RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE)
-                raise HPOneViewUnknownType(RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE)
+                raise exceptions.HPOneViewUnknownType(RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE)
         else:
             uri = self.build_uri(resource)
 
@@ -1448,7 +1449,7 @@ class ResourceClient(object):
         task, _ = self._connection.post(uri, {})
 
         if not task:
-            raise HPOneViewException(RESOURCE_CLIENT_TASK_EXPECTED)
+            raise exceptions.HPOneViewException(RESOURCE_CLIENT_TASK_EXPECTED)
 
         task = self._task_monitor.get_completed_task(task, timeout)
 
@@ -1470,7 +1471,7 @@ class ResourceClient(object):
             return subresource_id_or_uri
         else:
             if not resource_id_or_uri:
-                raise HPOneViewValueError(RESOURCE_ID_OR_URI_REQUIRED)
+                raise exceptions.HPOneViewValueError(RESOURCE_ID_OR_URI_REQUIRED)
 
             resource_uri = self.build_uri(resource_id_or_uri)
 
@@ -1499,7 +1500,7 @@ class ResourceClient(object):
     def __validate_resource_uri(self, path):
         if self._uri not in path:
             logger.exception('Get by uri : unrecognized uri: (%s)' % path)
-            raise HPOneViewUnknownType(UNRECOGNIZED_URI)
+            raise exceptions.HPOneViewUnknownType(UNRECOGNIZED_URI)
 
     def __make_query_filter(self, filters):
         if isinstance(filters, list):
