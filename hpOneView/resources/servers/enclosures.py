@@ -65,6 +65,30 @@ class Enclosures(Resource):
         self.EXCLUDE_FROM_REQUEST = ['name']
         return self.create(data=information, timeout=timeout)
 
+    def patch(self, operation, path, value, timeout=-1):
+        """
+        Uses the PATCH to update a resource.
+
+        Only one operation can be performed in each PATCH call.
+
+        Args
+            operation: Patch operation
+            path: Path
+            value: Value
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            Updated resource.
+        """
+        patch_request_body = [{'op': operation, 'path': path, 'value': value}]
+
+        headers = {'If-Match': '*'} 
+        self.data = self._patch_request(body=patch_request_body,
+                                        timeout=timeout,
+                                        custom_headers=headers)
+        return self
+
     def remove(self, force=False):
         """
         Remove enclosure

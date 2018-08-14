@@ -31,7 +31,8 @@ config = {
     "credentials": {
         "userName": "administrator",
         "password": "ecosystem"
-    }
+    },
+    "api_version": 600
 }
 
 options = {

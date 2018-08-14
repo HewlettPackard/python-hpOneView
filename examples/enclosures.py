@@ -38,7 +38,8 @@ config = {
     "enclosure_group_uri": "/rest/enclosure-groups/00bdf757-7ce2-4ffd-be7e-1a568dd8ecfc",
     "enclosure_hostname": "172.18.1.11",
     "enclosure_username": "dcs",
-    "enclosure_password": "dcs"
+    "enclosure_password": "dcs",
+    "api_version": 600
 }
 
 # Declare a CA signed certificate file path.
@@ -71,7 +72,7 @@ except HPOneViewTaskError, e:
     enclosure = oneview_client.enclosures.get_by_name(options['name'])
 
 # Perform a patch operation on the enclosure, replacing name of the enclosure
-enclosure_name = "Encl1-Updated-11"
+enclosure_name = "Encl1-Updated"
 print("Updating the enclosure to have a name of " + enclosure_name)
 enclosure.patch('replace', '/name', enclosure_name)
 print("  Done.\n  URI = '{uri}', name = {name}".format(**enclosure.data))
