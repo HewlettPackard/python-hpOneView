@@ -24,7 +24,7 @@ import mock
 import unittest
 
 from hpOneView.connection import connection
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource
 from hpOneView.resources.servers.id_pools import IdPools
 
 
@@ -36,53 +36,58 @@ class TestIdPools(unittest.TestCase):
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
-        self.client = IdPools(self.connection)
+        self._id_pools = IdPools(self.connection)
+        self._id_pools.data = {'uri': '/rest/id-pools/ipv4'}
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_called_once_by_id(self, mock_get):
-        id_pools_range_id = "f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
-        self.client.get(id_pools_range_id)
-        mock_get.assert_called_once_with(id_pools_range_id)
+    @mock.patch.object(Resource, 'do_get')
+    def test_get_called_once_by_name(self, mock_do_get):
+        id_pools_range_id = "ipv4"
+        self._id_pools.get_by_name(id_pools_range_id)
+        mock_do_get.assert_called_once_with(self.example_uri)
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_called_once_by_uri(self, mock_get):
-        self.client.get(self.example_uri)
-        mock_get.assert_called_once_with(self.example_uri)
+    @mock.patch.object(Resource, 'do_get')
+    def test_get_called_once_by_uri(self, mock_do_get):
+        self._id_pools.get_by_uri(self.example_uri)
+        mock_do_get.assert_called_once_with(self.example_uri)
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_generate_called_once(self, mock_get):
-        self.client.generate(self.example_uri)
-        mock_get.assert_called_once_with(self.example_uri + '/generate')
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'do_get')
+    def test_generate_called_once(self, mock_do_get, load_resource):
+        self._id_pools.generate()
+        mock_do_get.assert_called_once_with(self.example_uri + '/generate')
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_validate_id_pool_called_once(self, mock_get):
-        self.client.validate_id_pool(self.example_uri, ['VCGYOAA023',
-                                                        'VCGYOAA024'])
-        mock_get.assert_called_once_with(self.example_uri + "/validate?idList=VCGYOAA023&idList=VCGYOAA024")
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'do_get')
+    def test_validate_id_pool_called_once(self, mock_do_get, load_resource):
+        self._id_pools.validate_id_pool(['VCGYOAA023', 'VCGYOAA024'])
+        mock_do_get.assert_called_once_with(self.example_uri + "/validate?idList=VCGYOAA023&idList=VCGYOAA024")
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_validate_called_once(self, update):
-        self.client.validate(self.resource_info.copy(), self.example_uri)
-        update.assert_called_once_with(self.resource_info.copy(), self.example_uri + "/validate", timeout=-1)
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'do_put')
+    def test_validate_called_once(self, mock_do_put, load_resource):
+        self._id_pools.validate(self.resource_info.copy())
+        mock_do_put.assert_called_once_with(self.example_uri + "/validate", self.resource_info.copy(), timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update')
+    @mock.patch.object(Resource, 'update')
     def test_enable_called_once(self, update):
-        self.client.enable(self.resource_info.copy(), self.example_uri)
-        update.assert_called_once_with(self.resource_info.copy(), self.example_uri, timeout=-1)
+        self._id_pools.enable(self.resource_info.copy())
+        update.assert_called_once_with(self.resource_info.copy(), timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_check_range_availability_called_once_with_defaults(self, mock_get):
-        self.client.get_check_range_availability(self.example_uri, ['VCGYOAA023',
-                                                                    'VCGYOAA024'])
-        mock_get.assert_called_once_with(
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'do_get')
+    def test_get_check_range_availability_called_once_with_defaults(self, mock_do_get, load_resource):
+        self._id_pools.get_check_range_availability(['VCGYOAA023', 'VCGYOAA024'])
+        mock_do_get.assert_called_once_with(
             self.example_uri + "/checkrangeavailability?idList=VCGYOAA023&idList=VCGYOAA024")
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_allocate_called_once(self, mock_update):
-        self.client.allocate(self.resource_info.copy(), self.example_uri)
-        mock_update.assert_called_once_with(self.resource_info.copy(), self.example_uri + "/allocator", timeout=-1)
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'do_put')
+    def test_allocate_called_once(self, mock_do_put, load_resource):
+        self._id_pools.allocate(self.resource_info.copy())
+        mock_do_put.assert_called_once_with(self.example_uri + "/allocator", self.resource_info.copy(), timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_collect_called_once(self, update):
-        self.client.collect(self.resource_info.copy(), self.example_uri)
-        update.assert_called_once_with(self.resource_info.copy(), self.example_uri + "/collector", timeout=-1)
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'do_put')
+    def test_collect_called_once(self, mock_do_put, load_resource):
+        self._id_pools.collect(self.resource_info.copy())
+        mock_do_put.assert_called_once_with(self.example_uri + "/collector", self.resource_info.copy(), timeout=-1)

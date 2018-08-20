@@ -713,7 +713,7 @@ class Resource(object):
 
         return self._task_monitor.wait_for_task(task, timeout)
 
-    def do_put(self, uri, resource, timeout, custom_headers):
+    def do_put(self, uri, resource, timeout, custom_headers=None):
         """
         Method to support put requests of the resource
         """

@@ -137,14 +137,14 @@
 |<sub>/rest/firmware-drivers/{id}</sub>                                                   | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/firmware-drivers/{id}</sub>                                                   | DELETE   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |     **ID Pools**                                                                                                                      |
-|<sub>/rest/id-pools/{poolType}</sub>                                                     | GET      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/{poolType}</sub>                                                     | PUT      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/{poolType}/allocator</sub>                                           | PUT      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/{poolType}/checkrangeavailability</sub>                              | GET      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/{poolType}/collector</sub>                                           | PUT      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/{poolType}/generate</sub>                                            | GET      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/{poolType}/validate</sub>                                            | GET      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/{poolType}/validate</sub>                                            | PUT      | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/{poolType}</sub>                                                     | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/{poolType}</sub>                                                     | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/{poolType}/allocator</sub>                                           | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/{poolType}/checkrangeavailability</sub>                              | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/{poolType}/collector</sub>                                           | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/{poolType}/generate</sub>                                            | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/{poolType}/validate</sub>                                            | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/{poolType}/validate</sub>                                            | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |     **ID Pools IPv4 Ranges**                                                                                                                      |
 |<sub>/rest/id-pools/ipv4/ranges</sub>                                                    | POST     | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/id-pools/ipv4/ranges/{id}</sub>                                               | GET      | :white_check_mark:   | :white_check_mark:   |

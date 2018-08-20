@@ -29,37 +29,39 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource, ensure_resource_client
 
 
-class IdPools(object):
+class IdPools(Resource):
     """
     Class for Id Pools API client.
     """
     URI = '/rest/id-pools'
 
-    def __init__(self, con):
-        self._client = ResourceClient(con, self.URI)
+    def __init__(self, connection, options=None):
+        super(IdPools, self).__init__(connection, options)
 
-    def get(self, id_or_uri):
+    def get_by_name(self, name):
         """
-        Gets a pool.
-
-        Args:
-            id_or_uri: Can be either the range ID or URI.
-
-        Returns:
-            dict: Pool resource.
+        Retrieve a id pool
         """
-        return self._client.get(id_or_uri)
+        uri = '{}/{}'.format(self.URI, name)
+        self.data = self.do_get(uri)
+        return self
 
-    def enable(self, information, id_or_uri, timeout=-1):
+    def get_by_uri(self, uri):
+        """
+        Retrieve a id pool
+        """
+        self.data = self.do_get(uri)
+        return self
+
+    def enable(self, information, timeout=-1):
         """
         Enables or disables a pool.
 
         Args:
             information (dict): Information to update.
-            id_or_uri: ID or URI of range.
             timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
 
@@ -67,26 +69,26 @@ class IdPools(object):
             dict: Updated resource.
         """
 
-        uri = self._client.build_uri(id_or_uri)
-        return self._client.update(information, uri, timeout=timeout)
+        return self.update(information, timeout=timeout)
 
-    def validate_id_pool(self, id_or_uri, ids_pools):
+    @ensure_resource_client
+    def validate_id_pool(self, ids_pools):
         """
         Validates an ID pool.
 
         Args:
-            id_or_uri:
-                ID or URI of range.
             ids_pools (list):
                 List of Id Pools.
 
         Returns:
             dict: A dict containing a list with IDs.
         """
-        uri = self._client.build_uri(id_or_uri) + "/validate?idList=" + "&idList=".join(ids_pools)
-        return self._client.get(uri)
 
-    def validate(self, information, id_or_uri, timeout=-1):
+        uri = self.data['uri'] + "/validate?idList=" + "&idList=".join(ids_pools)
+        return self.do_get(uri)
+
+    @ensure_resource_client
+    def validate(self, information, timeout=-1):
         """
         Validates a set of user specified IDs to reserve in the pool.
 
@@ -95,8 +97,6 @@ class IdPools(object):
         Args:
             information (dict):
                 Information to update. Can result in system specified IDs or the system reserving user-specified IDs.
-            id_or_uri:
-                ID or URI of vSN range.
             timeout:
                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
@@ -104,10 +104,12 @@ class IdPools(object):
         Returns:
             dict: A dict containing a list with IDs.
         """
-        uri = self._client.build_uri(id_or_uri) + "/validate"
-        return self._client.update(information, uri, timeout=timeout)
 
-    def allocate(self, information, id_or_uri, timeout=-1):
+        uri = '{}/validate'.format(self.data['uri'])
+        return self.do_put(uri, information, timeout=timeout)
+
+    @ensure_resource_client
+    def allocate(self, information, timeout=-1):
         """
         Allocates a set of IDs from range.
 
@@ -116,8 +118,6 @@ class IdPools(object):
         Args:
             information (dict):
                 Information to update. Can result in system specified IDs or the system reserving user-specified IDs.
-            id_or_uri:
-                ID or URI of vSN range.
             timeout:
                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
@@ -125,19 +125,18 @@ class IdPools(object):
         Returns:
             dict: A dict containing a list with IDs.
         """
-        uri = self._client.build_uri(id_or_uri) + "/allocator"
 
-        return self._client.update(information, uri, timeout=timeout)
+        uri = '{}/allocator'.format(self.data['uri'])
+        return self.do_put(uri, information, timeout=timeout)
 
-    def collect(self, information, id_or_uri, timeout=-1):
+    @ensure_resource_client
+    def collect(self, information, timeout=-1):
         """
         Collects one or more IDs to be returned to a pool.
 
         Args:
             information (dict):
                 The list of IDs to be collected
-            id_or_uri:
-                ID or URI of range
             timeout:
                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
@@ -145,17 +144,16 @@ class IdPools(object):
         Returns:
             dict: Collector containing list of collected IDs successfully collected.
         """
-        uri = self._client.build_uri(id_or_uri) + "/collector"
 
-        return self._client.update(information, uri, timeout=timeout)
+        uri = '{}/collector'.format(self.data['uri'])
+        return self.do_put(uri, information, timeout=timeout)
 
-    def get_check_range_availability(self, id_or_uri, ids_pools):
+    @ensure_resource_client
+    def get_check_range_availability(self, ids_pools):
         """
         Checks the range availability in the ID pool.
 
         Args:
-            id_or_uri:
-                ID or URI of range.
             ids_pools (list):
                 List of Id Pools.
 
@@ -163,19 +161,20 @@ class IdPools(object):
             dict: A dict containing a list with IDs.
         """
 
-        uri = self._client.build_uri(id_or_uri) + "/checkrangeavailability?idList=" + "&idList=".join(ids_pools)
-        return self._client.get(uri)
+        uri = self.data['uri'] + "/checkrangeavailability?idList=" + "&idList=".join(ids_pools)
+        return self.do_get(uri)
 
-    def generate(self, id_or_uri):
+    @ensure_resource_client
+    def generate(self):
         """
         Generates and returns a random range.
 
         Args:
-            id_or_uri:
-                ID or URI of range.
+            None
 
         Returns:
             dict: A dict containing a list with IDs.
         """
-        uri = self._client.build_uri(id_or_uri) + "/generate"
-        return self._client.get(uri)
+
+        uri = '{}/generate'.format(self.data['uri'])
+        return self.do_get(uri)

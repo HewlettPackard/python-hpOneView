@@ -520,9 +520,7 @@ class OneViewClient(object):
         Returns:
             IdPools:
         """
-        if not self.__id_pools:
-            self.__id_pools = IdPools(self.__connection)
-        return self.__id_pools
+        return IdPools(self.__connection)
 
     @property
     def switches(self):
