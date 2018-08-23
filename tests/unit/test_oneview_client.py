@@ -539,10 +539,6 @@ class OneViewClientTest(unittest.TestCase):
     def test_id_pools_ipv4_subnets_has_right_type(self):
         self.assertIsInstance(self._oneview.id_pools_ipv4_subnets, IdPoolsIpv4Subnets)
 
-    def test_id_pools_ipv4_subnets_lazy_loading(self):
-        id_pools_ipv4_subnets = self._oneview.id_pools_ipv4_subnets
-        self.assertEqual(id_pools_ipv4_subnets, self._oneview.id_pools_ipv4_subnets)
-
     def test_id_pools_has_right_type(self):
         self.assertIsInstance(self._oneview.id_pools, IdPools)
 

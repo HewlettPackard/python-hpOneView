@@ -49,21 +49,22 @@ options = {
 }
 
 print('\n Create IPv4 subnet for id pools')
-ipv4_subnet = oneview_client.id_pools_ipv4_subnets.create(options)
-pprint(ipv4_subnet)
+ipv4_subnet = oneview_client.id_pools_ipv4_subnets.create(data=options)
+pprint(ipv4_subnet.data)
 
 print('\n Update IPv4 subnet for id pools')
-ipv4_subnet['name'] = 'Changed Name'
-ipv4_subnet = oneview_client.id_pools_ipv4_subnets.update(ipv4_subnet)
-
-print('\n Get IPv4 subnet by uri')
-ipv4_subnet_byuri = oneview_client.id_pools_ipv4_subnets.get(ipv4_subnet['uri'])
-pprint(ipv4_subnet_byuri)
+ipv4_subnet.data['name'] = 'Changed Name'
+ipv4_subnet = ipv4_subnet.update(data=ipv4_subnet.data)
+pprint(ipv4_subnet.data)
 
 print('\n Get all IPv4 subnet')
-all_subnets = oneview_client.id_pools_ipv4_subnets.get_all()
+all_subnets = ipv4_subnet.get_all()
 pprint(all_subnets)
 
+print('\n Get IPv4 subnet by uri')
+ipv4_subnet_byuri = oneview_client.id_pools_ipv4_subnets.get_by_uri(ipv4_subnet.data['uri'])
+pprint(ipv4_subnet_byuri.data)
+
 print('\n Delete IPv4 subnet')
-oneview_client.id_pools_ipv4_subnets.delete(ipv4_subnet)
+ipv4_subnet.delete()
 print(" Successfully deleted IPv4 subnet")

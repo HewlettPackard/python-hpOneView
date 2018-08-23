@@ -510,9 +510,7 @@ class OneViewClient(object):
         Returns:
             IdPoolsIpv4Subnets:
         """
-        if not self.__id_pools_ipv4_subnets:
-            self.__id_pools_ipv4_subnets = IdPoolsIpv4Subnets(self.__connection)
-        return self.__id_pools_ipv4_subnets
+        return IdPoolsIpv4Subnets(self.__connection)
 
     @property
     def id_pools(self):

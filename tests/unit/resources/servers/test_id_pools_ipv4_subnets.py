@@ -23,52 +23,59 @@
 import mock
 import unittest
 from hpOneView.connection import connection
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource
 from hpOneView.resources.servers.id_pools_ipv4_subnets import IdPoolsIpv4Subnets
 
 
 class TestIdPoolsIpv4Subnets(unittest.TestCase):
     resource_info = {'type': 'Range',
                      'name': 'No name'}
+    example_uri = "/rest/id-pools/ipv4/subnets/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
 
     def setUp(self):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
         self.client = IdPoolsIpv4Subnets(self.connection)
-        self.example_uri = "/rest/id-pools/ipv4/subnets/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
+        self.client.data = {'uri': "/rest/id-pools/ipv4/subnets/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"}
 
-    @mock.patch.object(ResourceClient, 'create')
+    @mock.patch.object(Resource, 'create')
     def test_create_called_once(self, mock_create):
         self.client.create(self.resource_info)
-        mock_create.assert_called_once_with(self.resource_info, timeout=-1)
+        mock_create.assert_called_once_with(self.resource_info)
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_by_id_called_once(self, mock_get):
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'get_by_uri')
+    def test_get_by_id_called_once(self, mock_get_by_uri, load_resource):
         id_pools_subnet_id = "f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
-        self.client.get(id_pools_subnet_id)
-        mock_get.assert_called_once_with(id_pools_subnet_id)
+        self.client.get_by_uri(id_pools_subnet_id)
+        mock_get_by_uri.assert_called_once_with(id_pools_subnet_id)
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_by_uri_called_once(self, mock_get):
-        self.client.get(self.example_uri)
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'get_by_uri')
+    def test_get_by_uri_called_once(self, mock_get_by_uri, load_resource):
+        self.client.get_by_uri(self.example_uri)
+        mock_get_by_uri.assert_called_once_with(self.example_uri)
+
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'update')
+    def test_enable_called_once(self, update, load_resource):
+        self.client.update(self.resource_info.copy())
+        update.assert_called_once_with(self.resource_info.copy())
+
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'get_all')
+    def test_get_allocated_fragments_called_once_with_defaults(self, mock_get, load_resource):
+        self.client.get_all(self.example_uri)
         mock_get.assert_called_once_with(self.example_uri)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_enable_called_once(self, update):
-        self.client.update(self.resource_info.copy())
-        update.assert_called_once_with(self.resource_info.copy(), timeout=-1)
-
-    @mock.patch.object(ResourceClient, 'get_all')
-    def test_get_allocated_fragments_called_once_with_defaults(self, mock_get):
-        self.client.get_all(self.example_uri)
-        mock_get.assert_called_once_with(self.example_uri, -1, filter='', sort='')
-
-    @mock.patch.object(ResourceClient, 'delete')
-    def test_delete_called_once(self, mock_delete):
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'delete')
+    def test_delete_called_once(self, mock_delete, load_resource):
         self.client.delete({'uri': '/rest/uri'}, force=True, timeout=50)
         mock_delete.assert_called_once_with({'uri': '/rest/uri'}, force=True, timeout=50)
 
-    @mock.patch.object(ResourceClient, 'delete')
-    def test_delete_called_once_with_defaults(self, mock_delete):
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'delete')
+    def test_delete_called_once_with_defaults(self, mock_delete, load_resource):
         self.client.delete({'uri': '/rest/uri'})
-        mock_delete.assert_called_once_with({'uri': '/rest/uri'}, force=False, timeout=-1)
+        mock_delete.assert_called_once_with({'uri': '/rest/uri'})
