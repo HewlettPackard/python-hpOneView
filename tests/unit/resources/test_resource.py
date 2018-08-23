@@ -1217,7 +1217,7 @@ class ResourceClientTest(unittest.TestCase):
 
         self.resource_client.upload(filepath, uri)
 
-        mock_post_multipart.assert_called_once_with(uri, filepath, None, 'SPPgen9snap6.2015_0405.81.iso')
+        mock_post_multipart.assert_called_once_with(uri, filepath, 'SPPgen9snap6.2015_0405.81.iso', None)
 
     @mock.patch.object(connection, 'post_multipart_with_response_handling')
     def test_upload_should_call_post_multipart_with_resource_uri_when_not_uri_provided(self, mock_post_multipart):

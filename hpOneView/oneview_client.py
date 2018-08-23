@@ -905,9 +905,7 @@ class OneViewClient(object):
         Returns:
             FirmwareBundles:
         """
-        if not self.__firmware_bundles:
-            self.__firmware_bundles = FirmwareBundles(self.__connection)
-        return self.__firmware_bundles
+        return FirmwareBundles(self.__connection)
 
     @property
     def uplink_sets(self):

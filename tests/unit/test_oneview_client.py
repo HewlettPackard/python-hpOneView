@@ -79,6 +79,7 @@ from hpOneView.resources.security.users import Users
 from hpOneView.resources.settings.appliance_node_information import ApplianceNodeInformation
 from hpOneView.resources.settings.appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfiguration
 from hpOneView.resources.settings.versions import Versions
+from hpOneView.resources.settings.firmware_bundles import FirmwareBundles
 from tests.test_utils import mock_builtin
 from hpOneView.resources.settings.licenses import Licenses
 
@@ -566,9 +567,11 @@ class OneViewClientTest(unittest.TestCase):
         firmware_drivers = self._oneview.firmware_drivers
         self.assertEqual(firmware_drivers, self._oneview.firmware_drivers)
 
-    def test_lazy_loading_firmware_bundles(self):
-        firmware_bundles = self._oneview.firmware_bundles
-        self.assertEqual(firmware_bundles, self._oneview.firmware_bundles)
+    def test_firmware_bundles_has_right_type(self):
+        self.assertIsInstance(self._oneview.firmware_bundles, FirmwareBundles)
+
+    def test_firmware_bundles_has_value(self):
+        self.assertIsNotNone(self._oneview.firmware_bundles)
 
     def test_migratable_vc_domains_has_right_type(self):
         self.assertIsInstance(self._oneview.migratable_vc_domains, MigratableVcDomains)
