@@ -1,3 +1,10 @@
+# v5.0.0
+#### Notes
+Major release which supports breaking code changes which will support helper methods implementation
+
+#### Features supported with current release:
+- Id pools ipv4 subnet
+
 # 4.7.1
 #### Bug fixes
 - [#364] (https://github.com/HewlettPackard/python-hpOneView/issues/364) Bug in index_resources.get_all()
