@@ -45,48 +45,48 @@ pool_type_vmac = 'vmac'
 pool_type_ipv4 = 'ipv4'
 
 print("\n Gets the Pool: " + pool_type_vsn)
-id_pool_1 = oneview_client.id_pools.get_by_name(pool_type_vsn)
-pprint(id_pool_1.data)
+id_pool_vsn = oneview_client.id_pools.get_by_name(pool_type_vsn)
+pprint(id_pool_vsn.data)
 
 print("\n Gets the Pool: " + pool_type_vwwn)
-id_pool_2 = oneview_client.id_pools.get_by_name(pool_type_vwwn)
-pprint(id_pool_2.data)
+id_pool_vwwn = oneview_client.id_pools.get_by_name(pool_type_vwwn)
+pprint(id_pool_vwwn.data)
 
 print("\n Gets the Pool: " + pool_type_vmac)
-id_pool_3 = oneview_client.id_pools.get_by_name(pool_type_vmac)
-pprint(id_pool_3.data)
+id_pool_vmac = oneview_client.id_pools.get_by_name(pool_type_vmac)
+pprint(id_pool_vmac.data)
 
 print("\n Gets the Pool: " + pool_type_ipv4)
-id_pool_4 = oneview_client.id_pools.get_by_name(pool_type_ipv4)
-pprint(id_pool_4.data)
+id_pool_ipv4 = oneview_client.id_pools.get_by_name(pool_type_ipv4)
+pprint(id_pool_ipv4.data)
 
 print("\n Enable the Id Pool")
-id_pool_1.enable({"type": "Pool", "enabled": True})
+id_pool_vsn.enable({"type": "Pool", "enabled": True})
 print(" Id Pool enabled")
 
 print("\n Generates a random range")
-rnd_range = id_pool_1.generate()
+rnd_range = id_pool_vsn.generate()
 pprint(rnd_range)
 
 print("\n Allocates a set of IDs from a pool")
-allocated_ids = id_pool_1.allocate({"count": 10})
+allocated_ids = id_pool_vsn.allocate({"count": 10})
 pprint(allocated_ids)
 
 print("\n Checks the range availability in the Id pool")
-range_availability = id_pool_1.get_check_range_availability(['VCGYOAF00P', 'VCGYOAF002'])
+range_availability = id_pool_vsn.get_check_range_availability(['VCGYOAF00P', 'VCGYOAF002'])
 pprint(range_availability)
 
 print("\n Validates a set of user specified IDs to reserve in the pool")
-validated = id_pool_1.validate({'idList': ['VCGYOAA023', 'VCGYOAA024']})
+validated = id_pool_vsn.validate({'idList': ['VCGYOAA023', 'VCGYOAA024']})
 pprint(validated)
 
 print("\n Validates an Id Pool")
-get_validate = id_pool_1.validate_id_pool(['172.18.9.11'])
+get_validate = id_pool_vsn.validate_id_pool(['172.18.9.11'])
 pprint(get_validate)
 
 print("\n Collect a set of IDs back to Id Pool")
 try:
-    collected_ids = id_pool_1.collect({"idList": allocated_ids['idList']})
+    collected_ids = id_pool_vsn.collect({"idList": allocated_ids['idList']})
     pprint(collected_ids)
 except HPOneViewException as e:
     print(e.msg)
