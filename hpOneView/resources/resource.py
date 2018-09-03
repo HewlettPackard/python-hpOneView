@@ -1221,6 +1221,8 @@ class ResourceClient(object):
             timeout:
                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
+            custom_headers:
+                Allows set specific HTTP headers.
 
         Returns:
             dict: Response body.

@@ -283,7 +283,7 @@ class connection(object):
 
         return None, body
 
-    def post_multipart(self, uri, fields, files, baseName, custom_headers, verbose=False):
+    def post_multipart(self, uri, fields, files, baseName, verbose=False, custom_headers=None):
         content_type = self.encode_multipart_formdata(fields, files, baseName,
                                                       verbose)
         inputfile = self._open(files + '.b64', 'rb')

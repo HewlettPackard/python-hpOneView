@@ -1,6 +1,10 @@
-# 4.7.1 (Unreleased)
+# 5.0.0 (Unreleased)
 #### Notes
-Extends support of the SDK to OneView Rest API version 600 (OneView v4.0).
+Major release where the resource file is revamped, so that it can be used to instantiate the resource object.
+Addition helper methods where necessary to make the sdk more user friendly and to reduce the dependency on hard coded values.
+
+#### Breaking changes
+Resource file now instantiates the object, which is used to directly call the available methods.
 
 #### Features supported with current release:
 - Firmware Bundle

@@ -45,7 +45,7 @@ class FirmwareBundles(object):
         self._connection = con
         self._client = ResourceClient(con, self.URI)
 
-    def upload(self, file_path, timeout=-1, custom_headers=None,):
+    def upload(self, file_path, timeout=-1, custom_headers=None):
         """
         Upload an SPP ISO image file or a hotfix file to the appliance.
         The API supports upload of one hotfix at a time into the system.
