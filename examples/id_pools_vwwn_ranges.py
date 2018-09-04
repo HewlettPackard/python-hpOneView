@@ -78,47 +78,38 @@ options_additional = {
 # Create vwwn Range for id pools
 print("create vWWN range for id pools")
 vwwn_range = oneview_client.id_pools_vwwn_ranges.create(options)
-pprint(vwwn_range)
+pprint(vwwn_range.data)
 
 # Get vwwn range by uri
-vwwn_range_byuri = oneview_client.id_pools_vwwn_ranges.get(vwwn_range['uri'])
-print("Got vwwn range from '{}' to '{}' by uri:\n   '{}'".format(vwwn_range_byuri[
-      'startAddress'], vwwn_range_byuri['endAddress'], vwwn_range_byuri['uri']))
-
-# Get vwwn range by id
-vwwn_range_byId = oneview_client.id_pools_vwwn_ranges.get(vwwn_range['uri'])
-print("Got vwwn range from '{}' to '{}' by uri:\n   '{}'".format(vwwn_range_byId[
-      'startAddress'], vwwn_range_byId['endAddress'], vwwn_range_byId['uri']))
+vwwn_range_byuri = oneview_client.id_pools_vwwn_ranges.get_by_uri(vwwn_range.data['uri'])
+print("Got vwwn range from '{}' to '{}' by uri:\n   '{}'".format(vwwn_range_byuri.data[
+      'startAddress'], vwwn_range_byuri.data['endAddress'], vwwn_range_byuri.data['uri']))
 
 # Enable a vWWN range
 information = {
     "type": "Range",
     "enabled": True
 }
-vwwn_range = oneview_client.id_pools_vwwn_ranges.enable(
-    information, vwwn_range['uri'])
+vwwn_range = vwwn_range.enable(information)
 print("Successfully enabled vwwn range at\n   'uri': {}\n   with 'enabled': {}".format(
-    vwwn_range['uri'], vwwn_range['enabled']))
+    vwwn_range.data['uri'], vwwn_range.data['enabled']))
 
 # Allocate a set of IDs from vwwn range
 information = {
     "count": 10
 }
-successfully_allocated_ids = oneview_client.id_pools_vwwn_ranges.allocate(
-    information, vwwn_range['uri'])
+successfully_allocated_ids = vwwn_range.allocate(information)
 print("Successfully allocated IDs:")
 pprint(successfully_allocated_ids)
 
 # Get all allocated fragments in vwwn range
 print("Get all allocated fragments in vwwn range")
-allocated_fragments = oneview_client.id_pools_vwwn_ranges.get_allocated_fragments(
-    vwwn_range['uri'])
+allocated_fragments = vwwn_range.get_allocated_fragments()
 pprint(allocated_fragments)
 
 # Get all free fragments in vwwn range
 print("Get all free fragments in vwwn range")
-allocated_fragments = oneview_client.id_pools_vwwn_ranges.get_free_fragments(
-    vwwn_range['uri'])
+allocated_fragments = vwwn_range.get_free_fragments()
 pprint(allocated_fragments)
 
 # Collect a set of IDs back to vwwn range
@@ -126,8 +117,7 @@ try:
     information = {
         "idList": successfully_allocated_ids['idList']
     }
-    successfully_collected_ids = oneview_client.id_pools_vwwn_ranges.collect(
-        information, vwwn_range['uri'])
+    successfully_collected_ids = vwwn_range.collect(information)
 except HPOneViewException as e:
     print(e.msg)
 
@@ -136,20 +126,19 @@ information = {
     "type": "Range",
     "enabled": False
 }
-vwwn_range = oneview_client.id_pools_vwwn_ranges.enable(
-    information, vwwn_range['uri'])
+vwwn_range = vwwn_range.enable(information)
 print("Successfully disabled vwwn range at\n   'uri': {}\n   with 'enabled': {}".format(
-    vwwn_range['uri'], vwwn_range['enabled']))
+    vwwn_range.data['uri'], vwwn_range.data['enabled']))
 
 # Delete vwwn_range
-oneview_client.id_pools_vwwn_ranges.delete(vwwn_range)
+vwwn_range.delete()
 print("Successfully deleted vwwn range")
 
 # Create vwwn Range for id pools with more options specified
 print("Create vWWN range with more options specified for id pools")
 vwwn_range = oneview_client.id_pools_vwwn_ranges.create(options_additional)
-pprint(vwwn_range)
+pprint(vwwn_range.data)
 
 # Delete vwwn_range
-oneview_client.id_pools_vwwn_ranges.delete(vwwn_range)
+vwwn_range.delete()
 print("Successfully deleted newly created vwwn range")

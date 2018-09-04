@@ -364,7 +364,7 @@ class Resource(object):
         return self._connection.get(self.URI + '/schema')
 
     @ensure_resource_client
-    def get_collection(self, filter=''):
+    def get_collection(self, filter='', path=''):
         """
         Retrieves a collection of resources.
 
@@ -375,6 +375,7 @@ class Resource(object):
 
         Args:
             filter (list or str): General filter/query string.
+            path (str): Extra path with default uri string.
 
         Returns:
              Collection of the requested resource.
@@ -382,8 +383,7 @@ class Resource(object):
         if filter:
             filter = self.__make_query_filter(filter)
             filter = "?" + filter[1:]
-
-        uri = "{uri}{filter}".format(uri=self.data['uri'], filter=filter)
+        uri = "{uri}{path}{filter}".format(uri=self.data['uri'], path=path, filter=filter)
         logger.debug('Get resource collection (uri = %s)' % uri)
         response = self._connection.get(uri)
 

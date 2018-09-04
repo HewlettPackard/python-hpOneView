@@ -41,8 +41,8 @@ oneview_client = OneViewClient(config)
 
 options = {
     "type": "Range",
-    "startAddress": "E2:13:C5:F0:00:00",
-    "endAddress": "E2:13:C5:FF:FF:FF",
+    "startAddress": "E2:13:C6:F0:00:00",
+    "endAddress": "E2:13:C6:FF:FF:FF",
     "rangeCategory": "Custom"
 }
 
@@ -52,8 +52,8 @@ options_additional = {
     "prefix": None,
     "enabled": True,
     "rangeCategory": "Generated",
-    "startAddress": "E2:13:C5:F0:00:00",
-    "endAddress": "E2:13:C5:FF:FF:FF",
+    "startAddress": "E2:13:C6:F0:00:00",
+    "endAddress": "E2:13:C6:FF:FF:FF",
     "totalCount": 1048575,
     "freeIdCount": 1048575,
     "allocatedIdCount": 0,
@@ -77,47 +77,38 @@ options_additional = {
 
 # Create vmac Range for id pools
 vmac_range = oneview_client.id_pools_vmac_ranges.create(options)
-pprint(vmac_range)
+pprint(vmac_range.data)
 
 # Get vmac range by uri
-vmac_range_byuri = oneview_client.id_pools_vmac_ranges.get(vmac_range['uri'])
-print("Got vmac range from '{}' to '{}' by uri:\n   '{}'".format(vmac_range_byuri[
-      'startAddress'], vmac_range_byuri['endAddress'], vmac_range_byuri['uri']))
-
-# Get vmac range by id
-vmac_range_byId = oneview_client.id_pools_vmac_ranges.get(vmac_range['uri'])
-print("Got vmac range from '{}' to '{}' by uri:\n   '{}'".format(vmac_range_byId[
-      'startAddress'], vmac_range_byId['endAddress'], vmac_range_byId['uri']))
+vmac_range_byuri = oneview_client.id_pools_vmac_ranges.get_by_uri(vmac_range.data['uri'])
+print("Got vmac range from '{}' to '{}' by uri:\n   '{}'".format(vmac_range_byuri.data[
+      'startAddress'], vmac_range_byuri.data['endAddress'], vmac_range_byuri.data['uri']))
 
 # Enable a vMAC range
 information = {
     "type": "Range",
     "enabled": True
 }
-vmac_range = oneview_client.id_pools_vmac_ranges.enable(
-    information, vmac_range['uri'])
+vmac_range = vmac_range.enable(information)
 print("Successfully enabled vmac range at\n   'uri': {}\n   with 'enabled': {}".format(
-    vmac_range['uri'], vmac_range['enabled']))
+    vmac_range.data['uri'], vmac_range.data['enabled']))
 
 # Allocate a set of IDs from vmac range
 information = {
     "count": 10
 }
-successfully_allocated_ids = oneview_client.id_pools_vmac_ranges.allocate(
-    information, vmac_range['uri'])
+successfully_allocated_ids = vmac_range.allocate(information)
 print("Successfully allocated IDs:")
 pprint(successfully_allocated_ids)
 
 # Get all allocated fragments in vmac range
 print("Get all allocated fragments in vmac range")
-allocated_fragments = oneview_client.id_pools_vmac_ranges.get_allocated_fragments(
-    vmac_range['uri'])
+allocated_fragments = vmac_range.get_allocated_fragments()
 pprint(allocated_fragments)
 
 # Get all free fragments in vmac range
 print("Get all free fragments in vmac range")
-allocated_fragments = oneview_client.id_pools_vmac_ranges.get_free_fragments(
-    vmac_range['uri'])
+allocated_fragments = vmac_range.get_free_fragments()
 pprint(allocated_fragments)
 
 # Collect a set of IDs back to vmac range
@@ -125,8 +116,7 @@ try:
     information = {
         "idList": successfully_allocated_ids['idList']
     }
-    successfully_collected_ids = oneview_client.id_pools_vmac_ranges.collect(
-        information, vmac_range['uri'])
+    successfully_collected_ids = vmac_range.collect(information)
 except HPOneViewException as e:
     print(e.msg)
 
@@ -135,20 +125,18 @@ information = {
     "type": "Range",
     "enabled": False
 }
-vmac_range = oneview_client.id_pools_vmac_ranges.enable(
-    information, vmac_range['uri'])
-print("Successfully disabled vmac range at\n   'uri': {}\n   with 'enabled': {}".format(
-    vmac_range['uri'], vmac_range['enabled']))
+vmac_range = vmac_range.enable(information)
+print("Successfully disabled vmac range at\n   'uri': {}\n   with 'enabled': {}".format(vmac_range.data['uri'], vmac_range.data['enabled']))
 
 # Delete vmac_range
-oneview_client.id_pools_vmac_ranges.delete(vmac_range)
+vmac_range.delete()
 print("Successfully deleted vmac range")
 
 # Create vmac Range for id pools with more options specified
 print("Create vMAC range with more options specified for id pools")
 vmac_range = oneview_client.id_pools_vmac_ranges.create(options_additional)
-pprint(vmac_range)
+pprint(vmac_range.data)
 
 # Delete vmac_range
-oneview_client.id_pools_vmac_ranges.delete(vmac_range)
+vmac_range.delete()
 print("Successfully deleted newly created vMAC range")

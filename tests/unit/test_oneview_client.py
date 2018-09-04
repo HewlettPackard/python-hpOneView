@@ -491,35 +491,23 @@ class OneViewClientTest(unittest.TestCase):
         server_hardware_types = self._oneview.server_hardware_types
         self.assertEqual(server_hardware_types, self._oneview.server_hardware_types)
 
-    def test_lazy_loading_id_pools_vsn_ranges(self):
-        id_pools_vsn_ranges = self._oneview.id_pools_vsn_ranges
-        self.assertEqual(id_pools_vsn_ranges, self._oneview.id_pools_vsn_ranges)
-
     def test_id_pools_vsn_ranges_has_right_type(self):
         self.assertIsInstance(self._oneview.id_pools_vsn_ranges, IdPoolsRanges)
 
     def test_id_pools_vsn_ranges_has_right_value(self):
-        self.assertEqual('/rest/id-pools/vsn/ranges', self._oneview.id_pools_vsn_ranges._client._uri)
-
-    def test_lazy_loading_id_pools_vmac_ranges(self):
-        id_pools_vmac_ranges = self._oneview.id_pools_vmac_ranges
-        self.assertEqual(id_pools_vmac_ranges, self._oneview.id_pools_vmac_ranges)
+        self.assertEqual('/rest/id-pools/vsn/ranges', self._oneview.id_pools_vsn_ranges.URI)
 
     def test_id_pools_vmac_ranges_has_right_type(self):
         self.assertIsInstance(self._oneview.id_pools_vmac_ranges, IdPoolsRanges)
 
     def test_id_pools_vmac_ranges_has_right_value(self):
-        self.assertEqual('/rest/id-pools/vmac/ranges', self._oneview.id_pools_vmac_ranges._client._uri)
-
-    def test_lazy_loading_id_pools_vwwn_ranges(self):
-        id_pools_vwwn_ranges = self._oneview.id_pools_vwwn_ranges
-        self.assertEqual(id_pools_vwwn_ranges, self._oneview.id_pools_vwwn_ranges)
+        self.assertEqual('/rest/id-pools/vmac/ranges', self._oneview.id_pools_vmac_ranges.URI)
 
     def test_id_pools_vwwn_ranges_has_right_type(self):
         self.assertIsInstance(self._oneview.id_pools_vwwn_ranges, IdPoolsRanges)
 
     def test_id_pools_vwwn_ranges_has_right_value(self):
-        self.assertEqual('/rest/id-pools/vwwn/ranges', self._oneview.id_pools_vwwn_ranges._client._uri)
+        self.assertEqual('/rest/id-pools/vwwn/ranges', self._oneview.id_pools_vwwn_ranges.URI)
 
     def test_id_pools_ipv4_ranges_has_right_type(self):
         self.assertIsInstance(self._oneview.id_pools_ipv4_ranges, IdPoolsIpv4Ranges)

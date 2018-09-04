@@ -24,7 +24,7 @@ import mock
 
 from hpOneView import HPOneViewValueError
 from hpOneView.connection import connection
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource
 from hpOneView.resources.servers.id_pools_ranges import IdPoolsRanges
 import unittest
 
@@ -38,88 +38,98 @@ class TestIdPoolsRanges(unittest.TestCase):
         self.connection = connection(self.host)
         self.id_pool_name = 'vsn'
         self.client = IdPoolsRanges(self.id_pool_name, self.connection)
+        self.client.data = {'uri': "/rest/id-pools/" + self.id_pool_name + "/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"}
         self.example_uri = "/rest/id-pools/" + self.id_pool_name + "/ranges/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
 
-    @mock.patch.object(ResourceClient, '__init__')
+    @mock.patch.object(Resource, '__init__')
     def test_id_pools_ranges_constructor_with_type_vsn(self, mock_rclient):
         mock_rclient.return_value = None
-        IdPoolsRanges('vsn', self.connection)
-        mock_rclient.assert_called_once_with(self.connection, '/rest/id-pools/vsn/ranges')
+        IdPoolsRanges(type='vsn', connection=self.connection)
+        mock_rclient.assert_called_once_with(self.connection, None)
 
-    @mock.patch.object(ResourceClient, '__init__')
+    @mock.patch.object(Resource, '__init__')
     def test_id_pools_ranges_constructor_with_type_vwwn(self, mock_rclient):
         mock_rclient.return_value = None
         IdPoolsRanges('vwwn', self.connection)
-        mock_rclient.assert_called_once_with(self.connection, '/rest/id-pools/vwwn/ranges')
+        mock_rclient.assert_called_once_with(self.connection, None)
 
-    @mock.patch.object(ResourceClient, '__init__')
+    @mock.patch.object(Resource, '__init__')
     def test_id_pools_ranges_constructor_with_type_vmac(self, mock_rclient):
         mock_rclient.return_value = None
         IdPoolsRanges('vmac', self.connection)
-        mock_rclient.assert_called_once_with(self.connection, '/rest/id-pools/vmac/ranges')
+        mock_rclient.assert_called_once_with(self.connection, None)
 
-    @mock.patch.object(ResourceClient, '__init__')
+    @mock.patch.object(Resource, '__init__')
     def test_id_pools_ranges_constructor_with_invalid_type(self, mock_rclient):
         mock_rclient.return_value = None
         self.assertRaises(HPOneViewValueError, IdPoolsRanges, 'invalid', self.connection)
 
-    @mock.patch.object(ResourceClient, 'create')
+    @mock.patch.object(Resource, 'create')
     def test_create_called_once(self, mock_create):
         self.client.create(self.resource_info)
-        mock_create.assert_called_once_with(self.resource_info, timeout=-1)
+        mock_create.assert_called_once_with(self.resource_info)
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_by_id_called_once(self, mock_get):
+    @mock.patch.object(Resource, 'get_by_uri')
+    def test_get_by_id_called_once(self, mock_get_by_uri):
         id_pools_range_id = "f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
-        self.client.get(id_pools_range_id)
-        mock_get.assert_called_once_with(id_pools_range_id)
+        self.client.get_by_uri(id_pools_range_id)
+        mock_get_by_uri.assert_called_once_with(id_pools_range_id)
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_by_uri_called_once(self, mock_get):
-        self.client.get(self.example_uri)
-        mock_get.assert_called_once_with(self.example_uri)
+    @mock.patch.object(Resource, 'get_by_uri')
+    def test_get_by_uri_called_once(self, mock_get_by_uri):
+        self.client.get_by_uri(self.example_uri)
+        mock_get_by_uri.assert_called_once_with(self.example_uri)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_enable_called_once(self, update):
-        self.client.enable(self.resource_info.copy(), self.example_uri)
-        update.assert_called_once_with(self.resource_info.copy(), self.example_uri, timeout=-1)
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'update')
+    def test_enable_called_once(self, mock_update, load_resource):
+        self.client.enable(self.resource_info.copy())
+        mock_update.assert_called_once_with(self.resource_info.copy(), timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'get_collection')
-    def test_get_allocated_fragments_called_once_with_defaults(self, mock_get):
-        self.client.get_allocated_fragments(self.example_uri)
-        mock_get.assert_called_once_with(self.example_uri + "/allocated-fragments?start=0&count=-1")
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'get_collection')
+    def test_get_allocated_fragments_called_once_with_defaults(self, mock_get, load_resource):
+        self.client.get_allocated_fragments()
+        mock_get.assert_called_once_with("/allocated-fragments?start=0&count=-1")
 
-    @mock.patch.object(ResourceClient, 'get_collection')
-    def test_get_allocated_fragments_called_once(self, mock_get):
-        self.client.get_allocated_fragments(self.example_uri, 5, 2)
-        mock_get.assert_called_once_with(self.example_uri + "/allocated-fragments?start=2&count=5")
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'get_collection')
+    def test_get_allocated_fragments_called_once(self, mock_get, load_resource):
+        self.client.get_allocated_fragments(5, 2)
+        mock_get.assert_called_once_with("/allocated-fragments?start=2&count=5")
 
-    @mock.patch.object(ResourceClient, 'get_collection')
-    def test_get_free_fragments_called_once_with_defaults(self, mock_get):
-        self.client.get_free_fragments(self.example_uri)
-        mock_get.assert_called_once_with(self.example_uri + "/free-fragments?start=0&count=-1")
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'get_collection')
+    def test_get_free_fragments_called_once_with_defaults(self, mock_get, load_resource):
+        self.client.get_free_fragments()
+        mock_get.assert_called_once_with("/free-fragments?start=0&count=-1")
 
-    @mock.patch.object(ResourceClient, 'get_collection')
-    def test_get_free_fragments_called_once(self, mock_get):
-        self.client.get_free_fragments(self.example_uri, 5, 3)
-        mock_get.assert_called_once_with(self.example_uri + "/free-fragments?start=3&count=5")
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'get_collection')
+    def test_get_free_fragments_called_once(self, mock_get, load_resource):
+        self.client.get_free_fragments(5, 3)
+        mock_get.assert_called_once_with("/free-fragments?start=3&count=5")
 
-    @mock.patch.object(ResourceClient, 'delete')
-    def test_delete_called_once(self, mock_delete):
-        self.client.delete({'uri': '/rest/uri'}, force=True, timeout=50)
-        mock_delete.assert_called_once_with({'uri': '/rest/uri'}, force=True, timeout=50)
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'delete')
+    def test_delete_called_once(self, mock_delete, load_resource):
+        self.client.delete(force=True, timeout=50)
+        mock_delete.assert_called_once_with(force=True, timeout=50)
 
-    @mock.patch.object(ResourceClient, 'delete')
-    def test_delete_called_once_with_defaults(self, mock_delete):
-        self.client.delete({'uri': '/rest/uri'})
-        mock_delete.assert_called_once_with({'uri': '/rest/uri'}, force=False, timeout=-1)
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'delete')
+    def test_delete_called_once_with_defaults(self, mock_delete, load_resource):
+        self.client.delete()
+        mock_delete.assert_called_once_with()
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_allocate_called_once(self, mock_update):
-        self.client.allocate(self.resource_info.copy(), self.example_uri)
-        mock_update.assert_called_once_with(self.resource_info.copy(), self.example_uri + "/allocator", timeout=-1)
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'do_put')
+    def test_allocate_called_once(self, mock_put, load_resource):
+        self.client.allocate(self.resource_info.copy())
+        mock_put.assert_called_once_with(self.example_uri + '/allocator', self.resource_info.copy(), timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_collect_called_once(self, update):
-        self.client.collect(self.resource_info.copy(), self.example_uri)
-        update.assert_called_once_with(self.resource_info.copy(), self.example_uri + "/collector", timeout=-1)
+    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'do_put')
+    def test_collect_called_once(self, mock_put, load_resource):
+        self.client.collect(self.resource_info.copy())
+        mock_put.assert_called_once_with(self.example_uri + '/collector', self.resource_info.copy(), timeout=-1)

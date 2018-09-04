@@ -460,9 +460,7 @@ class OneViewClient(object):
         Returns:
             IdPoolsRanges:
         """
-        if not self.__id_pools_vsn_ranges:
-            self.__id_pools_vsn_ranges = IdPoolsRanges('vsn', self.__connection)
-        return self.__id_pools_vsn_ranges
+        return IdPoolsRanges('vsn', self.__connection)
 
     @property
     def id_pools_vmac_ranges(self):
@@ -472,9 +470,7 @@ class OneViewClient(object):
         Returns:
             IdPoolsRanges:
         """
-        if not self.__id_pools_vmac_ranges:
-            self.__id_pools_vmac_ranges = IdPoolsRanges('vmac', self.__connection)
-        return self.__id_pools_vmac_ranges
+        return IdPoolsRanges('vmac', self.__connection)
 
     @property
     def id_pools_vwwn_ranges(self):
@@ -484,9 +480,7 @@ class OneViewClient(object):
         Returns:
             IdPoolsRanges:
         """
-        if not self.__id_pools_vwwn_ranges:
-            self.__id_pools_vwwn_ranges = IdPoolsRanges('vwwn', self.__connection)
-        return self.__id_pools_vwwn_ranges
+        return IdPoolsRanges('vwwn', self.__connection)
 
     @property
     def id_pools_ipv4_ranges(self):

@@ -1,3 +1,8 @@
+# 5.0.0 (Unrelased)
+
+#### Features supported with current release:
+- Id pool range
+
 # 4.7.1
 #### Bug fixes
 - [#364] (https://github.com/HewlettPackard/python-hpOneView/issues/364) Bug in index_resources.get_all()
