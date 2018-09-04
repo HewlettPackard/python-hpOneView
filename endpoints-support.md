@@ -159,32 +159,32 @@
 |<sub>/rest/id-pools/ipv4/subnets/{id}</sub>                                              | PUT      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/id-pools/ipv4/subnets/{id}</sub>                                              | DELETE   | :white_check_mark:   | :white_check_mark:   |
 |     **ID Pools vMAC Ranges**                                                                                                                      |
-|<sub>/rest/id-pools/vmac/ranges</sub>                                                    | POST     | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vmac/ranges/{id}</sub>                                               | GET      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vmac/ranges/{id}</sub>                                               | PUT      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vmac/ranges/{id}</sub>                                               | DELETE   | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vmac/ranges/{id}/allocated-fragments</sub>                           | GET      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vmac/ranges/{id}/allocator</sub>                                     | PUT      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vmac/ranges/{id}/collector</sub>                                     | PUT      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vmac/ranges/{id}/free-fragments</sub>                                | GET      | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vmac/ranges</sub>                                                    | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vmac/ranges/{id}</sub>                                               | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vmac/ranges/{id}</sub>                                               | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vmac/ranges/{id}</sub>                                               | DELETE   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vmac/ranges/{id}/allocated-fragments</sub>                           | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vmac/ranges/{id}/allocator</sub>                                     | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vmac/ranges/{id}/collector</sub>                                     | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vmac/ranges/{id}/free-fragments</sub>                                | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |     **ID Pools vSN Ranges**                                                                                                                       |
-|<sub>/rest/id-pools/vsn/ranges</sub>                                                     | POST     | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vsn/ranges/{id}</sub>                                                | GET      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vsn/ranges/{id}</sub>                                                | PUT      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vsn/ranges/{id}</sub>                                                | DELETE   | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vsn/ranges/{id}/allocated-fragments</sub>                            | GET      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vsn/ranges/{id}/allocator</sub>                                      | PUT      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vsn/ranges/{id}/collector</sub>                                      | PUT      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vsn/ranges/{id}/free-fragments</sub>                                 | GET      | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vsn/ranges</sub>                                                     | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vsn/ranges/{id}</sub>                                                | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vsn/ranges/{id}</sub>                                                | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vsn/ranges/{id}</sub>                                                | DELETE   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vsn/ranges/{id}/allocated-fragments</sub>                            | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vsn/ranges/{id}/allocator</sub>                                      | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vsn/ranges/{id}/collector</sub>                                      | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vsn/ranges/{id}/free-fragments</sub>                                 | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |     **ID Pools vWWN Ranges**                                                                                                                      |
-|<sub>/rest/id-pools/vwwn/ranges</sub>                                                    | POST     | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vwwn/ranges/{id}</sub>                                               | GET      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vwwn/ranges/{id}</sub>                                               | PUT      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vwwn/ranges/{id}</sub>                                               | DELETE   | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vwwn/ranges/{id}/allocated-fragments</sub>                           | GET      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vwwn/ranges/{id}/allocator</sub>                                     | PUT      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vwwn/ranges/{id}/collector</sub>                                     | PUT      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/vwwn/ranges/{id}/free-fragments</sub>                                | GET      | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vwwn/ranges</sub>                                                    | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vwwn/ranges/{id}</sub>                                               | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vwwn/ranges/{id}</sub>                                               | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vwwn/ranges/{id}</sub>                                               | DELETE   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vwwn/ranges/{id}/allocated-fragments</sub>                           | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vwwn/ranges/{id}/allocator</sub>                                     | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vwwn/ranges/{id}/collector</sub>                                     | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/vwwn/ranges/{id}/free-fragments</sub>                                | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |     **Interconnect Link Topologies**                                                                                                                       |
 |<sub>/rest/interconnect-link-topologies</sub>                                            | GET      | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/interconnect-link-topologies/{id}</sub>                                        | GET      | :heavy_minus_sign:   | :white_check_mark:   | :white_check_mark:   |
