@@ -146,12 +146,12 @@
 |<sub>/rest/id-pools/{poolType}/validate</sub>                                            | GET      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/id-pools/{poolType}/validate</sub>                                            | PUT      | :white_check_mark:   | :white_check_mark:   |
 |     **ID Pools IPv4 Ranges**                                                                                                                      |
-|<sub>/rest/id-pools/ipv4/ranges</sub>                                                    | POST     | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/ipv4/ranges/{id}</sub>                                               | GET      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/ipv4/ranges/{id}</sub>                                               | PUT      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/ipv4/ranges/{id}</sub>                                               | DELETE   | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/ipv4/ranges/{id}/allocated-fragments</sub>                           | GET      | :white_check_mark:   | :white_check_mark:   |
-|<sub>/rest/id-pools/ipv4/ranges/{id}/free-fragments</sub>                                | GET      | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/ipv4/ranges</sub>                                                    | POST     | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/ipv4/ranges/{id}</sub>                                               | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/ipv4/ranges/{id}</sub>                                               | PUT      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/ipv4/ranges/{id}</sub>                                               | DELETE   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/ipv4/ranges/{id}/allocated-fragments</sub>                           | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
+|<sub>/rest/id-pools/ipv4/ranges/{id}/free-fragments</sub>                                | GET      | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   | :white_check_mark:   |
 |     **ID Pools IPv4 Subnets**                                                                                                                      |
 |<sub>/rest/id-pools/ipv4/subnets</sub>                                                   | GET      | :white_check_mark:   | :white_check_mark:   |
 |<sub>/rest/id-pools/ipv4/subnets</sub>                                                   | POST     | :white_check_mark:   | :white_check_mark:   |

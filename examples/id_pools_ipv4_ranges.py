@@ -38,52 +38,54 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
+ipv4_subnet = oneview_client.id_pools_ipv4_subnets.get_all()
+
 options = {
     "type": "Range",
     "name": "IPv4",
     "rangeCategory": "Custom",
-    "startAddress": "10.10.2.2",
-    "endAddress": "10.10.2.254",
-    "subnetUri": "/rest/id-pools/ipv4/subnets/7e77926c-195c-4984-926d-c858fde63f9b"
+    "startAddress": "10.10.4.4",
+    "endAddress": "10.10.4.254",
+    "subnetUri": ipv4_subnet[0]['uri']
 }
 
 print("\n Create an IPv4 Range for id pools")
 ipv4_range = oneview_client.id_pools_ipv4_ranges.create(options)
-pprint(ipv4_range)
+pprint(ipv4_range.data)
 
 print("\n Update the IPv4 Range")
-ipv4_range['name'] = 'New Name'
-ipv4_range = oneview_client.id_pools_ipv4_ranges.update(ipv4_range)
-pprint(ipv4_range)
+options['name'] = 'New Name'
+ipv4_range = ipv4_range.update(options)
+pprint(ipv4_range.data)
 
 print("\n Get the IPv4 range by uri")
-ipv4_range_byuri = oneview_client.id_pools_ipv4_ranges.get(ipv4_range['uri'])
-pprint(ipv4_range_byuri)
+ipv4_range_byuri = oneview_client.id_pools_ipv4_ranges.get_by_uri(ipv4_range.data['uri'])
+pprint(ipv4_range_byuri.data)
 
 print("\n Enable an IPv4 range")
-ipv4_range = oneview_client.id_pools_ipv4_ranges.enable(
+ipv4_range = ipv4_range.enable(
     {
         "type": "Range",
         "enabled": True
     },
-    ipv4_range['uri'])
+    ipv4_range.data['uri'])
 print(" IPv4 range enabled successfully.")
 
 print("\n Get all allocated fragments in IPv4 range")
-allocated_fragments = oneview_client.id_pools_ipv4_ranges.get_allocated_fragments(ipv4_range['uri'])
+allocated_fragments = ipv4_range.get_allocated_fragments()
 pprint(allocated_fragments)
 
 print("\n Get all free fragments in IPv4 range")
-allocated_fragments = oneview_client.id_pools_ipv4_ranges.get_free_fragments(ipv4_range['uri'])
+allocated_fragments = ipv4_range.get_free_fragments()
 pprint(allocated_fragments)
 
 print("\n Disable an IPv4 range")
-ipv4_range = oneview_client.id_pools_ipv4_ranges.enable({
+ipv4_range = ipv4_range.enable({
     "type": "Range",
     "enabled": False
-}, ipv4_range['uri'])
+}, ipv4_range.data['uri'])
 print(" IPv4 range disabled successfully.")
 
 print("\n Delete the IPv4_range")
-oneview_client.id_pools_ipv4_ranges.delete(ipv4_range)
+ipv4_range.delete()
 print(" Successfully deleted IPv4 range")
