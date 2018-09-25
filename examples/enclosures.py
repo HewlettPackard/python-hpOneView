@@ -28,13 +28,13 @@ from hpOneView.exceptions import HPOneViewException, HPOneViewTaskError
 from config_loader import try_load_from_file
 
 # This example is compatible only for C7000 enclosures
-
 config = {
     "ip": "",
     "credentials": {
         "userName": "",
         "password": ""
     },
+    "api_version": "",
     "enclosure_group_uri": "",
     "enclosure_hostname": "",
     "enclosure_username": "",
@@ -49,7 +49,7 @@ config = try_load_from_file(config)
 
 # The hostname, enclosure group URI, username, and password must be set on the configuration file
 options = {
-    "name": "Encl1-Updated-Updated-Updated",
+    "name": "Encl1",
     "enclosureGroupUri": config['enclosure_group_uri'],
     "hostname": config['enclosure_hostname'],
     "username": config['enclosure_username'],
@@ -191,7 +191,7 @@ try:
             "base64Data": certificate
         }
 
-        enclosure.import_certificate(certificate_data, enclosure.data['uri'], bay_number=bay_number)
+        enclosure.import_certificate(certificate_data, bay_number=bay_number)
         print("Imported Signed Certificate  to the enclosure.")
 except HPOneViewException as e:
     print(e.msg)

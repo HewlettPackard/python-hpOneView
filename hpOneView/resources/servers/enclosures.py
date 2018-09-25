@@ -108,8 +108,8 @@ class Enclosures(Resource):
         Returns:
             Enclosure
         """
-        path = "/configuration"
-        return self.update_with_zero_body(path=path, timeout=timeout)
+        uri = "{}/configuration".format(self.data['uri'])
+        return self.update_with_zero_body(uri=uri, timeout=timeout)
 
     @ensure_resource_client
     def get_environmental_configuration(self):
