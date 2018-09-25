@@ -1,3 +1,11 @@
+# 5.0.0
+#### Notes
+Redesigned Resource class to support development of helper methods.
+
+#### features supported with current release
+- Enclosure
+- FC Network
+
 # 4.7.1
 #### Bug fixes
 - [#364] (https://github.com/HewlettPackard/python-hpOneView/issues/364) Bug in index_resources.get_all()
