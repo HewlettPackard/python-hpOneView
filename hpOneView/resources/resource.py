@@ -437,8 +437,8 @@ class Resource(object):
         patch_request_body = [{'op': operation, 'path': path, 'value': value}]
 
         self.data = self.patch_request(body=patch_request_body,
-                                        timeout=timeout,
-                                        custom_headers=custom_headers)
+                                       timeout=timeout,
+                                       custom_headers=custom_headers)
         return self
 
     @ensure_resource_client

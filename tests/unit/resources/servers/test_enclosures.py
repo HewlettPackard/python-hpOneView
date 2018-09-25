@@ -96,7 +96,8 @@ class EnclosuresTest(TestCase):
     @mock.patch.object(Resource, 'update_with_zero_body')
     def test_update_configuration_by_uri(self, mock_update_with_zero_body, load_resource):
         self._enclosures.update_configuration()
-        mock_update_with_zero_body.assert_called_once_with(path='/configuration', timeout=-1)
+        uri = "{}/configuration".format(self._enclosures.data['uri'])
+        mock_update_with_zero_body.assert_called_once_with(uri=uri, timeout=-1)
 
     @mock.patch.object(Resource, 'load_resource')
     @mock.patch.object(Resource, 'do_get')
