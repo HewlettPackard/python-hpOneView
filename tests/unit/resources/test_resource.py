@@ -28,13 +28,49 @@ from mock import call
 from tests.test_utils import mock_builtin
 
 from hpOneView.connection import connection
-from hpOneView.exceptions import HPOneViewUnknownType, HPOneViewException, HPOneViewValueError
+from hpOneView import exceptions
 from hpOneView.resources.resource import merge_resources, merge_default_values
-from hpOneView.resources.resource import ResourceClient, RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor, \
+from hpOneView.resources.resource import ResourceClient, Resource, RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor, \
     RESOURCE_CLIENT_TASK_EXPECTED, RESOURCE_ID_OR_URI_REQUIRED, transform_list_to_dict, extract_id_from_uri
 
 
 class ResourceTest(unittest.TestCase):
+
+    URI = '/rest/testuri'
+
+    def setUp(self):
+        host = '127.0.0.1'
+        self.connection = connection(host, 300)
+        self.resource_client = Resource(self.connection, self.URI)
+
+    @mock.patch.object(Resource, 'do_put')
+    @mock.patch.object(Resource, 'load_resource')
+    def test_load_resource_should_call_once(self, mock_do_put, mock_load_resource):
+        self.resource_client.data = {'uri': '/rest/test'}
+        self.resource_client.update(data={'name': 'test'})
+        mock_do_put.assert_called_once()
+        mock_load_resource.assert_called_once()
+
+    def test_load_resource_raise_unique_identifier_exception(self):
+        self.resource_client.data = []
+        self.assertRaises(exceptions.HPOneViewMissingUniqueIdentifiers,
+                          self.resource_client.load_resource)
+
+    @mock.patch.object(Resource, 'do_get')
+    def test_load_resource_raise_resource_not_found_exception_with_uri(self, mock_do_get):
+        self.resource_client.data = {'uri': '/uri/test'}
+        mock_do_get.return_value = []
+        self.assertRaises(exceptions.HPOneViewResourceNotFound,
+                          self.resource_client.load_resource)
+
+    @mock.patch.object(Resource, 'do_get')
+    @mock.patch.object(Resource, 'get_by')
+    def test_load_resource_raise_resource_not_found_exception_without_uri(self, mock_do_get, mock_get_by):
+        self.resource_client.data = {'name': 'testname'}
+        mock_do_get.return_value = []
+        self.assertRaises(exceptions.HPOneViewResourceNotFound,
+                          self.resource_client.load_resource)
+
     def test_merge_resources(self):
         resource1 = {'name': 'resource1', 'type': 'resource'}
         resource2 = {'name': 'resource2', 'port': '1'}
@@ -138,7 +174,7 @@ class ResourceClientTest(unittest.TestCase):
     def test_get_all_with_different_resource_uri_should_fail(self, mock_get):
         try:
             self.resource_client.get_all(uri='/rest/other/resource/12467836/subresources')
-        except HPOneViewUnknownType as e:
+        except exceptions.HPOneViewUnknownType as e:
             self.assertEqual(UNRECOGNIZED_URI, e.args[0])
         else:
             self.fail('Expected Exception was not raised')
@@ -322,7 +358,7 @@ class ResourceClientTest(unittest.TestCase):
                           "uri": ""}
         try:
             self.resource_client.delete(dict_to_delete, False, -1)
-        except HPOneViewUnknownType as e:
+        except exceptions.HPOneViewUnknownType as e:
             self.assertEqual("Unknown object type", e.args[0])
         else:
             self.fail()
@@ -417,7 +453,7 @@ class ResourceClientTest(unittest.TestCase):
     def test_get_by_property_with__invalid_uri(self, mock_get_all):
         try:
             self.resource_client.get_by('name', 'MyFibreNetwork', uri='/rest/other/5435534/sub')
-        except HPOneViewUnknownType as e:
+        except exceptions.HPOneViewUnknownType as e:
             self.assertEqual('Unrecognized URI for this resource', e.args[0])
         else:
             self.fail()
@@ -934,7 +970,7 @@ class ResourceClientTest(unittest.TestCase):
         uri = "/rest/interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32"
         try:
             self.resource_client.get(uri)
-        except HPOneViewUnknownType as exception:
+        except exceptions.HPOneViewUnknownType as exception:
             self.assertEqual(message, exception.args[0])
         else:
             self.fail("Expected Exception was not raised")
@@ -945,7 +981,7 @@ class ResourceClientTest(unittest.TestCase):
         fake_resource = FakeResource(None)
         try:
             fake_resource.get_fake(uri)
-        except HPOneViewUnknownType as exception:
+        except exceptions.HPOneViewUnknownType as exception:
             self.assertEqual(message, exception.args[0])
         else:
             self.fail("Expected Exception was not raised")
@@ -1040,7 +1076,7 @@ class ResourceClientTest(unittest.TestCase):
         try:
             self.resource_client.build_uri(
                 '/rest/test/another/resource/uri/09USE7335NW3')
-        except HPOneViewUnknownType as exception:
+        except exceptions.HPOneViewUnknownType as exception:
             self.assertEqual(UNRECOGNIZED_URI, exception.args[0])
         else:
             self.fail("Expected Exception was not raised")
@@ -1048,7 +1084,7 @@ class ResourceClientTest(unittest.TestCase):
     def test_build_uri_with_incomplete_uri_should_raise_exception(self):
         try:
             self.resource_client.build_uri('/rest/')
-        except HPOneViewUnknownType as exception:
+        except exceptions.HPOneViewUnknownType as exception:
             self.assertEqual(UNRECOGNIZED_URI, exception.args[0])
         else:
             self.fail("Expected Exception was not raised")
@@ -1099,7 +1135,7 @@ class ResourceClientTest(unittest.TestCase):
     def test_build_subresource_uri_with_subresourceid_and_without_resource_should_fail(self):
         try:
             self.resource_client.build_subresource_uri(None, "123456", 'sub-path')
-        except HPOneViewValueError as exception:
+        except exceptions.HPOneViewValueError as exception:
             self.assertEqual(RESOURCE_ID_OR_URI_REQUIRED, exception.args[0])
         else:
             self.fail("Expected Exception was not raised")
@@ -1169,7 +1205,7 @@ class ResourceClientTest(unittest.TestCase):
 
         try:
             self.resource_client.create_report("/rest/path/create-report")
-        except HPOneViewException as exception:
+        except exceptions.HPOneViewException as exception:
             self.assertEqual(RESOURCE_CLIENT_TASK_EXPECTED, exception.args[0])
         else:
             self.fail("Expected Exception was not raised")
