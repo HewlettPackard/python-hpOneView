@@ -76,7 +76,7 @@ class Resource(object):
     """Base class for OneView resources.
 
     Args:
-        connection: OneView cnnection object
+        connection: OneView connection object
         data: Resource data
     """
     # Base URI for the rest calls
@@ -104,7 +104,7 @@ class Resource(object):
         self._task_monitor = TaskMonitor(connection)
 
     def load_resource(self):
-        """Retrieve data from OneView and update resource data."""
+        """Retrieves data from OneView and update resource data."""
         # Check for unique identifier in the resource data
         if not any(key in self.data for key in self.UNIQUE_IDENTIFIERS):
             raise exceptions.HPOneViewMissingUniqueIdentifiers(MISSING_UNIQUE_IDENTIFIERS)
@@ -498,7 +498,7 @@ class Resource(object):
         return results
 
     def get_by_name(self, name):
-        """Retrieve a resource by its name.
+        """Retrieves a resource by its name.
 
         Args:
             name: Resource name.
@@ -514,7 +514,7 @@ class Resource(object):
             return self
 
     def get_by_uri(self, uri):
-        """Retrieve a resource by its URI
+        """Retrieves a resource by its URI
 
         Args:
             uri: URI of the resource
