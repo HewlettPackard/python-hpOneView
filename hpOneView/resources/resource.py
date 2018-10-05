@@ -49,7 +49,7 @@ RESOURCE_CLIENT_TASK_EXPECTED = "Failed: Expected a TaskResponse."
 RESOURCE_ID_OR_URI_REQUIRED = 'It is required to inform the Resource ID or URI.'
 UNAVAILABLE_METHOD = "Method is not available for this resource"
 MISSING_UNIQUE_IDENTIFIERS = "Missing unique identifiers(URI/Name) for the resource"
-RESOURCE_DOES_NOT_EXISTS = "Resource does not exists with provided unique identifiers"
+RESOURCE_DOES_NOT_EXIST = "Resource does not exist with provided unique identifiers"
 
 logger = logging.getLogger(__name__)
 
@@ -125,7 +125,7 @@ class Resource(object):
                         break
 
         if not resource_data:
-            raise exceptions.HPOneViewResourceNotFound(RESOURCE_DOES_NOT_EXISTS)
+            raise exceptions.HPOneViewResourceNotFound(RESOURCE_DOES_NOT_EXIST)
 
         self.data.update(resource_data)
 
