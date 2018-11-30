@@ -78,6 +78,7 @@ from hpOneView.resources.security.roles import Roles
 from hpOneView.resources.security.users import Users
 from hpOneView.resources.settings.appliance_device_read_community import ApplianceDeviceReadCommunity
 from hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations import ApplianceDeviceSNMPv1TrapDestinations
+from hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations import ApplianceDeviceSNMPv3TrapDestinations
 from hpOneView.resources.settings.appliance_node_information import ApplianceNodeInformation
 from hpOneView.resources.settings.appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfiguration
 from hpOneView.resources.settings.versions import Versions
@@ -899,6 +900,14 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_appliance_device_device_snmp_v1_trap_destinations(self):
         appliance_device_snmp_v1_trap_destinations = self._oneview.appliance_device_snmp_v1_trap_destinations
         self.assertEqual(appliance_device_snmp_v1_trap_destinations, self._oneview.appliance_device_snmp_v1_trap_destinations)
+
+    def test_appliance_device_device_snmp_v3_trap_destinations_has_right_type(self):
+        self.assertIsInstance(self._oneview.appliance_device_snmp_v3_trap_destinations,
+                              ApplianceDeviceSNMPv3TrapDestinations)
+
+    def test_lazy_loading_appliance_device_device_snmp_v3_trap_destinations(self):
+        appliance_device_snmp_v3_trap_destinations = self._oneview.appliance_device_snmp_v3_trap_destinations
+        self.assertEqual(appliance_device_snmp_v3_trap_destinations, self._oneview.appliance_device_snmp_v3_trap_destinations)
 
     def test_appliance_node_information_has_right_type(self):
         self.assertIsInstance(self._oneview.appliance_node_information,
