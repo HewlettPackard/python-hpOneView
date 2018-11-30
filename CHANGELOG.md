@@ -1,3 +1,13 @@
+# 4.7.2
+#### Notes
+Added the capability to handle OneView Appliance SNMP Settings
+
+#### Features supported with current release:
+- Appliance Device Read Community
+- Appliance Device SNMP v1 Trap Destinations
+- Appliance Device SNMP v3 Trap Destinations
+- Appliance Device SNMP v3 Users
+
 # 4.7.1
 #### Bug fixes
 - [#364] (https://github.com/HewlettPackard/python-hpOneView/issues/364) Bug in index_resources.get_all()
