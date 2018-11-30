@@ -1162,6 +1162,18 @@ class OneViewClient(object):
         return self.__appliance_device_snmp_v3_trap_destinations
 
     @property
+    def appliance_device_snmp_v3_users(self):
+        """
+        Gets the ApplianceDeviceSNMPv3Users API client.
+
+        Returns:
+            ApplianceDeviceSNMPv3Users:
+        """
+        if not self.__appliance_device_snmp_v3_users:
+            self.__appliance_device_snmp_v3_users = ApplianceDeviceSNMPv3Users(self.__connection)
+        return self.__appliance_device_snmp_v3_users
+
+    @property
     def appliance_node_information(self):
         """
         Gets the ApplianceNodeInformation API client.
