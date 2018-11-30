@@ -76,6 +76,7 @@ from hpOneView.resources.activity.events import Events
 from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitMQ
 from hpOneView.resources.security.roles import Roles
 from hpOneView.resources.security.users import Users
+from hpOneView.resources.settings.appliance_device_read_community import ApplianceDeviceReadCommunity
 from hpOneView.resources.settings.appliance_node_information import ApplianceNodeInformation
 from hpOneView.resources.settings.appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfiguration
 from hpOneView.resources.settings.versions import Versions
@@ -881,6 +882,14 @@ class OneViewClientTest(unittest.TestCase):
     def test_lazy_loading_users(self):
         user = self._oneview.users
         self.assertEqual(user, self._oneview.users)
+
+    def test_appliance_device_read_community_has_right_type(self):
+        self.assertIsInstance(self._oneview.appliance_device_read_community,
+                              ApplianceDeviceReadCommunity)
+
+    def test_lazy_loading_appliance_device_read_community(self):
+        appliance_device_read_community = self._oneview.appliance_device_read_community
+        self.assertEqual(appliance_device_read_community, self._oneview.appliance_device_read_community)
 
     def test_appliance_node_information_has_right_type(self):
         self.assertIsInstance(self._oneview.appliance_node_information,
