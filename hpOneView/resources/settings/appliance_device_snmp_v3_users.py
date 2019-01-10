@@ -68,6 +68,18 @@ class ApplianceDeviceSNMPv3Users(object):
         """
         return self._client.create(resource, uri=uri, timeout=timeout)
 
+    def get(self, id_or_uri):
+        """
+        Returns the SNMPv3 user with the specified ID, if it exists.
+
+        Args:
+            id_or_uri: ID or URI of SNMPv3 user.
+
+        Returns:
+            dict: Appliance SNMPv3 user.
+        """
+        return self._client.get(id_or_uri)
+
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
         Lists all SNMPv3 Users.

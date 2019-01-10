@@ -50,6 +50,12 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
+# Add appliance device SNMP v3 users
+snmp_v3_user = oneview_client.appliance_device_snmp_v3_users.create(options)
+snmp_v3_user_uri = snmp_v3_user['uri']
+print("\n## Create appliance SNMP v3 user successfully!")
+pprint(snmp_v3_user)
+
 # Lists the appliance SNMPv3 users
 snmp_v3_users_list = oneview_client.appliance_device_snmp_v3_users.get_all()
 print("\n## Got appliance SNMP v3 users successfully!")
@@ -58,19 +64,19 @@ pprint(snmp_v3_users_list)
 # Get first element of the List
 snmp_v3_users = snmp_v3_users_list.pop()
 
-# Add appliance device SNMP v3 users
-snmp_v3_users = oneview_client.appliance_device_snmp_v3_users.create(options)
-print("\n## Create appliance SNMP v3 user successfully!")
-pprint(snmp_v3_users)
+# Get by URI
+print("Find an SNMP v3 user by URI")
+snmp_v3_user = oneview_client.appliance_device_snmp_v3_users.get(snmp_v3_user_uri)
+pprint(snmp_v3_user)
 
 # Change appliance device SNMP v3 users
-snmp_v3_users['authenticationPassphrase'] = "newAuthPass"
-snmp_v3_users['privacyPassphrase'] = "8765432187654321"
-snmp_v3_users = oneview_client.appliance_device_snmp_v3_users.update(snmp_v3_users)
+snmp_v3_user['authenticationPassphrase'] = "newAuthPass"
+snmp_v3_user['privacyPassphrase'] = "8765432187654321"
+snmp_v3_user = oneview_client.appliance_device_snmp_v3_users.update(snmp_v3_user)
 print("\n## Update appliance SNMP v3 user successfully!")
-pprint(snmp_v3_users)
+pprint(snmp_v3_user)
 
 # Delete Created Entry
-del_result = oneview_client.appliance_device_snmp_v3_users.delete(snmp_v3_users)
+del_result = oneview_client.appliance_device_snmp_v3_users.delete(snmp_v3_user)
 print("\n## Delete appliance SNMP v3 user successfully!")
 pprint(del_result)

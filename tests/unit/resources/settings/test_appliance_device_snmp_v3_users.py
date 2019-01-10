@@ -55,6 +55,19 @@ class ApplianceDeviceSNMPv3UsersTest(unittest.TestCase):
         self._snmp_v3_users.create(resource)
         mock_create.assert_called_once_with(resource, timeout=-1, uri=None)
 
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_called_once(self, mock_get):
+        self._snmp_v3_users.get('0ca1b9e9-3c30-405f-b450-abd36730aa38')
+
+        mock_get.assert_called_once_with('0ca1b9e9-3c30-405f-b450-abd36730aa38')
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_with_uri_called_once(self, mock_get):
+        uri = '/rest/appliance/snmpv3-trap-forwarding/users/0ca1b9e9-3c30-405f-b450-abd36730aa38'
+        self._snmp_v3_users.get(uri)
+
+        mock_get.assert_called_once_with(uri)
+
     @mock.patch.object(ResourceClient, 'get_by')
     def test_get_by_uri_called_once(self, mock_create):
         uri = '/rest/appliance/snmpv3-trap-forwarding/users/0ca1b9e9-3c30-405f-b450-abd36730aa38'
