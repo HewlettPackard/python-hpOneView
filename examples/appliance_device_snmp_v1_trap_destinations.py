@@ -46,7 +46,7 @@ oneview_client = OneViewClient(config)
 
 # Add appliance device SNMP v1 Trap Destination
 snmp_v1_trap = oneview_client.appliance_device_snmp_v1_trap_destinations.create(options)
-snmp_v1_trap = snmp_v1_trap['uri']
+snmp_v1_trap_uri = snmp_v1_trap['uri']
 print("\n## Create appliance SNMP v1 trap destination successfully!")
 pprint(snmp_v1_trap)
 
