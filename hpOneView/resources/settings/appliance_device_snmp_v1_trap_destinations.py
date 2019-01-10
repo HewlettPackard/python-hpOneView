@@ -103,6 +103,18 @@ class ApplianceDeviceSNMPv1TrapDestinations(object):
         else:
             return 1
 
+    def get(self, id_or_uri):
+        """
+        Returns the SNMPv1 trap forwarding destination with the specified ID, if it exists.
+
+        Args:
+            id_or_uri: ID or URI of SNMPv1 trap destination.
+
+        Returns:
+            dict: Appliance SNMPv1 trap destination.
+        """
+        return self._client.get(id_or_uri)
+
     def get_all(self, start=0, count=-1, filter='', sort=''):
         """
         Retrieves all SNMPv1 trap forwarding destinations.

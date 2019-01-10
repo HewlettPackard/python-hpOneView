@@ -52,6 +52,19 @@ class ApplianceDeviceSNMPv1TrapDestinationsTest(unittest.TestCase):
         self._snmp_v1_trap_dest.create(resource, resource['uri'])
         mock_create.assert_called_once_with(resource, uri=resource['uri'], timeout=-1)
 
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_called_once(self, mock_get):
+        self._snmp_v1_trap_dest.get('1')
+
+        mock_get.assert_called_once_with('1')
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_with_uri_called_once(self, mock_get):
+        uri = '/rest/appliance/trap-destinations/1'
+        self._snmp_v1_trap_dest.get(uri)
+
+        mock_get.assert_called_once_with(uri)
+
     @mock.patch.object(ResourceClient, 'get_by')
     def test_get_by_uri_called_once(self, mock_create):
         uri = '/rest/appliance/trap-destinations/1'
