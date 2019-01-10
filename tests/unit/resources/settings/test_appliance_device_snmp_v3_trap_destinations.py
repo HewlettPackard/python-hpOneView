@@ -52,6 +52,19 @@ class ApplianceDeviceSNMPv3TrapDestinationsTest(unittest.TestCase):
         self._snmp_v3_trap_dest.create(resource)
         mock_create.assert_called_once_with(resource, timeout=-1, uri=None)
 
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_called_once(self, mock_get):
+        self._snmp_v3_trap_dest.get('86731e55-6837-44cf-a5c5-f0392920da7e')
+
+        mock_get.assert_called_once_with('86731e55-6837-44cf-a5c5-f0392920da7e')
+
+    @mock.patch.object(ResourceClient, 'get')
+    def test_get_with_uri_called_once(self, mock_get):
+        uri = '/rest/appliance/snmpv3-trap-forwarding/destinations/86731e55-6837-44cf-a5c5-f0392920da7e'
+        self._snmp_v3_trap_dest.get(uri)
+
+        mock_get.assert_called_once_with(uri)
+
     @mock.patch.object(ResourceClient, 'get_by')
     def test_get_by_uri_called_once(self, mock_create):
         uri = '/rest/appliance/snmpv3-trap-forwarding/destinations/86731e55-6837-44cf-a5c5-f0392920da7e'

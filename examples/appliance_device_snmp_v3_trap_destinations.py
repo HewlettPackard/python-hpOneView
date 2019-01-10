@@ -47,6 +47,12 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 
+# Add appliance device SNMP v3 Trap Destination
+snmp_v3_trap = oneview_client.appliance_device_snmp_v3_trap_destinations.create(options)
+snmp_v3_trap_uri = snmp_v3_trap['uri']
+print("\n## Crate appliance SNMP v3 trap destination successfully!")
+pprint(snmp_v3_trap)
+
 # Lists the appliance device read community
 snmp_v3_trap_list = oneview_client.appliance_device_snmp_v3_trap_destinations.get_all()
 print("\n## Got appliance SNMP v3 trap destination successfully!")
@@ -55,9 +61,9 @@ pprint(snmp_v3_trap_list)
 # Get first element of the List
 snmp_v3_trap = snmp_v3_trap_list.pop()
 
-# Add appliance device SNMP v3 Trap Destination
-snmp_v3_trap = oneview_client.appliance_device_snmp_v3_trap_destinations.create(options)
-print("\n## Crate appliance SNMP v3 trap destination successfully!")
+# Get by URI
+print("Find an SNMP v3 trap destination by URI")
+snmp_v3_trap = oneview_client.appliance_device_snmp_v3_trap_destinations.get(snmp_v3_trap_uri)
 pprint(snmp_v3_trap)
 
 # Change appliance device SNMP v3 Trap Destination - Only Community String and Port can be changed
