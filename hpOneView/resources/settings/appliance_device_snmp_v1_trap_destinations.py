@@ -98,7 +98,7 @@ class ApplianceDeviceSNMPv1TrapDestinations(object):
             for trap in traps:
                 used_uris = trap.get('uri')
                 used_ids.append(int(used_uris.split('/')[-1]))
-                used_ids.sort()
+            used_ids.sort()
             return self.__findFirstMissing(used_ids, 0, len(used_ids) - 1)
         else:
             return 1
