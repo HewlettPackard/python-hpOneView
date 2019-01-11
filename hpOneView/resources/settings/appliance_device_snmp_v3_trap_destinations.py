@@ -43,7 +43,7 @@ class ApplianceDeviceSNMPv3TrapDestinations(object):
     def __init__(self, con):
         self._client = ResourceClient(con, self.URI)
 
-    def create(self, resource, uri=None, timeout=-1):
+    def create(self, resource, timeout=-1):
         """
         Adds the specified trap forwarding destination.
         The trap destination associated with the specified id will be created if trap destination with that id does not exists.
@@ -59,7 +59,7 @@ class ApplianceDeviceSNMPv3TrapDestinations(object):
             dict: Created resource.
 
         """
-        return self._client.create(resource, uri=uri, timeout=timeout)
+        return self._client.create(resource, uri=self.URI, timeout=timeout)
 
     def get(self, id_or_uri):
         """
