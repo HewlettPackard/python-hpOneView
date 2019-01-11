@@ -50,9 +50,9 @@ class ApplianceDeviceSNMPv3Users(object):
     def __init__(self, con):
         self._client = ResourceClient(con, self.URI)
 
-    def create(self, resource, uri=None, timeout=-1):
+    def create(self, resource, timeout=-1):
         """
-        Creates a new USM user.
+        Creates a new SNMPv3 user.
         This user will be used for sending the SNMPv3 trap to the associated destinations.
         One user can be assigned to multiple destinations.
 
@@ -66,7 +66,7 @@ class ApplianceDeviceSNMPv3Users(object):
             dict: Created resource.
 
         """
-        return self._client.create(resource, uri=uri, timeout=timeout)
+        return self._client.create(resource, uri=self.URI, timeout=timeout)
 
     def get(self, id_or_uri):
         """
