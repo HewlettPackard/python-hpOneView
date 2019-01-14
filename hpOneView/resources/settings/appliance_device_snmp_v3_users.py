@@ -66,7 +66,7 @@ class ApplianceDeviceSNMPv3Users(object):
             dict: Created resource.
 
         """
-        return self._client.create(resource, uri=self.URI, timeout=timeout)
+        return self._client.create(resource, timeout=timeout)
 
     def get(self, id_or_uri):
         """
