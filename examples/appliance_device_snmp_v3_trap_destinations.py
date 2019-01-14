@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2018) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ from pprint import pprint
 from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
 
-# Set api_version to 600, default is 300 and this API is introduced since API 600.
+# Set api_version to 600, default is 300 and this API has been introduced since API 600.
 config = {
     "ip": "<oneview_ip>",
     "credentials": {
