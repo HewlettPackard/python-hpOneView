@@ -50,6 +50,12 @@ snmp_v1_trap_uri = snmp_v1_trap['uri']
 print("\n## Create appliance SNMP v1 trap destination successfully!")
 pprint(snmp_v1_trap)
 
+# Add appliance device SNMP v1 Trap Destination with ID
+trap_id = 9
+snmp_v1_trap = oneview_client.appliance_device_snmp_v1_trap_destinations.create(options, trap_id)
+print("\n## Create appliance SNMP v1 trap destination successfully!")
+pprint(snmp_v1_trap)
+
 # Lists the appliance device SNMP v1 Trap Destination
 snmp_v1_trap = oneview_client.appliance_device_snmp_v1_trap_destinations.get_all()
 print("\n## Got appliance SNMP v1 trap destination successfully!")
@@ -62,7 +68,7 @@ pprint(snmp_v1_trap)
 
 # Get by URI
 print("Find an SNMP v1 trap destination by URI")
-snmp_v1_trap = oneview_client.appliance_device_snmp_v3_trap_destinations.get(snmp_v1_trap_uri)
+snmp_v1_trap = oneview_client.appliance_device_snmp_v1_trap_destinations.get(snmp_v1_trap_uri)
 pprint(snmp_v1_trap)
 
 # Change appliance device SNMP v1 Trap Destination - Only Community String and Port can be changed

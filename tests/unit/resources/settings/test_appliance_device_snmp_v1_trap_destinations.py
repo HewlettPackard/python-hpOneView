@@ -46,11 +46,11 @@ class ApplianceDeviceSNMPv1TrapDestinationsTest(unittest.TestCase):
         resource = {
             'destination': '1.1.1.1',
             'communityString': 'public',
-            'port': 162,
-            'uri': '/rest/appliance/trap-destinations/1'
+            'port': 162
         }
-        self._snmp_v1_trap_dest.create(resource, resource['uri'])
-        mock_create.assert_called_once_with(resource, uri=resource['uri'], timeout=-1)
+        trap_id = 1
+        self._snmp_v1_trap_dest.create(resource, trap_id)
+        mock_create.assert_called_once_with(resource, uri="/rest/appliance/trap-destinations/%s" % (trap_id), timeout=-1)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_called_once(self, mock_get):
