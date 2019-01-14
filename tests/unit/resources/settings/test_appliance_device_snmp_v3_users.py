@@ -53,7 +53,7 @@ class ApplianceDeviceSNMPv3UsersTest(unittest.TestCase):
             'privacyPassphrase': '1234567812345678'
         }
         self._snmp_v3_users.create(resource)
-        mock_create.assert_called_once_with(resource, timeout=-1, uri=None)
+        mock_create.assert_called_once_with(resource, uri='/rest/appliance/snmpv3-trap-forwarding/users', timeout=-1)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_called_once(self, mock_get):

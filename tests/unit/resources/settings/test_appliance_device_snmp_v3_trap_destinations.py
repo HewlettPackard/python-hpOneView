@@ -50,7 +50,7 @@ class ApplianceDeviceSNMPv3TrapDestinationsTest(unittest.TestCase):
             'userId': '6b9c6f7b-7a24-4514-b9c9-0c31e086c170'
         }
         self._snmp_v3_trap_dest.create(resource)
-        mock_create.assert_called_once_with(resource, timeout=-1, uri=None)
+        mock_create.assert_called_once_with(resource, uri='/rest/appliance/snmpv3-trap-forwarding/destinations', timeout=-1)
 
     @mock.patch.object(ResourceClient, 'get')
     def test_get_called_once(self, mock_get):
