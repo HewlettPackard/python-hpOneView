@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView package &mdash; HPE OneView Python SDK 4.7.0 documentation</title>
+  <title>hpOneView package &mdash; HPE OneView Python SDK 4.8.0 documentation</title>
   
 
   
@@ -55,7 +55,7 @@
             
             
               <div class="version">
-                4.7.0
+                4.8.0
               </div>
             
           
@@ -283,6 +283,10 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="hpOneView.resources.settings.html">hpOneView.resources.settings package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.settings.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.settings.html#module-hpOneView.resources.settings.appliance_device_read_community">hpOneView.resources.settings.appliance_device_read_community module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.settings.html#module-hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations">hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.settings.html#module-hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations">hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.settings.html#module-hpOneView.resources.settings.appliance_device_snmp_v3_users">hpOneView.resources.settings.appliance_device_snmp_v3_users module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.settings.html#module-hpOneView.resources.settings.appliance_node_information">hpOneView.resources.settings.appliance_node_information module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.settings.html#module-hpOneView.resources.settings.appliance_time_and_locale_configuration">hpOneView.resources.settings.appliance_time_and_locale_configuration module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hpOneView.resources.settings.html#module-hpOneView.resources.settings.backups">hpOneView.resources.settings.backups module</a></li>
@@ -537,13 +541,29 @@ to be uploaded as files</p>
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewException.msg">
 <code class="descname">msg</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewException.msg" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Exception message.</p>
+<dd><p>Exception message.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewException.oneview_response">
 <code class="descname">oneview_response</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewException.oneview_response" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – OneView rest response.</p>
+<dd><p>OneView rest response.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -556,7 +576,15 @@ to be uploaded as files</p>
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewInvalidResource.msg">
 <code class="descname">msg</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewInvalidResource.msg" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Exception message.</p>
+<dd><p>Exception message.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -570,7 +598,15 @@ The exception is raised when an associated resource was not found.</p>
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewResourceNotFound.msg">
 <code class="descname">msg</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewResourceNotFound.msg" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Exception message.</p>
+<dd><p>Exception message.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -583,13 +619,29 @@ The exception is raised when an associated resource was not found.</p>
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewTaskError.msg">
 <code class="descname">msg</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewTaskError.msg" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Exception message.</p>
+<dd><p>Exception message.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewTaskError.error_code">
 <code class="descname">error_code</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewTaskError.error_code" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – A code which uniquely identifies the specific error.</p>
+<dd><p>A code which uniquely identifies the specific error.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -602,7 +654,15 @@ The exception is raised when an associated resource was not found.</p>
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewTimeout.msg">
 <code class="descname">msg</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewTimeout.msg" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Exception message.</p>
+<dd><p>Exception message.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -615,7 +675,15 @@ The exception is raised when an associated resource was not found.</p>
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewUnknownType.msg">
 <code class="descname">msg</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewUnknownType.msg" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Exception message.</p>
+<dd><p>Exception message.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -629,7 +697,15 @@ The exception is raised when the data contains an inappropriate value.</p>
 <dl class="attribute">
 <dt id="hpOneView.exceptions.HPOneViewValueError.msg">
 <code class="descname">msg</code><a class="headerlink" href="#hpOneView.exceptions.HPOneViewValueError.msg" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Exception message.</p>
+<dd><p>Exception message.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -679,6 +755,70 @@ The exception is raised when the data contains an inappropriate value.</p>
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">API Version.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.appliance_device_read_community">
+<code class="descname">appliance_device_read_community</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.appliance_device_read_community" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the ApplianceDeviceReadCommunity API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.settings.html#hpOneView.resources.settings.appliance_device_read_community.ApplianceDeviceReadCommunity" title="hpOneView.resources.settings.appliance_device_read_community.ApplianceDeviceReadCommunity">ApplianceDeviceReadCommunity</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.appliance_device_snmp_v1_trap_destinations">
+<code class="descname">appliance_device_snmp_v1_trap_destinations</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.appliance_device_snmp_v1_trap_destinations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the ApplianceDeviceSNMPv1TrapDestinations API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.settings.html#hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations" title="hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations">ApplianceDeviceSNMPv1TrapDestinations</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.appliance_device_snmp_v3_trap_destinations">
+<code class="descname">appliance_device_snmp_v3_trap_destinations</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.appliance_device_snmp_v3_trap_destinations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the ApplianceDeviceSNMPv3TrapDestinations API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.settings.html#hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations" title="hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations">ApplianceDeviceSNMPv3TrapDestinations</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.oneview_client.OneViewClient.appliance_device_snmp_v3_users">
+<code class="descname">appliance_device_snmp_v3_users</code><a class="headerlink" href="#hpOneView.oneview_client.OneViewClient.appliance_device_snmp_v3_users" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the ApplianceDeviceSNMPv3Users API client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="hpOneView.resources.settings.html#hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users" title="hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users">ApplianceDeviceSNMPv3Users</a></td>
 </tr>
 </tbody>
 </table>
@@ -1933,7 +2073,7 @@ List of login details</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP
 
     </p>
   </div> 
@@ -1951,20 +2091,14 @@ List of login details</p>
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'4.7.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
 
   
 

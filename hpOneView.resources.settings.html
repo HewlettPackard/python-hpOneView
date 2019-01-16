@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>hpOneView.resources.settings package &mdash; HPE OneView Python SDK 4.7.0 documentation</title>
+  <title>hpOneView.resources.settings package &mdash; HPE OneView Python SDK 4.8.0 documentation</title>
   
 
   
@@ -55,7 +55,7 @@
             
             
               <div class="version">
-                4.7.0
+                4.8.0
               </div>
             
           
@@ -83,6 +83,10 @@
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">hpOneView.resources.settings package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.settings.appliance_device_read_community">hpOneView.resources.settings.appliance_device_read_community module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations">hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations">hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations module</a></li>
+<li><a class="reference internal" href="#module-hpOneView.resources.settings.appliance_device_snmp_v3_users">hpOneView.resources.settings.appliance_device_snmp_v3_users module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.appliance_node_information">hpOneView.resources.settings.appliance_node_information module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.appliance_time_and_locale_configuration">hpOneView.resources.settings.appliance_time_and_locale_configuration module</a></li>
 <li><a class="reference internal" href="#module-hpOneView.resources.settings.backups">hpOneView.resources.settings.backups module</a></li>
@@ -163,6 +167,600 @@
 <h1>hpOneView.resources.settings package<a class="headerlink" href="#hponeview-resources-settings-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-hpOneView.resources.settings.appliance_device_read_community">
+<span id="hponeview-resources-settings-appliance-device-read-community-module"></span><h2>hpOneView.resources.settings.appliance_device_read_community module<a class="headerlink" href="#module-hpOneView.resources.settings.appliance_device_read_community" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.settings.appliance_device_read_community.ApplianceDeviceReadCommunity">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.settings.appliance_device_read_community.</code><code class="descname">ApplianceDeviceReadCommunity</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_read_community.html#ApplianceDeviceReadCommunity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_read_community.ApplianceDeviceReadCommunity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>ApplianceDeviceReadCommunity API client.
+The device read community string is used by the appliance to establish SNMP communication with devices managed by the appliance.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.settings.appliance_device_read_community.ApplianceDeviceReadCommunity.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/appliance/device-read-community-string'</em><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_read_community.ApplianceDeviceReadCommunity.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_read_community.ApplianceDeviceReadCommunity.get">
+<code class="descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_read_community.html#ApplianceDeviceReadCommunity.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_read_community.ApplianceDeviceReadCommunity.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the global community string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">ApplianceDeviceReadCommunity</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_read_community.ApplianceDeviceReadCommunity.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_read_community.html#ApplianceDeviceReadCommunity.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_read_community.ApplianceDeviceReadCommunity.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the device read community string.
+This results in an update of the community string on all servers being managed/monitored by this OneView instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) – Object to update.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated appliance SNMPv1 read community string.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations">
+<span id="hponeview-resources-settings-appliance-device-snmp-v1-trap-destinations-module"></span><h2>hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations module<a class="headerlink" href="#module-hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.</code><code class="descname">ApplianceDeviceSNMPv1TrapDestinations</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v1_trap_destinations.html#ApplianceDeviceSNMPv1TrapDestinations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>ApplianceDeviceSNMPv1TrapDestinations API client.
+The appliance has the ability to forward events received from monitored or managed server hardware to the specified destinations as SNMPv1 traps.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/appliance/trap-destinations'</em><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>id=None</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v1_trap_destinations.html#ApplianceDeviceSNMPv1TrapDestinations.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the specified trap forwarding destination.
+The trap destination associated with the specified id will be created if trap destination with that id does not exists.
+The id can only be an integer greater than 0.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) – Object to create.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v1_trap_destinations.html#ApplianceDeviceSNMPv1TrapDestinations.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes SNMPv1 trap forwarding destination based on {Id}.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> – dict object to delete</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v1_trap_destinations.html#ApplianceDeviceSNMPv1TrapDestinations.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the SNMPv1 trap forwarding destination with the specified ID, if it exists.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of SNMPv1 trap destination.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Appliance SNMPv1 trap destination.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v1_trap_destinations.html#ApplianceDeviceSNMPv1TrapDestinations.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves all SNMPv1 trap forwarding destinations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> – <p>The number of resources to return. A count of -1 requests all items.</p>
+<p>The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</p>
+</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
+default is no filter; all resources are returned.</li>
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
+on create time with the oldest entry first.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of SNMPv1 Trap Destionations.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations.get_by">
+<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v1_trap_destinations.html#ApplianceDeviceSNMPv1TrapDestinations.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations.get_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all SNMPv1 trap forwarding destinations that match the filter.
+The search is case-insensitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>field</strong> – field name to filter</li>
+<li><strong>value</strong> – value to filter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of SNMPv1 Trap Destionations.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v1_trap_destinations.html#ApplianceDeviceSNMPv1TrapDestinations.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations.ApplianceDeviceSNMPv1TrapDestinations.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the specified trap forwarding destination.
+The trap destination associated with the specified id will be updated if a trap destination with that id already exists.
+The id can only be an integer greater than 0.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> – dict object with changes.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated appliance SNMPv1 trap destinations.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations">
+<span id="hponeview-resources-settings-appliance-device-snmp-v3-trap-destinations-module"></span><h2>hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations module<a class="headerlink" href="#module-hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.</code><code class="descname">ApplianceDeviceSNMPv3TrapDestinations</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v3_trap_destinations.html#ApplianceDeviceSNMPv3TrapDestinations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>ApplianceDeviceSNMPv3TrapDestinations API client.
+The appliance has the ability to forward events received from monitored or managed server hardware to the specified destinations as SNMPv3 traps.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/appliance/snmpv3-trap-forwarding/destinations'</em><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v3_trap_destinations.html#ApplianceDeviceSNMPv3TrapDestinations.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the specified trap forwarding destination.
+The trap destination associated with the specified id will be created if trap destination with that id does not exists.
+The id can only be an integer greater than 0.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) – Object to create.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v3_trap_destinations.html#ApplianceDeviceSNMPv3TrapDestinations.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes SNMPv3 trap forwarding destination based on {Id} only if no User is assigned to it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> – dict object to delete</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v3_trap_destinations.html#ApplianceDeviceSNMPv3TrapDestinations.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the SNMPv3 trap forwarding destination with the specified ID, if it exists.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of SNMPv3 trap destination.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Appliance SNMPv3 trap destination.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v3_trap_destinations.html#ApplianceDeviceSNMPv3TrapDestinations.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves all SNMPv3 trap forwarding destinations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> – <p>The number of resources to return. A count of -1 requests all items.</p>
+<p>The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</p>
+</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
+default is no filter; all resources are returned.</li>
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
+on create time with the oldest entry first.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of SNMPv3 Trap Destionations.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations.get_by">
+<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v3_trap_destinations.html#ApplianceDeviceSNMPv3TrapDestinations.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations.get_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all SNMPv3 trap forwarding destinations that match the filter.
+The search is case-insensitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>field</strong> – field name to filter</li>
+<li><strong>value</strong> – value to filter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of SNMPv3 Trap Destionations.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v3_trap_destinations.html#ApplianceDeviceSNMPv3TrapDestinations.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations.ApplianceDeviceSNMPv3TrapDestinations.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates SNMPv3 trap forwarding destination based on Id.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> – dict object with changes.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated appliance SNMPv3 trap destinations.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-hpOneView.resources.settings.appliance_device_snmp_v3_users">
+<span id="hponeview-resources-settings-appliance-device-snmp-v3-users-module"></span><h2>hpOneView.resources.settings.appliance_device_snmp_v3_users module<a class="headerlink" href="#module-hpOneView.resources.settings.appliance_device_snmp_v3_users" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.settings.appliance_device_snmp_v3_users.</code><code class="descname">ApplianceDeviceSNMPv3Users</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v3_users.html#ApplianceDeviceSNMPv3Users"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>ApplianceDeviceSNMPv3Users API client [Available only since API 600].</p>
+<p>As part of SNMPv3 trap forwarding support, the appliance provides APIs for creating User-based Security Model (USM) and forwarding destinations.
+The following protocols are supported while defining USM.</p>
+<p>Authentication protocols: MD5 / SHA1 / SHA256 / SHA384 / SHA512
+Privacy protocols: AES / DES
+The security levels supported while defining USM are None, Authentication only and both Authentication and Privacy.</p>
+<dl class="attribute">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest/appliance/snmpv3-trap-forwarding/users'</em><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v3_users.html#ApplianceDeviceSNMPv3Users.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new SNMPv3 user.
+This user will be used for sending the SNMPv3 trap to the associated destinations.
+One user can be assigned to multiple destinations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> (<em>dict</em>) – Object to create.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created resource.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v3_users.html#ApplianceDeviceSNMPv3Users.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete an SNMPv3 User based on User Id specified in {Id}.
+The user will be deleted only if it has no associated destinations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_or_uri</strong> – dict object to delete</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users.delete_all">
+<code class="descname">delete_all</code><span class="sig-paren">(</span><em>filter=None</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v3_users.html#ApplianceDeviceSNMPv3Users.delete_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users.delete_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete an SNMPv3 User based on User name specified in filter. The user will be deleted only if it has no associated destinations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>username</strong> – ID or URI of SNMPv3 user.</li>
+<li><strong>filter</strong> – A general filter/query string to narrow the list of items returned.
+The default is no filter - all resources are returned.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v3_users.html#ApplianceDeviceSNMPv3Users.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the SNMPv3 user with the specified ID, if it exists.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of SNMPv3 user.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Appliance SNMPv3 user.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v3_users.html#ApplianceDeviceSNMPv3Users.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lists all SNMPv3 Users.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> – <p>The number of resources to return. A count of -1 requests all items.</p>
+<p>The actual number of items in the response might differ from the requested
+count if the sum of start and count exceeds the total number of items.</p>
+</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
+default is no filter; all resources are returned.</li>
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
+on create time with the oldest entry first.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of SNMPv3 Users.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users.get_by">
+<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v3_users.html#ApplianceDeviceSNMPv3Users.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users.get_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all SNMPv3 users that match the filter.
+The search is case-insensitive.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>field</strong> – field name to filter</li>
+<li><strong>value</strong> – value to filter</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of SNMPv3 Users.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/settings/appliance_device_snmp_v3_users.html#ApplianceDeviceSNMPv3Users.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.settings.appliance_device_snmp_v3_users.ApplianceDeviceSNMPv3Users.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates SNMPv3 User based on User Id as specified in {Id}</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource</strong> – dict object with changes.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView, just stop waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated appliance SNMPv3 user.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-hpOneView.resources.settings.appliance_node_information">
 <span id="hponeview-resources-settings-appliance-node-information-module"></span><h2>hpOneView.resources.settings.appliance_node_information module<a class="headerlink" href="#module-hpOneView.resources.settings.appliance_node_information" title="Permalink to this headline">¶</a></h2>
@@ -1164,7 +1762,7 @@ The other versions are supported for backward compatibility, but might not suppo
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP.
+        &copy; Copyright (C) 2016 Hewlett Packard Enterprise Development LP
 
     </p>
   </div> 
@@ -1182,20 +1780,14 @@ The other versions are supported for backward compatibility, but might not suppo
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'4.7.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
 
   
 

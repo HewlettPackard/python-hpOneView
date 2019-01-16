@@ -4,6 +4,38 @@ hpOneView.resources.settings package
 Submodules
 ----------
 
+hpOneView.resources.settings.appliance\_device\_read\_community module
+----------------------------------------------------------------------
+
+.. automodule:: hpOneView.resources.settings.appliance_device_read_community
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+hpOneView.resources.settings.appliance\_device\_snmp\_v1\_trap\_destinations module
+-----------------------------------------------------------------------------------
+
+.. automodule:: hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+hpOneView.resources.settings.appliance\_device\_snmp\_v3\_trap\_destinations module
+-----------------------------------------------------------------------------------
+
+.. automodule:: hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+hpOneView.resources.settings.appliance\_device\_snmp\_v3\_users module
+----------------------------------------------------------------------
+
+.. automodule:: hpOneView.resources.settings.appliance_device_snmp_v3_users
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 hpOneView.resources.settings.appliance\_node\_information module
 ----------------------------------------------------------------
 
