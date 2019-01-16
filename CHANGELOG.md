@@ -1,4 +1,14 @@
-# 4.7.1
+# 4.8.0 (Unreleased)
+#### Notes
+Added the capability to handle OneView Appliance SNMP Settings
+Extends support of the SDK to OneView Rest API version 800 (OneView v4.1).
+
+#### Features supported with current release:
+- Appliance Device Read Community
+- Appliance Device SNMP v1 Trap Destinations
+- Appliance Device SNMP v3 Trap Destinations
+- Appliance Device SNMP v3 Users
+
 #### Bug fixes
 - [#364] (https://github.com/HewlettPackard/python-hpOneView/issues/364) Bug in index_resources.get_all()
 

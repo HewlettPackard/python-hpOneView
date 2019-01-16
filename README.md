@@ -193,7 +193,7 @@ export ONEVIEWSDK_PROXY='<proxy_host>:<proxy_port>'
 
 ### Setting your OneView version
 
-The OneView Python SDK supports the API endpoints for HPE OneView 2.0, 3.0, 3.10 and 4.0.
+The OneView Python SDK supports the API endpoints for HPE OneView 2.0, 3.0, 3.10, 4.0 and 4.10.
 
 The current `default` HPE OneView version used by the Python SDK is `3.00`, API `300`.
 
@@ -216,6 +216,7 @@ The API list is as follows:
 - HPE OneView 3.0 API version: `300`
 - HPE OneView 3.10 API version: `500`
 - HPE OneView 4.0 API version: `600`
+- HPE OneView 4.10 API version: `800`
 
 ### HPE Synergy Image Streamer
 

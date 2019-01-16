@@ -106,6 +106,10 @@ from hpOneView.resources.security.certificate_rabbitmq import CertificateRabbitM
 from hpOneView.resources.security.login_details import LoginDetails
 from hpOneView.resources.security.roles import Roles
 from hpOneView.resources.security.users import Users
+from hpOneView.resources.settings.appliance_device_read_community import ApplianceDeviceReadCommunity
+from hpOneView.resources.settings.appliance_device_snmp_v1_trap_destinations import ApplianceDeviceSNMPv1TrapDestinations
+from hpOneView.resources.settings.appliance_device_snmp_v3_trap_destinations import ApplianceDeviceSNMPv3TrapDestinations
+from hpOneView.resources.settings.appliance_device_snmp_v3_users import ApplianceDeviceSNMPv3Users
 from hpOneView.resources.settings.appliance_node_information import ApplianceNodeInformation
 from hpOneView.resources.settings.appliance_time_and_locale_configuration import ApplianceTimeAndLocaleConfiguration
 from hpOneView.resources.settings.versions import Versions
@@ -190,6 +194,10 @@ class OneViewClient(object):
         self.__os_deployment_servers = None
         self.__certificate_rabbitmq = None
         self.__users = None
+        self.__appliance_device_read_community = None
+        self.__appliance_device_snmp_v1_trap_destinations = None
+        self.__appliance_device_snmp_v3_trap_destinations = None
+        self.__appliance_device_snmp_v3_users = None
         self.__appliance_time_and_locale_configuration = None
         self.__appliance_node_information = None
         self.__versions = None
@@ -1116,6 +1124,54 @@ class OneViewClient(object):
         if not self.__users:
             self.__users = Users(self.__connection)
         return self.__users
+
+    @property
+    def appliance_device_read_community(self):
+        """
+        Gets the ApplianceDeviceReadCommunity API client.
+
+        Returns:
+            ApplianceDeviceReadCommunity:
+        """
+        if not self.__appliance_device_read_community:
+            self.__appliance_device_read_community = ApplianceDeviceReadCommunity(self.__connection)
+        return self.__appliance_device_read_community
+
+    @property
+    def appliance_device_snmp_v1_trap_destinations(self):
+        """
+        Gets the ApplianceDeviceSNMPv1TrapDestinations API client.
+
+        Returns:
+            ApplianceDeviceSNMPv1TrapDestinations:
+        """
+        if not self.__appliance_device_snmp_v1_trap_destinations:
+            self.__appliance_device_snmp_v1_trap_destinations = ApplianceDeviceSNMPv1TrapDestinations(self.__connection)
+        return self.__appliance_device_snmp_v1_trap_destinations
+
+    @property
+    def appliance_device_snmp_v3_trap_destinations(self):
+        """
+        Gets the ApplianceDeviceSNMPv3TrapDestinations API client.
+
+        Returns:
+            ApplianceDeviceSNMPv3TrapDestinations:
+        """
+        if not self.__appliance_device_snmp_v3_trap_destinations:
+            self.__appliance_device_snmp_v3_trap_destinations = ApplianceDeviceSNMPv3TrapDestinations(self.__connection)
+        return self.__appliance_device_snmp_v3_trap_destinations
+
+    @property
+    def appliance_device_snmp_v3_users(self):
+        """
+        Gets the ApplianceDeviceSNMPv3Users API client.
+
+        Returns:
+            ApplianceDeviceSNMPv3Users:
+        """
+        if not self.__appliance_device_snmp_v3_users:
+            self.__appliance_device_snmp_v3_users = ApplianceDeviceSNMPv3Users(self.__connection)
+        return self.__appliance_device_snmp_v3_users
 
     @property
     def appliance_node_information(self):
