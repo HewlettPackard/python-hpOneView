@@ -29,16 +29,16 @@ from config_loader import try_load_from_file
 
 # This example is compatible only for C7000 enclosures
 config = {
-    "ip": "",
+    "ip": "10.30.5.62",
     "credentials": {
-        "userName": "",
-        "password": ""
+        "userName": "administrator",
+        "password": "sijenov@2017"
     },
-    "api_version": "",
-    "enclosure_group_uri": "",
-    "enclosure_hostname": "",
-    "enclosure_username": "",
-    "enclosure_password": "",
+    "api_version": "600",
+    "enclosure_group_uri": "/rest/enclosure-groups/10264ffa-6498-4393-bd2d-26bea1754cc5",
+    "enclosure_hostname": "172.18.1.14",
+    "enclosure_username": "dcs",
+    "enclosure_password": "dcs",
 }
 
 # Declare a CA signed certificate file path.
@@ -49,7 +49,7 @@ config = try_load_from_file(config)
 
 # The hostname, enclosure group URI, username, and password must be set on the configuration file
 options = {
-    "name": "Encl1",
+    "name": "En1",
     "enclosureGroupUri": config['enclosure_group_uri'],
     "hostname": config['enclosure_hostname'],
     "username": config['enclosure_username'],
@@ -57,35 +57,34 @@ options = {
     "licensingIntent": "OneView"
 }
 
-# Get OneView client
+# Get Enclosure resource object
 oneview_client = OneViewClient(config)
-
-# Add an enclosure
-try:
-    # This will return an enclosure object
-    enclosure = oneview_client.enclosures.add(options)
-    print("Added enclosure '{name}'.\n  URI = '{uri}'".format(**enclosure.data))
-except HPOneViewTaskError, e:
-    print(e)
-    # Get the reosurce by name
-    enclosure = oneview_client.enclosures.get_by_name(options['name'])
-
-# Perform a patch operation on the enclosure, replacing name of the enclosure
-enclosure_name = "Encl1-Updated"
-print("Updating the enclosure to have a name of " + enclosure_name)
-enclosure.patch('replace', '/name', enclosure_name)
-print("  Done.\n  URI = '{uri}', name = {name}".format(**enclosure.data))
-
-# Get by URI
-print("Find an enclosure by URI")
-enclosure = enclosure.get_by_uri(enclosure.data['uri'])
-pprint(enclosure.data)
+enclosure_resource = oneview_client.enclosures
 
 # Get all enclosures
 print("Get all enclosures")
-enclosures = enclosure.get_all()
+enclosures = enclosure_resource.get_all()
 for enc in enclosures:
     print('  {name}'.format(**enc))
+
+enclosure = enclosure_resource.get_by_name(options['name'])
+if not enclosure:
+    # Creates an enclosure and reurns created enclosure object
+    enclosure = enclosure_resource.add(options)
+print("Enclosure '{name}'.\n  URI = '{uri}'".format(**enclosure.data))
+
+# Get by URI.
+print("Find an enclosure by URI")
+uri = enclosure.data['uri']
+enclosure = enclosure_resource.get_by_uri(uri)
+pprint(enclosure.data)
+
+# Update name of the newly added enclosure
+update_name = "Enc-Updated"
+print("Updating the enclosure with name " + update_name)
+headers = {'If-Match': '*'}
+#enclosure.patch('replace', '/name', update_name, custom_headers=headers)
+print("  Done.\n  URI = '{uri}', name = {name}".format(**enclosure.data))
 
 # Update configuration
 print("Reapplying the appliance's configuration on the enclosure")
@@ -106,7 +105,7 @@ except HPOneViewException as e:
 print("Refreshing the enclosure")
 try:
     refresh_state = {"refreshState": "RefreshPending"}
-    enclosure.refresh_state(refresh_state)
+#    enclosure.refresh_state(refresh_state)
     print("  Done")
 except HPOneViewException as e:
     print(e.msg)
@@ -141,12 +140,12 @@ except HPOneViewException as e:
 bay_number = 1  # Required for C7000 enclosure
 csr_data = {
     "type": "CertificateDtoV2",
-    "organization": "",
-    "organizationalUnit": "",
-    "locality": "",
-    "state": "",
-    "country": "",
-    "commonName": ""
+    "organization": "organization",
+    "organizationalUnit": "organization unit",
+    "locality": "locality",
+    "state": "state",
+    "country": "country",
+    "commonName": "name"
 }
 try:
     enclosure.generate_csr(csr_data, bay_number=bay_number)
@@ -163,10 +162,27 @@ try:
 except HPOneViewException as e:
     print(e.msg)
 
+# Import CA signed certificate to the enclosure.
 try:
-    # Get Enclosure by scope_uris
-    if oneview_client.api_version >= 600:
-        enclosures_by_scope_uris = enclosure.get_all(scope_uris="\"'/rest/scopes/3bb0c754-fd38-45af-be8a-4d4419de06e9'\"")
+    # Certificate has to be signed by CA before running the task.
+    certificate_file = "enclosure.csr"
+    with open(certificate_file, "r") as file_object:
+        certificate = file_object.read()
+
+    certificate_data = {
+        "type": "CertificateDataV2",
+        "base64Data": certificate
+    }
+
+    enclosure.import_certificate(certificate_data, bay_number=bay_number)
+    print("Imported Signed Certificate  to the enclosure.")
+except HPOneViewException as e:
+    print(e.msg)
+
+# Get Enclosure by scope_uris
+if oneview_client.api_version >= 600:
+    try:
+        enclosures_by_scope_uris = enclosure.get_all(scope_uris="\"'/rest/scopes/a070577f-0dfa-4b86-ba48-863f3cac291e'\"")
         if len(enclosures_by_scope_uris) > 0:
             print("Found %d Enclosures" % (len(enclosures_by_scope_uris)))
             i = 0
@@ -176,25 +192,8 @@ try:
             pprint(enclosures_by_scope_uris)
         else:
             print("No Enclosures Group found.")
-except HPOneViewException as e:
-    print(e.msg)
-
-# Import a CA signed certificate to the enclosure.
-try:
-    # This action requires a certificate(CA signed) file path to be declared.
-    if certificate_file:
-        with open(certificate_file, "r") as file_object:
-            certificate = file_object.read()
-
-        certificate_data = {
-            "type": "CertificateDataV2",
-            "base64Data": certificate
-        }
-
-        enclosure.import_certificate(certificate_data, bay_number=bay_number)
-        print("Imported Signed Certificate  to the enclosure.")
-except HPOneViewException as e:
-    print(e.msg)
+    except HPOneViewException as e:
+        print(e.msg)
 
 # Remove the recently added enclosure
 enclosure.remove()

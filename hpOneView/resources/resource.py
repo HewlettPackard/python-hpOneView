@@ -35,7 +35,7 @@ import logging
 import os
 from copy import deepcopy
 from urllib.parse import quote
-from functools import update_wrapper, partial
+from functools import partial
 
 from hpOneView.resources.task_monitor import TaskMonitor
 from hpOneView import exceptions
@@ -49,23 +49,30 @@ RESOURCE_CLIENT_TASK_EXPECTED = "Failed: Expected a TaskResponse."
 RESOURCE_ID_OR_URI_REQUIRED = 'It is required to inform the Resource ID or URI.'
 UNAVAILABLE_METHOD = "Method is not available for this resource"
 MISSING_UNIQUE_IDENTIFIERS = "Missing unique identifiers(URI/Name) for the resource"
-RESOURCE_DOES_NOT_EXIST = "Resource does not exist with provided unique identifiers"
+RESOURCE_DOES_NOT_EXIST = "Resource does not exist with the provided unique identifiers"
 
 logger = logging.getLogger(__name__)
 
 
 class EnsureResourceClient(object):
     """Decorator class to update the resource data."""
-    def __init__(self, func):
-        update_wrapper(self, func)
-        self.func = func
+    def __init__(self, method=None, update_data=False):
+        self.method = method
+        self.update_data = update_data
 
     def __get__(self, obj, objtype):
         return partial(self.__call__, obj)
 
     def __call__(self, obj, *args, **kwargs):
-        obj.load_resource()
-        return self.func(obj, *args, **kwargs)
+        if self.method:
+            obj.ensure_resource_data(update_data=self.update_data)
+            return self.method(obj, *args, **kwargs)
+
+        def wrap(*args, **kwargs):
+            args[0].ensure_resource_data(update_data=self.update_data)
+            return obj(*args, **kwargs)
+
+        return wrap
 
 
 # Decorator to ensure the resource client
@@ -103,17 +110,25 @@ class Resource(object):
 
         self._task_monitor = TaskMonitor(connection)
 
-    def load_resource(self):
-        """Retrieves data from OneView and update resource data."""
+    def ensure_resource_data(self, update_data=False):
+        """Retrieves data from OneView and update resource data.
+
+        Args:
+            update_data: Helps to update resource data when it is required.
+                Some operations requires only resource uri, there is no need of data update.
+        """
         # Check for unique identifier in the resource data
         if not any(key in self.data for key in self.UNIQUE_IDENTIFIERS):
             raise exceptions.HPOneViewMissingUniqueIdentifiers(MISSING_UNIQUE_IDENTIFIERS)
 
+        # Returns if data update is not required
+        if not update_data:
+            return
+
         resource_data = None
 
         if 'uri' in self.UNIQUE_IDENTIFIERS and self.data.get('uri'):
-            uri = self.data['uri']
-            resource_data = self.do_get(uri)
+            resource_data = self.do_get(self.data['uri'])
         else:
             for identifier in self.UNIQUE_IDENTIFIERS:
                 identifier_value = self.data.get(identifier)
@@ -124,10 +139,15 @@ class Resource(object):
                         resource_data = result[0]
                         break
 
-        if not resource_data:
+        if resource_data:
+            self.data.update(resource_data)
+        else:
             raise exceptions.HPOneViewResourceNotFound(RESOURCE_DOES_NOT_EXIST)
 
-        self.data.update(resource_data)
+    @ensure_resource_client
+    def refresh(self):
+        """Helps to get the latest resource data from the server."""
+        self.data = self.do_get(self.data["uri"])
 
     def build_query_uri(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None, scope_uris=''):
         """Builds the URI from given parameters.
@@ -249,32 +269,41 @@ class Resource(object):
         """
         logger.debug('Create with zero body (uri = %s)' % self.URI)
 
-        self.do_post(self.URI, {}, timeout, custom_headers)
+        data = self.do_post(self.URI, {}, timeout, custom_headers)
+        new_resource = self.new(self._connection, data)
 
-        return self
+        return new_resource
 
-    def create(self, data=None, timeout=-1, custom_headers=None):
+    def create(self, data=None, uri=None, timeout=-1, custom_headers=None):
         """Makes a POST request to create a resource when a request body is required.
 
         Args:
             data: Additional fields can be passed to create the resource.
+            uri: Resouce uri
             timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
             custom_headers: Allows set specific HTTP headers.
         Returns:
             Created resource.
         """
-        uri = self.URI
-        resource = deepcopy(self.data)
+        if not uri:
+            uri = self.URI
 
-        if data:
-            resource.update(data)
+        if not data:
+            data = {}
 
-        logger.debug('Create (uri = %s, resource = %s)' % (uri, str(resource)))
+        default_values = self._get_default_values()
+        if default_values:
+            data.update(default_values)
+            open("error_log.txt", "a").write(str(self.DEFAULT_VALUES) + str(self._connection._apiVersion) + "\n" + str(data))
 
-        self.data = self.do_post(uri, resource, timeout, custom_headers)
+        logger.debug('Create (uri = %s, resource = %s)' % (uri, str(data)))
 
-        return self
+        resource_data = self.do_post(uri, data, timeout, custom_headers)
+
+        new_resource = self.new(self._connection, resource_data)
+
+        return new_resource
 
     def delete_all(self, filter, force=False, timeout=-1):
         """Deletes all resources from the appliance that match the provided filter.
@@ -311,11 +340,7 @@ class Resource(object):
             timeout: Timeout in seconds.
             custom_headers: Allows to set custom http headers.
         """
-        if self.data and 'uri' in self.data and self.data['uri']:
-            uri = self.data['uri']
-        else:
-            logger.exception(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
-            raise ValueError(RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED)
+        uri = self.data['uri']
 
         if force:
             uri += '?force=True'
@@ -337,7 +362,7 @@ class Resource(object):
         """Supports schema requests.
 
         Returns:
-            Returns the response body.
+            A dict with the schema.
         """
         logger.debug('Get schema (uri = %s, resource = %s)' %
                      (self.URI, self.URI))
@@ -380,7 +405,7 @@ class Resource(object):
             custom_headers: Allows to set custom HTTP headers.
 
         Returns:
-            Updated resource.
+            A dict with updated resource data.
         """
         if not uri:
             uri = self.data['uri']
@@ -389,7 +414,7 @@ class Resource(object):
 
         return self.do_put(uri, None, timeout, custom_headers)
 
-    @ensure_resource_client
+    @ensure_resource_client(update_data=True)
     def update(self, data=None, force=False, timeout=-1, custom_headers=None):
         """Makes a PUT request to update a resource when a request body is required.
 
@@ -402,7 +427,7 @@ class Resource(object):
             custom_headers: Allows to add custom HTTP headers.
 
         Returns:
-            Updated resource.
+            A dict with the updated resource data.
         """
         uri = self.data['uri']
 
@@ -418,7 +443,7 @@ class Resource(object):
 
         return self
 
-    def patch(self, operation, path, value, timeout=-1, custom_headers=None):
+    def patch(self, operation, path, value, custom_headers=None, timeout=-1):
         """Uses the PATCH to update a resource.
 
         Only one operation can be performed in each PATCH call.
@@ -437,21 +462,21 @@ class Resource(object):
         patch_request_body = [{'op': operation, 'path': path, 'value': value}]
 
         self.data = self.patch_request(body=patch_request_body,
-                                       timeout=timeout,
-                                       custom_headers=custom_headers)
+                                       custom_headers=custom_headers,
+                                       timeout=timeout)
         return self
 
     @ensure_resource_client
-    def patch_request(self, body, timeout=-1, custom_headers=None):
+    def patch_request(self, body, custom_headers=None, timeout=-1):
         """Uses the PATCH to update a resource.
 
         Only one operation can be performed in each PATCH call.
 
         Args:
-            body: Patch request body
-            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+            body (list): Patch request body
+            timeout (int): Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
-            custom_headers: Allows to add custom http headers.
+            custom_headers (dict): Allows to add custom http headers.
 
         Returns:
             Updated resource.
@@ -459,11 +484,13 @@ class Resource(object):
         uri = self.data['uri']
         logger.debug('Patch resource (uri = %s, data = %s)' % (uri, body))
 
-        custom_headers_copy = custom_headers.copy() if custom_headers else {}
-        if self._connection._apiVersion >= 300 and 'Content-Type' not in custom_headers_copy:
-            custom_headers_copy['Content-Type'] = 'application/json-patch+json'
+        if not custom_headers:
+            custom_headers = {}
 
-        task, entity = self._connection.patch(uri, body, custom_headers=custom_headers_copy)
+        if self._connection._apiVersion >= 300 and 'Content-Type' not in custom_headers:
+            custom_headers['Content-Type'] = 'application/json-patch+json'
+
+        task, entity = self._connection.patch(uri, body, custom_headers=custom_headers)
 
         if not task:
             return entity
@@ -493,7 +520,7 @@ class Resource(object):
         # Workaround when the OneView filter does not work, it will filter again
         if "." not in field:
             # This filter only work for the first level
-            results = [item for item in results if str(item.get(field, '')).lower() == value.lower()]
+            results = [item for item in results if str(item.get(field, "")).lower() == value.lower()]
 
         return results
 
@@ -506,12 +533,15 @@ class Resource(object):
         Returns:
             Resource object or None if resource does not exist.
         """
-        result = self.get_by('name', name)
-        if not result:
-            return None
+        result = self.get_by("name", name)
+
+        if result:
+            data = result[0]
+            new_resource = self.new(self._connection, data)
         else:
-            self.data = result[0]
-            return self
+            new_resource = None
+
+        return new_resource
 
     def get_by_uri(self, uri):
         """Retrieves a resource by its URI
@@ -523,9 +553,14 @@ class Resource(object):
             Resource object
         """
         self. __validate_resource_uri(uri)
-        self.data = self.do_get(uri)
+        data = self.do_get(uri)
 
-        return self
+        if data:
+            new_resource = self.new(self._connection, data)
+        else:
+            new_resource = None
+
+        return new_resource
 
     @ensure_resource_client
     def get_utilization(self, fields=None, filter=None, refresh=False, view=None):
@@ -840,12 +875,23 @@ class Resource(object):
 
         return response.get('nextPageUri') if has_next_page else None
 
-    def _merge_default_values(self):
-        """Pick the default values for the api version and append that with resource data."""
+    def _get_default_values(self):
+        """Gets the default values set for a resource"""
         if self.DEFAULT_VALUES:
             api_version = str(self._connection._apiVersion)
             values = self.DEFAULT_VALUES.get(api_version, {}).copy()
+            return values
+
+    def _merge_default_values(self):
+        """Merge default values with resource data."""
+        values = self._get_default_values()
+        if values:
             self.data.update(values)
+
+    @classmethod
+    def new(cls, connection, data):
+        """Returns a new object of the class"""
+        return cls(connection, data)
 
     @staticmethod
     def unavailable_method():

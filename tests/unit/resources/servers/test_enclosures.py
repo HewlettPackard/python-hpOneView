@@ -73,14 +73,14 @@ class EnclosuresTest(TestCase):
         self._enclosures.get_by_uri(uri)
         mock_get.assert_called_once_with(uri)
 
-    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'ensure_resource_data')
     @mock.patch.object(Resource, 'patch_request')
-    def test_patch_should_use_user_defined_values(self, mock_patch, load_resource):
+    def test_patch_should_use_user_defined_values(self, mock_patch, ensure_resource_data):
         mock_patch.return_value = {}
 
-        self._enclosures.patch('replace', '/name', 'new_name', 1)
+        self._enclosures.patch('replace', '/name', 'new_name', timeout=1)
         mock_patch.assert_called_once_with(body=[{u'path': '/name', u'value': 'new_name', u'op': 'replace'}],
-                                           custom_headers={u'If-Match': u'*'}, timeout=1)
+                                           custom_headers=None, timeout=1)
 
     @mock.patch.object(Resource, 'delete')
     def test_remove_called_once(self, mock_delete):
@@ -92,32 +92,32 @@ class EnclosuresTest(TestCase):
         self._enclosures.remove(force=True)
         mock_delete.assert_called_once_with(force=True)
 
-    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'ensure_resource_data')
     @mock.patch.object(Resource, 'update_with_zero_body')
-    def test_update_configuration_by_uri(self, mock_update_with_zero_body, load_resource):
+    def test_update_configuration_by_uri(self, mock_update_with_zero_body, ensure_resource_data):
         self._enclosures.update_configuration()
         uri = "{}/configuration".format(self._enclosures.data['uri'])
         mock_update_with_zero_body.assert_called_once_with(uri=uri, timeout=-1)
 
-    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'ensure_resource_data')
     @mock.patch.object(Resource, 'do_get')
-    def test_get_environmental_configuration_by_uri(self, mock_get, load_resource):
+    def test_get_environmental_configuration_by_uri(self, mock_get, ensure_resource_data):
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/environmentalConfiguration'
 
         self._enclosures.get_environmental_configuration()
         mock_get.assert_called_once_with(uri_rest_call)
 
-    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'ensure_resource_data')
     @mock.patch.object(Resource, 'do_get')
-    def test_get_environmental_configuration_by_id(self, mock_get, load_resource):
+    def test_get_environmental_configuration_by_id(self, mock_get, ensure_resource_data):
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/environmentalConfiguration'
 
         self._enclosures.get_environmental_configuration()
         mock_get.assert_called_once_with(uri_rest_call)
 
-    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'ensure_resource_data')
     @mock.patch.object(Resource, 'do_put')
-    def test_update_environmental_configuration_by_uri(self, mock_put, load_resource):
+    def test_update_environmental_configuration_by_uri(self, mock_put, ensure_resource_data):
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/environmentalConfiguration'
         configuration = {"calibratedMaxPower": 2500}
         configuration_rest_call = configuration.copy()
@@ -125,9 +125,9 @@ class EnclosuresTest(TestCase):
         self._enclosures.update_environmental_configuration(configuration, timeout=-1)
         mock_put.assert_called_once_with(uri_rest_call, configuration_rest_call, -1, None)
 
-    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'ensure_resource_data')
     @mock.patch.object(Resource, 'do_put')
-    def test_refresh_state_by_uri(self, mock_put, load_resource):
+    def test_refresh_state_by_uri(self, mock_put, ensure_resource_data):
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/refreshState'
         configuration = {"refreshState": "RefreshPending"}
         configuration_rest_call = configuration.copy()
@@ -135,17 +135,17 @@ class EnclosuresTest(TestCase):
         self._enclosures.refresh_state(configuration)
         mock_put.assert_called_once_with(uri_rest_call, configuration_rest_call, -1, None)
 
-    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'ensure_resource_data')
     @mock.patch.object(Resource, 'do_get')
-    def test_get_script_by_uri(self, mock_get, load_resource):
+    def test_get_script_by_uri(self, mock_get, ensure_resource_data):
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/script'
 
         self._enclosures.get_script()
         mock_get.assert_called_once_with(uri_rest_call)
 
-    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'ensure_resource_data')
     @mock.patch.object(Resource, 'do_get')
-    def test_get_sso_by_uri(self, mock_get, load_resource):
+    def test_get_sso_by_uri(self, mock_get, ensure_resource_data):
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/sso?role=Active'
 
         self._enclosures.get_sso('Active')
@@ -166,9 +166,9 @@ class EnclosuresTest(TestCase):
         self._enclosures.get_utilization('/rest/enclosures/09USE7335NW3')
         mock_get.assert_called_once_with('/rest/enclosures/09USE7335NW3')
 
-    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'ensure_resource_data')
     @mock.patch.object(Resource, 'do_post')
-    def test_generate_csr(self, mock_post, load_resource):
+    def test_generate_csr(self, mock_post, ensure_resource_data):
         bay_number = 1
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest?bayNumber=%d' % (bay_number)
         csr_data = {
@@ -185,18 +185,18 @@ class EnclosuresTest(TestCase):
         self._enclosures.generate_csr(csr_data, bay_number=bay_number)
         mock_post.assert_called_once_with(uri_rest_call, csr_data, -1, headers)
 
-    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'ensure_resource_data')
     @mock.patch.object(Resource, 'do_get')
-    def test_get_csr(self, mock_get, load_resource):
+    def test_get_csr(self, mock_get, ensure_resource_data):
         bay_number = 1
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest?bayNumber=%d' % (bay_number)
 
         self._enclosures.get_csr(bay_number=bay_number)
         mock_get.assert_called_once_with(uri_rest_call)
 
-    @mock.patch.object(Resource, 'load_resource')
+    @mock.patch.object(Resource, 'ensure_resource_data')
     @mock.patch.object(Resource, 'do_put')
-    def test_import_certificate(self, mock_put, load_resource):
+    def test_import_certificate(self, mock_put, ensure_resource_data):
         bay_number = 1
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest?bayNumber=%d' % (bay_number)
         certificate_data = {

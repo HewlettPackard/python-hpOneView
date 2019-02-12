@@ -258,8 +258,7 @@ class connection(object):
         fout = self._open(files + '.b64', 'wb')
         fout.write(bytearray('--' + BOUNDARY + CRLF, 'utf-8'))
         fout.write(bytearray('Content-Disposition: form-data'
-                             '; name="file"; filename="' +
-                             baseName + '"' + CRLF, "utf-8"))
+                             '; name="file"; filename="' + baseName + '"' + CRLF, "utf-8"))
         fout.write(bytearray('Content-Type: application/octet-stream' + CRLF,
                              'utf-8'))
         fout.write(bytearray(CRLF, 'utf-8'))

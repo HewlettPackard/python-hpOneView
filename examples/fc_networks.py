@@ -27,15 +27,15 @@ from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "",
+    "ip": "10.30.5.62",
     "credentials": {
-        "userName": "",
-        "password": ""
+        "userName": "administrator",
+        "password": "sijenov@2017"
     },
 }
 
 options = {
-    "name": "fc_test",
+    "name": "fc-test",
     "connectionTemplateUri": None,
     "autoLoginRedistribution": True,
     "fabricType": "FabricAttach",
@@ -49,57 +49,60 @@ scope_name = "sample"
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
-
-# Create a FcNetWork with the options provided
-try:
-    fc_network = oneview_client.fc_networks.create(data=options)
-    print("\nCreated a fc-network with name: '%s'.\n  uri = '%s'" % (fc_network.data['name'], fc_network.data['uri']))
-except HPOneViewException, e:
-    print(e[0])
-
-# Find recently created network by name
-fc_network = oneview_client.fc_networks.get_by_name(options['name'])
-print("\nFound fc-network by name: '%s'.\n  uri = '%s'" % (fc_network.data['name'], fc_network.data['uri']))
-
-# Update autoLoginRedistribution from recently created network
-data_to_update = {'autoLoginRedistribution': False,
-                  'name': 'Updated FC'}
-resource = fc_network.update(data=data_to_update)
-print("\nUpdated fc-network '%s' successfully.\n  uri = '%s'" % (resource.data['name'], resource.data['uri']))
-print("  with attribute {'autoLoginRedistribution': %s}" % resource.data['autoLoginRedistribution'])
-
+fc_networks = oneview_client.fc_networks
+help(fc_networks)
+print(str(fc_networks))
 # Get all, with defaults
 print("\nGet all fc-networks")
-fc_nets = fc_network.get_all()
+fc_nets = fc_networks.get_all()
 pprint(fc_nets)
+
+# Get the first 10 records
+print("\nGet the first ten fc-networks")
+fc_nets_limited = fc_networks.get_all(0, 10)
+pprint(fc_nets_limited)
 
 # Filter by name
 print("\nGet all fc-networks filtering by name")
-fc_nets_filtered = fc_network.get_all(filter="\"'name'='Updated FC'\"")
+fc_nets_filtered = fc_networks.get_all(filter="\"'name'='Updated FC'\"")
 pprint(fc_nets_filtered)
 
 # Get all sorting by name descending
 print("\nGet all fc-networks sorting by name")
-fc_nets_sorted = fc_network.get_all(sort='name:descending')
+fc_nets_sorted = fc_networks.get_all(sort='name:descending')
 pprint(fc_nets_sorted)
 
-# Get the first 10 records
-print("\nGet the first ten fc-networks")
-fc_nets_limited = fc_network.get_all(0, 10)
-pprint(fc_nets_limited)
+# Find recently created network by name
+print("\nGet FC Network by name")
+fc_network = fc_networks.get_by_name(options['name'])
+print(str(fc_network))
+
+if fc_network:
+    print("\nFound fc-network by name: '%s'.\n  uri = '%s'" % (fc_network.data['name'], fc_network.data['uri']))
+else:
+    # Create a FcNetWork with the options provided
+    fc_network = fc_networks.create(data=options)
+    print("\nCreated a fc-network with name: '%s'.\n  uri = '%s'" % (fc_network.data['name'], fc_network.data['uri']))
 
 # Get by uri
 print("\nGet a fc-network by uri")
-fc_nets_by_uri = fc_network.get_by_uri(resource.data['uri'])
+fc_nets_by_uri = fc_networks.get_by_uri(fc_network.data['uri'])
 pprint(fc_nets_by_uri.data)
 
-# Adds ethernet to scope defined
-if scope_name:
-    print("\nGet scope then add the network to it")
-    scope = oneview_client.scopes.get_by_name(scope_name)  # TODO: This has to updated
+# Update autoLoginRedistribution from recently created network
+data_to_update = {'autoLoginRedistribution': False,
+                  'name': 'Updated FC'}
+fc_network.update(data=data_to_update)
+print("\nUpdated fc-network '%s' successfully.\n  uri = '%s'" % (fc_network.data['name'], fc_network.data['uri']))
+print("  with attribute {'autoLoginRedistribution': %s}" % fc_network.data['autoLoginRedistribution'])
+
+# Adds fcnetwork to scope defined
+print("\nGet scope then add the network to it")
+scope = oneview_client.scopes.get_by_name(scope_name)
+print(scope['uri'])
+if scope:
     try:
-        fc_with_scope = fc_network.patch(resource.data['uri'],
-                                         'replace',
+        fc_with_scope = fc_network.patch('replace',
                                          '/scopeUris',
                                          [scope['uri']])
         pprint(fc_with_scope)
