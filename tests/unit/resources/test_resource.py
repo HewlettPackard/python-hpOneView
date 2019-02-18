@@ -30,11 +30,11 @@ from tests.test_utils import mock_builtin
 from hpOneView.connection import connection
 from hpOneView import exceptions
 from hpOneView.resources.resource import merge_resources, merge_default_values
-from hpOneView.resources.resource import ResourceClient, Resource, RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor, \
+from hpOneView.resources.resource import ResourceClient, ResourceZeroBodyMixIn, Resource, RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor, \
     RESOURCE_CLIENT_TASK_EXPECTED, RESOURCE_ID_OR_URI_REQUIRED, transform_list_to_dict, extract_id_from_uri
 
 
-class ResourceTest(unittest.TestCase):
+class BaseTest(unittest.TestCase):
 
     URI = "/rest/testuri"
     TYPE_V200 = "typeV200"
@@ -57,6 +57,318 @@ class ResourceTest(unittest.TestCase):
         self.response_body = {"body": "body"}
         self.custom_headers = {"Accept-Language": "en_US"}
 
+
+class ResourceFileHandlerMixInTest(BaseTest):
+
+    @mock.patch.object(connection, "post_multipart_with_response_handling")
+    def test_upload_should_call_post_multipart(self, mock_post_multipart):
+        uri = "/rest/testuri/"
+        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
+        mock_post_multipart.return_value = None, mock.Mock()
+
+        self.resource_client.upload(filepath, uri)
+
+        mock_post_multipart.assert_called_once_with(uri, filepath, "SPPgen9snap6.2015_0405.81.iso")
+
+    @mock.patch.object(connection, "post_multipart_with_response_handling")
+    def test_upload_should_call_post_multipart_with_resource_uri_when_not_uri_provided(self, mock_post_multipart):
+        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
+        mock_post_multipart.return_value = None, mock.Mock()
+
+        self.resource_client.upload(filepath)
+
+        mock_post_multipart.assert_called_once_with("/rest/testuri", mock.ANY, mock.ANY)
+
+    @mock.patch.object(connection, "post_multipart_with_response_handling")
+    @mock.patch.object(TaskMonitor, "wait_for_task")
+    @mock.patch.object(connection, "get")
+    def test_upload_should_wait_for_task_when_response_is_task(self, mock_get, mock_wait4task, mock_post_multipart):
+        uri = "/rest/testuri/"
+        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
+        mock_post_multipart.return_value = self.task, mock.Mock()
+
+        self.resource_client.upload(filepath, uri)
+
+        mock_wait4task.assert_called_once_with(self.task, -1)
+
+    @mock.patch.object(connection, "post_multipart_with_response_handling")
+    @mock.patch.object(TaskMonitor, "wait_for_task")
+    def test_upload_should_not_wait_for_task_when_response_is_not_task(self, mock_wait4task, mock_post_multipart):
+        uri = "/rest/testuri/"
+        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
+        mock_post_multipart.return_value = None, mock.Mock()
+
+        self.resource_client.upload(filepath, uri)
+
+        mock_wait4task.not_been_called()
+
+    @mock.patch.object(connection, "post_multipart_with_response_handling")
+    @mock.patch.object(TaskMonitor, "wait_for_task")
+    @mock.patch.object(connection, "get")
+    def test_upload_should_return_associated_resource_when_response_is_task(self, mock_get, mock_wait4task,
+                                                                            mock_post_multipart):
+        fake_associated_resurce = mock.Mock()
+        uri = "/rest/testuri/"
+        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
+        mock_post_multipart.return_value = self.task, mock.Mock()
+        mock_wait4task.return_value = fake_associated_resurce
+
+        result = self.resource_client.upload(filepath, uri)
+
+        self.assertEqual(result, fake_associated_resurce)
+
+    @mock.patch.object(connection, "post_multipart_with_response_handling")
+    @mock.patch.object(TaskMonitor, "wait_for_task")
+    def test_upload_should_return_resource_when_response_is_not_task(self, mock_wait4task, mock_post_multipart):
+        fake_response_body = mock.Mock()
+        uri = "/rest/testuri/"
+        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
+        mock_post_multipart.return_value = None, fake_response_body
+
+        result = self.resource_client.upload(filepath, uri)
+
+        self.assertEqual(result, fake_response_body)
+
+    @mock.patch.object(connection, "download_to_stream")
+    @mock.patch(mock_builtin("open"))
+    def test_download_should_call_download_to_stream_with_given_uri(self, mock_open, mock_download_to_stream):
+        file_path = "~/archive.log"
+        uri = "/rest/testuri/3ec91dd2-0ebb-4484-8b2d-90d065114315"
+        mock_open.return_value = io.StringIO()
+
+        self.resource_client.download(uri, file_path)
+
+        mock_download_to_stream.assert_called_once_with(mock.ANY, uri)
+
+    @mock.patch.object(connection, "download_to_stream")
+    @mock.patch(mock_builtin("open"))
+    def test_download_should_call_download_to_stream_with_open_file(self, mock_open, mock_download_to_stream):
+        file_path = "~/archive.log"
+        uri = "/rest/testuri/3ec91dd2-0ebb-4484-8b2d-90d065114315"
+        fake_file = io.StringIO()
+        mock_open.return_value = fake_file
+
+        self.resource_client.download(uri, file_path)
+
+        mock_open.assert_called_once_with(file_path, 'wb')
+        mock_download_to_stream.assert_called_once_with(fake_file, mock.ANY)
+
+    @mock.patch.object(connection, "download_to_stream")
+    @mock.patch(mock_builtin("open"))
+    def test_download_should_return_true_when_success(self, mock_open, mock_download_to_stream):
+        file_path = "~/archive.log"
+        uri = "/rest/testuri/3ec91dd2-0ebb-4484-8b2d-90d065114315"
+        mock_download_to_stream.return_value = True
+        mock_open.return_value = io.StringIO()
+
+        result = self.resource_client.download(uri, file_path)
+
+        self.assertTrue(result)
+
+    @mock.patch.object(connection, "download_to_stream")
+    @mock.patch(mock_builtin("open"))
+    def test_download_should_return_false_when_error(self, mock_open, mock_download_to_stream):
+        file_path = "~/archive.log"
+        uri = "/rest/testuri/3ec91dd2-0ebb-4484-8b2d-90d065114315"
+        mock_download_to_stream.return_value = False
+        mock_open.return_value = io.StringIO()
+
+        result = self.resource_client.download(uri, file_path)
+
+        self.assertFalse(result)
+
+class ResourcePatchMixInTest(BaseTest):
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "patch")
+    def test_patch_request_when_id_is_provided_v200(self, mock_patch, mock_ensure_resource):
+        uri = "/rest/testuri"
+        request_body = [{
+            "op": "replace",
+            "path": "/name",
+            "value": "new_name",
+        }]
+        mock_patch.return_value = {}, {}
+        self.connection._apiVersion = 200
+
+        self.resource_client.patch("replace", "/name", "new_name")
+
+        mock_patch.assert_called_once_with(uri, request_body, custom_headers={})
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "patch")
+    def test_patch_request_when_id_is_provided_v300(self, mock_patch, mock_ensure_resource):
+        request_body = [{
+            "op": "replace",
+            "path": "/name",
+            "value": "new_name",
+        }]
+        mock_patch.return_value = {}, {}
+        self.resource_client.patch("replace", "/name", "new_name")
+
+        mock_patch.assert_called_once_with(
+            "/rest/testuri", request_body, custom_headers={"Content-Type": "application/json-patch+json"})
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "patch")
+    def test_patch_request_when_uri_is_provided(self, mock_patch, mock_ensure_resource):
+        request_body = [{
+            "op": "replace",
+            "path": "/name",
+            "value": "new_name",
+        }]
+        mock_patch.return_value = {}, {}
+        self.resource_client.patch("replace", "/name", "new_name")
+
+        mock_patch.assert_called_once_with(
+            "/rest/testuri", request_body, custom_headers={"Content-Type": "application/json-patch+json"})
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "patch")
+    def test_patch_with_custom_headers_v200(self, mock_patch, mock_ensure_resource):
+        mock_patch.return_value = {}, {}
+        self.connection._apiVersion = 200
+
+        self.resource_client.patch("operation", "/field", "value",
+                                   custom_headers=self.custom_headers)
+
+        mock_patch.assert_called_once_with(mock.ANY, mock.ANY, custom_headers={"Accept-Language": "en_US"})
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "patch")
+    def test_patch_with_custom_headers_v300(self, mock_patch, mock_ensure_resource):
+        mock_patch.return_value = {}, {}
+        self.resource_client.patch("operation", "/field", "value",
+                                   custom_headers=self.custom_headers)
+
+        mock_patch.assert_called_once_with(mock.ANY,
+                                           mock.ANY,
+                                           custom_headers={"Accept-Language": "en_US",
+                                                           "Content-Type": "application/json-patch+json"})
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "patch")
+    @mock.patch.object(TaskMonitor, "wait_for_task")
+    def test_patch_return_entity(self, mock_wait4task, mock_patch, mock_ensure_resource):
+        entity = {"resource_id": "123a53cz"}
+        mock_patch.return_value = self.task, self.task
+        mock_wait4task.return_value = entity
+        self.resource_client.patch("replace", "/name", "new_name")
+
+        self.assertEqual(self.resource_client.data, entity)
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "patch")
+    @mock.patch.object(TaskMonitor, "get_completed_task")
+    def test_patch_request_custom_headers_with_content_type(self, mock_task, mock_patch, mock_ensure_resource):
+        uri = "/rest/testuri"
+        dict_info = {"resource_name": "a name"}
+        mock_patch.return_value = {}, {}
+        headers = {"Content-Type": "application/json",
+                   "Extra": "extra"}
+        self.connection._apiVersion = 300
+
+        self.resource_client.patch_request(body=dict_info, custom_headers=headers)
+
+        mock_patch.assert_called_once_with(uri, dict_info, custom_headers=headers)
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "patch")
+    @mock.patch.object(TaskMonitor, "get_completed_task")
+    def test_patch_request_custom_headers(self, mock_task, mock_patch, mock_ensure_resource):
+        uri = "/rest/testuri"
+        dict_info = {"resource_name": "a name"}
+        mock_patch.return_value = {}, {}
+        headers = {"Extra": "extra"}
+        self.connection._apiVersion = 300
+
+        self.resource_client.patch_request(body=dict_info, custom_headers=headers)
+
+        mock_patch.assert_called_once_with(
+            uri,
+            dict_info,
+            custom_headers={"Extra": "extra",
+                            "Content-Type": "application/json-patch+json"})
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "patch")
+    @mock.patch.object(TaskMonitor, "wait_for_task")
+    def test_wait_for_activity_on_patch(self, mock_wait4task, mock_patch, mock_ensure_resource):
+        entity = {"resource_id": "123a53cz"}
+        mock_patch.return_value = self.task, self.task
+        mock_wait4task.return_value = entity
+        self.resource_client.patch("replace", "/name", "new_name")
+
+        mock_wait4task.assert_called_once_with(self.task, mock.ANY)
+
+class ResourceZeoBodyMixInTest(BaseTest):
+
+    def setUp(self):
+        host = "127.0.0.1"
+        self.connection = connection(host, 300)
+        self.resource_client = ResourceZeroBodyMixIn()
+        self.resource_client.do_put = Resource.do_put.__func__
+        self.resource_client.URI = self.URI
+        self.resource_client.DEFAULT_VALUES = self.DEFAULT_VALUES
+        self.resource_client.data = {"uri": "/rest/testuri"}
+        #self.resource_client._merge_default_values()
+        self.task = {"task": "task", "taskState": "Finished"}
+        self.response_body = {"body": "body"}
+        self.custom_headers = {"Accept-Language": "en_US"}
+
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "put")
+    @mock.patch.object(TaskMonitor, "wait_for_task")
+    def test_update_with_zero_body_called_once(self, mock_wait4task, mock_update, mock_ensure_resource):
+        mock_update.return_value = self.task, self.task
+        mock_wait4task.return_value = self.task
+        self.resource_client.URI = "/rest/enclosures"
+
+        self.resource_client.update_with_zero_body("/rest/enclosures/09USE133E5H4/configuration",
+                                                   timeout=-1)
+
+        mock_update.assert_called_once_with(
+            "/rest/enclosures/09USE133E5H4/configuration", None, custom_headers=None)
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "put")
+    @mock.patch.object(TaskMonitor, "wait_for_task")
+    def test_update_with_zero_body_and_custom_headers(self, mock_wait4task, mock_update, mock_ensure_resource):
+        mock_update.return_value = self.task, self.task
+        mock_wait4task.return_value = self.task
+
+        self.resource_client.update_with_zero_body(uri="/rest/testuri", custom_headers=self.custom_headers)
+
+        mock_update.assert_called_once_with(mock.ANY, mock.ANY, custom_headers={"Accept-Language": "en_US"})
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "put")
+    @mock.patch.object(TaskMonitor, "wait_for_task")
+    def test_update_with_zero_body_return_entity(self, mock_wait4task, mock_put, mock_ensure_resource):
+        response_body = {"resource_name": "name"}
+        self.resource_client.URI = "/rest/enclosures"
+
+        mock_put.return_value = self.task, self.task
+        mock_wait4task.return_value = response_body
+
+        result = self.resource_client.update_with_zero_body(
+            "/rest/enclosures/09USE133E5H4/configuration", timeout=-1)
+
+        self.assertEqual(result, response_body)
+
+    @mock.patch.object(connection, "put")
+    def test_update_with_zero_body_without_task(self, mock_put):
+        mock_put.return_value = None, self.response_body
+        self.resource_client.URI = "/rest/enclosures"
+        result = self.resource_client.update_with_zero_body(
+            "/rest/enclosures/09USE133E5H4/configuration", timeout=-1)
+
+        self.assertEqual(result, self.response_body)
+
+
+class ResourceTest(BaseTest):
+
     @mock.patch.object(Resource, "do_put")
     @mock.patch.object(Resource, "ensure_resource_data")
     def test_ensure_resource_should_call_once(self, mock_do_put, mock_ensure_resource):
@@ -77,7 +389,6 @@ class ResourceTest(unittest.TestCase):
         with self.assertRaises(exceptions.HPOneViewResourceNotFound):
             self.resource_client.ensure_resource_data(update_data=True)
 
-#    @mock.patch.object(Resource, "do_get")
     @mock.patch.object(Resource, "get_by")
     def test_ensure_resource_raise_resource_not_found_exception_without_uri(self, mock_get_by):
         self.resource_client.data = {"name": "testname"}
@@ -515,56 +826,6 @@ class ResourceTest(unittest.TestCase):
 
     @mock.patch.object(Resource, "ensure_resource_data")
     @mock.patch.object(connection, "put")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    def test_update_with_zero_body_called_once(self, mock_wait4task, mock_update, mock_ensure_resource):
-        mock_update.return_value = self.task, self.task
-        mock_wait4task.return_value = self.task
-        self.resource_client.URI = "/rest/enclosures"
-
-        self.resource_client.update_with_zero_body("/rest/enclosures/09USE133E5H4/configuration",
-                                                   timeout=-1)
-
-        mock_update.assert_called_once_with(
-            "/rest/enclosures/09USE133E5H4/configuration", None, custom_headers=None)
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "put")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    def test_update_with_zero_body_and_custom_headers(self, mock_wait4task, mock_update, mock_ensure_resource):
-        mock_update.return_value = self.task, self.task
-        mock_wait4task.return_value = self.task
-
-        self.resource_client.update_with_zero_body(uri="/rest/testuri", custom_headers=self.custom_headers)
-
-        mock_update.assert_called_once_with(mock.ANY, mock.ANY, custom_headers={"Accept-Language": "en_US"})
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "put")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    def test_update_with_zero_body_return_entity(self, mock_wait4task, mock_put, mock_ensure_resource):
-        response_body = {"resource_name": "name"}
-        self.resource_client.URI = "/rest/enclosures"
-
-        mock_put.return_value = self.task, self.task
-        mock_wait4task.return_value = response_body
-
-        result = self.resource_client.update_with_zero_body(
-            "/rest/enclosures/09USE133E5H4/configuration", timeout=-1)
-
-        self.assertEqual(result, response_body)
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "put")
-    def test_update_with_zero_body_without_task(self, mock_put, mock_ensure_resource):
-        mock_put.return_value = None, self.response_body
-        self.resource_client.URI = "/rest/enclosures"
-        result = self.resource_client.update_with_zero_body(
-            "/rest/enclosures/09USE133E5H4/configuration", timeout=-1)
-
-        self.assertEqual(result, self.response_body)
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "put")
     def test_update_with_uri_called_once(self, mock_put, mock_ensure_resource):
         uri = "/rest/testuri"
         dict_to_update = {"name": "test", "type": "typeV300"}
@@ -672,127 +933,6 @@ class ResourceTest(unittest.TestCase):
 
         self.assertEqual(self.resource_client.data, dict_to_update)
 
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "patch")
-    def test_patch_request_when_id_is_provided_v200(self, mock_patch, mock_ensure_resource):
-        uri = "/rest/testuri"
-        request_body = [{
-            "op": "replace",
-            "path": "/name",
-            "value": "new_name",
-        }]
-        mock_patch.return_value = {}, {}
-        self.connection._apiVersion = 200
-
-        self.resource_client.patch("replace", "/name", "new_name")
-
-        mock_patch.assert_called_once_with(uri, request_body, custom_headers={})
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "patch")
-    def test_patch_request_when_id_is_provided_v300(self, mock_patch, mock_ensure_resource):
-        request_body = [{
-            "op": "replace",
-            "path": "/name",
-            "value": "new_name",
-        }]
-        mock_patch.return_value = {}, {}
-        self.resource_client.patch("replace", "/name", "new_name")
-
-        mock_patch.assert_called_once_with(
-            "/rest/testuri", request_body, custom_headers={"Content-Type": "application/json-patch+json"})
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "patch")
-    def test_patch_request_when_uri_is_provided(self, mock_patch, mock_ensure_resource):
-        request_body = [{
-            "op": "replace",
-            "path": "/name",
-            "value": "new_name",
-        }]
-        mock_patch.return_value = {}, {}
-        self.resource_client.patch("replace", "/name", "new_name")
-
-        mock_patch.assert_called_once_with(
-            "/rest/testuri", request_body, custom_headers={"Content-Type": "application/json-patch+json"})
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "patch")
-    def test_patch_with_custom_headers_v200(self, mock_patch, mock_ensure_resource):
-        mock_patch.return_value = {}, {}
-        self.connection._apiVersion = 200
-
-        self.resource_client.patch("operation", "/field", "value",
-                                   custom_headers=self.custom_headers)
-
-        mock_patch.assert_called_once_with(mock.ANY, mock.ANY, custom_headers={"Accept-Language": "en_US"})
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "patch")
-    def test_patch_with_custom_headers_v300(self, mock_patch, mock_ensure_resource):
-        mock_patch.return_value = {}, {}
-        self.resource_client.patch("operation", "/field", "value",
-                                   custom_headers=self.custom_headers)
-
-        mock_patch.assert_called_once_with(mock.ANY,
-                                           mock.ANY,
-                                           custom_headers={"Accept-Language": "en_US",
-                                                           "Content-Type": "application/json-patch+json"})
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "patch")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    def test_patch_return_entity(self, mock_wait4task, mock_patch, mock_ensure_resource):
-        entity = {"resource_id": "123a53cz"}
-        mock_patch.return_value = self.task, self.task
-        mock_wait4task.return_value = entity
-        self.resource_client.patch("replace", "/name", "new_name")
-
-        self.assertEqual(self.resource_client.data, entity)
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "patch")
-    @mock.patch.object(TaskMonitor, "get_completed_task")
-    def test_patch_request_custom_headers_with_content_type(self, mock_task, mock_patch, mock_ensure_resource):
-        uri = "/rest/testuri"
-        dict_info = {"resource_name": "a name"}
-        mock_patch.return_value = {}, {}
-        headers = {"Content-Type": "application/json",
-                   "Extra": "extra"}
-        self.connection._apiVersion = 300
-
-        self.resource_client.patch_request(body=dict_info, custom_headers=headers)
-
-        mock_patch.assert_called_once_with(uri, dict_info, custom_headers=headers)
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "patch")
-    @mock.patch.object(TaskMonitor, "get_completed_task")
-    def test_patch_request_custom_headers(self, mock_task, mock_patch, mock_ensure_resource):
-        uri = "/rest/testuri"
-        dict_info = {"resource_name": "a name"}
-        mock_patch.return_value = {}, {}
-        headers = {"Extra": "extra"}
-        self.connection._apiVersion = 300
-
-        self.resource_client.patch_request(body=dict_info, custom_headers=headers)
-
-        mock_patch.assert_called_once_with(
-            uri,
-            dict_info,
-            custom_headers={"Extra": "extra",
-                            "Content-Type": "application/json-patch+json"})
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "patch")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    def test_wait_for_activity_on_patch(self, mock_wait4task, mock_patch, mock_ensure_resource):
-        entity = {"resource_id": "123a53cz"}
-        mock_patch.return_value = self.task, self.task
-        mock_wait4task.return_value = entity
-        self.resource_client.patch("replace", "/name", "new_name")
-
-        mock_wait4task.assert_called_once_with(self.task, mock.ANY)
 
     @mock.patch.object(Resource, "get_by")
     def test_get_by_name_with_result(self, mock_get_by):
@@ -1033,122 +1173,7 @@ class ResourceTest(unittest.TestCase):
         else:
             self.fail("Expected Exception was not raised")
 
-    @mock.patch.object(connection, "post_multipart_with_response_handling")
-    def test_upload_should_call_post_multipart(self, mock_post_multipart):
-        uri = "/rest/testuri/"
-        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
-        mock_post_multipart.return_value = None, mock.Mock()
 
-        self.resource_client.upload(filepath, uri)
-
-        mock_post_multipart.assert_called_once_with(uri, filepath, "SPPgen9snap6.2015_0405.81.iso")
-
-    @mock.patch.object(connection, "post_multipart_with_response_handling")
-    def test_upload_should_call_post_multipart_with_resource_uri_when_not_uri_provided(self, mock_post_multipart):
-        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
-        mock_post_multipart.return_value = None, mock.Mock()
-
-        self.resource_client.upload(filepath)
-
-        mock_post_multipart.assert_called_once_with("/rest/testuri", mock.ANY, mock.ANY)
-
-    @mock.patch.object(connection, "post_multipart_with_response_handling")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    @mock.patch.object(connection, "get")
-    def test_upload_should_wait_for_task_when_response_is_task(self, mock_get, mock_wait4task, mock_post_multipart):
-        uri = "/rest/testuri/"
-        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
-        mock_post_multipart.return_value = self.task, mock.Mock()
-
-        self.resource_client.upload(filepath, uri)
-
-        mock_wait4task.assert_called_once_with(self.task, -1)
-
-    @mock.patch.object(connection, "post_multipart_with_response_handling")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    def test_upload_should_not_wait_for_task_when_response_is_not_task(self, mock_wait4task, mock_post_multipart):
-        uri = "/rest/testuri/"
-        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
-        mock_post_multipart.return_value = None, mock.Mock()
-
-        self.resource_client.upload(filepath, uri)
-
-        mock_wait4task.not_been_called()
-
-    @mock.patch.object(connection, "post_multipart_with_response_handling")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    @mock.patch.object(connection, "get")
-    def test_upload_should_return_associated_resource_when_response_is_task(self, mock_get, mock_wait4task,
-                                                                            mock_post_multipart):
-        fake_associated_resurce = mock.Mock()
-        uri = "/rest/testuri/"
-        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
-        mock_post_multipart.return_value = self.task, mock.Mock()
-        mock_wait4task.return_value = fake_associated_resurce
-
-        result = self.resource_client.upload(filepath, uri)
-
-        self.assertEqual(result, fake_associated_resurce)
-
-    @mock.patch.object(connection, "post_multipart_with_response_handling")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    def test_upload_should_return_resource_when_response_is_not_task(self, mock_wait4task, mock_post_multipart):
-        fake_response_body = mock.Mock()
-        uri = "/rest/testuri/"
-        filepath = "test/SPPgen9snap6.2015_0405.81.iso"
-        mock_post_multipart.return_value = None, fake_response_body
-
-        result = self.resource_client.upload(filepath, uri)
-
-        self.assertEqual(result, fake_response_body)
-
-    @mock.patch.object(connection, "download_to_stream")
-    @mock.patch(mock_builtin("open"))
-    def test_download_should_call_download_to_stream_with_given_uri(self, mock_open, mock_download_to_stream):
-        file_path = "~/archive.log"
-        uri = "/rest/testuri/3ec91dd2-0ebb-4484-8b2d-90d065114315"
-        mock_open.return_value = io.StringIO()
-
-        self.resource_client.download(uri, file_path)
-
-        mock_download_to_stream.assert_called_once_with(mock.ANY, uri)
-
-    @mock.patch.object(connection, "download_to_stream")
-    @mock.patch(mock_builtin("open"))
-    def test_download_should_call_download_to_stream_with_open_file(self, mock_open, mock_download_to_stream):
-        file_path = "~/archive.log"
-        uri = "/rest/testuri/3ec91dd2-0ebb-4484-8b2d-90d065114315"
-        fake_file = io.StringIO()
-        mock_open.return_value = fake_file
-
-        self.resource_client.download(uri, file_path)
-
-        mock_open.assert_called_once_with(file_path, 'wb')
-        mock_download_to_stream.assert_called_once_with(fake_file, mock.ANY)
-
-    @mock.patch.object(connection, "download_to_stream")
-    @mock.patch(mock_builtin("open"))
-    def test_download_should_return_true_when_success(self, mock_open, mock_download_to_stream):
-        file_path = "~/archive.log"
-        uri = "/rest/testuri/3ec91dd2-0ebb-4484-8b2d-90d065114315"
-        mock_download_to_stream.return_value = True
-        mock_open.return_value = io.StringIO()
-
-        result = self.resource_client.download(uri, file_path)
-
-        self.assertTrue(result)
-
-    @mock.patch.object(connection, "download_to_stream")
-    @mock.patch(mock_builtin("open"))
-    def test_download_should_return_false_when_error(self, mock_open, mock_download_to_stream):
-        file_path = "~/archive.log"
-        uri = "/rest/testuri/3ec91dd2-0ebb-4484-8b2d-90d065114315"
-        mock_download_to_stream.return_value = False
-        mock_open.return_value = io.StringIO()
-
-        result = self.resource_client.download(uri, file_path)
-
-        self.assertFalse(result)
 
     def test_merge_resources(self):
         resource1 = {"name": "resource1", "type": "resource"}

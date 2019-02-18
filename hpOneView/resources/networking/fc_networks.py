@@ -29,8 +29,8 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-
-from hpOneView.resources.resource import Resource
+from hpOneView.resources.task_monitor import TaskMonitor
+from hpOneView.resources.resource import Resource, ResourceHelper
 
 
 class FcNetworks(Resource):
@@ -45,8 +45,30 @@ class FcNetworks(Resource):
         '200': {'type': 'fc-networkV2'},
         '300': {"type": "fc-networkV300"},
         '500': {"type": "fc-networkV300"},
-        '600': {"type": "fc-networkV4"}
+        '600': {"type": "fc-networkV4"},
+        '800': {"type": "fc-networkV4"}
     }
 
-    def __init__(self, connection, options=None):
-        super(FcNetworks, self).__init__(connection, options)
+    def __init__(self, connection, data=None):
+        task_monitor = TaskMonitor(connection)
+        resource_helper = ResourceHelper(self.URI, connection, task_monitor)
+        super(FcNetworks, self).__init__(connection, task_monitor, resource_helper, data)
+
+    def patch(self, operation, path, value, timeout=-1):
+        """
+        Uses the PATCH to update the given resource.
+
+        Only one operation can be performed in each PATCH call.
+
+        Args:
+            operation: Patch operation
+            path: Path
+            value: Value
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            dict: Updated resource.
+        """
+        uri = self.data['uri']
+        return self._resource_helper.patch(uri, operation, path, value, timeout=timeout)

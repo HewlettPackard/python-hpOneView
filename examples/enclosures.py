@@ -29,13 +29,13 @@ from config_loader import try_load_from_file
 
 # This example is compatible only for C7000 enclosures
 config = {
-    "ip": "10.30.5.62",
+    "ip": "10.170.16.56",
     "credentials": {
         "userName": "administrator",
-        "password": "sijenov@2017"
+        "password": "Everest@123"
     },
-    "api_version": "600",
-    "enclosure_group_uri": "/rest/enclosure-groups/10264ffa-6498-4393-bd2d-26bea1754cc5",
+    "api_version": "800",
+    "enclosure_group_uri": "/rest/enclosure-groups/06475bf3-084b-4874-af9f-3412dee3f0eb",
     "enclosure_hostname": "172.18.1.14",
     "enclosure_username": "dcs",
     "enclosure_password": "dcs",
@@ -67,7 +67,7 @@ enclosures = enclosure_resource.get_all()
 for enc in enclosures:
     print('  {name}'.format(**enc))
 
-enclosure = enclosure_resource.get_by_name(options['name'])
+enclosure = enclosure_resource.get_by_name(options["name"])
 if not enclosure:
     # Creates an enclosure and reurns created enclosure object
     enclosure = enclosure_resource.add(options)
@@ -83,7 +83,7 @@ pprint(enclosure.data)
 update_name = "Enc-Updated"
 print("Updating the enclosure with name " + update_name)
 headers = {'If-Match': '*'}
-#enclosure.patch('replace', '/name', update_name, custom_headers=headers)
+enclosure.patch('replace', '/name', update_name, custom_headers=headers)
 print("  Done.\n  URI = '{uri}', name = {name}".format(**enclosure.data))
 
 # Update configuration
@@ -105,7 +105,7 @@ except HPOneViewException as e:
 print("Refreshing the enclosure")
 try:
     refresh_state = {"refreshState": "RefreshPending"}
-#    enclosure.refresh_state(refresh_state)
+    enclosure.refresh_state(refresh_state)
     print("  Done")
 except HPOneViewException as e:
     print(e.msg)

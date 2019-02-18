@@ -27,11 +27,12 @@ from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "10.30.5.62",
+    "ip": "10.170.16.56",
     "credentials": {
         "userName": "administrator",
-        "password": "sijenov@2017"
+        "password": "Everest@123"
     },
+    "api_version": 800
 }
 
 options = {
@@ -50,7 +51,7 @@ config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
 fc_networks = oneview_client.fc_networks
-help(fc_networks)
+#help(fc_networks)
 print(str(fc_networks))
 # Get all, with defaults
 print("\nGet all fc-networks")
