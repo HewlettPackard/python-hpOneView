@@ -27,7 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.networking.fc_networks import FcNetworks
-from hpOneView.resources.resource import Resource
+from hpOneView.resources.resource import Resource, ResourcePatchMixin
 
 
 class FcNetworksTest(unittest.TestCase):
@@ -93,7 +93,7 @@ class FcNetworksTest(unittest.TestCase):
         self._fc_networks.get_by_uri(uri)
         mock_get.assert_called_once_with(uri)
 
-    @mock.patch.object(Resource, 'patch')
+    @mock.patch.object(ResourcePatchMixin, 'patch')
     def test_patch_should_use_user_defined_values(self, mock_patch):
         mock_patch.return_value = {}
 

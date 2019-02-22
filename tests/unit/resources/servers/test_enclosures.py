@@ -27,7 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.servers.enclosures import Enclosures
-from hpOneView.resources.resource import Resource
+from hpOneView.resources.resource import Resource, ResourceRequest, ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationMixin
 
 
 class EnclosuresTest(TestCase):
@@ -74,12 +74,14 @@ class EnclosuresTest(TestCase):
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(Resource, 'ensure_resource_data')
-    @mock.patch.object(Resource, 'patch_request')
+    @mock.patch.object(ResourcePatchMixin, 'patch_request')
     def test_patch_should_use_user_defined_values(self, mock_patch, ensure_resource_data):
         mock_patch.return_value = {}
 
         self._enclosures.patch('replace', '/name', 'new_name', timeout=1)
-        mock_patch.assert_called_once_with(body=[{u'path': '/name', u'value': 'new_name', u'op': 'replace'}],
+        print (self._enclosures.data)
+        mock_patch.assert_called_once_with('/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32',
+                                           body=[{u'path': '/name', u'value': 'new_name', u'op': 'replace'}],
                                            custom_headers=None, timeout=1)
 
     @mock.patch.object(Resource, 'delete')
@@ -93,14 +95,14 @@ class EnclosuresTest(TestCase):
         mock_delete.assert_called_once_with(force=True)
 
     @mock.patch.object(Resource, 'ensure_resource_data')
-    @mock.patch.object(Resource, 'update_with_zero_body')
+    @mock.patch.object(ResourceZeroBodyMixin, 'update_with_zero_body')
     def test_update_configuration_by_uri(self, mock_update_with_zero_body, ensure_resource_data):
         self._enclosures.update_configuration()
         uri = "{}/configuration".format(self._enclosures.data['uri'])
         mock_update_with_zero_body.assert_called_once_with(uri=uri, timeout=-1)
 
     @mock.patch.object(Resource, 'ensure_resource_data')
-    @mock.patch.object(Resource, 'do_get')
+    @mock.patch.object(ResourceRequest, 'do_get')
     def test_get_environmental_configuration_by_uri(self, mock_get, ensure_resource_data):
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/environmentalConfiguration'
 
@@ -108,7 +110,7 @@ class EnclosuresTest(TestCase):
         mock_get.assert_called_once_with(uri_rest_call)
 
     @mock.patch.object(Resource, 'ensure_resource_data')
-    @mock.patch.object(Resource, 'do_get')
+    @mock.patch.object(ResourceRequest, 'do_get')
     def test_get_environmental_configuration_by_id(self, mock_get, ensure_resource_data):
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/environmentalConfiguration'
 
@@ -116,7 +118,7 @@ class EnclosuresTest(TestCase):
         mock_get.assert_called_once_with(uri_rest_call)
 
     @mock.patch.object(Resource, 'ensure_resource_data')
-    @mock.patch.object(Resource, 'do_put')
+    @mock.patch.object(ResourceRequest, 'do_put')
     def test_update_environmental_configuration_by_uri(self, mock_put, ensure_resource_data):
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/environmentalConfiguration'
         configuration = {"calibratedMaxPower": 2500}
@@ -126,7 +128,7 @@ class EnclosuresTest(TestCase):
         mock_put.assert_called_once_with(uri_rest_call, configuration_rest_call, -1, None)
 
     @mock.patch.object(Resource, 'ensure_resource_data')
-    @mock.patch.object(Resource, 'do_put')
+    @mock.patch.object(ResourceRequest, 'do_put')
     def test_refresh_state_by_uri(self, mock_put, ensure_resource_data):
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/refreshState'
         configuration = {"refreshState": "RefreshPending"}
@@ -136,7 +138,7 @@ class EnclosuresTest(TestCase):
         mock_put.assert_called_once_with(uri_rest_call, configuration_rest_call, -1, None)
 
     @mock.patch.object(Resource, 'ensure_resource_data')
-    @mock.patch.object(Resource, 'do_get')
+    @mock.patch.object(ResourceRequest, 'do_get')
     def test_get_script_by_uri(self, mock_get, ensure_resource_data):
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/script'
 
@@ -144,14 +146,14 @@ class EnclosuresTest(TestCase):
         mock_get.assert_called_once_with(uri_rest_call)
 
     @mock.patch.object(Resource, 'ensure_resource_data')
-    @mock.patch.object(Resource, 'do_get')
+    @mock.patch.object(ResourceRequest, 'do_get')
     def test_get_sso_by_uri(self, mock_get, ensure_resource_data):
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/sso?role=Active'
 
         self._enclosures.get_sso('Active')
         mock_get.assert_called_once_with(uri_rest_call)
 
-    @mock.patch.object(Resource, 'get_utilization')
+    @mock.patch.object(ResourceUtilizationMixin, 'get_utilization')
     def test_get_utilization_with_all_args(self, mock_get_utilization):
         self._enclosures.get_utilization('09USE7335NW3', fields='AmbientTemperature,AveragePower,PeakPower',
                                          filter='startDate=2016-05-30T03:29:42.361Z',
@@ -161,13 +163,13 @@ class EnclosuresTest(TestCase):
                                                      filter='startDate=2016-05-30T03:29:42.361Z',
                                                      refresh=True, view='day')
 
-    @mock.patch.object(Resource, 'get_utilization')
+    @mock.patch.object(ResourceUtilizationMixin, 'get_utilization')
     def test_get_utilization_by_uri_with_defaults(self, mock_get):
         self._enclosures.get_utilization('/rest/enclosures/09USE7335NW3')
         mock_get.assert_called_once_with('/rest/enclosures/09USE7335NW3')
 
     @mock.patch.object(Resource, 'ensure_resource_data')
-    @mock.patch.object(Resource, 'do_post')
+    @mock.patch.object(ResourceRequest, 'do_post')
     def test_generate_csr(self, mock_post, ensure_resource_data):
         bay_number = 1
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest?bayNumber=%d' % (bay_number)
@@ -186,7 +188,7 @@ class EnclosuresTest(TestCase):
         mock_post.assert_called_once_with(uri_rest_call, csr_data, -1, headers)
 
     @mock.patch.object(Resource, 'ensure_resource_data')
-    @mock.patch.object(Resource, 'do_get')
+    @mock.patch.object(ResourceRequest, 'do_get')
     def test_get_csr(self, mock_get, ensure_resource_data):
         bay_number = 1
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest?bayNumber=%d' % (bay_number)
@@ -195,7 +197,7 @@ class EnclosuresTest(TestCase):
         mock_get.assert_called_once_with(uri_rest_call)
 
     @mock.patch.object(Resource, 'ensure_resource_data')
-    @mock.patch.object(Resource, 'do_put')
+    @mock.patch.object(ResourceRequest, 'do_put')
     def test_import_certificate(self, mock_put, ensure_resource_data):
         bay_number = 1
         uri_rest_call = '/rest/enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/https/certificaterequest?bayNumber=%d' % (bay_number)

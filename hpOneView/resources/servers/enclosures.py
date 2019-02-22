@@ -29,11 +29,10 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-from hpOneView.resources.task_monitor import TaskMonitor
-from hpOneView.resources.resource import Resource, ResourceHelper, ensure_resource_client
+from hpOneView.resources.resource import Resource, ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationMixin, ensure_resource_client
 
 
-class Enclosures(Resource):
+class Enclosures(ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationMixin, Resource):
     """
     Enclosures API client.
 
@@ -41,9 +40,7 @@ class Enclosures(Resource):
     URI = '/rest/enclosures'
 
     def __init__(self, connection, data=None):
-        task_monitor = TaskMonitor(connection)
-        helper = ResourceHelper(self.URI, connection, task_monitor)
-        super(Enclosures, self).__init__(connection, task_monitor, helper, data)
+        super(Enclosures, self).__init__(connection, data)
 
     def add(self, information, timeout=-1):
         """
@@ -73,25 +70,6 @@ class Enclosures(Resource):
         """
         self.delete(force=force)
 
-    def patch(self, operation, path, value, custom_headers=None, timeout=-1):
-        """Uses the PATCH to update a resource.
-
-        Only one operation can be performed in each PATCH call.
-
-        Args
-            operation: Patch operation
-            path: Path
-            value: Value
-            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView; it just stops waiting for its completion.
-            custom_headers: Allows to add custom http headers.
-
-        Returns:
-            Updated resource.
-        """
-        uri = self.data['uri']
-        return  self._resource_helper.patch(uri, operation, path, value, custom_headers, timeout)
-
     def update_configuration(self, timeout=-1):
         """
         Reapplies the appliance's configuration on the enclosure. This includes running the same configure steps
@@ -105,7 +83,7 @@ class Enclosures(Resource):
             Enclosure
         """
         uri = "{}/configuration".format(self.data['uri'])
-        return self._resource_helper.update_with_zero_body(uri=uri, timeout=timeout)
+        return self.update_with_zero_body(uri=uri, timeout=timeout)
 
     def get_by_hostname(self, hostname):
         """Get enclosure by it's hostname"""
@@ -134,7 +112,7 @@ class Enclosures(Resource):
             Settings that describe the environmental configuration.
         """
         uri = '{}/environmentalConfiguration'.format(self.data['uri'])
-        return self._resource_helper.do_get(uri)
+        return self._request.do_get(uri)
 
     @ensure_resource_client
     def update_environmental_configuration(self, configuration, timeout=-1):
@@ -150,7 +128,7 @@ class Enclosures(Resource):
             Settings that describe the environmental configuration.
         """
         uri = '{}/environmentalConfiguration'.format(self.data['uri'])
-        return self._resource_helper.do_put(uri, configuration, timeout, None)
+        return self._request.do_put(uri, configuration, timeout, None)
 
     @ensure_resource_client
     def refresh_state(self, configuration, timeout=-1):
@@ -169,7 +147,7 @@ class Enclosures(Resource):
             Enclosure
         """
         uri = "{}/refreshState".format(self.data['uri'])
-        return self._resource_helper.do_put(uri, configuration, timeout, None)
+        return self._request.do_put(uri, configuration, timeout, None)
 
     @ensure_resource_client
     def get_script(self):
@@ -180,7 +158,7 @@ class Enclosures(Resource):
             Enclosure script.
         """
         uri = "{}/script".format(self.data['uri'])
-        return self._resource_helper.do_get(uri)
+        return self._request.do_get(uri)
 
     @ensure_resource_client
     def get_sso(self, role):
@@ -195,69 +173,7 @@ class Enclosures(Resource):
             SSO (Single Sign-On) URL parameters.
         """
         uri = "{}/sso?role={}".format(self.data['uri'], role)
-        return self._resource_helper.do_get(uri)
-
-    @ensure_resource_client
-    def get_utilization(self, fields=None, filter=None, refresh=False, view=None):
-        """Retrieves historical utilization data for the specified resource, metrics, and time span.
-
-        Args:
-            fields: Name of the supported metric(s) to be retrieved in the format METRIC[,METRIC]...
-                If unspecified, all metrics supported are returned.
-
-            filter (list or str): Filters should be in the format FILTER_NAME=VALUE[,FILTER_NAME=VALUE]...
-                E.g.: 'startDate=2016-05-30T11:20:44.541Z,endDate=2016-05-30T19:20:44.541Z'
-
-                startDate
-                    Start date of requested starting time range in ISO 8601 format. If omitted, the startDate is
-                    determined by the endDate minus 24 hours.
-                endDate
-                    End date of requested starting time range in ISO 8601 format. When omitted, the endDate includes
-                    the latest data sample available.
-
-                If an excessive number of samples would otherwise be returned, the results will be segmented. The
-                caller is responsible for comparing the returned sliceStartTime with the requested startTime in the
-                response. If the sliceStartTime is greater than the oldestSampleTime and the requested start time,
-                the caller is responsible for repeating the request with endTime set to sliceStartTime to obtain the
-                next segment. This process is repeated until the full data set is retrieved.
-
-                If the resource has no data, the UtilizationData is still returned but will contain no samples and
-                sliceStartTime/sliceEndTime will be equal. oldestSampleTime/newestSampleTime will still be set
-                appropriately (null if no data is available). If the filter does not happen to overlap the data
-                that a resource has, then the metric history service will return null sample values for any
-                missing samples.
-
-            refresh: Specifies that if necessary, an additional request will be queued to obtain the most recent
-                utilization data from the iLO. The response will not include any refreshed data. To track the
-                availability of the newly collected data, monitor the TaskResource identified by the refreshTaskUri
-                property in the response. If null, no refresh was queued.
-
-            view: Specifies the resolution interval length of the samples to be retrieved. This is reflected in the
-                resolution in the returned response. Utilization data is automatically purged to stay within storage
-                space constraints. Supported views are listed below:
-
-                native
-                    Resolution of the samples returned will be one sample for each 5-minute time period. This is the
-                    default view and matches the resolution of the data returned by the iLO. Samples at this resolution
-                    are retained up to one year.
-                hour
-                    Resolution of the samples returned will be one sample for each 60-minute time period. Samples are
-                    calculated by averaging the available 5-minute data samples that occurred within the hour, except
-                    for PeakPower which is calculated by reporting the peak observed 5-minute sample value data during
-                    the hour. Samples at this resolution are retained up to three years.
-                day
-                    Resolution of the samples returned will be one sample for each 24-hour time period. One day is a
-                     24-hour period that starts at midnight GMT regardless of the time zone in which the appliance or
-                    client is located. Samples are calculated by averaging the available 5-minute data samples that
-                    occurred during the day, except for PeakPower which is calculated by reporting the peak observed
-                    5-minute sample value data during the day. Samples at this resolution are retained up to three
-                    years.
-
-        Returns:
-            dict
-        """
-        uri = self.data['uri']
-        return self._resource_helper.get_utilization(uri, fields=None, filter=None, refresh=False, view=None)
+        return self._request.do_get(uri)
 
     @ensure_resource_client
     def generate_csr(self, csr_data, bay_number=None):
@@ -278,7 +194,7 @@ class Enclosures(Resource):
 
         headers = {'Content-Type': 'application/json'}
 
-        return self._resource_helper.do_post(uri, csr_data, -1, headers)
+        return self._request.do_post(uri, csr_data, -1, headers)
 
     @ensure_resource_client
     def get_csr(self, bay_number=None):
@@ -296,7 +212,7 @@ class Enclosures(Resource):
         if bay_number:
             uri += "?bayNumber=%d" % (bay_number)
 
-        return self._resource_helper.do_get(uri)
+        return self._request.do_get(uri)
 
     @ensure_resource_client
     def import_certificate(self, certificate_data, bay_number=None):
@@ -316,4 +232,4 @@ class Enclosures(Resource):
             uri += "?bayNumber=%d" % (bay_number)
 
         headers = {'Content-Type': 'application/json'}
-        return self._resource_helper.do_put(uri, certificate_data, -1, headers)
+        return self._request.do_put(uri, certificate_data, -1, headers)

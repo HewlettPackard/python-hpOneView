@@ -29,11 +29,9 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-from hpOneView.resources.task_monitor import TaskMonitor
-from hpOneView.resources.resource import Resource, ResourceHelper
+from hpOneView.resources.resource import Resource, ResourceHelper, ResourcePatchMixin
 
-
-class FcNetworks(Resource):
+class FcNetworks(Resource, ResourcePatchMixin):
     """
     Fibre Channel networks API client.
 
@@ -50,25 +48,23 @@ class FcNetworks(Resource):
     }
 
     def __init__(self, connection, data=None):
-        task_monitor = TaskMonitor(connection)
-        resource_helper = ResourceHelper(self.URI, connection, task_monitor)
-        super(FcNetworks, self).__init__(connection, task_monitor, resource_helper, data)
+        super(FcNetworks, self).__init__(connection, data)
 
-    def patch(self, operation, path, value, timeout=-1):
-        """
-        Uses the PATCH to update the given resource.
-
-        Only one operation can be performed in each PATCH call.
-
-        Args:
-            operation: Patch operation
-            path: Path
-            value: Value
-            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView; it just stops waiting for its completion.
-
-        Returns:
-            dict: Updated resource.
-        """
-        uri = self.data['uri']
-        return self._resource_helper.patch(uri, operation, path, value, timeout=timeout)
+#    def patch(self, operation, path, value, timeout=-1):
+#        """
+#        Uses the PATCH to update the given resource.
+#
+#        Only one operation can be performed in each PATCH call.
+#
+#        Args:
+#            operation: Patch operation
+#            path: Path
+#            value: Value
+#            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+#                in OneView; it just stops waiting for its completion.
+#
+#        Returns:
+#            dict: Updated resource.
+#        """
+#        uri = self.data['uri']
+#        return self._resource_helper.patch(uri, operation, path, value, timeout=timeout)

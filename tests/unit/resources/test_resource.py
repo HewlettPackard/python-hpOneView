@@ -23,15 +23,47 @@
 import io
 import unittest
 import mock
-
 from mock import call
-from tests.test_utils import mock_builtin
 
+from tests.test_utils import mock_builtin
 from hpOneView.connection import connection
 from hpOneView import exceptions
-from hpOneView.resources.resource import merge_resources, merge_default_values
-from hpOneView.resources.resource import ResourceClient, ResourceZeroBodyMixIn, Resource, RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor, \
-    RESOURCE_CLIENT_TASK_EXPECTED, RESOURCE_ID_OR_URI_REQUIRED, transform_list_to_dict, extract_id_from_uri
+from hpOneView.resources.resource import (ResourceClient, ResourceRequest, ResourceFileHandlerMixin,
+                                          ResourceZeroBodyMixin, ResourcePatchMixin, ResourceUtilizationMixin,
+                                          ResourceCollectionMixin, ResourceSchemaMixin, Resource,
+                                          RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor,
+                                          RESOURCE_CLIENT_TASK_EXPECTED, RESOURCE_ID_OR_URI_REQUIRED,
+                                          transform_list_to_dict, extract_id_from_uri, merge_resources,
+                                          merge_default_values)
+
+
+class StubResourceFileHandler(ResourceFileHandlerMixin, Resource):
+    """Stub class to test resource file operations"""
+
+
+class StubResourceZeroBody(ResourceZeroBodyMixin, Resource):
+    """Stub class to test resoruce zero body methods"""
+
+
+class StubResourcePatch(ResourcePatchMixin, Resource):
+    """Stub class to test resource patch operations"""
+
+
+class StubResourceUtilization(ResourceUtilizationMixin, Resource):
+    """Stub class to test resource utilization methods"""
+
+
+class StubResourceCollection(ResourceCollectionMixin, Resource):
+    """Stub class to test resource collection operation"""
+
+
+class StubResourceSchema(ResourceSchemaMixin, Resource):
+    """Stub class to test resource schema methods"""
+
+
+class StubResource(Resource):
+    """Stub class to test resource common methods"""
+    URI = "/rest/testuri"
 
 
 class BaseTest(unittest.TestCase):
@@ -45,10 +77,8 @@ class BaseTest(unittest.TestCase):
         "300": {"type": TYPE_V300}
     }
 
-    def setUp(self):
-        host = "127.0.0.1"
-        self.connection = connection(host, 300)
-        self.resource_client = Resource(self.connection)
+    def setUp(self, resource_client=None):
+        self.resource_client = resource_client
         self.resource_client.URI = self.URI
         self.resource_client.DEFAULT_VALUES = self.DEFAULT_VALUES
         self.resource_client.data = {"uri": "/rest/testuri"}
@@ -58,7 +88,12 @@ class BaseTest(unittest.TestCase):
         self.custom_headers = {"Accept-Language": "en_US"}
 
 
-class ResourceFileHandlerMixInTest(BaseTest):
+class ResourceFileHandlerMixinTest(BaseTest):
+
+    def setUp(self):
+       self.connection = connection('127.0.0.1', 300)
+       self.resource_client = StubResourceFileHandler(self.connection)
+       super(ResourceFileHandlerMixinTest, self).setUp(self.resource_client)
 
     @mock.patch.object(connection, "post_multipart_with_response_handling")
     def test_upload_should_call_post_multipart(self, mock_post_multipart):
@@ -177,7 +212,119 @@ class ResourceFileHandlerMixInTest(BaseTest):
 
         self.assertFalse(result)
 
-class ResourcePatchMixInTest(BaseTest):
+
+class ResourceZeroBodyMixinTest(BaseTest):
+
+    def setUp(self):
+       self.connection = connection('127.0.0.1', 300)
+       self.resource_client = StubResourceZeroBody(self.connection)
+       super(ResourceZeroBodyMixinTest, self).setUp(self.resource_client)
+
+    @mock.patch.object(connection, "post")
+    @mock.patch.object(TaskMonitor, "wait_for_task")
+    def test_create_with_zero_body_called_once(self, mock_wait4task, mock_post):
+        mock_post.return_value = self.task, self.task
+        mock_wait4task.return_value = self.task
+        self.resource_client.create_with_zero_body()
+
+        mock_post.assert_called_once_with(
+            "/rest/testuri", {}, custom_headers=None)
+
+    @mock.patch.object(connection, "post")
+    @mock.patch.object(TaskMonitor, "wait_for_task")
+    def test_create_with_zero_body_called_once_without_uri(self, mock_wait4task, mock_post):
+        mock_post.return_value = self.task, self.task
+        mock_wait4task.return_value = self.task
+        self.resource_client.create_with_zero_body(timeout=-1)
+
+        mock_post.assert_called_once_with(
+            "/rest/testuri", {}, custom_headers=None)
+
+    @mock.patch.object(connection, "post")
+    @mock.patch.object(TaskMonitor, "wait_for_task")
+    def test_create_with_zero_body_and_custom_headers(self, mock_wait4task, mock_post):
+        mock_post.return_value = self.task, self.task
+        mock_wait4task.return_value = self.task
+        self.resource_client.create_with_zero_body(custom_headers=self.custom_headers)
+
+        mock_post.assert_called_once_with(mock.ANY, mock.ANY, custom_headers={"Accept-Language": "en_US"})
+
+    @mock.patch.object(connection, "post")
+    @mock.patch.object(TaskMonitor, "wait_for_task")
+    def test_create_with_zero_body_return_entity(self, mock_wait4task, mock_post):
+        response_body = {"resource_name": "name"}
+
+        mock_post.return_value = self.task, self.task
+        mock_wait4task.return_value = response_body
+
+        new_resource = self.resource_client.create_with_zero_body(timeout=-1)
+
+        self.assertNotEqual(new_resource, self.resource_client)
+
+    @mock.patch.object(connection, "post")
+    def test_create_with_zero_body_without_task(self, mock_post):
+        mock_post.return_value = None, self.response_body
+
+        new_resource = self.resource_client.create_with_zero_body()
+
+        self.assertNotEqual(new_resource, self.resource_client)
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "put")
+    @mock.patch.object(TaskMonitor, "wait_for_task")
+    def test_update_with_zero_body_called_once(self, mock_wait4task, mock_update, mock_ensure_resource):
+        mock_update.return_value = self.task, self.task
+        mock_wait4task.return_value = self.task
+        self.resource_client.URI = "/rest/enclosures"
+
+        self.resource_client.update_with_zero_body("/rest/enclosures/09USE133E5H4/configuration",
+                                                   timeout=-1)
+
+        mock_update.assert_called_once_with(
+            "/rest/enclosures/09USE133E5H4/configuration", None, custom_headers=None)
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "put")
+    @mock.patch.object(TaskMonitor, "wait_for_task")
+    def test_update_with_zero_body_and_custom_headers(self, mock_wait4task, mock_update, mock_ensure_resource):
+        mock_update.return_value = self.task, self.task
+        mock_wait4task.return_value = self.task
+
+        self.resource_client.update_with_zero_body(uri="/rest/testuri", custom_headers=self.custom_headers)
+
+        mock_update.assert_called_once_with(mock.ANY, mock.ANY, custom_headers={"Accept-Language": "en_US"})
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "put")
+    @mock.patch.object(TaskMonitor, "wait_for_task")
+    def test_update_with_zero_body_return_entity(self, mock_wait4task, mock_put, mock_ensure_resource):
+        response_body = {"resource_name": "name"}
+        self.resource_client.URI = "/rest/enclosures"
+
+        mock_put.return_value = self.task, self.task
+        mock_wait4task.return_value = response_body
+
+        result = self.resource_client.update_with_zero_body(
+            "/rest/enclosures/09USE133E5H4/configuration", timeout=-1)
+
+        self.assertEqual(result, response_body)
+
+    @mock.patch.object(connection, "put")
+    def test_update_with_zero_body_without_task(self, mock_put):
+        mock_put.return_value = None, self.response_body
+        self.resource_client.URI = "/rest/enclosures"
+        result = self.resource_client.update_with_zero_body(
+            "/rest/enclosures/09USE133E5H4/configuration", timeout=-1)
+
+        self.assertEqual(result, self.response_body)
+
+
+class ResourcePatchMixinTest(BaseTest):
+
+    def setUp(self):
+       self.connection = connection('127.0.0.1', 300)
+       self.resource_client = StubResourcePatch(self.connection)
+       super(ResourcePatchMixinTest, self).setUp(self.resource_client)
 
     @mock.patch.object(Resource, "ensure_resource_data")
     @mock.patch.object(connection, "patch")
@@ -268,7 +415,7 @@ class ResourcePatchMixInTest(BaseTest):
                    "Extra": "extra"}
         self.connection._apiVersion = 300
 
-        self.resource_client.patch_request(body=dict_info, custom_headers=headers)
+        self.resource_client.patch_request(uri, body=dict_info, custom_headers=headers)
 
         mock_patch.assert_called_once_with(uri, dict_info, custom_headers=headers)
 
@@ -282,7 +429,7 @@ class ResourcePatchMixInTest(BaseTest):
         headers = {"Extra": "extra"}
         self.connection._apiVersion = 300
 
-        self.resource_client.patch_request(body=dict_info, custom_headers=headers)
+        self.resource_client.patch_request(uri, body=dict_info, custom_headers=headers)
 
         mock_patch.assert_called_once_with(
             uri,
@@ -301,75 +448,140 @@ class ResourcePatchMixInTest(BaseTest):
 
         mock_wait4task.assert_called_once_with(self.task, mock.ANY)
 
-class ResourceZeoBodyMixInTest(BaseTest):
+
+class ResourceUtilizationMixinTest(BaseTest):
 
     def setUp(self):
-        host = "127.0.0.1"
-        self.connection = connection(host, 300)
-        self.resource_client = ResourceZeroBodyMixIn()
-        self.resource_client.do_put = Resource.do_put.__func__
-        self.resource_client.URI = self.URI
-        self.resource_client.DEFAULT_VALUES = self.DEFAULT_VALUES
-        self.resource_client.data = {"uri": "/rest/testuri"}
-        #self.resource_client._merge_default_values()
-        self.task = {"task": "task", "taskState": "Finished"}
-        self.response_body = {"body": "body"}
-        self.custom_headers = {"Accept-Language": "en_US"}
-
+       self.connection = connection('127.0.0.1', 300)
+       self.resource_client = StubResourceUtilization(self.connection)
+       super(ResourceUtilizationMixinTest, self).setUp(self.resource_client)
 
     @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "put")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    def test_update_with_zero_body_called_once(self, mock_wait4task, mock_update, mock_ensure_resource):
-        mock_update.return_value = self.task, self.task
-        mock_wait4task.return_value = self.task
-        self.resource_client.URI = "/rest/enclosures"
+    @mock.patch.object(connection, "get")
+    def test_get_utilization_with_args(self, mock_get, mock_ensure_resource):
+        self.resource_client.get_utilization(fields="AmbientTemperature,AveragePower,PeakPower",
+                                             filter="startDate=2016-05-30T03:29:42.361Z",
+                                             refresh=True, view="day")
 
-        self.resource_client.update_with_zero_body("/rest/enclosures/09USE133E5H4/configuration",
-                                                   timeout=-1)
+        expected_uri = "/rest/testuri/utilization" \
+                       "?filter=startDate%3D2016-05-30T03%3A29%3A42.361Z" \
+                       "&fields=AmbientTemperature%2CAveragePower%2CPeakPower" \
+                       "&refresh=true" \
+                       "&view=day"
 
-        mock_update.assert_called_once_with(
-            "/rest/enclosures/09USE133E5H4/configuration", None, custom_headers=None)
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "put")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    def test_update_with_zero_body_and_custom_headers(self, mock_wait4task, mock_update, mock_ensure_resource):
-        mock_update.return_value = self.task, self.task
-        mock_wait4task.return_value = self.task
-
-        self.resource_client.update_with_zero_body(uri="/rest/testuri", custom_headers=self.custom_headers)
-
-        mock_update.assert_called_once_with(mock.ANY, mock.ANY, custom_headers={"Accept-Language": "en_US"})
+        mock_get.assert_called_once_with(expected_uri)
 
     @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "put")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    def test_update_with_zero_body_return_entity(self, mock_wait4task, mock_put, mock_ensure_resource):
-        response_body = {"resource_name": "name"}
-        self.resource_client.URI = "/rest/enclosures"
+    @mock.patch.object(connection, "get")
+    def test_get_utilization_with_multiple_filters(self, mock_get, mock_ensure_resource):
+        self.resource_client.get_utilization(
+            fields="AmbientTemperature,AveragePower,PeakPower",
+            filter=["startDate=2016-05-30T03:29:42.361Z",
+                    "endDate=2016-05-31T03:29:42.361Z"],
+            refresh=True,
+            view="day")
+        expected_uri = "/rest/testuri/utilization" \
+                       "?filter=startDate%3D2016-05-30T03%3A29%3A42.361Z" \
+                       "&filter=endDate%3D2016-05-31T03%3A29%3A42.361Z" \
+                       "&fields=AmbientTemperature%2CAveragePower%2CPeakPower" \
+                       "&refresh=true" \
+                       "&view=day"
 
-        mock_put.return_value = self.task, self.task
-        mock_wait4task.return_value = response_body
+        mock_get.assert_called_once_with(expected_uri)
 
-        result = self.resource_client.update_with_zero_body(
-            "/rest/enclosures/09USE133E5H4/configuration", timeout=-1)
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "get")
+    def test_get_utilization_by_id_with_defaults(self, mock_get, mock_ensure_resource):
+        self.resource_client.get_utilization()
 
-        self.assertEqual(result, response_body)
+        expected_uri = "/rest/testuri/utilization"
 
-    @mock.patch.object(connection, "put")
-    def test_update_with_zero_body_without_task(self, mock_put):
-        mock_put.return_value = None, self.response_body
-        self.resource_client.URI = "/rest/enclosures"
-        result = self.resource_client.update_with_zero_body(
-            "/rest/enclosures/09USE133E5H4/configuration", timeout=-1)
+        mock_get.assert_called_once_with(expected_uri)
 
-        self.assertEqual(result, self.response_body)
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "get")
+    def test_get_utilization_by_uri_with_defaults(self, mock_get, mock_ensure_resource):
+        self.resource_client.get_utilization()
+
+        expected_uri = "/rest/testuri/utilization"
+
+        mock_get.assert_called_once_with(expected_uri)
+
+
+class ResourceCollectionMixinTest(BaseTest):
+
+    def setUp(self):
+       self.connection = connection('127.0.0.1', 300)
+       self.resource_client = StubResourceCollection(self.connection)
+       super(ResourceCollectionMixinTest, self).setUp(self.resource_client)
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "get")
+    def test_get_collection_uri(self, mock_get, mock_ensure_resource):
+        mock_get.return_value = {"members": [{"key": "value"}, {"key": "value"}]}
+
+        self.resource_client.get_collection()
+
+        mock_get.assert_called_once_with(self.URI)
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "get")
+    def test_get_collection_with_filter(self, mock_get, mock_ensure_resource):
+        mock_get.return_value = {}
+
+        self.resource_client.get_collection(filter="name=name")
+
+        mock_get.assert_called_once_with(self.URI + "?filter=name%3Dname")
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "get")
+    def test_get_collection_with_path(self, mock_get, mock_ensure_resource):
+        mock_get.return_value = {}
+
+        self.resource_client.get_collection(path="/test")
+
+        mock_get.assert_called_once_with(self.URI + "/test")
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "get")
+    def test_get_collection_with_multiple_filters(self, mock_get, mock_ensure_resource):
+        mock_get.return_value = {}
+
+        self.resource_client.get_collection(["name1=one", "name2=two", "name=three"])
+
+        mock_get.assert_called_once_with(self.URI + "?filter=name1%3Done&filter=name2%3Dtwo&filter=name%3Dthree")
+
+    @mock.patch.object(Resource, "ensure_resource_data")
+    @mock.patch.object(connection, "get")
+    def test_get_collection_should_return_list(self, mock_get, mock_ensure_resource):
+        mock_get.return_value = {"members": [{"key": "value"}, {"key": "value"}]}
+
+        collection = self.resource_client.get_collection()
+
+        self.assertEqual(len(collection), 2)
+
+
+class ResourceSchemaMixinTest(BaseTest):
+
+    def setUp(self):
+       self.connection = connection('127.0.0.1', 300)
+       self.resource_client = StubResourceSchema(self.connection)
+       super(ResourceSchemaMixinTest, self).setUp(self.resource_client)
+
+    @mock.patch.object(connection, "get")
+    def test_get_schema_uri(self, mock_get):
+        self.resource_client.get_schema()
+        mock_get.assert_called_once_with(self.URI + "/schema")
 
 
 class ResourceTest(BaseTest):
 
-    @mock.patch.object(Resource, "do_put")
+    def setUp(self):
+       self.connection = connection('127.0.0.1', 300)
+       self.resource_client = StubResource(self.connection)
+       super(ResourceTest, self).setUp(self.resource_client)
+
+    @mock.patch.object(ResourceRequest, "do_put")
     @mock.patch.object(Resource, "ensure_resource_data")
     def test_ensure_resource_should_call_once(self, mock_do_put, mock_ensure_resource):
         self.resource_client.data = {"uri": "/rest/test"}
@@ -382,7 +594,7 @@ class ResourceTest(BaseTest):
         self.assertRaises(exceptions.HPOneViewMissingUniqueIdentifiers,
                           self.resource_client.ensure_resource_data)
 
-    @mock.patch.object(Resource, "do_get")
+    @mock.patch.object(ResourceRequest, "do_get")
     def test_ensure_resource_raise_resource_not_found_exception_with_uri(self, mock_do_get):
         self.resource_client.data = {"uri": "/uri/test"}
         mock_do_get.return_value = []
@@ -396,7 +608,7 @@ class ResourceTest(BaseTest):
         with self.assertRaises(exceptions.HPOneViewResourceNotFound):
             self.resource_client.ensure_resource_data(update_data=True)
 
-    @mock.patch.object(Resource, "do_get")
+    @mock.patch.object(ResourceRequest, "do_get")
     @mock.patch.object(Resource, "get_by")
     def test_ensure_resource_should_update_resource_data(self, mock_do_get, mock_get_by):
         get_by_return_value = [{"name": "testname", "uri": "/rest/testuri"}]
@@ -581,54 +793,6 @@ class ResourceTest(BaseTest):
 
         self.assertEqual(result, [])
 
-    @mock.patch.object(connection, "post")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    def test_create_with_zero_body_called_once(self, mock_wait4task, mock_post):
-        mock_post.return_value = self.task, self.task
-        mock_wait4task.return_value = self.task
-        self.resource_client.create_with_zero_body()
-
-        mock_post.assert_called_once_with(
-            "/rest/testuri", {}, custom_headers=None)
-
-    @mock.patch.object(connection, "post")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    def test_create_with_zero_body_called_once_without_uri(self, mock_wait4task, mock_post):
-        mock_post.return_value = self.task, self.task
-        mock_wait4task.return_value = self.task
-        self.resource_client.create_with_zero_body(timeout=-1)
-
-        mock_post.assert_called_once_with(
-            "/rest/testuri", {}, custom_headers=None)
-
-    @mock.patch.object(connection, "post")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    def test_create_with_zero_body_and_custom_headers(self, mock_wait4task, mock_post):
-        mock_post.return_value = self.task, self.task
-        mock_wait4task.return_value = self.task
-        self.resource_client.create_with_zero_body('1', custom_headers=self.custom_headers)
-
-        mock_post.assert_called_once_with(mock.ANY, mock.ANY, custom_headers={"Accept-Language": "en_US"})
-
-    @mock.patch.object(connection, "post")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    def test_create_with_zero_body_return_entity(self, mock_wait4task, mock_post):
-        response_body = {"resource_name": "name"}
-
-        mock_post.return_value = self.task, self.task
-        mock_wait4task.return_value = response_body
-
-        new_resource = self.resource_client.create_with_zero_body(timeout=-1)
-
-        self.assertNotEqual(new_resource, self.resource_client)
-
-    @mock.patch.object(connection, "post")
-    def test_create_with_zero_body_without_task(self, mock_post):
-        mock_post.return_value = None, self.response_body
-
-        new_resource = self.resource_client.create_with_zero_body()
-
-        self.assertNotEqual(new_resource, self.resource_client)
 
     @mock.patch.object(connection, "post")
     def test_create_uri(self, mock_post):
@@ -704,40 +868,40 @@ class ResourceTest(BaseTest):
 
         mock_wait4task.assert_called_once_with(self.task, 60)
 
-    @mock.patch.object(connection, "delete")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    def test_delete_all_called_once(self, mock_wait4task, mock_delete):
-        mock_delete.return_value = self.task, self.response_body
-        mock_wait4task.return_value = self.task
-
-        filter = "name='Exchange Server'"
-        uri = "/rest/testuri?filter=name%3D%27Exchange%20Server%27&force=True"
-        self.resource_client.delete_all(filter=filter, force=True, timeout=-1)
-
-        mock_delete.assert_called_once_with(uri)
-
-    @mock.patch.object(connection, "delete")
-    def test_delete_all_should_return_true(self, mock_delete):
-        mock_delete.return_value = None, self.response_body
-
-        filter = "name='Exchange Server'"
-        result = self.resource_client.delete_all(filter=filter, force=True, timeout=-1)
-
-        self.assertTrue(result)
-
-    @mock.patch.object(connection, "delete")
-    @mock.patch.object(TaskMonitor, "wait_for_task")
-    def test_delete_all_should_wait_for_task(self, mock_wait4task, mock_delete):
-        mock_delete.return_value = self.task, self.response_body
-        mock_wait4task.return_value = self.task
-
-        filter = "name='Exchange Server'"
-        delete_task = self.resource_client.delete_all(filter=filter, force=True, timeout=-1)
-
-        mock_wait4task.assert_called_with(self.task, timeout=-1)
-        self.assertEqual(self.task, delete_task)
-
-#    @mock.patch.object(Resource, "ensure_resource_data")
+#    @mock.patch.object(connection, "delete")
+#    @mock.patch.object(TaskMonitor, "wait_for_task")
+#    def test_delete_all_called_once(self, mock_wait4task, mock_delete):
+#        mock_delete.return_value = self.task, self.response_body
+#        mock_wait4task.return_value = self.task
+#
+#        filter = "name='Exchange Server'"
+#        uri = "/rest/testuri?filter=name%3D%27Exchange%20Server%27&force=True"
+#        self.resource_client.delete_all(filter=filter, force=True, timeout=-1)
+#
+#        mock_delete.assert_called_once_with(uri)
+#
+#    @mock.patch.object(connection, "delete")
+#    def test_delete_all_should_return_true(self, mock_delete):
+#        mock_delete.return_value = None, self.response_body
+#
+#        filter = "name='Exchange Server'"
+#        result = self.resource_client.delete_all(filter=filter, force=True, timeout=-1)
+#
+#        self.assertTrue(result)
+#
+#    @mock.patch.object(connection, "delete")
+#    @mock.patch.object(TaskMonitor, "wait_for_task")
+#    def test_delete_all_should_wait_for_task(self, mock_wait4task, mock_delete):
+#        mock_delete.return_value = self.task, self.response_body
+#        mock_wait4task.return_value = self.task
+#
+#        filter = "name='Exchange Server'"
+#        delete_task = self.resource_client.delete_all(filter=filter, force=True, timeout=-1)
+#
+#        mock_wait4task.assert_called_with(self.task, timeout=-1)
+#        self.assertEqual(self.task, delete_task)
+#
+##    @mock.patch.object(Resource, "ensure_resource_data")
 #    @mock.patch.object(connection, "delete")
 #    def test_delete_without_data(self, mock_ensure_resource, mock_delete):
 #        self.resource_client.data = {}
@@ -774,55 +938,7 @@ class ResourceTest(BaseTest):
 
         mock_delete.assert_called_once_with(mock.ANY, custom_headers={"Accept-Language": "en_US"})
 
-    @mock.patch.object(connection, "get")
-    def test_get_schema_uri(self, mock_get):
-        self.resource_client.get_schema()
-        mock_get.assert_called_once_with(self.URI + "/schema")
 
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "get")
-    def test_get_collection_uri(self, mock_get, mock_ensure_resource):
-        mock_get.return_value = {"members": [{"key": "value"}, {"key": "value"}]}
-
-        self.resource_client.get_collection()
-
-        mock_get.assert_called_once_with(self.URI)
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "get")
-    def test_get_collection_with_filter(self, mock_get, mock_ensure_resource):
-        mock_get.return_value = {}
-
-        self.resource_client.get_collection(filter="name=name")
-
-        mock_get.assert_called_once_with(self.URI + "?filter=name%3Dname")
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "get")
-    def test_get_collection_with_path(self, mock_get, mock_ensure_resource):
-        mock_get.return_value = {}
-
-        self.resource_client.get_collection(path="/test")
-
-        mock_get.assert_called_once_with(self.URI + "/test")
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "get")
-    def test_get_collection_with_multiple_filters(self, mock_get, mock_ensure_resource):
-        mock_get.return_value = {}
-
-        self.resource_client.get_collection(["name1=one", "name2=two", "name=three"])
-
-        mock_get.assert_called_once_with(self.URI + "?filter=name1%3Done&filter=name2%3Dtwo&filter=name%3Dthree")
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "get")
-    def test_get_collection_should_return_list(self, mock_get, mock_ensure_resource):
-        mock_get.return_value = {"members": [{"key": "value"}, {"key": "value"}]}
-
-        collection = self.resource_client.get_collection()
-
-        self.assertEqual(len(collection), 2)
 
     @mock.patch.object(Resource, "ensure_resource_data")
     @mock.patch.object(connection, "put")
@@ -933,7 +1049,6 @@ class ResourceTest(BaseTest):
 
         self.assertEqual(self.resource_client.data, dict_to_update)
 
-
     @mock.patch.object(Resource, "get_by")
     def test_get_by_name_with_result(self, mock_get_by):
         self.resource_client.get_by_name("Resource Name,")
@@ -951,147 +1066,21 @@ class ResourceTest(BaseTest):
         self.resource_client.get_by_uri("/rest/testuri")
         mock_get.assert_called_once_with('/rest/testuri')
 
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "get")
-    def test_get_utilization_with_args(self, mock_get, mock_ensure_resource):
-        self.resource_client.get_utilization(fields="AmbientTemperature,AveragePower,PeakPower",
-                                             filter="startDate=2016-05-30T03:29:42.361Z",
-                                             refresh=True, view="day")
-
-        expected_uri = "/rest/testuri/utilization" \
-                       "?filter=startDate%3D2016-05-30T03%3A29%3A42.361Z" \
-                       "&fields=AmbientTemperature%2CAveragePower%2CPeakPower" \
-                       "&refresh=true" \
-                       "&view=day"
-
-        mock_get.assert_called_once_with(expected_uri)
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "get")
-    def test_get_utilization_with_multiple_filters(self, mock_get, mock_ensure_resource):
-        self.resource_client.get_utilization(
-            fields="AmbientTemperature,AveragePower,PeakPower",
-            filter=["startDate=2016-05-30T03:29:42.361Z",
-                    "endDate=2016-05-31T03:29:42.361Z"],
-            refresh=True,
-            view="day")
-        expected_uri = "/rest/testuri/utilization" \
-                       "?filter=startDate%3D2016-05-30T03%3A29%3A42.361Z" \
-                       "&filter=endDate%3D2016-05-31T03%3A29%3A42.361Z" \
-                       "&fields=AmbientTemperature%2CAveragePower%2CPeakPower" \
-                       "&refresh=true" \
-                       "&view=day"
-
-        mock_get.assert_called_once_with(expected_uri)
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "get")
-    def test_get_utilization_by_id_with_defaults(self, mock_get, mock_ensure_resource):
-        self.resource_client.get_utilization()
-
-        expected_uri = "/rest/testuri/utilization"
-
-        mock_get.assert_called_once_with(expected_uri)
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "get")
-    def test_get_utilization_by_uri_with_defaults(self, mock_get, mock_ensure_resource):
-        self.resource_client.get_utilization()
-
-        expected_uri = "/rest/testuri/utilization"
-
-        mock_get.assert_called_once_with(expected_uri)
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "post")
-    @mock.patch.object(TaskMonitor, "get_completed_task")
-    def test_create_report_should_do_post_request(self, mock_get_completed_task, mock_post, mock_ensure_resource):
-        task_with_output = self.task.copy()
-        task_with_output["taskOutput"] = []
-
-        mock_post.return_value = self.task, {}
-        mock_get_completed_task.return_value = task_with_output
-
-        self.resource_client.create_report()
-
-        mock_post.assert_called_once_with("/rest/testuri", {})
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "post")
-    @mock.patch.object(TaskMonitor, 'get_completed_task')
-    def test_create_report_should_wait_task_completion(self, mock_get_completed_task, mock_post, mock_ensure_resource):
-        task_with_output = self.task.copy()
-        task_with_output["taskOutput"] = []
-
-        mock_post.return_value = self.task, {}
-        mock_get_completed_task.return_value = task_with_output
-
-        self.resource_client.create_report(timeout=60)
-
-        mock_get_completed_task.assert_called_once_with(self.task, 60)
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "post")
-    @mock.patch.object(TaskMonitor, "get_completed_task")
-    def test_create_report_should_return_output_list_when_results(self, mock_get_completed_task, mock_post, mock_ensure_resource):
-        task_output = [
-            {"type": "FCIssueResponseV2", "created": "2015-03-24T15: 32: 50.889Z"},
-            {"type": "FCIssueResponseV2", "created": "2015-03-13T14: 10: 50.322Z"}
-        ]
-        task_with_output = self.task.copy()
-        task_with_output['taskOutput'] = task_output
-
-        mock_post.return_value = self.task, {}
-        mock_get_completed_task.return_value = task_with_output
-
-        result = self.resource_client.create_report()
-
-        self.assertEqual(result, task_output)
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "post")
-    @mock.patch.object(TaskMonitor, "get_completed_task")
-    def test_create_report_should_return_empty_list_when_output_is_empty(self, mock_get_completed_task, mock_post, mock_ensure_resource):
-        task_with_output = self.task.copy()
-        task_with_output['taskOutput'] = []
-
-        mock_post.return_value = self.task, {}
-        mock_get_completed_task.return_value = task_with_output
-
-        result = self.resource_client.create_report()
-
-        self.assertEqual(result, [])
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "post")
-    def test_create_report_should_raise_exception_when_not_task(self, mock_post, mock_ensure_resource):
-        task_with_output = self.task.copy()
-        task_with_output["taskOutput"] = []
-
-        mock_post.return_value = None, {}
-
-        try:
-            self.resource_client.create_report()
-        except exceptions.HPOneViewException as exception:
-            self.assertEqual(RESOURCE_CLIENT_TASK_EXPECTED, exception.args[0])
-        else:
-            self.fail("Expected Exception was not raised")
-
     def test_build_uri_with_id_should_work(self):
         input = "09USE7335NW35"
         expected_output = "/rest/testuri/09USE7335NW35"
-        result = self.resource_client.build_uri(input)
+        result = self.resource_client._helper.build_uri(input)
         self.assertEqual(expected_output, result)
 
     def test_build_uri_with_uri_should_work(self):
         input = "/rest/testuri/09USE7335NW3"
         expected_output = "/rest/testuri/09USE7335NW3"
-        result = self.resource_client.build_uri(input)
+        result = self.resource_client._helper.build_uri(input)
         self.assertEqual(expected_output, result)
 
     def test_build_uri_with_none_should_raise_exception(self):
         try:
-            self.resource_client.build_uri(None)
+            self.resource_client._helper.build_uri(None)
         except ValueError as exception:
             self.assertEqual(RESOURCE_CLIENT_INVALID_ID, exception.args[0])
         else:
@@ -1099,7 +1088,7 @@ class ResourceTest(BaseTest):
 
     def test_build_uri_with_empty_str_should_raise_exception(self):
         try:
-            self.resource_client.build_uri('')
+            self.resource_client._helper.build_uri('')
         except ValueError as exception:
             self.assertEqual(RESOURCE_CLIENT_INVALID_ID, exception.args[0])
         else:
@@ -1107,7 +1096,7 @@ class ResourceTest(BaseTest):
 
     def test_build_uri_with_different_resource_uri_should_raise_exception(self):
         try:
-            self.resource_client.build_uri(
+            self.resource_client._helper.build_uri(
                 "/rest/test/another/resource/uri/09USE7335NW3")
         except exceptions.HPOneViewUnknownType as exception:
             self.assertEqual(UNRECOGNIZED_URI, exception.args[0])
@@ -1116,7 +1105,7 @@ class ResourceTest(BaseTest):
 
     def test_build_uri_with_incomplete_uri_should_raise_exception(self):
         try:
-            self.resource_client.build_uri("/rest/")
+            self.resource_client._helper.build_uri("/rest/")
         except exceptions.HPOneViewUnknownType as exception:
             self.assertEqual(UNRECOGNIZED_URI, exception.args[0])
         else:
@@ -1162,18 +1151,16 @@ class ResourceTest(BaseTest):
         ]
 
         for option in options:
-            uri = self.resource_client.build_subresource_uri(option["resource"], option["subresource"], option["path"])
+            uri = self.resource_client._helper.build_subresource_uri(option["resource"], option["subresource"], option["path"])
             self.assertEqual(uri, option["uri"])
 
     def test_build_subresource_uri_with_subresourceid_and_without_resource_should_fail(self):
         try:
-            self.resource_client.build_subresource_uri(None, "123456", "sub-path")
+            self.resource_client._helper.build_subresource_uri(None, "123456", "sub-path")
         except exceptions.HPOneViewValueError as exception:
             self.assertEqual(RESOURCE_ID_OR_URI_REQUIRED, exception.args[0])
         else:
             self.fail("Expected Exception was not raised")
-
-
 
     def test_merge_resources(self):
         resource1 = {"name": "resource1", "type": "resource"}
@@ -1198,9 +1185,10 @@ class ResourceTest(BaseTest):
 
         self.assertEqual(result_list, expected_list)
 
-    def test_raise_unavailable_method_exception(self):
-        self.assertRaises(exceptions.HPOneViewUnavailableMethod,
-                          self.resource_client.unavailable_method)
+#    def test_raise_unavailable_method_exception(self):
+#        self.assertRaises(exceptions.HPOneViewUnavailableMethod,
+#                          self.resource_client.unavailable_method)
+#
 
 
 class FakeResource(object):
