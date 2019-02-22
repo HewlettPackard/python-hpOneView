@@ -34,7 +34,7 @@ from hpOneView.resources.resource import (ResourceClient, ResourceRequest, Resou
                                           RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor,
                                           RESOURCE_CLIENT_TASK_EXPECTED, RESOURCE_ID_OR_URI_REQUIRED,
                                           transform_list_to_dict, extract_id_from_uri, merge_resources,
-                                          merge_default_values)
+                                          merge_default_values, unavailable_method)
 
 
 class StubResourceFileHandler(ResourceFileHandlerMixin, Resource):
@@ -933,19 +933,6 @@ class ResourceTest(BaseTest):
         expected_uri = "/rest/testuri?force=True"
         mock_put.assert_called_once_with(expected_uri, expected, custom_headers=None)
 
-#    @mock.patch.object(Resource, "ensure_resource_data")
-#    @mock.patch.object(connection, "put")
-#    def test_update_with_api_version_200(self, mock_put, mock_ensure_resource):
-#        dict_to_update = {"name": "test"}
-#        uri = "/rest/testuri"
-#        mock_put.return_value = None, self.response_body
-#        self.connection._apiVersion = 200
-#        self.resource_client._merge_default_values()
-#        expected_dict = {"name": "test", "type": self.TYPE_V200, "uri": uri}
-#
-#        self.resource_client.update(dict_to_update)
-#        mock_put.assert_called_once_with(uri, expected_dict, custom_headers=None)
-
     @mock.patch.object(Resource, "ensure_resource_data")
     @mock.patch.object(connection, "put")
     def test_update_with_default_api_version_300(self, mock_put, mock_ensure_resource):
@@ -1142,10 +1129,9 @@ class ResourceTest(BaseTest):
 
         self.assertEqual(result_list, expected_list)
 
-#    def test_raise_unavailable_method_exception(self):
-#        self.assertRaises(exceptions.HPOneViewUnavailableMethod,
-#                          self.resource_client.unavailable_method)
-#
+    def test_raise_unavailable_method_exception(self):
+        self.assertRaises(exceptions.HPOneViewUnavailableMethod,
+                          unavailable_method)
 
 
 class FakeResource(object):

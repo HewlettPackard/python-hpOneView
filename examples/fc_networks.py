@@ -36,7 +36,7 @@ config = {
 }
 
 options = {
-    "name": "fc-test",
+    "name": "OneViewSDK Test FC Network",
     "connectionTemplateUri": None,
     "autoLoginRedistribution": True,
     "fabricType": "FabricAttach",
@@ -44,7 +44,7 @@ options = {
 }
 
 # Scope name to perform the patch operation
-scope_name = "sample"
+scope_name = "test_scope"
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -27,7 +27,8 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.servers.enclosures import Enclosures
-from hpOneView.resources.resource import Resource, ResourceRequest, ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationMixin
+from hpOneView.resources.resource import (Resource, ResourceRequest, ResourcePatchMixin,
+                                          ResourceZeroBodyMixin, ResourceUtilizationMixin)
 
 
 class EnclosuresTest(TestCase):

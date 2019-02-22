@@ -35,10 +35,10 @@ config = {
         "password": ""
     },
     "api_version": "800",
-    "enclosure_group_uri": "/rest/enclosure-groups/06475bf3-084b-4874-af9f-3412dee3f0eb",
-    "enclosure_hostname": "172.18.1.14",
-    "enclosure_username": "dcs",
-    "enclosure_password": "dcs",
+    "enclosure_group_uri": "/rest/enclosure-groups/06475bf3-084b-4874",
+    "enclosure_hostname": "",
+    "enclosure_username": "",
+    "enclosure_password": "",
 }
 
 # Declare a CA signed certificate file path.
