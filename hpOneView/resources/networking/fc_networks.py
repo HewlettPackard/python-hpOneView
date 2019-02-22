@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,8 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-from hpOneView.resources.resource import Resource, ResourceHelper, ResourcePatchMixin
+from hpOneView.resources.resource import Resource, ResourcePatchMixin
+
 
 class FcNetworks(Resource, ResourcePatchMixin):
     """
@@ -49,22 +50,3 @@ class FcNetworks(Resource, ResourcePatchMixin):
 
     def __init__(self, connection, data=None):
         super(FcNetworks, self).__init__(connection, data)
-
-#    def patch(self, operation, path, value, timeout=-1):
-#        """
-#        Uses the PATCH to update the given resource.
-#
-#        Only one operation can be performed in each PATCH call.
-#
-#        Args:
-#            operation: Patch operation
-#            path: Path
-#            value: Value
-#            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-#                in OneView; it just stops waiting for its completion.
-#
-#        Returns:
-#            dict: Updated resource.
-#        """
-#        uri = self.data['uri']
-#        return self._resource_helper.patch(uri, operation, path, value, timeout=timeout)

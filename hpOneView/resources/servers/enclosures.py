@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,9 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-from hpOneView.resources.resource import Resource, ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationMixin, ensure_resource_client
+from hpOneView.resources.resource import (Resource, ResourcePatchMixin,
+                                          ResourceZeroBodyMixin, ResourceUtilizationMixin,
+                                          ensure_resource_client)
 
 
 class Enclosures(ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationMixin, Resource):
@@ -100,7 +102,7 @@ class Enclosures(ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationM
         else:
             new_resource = None
 
-        return  new_resource
+        return new_resource
 
     @ensure_resource_client
     def get_environmental_configuration(self):

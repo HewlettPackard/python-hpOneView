@@ -91,9 +91,9 @@ class BaseTest(unittest.TestCase):
 class ResourceFileHandlerMixinTest(BaseTest):
 
     def setUp(self):
-       self.connection = connection('127.0.0.1', 300)
-       self.resource_client = StubResourceFileHandler(self.connection)
-       super(ResourceFileHandlerMixinTest, self).setUp(self.resource_client)
+        self.connection = connection('127.0.0.1', 300)
+        self.resource_client = StubResourceFileHandler(self.connection)
+        super(ResourceFileHandlerMixinTest, self).setUp(self.resource_client)
 
     @mock.patch.object(connection, "post_multipart_with_response_handling")
     def test_upload_should_call_post_multipart(self, mock_post_multipart):
@@ -216,9 +216,9 @@ class ResourceFileHandlerMixinTest(BaseTest):
 class ResourceZeroBodyMixinTest(BaseTest):
 
     def setUp(self):
-       self.connection = connection('127.0.0.1', 300)
-       self.resource_client = StubResourceZeroBody(self.connection)
-       super(ResourceZeroBodyMixinTest, self).setUp(self.resource_client)
+        self.connection = connection('127.0.0.1', 300)
+        self.resource_client = StubResourceZeroBody(self.connection)
+        super(ResourceZeroBodyMixinTest, self).setUp(self.resource_client)
 
     @mock.patch.object(connection, "post")
     @mock.patch.object(TaskMonitor, "wait_for_task")
@@ -322,9 +322,9 @@ class ResourceZeroBodyMixinTest(BaseTest):
 class ResourcePatchMixinTest(BaseTest):
 
     def setUp(self):
-       self.connection = connection('127.0.0.1', 300)
-       self.resource_client = StubResourcePatch(self.connection)
-       super(ResourcePatchMixinTest, self).setUp(self.resource_client)
+        self.connection = connection('127.0.0.1', 300)
+        self.resource_client = StubResourcePatch(self.connection)
+        super(ResourcePatchMixinTest, self).setUp(self.resource_client)
 
     @mock.patch.object(Resource, "ensure_resource_data")
     @mock.patch.object(connection, "patch")
@@ -452,9 +452,9 @@ class ResourcePatchMixinTest(BaseTest):
 class ResourceUtilizationMixinTest(BaseTest):
 
     def setUp(self):
-       self.connection = connection('127.0.0.1', 300)
-       self.resource_client = StubResourceUtilization(self.connection)
-       super(ResourceUtilizationMixinTest, self).setUp(self.resource_client)
+        self.connection = connection('127.0.0.1', 300)
+        self.resource_client = StubResourceUtilization(self.connection)
+        super(ResourceUtilizationMixinTest, self).setUp(self.resource_client)
 
     @mock.patch.object(Resource, "ensure_resource_data")
     @mock.patch.object(connection, "get")
@@ -511,9 +511,9 @@ class ResourceUtilizationMixinTest(BaseTest):
 class ResourceCollectionMixinTest(BaseTest):
 
     def setUp(self):
-       self.connection = connection('127.0.0.1', 300)
-       self.resource_client = StubResourceCollection(self.connection)
-       super(ResourceCollectionMixinTest, self).setUp(self.resource_client)
+        self.connection = connection('127.0.0.1', 300)
+        self.resource_client = StubResourceCollection(self.connection)
+        super(ResourceCollectionMixinTest, self).setUp(self.resource_client)
 
     @mock.patch.object(Resource, "ensure_resource_data")
     @mock.patch.object(connection, "get")
@@ -564,9 +564,9 @@ class ResourceCollectionMixinTest(BaseTest):
 class ResourceSchemaMixinTest(BaseTest):
 
     def setUp(self):
-       self.connection = connection('127.0.0.1', 300)
-       self.resource_client = StubResourceSchema(self.connection)
-       super(ResourceSchemaMixinTest, self).setUp(self.resource_client)
+        self.connection = connection('127.0.0.1', 300)
+        self.resource_client = StubResourceSchema(self.connection)
+        super(ResourceSchemaMixinTest, self).setUp(self.resource_client)
 
     @mock.patch.object(connection, "get")
     def test_get_schema_uri(self, mock_get):
@@ -577,9 +577,9 @@ class ResourceSchemaMixinTest(BaseTest):
 class ResourceTest(BaseTest):
 
     def setUp(self):
-       self.connection = connection('127.0.0.1', 300)
-       self.resource_client = StubResource(self.connection)
-       super(ResourceTest, self).setUp(self.resource_client)
+        self.connection = connection('127.0.0.1', 300)
+        self.resource_client = StubResource(self.connection)
+        super(ResourceTest, self).setUp(self.resource_client)
 
     @mock.patch.object(ResourceRequest, "do_put")
     @mock.patch.object(Resource, "ensure_resource_data")
@@ -793,7 +793,6 @@ class ResourceTest(BaseTest):
 
         self.assertEqual(result, [])
 
-
     @mock.patch.object(connection, "post")
     def test_create_uri(self, mock_post):
         dict_to_create = {"resource_name": "a name"}
@@ -824,14 +823,14 @@ class ResourceTest(BaseTest):
         self.resource_client.create(dict_to_create, timeout=-1)
         mock_post.assert_called_once_with(self.URI, expected_dict, custom_headers=None)
 
-#    @mock.patch.object(connection, "post")
-#    def test_create_should_not_override_resource_properties(self, mock_post):
-#        dict_to_create = {"resource_name": "a name", "type": "anotherType"}
-#        mock_post.return_value = {}, {}
-#        expected = {"resource_name": "a name", "type": "anotherType"}
-#        self.resource_client.create(dict_to_create)
-#
-#        mock_post.assert_called_once_with(self.URI, expected, custom_headers=None)
+    @mock.patch.object(connection, "post")
+    def test_create_should_not_override_resource_properties(self, mock_post):
+        dict_to_create = {"resource_name": "a name", "type": "anotherType"}
+        mock_post.return_value = {}, {}
+        expected = {"resource_name": "a name", "type": "anotherType"}
+        self.resource_client.create(dict_to_create)
+
+        mock_post.assert_called_once_with(self.URI, expected, custom_headers=None)
 
     @mock.patch.object(connection, "post")
     def test_create_without_default_values(self, mock_post):
@@ -868,46 +867,6 @@ class ResourceTest(BaseTest):
 
         mock_wait4task.assert_called_once_with(self.task, 60)
 
-#    @mock.patch.object(connection, "delete")
-#    @mock.patch.object(TaskMonitor, "wait_for_task")
-#    def test_delete_all_called_once(self, mock_wait4task, mock_delete):
-#        mock_delete.return_value = self.task, self.response_body
-#        mock_wait4task.return_value = self.task
-#
-#        filter = "name='Exchange Server'"
-#        uri = "/rest/testuri?filter=name%3D%27Exchange%20Server%27&force=True"
-#        self.resource_client.delete_all(filter=filter, force=True, timeout=-1)
-#
-#        mock_delete.assert_called_once_with(uri)
-#
-#    @mock.patch.object(connection, "delete")
-#    def test_delete_all_should_return_true(self, mock_delete):
-#        mock_delete.return_value = None, self.response_body
-#
-#        filter = "name='Exchange Server'"
-#        result = self.resource_client.delete_all(filter=filter, force=True, timeout=-1)
-#
-#        self.assertTrue(result)
-#
-#    @mock.patch.object(connection, "delete")
-#    @mock.patch.object(TaskMonitor, "wait_for_task")
-#    def test_delete_all_should_wait_for_task(self, mock_wait4task, mock_delete):
-#        mock_delete.return_value = self.task, self.response_body
-#        mock_wait4task.return_value = self.task
-#
-#        filter = "name='Exchange Server'"
-#        delete_task = self.resource_client.delete_all(filter=filter, force=True, timeout=-1)
-#
-#        mock_wait4task.assert_called_with(self.task, timeout=-1)
-#        self.assertEqual(self.task, delete_task)
-#
-##    @mock.patch.object(Resource, "ensure_resource_data")
-#    @mock.patch.object(connection, "delete")
-#    def test_delete_without_data(self, mock_ensure_resource, mock_delete):
-#        self.resource_client.data = {}
-#        self.assertRaises(ValueError,
-#                          self.resource_client.delete)
-
     @mock.patch.object(Resource, "ensure_resource_data")
     @mock.patch.object(connection, "delete")
     def test_delete_should_return_true(self, mock_delete, mock_ensure_resource):
@@ -937,8 +896,6 @@ class ResourceTest(BaseTest):
         self.resource_client.delete(custom_headers=self.custom_headers)
 
         mock_delete.assert_called_once_with(mock.ANY, custom_headers={"Accept-Language": "en_US"})
-
-
 
     @mock.patch.object(Resource, "ensure_resource_data")
     @mock.patch.object(connection, "put")
@@ -976,18 +933,18 @@ class ResourceTest(BaseTest):
         expected_uri = "/rest/testuri?force=True"
         mock_put.assert_called_once_with(expected_uri, expected, custom_headers=None)
 
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "put")
-    def test_update_with_api_version_200(self, mock_put, mock_ensure_resource):
-        dict_to_update = {"name": "test"}
-        uri = "/rest/testuri"
-        mock_put.return_value = None, self.response_body
-        self.connection._apiVersion = 200
-        self.resource_client._merge_default_values()
-        expected_dict = {"name": "test", "type": self.TYPE_V200, "uri": uri}
-
-        self.resource_client.update(dict_to_update)
-        mock_put.assert_called_once_with(uri, expected_dict, custom_headers=None)
+#    @mock.patch.object(Resource, "ensure_resource_data")
+#    @mock.patch.object(connection, "put")
+#    def test_update_with_api_version_200(self, mock_put, mock_ensure_resource):
+#        dict_to_update = {"name": "test"}
+#        uri = "/rest/testuri"
+#        mock_put.return_value = None, self.response_body
+#        self.connection._apiVersion = 200
+#        self.resource_client._merge_default_values()
+#        expected_dict = {"name": "test", "type": self.TYPE_V200, "uri": uri}
+#
+#        self.resource_client.update(dict_to_update)
+#        mock_put.assert_called_once_with(uri, expected_dict, custom_headers=None)
 
     @mock.patch.object(Resource, "ensure_resource_data")
     @mock.patch.object(connection, "put")
