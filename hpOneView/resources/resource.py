@@ -98,10 +98,9 @@ class Resource(object):
     def __init__(self, connection, data=None):
         self._connection = connection
         self._task_monitor = TaskMonitor(connection)
-        self._helper = ResourceHelper(self.URI)
-        self._request = ResourceRequest(connection,
-                                        self._task_monitor,
-                                        self._helper)
+        self._helper = ResourceHelper(self.URI,
+                                      self._connection,
+                                      self._task_monitor)
         # Resource data
         self.data = data if data else {}
 
@@ -109,11 +108,10 @@ class Resource(object):
         self._merge_default_values()
 
     def ensure_resource_data(self, update_data=False):
-        """Retrieves data from OneView and update resource data.
+        """Retrieves data from OneView and updates resource object.
 
         Args:
-            update_data: Helps to update resource data when it is required.
-                Some operations requires only resource uri, there is no need of data update.
+            update_data: Flag to update resource data when it is required.
         """
         # Check for unique identifier in the resource data
         if not any(key in self.data for key in self.UNIQUE_IDENTIFIERS):
@@ -126,7 +124,7 @@ class Resource(object):
         resource_data = None
 
         if 'uri' in self.UNIQUE_IDENTIFIERS and self.data.get('uri'):
-            resource_data = self._request.do_get(self.data['uri'])
+            resource_data = self._helper.do_get(self.data['uri'])
         else:
             for identifier in self.UNIQUE_IDENTIFIERS:
                 identifier_value = self.data.get(identifier)
@@ -145,9 +143,9 @@ class Resource(object):
     @ensure_resource_client
     def refresh(self):
         """Helps to get the latest resource data from the server."""
-        self.data = self._request.do_get(self.data["uri"])
+        self.data = self._helper.do_get(self.data["uri"])
 
-    def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None, scope_uris=''):
+    def get_all(self, start=0, count=-1, filter='', query='', sort='', uri=None):
         """Gets all items according with the given arguments.
 
         Args:
@@ -160,33 +158,13 @@ class Resource(object):
                 filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.
             sort: The sort order of the returned data set. By default, the sort order is based on create time with the
                 oldest entry first.
-            view: Returns a specific subset of the attributes of the resource or collection by specifying the name of a
-                predefined view. The default view is expand (show all attributes of the resource and all elements of
-                the collections or resources).
-            fields: Name of the fields.
             uri: A specific URI (optional)
-            scope_uris: An expression to restrict the resources returned according to the scopes to
-                which they are assigned.
 
         Returns:
             list: A list of items matching the specified filter.
         """
-        if not uri:
-            uri = self.URI
-
-        uri = self._helper.build_query_uri(uri=uri,
-                                           start=start,
-                                           count=count,
-                                           filter=filter,
-                                           query=query,
-                                           sort=sort,
-                                           view=view,
-                                           fields=fields,
-                                           scope_uris=scope_uris)
-
-        logger.debug('Getting all resources with uri: {0}'.format(uri))
-
-        result = self._request.do_requests_to_getall(uri, count)
+        result = self._helper.get_all(uri=uri, start=start, count=count,
+                                      filter=filter, query=query, sort=sort)
 
         return result
 
@@ -202,9 +180,6 @@ class Resource(object):
         Returns:
             Created resource.
         """
-        if not uri:
-            uri = self.URI
-
         if not data:
             data = {}
 
@@ -215,46 +190,32 @@ class Resource(object):
 
         logger.debug('Create (uri = %s, resource = %s)' % (uri, str(data)))
 
-        resource_data = self._request.do_post(uri, data, timeout, custom_headers)
+        resource_data = self._helper.create(data, uri, timeout, custom_headers)
         new_resource = self.new(self._connection, resource_data)
 
         return new_resource
 
     @ensure_resource_client
-    def delete(self, force=False, timeout=-1, custom_headers=None):
+    def delete(self, timeout=-1, custom_headers=None, force=None):
         """Deletes current resource.
 
         Args:
-            force: Flag to delete the resource forcefully, default is False.
             timeout: Timeout in seconds.
             custom_headers: Allows to set custom http headers.
         """
         uri = self.data['uri']
 
-        if force:
-            uri += '?force=True'
-
         logger.debug("Delete resource (uri = %s)" % (str(uri)))
 
-        task, body = self._connection.delete(uri, custom_headers=custom_headers)
-
-        if not task:
-            # 204 NO CONTENT
-            # Successful return from a synchronous delete operation.
-            return True
-
-        task = self._task_monitor.wait_for_task(task, timeout=timeout)
-
-        return task
+        return self._helper.delete(uri, timeout=timeout,
+                                   custom_headers=custom_headers, force=force)
 
     @ensure_resource_client(update_data=True)
-    def update(self, data=None, force=False, timeout=-1, custom_headers=None):
+    def update(self, data=None, timeout=-1, custom_headers=None):
         """Makes a PUT request to update a resource when a request body is required.
 
         Args:
             data: Data to update the resource.
-            force: If set to true, the operation completes despite any problems
-                with network connectivity or errors on the resource itself. The default is false.
             timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
             custom_headers: Allows to add custom HTTP headers.
@@ -269,10 +230,8 @@ class Resource(object):
 
         logger.debug('Update async (uri = %s, resource = %s)' %
                      (uri, str(resource)))
-        if force:
-            uri += '?force=True'
 
-        self.data = self._request.do_put(uri, resource, timeout, custom_headers)
+        self.data = self._helper.do_put(uri, resource, timeout, custom_headers)
 
         return self
 
@@ -332,7 +291,7 @@ class Resource(object):
             Resource object
         """
         self._helper.validate_resource_uri(uri)
-        data = self._request.do_get(uri)
+        data = self._helper.do_get(uri)
 
         if data:
             new_resource = self.new(self._connection, data)
@@ -367,8 +326,122 @@ class Resource(object):
 
 class ResourceHelper(object):
 
-    def __init__(self, base_uri):
-        self._resource_uri = base_uri
+    def __init__(self, base_uri, connection, task_monitor):
+        self._base_uri = base_uri
+        self._connection = connection
+        self._task_monitor = task_monitor
+
+    def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields='', uri=None, scope_uris=''):
+        """Gets all items according with the given arguments.
+
+        Args:
+            start: The first item to return, using 0-based indexing.
+                If not specified, the default is 0 - start with the first available item.
+            count: The number of resources to return. A count of -1 requests all items (default).
+            filter (list or str): A general filter/query string to narrow the list of items returned. The default is no
+                filter; all resources are returned.
+            query: A single query parameter can do what would take multiple parameters or multiple GET requests using
+                filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.
+            sort: The sort order of the returned data set. By default, the sort order is based on create time with the
+                oldest entry first.
+            view:
+                Returns a specific subset of the attributes of the resource or collection by specifying the name of a
+                predefined view. The default view is expand (show all attributes of the resource and all elements of
+                the collections or resources).
+            fields:
+                Name of the fields.
+            uri:
+                A specific URI (optional)
+            scope_uris:
+                An expression to restrict the resources returned according to the scopes to
+                which they are assigned.
+
+        Returns:
+             list: A list of items matching the specified filter.
+        """
+        if not uri:
+            uri = self._base_uri
+
+        uri = self.build_query_uri(uri=uri,
+                                   start=start,
+                                   count=count,
+                                   filter=filter,
+                                   query=query,
+                                   sort=sort,
+                                   view=view,
+                                   fields=fields,
+                                   scope_uris=scope_uris)
+
+        logger.debug('Getting all resources with uri: {0}'.format(uri))
+
+        return self.do_requests_to_getall(uri, count)
+
+    def create(self, data=None, uri=None, timeout=-1, custom_headers=None):
+        """Makes a POST request to create a resource when a request body is required.
+
+        Args:
+            data: Additional fields can be passed to create the resource.
+            uri: Resouce uri
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+            custom_headers: Allows set specific HTTP headers.
+        Returns:
+            Created resource.
+        """
+        if not uri:
+            uri = self._base_uri
+
+        logger.debug('Create (uri = %s, resource = %s)' % (uri, str(data)))
+
+        return self.do_post(uri, data, timeout, custom_headers)
+
+    def delete(self, uri, force=False, timeout=-1, custom_headers=None):
+        """Deletes current resource.
+
+        Args:
+            force: Flag to delete the resource forcefully, default is False.
+            timeout: Timeout in seconds.
+            custom_headers: Allows to set custom http headers.
+        """
+        if force:
+            uri += '?force=True'
+
+        logger.debug("Delete resource (uri = %s)" % (str(uri)))
+
+        task, body = self._connection.delete(uri, custom_headers=custom_headers)
+
+        if not task:
+            # 204 NO CONTENT
+            # Successful return from a synchronous delete operation.
+            return True
+
+        task = self._task_monitor.wait_for_task(task, timeout=timeout)
+
+        return task
+
+    def update(self, resource, uri=None, force=False, timeout=-1, custom_headers=None):
+        """Makes a PUT request to update a resource when a request body is required.
+
+        Args:
+            data: Data to update the resource.
+            force: If set to true, the operation completes despite any problems
+                with network connectivity or errors on the resource itself. The default is false.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+            custom_headers: Allows to add custom HTTP headers.
+
+        Returns:
+            A dict with the updated resource data.
+        """
+        logger.debug('Update async (uri = %s, resource = %s)' %
+                     (uri, str(resource)))
+        if not uri:
+            uri = resource['uri']
+
+        if force:
+            uri += '?force=True'
+
+        return self.do_put(uri, resource, timeout, custom_headers)
 
     def build_query_uri(self, uri=None, start=0, count=-1, filter='', query='', sort='', view='', fields='', scope_uris=''):
         """Builds the URI from given parameters.
@@ -424,7 +497,7 @@ class ResourceHelper(object):
         if scope_uris:
             scope_uris = "&scopeUris=" + quote(scope_uris)
 
-        path = uri if uri else self._resource_uri
+        path = uri if uri else self._base_uri
 
         self.validate_resource_uri(path)
 
@@ -451,7 +524,7 @@ class ResourceHelper(object):
             self.validate_resource_uri(id_or_uri)
             return id_or_uri
         else:
-            return self._resource_uri + "/" + id_or_uri
+            return self._base_uri + "/" + id_or_uri
 
     def build_subresource_uri(self, resource_id_or_uri=None, subresource_id_or_uri=None, subresource_path=''):
         """Helps to build a URI with resource path and its sub resource path.
@@ -482,7 +555,7 @@ class ResourceHelper(object):
 
     def validate_resource_uri(self, path):
         """Helper method to validate URI of the resource."""
-        if self._resource_uri not in path:
+        if self._base_uri not in path:
             logger.exception('Get by uri : unrecognized uri: (%s)' % path)
             raise exceptions.HPOneViewUnknownType(UNRECOGNIZED_URI)
 
@@ -501,6 +574,91 @@ class ResourceHelper(object):
             return mlist['members']
         else:
             return []
+
+    def do_requests_to_getall(self, uri, requested_count):
+        """Helps to make http request for get_all method.
+
+        Note:
+            This method will be checking for the pagination URI in the response
+            and make request to pagination URI to get all the resources.
+        """
+        items = []
+
+        while uri:
+            logger.debug('Making HTTP request to get all resources. Uri: {0}'.format(uri))
+            response = self._connection.get(uri)
+            members = self.get_members(response)
+            items += members
+
+            logger.debug("Response getAll: nextPageUri = {0}, members list length: {1}".format(uri, str(len(members))))
+            uri = self.get_next_page(response, items, requested_count)
+
+        logger.debug('Total # of members found = {0}'.format(str(len(items))))
+        return items
+
+    def get_next_page(self, response, items, requested_count):
+        """Returns next page URI."""
+        next_page_is_empty = response.get('nextPageUri') is None
+        has_different_next_page = not response.get('uri') == response.get('nextPageUri')
+        has_next_page = not next_page_is_empty and has_different_next_page
+
+        if len(items) >= requested_count and requested_count != -1:
+            return None
+
+        return response.get('nextPageUri') if has_next_page else None
+
+    def do_get(self, uri):
+        """Helps to make get requests
+
+        Args:
+            uri: URI of the resource
+
+        Returns:
+            Returns: Returns the resource data
+        """
+        self.validate_resource_uri(uri)
+        return self._connection.get(uri)
+
+    def do_post(self, uri, resource, timeout, custom_headers):
+        """Helps to make post requests.
+
+        Args:
+            uri: URI of  the resource.
+            resource: Resource data to post.
+            timeout: Time out for the request in seconds.
+            cutom_headers: Allows to add custom http headers.
+
+        Returns:
+            Retunrs Task object.
+        """
+        self.validate_resource_uri(uri)
+
+        task, entity = self._connection.post(uri, resource, custom_headers=custom_headers)
+
+        if not task:
+            return entity
+
+        return self._task_monitor.wait_for_task(task, timeout)
+
+    def do_put(self, uri, resource, timeout, custom_headers):
+        """Helps to make put requests.
+
+        Args:
+            uri: URI of the resource
+            timeout: Time out for the request in seconds.
+            custom_headers: Allows to set custom http headers.
+
+        Retuns:
+            Returns Task object
+        """
+        self.validate_resource_uri(uri)
+
+        task, body = self._connection.put(uri, resource, custom_headers=custom_headers)
+
+        if not task:
+            return body
+
+        return self._task_monitor.wait_for_task(task, timeout)
 
 
 class ResourcePatchMixin(object):
@@ -679,7 +837,7 @@ class ResourceUtilizationMixin(object):
 
         uri = "{0}/utilization{1}".format(self._helper.build_uri(resource_uri), query)
 
-        return self._request.do_get(uri)
+        return self._helper.do_get(uri)
 
 
 class ResourceSchemaMixin(object):
@@ -691,7 +849,7 @@ class ResourceSchemaMixin(object):
             A dict with the schema.
         """
         resource_uri = self.data['uri']
-        return self._request.do_get(resource_uri + '/schema')
+        return self._helper.do_get(resource_uri + '/schema')
 
 
 class ResourceCollectionMixin(object):
@@ -742,7 +900,7 @@ class ResourceZeroBodyMixin(object):
             uri = self.URI
 
         logger.debug('Create with zero body (uri = %s)' % uri)
-        resource_data = self._request.do_post(uri, {}, timeout, custom_headers)
+        resource_data = self._helper.do_post(uri, {}, timeout, custom_headers)
 
         return resource_data
 
@@ -762,102 +920,9 @@ class ResourceZeroBodyMixin(object):
             uri = self.data['uri']
 
         logger.debug('Update with zero length body (uri = %s)' % uri)
-        resource_data = self._request.do_put(uri, None, timeout, custom_headers)
+        resource_data = self._helper.do_put(uri, None, timeout, custom_headers)
 
         return resource_data
-
-
-class ResourceRequest(object):
-
-    def __init__(self, connection, task_monitor, helper):
-        self._connection = connection
-        self._helper = helper
-        self._task_monitor = task_monitor
-
-    def do_get(self, uri):
-        """Helps to make get requests
-
-        Args:
-            uri: URI of the resource
-
-        Returns:
-            Returns: Returns the resource data
-        """
-        self._helper.validate_resource_uri(uri)
-        return self._connection.get(uri)
-
-    def do_post(self, uri, resource, timeout, custom_headers):
-        """Helps to make post requests.
-
-        Args:
-            uri: URI of  the resource.
-            resource: Resource data to post.
-            timeout: Time out for the request in seconds.
-            cutom_headers: Allows to add custom http headers.
-
-        Returns:
-            Retunrs Task object.
-        """
-        self._helper.validate_resource_uri(uri)
-
-        task, entity = self._connection.post(uri, resource, custom_headers=custom_headers)
-
-        if not task:
-            return entity
-
-        return self._task_monitor.wait_for_task(task, timeout)
-
-    def do_put(self, uri, resource, timeout, custom_headers):
-        """Helps to make put requests.
-
-        Args:
-            uri: URI of the resource
-            timeout: Time out for the request in seconds.
-            custom_headers: Allows to set custom http headers.
-
-        Retuns:
-            Returns Task object
-        """
-        self._helper.validate_resource_uri(uri)
-
-        task, body = self._connection.put(uri, resource, custom_headers=custom_headers)
-
-        if not task:
-            return body
-
-        return self._task_monitor.wait_for_task(task, timeout)
-
-    def do_requests_to_getall(self, uri, requested_count):
-        """Helps to make http request for get_all method.
-
-        Note:
-            This method will be checking for the pagination URI in the response
-            and make request to pagination URI to get all the resources.
-        """
-        items = []
-
-        while uri:
-            logger.debug('Making HTTP request to get all resources. Uri: {0}'.format(uri))
-            response = self._connection.get(uri)
-            members = self._helper.get_members(response)
-            items += members
-
-            logger.debug("Response getAll: nextPageUri = {0}, members list length: {1}".format(uri, str(len(members))))
-            uri = self.get_next_page(response, items, requested_count)
-
-        logger.debug('Total # of members found = {0}'.format(str(len(items))))
-        return items
-
-    def get_next_page(self, response, items, requested_count):
-        """Returns next page URI."""
-        next_page_is_empty = response.get('nextPageUri') is None
-        has_different_next_page = not response.get('uri') == response.get('nextPageUri')
-        has_next_page = not next_page_is_empty and has_different_next_page
-
-        if len(items) >= requested_count and requested_count != -1:
-            return None
-
-        return response.get('nextPageUri') if has_next_page else None
 
 
 class ResourceClient(object):
