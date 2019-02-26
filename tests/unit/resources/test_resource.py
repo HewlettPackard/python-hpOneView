@@ -795,6 +795,13 @@ class ResourceTest(BaseTest):
 
         self.assertEqual(result, [])
 
+    @mock.patch.object(ResourceHelper, "do_get")
+    def test_refresh(self, mock_do_get):
+        updated_data = {"resource_name": "updated name"}
+        mock_do_get.return_value = updated_data
+        self.resource_client.refresh()
+        self.assertEqual(self.resource_client.data, updated_data)
+
     @mock.patch.object(connection, "post")
     def test_create_uri(self, mock_post):
         dict_to_create = {"resource_name": "a name"}
