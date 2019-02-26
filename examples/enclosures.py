@@ -29,10 +29,10 @@ from config_loader import try_load_from_file
 
 # This example is compatible only for C7000 enclosures
 config = {
-    "ip": "",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     },
     "api_version": "800",
     "enclosure_group_uri": "/rest/enclosure-groups/06475bf3-084b-4874",
@@ -40,6 +40,8 @@ config = {
     "enclosure_username": "",
     "enclosure_password": "",
 }
+
+enclosure_name = "Enc1"
 
 # Declare a CA signed certificate file path.
 certificate_file = ""
@@ -49,7 +51,6 @@ config = try_load_from_file(config)
 
 # The hostname, enclosure group URI, username, and password must be set on the configuration file
 options = {
-    "name": "En1",
     "enclosureGroupUri": config['enclosure_group_uri'],
     "hostname": config['enclosure_hostname'],
     "username": config['enclosure_username'],
@@ -67,7 +68,7 @@ enclosures = enclosure_resource.get_all()
 for enc in enclosures:
     print('  {name}'.format(**enc))
 
-enclosure = enclosure_resource.get_by_name(options["name"])
+enclosure = enclosure_resource.get_by_name(enclosure_name)
 if not enclosure:
     # Creates an enclosure and reurns created enclosure object
     enclosure = enclosure_resource.add(options)

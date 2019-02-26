@@ -28,7 +28,7 @@ from mock import call
 from tests.test_utils import mock_builtin
 from hpOneView.connection import connection
 from hpOneView import exceptions
-from hpOneView.resources.resource import (ResourceClient, ResourceRequest, ResourceFileHandlerMixin,
+from hpOneView.resources.resource import (ResourceClient, ResourceHelper, ResourceFileHandlerMixin,
                                           ResourceZeroBodyMixin, ResourcePatchMixin, ResourceUtilizationMixin,
                                           ResourceCollectionMixin, ResourceSchemaMixin, Resource,
                                           RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor,
@@ -580,8 +580,9 @@ class ResourceTest(BaseTest):
         self.connection = connection('127.0.0.1', 300)
         self.resource_client = StubResource(self.connection)
         super(ResourceTest, self).setUp(self.resource_client)
+        self.resource_helper = ResourceHelper(self.URI, self.connection, None)
 
-    @mock.patch.object(ResourceRequest, "do_put")
+    @mock.patch.object(ResourceHelper, "do_put")
     @mock.patch.object(Resource, "ensure_resource_data")
     def test_ensure_resource_should_call_once(self, mock_do_put, mock_ensure_resource):
         self.resource_client.data = {"uri": "/rest/test"}
@@ -594,7 +595,7 @@ class ResourceTest(BaseTest):
         self.assertRaises(exceptions.HPOneViewMissingUniqueIdentifiers,
                           self.resource_client.ensure_resource_data)
 
-    @mock.patch.object(ResourceRequest, "do_get")
+    @mock.patch.object(ResourceHelper, "do_get")
     def test_ensure_resource_raise_resource_not_found_exception_with_uri(self, mock_do_get):
         self.resource_client.data = {"uri": "/uri/test"}
         mock_do_get.return_value = []
@@ -608,7 +609,7 @@ class ResourceTest(BaseTest):
         with self.assertRaises(exceptions.HPOneViewResourceNotFound):
             self.resource_client.ensure_resource_data(update_data=True)
 
-    @mock.patch.object(ResourceRequest, "do_get")
+    @mock.patch.object(ResourceHelper, "do_get")
     @mock.patch.object(Resource, "get_by")
     def test_ensure_resource_should_update_resource_data(self, mock_do_get, mock_get_by):
         get_by_return_value = [{"name": "testname", "uri": "/rest/testuri"}]
@@ -618,27 +619,29 @@ class ResourceTest(BaseTest):
 
         self.assertEqual(self.resource_client.data, get_by_return_value[0])
 
+    @mock.patch.object(Resource, "get_by")
+    def test_ensure_resource_without_data_update(self, mock_get_by):
+        mock_get_by.return_value = []
+        actual_result = self.resource_client.ensure_resource_data(update_data=False)
+        expected_result = None
+        self.assertEqual(actual_result, expected_result)
+
     @mock.patch.object(connection, "get")
     def test_get_all_called_once(self, mock_get):
         filter = "'name'='OneViewSDK \"Test FC Network'"
         sort = "name:ascending"
         query = "name NE 'WrongName'"
-        view = '"{view-name}"'
-        scope_uris = "/rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a"
 
         mock_get.return_value = {"members": [{"member": "member"}]}
 
-        result = self.resource_client.get_all(
-            1, 500, filter, query, sort, view, "name,owner,modified", scope_uris=scope_uris)
+        result = self.resource_helper.get_all(
+            1, 500, filter, query, sort)
 
         uri = "{resource_uri}?start=1" \
               "&count=500" \
               "&filter=%27name%27%3D%27OneViewSDK%20%22Test%20FC%20Network%27" \
               "&query=name%20NE%20%27WrongName%27" \
-              "&sort=name%3Aascending" \
-              "&view=%22%7Bview-name%7D%22" \
-              "&fields=name%2Cowner%2Cmodified" \
-              "&scopeUris=/rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a".format(resource_uri=self.URI)
+              "&sort=name%3Aascending".format(resource_uri=self.URI)
 
         self.assertEqual([{"member": "member"}], result)
         mock_get.assert_called_once_with(uri)
@@ -652,14 +655,14 @@ class ResourceTest(BaseTest):
 
     @mock.patch.object(connection, "get")
     def test_get_all_with_custom_uri(self, mock_get):
-        self.resource_client.get_all(uri="/rest/testuri/12467836/subresources")
+        self.resource_helper.get_all(uri="/rest/testuri/12467836/subresources")
         uri = "/rest/testuri/12467836/subresources?start=0&count=-1"
 
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(connection, "get")
     def test_get_all_with_custom_uri_and_query_string(self, mock_get):
-        self.resource_client.get_all(uri="/rest/testuri/12467836/subresources?param=value")
+        self.resource_helper.get_all(uri="/rest/testuri/12467836/subresources?param=value")
 
         uri = "/rest/testuri/12467836/subresources?param=value&start=0&count=-1"
         mock_get.assert_called_once_with(uri)
@@ -667,7 +670,7 @@ class ResourceTest(BaseTest):
     @mock.patch.object(connection, "get")
     def test_get_all_with_different_resource_uri_should_fail(self, mock_get):
         try:
-            self.resource_client.get_all(uri="/rest/other/resource/12467836/subresources")
+            self.resource_helper.get_all(uri="/rest/other/resource/12467836/subresources")
         except exceptions.HPOneViewUnknownType as e:
             self.assertEqual(UNRECOGNIZED_URI, e.args[0])
         else:
@@ -792,6 +795,13 @@ class ResourceTest(BaseTest):
         result = self.resource_client.get_all()
 
         self.assertEqual(result, [])
+
+    @mock.patch.object(ResourceHelper, "do_get")
+    def test_refresh(self, mock_do_get):
+        updated_data = {"resource_name": "updated name"}
+        mock_do_get.return_value = updated_data
+        self.resource_client.refresh()
+        self.assertEqual(self.resource_client.data, updated_data)
 
     @mock.patch.object(connection, "post")
     def test_create_uri(self, mock_post):
@@ -928,9 +938,9 @@ class ResourceTest(BaseTest):
         expected = {"name": "test", "uri": uri, "type": "typeV300"}
         mock_put.return_value = None, self.response_body
 
-        self.resource_client.update(dict_to_update, force=True)
+        self.resource_client.update(dict_to_update)
 
-        expected_uri = "/rest/testuri?force=True"
+        expected_uri = "/rest/testuri"
         mock_put.assert_called_once_with(expected_uri, expected, custom_headers=None)
 
     @mock.patch.object(Resource, "ensure_resource_data")

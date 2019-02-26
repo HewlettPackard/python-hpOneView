@@ -44,6 +44,37 @@ class Enclosures(ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationM
     def __init__(self, connection, data=None):
         super(Enclosures, self).__init__(connection, data)
 
+    def get_all(self, start=0, count=-1, filter='', sort='', scope_uris=''):
+        """
+        Gets a paginated collection of Enclosures. The collection is based on optional sorting and filtering, and
+        constrained by start and count parameters.
+
+        Args:
+            start:
+                The first item to return, using 0-based indexing.
+                If not specified, the default is 0 - start with the first available item.
+            count:
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
+            filter (list or str):
+                A general filter/query string to narrow the list of items returned. The
+                default is no filter; all resources are returned.
+            sort:
+                The sort order of the returned data set. By default, the sort order is based
+                on create time with the oldest entry first.
+
+        Returns:
+            list: A list of Enclosures.
+        """
+        result = self._helper.get_all(start=start,
+                                      count=count,
+                                      filter=filter,
+                                      sort=sort,
+                                      scope_uris=scope_uris)
+
+        return result
+
     def add(self, information, timeout=-1):
         """
         C7000:
@@ -114,7 +145,7 @@ class Enclosures(ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationM
             Settings that describe the environmental configuration.
         """
         uri = '{}/environmentalConfiguration'.format(self.data['uri'])
-        return self._request.do_get(uri)
+        return self._helper.do_get(uri)
 
     @ensure_resource_client
     def update_environmental_configuration(self, configuration, timeout=-1):
@@ -130,7 +161,7 @@ class Enclosures(ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationM
             Settings that describe the environmental configuration.
         """
         uri = '{}/environmentalConfiguration'.format(self.data['uri'])
-        return self._request.do_put(uri, configuration, timeout, None)
+        return self._helper.do_put(uri, configuration, timeout, None)
 
     @ensure_resource_client
     def refresh_state(self, configuration, timeout=-1):
@@ -149,7 +180,7 @@ class Enclosures(ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationM
             Enclosure
         """
         uri = "{}/refreshState".format(self.data['uri'])
-        return self._request.do_put(uri, configuration, timeout, None)
+        return self._helper.do_put(uri, configuration, timeout, None)
 
     @ensure_resource_client
     def get_script(self):
@@ -160,7 +191,7 @@ class Enclosures(ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationM
             Enclosure script.
         """
         uri = "{}/script".format(self.data['uri'])
-        return self._request.do_get(uri)
+        return self._helper.do_get(uri)
 
     @ensure_resource_client
     def get_sso(self, role):
@@ -175,7 +206,7 @@ class Enclosures(ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationM
             SSO (Single Sign-On) URL parameters.
         """
         uri = "{}/sso?role={}".format(self.data['uri'], role)
-        return self._request.do_get(uri)
+        return self._helper.do_get(uri)
 
     @ensure_resource_client
     def generate_csr(self, csr_data, bay_number=None):
@@ -196,7 +227,7 @@ class Enclosures(ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationM
 
         headers = {'Content-Type': 'application/json'}
 
-        return self._request.do_post(uri, csr_data, -1, headers)
+        return self._helper.do_post(uri, csr_data, -1, headers)
 
     @ensure_resource_client
     def get_csr(self, bay_number=None):
@@ -214,7 +245,7 @@ class Enclosures(ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationM
         if bay_number:
             uri += "?bayNumber=%d" % (bay_number)
 
-        return self._request.do_get(uri)
+        return self._helper.do_get(uri)
 
     @ensure_resource_client
     def import_certificate(self, certificate_data, bay_number=None):
@@ -234,4 +265,4 @@ class Enclosures(ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationM
             uri += "?bayNumber=%d" % (bay_number)
 
         headers = {'Content-Type': 'application/json'}
-        return self._request.do_put(uri, certificate_data, -1, headers)
+        return self._helper.do_put(uri, certificate_data, -1, headers)
