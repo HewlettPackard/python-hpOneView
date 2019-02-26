@@ -209,9 +209,7 @@ class Resource(object):
             data = {}
 
         default_values = self._get_default_values()
-        for key, value in default_values.items():
-            if not data.get(key):
-                data[key] = value
+        data = self._helper.add_new_fields(data, default_values)
 
         logger.debug('Create (uri = %s, resource = %s)' % (uri, str(data)))
 
@@ -501,6 +499,22 @@ class ResourceHelper(object):
             return mlist['members']
         else:
             return []
+
+    def add_new_fields(data, data_to_add):
+       """Update resource data with new fields.
+
+       Args:
+           data: resource data
+           data_to_update: dict of data to update resource data
+
+       Returnes:
+           Returnes dict
+       """
+       for key, value in data_to_add.items():
+            if not data.get(key):
+                data[key] = value
+
+       return data
 
 
 class ResourcePatchMixin(object):
