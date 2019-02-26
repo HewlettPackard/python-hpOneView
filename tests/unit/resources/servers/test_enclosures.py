@@ -45,12 +45,12 @@ class EnclosuresTest(TestCase):
         scope_uris = 'rest/scopes/cd237b60-09e2-45c4-829e-082e318a6d2a'
 
         self._enclosures.get_all(2, 500, filter, sort=sort, scope_uris=scope_uris)
-        mock_get_all.assert_called_once_with(start=2, count=500, filter=filter, sort=sort, scope_uris=scope_uris, query='', uri=None)
+        mock_get_all.assert_called_once_with(start=2, count=500, filter=filter, sort=sort, scope_uris=scope_uris)
 
     @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_all_called_once_with_default_values(self, mock_get_all):
         self._enclosures.get_all(0, -1)
-        mock_get_all.assert_called_once_with(count=-1, start=0, filter='', sort='', query='', scope_uris='', uri=None)
+        mock_get_all.assert_called_once_with(count=-1, start=0, filter='', sort='', scope_uris='')
 
     @mock.patch.object(Resource, 'get_by')
     def test_get_by_called_once(self, mock_get_by):

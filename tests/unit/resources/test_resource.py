@@ -580,6 +580,7 @@ class ResourceTest(BaseTest):
         self.connection = connection('127.0.0.1', 300)
         self.resource_client = StubResource(self.connection)
         super(ResourceTest, self).setUp(self.resource_client)
+        self.resource_helper = ResourceHelper(self.URI, self.connection, None)
 
     @mock.patch.object(ResourceHelper, "do_put")
     @mock.patch.object(Resource, "ensure_resource_data")
@@ -633,7 +634,7 @@ class ResourceTest(BaseTest):
 
         mock_get.return_value = {"members": [{"member": "member"}]}
 
-        result = self.resource_client.get_all(
+        result = self.resource_helper.get_all(
             1, 500, filter, query, sort)
 
         uri = "{resource_uri}?start=1" \
@@ -654,14 +655,14 @@ class ResourceTest(BaseTest):
 
     @mock.patch.object(connection, "get")
     def test_get_all_with_custom_uri(self, mock_get):
-        self.resource_client.get_all(uri="/rest/testuri/12467836/subresources")
+        self.resource_helper.get_all(uri="/rest/testuri/12467836/subresources")
         uri = "/rest/testuri/12467836/subresources?start=0&count=-1"
 
         mock_get.assert_called_once_with(uri)
 
     @mock.patch.object(connection, "get")
     def test_get_all_with_custom_uri_and_query_string(self, mock_get):
-        self.resource_client.get_all(uri="/rest/testuri/12467836/subresources?param=value")
+        self.resource_helper.get_all(uri="/rest/testuri/12467836/subresources?param=value")
 
         uri = "/rest/testuri/12467836/subresources?param=value&start=0&count=-1"
         mock_get.assert_called_once_with(uri)
@@ -669,7 +670,7 @@ class ResourceTest(BaseTest):
     @mock.patch.object(connection, "get")
     def test_get_all_with_different_resource_uri_should_fail(self, mock_get):
         try:
-            self.resource_client.get_all(uri="/rest/other/resource/12467836/subresources")
+            self.resource_helper.get_all(uri="/rest/other/resource/12467836/subresources")
         except exceptions.HPOneViewUnknownType as e:
             self.assertEqual(UNRECOGNIZED_URI, e.args[0])
         else:

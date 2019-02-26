@@ -44,32 +44,32 @@ class Enclosures(ResourcePatchMixin, ResourceZeroBodyMixin, ResourceUtilizationM
     def __init__(self, connection, data=None):
         super(Enclosures, self).__init__(connection, data)
 
-    def get_all(self, start=0, count=-1, filter='', query='', sort='', uri=None, scope_uris=''):
-        """Gets all items according with the given arguments.
+    def get_all(self, start=0, count=-1, filter='', sort='', scope_uris=''):
+        """
+        Gets a paginated collection of Enclosures. The collection is based on optional sorting and filtering, and
+        constrained by start and count parameters.
 
         Args:
-            start: The first item to return, using 0-based indexing.
+            start:
+                The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
-            count: The number of resources to return. A count of -1 requests all items (default).
-            filter (list or str): A general filter/query string to narrow the list of items returned. The default is no
-                filter; all resources are returned.
-            query: A single query parameter can do what would take multiple parameters or multiple GET requests using
-                filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.
-            sort: The sort order of the returned data set. By default, the sort order is based on create time with the
-                oldest entry first.
-            uri: A specific URI (optional)
-            scope_uris:
-                An expression to restrict the resources returned according to the scopes to
-                which they are assigned.
+            count:
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
+            filter (list or str):
+                A general filter/query string to narrow the list of items returned. The
+                default is no filter; all resources are returned.
+            sort:
+                The sort order of the returned data set. By default, the sort order is based
+                on create time with the oldest entry first.
 
         Returns:
-             list: A list of items matching the specified filter.
+            list: A list of Enclosures.
         """
-        result = self._helper.get_all(uri=uri,
-                                      start=start,
+        result = self._helper.get_all(start=start,
                                       count=count,
                                       filter=filter,
-                                      query=query,
                                       sort=sort,
                                       scope_uris=scope_uris)
 

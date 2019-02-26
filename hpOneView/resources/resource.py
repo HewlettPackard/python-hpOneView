@@ -145,7 +145,7 @@ class Resource(object):
         """Helps to get the latest resource data from the server."""
         self.data = self._helper.do_get(self.data["uri"])
 
-    def get_all(self, start=0, count=-1, filter='', query='', sort='', uri=None):
+    def get_all(self, start=0, count=-1, filter='', sort=''):
         """Gets all items according with the given arguments.
 
         Args:
@@ -154,17 +154,13 @@ class Resource(object):
             count: The number of resources to return. A count of -1 requests all items (default).
             filter (list or str): A general filter/query string to narrow the list of items returned. The default is no
                 filter; all resources are returned.
-            query: A single query parameter can do what would take multiple parameters or multiple GET requests using
-                filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.
             sort: The sort order of the returned data set. By default, the sort order is based on create time with the
                 oldest entry first.
-            uri: A specific URI (optional)
 
         Returns:
             list: A list of items matching the specified filter.
         """
-        result = self._helper.get_all(uri=uri, start=start, count=count,
-                                      filter=filter, query=query, sort=sort)
+        result = self._helper.get_all(start=start, count=count, filter=filter, sort=sort)
 
         return result
 
