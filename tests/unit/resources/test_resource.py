@@ -618,6 +618,13 @@ class ResourceTest(BaseTest):
 
         self.assertEqual(self.resource_client.data, get_by_return_value[0])
 
+    @mock.patch.object(Resource, "get_by")
+    def test_ensure_resource_without_data_update(self, mock_get_by):
+        mock_get_by.return_value = []
+        actual_result = self.resource_client.ensure_resource_data(update_data=False)
+        expected_result = None
+        self.assertEqual(actual_result, expected_result)
+
     @mock.patch.object(connection, "get")
     def test_get_all_called_once(self, mock_get):
         filter = "'name'='OneViewSDK \"Test FC Network'"

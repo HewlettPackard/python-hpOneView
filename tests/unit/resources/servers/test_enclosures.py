@@ -57,6 +57,34 @@ class EnclosuresTest(TestCase):
         self._enclosures.get_by('name', 'OneViewSDK-Test-Enclosure')
         mock_get_by.assert_called_once_with('name', 'OneViewSDK-Test-Enclosure')
 
+    @mock.patch.object(Enclosures, 'get_by_hostname')
+    def test_get_by_hostname_called_one(self, mock_get_by_hostname):
+        self._enclosures.get_by_hostname('host_name')
+        mock_get_by_hostname.assert_called_once_with('host_name')
+
+    @mock.patch.object(Enclosures, 'get_all')
+    def test_get_by_hostname_return_with_no_host(self, mock_get_all):
+        mock_get_all.return_value = []
+        actual_return = self._enclosures.get_by_hostname('host_name')
+        expected_return = None
+        self.assertEqual(actual_return, expected_return)
+
+    @mock.patch.object(Enclosures, 'get_all')
+    def test_get_by_hostname_return_with_primary_ip(self, mock_get_all):
+        enclosure = {'activeOaPreferredIP': '1.1.1.1', "name": "En1"}
+        mock_get_all.return_value = [enclosure]
+        actual_return = self._enclosures.get_by_hostname('1.1.1.1')
+        expected_return = enclosure
+        self.assertEqual(actual_return.data, expected_return)
+
+    @mock.patch.object(Enclosures, 'get_all')
+    def test_get_by_hostname_return_with_standby_ip(self, mock_get_all):
+        enclosure = {'standbyOaPreferredIP': '1.1.1.1', "name": "En1"}
+        mock_get_all.return_value = [enclosure]
+        actual_return = self._enclosures.get_by_hostname('1.1.1.1')
+        expected_return = enclosure
+        self.assertEqual(actual_return.data, expected_return)
+
     @mock.patch.object(Resource, 'create')
     def test_add_called_once(self, mock_create):
         information = {
