@@ -27,10 +27,10 @@ from config_loader import try_load_from_file
 from hpOneView.oneview_client import OneViewClient
 
 config = {
-    "ip": "<oneview_ip>",
+    "ip": "10.30.5.74",
     "credentials": {
-        "userName": "<username>",
-        "password": "<password>"
+        "userName": "administrator",
+        "password": "sijenov@2017"
     }
 }
 
@@ -58,7 +58,7 @@ options_bulk = {
 
 # Scope name to perform the patch operation
 scope_name = ""
-ethernet_name = ""
+ethernet_name = "OneViewSDK Test Ethernet Network"
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
@@ -97,20 +97,21 @@ ethernet_nets_limited = ethernet_networks.get_all(0, 10)
 for net in ethernet_nets_limited:
     print("   '{name}' at uri: '{uri}'".format(**net))
 
-# Create bulk ethernet networks
-print("\nCreate bulk ethernet networks")
-ethernet_nets_bulk = ethernet_networks.create_bulk(options_bulk)
-pprint(ethernet_nets_bulk)
-
 # Find network by name
-print("\nFind recently created network by name")
+print("\nFind network by name")
 ethernet_network = oneview_client.ethernet_networks.get_by_name(ethernet_name)
-print("Found ethernet-network by name: '{name}'.\n   uri = '{uri}'" .format(**ethernet_network.data))
-if not ethernet_network:
+if ethernet_network:
+    print("Found ethernet-network by name: '{name}'.\n   uri = '{uri}'" .format(**ethernet_network.data))
+else:
     # Create an ethernet Network
     print("\nCreate an ethernet network")
     ethernet_network = oneview_client.ethernet_networks.create(options)
     print("Created ethernet-network '{name}' successfully.\n   uri = '{uri}'" .format(**ethernet_network.data))
+
+# Create bulk ethernet networks
+print("\nCreate bulk ethernet networks")
+ethernet_nets_bulk = ethernet_networks.create_bulk(options_bulk)
+pprint(ethernet_nets_bulk)
 
 # Update purpose recently created network
 print("\nUpdate the purpose attribute from the recently created network")
@@ -118,7 +119,7 @@ ethernet_data = ethernet_network.data
 ethernet_data['purpose'] = 'Management'
 ethernet_network = ethernet_network.update(ethernet_data)
 print("Updated ethernet-network '{name}' successfully.\n   uri = '{uri}'\n   with attribute ['purpose': {purpose}]"
-      .format(**ethernet_network))
+      .format(**ethernet_network.data))
 
 # Get URIs of associated profiles
 print("\nGet associated profiles uri(s)")

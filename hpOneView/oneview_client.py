@@ -371,9 +371,7 @@ class OneViewClient(object):
         Returns:
             EthernetNetworks:
         """
-        if not self.__ethernet_networks:
-            self.__ethernet_networks = EthernetNetworks(self.__connection)
-        return self.__ethernet_networks
+        return EthernetNetworks(self.__connection)
 
     @property
     def fabrics(self):

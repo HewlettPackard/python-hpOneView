@@ -31,10 +31,11 @@ from future import standard_library
 standard_library.install_aliases()
 
 
-from hpOneView.resources.resource import Resource
+from hpOneView.resources.resource import (Resource, ResourcePatchMixin,
+                                          ensure_resource_client)
 
 
-class EthernetNetworks(Resource):
+class EthernetNetworks(ResourcePatchMixin, Resource):
     """
     Ethernet Networks API client.
 
@@ -74,8 +75,10 @@ class EthernetNetworks(Resource):
 
         """
         uri = self.URI + '/bulk'
-        data = self._helper.add_new_fields(resource, self.BULK_DEFAULT_VALUES)
-        self._request.do_post(uri, data, timeout=timeout)
+        default_values = self.get_default_values(self.BULK_DEFAULT_VALUES)
+        updated_data = self._helper.update_resource_fields(resource, default_values)
+
+        self._helper.create(updated_data, uri=uri, timeout=timeout)
 
         return self.get_range(resource['namePrefix'], resource['vlanIdRange'])
 
@@ -160,7 +163,7 @@ class EthernetNetworks(Resource):
 
         """
         uri = "{}/associatedProfiles".format(self.data['uri'])
-        return self._request.do_get(uri)
+        return self._helper.do_get(uri)
 
     @ensure_resource_client
     def get_associated_uplink_groups(self):
@@ -172,4 +175,4 @@ class EthernetNetworks(Resource):
 
         """
         uri = "{}/associatedUplinkGroups".format(self.data['uri'])
-        return self._request.do_get(uri)
+        return self._helper.do_get(uri)
