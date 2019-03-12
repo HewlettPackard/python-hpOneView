@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,7 @@ standard_library.install_aliases()
 
 from hpOneView.resources.resource import Resource, ensure_resource_client
 from hpOneView.resources.networking.ethernet_networks import EthernetNetworks
+from hpOneView.exceptions import HPOneViewResourceNotFound
 from builtins import isinstance
 
 
@@ -53,7 +54,7 @@ class UplinkSets(Resource):
 
     def __init__(self, connection, data=None):
         super(UplinkSets, self).__init__(connection, data)
-        self._ethernet_network = EthernetNetworks(connection)
+        self._ethernet_networks = EthernetNetworks(connection)
 
     @ensure_resource_client
     def get_ethernet_networks(self):
@@ -70,27 +71,27 @@ class UplinkSets(Resource):
         networks = []
         if network_uris:
             for uri in network_uris:
-                networks.append(self._ethernet_network.get_by_uri(uri))
+                networks.append(self._ethernet_networks.get_by_uri(uri))
         return networks
 
     @ensure_resource_client
-    def add_ethernet_networks(self, ethernet_id_or_uris):
+    def add_ethernet_networks(self, ethernet_names):
         """
         Adds existing ethernet networks to an uplink set.
 
         Args:
             id_or_uri:
                 Can be either the uplink set id or the uplink set uri.
-            ethernet_id_or_uris:
-                Could be either one or more ethernet network id or ethernet network uri.
-
+            ethernet_name:
+                Could be either one or more ethernet network names.
         Returns:
             dict: The updated uplink set.
         """
-        return self.__set_ethernet_uris(ethernet_id_or_uris, operation="add")
+        self.__set_ethernet_uris(ethernet_names, operation="add")
+        return self.data
 
     @ensure_resource_client
-    def remove_ethernet_networks(self, ethernet_id_or_uris):
+    def remove_ethernet_networks(self, ethernet_names):
         """
         Remove existing ethernet networks of an uplink set.
 
@@ -103,26 +104,31 @@ class UplinkSets(Resource):
         Returns:
             dict: The updated uplink set.
         """
-        return self.__set_ethernet_uris(id_or_uri, ethernet_id_or_uris, operation="remove")
+        self.__set_ethernet_uris(ethernet_names, operation="remove")
+        return self.data
 
-    def __set_ethernet_uris(self, ethernet_id_or_uris, operation="add"):
-        if not isinstance(ethernet_id_or_uris, list):
-            ethernet_id_or_uris = [ethernet_id_or_uris]
+    def __set_ethernet_uris(self, ethernet_names, operation="add"):
+        """Updates network uris."""
+        if not isinstance(ethernet_names, list):
+            ethernet_names = [ethernet_names]
 
         associated_enets = self.data.get('networkUris', [])
+        ethernet_uris = []
 
-        for i, enet in enumerate(ethernet_id_or_uris):
-            ethernet_id_or_uris[i] = enet if '/' in enet else self._ethernet_network.URI + '/' + enet
+        for i, enet in enumerate(ethernet_names):
+            enet_exists = self._ethernet_networks.get_by_name(enet)
+            if enet_exists:
+                ethernet_uris.append(enet_exists.data['uri'])
+            else:
+                raise HPOneViewResourceNotFound("Ethernet: {} does not exist".foramt(enet))
 
         if operation == "remove":
-            enets_to_update = sorted(list(set(associated_enets) - set(ethernet_id_or_uris)))
+            enets_to_update = sorted(list(set(associated_enets) - set(ethernet_uris)))
         elif operation == "add":
-            enets_to_update = sorted(list(set(associated_enets).union(set(ethernet_id_or_uris))))
+            enets_to_update = sorted(list(set(associated_enets).union(set(ethernet_uris))))
         else:
             raise ValueError("Value {} is not supported as operation. The supported values are: ['add', 'remove']")
 
         if set(enets_to_update) != set(associated_enets):
             updated_network = {'networkUris': enets_to_update}
-            return self.update(updated_network)
-        else:
-            return uplink
+            self.update(updated_network)
