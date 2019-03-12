@@ -576,20 +576,20 @@ class ResourceHelper(object):
             return []
 
     def update_resource_fields(self, data, data_to_add):
-       """Update resource data with new fields.
+        """Update resource data with new fields.
 
-       Args:
-           data: resource data
-           data_to_update: dict of data to update resource data
+        Args:
+            data: resource data
+            data_to_update: dict of data to update resource data
 
-       Returnes:
-           Returnes dict
-       """
-       for key, value in data_to_add.items():
+        Returnes:
+            Returnes dict
+        """
+        for key, value in data_to_add.items():
             if not data.get(key):
                 data[key] = value
 
-       return data
+        return data
 
     def do_requests_to_getall(self, uri, requested_count):
         """Helps to make http request for get_all method.

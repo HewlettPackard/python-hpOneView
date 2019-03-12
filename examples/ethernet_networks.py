@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,11 +27,12 @@ from config_loader import try_load_from_file
 from hpOneView.oneview_client import OneViewClient
 
 config = {
-    "ip": "10.30.5.74",
+    "ip": "oneview_ip",
     "credentials": {
-        "userName": "administrator",
-        "password": "sijenov@2017"
-    }
+        "userName": "<username>",
+        "password": "<password>"
+    },
+    "api_version": 800
 }
 
 options = {
@@ -131,13 +132,12 @@ print("\nGet uplink port group uri(s)")
 uplink_group_uris = ethernet_network.get_associated_uplink_groups()
 pprint(uplink_group_uris)
 
-#TODO:: Update when uplink module is upadated with base class changes
 # Get the associated uplink set resources
-#print("\nGet uplink port group uri(s)")
-#uplink_groups = []
-#for uri in uplink_group_uris:
-#    uplink_groups.append(oneview_client.uplink_sets.get(uri))
-#pprint(uplink_groups)
+print("\nGet associated uplink sets")
+uplink_sets = oneview_client.uplink_sets
+for uri in uplink_group_uris:
+    uplink = uplink_sets.get_by_uri(uri)
+    pprint(uplink.data)
 
 # Adds ethernet to scope defined
 if scope_name:

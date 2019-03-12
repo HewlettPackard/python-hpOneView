@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,7 @@ class EthernetNetworks(ResourcePatchMixin, Resource):
         '300': {"type": "bulk-ethernet-network"},
         '500': {"type": "bulk-ethernet-network"},
         '600': {"type": "bulk-ethernet-networkV1"},
-        '800': {"type": "bulk-ethernet-network"},
+        '800': {"type": "bulk-ethernet-networkV1"},
     }
 
     def __init__(self, connection, data=None):
