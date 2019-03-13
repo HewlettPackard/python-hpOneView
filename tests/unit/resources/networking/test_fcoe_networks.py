@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -27,7 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource
 
 
 class FcoeNetworksTest(TestCase):
@@ -36,7 +36,7 @@ class FcoeNetworksTest(TestCase):
         self.connection = connection(self.host)
         self._fcoe_networks = FcoeNetworks(self.connection)
 
-    @mock.patch.object(ResourceClient, 'get_all')
+    @mock.patch.object(Resource, 'get_all')
     def test_get_all_called_once(self, mock_get_all):
         filter = 'name=TestName'
         sort = 'name:ascending'
@@ -45,7 +45,7 @@ class FcoeNetworksTest(TestCase):
 
         mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort)
 
-    @mock.patch.object(ResourceClient, 'create')
+    @mock.patch.object(Resource, 'create')
     def test_create(self, mock_create):
         resource = {
             'name': 'OneViewSDK Test FCoE Network',
@@ -57,7 +57,7 @@ class FcoeNetworksTest(TestCase):
 
         mock_create.assert_called_once_with(resource, timeout=-1, default_values=self._fcoe_networks.DEFAULT_VALUES)
 
-    @mock.patch.object(ResourceClient, 'update')
+    @mock.patch.object(Resource, 'update')
     def test_update(self, mock_update):
         resource = {
             'name': 'vsan1',
@@ -72,33 +72,33 @@ class FcoeNetworksTest(TestCase):
         mock_update.assert_called_once_with(resource_rest_call, timeout=12,
                                             default_values=self._fcoe_networks.DEFAULT_VALUES)
 
-    @mock.patch.object(ResourceClient, 'delete')
+    @mock.patch.object(Resource, 'delete')
     def test_delete_called_once(self, mock_delete):
         id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
         self._fcoe_networks.delete(id, force=False, timeout=50)
 
         mock_delete.assert_called_once_with(id, force=False, timeout=50)
 
-    @mock.patch.object(ResourceClient, 'get_by')
+    @mock.patch.object(Resource, 'get_by')
     def test_get_by_called_once(self, mock_get_by):
         self._fcoe_networks.get_by('name', 'OneViewSDK Test FCoE Network')
 
         mock_get_by.assert_called_once_with('name', 'OneViewSDK Test FCoE Network')
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(Resource, 'get')
     def test_get_called_once(self, mock_get):
         self._fcoe_networks.get('3518be0e-17c1-4189-8f81-83f3724f6155')
 
         mock_get.assert_called_once_with('3518be0e-17c1-4189-8f81-83f3724f6155')
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(Resource, 'get')
     def test_get_with_uri_called_once(self, mock_get):
         uri = '/rest/fcoe-networks/3518be0e-17c1-4189-8f81-83f3724f6155'
         self._fcoe_networks.get(uri)
 
         mock_get.assert_called_once_with(uri)
 
-    @mock.patch.object(ResourceClient, 'patch')
+    @mock.patch.object(Resource, 'patch')
     def test_patch_should_use_user_defined_values(self, mock_patch):
         mock_patch.return_value = {}
 
