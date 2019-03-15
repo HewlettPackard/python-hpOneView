@@ -30,10 +30,10 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource
 
 
-class LogicalInterconnects(object):
+class LogicalInterconnects(Resource):
     """
     Logical Interconnects API client.
 
@@ -51,7 +51,6 @@ class LogicalInterconnects(object):
         '200': {"type": "InterconnectSettingsV3"},
         '300': {"type": "InterconnectSettingsV201"},
         '500': {"type": "InterconnectSettingsV201"},
-        '600': {"type": "InterconnectSettingsV201"}
     }
 
     SETTINGS_ETHERNET_DEFAULT_VALUES = {
@@ -59,6 +58,7 @@ class LogicalInterconnects(object):
         '300': {"type": "EthernetInterconnectSettingsV201"},
         '500': {"type": "EthernetInterconnectSettingsV201"},
         '600': {"type": "EthernetInterconnectSettingsV4"}
+        '800': {"type": "EthernetInterconnectSettingsV4"}
     }
 
     SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES = {
@@ -66,6 +66,7 @@ class LogicalInterconnects(object):
         '300': {"type": "telemetry-configuration"},
         '500': {"type": "telemetry-configuration"},
         '600': {"type": "telemetry-configuration"}
+        '800': {"type": "telemetry-configuration"}
     }
 
     def __init__(self, con):
@@ -195,13 +196,13 @@ class LogicalInterconnects(object):
         uri = self._client.build_uri(id_or_uri) + "/internalVlans"
         return self._client.get_collection(uri)
 
-    def update_settings(self, id_or_uri, settings, force=False, timeout=-1):
+    @ensure_resource_client
+    def update_settings(self, settings, force=False, timeout=-1):
         """
         Updates interconnect settings on the logical interconnect. Changes to interconnect settings are asynchronously
         applied to all managed interconnects.
-
+        (This method is not available from API version 600 onwards)
         Args:
-            id_or_uri: Can be either the resource ID or the resource URI.
             settings: Interconnect settings
             force: If set to true, the operation completes despite any problems with network connectivity or errors
                 on the resource itself. The default is false.
@@ -217,8 +218,8 @@ class LogicalInterconnects(object):
             data['ethernetSettings'] = self._client.merge_default_values(data['ethernetSettings'],
                                                                          self.SETTINGS_ETHERNET_DEFAULT_VALUES)
 
-        uri = self._client.build_uri(id_or_uri) + "/settings"
-        return self._client.update(data, uri=uri, force=force, timeout=timeout,
+        uri = "{}/settings".format(self.data["uri"])
+        return self._helper.update(data, uri=uri, force=force, timeout=timeout,
                                    default_values=self.SETTINGS_DEFAULT_VALUES)
 
     def update_configuration(self, id_or_uri, timeout=-1):
