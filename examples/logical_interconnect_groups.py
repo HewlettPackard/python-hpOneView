@@ -35,11 +35,18 @@ config = {
         "password": "<password>"
     }
 }
-
+config = {
+    "ip": "10.50.9.42",
+    "credentials": {
+        "userName": "administrator",
+        "password": "ecosystem"
+    },
+    "api_version": 800
+}
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
-
 oneview_client = OneViewClient(config)
+logical_interconnect_groups = oneview_client.logical_interconnect_groups
 
 # Define the scope name to add the logical interconnect group to it
 scope_name = ""
@@ -47,7 +54,9 @@ scope_name = ""
 # Get the interconnect type named 'HP VC FlexFabric 10Gb/24-Port Module' and using the uri in the values for the fields
 # "permittedInterconnectTypeUri" and create a Logical Interconnect Group.
 # Note: If this type does not exist, select another name
-interconnect_type = oneview_client.interconnect_types.get_by('name', 'HP VC FlexFabric 10Gb/24-Port Module')[0]['uri']
+data = oneview_client.interconnect_types.get_all()
+pprint(data)
+interconnect_type = oneview_client.interconnect_types.get_by('name', 'Synergy 10Gb Interconnect Link Module')[0]['uri']
 
 options = {
     "category": None,
@@ -193,72 +202,32 @@ options = {
     }
 }
 
-# Create a logical interconnect group
-print("Create a logical interconnect group")
-created_lig = oneview_client.logical_interconnect_groups.create(options)
-pprint(created_lig)
-
-# Get the first 10 records, sorting by name descending, filtering by name
-print("Get the first Logical Interconnect Groups, sorting by name descending, filtering by name")
-ligs = oneview_client.logical_interconnect_groups.get_all(
-    0, 10, sort='name:descending', filter="\"'name'='OneView Test Logical Interconnect Group'\"")
-pprint(ligs)
-
-# Get Logical Interconnect Group by property
-lig = oneview_client.logical_interconnect_groups.get_by('name', 'OneView Test Logical Interconnect Group')[0]
-print("Found lig by name: '%s'.\n  uri = '%s'" % (lig['name'], lig['uri']))
-
-# Update a logical interconnect group
-print("Update a logical interconnect group")
-lig_to_update = created_lig.copy()
-lig_to_update["name"] = "Renamed Logical Interconnect Group"
-updated_lig = oneview_client.logical_interconnect_groups.update(lig_to_update)
-pprint(updated_lig)
-
 # Get all, with defaults
 print("Get all Logical Interconnect Groups")
-ligs = oneview_client.logical_interconnect_groups.get_all()
+ligs = logical_interconnect_groups.get_all()
 pprint(ligs)
-
-# Get by Id
-try:
-    print("Get a Logical Interconnect Group by id")
-    lig_byid = oneview_client.logical_interconnect_groups.get('f0a0a113-ec97-41b4-83ce-d7c92b900e7c')
-    pprint(lig_byid)
-except HPOneViewException as e:
-    print(e.msg)
 
 # Get by uri
 try:
     print("Get a Logical Interconnect Group by uri")
-    lig_byuri = oneview_client.logical_interconnect_groups.get(created_lig["uri"])
-    pprint(lig_byuri)
+    lig_byuri = logical_interconnect_groups.get_by_uri(ligs[0]["uri"])
+    pprint(lig_byuri.data)
 except HPOneViewException as e:
     print(e.msg)
 
-# Performs a patch operation
-scope = oneview_client.scopes.get_by_name(scope_name)
-if scope:
-    print("\nPatches the logical interconnect group adding one scope to it")
-    updated_lig = oneview_client.logical_interconnect_groups.patch(updated_lig['uri'],
-                                                                   'replace',
-                                                                   '/scopeUris',
-                                                                   [scope['uri']])
-    pprint(updated_lig)
+# Get the first 10 records, sorting by name descending, filtering by name
+print("Get the first Logical Interconnect Groups, sorting by name descending, filtering by name")
+ligs = logical_interconnect_groups.get_all(
+    0, 10, sort='name:descending', filter="\"'name'='OneView Test Logical Interconnect Group'\"")
+pprint(ligs)
 
-# Get default settings
-print("Get the default interconnect settings for a logical interconnect group")
-lig_default_settings = oneview_client.logical_interconnect_groups.get_default_settings()
-pprint(lig_default_settings)
-
-# Get settings
-print("Gets the interconnect settings for a logical interconnect group")
-lig_settings = oneview_client.logical_interconnect_groups.get_settings(created_lig["uri"])
-pprint(lig_settings)
+# Get Logical Interconnect Group by property
+lig = logical_interconnect_groups.get_by('name', 'SYN-LIG')[0]
+print("Found lig by name: '%s'.\n  uri = '%s'" % (lig['name'], lig['uri']))
 
 # Get Logical Interconnect Group by scope_uris
 if oneview_client.api_version >= 600:
-    lig_by_scope_uris = oneview_client.logical_interconnect_groups.get_all(scope_uris="\"'/rest/scopes/3bb0c754-fd38-45af-be8a-4d4419de06e9'\"")
+    lig_by_scope_uris = logical_interconnect_groups.get_all(scope_uris="\"'/rest/scopes/3bb0c754-fd38-45af-be8a-4d4419de06e9'\"")
     if len(lig_by_scope_uris) > 0:
         print("Found %d Logical Interconnect Groups" % (len(lig_by_scope_uris)))
         i = 0
@@ -269,7 +238,41 @@ if oneview_client.api_version >= 600:
     else:
         print("No Logical Interconnect Group found.")
 
+#Get logical interconnect group by name
+lig = logical_interconnect_groups.get_by_name(options["name"])
+if not lig:
+    # Create a logical interconnect group
+    print("Create a logical interconnect group")
+    lig = logical_interconnect_groups.create(options)
+    pprint(lig.data)
+
+# Update a logical interconnect group
+print("Update a logical interconnect group")
+lig_to_update = lig.data.copy()
+lig_to_update["name"] = "Renamed Logical Interconnect Group"
+lig.update(lig_to_update)
+pprint(lig.data)
+
+# Performs a patch operation
+scope = oneview_client.scopes.get_by_name(scope_name)
+if scope:
+    print("\nPatches the logical interconnect group adding one scope to it")
+    updated_lig = lig.patch('replace',
+                            '/scopeUris',
+                            [scope['uri']])
+    pprint(updated_lig.data)
+
+# Get default settings
+print("Get the default interconnect settings for a logical interconnect group")
+lig_default_settings = lig.get_default_settings()
+pprint(lig_default_settings)
+
+# Get settings
+print("Gets the interconnect settings for a logical interconnect group")
+lig_settings = lig.get_settings()
+pprint(lig_settings)
+
 # Delete a logical interconnect group
 print("Delete the created logical interconnect group")
-oneview_client.logical_interconnect_groups.delete(updated_lig)
+lig.delete()
 print("Successfully deleted logical interconnect group")
