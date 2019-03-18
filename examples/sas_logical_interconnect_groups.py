@@ -48,15 +48,14 @@ config = {
 config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
 sas_logical_interconnect_groups = oneview_client.sas_logical_interconnect_groups
-interconnect_types = oneview_client.interconnect_types
+interconnect_types = oneview_client.sas_interconnect_types
 
-# The Interconnect Type URI which is permitted to form SAS interconnect map must be defined to run this example
-permittedInterconnectTypeUri = '/rest/sas-interconnect-types/Synergy12GbSASConnectionModule'
-it = interconnect_types.get_all()
-pprint(it)
+interconnect_type_name = "Synergy 12Gb SAS Connection Module"
 
-interconnect_type = interconnect_types.get_by_name("Synergy 10Gb Pass-Thru Module")
+# The Interconnect Type which is permitted to form SAS interconnect map must be defined to run this example
+interconnect_type = interconnect_types.get_by_name(interconnect_type_name)
 pprint(interconnect_type)
+
 # Create a SAS Logical Interconnect Group
 data = {
     "name": "Test SAS Logical Interconnect Group",
@@ -75,7 +74,7 @@ data = {
                 ]
             },
             "enclosureIndex": 1,
-            "permittedInterconnectTypeUri": permittedInterconnectTypeUri
+            "permittedInterconnectTypeUri": interconnect_type.data["uri"]
         }, {
             "logicalLocation": {
                 "locationEntries": [
@@ -89,7 +88,7 @@ data = {
                 ]
             },
             "enclosureIndex": 1,
-            "permittedInterconnectTypeUri": permittedInterconnectTypeUri
+            "permittedInterconnectTypeUri": interconnect_type.data["uri"]
         }]
     },
     "enclosureType": "SY12000",
@@ -117,7 +116,7 @@ if oneview_client.api_version >= 600:
     else:
         print("No SAS Interconnect Group found.")
 
-sas_lig = sas_logical_interconnect_groups.get_by_name()
+sas_lig = sas_logical_interconnect_groups.get_by_name(data["name"])
 if not sas_lig:
     sas_lig = oneview_client.sas_logical_interconnect_groups.create(data)
     print("\nSAS Logical Interconnect Group '{name}' created successfully.\n  uri = '{uri}'".format(**sas_lig.data))
@@ -127,8 +126,8 @@ print("\nUpdate the SAS Logical Interconnect Group")
 resource_to_update = sas_lig.data.copy()
 resource_to_update['name'] = 'Test SAS Logical Interconnect Group - Renamed'
 
-sas_lig_updated = sas_lig.update(resource_to_update)
-pprint(sas_lig_updated)
+sas_lig.update(resource_to_update)
+pprint(sas_lig.data)
 
 # Delete the SAS Logical Interconnect Group
 sas_lig.delete()
