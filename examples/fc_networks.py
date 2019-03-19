@@ -35,6 +35,16 @@ config = {
     "api_version": 800
 }
 
+config = {
+    "ip": "10.50.4.100",
+    "credentials": {
+        "userName": "kattumun",
+        "password": "P@ssw0rd!"
+    },
+    "api_version": 800
+}
+
+
 options = {
     "name": "OneViewSDK Test FC Network",
     "connectionTemplateUri": None,
