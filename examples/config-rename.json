@@ -1,12 +1,12 @@
 {
-  "ip": "172.16.102.59",
-  "image_streamer_ip": "172.16.102.60",
-  "api_version": 500,
+  "ip": "10.50.9.42",
+  "image_streamer_ip": "",
+  "api_version": 800,
   "ssl_certificate": "",
   "credentials": {
     "userName": "administrator",
     "authLoginDomain": "",
-    "password": "",
+    "password": "ecosystem",
     "sessionID": ""
   },
   "enclosure_hostname": "172.18.1.13",
