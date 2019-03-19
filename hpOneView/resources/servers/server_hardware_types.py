@@ -59,8 +59,7 @@ class ServerHardwareTypes(Resource):
         Returns:
             dict: Updated server hardware type.
         """
-        resource = deepcopy(self.data)
-        resource.update(data)
-        self.data = self._helper.update(resource, timeout=timeout, force=force)
+        uri = self.data["uri"]
+        self.data = self._helper.update(data, uri=uri, timeout=timeout, force=force)
 
         return self
