@@ -35,16 +35,6 @@ config = {
     "api_version": 800
 }
 
-config = {
-    "ip": "10.50.4.100",
-    "credentials": {
-        "userName": "kattumun",
-        "password": "P@ssw0rd!"
-    },
-    "api_version": 800
-}
-
-
 options = {
     "name": "OneViewSDK Test FC Network",
     "connectionTemplateUri": None,
@@ -85,7 +75,6 @@ pprint(fc_nets_sorted)
 # Find recently created network by name
 print("\nGet FC Network by name")
 fc_network = fc_networks.get_by_name(options['name'])
-print(str(fc_network))
 
 if fc_network:
     print("\nFound fc-network by name: '%s'.\n  uri = '%s'" % (fc_network.data['name'], fc_network.data['uri']))
