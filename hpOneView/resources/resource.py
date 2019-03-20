@@ -441,6 +441,29 @@ class ResourceHelper(object):
 
         return self.do_put(uri, resource, timeout, custom_headers)
 
+    def create_report(self, uri, timeout=-1):
+        """
+        Creates a report and returns the output.
+
+        Args:
+            uri: URI
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            list:
+        """
+        logger.debug('Creating Report (uri = %s)'.format(uri))
+        task, _ = self._connection.post(uri, {})
+        print(task)
+        if not task:
+            raise exceptions.HPOneViewException(RESOURCE_CLIENT_TASK_EXPECTED)
+
+        task = self._task_monitor.get_completed_task(task, timeout)
+
+        return task['taskOutput']
+
     def build_query_uri(self, uri=None, start=0, count=-1, filter='', query='', sort='', view='', fields='', scope_uris=''):
         """Builds the URI from given parameters.
 
