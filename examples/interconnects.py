@@ -199,7 +199,7 @@ try:
     updated = oneview_client.interconnects.update_configuration(interconnect_id)
     pprint(updated)
 except HPOneViewException as e:
-        print(e.msg)
+    print(e.msg)
 
 # Gets the interconnect configuration.
 print("\nGet the interconnect pluggable module information")
@@ -208,4 +208,4 @@ try:
     plug_info = oneview_client.interconnects.get_pluggable_module_information(interconnect_id)
     pprint(plug_info)
 except HPOneViewException as e:
-        print(e.msg)
+    print(e.msg)

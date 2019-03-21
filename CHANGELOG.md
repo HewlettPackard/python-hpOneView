@@ -1,4 +1,4 @@
-# 4.8.0 (Unreleased)
+# 4.8.0
 #### Notes
 Added the capability to handle OneView Appliance SNMP Settings
 Extends support of the SDK to OneView Rest API version 800 (OneView v4.1).
