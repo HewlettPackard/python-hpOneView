@@ -23,7 +23,6 @@
 
 from pprint import pprint
 from hpOneView.oneview_client import OneViewClient
-from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
@@ -75,4 +74,3 @@ server_hardware_type.update(update)
 print("\nServer Hardware type '{}' updated: \n 'description': '{}'".format(
     server_hardware_type.data['name'],
     server_hardware_type.data['description']))
-

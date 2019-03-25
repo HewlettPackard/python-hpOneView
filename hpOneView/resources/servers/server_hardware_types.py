@@ -27,7 +27,6 @@ from __future__ import division
 from __future__ import absolute_import
 from future import standard_library
 
-from copy import deepcopy
 
 standard_library.install_aliases()
 
