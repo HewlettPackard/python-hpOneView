@@ -442,7 +442,7 @@ class OneViewClientTest(unittest.TestCase):
         switches = self._oneview.switches
         self.assertEqual(switches, self._oneview.switches)
 
-    def test_should_return_new_ethernet_networks(self):
+    def test_should_return_new_ethernet_networks_obj(self):
         self.assertNotEqual(self._oneview.ethernet_networks, self._oneview.ethernet_networks)
 
     def test_lazy_loading_server_hardware(self):
