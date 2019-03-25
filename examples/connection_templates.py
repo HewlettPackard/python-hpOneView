@@ -26,7 +26,7 @@ from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "<ip>",
+    "ip": "<oneview_ip>",
     "credentials": {
         "userName": "<username>",
         "password": "<password>"
@@ -42,7 +42,6 @@ connection_templates = oneview_client.connection_templates
 
 # The name and ID of an existent Connection Template must be set to run this example
 connection_template_name = 'defaultConnectionTemplate'
-connection_template_id = '63b9a696-8c68-4e59-876d-148b1b925709'
 
 # Get all connection templates
 print("Get all connection templates")
@@ -66,7 +65,7 @@ pprint(con_template_byname.data)
 
 # Update the connection_template retrieved in the last operation
 print("Update the retrieved connection_template typicalBandwidth")
-template_byname = con_template_byname.data
+template_byname = con_template_byname.data.copy()
 template_byname['bandwidth']['typicalBandwidth'] = 5000
 con_template_updated = con_template_byname.update(template_byname)
 pprint(con_template_updated.data)

@@ -26,7 +26,7 @@ Resource data will be available with the resource object. This enhancement helps
 #### features supported with current release
 - Connection template
 - Enclosure
-- FC Network
+- FC network
 
 # 4.8.0
 #### Notes

@@ -61,4 +61,4 @@ class ConnectionTemplates(Resource):
             dict:
         """
         uri = self.URI + "/defaultConnectionTemplate"
-        return self._request.do_get(uri)
+        return self._helper.do_get(uri)

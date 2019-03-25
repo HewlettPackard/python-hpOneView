@@ -27,7 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.networking.connection_templates import ConnectionTemplates
-from hpOneView.resources.resource import Resource, ResourceRequest
+from hpOneView.resources.resource import Resource, ResourceHelper
 
 
 class ConnectionTemplatesTest(unittest.TestCase):
@@ -36,7 +36,7 @@ class ConnectionTemplatesTest(unittest.TestCase):
         self.connection = connection(self.host)
         self._connection_templates = ConnectionTemplates(self.connection)
 
-    @mock.patch.object(ResourceRequest, 'do_requests_to_getall')
+    @mock.patch.object(ResourceHelper, 'do_requests_to_getall')
     def test_get_all_called_once(self, mock_get_all):
         filter = 'name=TestName'
         sort = 'name:ascending'
@@ -53,7 +53,7 @@ class ConnectionTemplatesTest(unittest.TestCase):
         mock_get_by.assert_called_once_with(
             'name', 'name1128673347-1465916352647')
 
-    @mock.patch.object(ResourceRequest, 'do_get')
+    @mock.patch.object(ResourceHelper, 'do_get')
     def test_get_default_called_once(self, mock_do_get):
         self._connection_templates.get_default()
         uri = '/rest/connection-templates/defaultConnectionTemplate'
