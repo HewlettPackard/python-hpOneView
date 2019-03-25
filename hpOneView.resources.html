@@ -301,6 +301,192 @@
 <div class="section" id="module-hpOneView.resources.resource">
 <span id="hponeview-resources-resource-module"></span><h2>hpOneView.resources.resource module<a class="headerlink" href="#module-hpOneView.resources.resource" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
+<dt id="hpOneView.resources.resource.EnsureResourceClient">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.resource.</code><code class="descname">EnsureResourceClient</code><span class="sig-paren">(</span><em>method=None</em>, <em>update_data=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#EnsureResourceClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.EnsureResourceClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Decorator class to update the resource data.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="hpOneView.resources.resource.Resource">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.resource.</code><code class="descname">Resource</code><span class="sig-paren">(</span><em>connection</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#Resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.Resource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for OneView resources.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>connection</strong> – OneView connection object</li>
+<li><strong>data</strong> – Resource data</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="hpOneView.resources.resource.Resource.DEFAULT_VALUES">
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {}</em><a class="headerlink" href="#hpOneView.resources.resource.Resource.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.resource.Resource.UNIQUE_IDENTIFIERS">
+<code class="descname">UNIQUE_IDENTIFIERS</code><em class="property"> = [u'uri', u'name']</em><a class="headerlink" href="#hpOneView.resources.resource.Resource.UNIQUE_IDENTIFIERS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.resource.Resource.URI">
+<code class="descname">URI</code><em class="property"> = u'/rest'</em><a class="headerlink" href="#hpOneView.resources.resource.Resource.URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.Resource.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>data=None</em>, <em>uri=None</em>, <em>timeout=-1</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#Resource.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.Resource.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a POST request to create a resource when a request body is required.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – Additional fields can be passed to create the resource.</li>
+<li><strong>uri</strong> – Resouce uri</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+<li><strong>custom_headers</strong> – Allows set specific HTTP headers.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Created resource.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.resource.Resource.delete">
+<code class="descname">delete</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.resource.Resource.delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.Resource.ensure_resource_data">
+<code class="descname">ensure_resource_data</code><span class="sig-paren">(</span><em>update_data=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#Resource.ensure_resource_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.Resource.ensure_resource_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves data from OneView and updates resource object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>update_data</strong> – Flag to update resource data when it is required.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.Resource.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#Resource.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.Resource.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all items according with the given arguments.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items (default).</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The default is no
+filter; all resources are returned.</li>
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based on create time with the
+oldest entry first.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of items matching the specified filter.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.Resource.get_by">
+<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#Resource.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.Resource.get_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the resource by passing a field and its value.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This function uses get_all passing a filter.The search is case-insensitive.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>field</strong> – Field name to filter.</li>
+<li><strong>value</strong> – Value to filter.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.Resource.get_by_name">
+<code class="descname">get_by_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#Resource.get_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.Resource.get_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a resource by its name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – Resource name.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Resource object or None if resource does not exist.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.Resource.get_by_uri">
+<code class="descname">get_by_uri</code><span class="sig-paren">(</span><em>uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#Resource.get_by_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.Resource.get_by_uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a resource by its URI</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uri</strong> – URI of the resource</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Resource object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="hpOneView.resources.resource.Resource.new">
+<em class="property">classmethod </em><code class="descname">new</code><span class="sig-paren">(</span><em>connection</em>, <em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#Resource.new"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.Resource.new" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a new resource object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.resource.Resource.refresh">
+<code class="descname">refresh</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.resource.Resource.refresh" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.Resource.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#Resource.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.Resource.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="hpOneView.resources.resource.ResourceClient">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.resource.</code><code class="descname">ResourceClient</code><span class="sig-paren">(</span><em>con</em>, <em>uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -840,6 +1026,597 @@ in OneView; it just stops waiting for its completion.</li>
 
 </dd></dl>
 
+<dl class="class">
+<dt id="hpOneView.resources.resource.ResourceCollectionMixin">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.resource.</code><code class="descname">ResourceCollectionMixin</code><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceCollectionMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceCollectionMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceCollectionMixin.get_collection">
+<code class="descname">get_collection</code><span class="sig-paren">(</span><em>filter=u''</em>, <em>path=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceCollectionMixin.get_collection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceCollectionMixin.get_collection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a collection of resources.</p>
+<p>Use this function when the ‘start’ and ‘count’ parameters are not allowed in the GET call.
+Otherwise, use get_all instead.</p>
+<p>Optional filtering criteria may be specified.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – General filter/query string.</li>
+<li><strong>path</strong> (<em>str</em>) – path to be added with base URI</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Collection of the requested resource.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hpOneView.resources.resource.ResourceFileHandlerMixin">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.resource.</code><code class="descname">ResourceFileHandlerMixin</code><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceFileHandlerMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceFileHandlerMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceFileHandlerMixin.download">
+<code class="descname">download</code><span class="sig-paren">(</span><em>uri</em>, <em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceFileHandlerMixin.download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceFileHandlerMixin.download" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads the contents of the requested URI to a stream.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>uri</strong> – URI</li>
+<li><strong>file_path</strong> – File path destination</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the file was successfully downloaded.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceFileHandlerMixin.upload">
+<code class="descname">upload</code><span class="sig-paren">(</span><em>file_path</em>, <em>uri=None</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceFileHandlerMixin.upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceFileHandlerMixin.upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a multipart request.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file_path</strong> – File to upload.</li>
+<li><strong>uri</strong> – A specific URI (optional).</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Response body.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hpOneView.resources.resource.ResourceHelper">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.resource.</code><code class="descname">ResourceHelper</code><span class="sig-paren">(</span><em>base_uri</em>, <em>connection</em>, <em>task_monitor</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.build_query_uri">
+<code class="descname">build_query_uri</code><span class="sig-paren">(</span><em>uri=None</em>, <em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>view=u''</em>, <em>fields=u''</em>, <em>scope_uris=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.build_query_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.build_query_uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds the URI from given parameters.</p>
+<p>More than one request can be send to get the items, regardless the query parameter ‘count’, because the actual
+number of items in the response might differ from the requested count. Some types of resource have a limited
+number of items returned on each call. For those resources, additional calls are made to the API to retrieve
+any other items matching the given filter. The actual number of items can also differ from the requested call
+if the requested number of items would take too long.</p>
+<p>The use of optional parameters for OneView 2.0 is described at:
+<a class="reference external" href="http://h17007.www1.hpe.com/docs/enterprise/servers/oneview2.0/cic-api/en/api-docs/current/index.html">http://h17007.www1.hpe.com/docs/enterprise/servers/oneview2.0/cic-api/en/api-docs/current/index.html</a></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Single quote - “’” - inside a query parameter is not supported by OneView API.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items (default).</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The default is no
+filter; all resources are returned.</li>
+<li><strong>query</strong> – A single query parameter can do what would take multiple parameters or multiple GET requests using
+filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.</li>
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based on create time with the
+oldest entry first.</li>
+<li><strong>view</strong> – Returns a specific subset of the attributes of the resource or collection by specifying the name of a
+predefined view. The default view is expand (show all attributes of the resource and all elements of
+the collections or resources).</li>
+<li><strong>fields</strong> – Name of the fields.</li>
+<li><strong>uri</strong> – A specific URI (optional)</li>
+<li><strong>scope_uris</strong> – An expression to restrict the resources returned according to the scopes to
+which they are assigned.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The complete uri</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">uri</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.build_subresource_uri">
+<code class="descname">build_subresource_uri</code><span class="sig-paren">(</span><em>resource_id_or_uri=None</em>, <em>subresource_id_or_uri=None</em>, <em>subresource_path=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.build_subresource_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.build_subresource_uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helps to build a URI with resource path and its sub resource path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resoure_id_or_uri</strong> – ID/URI of the main resource.</li>
+<li><strong>subresource_id__or_uri</strong> – ID/URI of the sub resource.</li>
+<li><strong>subresource_path</strong> – Sub resource path to be added with the URI.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Returns URI</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.build_uri">
+<code class="descname">build_uri</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.build_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.build_uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helps to build the URI from resource id and validate the URI.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID/URI of the resource.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns a valid resource URI</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>data=None</em>, <em>uri=None</em>, <em>timeout=-1</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a POST request to create a resource when a request body is required.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – Additional fields can be passed to create the resource.</li>
+<li><strong>uri</strong> – Resouce uri</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+<li><strong>custom_headers</strong> – Allows set specific HTTP headers.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Created resource.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>uri</em>, <em>force=False</em>, <em>timeout=-1</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes current resource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>force</strong> – Flag to delete the resource forcefully, default is False.</li>
+<li><strong>timeout</strong> – Timeout in seconds.</li>
+<li><strong>custom_headers</strong> – Allows to set custom http headers.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.do_get">
+<code class="descname">do_get</code><span class="sig-paren">(</span><em>uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.do_get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.do_get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helps to make get requests</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uri</strong> – URI of the resource</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Returns the resource data</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Returns</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.do_post">
+<code class="descname">do_post</code><span class="sig-paren">(</span><em>uri</em>, <em>resource</em>, <em>timeout</em>, <em>custom_headers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.do_post"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.do_post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helps to make post requests.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>uri</strong> – URI of  the resource.</li>
+<li><strong>resource</strong> – Resource data to post.</li>
+<li><strong>timeout</strong> – Time out for the request in seconds.</li>
+<li><strong>cutom_headers</strong> – Allows to add custom http headers.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Retunrs Task object.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.do_put">
+<code class="descname">do_put</code><span class="sig-paren">(</span><em>uri</em>, <em>resource</em>, <em>timeout</em>, <em>custom_headers</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.do_put"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.do_put" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helps to make put requests.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>uri</strong> – URI of the resource</li>
+<li><strong>timeout</strong> – Time out for the request in seconds.</li>
+<li><strong>custom_headers</strong> – Allows to set custom http headers.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Retuns:</dt>
+<dd>Returns Task object</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.do_requests_to_getall">
+<code class="descname">do_requests_to_getall</code><span class="sig-paren">(</span><em>uri</em>, <em>requested_count</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.do_requests_to_getall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.do_requests_to_getall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helps to make http request for get_all method.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This method will be checking for the pagination URI in the response
+and make request to pagination URI to get all the resources.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.get_all">
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>view=u''</em>, <em>fields=u''</em>, <em>uri=None</em>, <em>scope_uris=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all items according with the given arguments.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> – The first item to return, using 0-based indexing.
+If not specified, the default is 0 - start with the first available item.</li>
+<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items (default).</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The default is no
+filter; all resources are returned.</li>
+<li><strong>query</strong> – A single query parameter can do what would take multiple parameters or multiple GET requests using
+filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.</li>
+<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based on create time with the
+oldest entry first.</li>
+<li><strong>view</strong> – Returns a specific subset of the attributes of the resource or collection by specifying the name of a
+predefined view. The default view is expand (show all attributes of the resource and all elements of
+the collections or resources).</li>
+<li><strong>fields</strong> – Name of the fields.</li>
+<li><strong>uri</strong> – A specific URI (optional)</li>
+<li><strong>scope_uris</strong> – An expression to restrict the resources returned according to the scopes to
+which they are assigned.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of items matching the specified filter.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.get_members">
+<code class="descname">get_members</code><span class="sig-paren">(</span><em>mlist</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.get_members"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.get_members" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get members from list of resources</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.get_next_page">
+<code class="descname">get_next_page</code><span class="sig-paren">(</span><em>response</em>, <em>items</em>, <em>requested_count</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.get_next_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.get_next_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns next page URI.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.make_query_filter">
+<code class="descname">make_query_filter</code><span class="sig-paren">(</span><em>filters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.make_query_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.make_query_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper method to build filter query parameter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>uri=None</em>, <em>force=False</em>, <em>timeout=-1</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a PUT request to update a resource when a request body is required.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> – Data to update the resource.</li>
+<li><strong>force</strong> – If set to true, the operation completes despite any problems
+with network connectivity or errors on the resource itself. The default is false.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+<li><strong>custom_headers</strong> – Allows to add custom HTTP headers.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dict with the updated resource data.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.validate_resource_uri">
+<code class="descname">validate_resource_uri</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.validate_resource_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.validate_resource_uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper method to validate URI of the resource.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hpOneView.resources.resource.ResourcePatchMixin">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.resource.</code><code class="descname">ResourcePatchMixin</code><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourcePatchMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourcePatchMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourcePatchMixin.patch">
+<code class="descname">patch</code><span class="sig-paren">(</span><em>operation</em>, <em>path</em>, <em>value</em>, <em>custom_headers=None</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourcePatchMixin.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourcePatchMixin.patch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses the PATCH to update a resource.</p>
+<p>Only one operation can be performed in each PATCH call.</p>
+<dl class="docutils">
+<dt>Args</dt>
+<dd><p class="first">operation: Patch operation
+path: Path
+value: Value
+timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</p>
+<blockquote>
+<div>in OneView; it just stops waiting for its completion.</div></blockquote>
+<p class="last">custom_headers: Allows to add custom http headers.</p>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Updated resource.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourcePatchMixin.patch_request">
+<code class="descname">patch_request</code><span class="sig-paren">(</span><em>uri</em>, <em>body</em>, <em>custom_headers=None</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourcePatchMixin.patch_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourcePatchMixin.patch_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses the PATCH to update a resource.</p>
+<p>Only one operation can be performed in each PATCH call.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>body</strong> (<em>list</em>) – Patch request body</li>
+<li><strong>timeout</strong> (<em>int</em>) – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+<li><strong>custom_headers</strong> (<em>dict</em>) – Allows to add custom http headers.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Updated resource.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hpOneView.resources.resource.ResourceSchemaMixin">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.resource.</code><code class="descname">ResourceSchemaMixin</code><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceSchemaMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceSchemaMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceSchemaMixin.get_schema">
+<code class="descname">get_schema</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceSchemaMixin.get_schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceSchemaMixin.get_schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Supports schema requests.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A dict with the schema.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hpOneView.resources.resource.ResourceUtilizationMixin">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.resource.</code><code class="descname">ResourceUtilizationMixin</code><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceUtilizationMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceUtilizationMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceUtilizationMixin.get_utilization">
+<code class="descname">get_utilization</code><span class="sig-paren">(</span><em>fields=None</em>, <em>filter=None</em>, <em>refresh=False</em>, <em>view=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceUtilizationMixin.get_utilization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceUtilizationMixin.get_utilization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves historical utilization data for the specified resource, metrics, and time span.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fields</strong> – Name of the supported metric(s) to be retrieved in the format METRIC[,METRIC]…
+If unspecified, all metrics supported are returned.</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – <p>Filters should be in the format FILTER_NAME=VALUE[,FILTER_NAME=VALUE]…
+E.g.: ‘startDate=2016-05-30T11:20:44.541Z,endDate=2016-05-30T19:20:44.541Z’</p>
+<dl class="docutils">
+<dt>startDate</dt>
+<dd>Start date of requested starting time range in ISO 8601 format. If omitted, the startDate is
+determined by the endDate minus 24 hours.</dd>
+<dt>endDate</dt>
+<dd>End date of requested starting time range in ISO 8601 format. When omitted, the endDate includes
+the latest data sample available.</dd>
+</dl>
+<p>If an excessive number of samples would otherwise be returned, the results will be segmented. The
+caller is responsible for comparing the returned sliceStartTime with the requested startTime in the
+response. If the sliceStartTime is greater than the oldestSampleTime and the requested start time,
+the caller is responsible for repeating the request with endTime set to sliceStartTime to obtain the
+next segment. This process is repeated until the full data set is retrieved.</p>
+<p>If the resource has no data, the UtilizationData is still returned but will contain no samples and
+sliceStartTime/sliceEndTime will be equal. oldestSampleTime/newestSampleTime will still be set
+appropriately (null if no data is available). If the filter does not happen to overlap the data
+that a resource has, then the metric history service will return null sample values for any
+missing samples.</p>
+</li>
+<li><strong>refresh</strong> – Specifies that if necessary, an additional request will be queued to obtain the most recent
+utilization data from the iLO. The response will not include any refreshed data. To track the
+availability of the newly collected data, monitor the TaskResource identified by the refreshTaskUri
+property in the response. If null, no refresh was queued.</li>
+<li><strong>view</strong> – <p>Specifies the resolution interval length of the samples to be retrieved. This is reflected in the
+resolution in the returned response. Utilization data is automatically purged to stay within storage
+space constraints. Supported views are listed below:</p>
+<dl class="docutils">
+<dt>native</dt>
+<dd>Resolution of the samples returned will be one sample for each 5-minute time period. This is the
+default view and matches the resolution of the data returned by the iLO. Samples at this resolution
+are retained up to one year.</dd>
+<dt>hour</dt>
+<dd>Resolution of the samples returned will be one sample for each 60-minute time period. Samples are
+calculated by averaging the available 5-minute data samples that occurred within the hour, except
+for PeakPower which is calculated by reporting the peak observed 5-minute sample value data during
+the hour. Samples at this resolution are retained up to three years.</dd>
+<dt>day</dt>
+<dd>Resolution of the samples returned will be one sample for each 24-hour time period. One day is a
+24-hour period that starts at midnight GMT regardless of the time zone in which the appliance or
+client is located. Samples are calculated by averaging the available 5-minute data samples that
+occurred during the day, except for PeakPower which is calculated by reporting the peak observed
+5-minute sample value data during the day. Samples at this resolution are retained up to three
+years.</dd>
+</dl>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hpOneView.resources.resource.ResourceZeroBodyMixin">
+<em class="property">class </em><code class="descclassname">hpOneView.resources.resource.</code><code class="descname">ResourceZeroBodyMixin</code><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceZeroBodyMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceZeroBodyMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceZeroBodyMixin.create_with_zero_body">
+<code class="descname">create_with_zero_body</code><span class="sig-paren">(</span><em>uri=None</em>, <em>timeout=-1</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceZeroBodyMixin.create_with_zero_body"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceZeroBodyMixin.create_with_zero_body" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a POST request to create a resource when no request body is required.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+<li><strong>custom_headers</strong> – Allows set specific HTTP headers.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Created resource.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceZeroBodyMixin.update_with_zero_body">
+<code class="descname">update_with_zero_body</code><span class="sig-paren">(</span><em>uri=None</em>, <em>timeout=-1</em>, <em>custom_headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceZeroBodyMixin.update_with_zero_body"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceZeroBodyMixin.update_with_zero_body" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a PUT request to update a resource when no request body is required.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>uri</strong> – Allows to use a different URI other than resource URI</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default.
+The timeout does not abort the operation in OneView; it just stops waiting for its completion.</li>
+<li><strong>custom_headers</strong> – Allows to set custom HTTP headers.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dict with updated resource data.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.resource.ensure_resource_client">
+<code class="descclassname">hpOneView.resources.resource.</code><code class="descname">ensure_resource_client</code><a class="headerlink" href="#hpOneView.resources.resource.ensure_resource_client" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#hpOneView.resources.resource.EnsureResourceClient" title="hpOneView.resources.resource.EnsureResourceClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.EnsureResourceClient</span></code></a></p>
+</dd></dl>
+
 <dl class="function">
 <dt id="hpOneView.resources.resource.extract_id_from_uri">
 <code class="descclassname">hpOneView.resources.resource.</code><code class="descname">extract_id_from_uri</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#extract_id_from_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.extract_id_from_uri" title="Permalink to this definition">¶</a></dt>
@@ -924,6 +1701,12 @@ the original value will be maintained.</li>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="function">
+<dt id="hpOneView.resources.resource.unavailable_method">
+<code class="descclassname">hpOneView.resources.resource.</code><code class="descname">unavailable_method</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#unavailable_method"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.unavailable_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise an exception if method is not available for the resource.</p>
 </dd></dl>
 
 </div>

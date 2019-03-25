@@ -148,7 +148,7 @@
   <h1>Source code for hpOneView.resources.resource</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1">###</span>
-<span class="c1"># (C) Copyright (2012-2018) Hewlett Packard Enterprise Development LP</span>
+<span class="c1"># (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP</span>
 <span class="c1">#</span>
 <span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
 <span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
@@ -181,11 +181,12 @@
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
-
+<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">quote</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
+
 <span class="kn">from</span> <span class="nn">hpOneView.resources.task_monitor</span> <span class="k">import</span> <span class="n">TaskMonitor</span>
-<span class="kn">from</span> <span class="nn">hpOneView.exceptions</span> <span class="k">import</span> <span class="n">HPOneViewUnknownType</span><span class="p">,</span> <span class="n">HPOneViewException</span>
-<span class="kn">from</span> <span class="nn">hpOneView.exceptions</span> <span class="k">import</span> <span class="n">HPOneViewValueError</span>
+<span class="kn">from</span> <span class="nn">hpOneView</span> <span class="k">import</span> <span class="n">exceptions</span>
 
 <span class="n">RESOURCE_CLIENT_RESOURCE_WAS_NOT_PROVIDED</span> <span class="o">=</span> <span class="s1">&#39;Resource was not provided&#39;</span>
 <span class="n">RESOURCE_CLIENT_INVALID_FIELD</span> <span class="o">=</span> <span class="s1">&#39;Invalid field was provided&#39;</span>
@@ -194,44 +195,880 @@
 <span class="n">UNRECOGNIZED_URI</span> <span class="o">=</span> <span class="s1">&#39;Unrecognized URI for this resource&#39;</span>
 <span class="n">RESOURCE_CLIENT_TASK_EXPECTED</span> <span class="o">=</span> <span class="s2">&quot;Failed: Expected a TaskResponse.&quot;</span>
 <span class="n">RESOURCE_ID_OR_URI_REQUIRED</span> <span class="o">=</span> <span class="s1">&#39;It is required to inform the Resource ID or URI.&#39;</span>
-
+<span class="n">UNAVAILABLE_METHOD</span> <span class="o">=</span> <span class="s2">&quot;Method is not available for this resource&quot;</span>
+<span class="n">MISSING_UNIQUE_IDENTIFIERS</span> <span class="o">=</span> <span class="s2">&quot;Missing unique identifiers(URI/Name) for the resource&quot;</span>
+<span class="n">RESOURCE_DOES_NOT_EXIST</span> <span class="o">=</span> <span class="s2">&quot;Resource does not exist with the provided unique identifiers&quot;</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="merge_resources"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.merge_resources">[docs]</a><span class="k">def</span> <span class="nf">merge_resources</span><span class="p">(</span><span class="n">resource1</span><span class="p">,</span> <span class="n">resource2</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Updates a copy of resource1 with resource2 values and returns the merged dictionary.</span>
+<div class="viewcode-block" id="EnsureResourceClient"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.EnsureResourceClient">[docs]</a><span class="k">class</span> <span class="nc">EnsureResourceClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Decorator class to update the resource data.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">update_data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_data</span> <span class="o">=</span> <span class="n">update_data</span>
+
+    <span class="k">def</span> <span class="nf">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">objtype</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="fm">__call__</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">:</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">ensure_resource_data</span><span class="p">(</span><span class="n">update_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_data</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">wrap</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ensure_resource_data</span><span class="p">(</span><span class="n">update_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_data</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">wrap</span></div>
+
+
+<span class="c1"># Decorator to ensure the resource client</span>
+<span class="n">ensure_resource_client</span> <span class="o">=</span> <span class="n">EnsureResourceClient</span>
+
+
+<div class="viewcode-block" id="Resource"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.Resource">[docs]</a><span class="k">class</span> <span class="nc">Resource</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for OneView resources.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        resource1: original resource</span>
-<span class="sd">        resource2: resource to update resource1</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        dict: merged resource</span>
+<span class="sd">        connection: OneView connection object</span>
+<span class="sd">        data: Resource data</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">merged</span> <span class="o">=</span> <span class="n">resource1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">merged</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource2</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">merged</span></div>
+    <span class="c1"># Base URI for the rest calls</span>
+    <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest&#39;</span>
+
+    <span class="c1"># Unique identifiers to query the resource</span>
+    <span class="n">UNIQUE_IDENTIFIERS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Default values required for the api versions</span>
+    <span class="n">DEFAULT_VALUES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_monitor</span> <span class="o">=</span> <span class="n">TaskMonitor</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span> <span class="o">=</span> <span class="n">ResourceHelper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">_task_monitor</span><span class="p">)</span>
+        <span class="c1"># Resource data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="k">if</span> <span class="n">data</span> <span class="k">else</span> <span class="p">{}</span>
+
+        <span class="c1"># Merge resoure data with the default values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_merge_default_values</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Resource.ensure_resource_data"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.Resource.ensure_resource_data">[docs]</a>    <span class="k">def</span> <span class="nf">ensure_resource_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update_data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves data from OneView and updates resource object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            update_data: Flag to update resource data when it is required.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check for unique identifier in the resource data</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">UNIQUE_IDENTIFIERS</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">HPOneViewMissingUniqueIdentifiers</span><span class="p">(</span><span class="n">MISSING_UNIQUE_IDENTIFIERS</span><span class="p">)</span>
+
+        <span class="c1"># Returns if data update is not required</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">update_data</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">resource_data</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="s1">&#39;uri&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">UNIQUE_IDENTIFIERS</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">):</span>
+            <span class="n">resource_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">identifier</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">UNIQUE_IDENTIFIERS</span><span class="p">:</span>
+                <span class="n">identifier_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">identifier</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">identifier_value</span><span class="p">:</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">identifier_value</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">result</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                        <span class="n">resource_data</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="k">break</span>
+
+        <span class="k">if</span> <span class="n">resource_data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource_data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">HPOneViewResourceNotFound</span><span class="p">(</span><span class="n">RESOURCE_DOES_NOT_EXIST</span><span class="p">)</span></div>
+
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helps to get the latest resource data from the server.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">])</span>
+
+<div class="viewcode-block" id="Resource.get_all"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.Resource.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets all items according with the given arguments.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start: The first item to return, using 0-based indexing.</span>
+<span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
+<span class="sd">            count: The number of resources to return. A count of -1 requests all items (default).</span>
+<span class="sd">            filter (list or str): A general filter/query string to narrow the list of items returned. The default is no</span>
+<span class="sd">                filter; all resources are returned.</span>
+<span class="sd">            sort: The sort order of the returned data set. By default, the sort order is based on create time with the</span>
+<span class="sd">                oldest entry first.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of items matching the specified filter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="Resource.create"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.Resource.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes a POST request to create a resource when a request body is required.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: Additional fields can be passed to create the resource.</span>
+<span class="sd">            uri: Resouce uri</span>
+<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
+<span class="sd">            custom_headers: Allows set specific HTTP headers.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Created resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">default_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_default_values</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">default_values</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Create (uri = </span><span class="si">%s</span><span class="s1">, resource = </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)))</span>
+
+        <span class="n">resource_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">custom_headers</span><span class="p">)</span>
+        <span class="n">new_resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span> <span class="n">resource_data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">new_resource</span></div>
+
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deletes current resource.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timeout: Timeout in seconds.</span>
+<span class="sd">            custom_headers: Allows to set custom http headers.</span>
+<span class="sd">            force: Flag to force the operation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Delete resource (uri = </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">uri</span><span class="p">)))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
+                                   <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Resource.update"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.Resource.update">[docs]</a>    <span class="nd">@ensure_resource_client</span><span class="p">(</span><span class="n">update_data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes a PUT request to update a resource when a request body is required.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: Data to update the resource.</span>
+<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
+<span class="sd">            custom_headers: Allows to add custom HTTP headers.</span>
+<span class="sd">            force: Force the update operation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dict with the updated resource data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span>
+
+        <span class="n">resource</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">resource</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Update async (uri = </span><span class="si">%s</span><span class="s1">, resource = </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span>
+                     <span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">resource</span><span class="p">)))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">custom_headers</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="Resource.get_by"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.Resource.get_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the resource by passing a field and its value.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This function uses get_all passing a filter.The search is case-insensitive.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            field: Field name to filter.</span>
+<span class="sd">            value: Value to filter.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">field</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">RESOURCE_CLIENT_INVALID_FIELD</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">RESOURCE_CLIENT_INVALID_FIELD</span><span class="p">)</span>
+
+        <span class="nb">filter</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="si">{0}</span><span class="s2">=&#39;</span><span class="si">{1}</span><span class="s2">&#39;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">)</span>
+
+        <span class="c1"># Workaround when the OneView filter does not work, it will filter again</span>
+        <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">field</span><span class="p">:</span>
+            <span class="c1"># This filter only work for the first level</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">results</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">value</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
+
+        <span class="k">return</span> <span class="n">results</span></div>
+
+<div class="viewcode-block" id="Resource.get_by_name"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.Resource.get_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves a resource by its name.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: Resource name.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Resource object or None if resource does not exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">new_resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_resource</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">new_resource</span></div>
+
+<div class="viewcode-block" id="Resource.get_by_uri"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.Resource.get_by_uri">[docs]</a>    <span class="k">def</span> <span class="nf">get_by_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves a resource by its URI</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            uri: URI of the resource</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Resource object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">validate_resource_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">new_resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_resource</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">new_resource</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_default_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the default values set for a resource&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="p">:</span>
+            <span class="n">api_version</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">_apiVersion</span><span class="p">)</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_version</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">return</span> <span class="n">values</span>
+
+    <span class="k">def</span> <span class="nf">_merge_default_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Merge default values with resource data.&quot;&quot;&quot;</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_default_values</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="Resource.new"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.Resource.new">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a new resource object&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="merge_default_values"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.merge_default_values">[docs]</a><span class="k">def</span> <span class="nf">merge_default_values</span><span class="p">(</span><span class="n">resource_list</span><span class="p">,</span> <span class="n">default_values</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generate a new list where each item of original resource_list will be merged with the default_values.</span>
+<div class="viewcode-block" id="ResourceHelper"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper">[docs]</a><span class="k">class</span> <span class="nc">ResourceHelper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        resource_list: list with items to be merged</span>
-<span class="sd">        default_values: properties to be merged with each item list. If the item already contains some property</span>
-<span class="sd">            the original value will be maintained.</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_uri</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">task_monitor</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_base_uri</span> <span class="o">=</span> <span class="n">base_uri</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_task_monitor</span> <span class="o">=</span> <span class="n">task_monitor</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        list: list containing each item merged with default_values</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ResourceHelper.get_all"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scope_uris</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets all items according with the given arguments.</span>
 
-    <span class="k">def</span> <span class="nf">merge_item</span><span class="p">(</span><span class="n">resource</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">merge_resources</span><span class="p">(</span><span class="n">default_values</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span>
+<span class="sd">        Args:</span>
+<span class="sd">            start: The first item to return, using 0-based indexing.</span>
+<span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
+<span class="sd">            count: The number of resources to return. A count of -1 requests all items (default).</span>
+<span class="sd">            filter (list or str): A general filter/query string to narrow the list of items returned. The default is no</span>
+<span class="sd">                filter; all resources are returned.</span>
+<span class="sd">            query: A single query parameter can do what would take multiple parameters or multiple GET requests using</span>
+<span class="sd">                filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.</span>
+<span class="sd">            sort: The sort order of the returned data set. By default, the sort order is based on create time with the</span>
+<span class="sd">                oldest entry first.</span>
+<span class="sd">            view:</span>
+<span class="sd">                Returns a specific subset of the attributes of the resource or collection by specifying the name of a</span>
+<span class="sd">                predefined view. The default view is expand (show all attributes of the resource and all elements of</span>
+<span class="sd">                the collections or resources).</span>
+<span class="sd">            fields:</span>
+<span class="sd">                Name of the fields.</span>
+<span class="sd">            uri:</span>
+<span class="sd">                A specific URI (optional)</span>
+<span class="sd">            scope_uris:</span>
+<span class="sd">                An expression to restrict the resources returned according to the scopes to</span>
+<span class="sd">                which they are assigned.</span>
 
-    <span class="k">return</span> <span class="n">lmap</span><span class="p">(</span><span class="n">merge_item</span><span class="p">,</span> <span class="n">resource_list</span><span class="p">)</span></div>
+<span class="sd">        Returns:</span>
+<span class="sd">             list: A list of items matching the specified filter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">uri</span><span class="p">:</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_uri</span>
+
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_query_uri</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span>
+                                   <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span>
+                                   <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span>
+                                   <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span>
+                                   <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+                                   <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span>
+                                   <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span>
+                                   <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
+                                   <span class="n">scope_uris</span><span class="o">=</span><span class="n">scope_uris</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Getting all resources with uri: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uri</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_requests_to_getall</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ResourceHelper.create"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes a POST request to create a resource when a request body is required.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: Additional fields can be passed to create the resource.</span>
+<span class="sd">            uri: Resouce uri</span>
+<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
+<span class="sd">            custom_headers: Allows set specific HTTP headers.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Created resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">uri</span><span class="p">:</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_uri</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Create (uri = </span><span class="si">%s</span><span class="s1">, resource = </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_post</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">custom_headers</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ResourceHelper.delete"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Deletes current resource.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            force: Flag to delete the resource forcefully, default is False.</span>
+<span class="sd">            timeout: Timeout in seconds.</span>
+<span class="sd">            custom_headers: Allows to set custom http headers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">force</span><span class="p">:</span>
+            <span class="n">uri</span> <span class="o">+=</span> <span class="s1">&#39;?force=True&#39;</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Delete resource (uri = </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">uri</span><span class="p">)))</span>
+
+        <span class="n">task</span><span class="p">,</span> <span class="n">body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">task</span><span class="p">:</span>
+            <span class="c1"># 204 NO CONTENT</span>
+            <span class="c1"># Successful return from a synchronous delete operation.</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="n">task</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_monitor</span><span class="o">.</span><span class="n">wait_for_task</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">task</span></div>
+
+<div class="viewcode-block" id="ResourceHelper.update"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes a PUT request to update a resource when a request body is required.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: Data to update the resource.</span>
+<span class="sd">            force: If set to true, the operation completes despite any problems</span>
+<span class="sd">                with network connectivity or errors on the resource itself. The default is false.</span>
+<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
+<span class="sd">            custom_headers: Allows to add custom HTTP headers.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dict with the updated resource data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Update async (uri = </span><span class="si">%s</span><span class="s1">, resource = </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span>
+                     <span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">resource</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">uri</span><span class="p">:</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="n">resource</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">force</span><span class="p">:</span>
+            <span class="n">uri</span> <span class="o">+=</span> <span class="s1">&#39;?force=True&#39;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_put</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">custom_headers</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ResourceHelper.build_query_uri"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.build_query_uri">[docs]</a>    <span class="k">def</span> <span class="nf">build_query_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">scope_uris</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Builds the URI from given parameters.</span>
+
+<span class="sd">        More than one request can be send to get the items, regardless the query parameter &#39;count&#39;, because the actual</span>
+<span class="sd">        number of items in the response might differ from the requested count. Some types of resource have a limited</span>
+<span class="sd">        number of items returned on each call. For those resources, additional calls are made to the API to retrieve</span>
+<span class="sd">        any other items matching the given filter. The actual number of items can also differ from the requested call</span>
+<span class="sd">        if the requested number of items would take too long.</span>
+
+<span class="sd">        The use of optional parameters for OneView 2.0 is described at:</span>
+<span class="sd">        http://h17007.www1.hpe.com/docs/enterprise/servers/oneview2.0/cic-api/en/api-docs/current/index.html</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            Single quote - &quot;&#39;&quot; - inside a query parameter is not supported by OneView API.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start: The first item to return, using 0-based indexing.</span>
+<span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
+<span class="sd">            count: The number of resources to return. A count of -1 requests all items (default).</span>
+<span class="sd">            filter (list or str): A general filter/query string to narrow the list of items returned. The default is no</span>
+<span class="sd">                filter; all resources are returned.</span>
+<span class="sd">            query: A single query parameter can do what would take multiple parameters or multiple GET requests using</span>
+<span class="sd">                filter. Use query for more complex queries. NOTE: This parameter is experimental for OneView 2.0.</span>
+<span class="sd">            sort: The sort order of the returned data set. By default, the sort order is based on create time with the</span>
+<span class="sd">                oldest entry first.</span>
+<span class="sd">            view: Returns a specific subset of the attributes of the resource or collection by specifying the name of a</span>
+<span class="sd">                predefined view. The default view is expand (show all attributes of the resource and all elements of</span>
+<span class="sd">                the collections or resources).</span>
+<span class="sd">            fields: Name of the fields.</span>
+<span class="sd">            uri: A specific URI (optional)</span>
+<span class="sd">            scope_uris: An expression to restrict the resources returned according to the scopes to</span>
+<span class="sd">                which they are assigned.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            uri: The complete uri</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">filter</span><span class="p">:</span>
+            <span class="nb">filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_query_filter</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">query</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&amp;query=&quot;</span> <span class="o">+</span> <span class="n">quote</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">sort</span><span class="p">:</span>
+            <span class="n">sort</span> <span class="o">=</span> <span class="s2">&quot;&amp;sort=&quot;</span> <span class="o">+</span> <span class="n">quote</span><span class="p">(</span><span class="n">sort</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">view</span><span class="p">:</span>
+            <span class="n">view</span> <span class="o">=</span> <span class="s2">&quot;&amp;view=&quot;</span> <span class="o">+</span> <span class="n">quote</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">fields</span><span class="p">:</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="s2">&quot;&amp;fields=&quot;</span> <span class="o">+</span> <span class="n">quote</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">scope_uris</span><span class="p">:</span>
+            <span class="n">scope_uris</span> <span class="o">=</span> <span class="s2">&quot;&amp;scopeUris=&quot;</span> <span class="o">+</span> <span class="n">quote</span><span class="p">(</span><span class="n">scope_uris</span><span class="p">)</span>
+
+        <span class="n">path</span> <span class="o">=</span> <span class="n">uri</span> <span class="k">if</span> <span class="n">uri</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_uri</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">validate_resource_uri</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+        <span class="n">symbol</span> <span class="o">=</span> <span class="s1">&#39;?&#39;</span> <span class="k">if</span> <span class="s1">&#39;?&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">path</span> <span class="k">else</span> <span class="s1">&#39;&amp;&#39;</span>
+
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}{1}</span><span class="s2">start=</span><span class="si">{2}</span><span class="s2">&amp;count=</span><span class="si">{3}{4}{5}{6}{7}{8}{9}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">sort</span><span class="p">,</span>
+                                                                   <span class="n">view</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">scope_uris</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">uri</span></div>
+
+<div class="viewcode-block" id="ResourceHelper.build_uri"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.build_uri">[docs]</a>    <span class="k">def</span> <span class="nf">build_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helps to build the URI from resource id and validate the URI.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id_or_uri: ID/URI of the resource.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Returns a valid resource URI</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">id_or_uri</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">RESOURCE_CLIENT_INVALID_ID</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">RESOURCE_CLIENT_INVALID_ID</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;/&quot;</span> <span class="ow">in</span> <span class="n">id_or_uri</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate_resource_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">id_or_uri</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_uri</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">id_or_uri</span></div>
+
+<div class="viewcode-block" id="ResourceHelper.build_subresource_uri"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.build_subresource_uri">[docs]</a>    <span class="k">def</span> <span class="nf">build_subresource_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource_id_or_uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subresource_id_or_uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subresource_path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helps to build a URI with resource path and its sub resource path.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resoure_id_or_uri: ID/URI of the main resource.</span>
+<span class="sd">            subresource_id__or_uri: ID/URI of the sub resource.</span>
+<span class="sd">            subresource_path: Sub resource path to be added with the URI.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Returns URI</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">subresource_id_or_uri</span> <span class="ow">and</span> <span class="s2">&quot;/&quot;</span> <span class="ow">in</span> <span class="n">subresource_id_or_uri</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">subresource_id_or_uri</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">resource_id_or_uri</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">HPOneViewValueError</span><span class="p">(</span><span class="n">RESOURCE_ID_OR_URI_REQUIRED</span><span class="p">)</span>
+
+            <span class="n">resource_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">resource_id_or_uri</span><span class="p">)</span>
+
+            <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">resource_uri</span><span class="p">,</span> <span class="n">subresource_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">subresource_id_or_uri</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;//&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">uri</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+                <span class="n">uri</span> <span class="o">=</span> <span class="n">uri</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="n">uri</span></div>
+
+<div class="viewcode-block" id="ResourceHelper.validate_resource_uri"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.validate_resource_uri">[docs]</a>    <span class="k">def</span> <span class="nf">validate_resource_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helper method to validate URI of the resource.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_uri</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Get by uri : unrecognized uri: (</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">HPOneViewUnknownType</span><span class="p">(</span><span class="n">UNRECOGNIZED_URI</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ResourceHelper.make_query_filter"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.make_query_filter">[docs]</a>    <span class="k">def</span> <span class="nf">make_query_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helper method to build filter query parameter.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">formated_filter</span> <span class="o">=</span> <span class="s2">&quot;&amp;filter=&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">quote</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filters</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">formated_filter</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s2">&quot;&amp;filter=&quot;</span> <span class="o">+</span> <span class="n">formated_filter</span></div>
+
+<div class="viewcode-block" id="ResourceHelper.get_members"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.get_members">[docs]</a>    <span class="k">def</span> <span class="nf">get_members</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mlist</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get members from list of resources&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">mlist</span> <span class="ow">and</span> <span class="n">mlist</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;members&#39;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">mlist</span><span class="p">[</span><span class="s1">&#39;members&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="ResourceHelper.do_requests_to_getall"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.do_requests_to_getall">[docs]</a>    <span class="k">def</span> <span class="nf">do_requests_to_getall</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">requested_count</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helps to make http request for get_all method.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            This method will be checking for the pagination URI in the response</span>
+<span class="sd">            and make request to pagination URI to get all the resources.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">while</span> <span class="n">uri</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Making HTTP request to get all resources. Uri: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uri</span><span class="p">))</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+            <span class="n">members</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_members</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+            <span class="n">items</span> <span class="o">+=</span> <span class="n">members</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Response getAll: nextPageUri = </span><span class="si">{0}</span><span class="s2">, members list length: </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">members</span><span class="p">))))</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_next_page</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">requested_count</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Total # of members found = </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">))))</span>
+        <span class="k">return</span> <span class="n">items</span></div>
+
+<div class="viewcode-block" id="ResourceHelper.get_next_page"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.get_next_page">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">requested_count</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns next page URI.&quot;&quot;&quot;</span>
+        <span class="n">next_page_is_empty</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nextPageUri&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="n">has_different_next_page</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;uri&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nextPageUri&#39;</span><span class="p">)</span>
+        <span class="n">has_next_page</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">next_page_is_empty</span> <span class="ow">and</span> <span class="n">has_different_next_page</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">requested_count</span> <span class="ow">and</span> <span class="n">requested_count</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nextPageUri&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">has_next_page</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ResourceHelper.do_get"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.do_get">[docs]</a>    <span class="k">def</span> <span class="nf">do_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helps to make get requests</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            uri: URI of the resource</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Returns: Returns the resource data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validate_resource_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ResourceHelper.do_post"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.do_post">[docs]</a>    <span class="k">def</span> <span class="nf">do_post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">custom_headers</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helps to make post requests.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            uri: URI of  the resource.</span>
+<span class="sd">            resource: Resource data to post.</span>
+<span class="sd">            timeout: Time out for the request in seconds.</span>
+<span class="sd">            cutom_headers: Allows to add custom http headers.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Retunrs Task object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validate_resource_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+
+        <span class="n">task</span><span class="p">,</span> <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">task</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">entity</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_monitor</span><span class="o">.</span><span class="n">wait_for_task</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ResourceHelper.do_put"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.do_put">[docs]</a>    <span class="k">def</span> <span class="nf">do_put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">custom_headers</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helps to make put requests.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            uri: URI of the resource</span>
+<span class="sd">            timeout: Time out for the request in seconds.</span>
+<span class="sd">            custom_headers: Allows to set custom http headers.</span>
+
+<span class="sd">        Retuns:</span>
+<span class="sd">            Returns Task object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validate_resource_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+
+        <span class="n">task</span><span class="p">,</span> <span class="n">body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">task</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">body</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_monitor</span><span class="o">.</span><span class="n">wait_for_task</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ResourcePatchMixin"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourcePatchMixin">[docs]</a><span class="k">class</span> <span class="nc">ResourcePatchMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ResourcePatchMixin.patch"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourcePatchMixin.patch">[docs]</a>    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Uses the PATCH to update a resource.</span>
+
+<span class="sd">        Only one operation can be performed in each PATCH call.</span>
+
+<span class="sd">        Args</span>
+<span class="sd">            operation: Patch operation</span>
+<span class="sd">            path: Path</span>
+<span class="sd">            value: Value</span>
+<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
+<span class="sd">            custom_headers: Allows to add custom http headers.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Updated resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">patch_request_body</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;op&#39;</span><span class="p">:</span> <span class="n">operation</span><span class="p">,</span> <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="n">path</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">value</span><span class="p">}]</span>
+        <span class="n">resource_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">patch_request</span><span class="p">(</span><span class="n">resource_uri</span><span class="p">,</span>
+                                       <span class="n">body</span><span class="o">=</span><span class="n">patch_request_body</span><span class="p">,</span>
+                                       <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">,</span>
+                                       <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="ResourcePatchMixin.patch_request"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourcePatchMixin.patch_request">[docs]</a>    <span class="k">def</span> <span class="nf">patch_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Uses the PATCH to update a resource.</span>
+
+<span class="sd">        Only one operation can be performed in each PATCH call.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            body (list): Patch request body</span>
+<span class="sd">            timeout (int): Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
+<span class="sd">            custom_headers (dict): Allows to add custom http headers.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Updated resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Patch resource (uri = </span><span class="si">%s</span><span class="s1">, data = </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">custom_headers</span><span class="p">:</span>
+            <span class="n">custom_headers</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">_apiVersion</span> <span class="o">&gt;=</span> <span class="mi">300</span> <span class="ow">and</span> <span class="s1">&#39;Content-Type&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">custom_headers</span><span class="p">:</span>
+            <span class="n">custom_headers</span><span class="p">[</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;application/json-patch+json&#39;</span>
+
+        <span class="n">task</span><span class="p">,</span> <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">task</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">entity</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_monitor</span><span class="o">.</span><span class="n">wait_for_task</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ResourceFileHandlerMixin"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceFileHandlerMixin">[docs]</a><span class="k">class</span> <span class="nc">ResourceFileHandlerMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ResourceFileHandlerMixin.upload"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceFileHandlerMixin.upload">[docs]</a>    <span class="k">def</span> <span class="nf">upload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes a multipart request.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            file_path: File to upload.</span>
+<span class="sd">            uri: A specific URI (optional).</span>
+<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Response body.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">uri</span><span class="p">:</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span>
+
+        <span class="n">upload_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="n">task</span><span class="p">,</span> <span class="n">entity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">post_multipart_with_response_handling</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">upload_file_name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">task</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">entity</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_monitor</span><span class="o">.</span><span class="n">wait_for_task</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ResourceFileHandlerMixin.download"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceFileHandlerMixin.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">file_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Downloads the contents of the requested URI to a stream.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            uri: URI</span>
+<span class="sd">            file_path: File path destination</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Indicates if the file was successfully downloaded.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">download_to_stream</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">uri</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ResourceUtilizationMixin"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceUtilizationMixin">[docs]</a><span class="k">class</span> <span class="nc">ResourceUtilizationMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ResourceUtilizationMixin.get_utilization"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceUtilizationMixin.get_utilization">[docs]</a>    <span class="k">def</span> <span class="nf">get_utilization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">refresh</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves historical utilization data for the specified resource, metrics, and time span.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fields: Name of the supported metric(s) to be retrieved in the format METRIC[,METRIC]...</span>
+<span class="sd">                If unspecified, all metrics supported are returned.</span>
+
+<span class="sd">            filter (list or str): Filters should be in the format FILTER_NAME=VALUE[,FILTER_NAME=VALUE]...</span>
+<span class="sd">                E.g.: &#39;startDate=2016-05-30T11:20:44.541Z,endDate=2016-05-30T19:20:44.541Z&#39;</span>
+
+<span class="sd">                startDate</span>
+<span class="sd">                    Start date of requested starting time range in ISO 8601 format. If omitted, the startDate is</span>
+<span class="sd">                    determined by the endDate minus 24 hours.</span>
+<span class="sd">                endDate</span>
+<span class="sd">                    End date of requested starting time range in ISO 8601 format. When omitted, the endDate includes</span>
+<span class="sd">                    the latest data sample available.</span>
+
+<span class="sd">                If an excessive number of samples would otherwise be returned, the results will be segmented. The</span>
+<span class="sd">                caller is responsible for comparing the returned sliceStartTime with the requested startTime in the</span>
+<span class="sd">                response. If the sliceStartTime is greater than the oldestSampleTime and the requested start time,</span>
+<span class="sd">                the caller is responsible for repeating the request with endTime set to sliceStartTime to obtain the</span>
+<span class="sd">                next segment. This process is repeated until the full data set is retrieved.</span>
+
+<span class="sd">                If the resource has no data, the UtilizationData is still returned but will contain no samples and</span>
+<span class="sd">                sliceStartTime/sliceEndTime will be equal. oldestSampleTime/newestSampleTime will still be set</span>
+<span class="sd">                appropriately (null if no data is available). If the filter does not happen to overlap the data</span>
+<span class="sd">                that a resource has, then the metric history service will return null sample values for any</span>
+<span class="sd">                missing samples.</span>
+
+<span class="sd">            refresh: Specifies that if necessary, an additional request will be queued to obtain the most recent</span>
+<span class="sd">                utilization data from the iLO. The response will not include any refreshed data. To track the</span>
+<span class="sd">                availability of the newly collected data, monitor the TaskResource identified by the refreshTaskUri</span>
+<span class="sd">                property in the response. If null, no refresh was queued.</span>
+
+<span class="sd">            view: Specifies the resolution interval length of the samples to be retrieved. This is reflected in the</span>
+<span class="sd">                resolution in the returned response. Utilization data is automatically purged to stay within storage</span>
+<span class="sd">                space constraints. Supported views are listed below:</span>
+
+<span class="sd">                native</span>
+<span class="sd">                    Resolution of the samples returned will be one sample for each 5-minute time period. This is the</span>
+<span class="sd">                    default view and matches the resolution of the data returned by the iLO. Samples at this resolution</span>
+<span class="sd">                    are retained up to one year.</span>
+<span class="sd">                hour</span>
+<span class="sd">                    Resolution of the samples returned will be one sample for each 60-minute time period. Samples are</span>
+<span class="sd">                    calculated by averaging the available 5-minute data samples that occurred within the hour, except</span>
+<span class="sd">                    for PeakPower which is calculated by reporting the peak observed 5-minute sample value data during</span>
+<span class="sd">                    the hour. Samples at this resolution are retained up to three years.</span>
+<span class="sd">                day</span>
+<span class="sd">                    Resolution of the samples returned will be one sample for each 24-hour time period. One day is a</span>
+<span class="sd">                    24-hour period that starts at midnight GMT regardless of the time zone in which the appliance or</span>
+<span class="sd">                    client is located. Samples are calculated by averaging the available 5-minute data samples that</span>
+<span class="sd">                    occurred during the day, except for PeakPower which is calculated by reporting the peak observed</span>
+<span class="sd">                    5-minute sample value data during the day. Samples at this resolution are retained up to three</span>
+<span class="sd">                    years.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="nb">filter</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">make_query_filter</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">fields</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;&amp;fields=&quot;</span> <span class="o">+</span> <span class="n">quote</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">refresh</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;&amp;refresh=true&quot;</span>
+
+        <span class="k">if</span> <span class="n">view</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;&amp;view=&quot;</span> <span class="o">+</span> <span class="n">quote</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">query</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;?&quot;</span> <span class="o">+</span> <span class="n">query</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">/utilization</span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">resource_uri</span><span class="p">),</span> <span class="n">query</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ResourceSchemaMixin"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceSchemaMixin">[docs]</a><span class="k">class</span> <span class="nc">ResourceSchemaMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ResourceSchemaMixin.get_schema"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceSchemaMixin.get_schema">[docs]</a>    <span class="k">def</span> <span class="nf">get_schema</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Supports schema requests.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dict with the schema.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_get</span><span class="p">(</span><span class="n">resource_uri</span> <span class="o">+</span> <span class="s1">&#39;/schema&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ResourceCollectionMixin"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceCollectionMixin">[docs]</a><span class="k">class</span> <span class="nc">ResourceCollectionMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ResourceCollectionMixin.get_collection"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceCollectionMixin.get_collection">[docs]</a>    <span class="k">def</span> <span class="nf">get_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves a collection of resources.</span>
+
+<span class="sd">        Use this function when the &#39;start&#39; and &#39;count&#39; parameters are not allowed in the GET call.</span>
+<span class="sd">        Otherwise, use get_all instead.</span>
+
+<span class="sd">        Optional filtering criteria may be specified.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filter (list or str): General filter/query string.</span>
+<span class="sd">            path (str): path to be added with base URI</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">             Collection of the requested resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span>
+
+        <span class="k">if</span> <span class="nb">filter</span><span class="p">:</span>
+            <span class="nb">filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">make_query_filter</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
+            <span class="nb">filter</span> <span class="o">=</span> <span class="s2">&quot;?&quot;</span> <span class="o">+</span> <span class="nb">filter</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{uri}{path}{filter}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Get resource collection (uri = </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">uri</span><span class="p">)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">get_members</span><span class="p">(</span><span class="n">response</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ResourceZeroBodyMixin"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceZeroBodyMixin">[docs]</a><span class="k">class</span> <span class="nc">ResourceZeroBodyMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+<div class="viewcode-block" id="ResourceZeroBodyMixin.create_with_zero_body"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceZeroBodyMixin.create_with_zero_body">[docs]</a>    <span class="k">def</span> <span class="nf">create_with_zero_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes a POST request to create a resource when no request body is required.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
+<span class="sd">            custom_headers: Allows set specific HTTP headers.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Created resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">uri</span><span class="p">:</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Create with zero body (uri = </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">uri</span><span class="p">)</span>
+        <span class="n">resource_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_post</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="p">{},</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">custom_headers</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">resource_data</span></div>
+
+<div class="viewcode-block" id="ResourceZeroBodyMixin.update_with_zero_body"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceZeroBodyMixin.update_with_zero_body">[docs]</a>    <span class="k">def</span> <span class="nf">update_with_zero_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Makes a PUT request to update a resource when no request body is required.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            uri: Allows to use a different URI other than resource URI</span>
+<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default.</span>
+<span class="sd">                The timeout does not abort the operation in OneView; it just stops waiting for its completion.</span>
+<span class="sd">            custom_headers: Allows to set custom HTTP headers.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dict with updated resource data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">uri</span><span class="p">:</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Update with zero length body (uri = </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">uri</span><span class="p">)</span>
+        <span class="n">resource_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_put</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">custom_headers</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">resource_data</span></div></div>
 
 
 <div class="viewcode-block" id="ResourceClient"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceClient">[docs]</a><span class="k">class</span> <span class="nc">ResourceClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -402,7 +1239,7 @@
                 <span class="n">uri</span> <span class="o">=</span> <span class="n">resource</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE</span><span class="p">)</span>
-                <span class="k">raise</span> <span class="n">HPOneViewUnknownType</span><span class="p">(</span><span class="n">RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">HPOneViewUnknownType</span><span class="p">(</span><span class="n">RESOURCE_CLIENT_UNKNOWN_OBJECT_TYPE</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span>
 
@@ -836,7 +1673,7 @@
         <span class="n">task</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="p">{})</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">task</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">HPOneViewException</span><span class="p">(</span><span class="n">RESOURCE_CLIENT_TASK_EXPECTED</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">HPOneViewException</span><span class="p">(</span><span class="n">RESOURCE_CLIENT_TASK_EXPECTED</span><span class="p">)</span>
 
         <span class="n">task</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_monitor</span><span class="o">.</span><span class="n">get_completed_task</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
 
@@ -858,7 +1695,7 @@
             <span class="k">return</span> <span class="n">subresource_id_or_uri</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">resource_id_or_uri</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">HPOneViewValueError</span><span class="p">(</span><span class="n">RESOURCE_ID_OR_URI_REQUIRED</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">HPOneViewValueError</span><span class="p">(</span><span class="n">RESOURCE_ID_OR_URI_REQUIRED</span><span class="p">)</span>
 
             <span class="n">resource_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">resource_id_or_uri</span><span class="p">)</span>
 
@@ -887,7 +1724,7 @@
     <span class="k">def</span> <span class="nf">__validate_resource_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Get by uri : unrecognized uri: (</span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">HPOneViewUnknownType</span><span class="p">(</span><span class="n">UNRECOGNIZED_URI</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">HPOneViewUnknownType</span><span class="p">(</span><span class="n">UNRECOGNIZED_URI</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__make_query_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
@@ -958,6 +1795,41 @@
         <span class="k">return</span> <span class="n">merged_resource</span> <span class="ow">or</span> <span class="n">resource</span></div></div>
 
 
+<div class="viewcode-block" id="merge_resources"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.merge_resources">[docs]</a><span class="k">def</span> <span class="nf">merge_resources</span><span class="p">(</span><span class="n">resource1</span><span class="p">,</span> <span class="n">resource2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Updates a copy of resource1 with resource2 values and returns the merged dictionary.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        resource1: original resource</span>
+<span class="sd">        resource2: resource to update resource1</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: merged resource</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">resource1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">merged</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">merged</span></div>
+
+
+<div class="viewcode-block" id="merge_default_values"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.merge_default_values">[docs]</a><span class="k">def</span> <span class="nf">merge_default_values</span><span class="p">(</span><span class="n">resource_list</span><span class="p">,</span> <span class="n">default_values</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a new list where each item of original resource_list will be merged with the default_values.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        resource_list: list with items to be merged</span>
+<span class="sd">        default_values: properties to be merged with each item list. If the item already contains some property</span>
+<span class="sd">            the original value will be maintained.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: list containing each item merged with default_values</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">merge_item</span><span class="p">(</span><span class="n">resource</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">merge_resources</span><span class="p">(</span><span class="n">default_values</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">lmap</span><span class="p">(</span><span class="n">merge_item</span><span class="p">,</span> <span class="n">resource_list</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="transform_list_to_dict"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.transform_list_to_dict">[docs]</a><span class="k">def</span> <span class="nf">transform_list_to_dict</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Transforms a list into a dictionary, putting values as keys</span>
@@ -992,6 +1864,11 @@
         <span class="k">return</span> <span class="n">id_or_uri</span><span class="p">[</span><span class="n">id_or_uri</span><span class="o">.</span><span class="n">rindex</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">id_or_uri</span></div>
+
+
+<div class="viewcode-block" id="unavailable_method"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.unavailable_method">[docs]</a><span class="k">def</span> <span class="nf">unavailable_method</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Raise an exception if method is not available for the resource.&quot;&quot;&quot;</span>
+    <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">HPOneViewUnavailableMethod</span><span class="p">(</span><span class="n">UNAVAILABLE_METHOD</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

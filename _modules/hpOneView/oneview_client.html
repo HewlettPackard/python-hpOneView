@@ -148,7 +148,7 @@
   <h1>Source code for hpOneView.oneview_client</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1">###</span>
-<span class="c1"># (C) Copyright (2012-2018) Hewlett Packard Enterprise Development LP</span>
+<span class="c1"># (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP</span>
 <span class="c1">#</span>
 <span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
 <span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
@@ -497,9 +497,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            FcNetworks:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fc_networks</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__fc_networks</span> <span class="o">=</span> <span class="n">FcNetworks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__fc_networks</span>
+        <span class="k">return</span> <span class="n">FcNetworks</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">fcoe_networks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -774,9 +772,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Enclosures:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__enclosures</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__enclosures</span> <span class="o">=</span> <span class="n">Enclosures</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__enclosures</span>
+        <span class="k">return</span> <span class="n">Enclosures</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__connection</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">logical_enclosures</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

@@ -480,8 +480,8 @@ in OneView; it just stops waiting for its completion.</li>
 <span id="hponeview-resources-servers-enclosures-module"></span><h2>hpOneView.resources.servers.enclosures module<a class="headerlink" href="#module-hpOneView.resources.servers.enclosures" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.servers.enclosures.</code><code class="descname">Enclosures</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">hpOneView.resources.servers.enclosures.</code><code class="descname">Enclosures</code><span class="sig-paren">(</span><em>connection</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.ResourcePatchMixin" title="hpOneView.resources.resource.ResourcePatchMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.ResourcePatchMixin</span></code></a>, <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.ResourceZeroBodyMixin" title="hpOneView.resources.resource.ResourceZeroBodyMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.ResourceZeroBodyMixin</span></code></a>, <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.ResourceUtilizationMixin" title="hpOneView.resources.resource.ResourceUtilizationMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.ResourceUtilizationMixin</span></code></a>, <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.Resource" title="hpOneView.resources.resource.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.Resource</span></code></a></p>
 <p>Enclosures API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.URI">
@@ -521,45 +521,10 @@ in OneView; it just stops waiting for its completion.</li>
 </table>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.generate_csr">
-<code class="descname">generate_csr</code><span class="sig-paren">(</span><em>csr_data</em>, <em>id_or_uri</em>, <em>bay_number=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.generate_csr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.generate_csr" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a Certificate Signing Request (CSR) for an enclosure.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>csr_data</strong> – Dictionary with csr details.</li>
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>bay_number</strong> – OA from which the CSR should be generated.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Enclosure.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.servers.enclosures.Enclosures.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the enclosure with the specified ID, if it exists.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the Enclosure.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Enclosure.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">generate_csr</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.generate_csr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.get_all">
@@ -594,350 +559,69 @@ on create time with the oldest entry first.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="hpOneView.resources.servers.enclosures.Enclosures.get_by">
-<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all Enclosures that match the filter.</p>
-<p>The search is case-insensitive.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> – Field name to filter.</li>
-<li><strong>value</strong> – Value to filter.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of Enclosures.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+<dt id="hpOneView.resources.servers.enclosures.Enclosures.get_by_hostname">
+<code class="descname">get_by_hostname</code><span class="sig-paren">(</span><em>hostname</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.get_by_hostname"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.get_by_hostname" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get enclosure by it’s hostname</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.get_csr">
-<code class="descname">get_csr</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>bay_number=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.get_csr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.get_csr" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get an enclosure’s Certificate Signing Request (CSR) that was generated by previous POST to the same URI.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>bay_number</strong> – OA to retrieve the previously generated CSR.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_csr</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.get_csr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.get_environmental_configuration">
-<code class="descname">get_environmental_configuration</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.get_environmental_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.get_environmental_configuration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the settings that describe the environmental configuration (supported feature set, calibrated minimum &amp;
-maximum power, location &amp; dimensions, …) of the enclosure resource.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Settings that describe the environmental configuration.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_environmental_configuration</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.get_environmental_configuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.get_script">
-<code class="descname">get_script</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.get_script"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.get_script" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the script of the enclosure.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Enclosure script.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_script</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.get_script" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.get_sso">
-<code class="descname">get_sso</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>role</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.get_sso"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.get_sso" title="Permalink to this definition">¶</a></dt>
-<dd><p>Builds the SSO (Single Sign-On) URL parameters for the specified enclosure. This allows the user to
-log in to the enclosure without providing credentials. This API is currently only supported by C7000 enclosures.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>role</strong> – Role</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">SSO (Single Sign-On) URL parameters.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_sso</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.get_sso" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
-<dt id="hpOneView.resources.servers.enclosures.Enclosures.get_utilization">
-<code class="descname">get_utilization</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>fields=None</em>, <em>filter=None</em>, <em>refresh=False</em>, <em>view=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.get_utilization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.get_utilization" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves historical utilization data for the specified enclosure, metrics, and time span.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>fields</strong> – <p>Name of the metrics to be retrieved in the format METRIC[,METRIC]…</p>
-<p>If unspecified, all metrics supported are returned.</p>
-<dl class="docutils">
-<dt>Enclosures support the following utilization metrics:</dt>
-<dd><dl class="first last docutils">
-<dt>AmbientTemperature</dt>
-<dd>Inlet air temperature in degrees Celsius during this sample interval.</dd>
-<dt>AveragePower</dt>
-<dd>Average power consumption in Watts during this sample interval.</dd>
-<dt>PeakPower</dt>
-<dd>Peak power consumption in Watts during this sample interval.</dd>
-<dt>PowerCap</dt>
-<dd>Dynamic power cap setting on the server hardware in Watts during this sample interval.</dd>
-<dt>DeratedCapacity</dt>
-<dd>Enclosure dynamic power cap derated capacity setting in Watts during this sample interval.</dd>
-<dt>RatedCapacity</dt>
-<dd>Enclosure dynamic power cap rated capacity setting in Watts during this sample interval.</dd>
-</dl>
-</dd>
-</dl>
-</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – <p>Provides an expression of the requested time range of data. One condition (startDate/endDate) is
-specified per filter specification as described below. The condition must be specified via the
-equals (=) operator.</p>
-<dl class="docutils">
-<dt>startDate</dt>
-<dd>Start date of requested starting time range in ISO 8601 format (2016-05-31T07:20:00.000Z).
-If omitted, the startDate is determined by the endDate minus 24 hours.</dd>
-<dt>endDate</dt>
-<dd>End date of requested starting time range in ISO 8601 format. When omitted the endDate includes the
-latest data sample available.</dd>
-</dl>
-<p>If an excessive number of samples would otherwise be returned, the results will be segmented. The caller
-is responsible for comparing the returned sliceStartTime with the requested startTime in the response.
-If the sliceStartTime is greater than the oldestSampleTime and the requested start time, the caller is
-responsible for repeating the request with endTime set to sliceStartTime to obtain the next segment.
-This process is repeated until the full data set is retrieved.</p>
-<p>If the resource has no data, the UtilizationData is still returned, but will contain no samples and
-sliceStartTime/sliceEndTime will be equal. oldestSampleTime/newestSampleTime will still be set
-appropriately (null if no data is available). If the filter just does not happen to overlap the data
-that a resource does have, then the metric history service will return null sample values for any
-missing samples.</p>
-</li>
-<li><strong>refresh</strong> – <dl class="docutils">
-<dt>Specifies that if necessary an additional request will be queued to obtain the most recent utilization</dt>
-<dd>data from the enclosure. The response will not include any refreshed data. To track the availability
-of the newly collected data, monitor the TaskResource identified by the refreshTaskUri property in
-the response. If null, no refresh was queued.</dd>
-</dl>
-</li>
-<li><strong>view</strong> – <dl class="docutils">
-<dt>Specifies the resolution interval length of the samples to be retrieved. This is reflected in the</dt>
-<dd>resolution in the returned response. Utilization data is automatically purged to stay within storage
-space constraints. Supported views are listed below.</dd>
-<dt>native (DEFAULT)</dt>
-<dd>Resolution of the samples returned will be one sample for each 5-minute time period. This is the
-default view and matches the resolution of the data returned by the enclosure. Samples at this
-resolution are retained up to one year.</dd>
-<dt>hour</dt>
-<dd>Resolution of the samples returned will be one sample for each 60-minute time period. Samples are
-calculated by averaging the available 5-minute data samples that occurred within the hour, except
-for PeakPower, which is calculated by reporting the peak observed 5-minute sample value data during
-the hour. Samples at this resolution are retained up to three years.</dd>
-<dt>day</dt>
-<dd>Resolution of the samples returned will be one sample for each 24-hour time period. One day is a
-24-hour period that starts at midnight GMT, regardless of the time zone in which the appliance or
-client is located. Samples are calculated by averaging the available 5-minute data samples that
-occurred during the day, except for PeakPower, which is calculated by reporting the peak observed
-5-minute sample value data during the day. Samples at this resolution are retained up to three
-years.</dd>
-</dl>
-</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.import_certificate">
-<code class="descname">import_certificate</code><span class="sig-paren">(</span><em>certificate_data</em>, <em>id_or_uri</em>, <em>bay_number=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.import_certificate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.import_certificate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Imports a signed server certificate into the enclosure.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>certificate_data</strong> – Dictionary with Signed certificate and type.</li>
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>bay_number</strong> – OA to which the signed certificate will be imported.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Enclosure.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">import_certificate</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.import_certificate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
-<dt id="hpOneView.resources.servers.enclosures.Enclosures.patch">
-<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.patch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Uses the PATCH to update a resource for a given enclosure.</p>
-<p>Only one operation can be performed in each PATCH call.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>operation</strong> – Patch operation</li>
-<li><strong>path</strong> – Path</li>
-<li><strong>value</strong> – Value</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.refresh_state">
-<code class="descname">refresh_state</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>configuration</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.refresh_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.refresh_state" title="Permalink to this definition">¶</a></dt>
-<dd><p>Refreshes the enclosure along with all of its components, including interconnects and servers. Any new
-hardware is added and any hardware that is no longer present within the enclosure is removed. The
-configuration dict must have the “refreshState” field set to “Refreshing” and optionally
-provide information to re-claim the enclosure (for example: IP address, user name, password, etc.).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>configuration</strong> – Configuration</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Enclosure</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">refresh_state</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.refresh_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.remove">
-<code class="descname">remove</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.remove" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes and unconfigures the specified enclosure from the appliance. All components of the enclosure (for
-example: blades and interconnects) are unconfigured/removed as part of this process.</p>
-<p>If the force option is set to “true”, then any errors encountered as part of unconfiguring the enclosure or its
-components are ignored and the enclosure is removed regardless of any errors that occur.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> – Dict object to delete;</li>
-<li><strong>force</strong> – If set to true, the operation completes despite any problems with
-network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully removed.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+<code class="descname">remove</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove enclosure</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.update_configuration">
-<code class="descname">update_configuration</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.update_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.update_configuration" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update_configuration</code><span class="sig-paren">(</span><em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.update_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.update_configuration" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reapplies the appliance’s configuration on the enclosure. This includes running the same configure steps
 that were performed as part of the enclosure add.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Enclosure</p>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Enclosure</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.enclosures.Enclosures.update_environmental_configuration">
-<code class="descname">update_environmental_configuration</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>configuration</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/enclosures.html#Enclosures.update_environmental_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.update_environmental_configuration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the calibrated max power of an unmanaged or unsupported enclosure.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>configuration</strong> – Configuration</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Settings that describe the environmental configuration.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update_environmental_configuration</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.enclosures.Enclosures.update_environmental_configuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
