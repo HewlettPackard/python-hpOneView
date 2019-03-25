@@ -441,9 +441,8 @@ class OneViewClientTest(unittest.TestCase):
         switches = self._oneview.switches
         self.assertEqual(switches, self._oneview.switches)
 
-    def test_ethernet_networks(self):
-        ethernet_networks = self._oneview.ethernet_networks
-        self.assertNotEqual(ethernet_networks, self._oneview.ethernet_networks)
+    def test_should_return_new_ethernet_networks(self):
+        self.assertNotEqual(self._oneview.ethernet_networks, self._oneview.ethernet_networks)
 
     def test_lazy_loading_server_hardware(self):
         server_hardware = self._oneview.server_hardware
@@ -690,15 +689,14 @@ class OneViewClientTest(unittest.TestCase):
         storage_volume_attachments = self._oneview.storage_volume_attachments
         self.assertEqual(storage_volume_attachments, self._oneview.storage_volume_attachments)
 
+    def test_should_return_new_uplink_sets_obj(self):
+        self.assertNotEqual(self._oneview.uplink_sets, self._oneview.uplink_sets)
+
     def test_uplink_sets_has_right_type(self):
         self.assertIsInstance(self._oneview.uplink_sets, UplinkSets)
 
     def test_uplink_sets_has_value(self):
         self.assertIsNotNone(self._oneview.uplink_sets)
-
-    def test_lazy_loading_uplink_sets(self):
-        copy_uplink_sets = self._oneview.uplink_sets
-        self.assertEqual(copy_uplink_sets, self._oneview.uplink_sets)
 
     def test_backups_has_right_type(self):
         self.assertIsInstance(self._oneview.backups, Backups)
