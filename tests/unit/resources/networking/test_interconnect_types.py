@@ -27,7 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.networking.interconnect_types import InterconnectTypes
-from hpOneView.resources.resource import Resource, ResourceRequest
+from hpOneView.resources.resource import Resource, ResourceHelper
 
 
 class InterconnectTypesTest(unittest.TestCase):
@@ -37,7 +37,7 @@ class InterconnectTypesTest(unittest.TestCase):
         self.connection = connection(self.host)
         self._interconnect_types = InterconnectTypes(self.connection)
 
-    @mock.patch.object(ResourceRequest, 'do_requests_to_getall')
+    @mock.patch.object(ResourceHelper, 'do_requests_to_getall')
     def test_get_all_called_once(self, mock_do_get):
         filter = 'name=TestName'
         sort = 'name:ascending'
