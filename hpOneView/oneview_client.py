@@ -670,9 +670,7 @@ class OneViewClient(object):
         Returns:
             InterconnectTypes:
         """
-        if not self.__interconnect_types:
-            self.__interconnect_types = InterconnectTypes(self.__connection)
-        return self.__interconnect_types
+        return InterconnectTypes(self.__connection)
 
     @property
     def interconnect_link_topologies(self):
