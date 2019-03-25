@@ -336,10 +336,7 @@ class OneViewClient(object):
         Returns:
             ConnectionTemplates:
         """
-        if not self.__connection_templates:
-            self.__connection_templates = ConnectionTemplates(
-                self.__connection)
-        return self.__connection_templates
+        return ConnectionTemplates(self.__connection)
 
     @property
     def fc_networks(self):
