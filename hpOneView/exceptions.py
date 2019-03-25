@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -144,6 +144,28 @@ class HPOneViewResourceNotFound(HPOneViewException):
     """
     OneView Resource Not Found Exception.
     The exception is raised when an associated resource was not found.
+
+    Attributes:
+       msg (str): Exception message.
+    """
+    pass
+
+
+class HPOneViewUnavailableMethod(HPOneViewException):
+    """
+    OneView Unavailable Method Exception.
+    The exception is raised when a method is not available for the resource class.
+
+    Attributes:
+       msg (str): Exception message.
+    """
+    pass
+
+
+class HPOneViewMissingUniqueIdentifiers(HPOneViewException):
+    """
+    OneView Missing Unique Identifiers Exception.
+    The exception is raised when unique identifiers are missing for the resource
 
     Attributes:
        msg (str): Exception message.

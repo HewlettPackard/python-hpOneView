@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -258,8 +258,7 @@ class connection(object):
         fout = self._open(files + '.b64', 'wb')
         fout.write(bytearray('--' + BOUNDARY + CRLF, 'utf-8'))
         fout.write(bytearray('Content-Disposition: form-data'
-                             '; name="file"; filename="' +
-                             baseName + '"' + CRLF, "utf-8"))
+                             '; name="file"; filename="' + baseName + '"' + CRLF, "utf-8"))
         fout.write(bytearray('Content-Type: application/octet-stream' + CRLF,
                              'utf-8'))
         fout.write(bytearray(CRLF, 'utf-8'))
