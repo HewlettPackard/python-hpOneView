@@ -6,7 +6,7 @@ Introduced mixin classes to include the optional features of the resources.
 Resource data will be available with the resource object. This enhancement helps to
   add helper methods and avoid passing uri/name to call the resource methods.
 
-- breaking
+#### Breaking
   Enhancement made in this version breaks the previous version of the SDK.
   Resource object should be created to call a resource method.
 
@@ -28,7 +28,7 @@ Resource data will be available with the resource object. This enhancement helps
 - FC Network
 - Interconnect type
 
-# 4.8.0 (Unreleased)
+# 4.8.0
 #### Notes
 Added the capability to handle OneView Appliance SNMP Settings
 Extends support of the SDK to OneView Rest API version 800 (OneView v4.1).
