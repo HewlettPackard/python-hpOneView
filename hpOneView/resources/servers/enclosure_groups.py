@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -44,9 +44,7 @@ class EnclosureGroups(Resource):
     DEFAULT_VALUES = {
         '200': {"type": "EnclosureGroupV200"},
         '300': {"type": "EnclosureGroupV300"},
-        '500': {"type": "EnclosureGroupV400"},
-        '600': {"type": "EnclosureGroupV7"},
-        '800': {"type": "EnclosureGroupV7"}
+        '500': {"type": "EnclosureGroupV400"}
     }
 
     def __init__(self, connection, data=None):
@@ -79,6 +77,7 @@ class EnclosureGroups(Resource):
         """
         return self._helper.get_all(start, count, filter=filter,
                                     sort=sort, scope_uris=scope_uris)
+
     @ensure_resource_client
     def get_script(self):
         """

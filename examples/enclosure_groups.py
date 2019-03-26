@@ -25,7 +25,6 @@
 from pprint import pprint
 
 from config_loader import try_load_from_file
-from hpOneView.exceptions import HPOneViewException
 from hpOneView.oneview_client import OneViewClient
 
 config = {
@@ -35,16 +34,6 @@ config = {
         "password": "<password>"
     }
 }
-
-config = {
-    "ip": "10.50.4.100",
-    "credentials": {
-        "userName": "kattumun",
-        "password": "P@ssw0rd!"
-    },
-    "api_version": 500
-}
-
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
@@ -73,13 +62,7 @@ data = {
             },
             {
                 "interconnectBay": 6,
-            },
-#            {
-#                "interconnectBay": 7,
-#            },
-#            {
-#                "interconnectBay": 8,
-#            }
+            }
         ]
 }
 
@@ -103,14 +86,11 @@ egs = enclosure_groups.get_all()
 pprint(egs)
 
 # Get by uri
-try:
-    print("Get an Enclosure Group by uri")
-    eg_byuri = enclosure_groups.get_by_uri(egs[0]["uri"])
-    pprint(eg_byuri.data)
-except HPOneViewException as e:
-    print(e.msg)
+print("Get an Enclosure Group by uri")
+eg_byuri = enclosure_groups.get_by_uri(egs[0]["uri"])
+pprint(eg_byuri.data)
 
-#Get by name
+# Get by name
 enclosure_group = enclosure_groups.get_by_name(data["name"])
 if not enclosure_group:
     # Create a Enclosure Group
@@ -132,19 +112,13 @@ pprint(enclosure_group.data)
 # Update an Enclosure Group Script
 print("Update an Enclosure Group Script")
 script = "#TEST COMMAND"
-try:
-    update_script_result = enclosure_group.update_script(script)
-    pprint(update_script_result)
-except HPOneViewException as e:
-    print(e.msg)
+update_script_result = enclosure_group.update_script(script)
+pprint(update_script_result)
 
 # Gets the configuration script of a Enclosure Group
 print("Gets the configuration script of an Enclosure Group")
-try:
-    script = enclosure_group.get_script()
-    print(script)
-except HPOneViewException as e:
-    print(e.msg)
+script = enclosure_group.get_script()
+print(script)
 
 # Delete an Enclosure Group
 print("Delete the created Enclosure Group")
