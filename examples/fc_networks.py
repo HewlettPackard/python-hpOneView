@@ -75,7 +75,6 @@ pprint(fc_nets_sorted)
 # Find recently created network by name
 print("\nGet FC Network by name")
 fc_network = fc_networks.get_by_name(options['name'])
-print(str(fc_network))
 
 if fc_network:
     print("\nFound fc-network by name: '%s'.\n  uri = '%s'" % (fc_network.data['name'], fc_network.data['uri']))
