@@ -22,7 +22,6 @@
 ###
 
 from pprint import pprint
-from hpOneView.exceptions import HPOneViewException
 from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
 
@@ -33,15 +32,6 @@ config = {
         "password": "<password>"
     }
 }
-config = {
-    "ip": "10.50.4.100",
-    "credentials": {
-        "userName": "kattumun",
-        "password": "P@ssw0rd!"
-    },
-    "api_version": 800
-}
-
 
 options = {
     "name": "OneViewSDK Test FCoE Network",
@@ -77,7 +67,7 @@ print("\nGet the first ten fcoe-networks")
 fcoe_nets_limited = fcoe_networks.get_all(0, 10)
 pprint(fcoe_nets_limited)
 
-#Get by name
+# Get by name
 fcoe_network = fcoe_networks.get_by_name(options['name'])
 if fcoe_network:
     print("\nGot fcoe-network by name uri={}".format(fcoe_network.data['uri']))

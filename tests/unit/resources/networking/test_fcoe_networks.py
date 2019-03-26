@@ -35,7 +35,7 @@ class FcoeNetworksTest(TestCase):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
         self._fcoe_networks = FcoeNetworks(self.connection)
-        self.uri = "/rest/fcoe-networks/"
+        self.uri = "/rest/fcoe-networks/3518be0e-17c1-4189-8f81-83f3724f6155"
         self._fcoe_networks.data = {"uri": self.uri}
 
     @mock.patch.object(ResourceHelper, 'get_all')
@@ -69,11 +69,11 @@ class FcoeNetworksTest(TestCase):
             'type': 'fcoe-networkV2',
         }
         resource_rest_call = resource.copy()
+        resource_rest_call.update(self._fcoe_networks.data)
         mock_update.return_value = {}
 
         self._fcoe_networks.update(resource, timeout=12)
-        mock_update.assert_called_once_with(resource_rest_call, timeout=12,
-                                            default_values=self._fcoe_networks.DEFAULT_VALUES)
+        mock_update.assert_called_once_with(resource_rest_call, self.uri, False, 12, None)
 
     @mock.patch.object(ResourceHelper, 'delete')
     def test_delete_called_once(self, mock_delete):
