@@ -33,16 +33,6 @@ config = {
     }
 }
 
-config = {
-    "ip": "10.50.9.42",
-    "credentials": {
-        "userName": "administrator",
-        "password": "ecosystem"
-    },
-    "api_version": 800
-}
-
-
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
@@ -87,8 +77,8 @@ if managed_sans_all:
                 "valueFormat": "None"
             }]
         }
-        internally_managed_sans.update(public_attributes)
-        pprint(internally_managed_sans.data)
+        internally_managed_san.update(public_attributes)
+        pprint(internally_managed_san.data)
 
         # Update the Managed SAN's policy
         print("\nUpdate the Internally Managed SAN's policy")
@@ -102,8 +92,8 @@ if managed_sans_all:
                 "targetGroupNameFormat": "{storageSystemName}_{targetGroupName}"
             }
         }
-        internally_managed_sans.update(policy)
-        pprint(internally_managed_sans.data)
+        internally_managed_san.update(policy)
+        pprint(internally_managed_san.data)
 
     if imported_san:
         # Refresh the Managed SAN

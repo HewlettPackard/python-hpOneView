@@ -44,6 +44,49 @@ class ManagedSANs(Resource):
     def __init__(self, connection, data=None):
         super(ManagedSANs, self).__init__(connection, data)
 
+    def get_all(self, start=0, count=-1, query='', sort=''):
+        """
+        Retrieves the list of registered Managed SANs
+
+        Args:
+            start:
+                The first item to return, using 0-based indexing.
+                If not specified, the default is 0 - start with the first available item.
+            count:
+                The number of resources to return. A count of -1 requests all items. The actual number of items in
+                the response may differ from the requested count if the sum of start and count exceed the total number
+                of items.
+            query:
+                A general query string to narrow the list of resources returned.
+                The default is no query - all resources are returned.
+            sort:
+                The sort order of the returned data set. By default, the sort order is based
+                on create time with the oldest entry first.
+
+        Returns:
+            list: A list of Managed SANs
+        """
+        return self._helper.get_all(start=start, count=count, query=query, sort=sort)
+
+    def get_by_name(self, name):
+        """
+        Gets a Managed SAN by name.
+
+        Args:
+            name: Name of the Managed SAN
+
+        Returns:
+            dict: Managed SAN.
+        """
+        managed_sans = self.get_all()
+        result = [x for x in managed_sans if x['name'] == name]
+
+        resource = result[0] if result else None
+        if resource:
+            resource = self.new(self._connection, resource)
+
+        return resource
+
     def create(self):
         """Create method is not available"""
         unavailable_method()
