@@ -35,7 +35,7 @@ config = {
     }
 }
 config = {
-    "ip": "10.50.9.42",
+    "ip": "10.50.9.91",
     "credentials": {
         "userName": "administrator",
         "password": "ecosystem"
@@ -48,10 +48,9 @@ config = {
 config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
 sas_logical_interconnect_groups = oneview_client.sas_logical_interconnect_groups
+
 interconnect_types = oneview_client.sas_interconnect_types
-
 interconnect_type_name = "Synergy 12Gb SAS Connection Module"
-
 # The Interconnect Type which is permitted to form SAS interconnect map must be defined to run this example
 interconnect_type = interconnect_types.get_by_name(interconnect_type_name)
 pprint(interconnect_type)
@@ -124,7 +123,7 @@ if not sas_lig:
 # Update the SAS Logical Interconnect Group
 print("\nUpdate the SAS Logical Interconnect Group")
 resource_to_update = sas_lig.data.copy()
-resource_to_update['name'] = 'Test SAS Logical Interconnect Group - Renamed'
+resource_to_update['name'] = 'Test SAS Logical Interconnect Group - Renamed1'
 
 sas_lig.update(resource_to_update)
 pprint(sas_lig.data)
