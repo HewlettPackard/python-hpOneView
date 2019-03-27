@@ -34,20 +34,11 @@ config = {
         "password": "<password>"
     }
 }
-config = {
-    "ip": "10.50.9.42",
-    "credentials": {
-        "userName": "administrator",
-        "password": "ecosystem"
-    },
-    "api_version": 800
-}
-
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
-sas_interconnect_types =  oneview_client.sas_interconnect_types
+sas_interconnect_types = oneview_client.sas_interconnect_types
 
 # Get all
 print("\nGet all SAS Interconnect Types")

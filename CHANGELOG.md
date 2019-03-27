@@ -25,7 +25,8 @@ Resource data will be available with the resource object. This enhancement helps
 
 #### features supported with current release
 - Enclosure
-- FC Network
+- FC network
+- SAS interconnect type
 
 # 4.8.0 (Unreleased)
 #### Notes
