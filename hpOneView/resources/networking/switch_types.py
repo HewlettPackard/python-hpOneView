@@ -43,4 +43,3 @@ class SwitchTypes(Resource):
 
     def __init__(self, connection, data=None):
         super(SwitchTypes, self).__init__(connection, data)
-
