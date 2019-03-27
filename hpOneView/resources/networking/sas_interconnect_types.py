@@ -30,7 +30,7 @@ from future import standard_library
 standard_library.install_aliases()
 
 
-from hpOneView.resources.resource import Resource
+from hpOneView.resources.resource import Resource, unavailable_method
 
 
 class SasInterconnectTypes(Resource):
@@ -55,7 +55,5 @@ class SasInterconnectTypes(Resource):
         unavailable_method()
 
     def update(self):
-        """Update method is avaialble"""
+        """Update method is not avaialble"""
         unavailable_method()
-
-

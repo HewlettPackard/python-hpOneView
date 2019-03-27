@@ -34,6 +34,7 @@ config = {
         "password": "<password>"
     }
 }
+<<<<<<< HEAD
 config = {
     "ip": "10.50.9.91",
     "credentials": {
@@ -43,11 +44,13 @@ config = {
     "api_version": 800
 }
 
+=======
+>>>>>>> upgrade/800/sas_interconnect_types
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
-sas_interconnect_types =  oneview_client.sas_interconnect_types
+sas_interconnect_types = oneview_client.sas_interconnect_types
 
 # Get all
 print("\nGet all SAS Interconnect Types")
