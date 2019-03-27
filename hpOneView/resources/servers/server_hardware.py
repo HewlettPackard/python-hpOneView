@@ -274,7 +274,7 @@ class ServerHardware(ResourcePatchMixin, ResourceUtilizationMixin, Resource):
         Returns:
             URL
         """
-        uri = "{}/remoteConsoleUrl".foramt(self.data["uri"])
+        uri = "{}/remoteConsoleUrl".format(self.data["uri"])
         return self._helper.do_get(uri)
 
     @ensure_resource_client

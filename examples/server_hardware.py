@@ -23,14 +23,13 @@
 
 from pprint import pprint
 from hpOneView.oneview_client import OneViewClient
-from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "10.50.9.42",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": "ecosystem"
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
@@ -59,22 +58,21 @@ server = server_hardwares.get_by_name(server_name)
 if not server:
     # Create a rack-mount server
     server = server_hardwares.add(options)
-    print("Added rack mount server '%s'.\n  uri = '%s'" %
-      (server['name'], server['uri']))
+    print("Added rack mount server '%s'.\n  uri = '%s'" % (server['name'], server['uri']))
 
 # Create Multiple rack-mount servers
-#if oneview_client.api_version >= 600:
-#    options_to_add_multiple_server = {
-#        "mpHostsAndRanges": config['server_mpHostsAndRanges'],
-#        "username": config['server_username'],
-#        "password": config['server_password'],
-#        "licensingIntent": "OneView",
-#        "configurationState": "Managed",
-#    }
-#    multiple_server = server_hardwares.add_multiple_servers(options_to_add_multiple_server)
-#else:
-#    print("\nCANNOT CREATE MULTIPLE SERVERS! Endpoint supported for REST API Versions 600 and above only.\n")
-#
+if oneview_client.api_version >= 600:
+    options_to_add_multiple_server = {
+        "mpHostsAndRanges": config['server_mpHostsAndRanges'],
+        "username": config['server_username'],
+        "password": config['server_password'],
+        "licensingIntent": "OneView",
+        "configurationState": "Managed",
+    }
+    multiple_server = server_hardwares.add_multiple_servers(options_to_add_multiple_server)
+else:
+    print("\nCANNOT CREATE MULTIPLE SERVERS! Endpoint supported for REST API Versions 600 and above only.\n")
+
 # Get recently added server hardware resource by uri
 server_byId = server_hardwares.get_by_uri(server.data['uri'])
 print("Found server '%s' by uri.\n  uri = '%s'" %
@@ -105,11 +103,11 @@ pprint(server_envConf)
 
 # Set the calibrated max power of an unmanaged or unsupported server
 # hardware resource
-#print("Set the calibrated max power of an unmanaged or unsupported server hardware resource")
-#configuration = {
-#    "calibratedMaxPower": 2500
-#}
-##server_updated_encConf = server.update_environmental_configuration(configuration)
+print("Set the calibrated max power of an unmanaged or unsupported server hardware resource")
+configuration = {
+    "calibratedMaxPower": 2500
+}
+server_updated_encConf = server.update_environmental_configuration(configuration)
 
 # Get URL to launch SSO session for iLO web interface
 ilo_sso_url = server.get_ilo_sso_url()
@@ -124,16 +122,16 @@ print("URL to launch a Single Sign-On (SSO) session for the iiLO Java Applet con
           server.data['uri'], java_remote_console_url))
 
 # Update iLO firmware to minimum version required
-#server.update_mp_firware_version()
-#print("Successfully updated iLO firmware on server at\n  uri: '{}'".format(server.data['uri']))
+server.update_mp_firware_version()
+print("Successfully updated iLO firmware on server at\n  uri: '{}'".format(server.data['uri']))
 
 # Request power operation to change the power state of the physical server.
 configuration = {
     "powerState": "Off",
     "powerControl": "MomentaryPress"
 }
-#server_power = server.update_power_state(configuration)
-#print("Successfully changed the power state of server '{name}' to '{powerState}'".format(**server_power))
+server_power = server.update_power_state(configuration)
+print("Successfully changed the power state of server '{name}' to '{powerState}'".format(**server_power))
 
 # Refresh server state
 configuration = {
@@ -153,8 +151,8 @@ if oneview_client.api_version >= 300:
     # These functions are only available for the API version 300 or higher
 
     # Turn the Server Hardware led light On
-    #server.patch('replace', '/uidState', 'On')
-    #print("Server Hardware led light turned on")
+    server.patch('replace', '/uidState', 'On')
+    print("Server Hardware led light turned on")
 
     # Get a Firmware by Server Hardware ID
     print("Get a Firmware by Server Hardware ID")
@@ -179,5 +177,5 @@ if oneview_client.api_version >= 500:
     pprint(sdx_server)
 
 # Remove rack server
-#server.remove()
+server.remove()
 print("Server removed successfully")
