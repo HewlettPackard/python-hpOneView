@@ -99,9 +99,8 @@ class SasInterconnects(ResourcePatchMixin, Resource):
 
     def delete(self):
         """Delete method is not available"""
-        unavailabe_method()
+        unavailable_method()
 
     def update(self):
         """Update method is not available"""
-        unavailabe_method()
-
+        unavailable_method()

@@ -23,7 +23,6 @@
 
 from pprint import pprint
 from hpOneView.oneview_client import OneViewClient
-from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 # This resource is only available on HPE Synergy
@@ -35,20 +34,11 @@ config = {
         "password": "<password>"
     }
 }
-config = {
-    "ip": "10.50.9.42",
-    "credentials": {
-        "userName": "administrator",
-        "password": "ecosystem"
-    },
-    "api_version": 800
-}
-
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
-sas_interconnects =  oneview_client.sas_interconnects
+sas_interconnects = oneview_client.sas_interconnects
 
 # Get all, with defaults
 print("\nGet all SAS Interconnects")
