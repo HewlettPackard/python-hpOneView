@@ -26,7 +26,7 @@ from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "<ip>",
+    "ip": "<oneview_ip>",
     "credentials": {
         "userName": "<username>",
         "password": "<password>"
