@@ -27,6 +27,7 @@ Resource data will be available with the resource object. This enhancement helps
 - Connection template
 - Enclosure
 - FC network
+- Interconnect type
 
 # 4.8.0
 #### Notes

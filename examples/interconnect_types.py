@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,14 +23,13 @@
 
 from pprint import pprint
 from hpOneView.oneview_client import OneViewClient
-from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
-    "ip": "",
+    "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "administrator",
-        "password": ""
+        "userName": "<username>",
+        "password": "<password>"
     }
 }
 
@@ -38,32 +37,20 @@ config = {
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
+interconnect_types = oneview_client.interconnect_types
 
 # Get all supported interconnect types
 print("Get all supported interconnect types")
-interconnect_types = oneview_client.interconnect_types.get_all()
+interconnect_types = interconnect_types.get_all()
 pprint(interconnect_types, depth=2)
 
 # Get all sorting by name descending
 print("Get all interconnect-types sorting by name")
-interconnect_types_sorted = oneview_client.interconnect_types.get_all(
-    sort='name:descending')
+interconnect_types_sorted = oneview_client.interconnect_types.get_all(sort='name:descending')
 pprint(interconnect_types_sorted, depth=2)
 
-# Get by Id
-try:
-    print("Get an interconnect_type by id")
-    interconnect_types_byid = oneview_client.interconnect_types.get(
-        'e28949fa-8681-433d-9808-a9146feb8048')
-    pprint(interconnect_types_byid, depth=1)
-except HPOneViewException as e:
-    print(e.msg)
-
 # Get by name
-try:
-    print("Get an interconnect_type by name")
-    interconnect_type_byname = oneview_client.interconnect_types.get_by(
-        'name', 'HP VC Flex-10 Enet Module')[0]
-    pprint(interconnect_type_byname, depth=1)
-except HPOneViewException as e:
-    print(e.msg)
+print("Get an interconnect_type by name")
+name = interconnect_types_sorted[0]["name"]
+interconnect_type_byname = oneview_client.interconnect_types.get_by_name(name)
+pprint(interconnect_type_byname.data, depth=1)

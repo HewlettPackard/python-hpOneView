@@ -549,9 +549,8 @@ class OneViewClientTest(unittest.TestCase):
         logical_enclosures = self._oneview.logical_enclosures
         self.assertEqual(logical_enclosures, self._oneview.logical_enclosures)
 
-    def test_lazy_loading_interconnect_types(self):
-        interconnect_types = self._oneview.interconnect_types
-        self.assertEqual(interconnect_types, self._oneview.interconnect_types)
+    def test_should_return_new_interconnect_types_obj(self):
+        self.assertNotEqual(self._oneview.interconnect_types, self._oneview.interconnect_types)
 
     def test_lazy_loading_logical_downlinks(self):
         logical_downlinks = self._oneview.logical_downlinks
