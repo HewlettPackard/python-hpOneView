@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ config = {
     }
 }
 config = {
-    "ip": "10.50.9.42",
+    "ip": "10.50.9.43",
     "credentials": {
         "userName": "administrator",
         "password": "ecosystem"
@@ -65,7 +65,7 @@ options = {
     "eTag": None,
     "uplinkSets": [],
     "modified": None,
-    "name": "OneView Test Logical Interconnect Group",
+    "name": "SYN-LIG",
     "state": "Active",
     "status": None,
     "enclosureType": "C7000",
@@ -208,12 +208,9 @@ ligs = logical_interconnect_groups.get_all()
 pprint(ligs)
 
 # Get by uri
-try:
-    print("Get a Logical Interconnect Group by uri")
-    lig_byuri = logical_interconnect_groups.get_by_uri(ligs[0]["uri"])
-    pprint(lig_byuri.data)
-except HPOneViewException as e:
-    print(e.msg)
+print("Get a Logical Interconnect Group by uri")
+lig_byuri = logical_interconnect_groups.get_by_uri(ligs[0]["uri"])
+pprint(lig_byuri.data)
 
 # Get the first 10 records, sorting by name descending, filtering by name
 print("Get the first Logical Interconnect Groups, sorting by name descending, filtering by name")
