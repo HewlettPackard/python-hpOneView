@@ -34,18 +34,6 @@ config = {
         "password": "<password>"
     }
 }
-<<<<<<< HEAD
-config = {
-    "ip": "10.50.9.91",
-    "credentials": {
-        "userName": "administrator",
-        "password": "ecosystem"
-    },
-    "api_version": 800
-}
-
-=======
->>>>>>> upgrade/800/sas_interconnect_types
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
