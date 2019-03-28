@@ -81,4 +81,3 @@ class SasLogicalInterconnectGroups(Resource):
             list: A list of SAS logical interconnect groups.
         """
         return self._helper.get_all(start, count, filter=filter, sort=sort, scope_uris=scope_uris)
-
