@@ -32,7 +32,7 @@ standard_library.install_aliases()
 from hpOneView.resources.resource import Resource, ResourcePatchMixin
 
 
-class FcNetworks(Resource, ResourcePatchMixin):
+class FcNetworks(ResourcePatchMixin, Resource):
     """
     Fibre Channel networks API client.
 

@@ -190,12 +190,13 @@ class Resource(object):
         return new_resource
 
     @ensure_resource_client
-    def delete(self, timeout=-1, custom_headers=None, force=None):
+    def delete(self, timeout=-1, custom_headers=None, force=False):
         """Deletes current resource.
 
         Args:
             timeout: Timeout in seconds.
             custom_headers: Allows to set custom http headers.
+            force: Flag to force the operation.
         """
         uri = self.data['uri']
 
@@ -205,7 +206,7 @@ class Resource(object):
                                    custom_headers=custom_headers, force=force)
 
     @ensure_resource_client(update_data=True)
-    def update(self, data=None, timeout=-1, custom_headers=None):
+    def update(self, data=None, timeout=-1, custom_headers=None, force=False):
         """Makes a PUT request to update a resource when a request body is required.
 
         Args:
@@ -213,6 +214,7 @@ class Resource(object):
             timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
             custom_headers: Allows to add custom HTTP headers.
+            force: Force the update operation.
 
         Returns:
             A dict with the updated resource data.
@@ -225,7 +227,7 @@ class Resource(object):
         logger.debug('Update async (uri = %s, resource = %s)' %
                      (uri, str(resource)))
 
-        self.data = self._helper.do_put(uri, resource, timeout, custom_headers)
+        self.data = self._helper.update(resource, uri, force, timeout, custom_headers)
 
         return self
 
