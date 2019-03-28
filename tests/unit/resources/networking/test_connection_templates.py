@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.networking.connection_templates import ConnectionTemplates
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource, ResourceHelper
 
 
 class ConnectionTemplatesTest(unittest.TestCase):
@@ -36,23 +36,16 @@ class ConnectionTemplatesTest(unittest.TestCase):
         self.connection = connection(self.host)
         self._connection_templates = ConnectionTemplates(self.connection)
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_called_once(self, mock_get):
-        self._connection_templates.get('7a9f7d09-3c24-4efe-928f-50a1af411120')
-
-        mock_get.assert_called_once_with(
-            '7a9f7d09-3c24-4efe-928f-50a1af411120')
-
-    @mock.patch.object(ResourceClient, 'get_all')
+    @mock.patch.object(ResourceHelper, 'do_requests_to_getall')
     def test_get_all_called_once(self, mock_get_all):
         filter = 'name=TestName'
         sort = 'name:ascending'
 
-        self._connection_templates.get_all(2, 500, filter, sort)
+        self._connection_templates.get_all(2, 500, filter=filter, sort=sort)
 
-        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort)
+        mock_get_all.assert_called_once_with('/rest/connection-templates?start=2&count=500&filter=name%3DTestName&sort=name%3Aascending', 500)
 
-    @mock.patch.object(ResourceClient, 'get_by')
+    @mock.patch.object(Resource, 'get_by')
     def test_get_by_called_once(self, mock_get_by):
         self._connection_templates.get_by(
             'name', 'name1128673347-1465916352647')
@@ -60,14 +53,14 @@ class ConnectionTemplatesTest(unittest.TestCase):
         mock_get_by.assert_called_once_with(
             'name', 'name1128673347-1465916352647')
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_default_called_once(self, mock_get):
+    @mock.patch.object(ResourceHelper, 'do_get')
+    def test_get_default_called_once(self, mock_do_get):
         self._connection_templates.get_default()
         uri = '/rest/connection-templates/defaultConnectionTemplate'
 
-        mock_get.assert_called_once_with(uri)
+        mock_do_get.assert_called_once_with(uri)
 
-    @mock.patch.object(ResourceClient, 'update')
+    @mock.patch.object(Resource, 'update')
     def test_update_called_once(self, mock_update):
         con_template = {
             "type": "connection-templates",
@@ -78,5 +71,4 @@ class ConnectionTemplatesTest(unittest.TestCase):
             "name": "CT-23"
         }
         self._connection_templates.update(con_template, 70)
-        mock_update.assert_called_once_with(con_template, timeout=70,
-                                            default_values=self._connection_templates.DEFAULT_VALUES)
+        mock_update.assert_called_once_with(con_template, 70)
