@@ -30,10 +30,10 @@ from future import standard_library
 standard_library.install_aliases()
 
 
-from hpOneView.resources.resource import Resource, ensure_resource_client
+from hpOneView.resources.resource import Resource, ResourcePatchMixin, ensure_resource_client
 
 
-class LogicalEnclosures(Resource):
+class LogicalEnclosures(ResourcePatchMixin, Resource):
     """
     The logical enclosure resource provides methods for managing one or more enclosures that are
     linked or stacked with stacking links.
@@ -88,7 +88,7 @@ class LogicalEnclosures(Resource):
             dict: Logical enclosure.
         """
         uri = "{}/configuration".format(self.data["uri"])
-        return self._helper.do_put(uri, None, timeout)
+        return self._helper.update(None, uri, timeout=timeout)
 
     @ensure_resource_client
     def get_script(self):
@@ -133,7 +133,7 @@ class LogicalEnclosures(Resource):
         Returns:
             dict: Support dump.
         """
-        uri = "{}/support_dumps".format(self.data["uri"])
+        uri = "{}/support-dumps".format(self.data["uri"])
         return self._helper.create(information, uri=uri, timeout=timeout)
 
     @ensure_resource_client
@@ -150,4 +150,4 @@ class LogicalEnclosures(Resource):
             dict: Logical enclosure.
         """
         uri = "{}/updateFromGroup".format(self.data["uri"])
-        return self._helper.do_put(uri, data, tiemout)
+        return self._helper.update(data, uri, timeout=timeout)

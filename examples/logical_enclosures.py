@@ -22,8 +22,8 @@
 ###
 
 from pprint import pprint
+
 from hpOneView.oneview_client import OneViewClient
-from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
@@ -32,14 +32,6 @@ config = {
         "userName": "<username>",
         "password": "<password>"
     }
-}
-config = {
-    "ip": "10.50.4.100",
-    "credentials": {
-        "userName": "kattumun",
-        "password": "P@ssw0rd!"
-    },
-    "api_version": 800
 }
 
 # Try load config from a file (if there is a config file)
@@ -53,10 +45,10 @@ logical_enclosures = oneview_client.logical_enclosures
 # The valid enclosure URIs need to be inserted sorted by URI
 # The number of enclosure URIs must be equal to the enclosure count in the enclosure group
 options = dict(
-        enclosureUris=[],
-        enclosureGroupUri="",
-        forceInstallFirmware=False,
-        name="LogicalEnclosure2"
+    enclosureUris=[],
+    enclosureGroupUri="",
+    forceInstallFirmware=False,
+    name="LogicalEnclosure2"
 )
 
 # Get all logical enclosures
@@ -66,15 +58,16 @@ for enc in logical_enclosures_all:
     print('   %s' % enc['name'])
 
 # Get first logical enclosure
-logical_enclosure = logical_enclosures.get_all()[0]
-print("Found logical enclosure '{}' at\n   uri: '{}'".format(
-    logical_enclosure['name'], logical_enclosure['uri']))
+logical_enclosure_all = logical_enclosures.get_all()
+if logical_enclosure_all:
+    logical_enclosure = logical_enclosure_all[0]
+    print("Found logical enclosure '{}' at\n   uri: '{}'".format(
+        logical_enclosure['name'], logical_enclosure['uri']))
 
-# Get logical enclosure by uri
-logical_enclosure = logical_enclosures.get_by_uri(
-    logical_enclosure['uri'])
-print("Got logical enclosure '{}' by\n   uri: '{}'".format(
-    logical_enclosure.data['name'], logical_enclosure.data['uri']))
+    # Get logical enclosure by uri
+    logical_enclosure = logical_enclosures.get_by_uri(logical_enclosure['uri'])
+    print("Got logical enclosure '{}' by\n   uri: '{}'".format(
+        logical_enclosure.data['name'], logical_enclosure.data['uri']))
 
 # Get Logical Enclosure by scope_uris
 if oneview_client.api_version >= 600:
@@ -85,7 +78,7 @@ if oneview_client.api_version >= 600:
     else:
         print("No Logical Enclosure found by scope_uris")
 
-#Get Logical Enclosure by name
+# Get Logical Enclosure by name
 logical_enclosure = logical_enclosures.get_by_name(options["name"])
 if not logical_enclosure:
     # Get enclosure group for creating logical enclosure
@@ -109,11 +102,6 @@ if not logical_enclosure:
         logical_enclosure['uri'])
     )
 
-    # Delete the logical enclosure created
-    # This method is only available on HPE Synergy.
-#    logical_enclosure_created.delete()
-#    print("Delete logical enclosure")
-
 # Update the logical enclosure name
 print("Update the logical enclosure to have a name of '%s'" %
       options["name"])
@@ -133,22 +121,16 @@ print("   Done. uri: '%s', 'name': '%s'" %
 
 # Update configuration
 print("Reapply the appliance's configuration to the logical enclosure")
-try:
-    logical_enclosure.update_configuration()
-    print("   Done.")
-except HPOneViewException as e:
-    print(e.msg)
+logical_enclosure.update_configuration()
+print("   Done.")
 
 # Update and get script
 print("Update script")
-try:
-    script = "# TEST COMMAND"
-    logical_enclosure_updated = logical_enclosure.update_script(
-        logical_enclosure_updated['uri'], script)
-    print("   updated script: '{}'".format(
-        logical_enclosure.get_script()))
-except HPOneViewException as e:
-    print("  %s" % e.msg)
+script = "# TEST COMMAND"
+logical_enclosure_updated = logical_enclosure.update_script(
+    logical_enclosure.data['uri'], script)
+print("   updated script: '{}'".format(
+    logical_enclosure.get_script()))
 
 # Create support dumps
 print("Generate support dump")
@@ -162,11 +144,8 @@ print("   Done")
 
 # update from group
 print("Update from group")
-try:
-    logical_enclosure_updated = logical_enclosure.update_from_group()
-    print("   Done")
-except HPOneViewException as e:
-    print("  %s" % e.msg)
+logical_enclosure_updated = logical_enclosure.update_from_group()
+print("   Done")
 
 if oneview_client.api_version >= 300:
     if logical_enclosure:
@@ -176,12 +155,18 @@ if oneview_client.api_version >= 300:
             operation="replace",
             path="/firmware",
             value={
-                "firmwareBaselineUri": "/rest/firmware-drivers/SPPgen9snap6_2016_0405_87",
+                "firmwareBaselineUri": "/rest/firmware-drivers/SPP_2018_06_20180709_for_HPE_Synergy_Z7550-96524",
                 "firmwareUpdateOn": "EnclosureOnly",
                 "forceInstallFirmware": "true",
                 "validateIfLIFirmwareUpdateIsNonDisruptive": "true",
                 "logicalInterconnectUpdateMode": "Orchestrated",
                 "updateFirmwareOnUnmanagedInterconnect": "true"
-            }
+            },
+            custom_headers={"if-Match": "*"}
         )
         pprint(logical_enclosure_updated.data)
+
+# Delete the logical enclosure created
+# This method is only available on HPE Synergy.
+logical_enclosure.delete()
+print("Delete logical enclosure")
