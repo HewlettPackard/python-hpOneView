@@ -105,7 +105,7 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
             dict: Logical Interconnect.
         """
         uri = "{}/compliance".format(self.data["uri"])
-        return self._helper.do_put(uri, None, timeout)
+        return self._helper.update(None, uri, timeout=timeout)
 
     @ensure_resource_client
     def update_ethernet_settings(self, configuration, force=False, timeout=-1):
@@ -196,7 +196,7 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
             dict: Logical Interconnect.
         """
         uri = "{}/configuration".format(self.data["uri"])
-        return self._helper.do_put(uri=uri, timeout=timeout)
+        return self._helper.update(None, uri=uri, timeout=timeout)
 
     @ensure_resource_client
     def get_snmp_configuration(self):
