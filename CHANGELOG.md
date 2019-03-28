@@ -28,6 +28,7 @@ Resource data will be available with the resource object. This enhancement helps
 - Enclosure
 - Enclosure group
 - FC network
+- FCOE network
 - Interconnect type
 
 # 4.8.0
