@@ -36,10 +36,10 @@ config = {
 }
 
 config = {
-    "ip": "10.50.9.42",
+    "ip": "10.50.4.100",
     "credentials": {
-        "userName": "administrator",
-        "password": "ecosystem"
+        "userName": "kattumun",
+        "password": "P@ssw0rd!"
     },
     "api_version": 800
 }
@@ -48,6 +48,7 @@ config = {
 config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
 sas_logical_interconnects = oneview_client.sas_logical_interconnects
+firmware_driver_uri = None
 
 # Get all SAS Logical Interconnects
 print("\nGet all SAS Logical Interconnects")
@@ -70,7 +71,8 @@ print("\n  Done. The current consistency state is {consistencyStatus}.".format(*
 
 # Return the SAS Logical Interconnect list to a consistent state
 print("\nReturn the SAS Logical Interconnect list to a consistent state")
-sas_logical_interconnect.update_compliance_all()
+compliance_uris = [logical_interconnects[0]['uri']]
+sas_logical_interconnect.update_compliance_all(compliance_uris)
 print("\n  Done. The current consistency state is {consistencyStatus}.".format(**sas_logical_interconnect.data))
 
 # Replace Drive Enclosure (This example only works with real hardware)

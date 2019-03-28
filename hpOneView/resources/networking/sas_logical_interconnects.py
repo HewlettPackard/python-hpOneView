@@ -141,7 +141,7 @@ class SasLogicalInterconnects(Resource):
             dict: SAS Logical Interconnect.
         """
         uri = "{}/compliance".format(self.data["uri"])
-        result = self._helper.do_put(uri, timeout=timeout)
+        result = self._helper.update({}, uri, timeout=timeout)
         self.refresh()
 
         return result
@@ -176,7 +176,7 @@ class SasLogicalInterconnects(Resource):
             dict: SAS Logical Interconnect.
         """
         uri = "{}/configuration".format(self.data["uri"])
-        result = self._helper.do_put(uri)
+        result = self._helper.update({}, uri)
         self.refresh()
 
         return result
