@@ -25,7 +25,6 @@
 from pprint import pprint
 
 from config_loader import try_load_from_file
-from hpOneView.exceptions import HPOneViewException
 from hpOneView.oneview_client import OneViewClient
 
 config = {
@@ -35,14 +34,7 @@ config = {
         "password": "<password>"
     }
 }
-config = {
-    "ip": "10.50.9.43",
-    "credentials": {
-        "userName": "administrator",
-        "password": "ecosystem"
-    },
-    "api_version": 800
-}
+
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
@@ -65,7 +57,7 @@ options = {
     "eTag": None,
     "uplinkSets": [],
     "modified": None,
-    "name": "SYN-LIG",
+    "name": "OneView Test Logical Interconnect Group",
     "state": "Active",
     "status": None,
     "enclosureType": "C7000",
@@ -235,7 +227,7 @@ if oneview_client.api_version >= 600:
     else:
         print("No Logical Interconnect Group found.")
 
-#Get logical interconnect group by name
+# Get logical interconnect group by name
 lig = logical_interconnect_groups.get_by_name(options["name"])
 if not lig:
     # Create a logical interconnect group
