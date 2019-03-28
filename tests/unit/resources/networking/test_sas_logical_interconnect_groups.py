@@ -27,7 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.networking.sas_logical_interconnect_groups import SasLogicalInterconnectGroups
-from hpOneView.resources.resource import ResourceHelper
+from hpOneView.resources.resource import Resource, ResourceHelper
 
 
 class SasLogicalInterconnectGroupsTest(unittest.TestCase):
@@ -35,6 +35,8 @@ class SasLogicalInterconnectGroupsTest(unittest.TestCase):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
         self._resource = SasLogicalInterconnectGroups(self.connection)
+        self.uri = "/rest/sas-logical-interconnect-groups/3518be0e-17c1-4189-8f81-83f3724f6155"
+        self._resource.data = {"uri": self.uri}
 
     @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_all_called_once(self, mock_get_all):
@@ -50,26 +52,27 @@ class SasLogicalInterconnectGroupsTest(unittest.TestCase):
     def test_create_called_once(self, mock_create):
         resource = {'name': 'Test SAS Logical Interconnect Group'}
 
-        self._resource.create(resource, 30)
+        self._resource.create(resource, timeout=30)
 
-        mock_create.assert_called_once_with(resource, timeout=30)
+        mock_create.assert_called_once_with(resource, None, 30, None)
 
+    @mock.patch.object(Resource, 'ensure_resource_data')
     @mock.patch.object(ResourceHelper, 'update')
-    def test_update_called_once(self, mock_update):
+    def test_update_called_once(self, mock_update, mock_ensure_client):
         resource = {'name': 'Test SAS Logical Interconnect Group'}
 
-        self._resource.update(resource, 60)
-
-        mock_update.assert_called_once_with(resource, timeout=60)
+        self._resource.update(resource, timeout=60)
+        resource["uri"] = self.uri
+        mock_update.assert_called_once_with(resource, self.uri, False, 60, None)
 
     @mock.patch.object(ResourceHelper, 'delete')
     def test_delete_called_once(self, mock_delete):
         self._resource.delete(force=False, timeout=-1)
 
-        mock_delete.assert_called_once_with(force=False, timeout=-1)
+        mock_delete.assert_called_once_with(self.uri, custom_headers=None, force=False, timeout=-1)
 
     @mock.patch.object(ResourceHelper, 'delete')
     def test_delete_called_once_with_force(self, mock_delete):
         self._resource.delete(force=True, timeout=-1)
 
-        mock_delete.assert_called_once_with(force=True, timeout=-1)
+        mock_delete.assert_called_once_with(self.uri, custom_headers=None, force=True, timeout=-1)
