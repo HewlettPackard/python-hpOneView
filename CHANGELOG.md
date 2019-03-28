@@ -25,6 +25,7 @@ Resource data will be available with the resource object. This enhancement helps
 
 #### features supported with current release
 - Enclosure
+- Enclosure group
 - FC network
 - Interconnect type
 
