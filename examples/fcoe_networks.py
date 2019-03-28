@@ -89,7 +89,7 @@ print("\nGet a fcoe-network by uri")
 fcoe_nets_by_uri = fcoe_networks.get_by_uri(fcoe_network.data['uri'])
 pprint(fcoe_nets_by_uri.data)
 
-# Adds ethernet to scope defined
+# Adds FCOE network to scope defined
 if scope_name:
     print("\nGet scope then add the network to it")
     scope = oneview_client.scopes.get_by_name(scope_name)

@@ -24,9 +24,11 @@ Resource data will be available with the resource object. This enhancement helps
   Refer example files of the updated resources for more details.
 
 #### features supported with current release
+- Connection template
 - Enclosure
 - FC network
 - FCOE network
+- Interconnect type
 
 # 4.8.0
 #### Notes
