@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,6 @@
 
 from pprint import pprint
 from hpOneView.oneview_client import OneViewClient
-from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
@@ -31,61 +30,42 @@ config = {
     "credentials": {
         "userName": "<username>",
         "password": "<password>"
-    }
+    },
+    "api_version": 800
 }
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
+connection_templates = oneview_client.connection_templates
 
 # The name and ID of an existent Connection Template must be set to run this example
 connection_template_name = 'defaultConnectionTemplate'
-connection_template_id = '63b9a696-8c68-4e59-876d-148b1b925709'
 
 # Get all connection templates
 print("Get all connection templates")
-con_templates = oneview_client.connection_templates.get_all()
+con_templates = connection_templates.get_all()
 pprint(con_templates)
 
 # Get all sorting by name descending
 print("Get all connection templates sorting by name")
-con_templates_sorted = oneview_client.connection_templates.get_all(sort='name:descending')
+con_templates_sorted = connection_templates.get_all(sort='name:descending')
 pprint(con_templates_sorted)
 
 # Get default template
 print("Get default connection template")
-con_template_default = oneview_client.connection_templates.get_default()
+con_template_default = connection_templates.get_default()
 pprint(con_template_default)
 
 # Get by name
-try:
-    print("Get a connection_template by name")
-    con_template_byname = oneview_client.connection_templates.get_by('name', connection_template_name)[0]
-    pprint(con_template_byname)
-except HPOneViewException as e:
-    print(e.msg)
+print("Get a connection_template by name")
+con_template_byname = connection_templates.get_by_name(connection_template_name)
+pprint(con_template_byname.data)
 
 # Update the connection_template retrieved in the last operation
-try:
-    print("Update the retrieved connection_template typicalBandwidth")
-    con_template_byname['bandwidth']['typicalBandwidth'] = 3000
-    con_template_updated = oneview_client.connection_templates.update(con_template_byname)
-    pprint(con_template_updated)
-except HPOneViewException as e:
-    print(e.msg)
-
-# Get by Id and update name
-try:
-    print("Get a connection template by id")
-    con_template_byid = oneview_client.connection_templates.get(connection_template_id)
-    pprint(con_template_byid)
-    print("Update name of connection template")
-    con_template_byid['name'] = "renamed"
-    con_template_byid = oneview_client.connection_templates.update(
-        con_template_byid)
-    print("Updated connection template successfully\n  uri = '%s'" %
-          (con_template_byid['uri']))
-    print("  with attribute {'name': '%s'}" % con_template_byid['name'])
-except HPOneViewException as e:
-    print(e.msg)
+print("Update the retrieved connection_template typicalBandwidth")
+template_byname = con_template_byname.data.copy()
+template_byname['bandwidth']['typicalBandwidth'] = 5000
+con_template_updated = con_template_byname.update(template_byname)
+pprint(con_template_updated.data)

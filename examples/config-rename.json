@@ -1,15 +1,15 @@
 {
-  "ip": "10.50.9.42",
+  "ip": "",
   "image_streamer_ip": "",
   "api_version": 800,
   "ssl_certificate": "",
   "credentials": {
-    "userName": "administrator",
+    "userName": "",
     "authLoginDomain": "",
-    "password": "ecosystem",
+    "password": "",
     "sessionID": ""
   },
-  "enclosure_hostname": "172.18.1.13",
+  "enclosure_hostname": "",
   "enclosure_username": "",
   "enclosure_password": "",
   "enclosure_group_uri": "",
