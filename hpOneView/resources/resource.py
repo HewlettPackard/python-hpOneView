@@ -374,7 +374,7 @@ class ResourceHelper(object):
 
         return self.do_requests_to_getall(uri, count)
 
-    def create(self, data=None, uri=None, timeout=-1, custom_headers=None, force=Force):
+    def create(self, data=None, uri=None, timeout=-1, custom_headers=None, force=False):
         """Makes a POST request to create a resource when a request body is required.
 
         Args:

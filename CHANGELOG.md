@@ -31,6 +31,7 @@ Resource data will be available with the resource object. This enhancement helps
 - FCOE network
 - Interconnect type
 - Server hardware type
+- Server profile template
 
 # 4.8.0
 #### Notes

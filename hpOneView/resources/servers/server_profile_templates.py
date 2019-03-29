@@ -29,7 +29,9 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-from hpOneView.resources.resource import Resource
+from copy import deepcopy
+
+from hpOneView.resources.resource import Resource, ensure_resource_client
 
 
 class ServerProfileTemplate(Resource):
@@ -61,9 +63,8 @@ class ServerProfileTemplate(Resource):
         '800': {'type': 'ServerProfileTemplateV5'}
     }
 
-    def __init__(self, con):
-        self._connection = con
-        self._client = ResourceClient(con, self.URI)
+    def __init__(self, connection, data=None):
+        super(ServerProfileTemplate, self).__init__(connection, data)
 
     def get_all(self, start=0, count=-1, filter='', sort='', scope_uris=''):
         """
@@ -112,8 +113,6 @@ class ServerProfileTemplate(Resource):
             if not data.get(key):
                 data[key] = value
 
-        logger.debug('Create (uri = %s, resource = %s)' % (uri, str(data)))
-
         resource_data = self._helper.create(data, uri, timeout, force=force)
         new_resource = self.new(self._connection, resource_data)
 
@@ -137,12 +136,10 @@ class ServerProfileTemplate(Resource):
         resource = deepcopy(self.data)
         resource.update(data)
 
-        logger.debug('Update async (uri = %s, resource = %s)' %
-                     (uri, str(resource)))
-
         self.data = self._helper.update(resource, uri, force, timeout)
 
         return self
+
     @ensure_resource_client
     def get_new_profile(self):
         """
@@ -178,7 +175,7 @@ class ServerProfileTemplate(Resource):
             dict: The server profile template resource.
         """
         query_params = self.TRANSFORMATION_PATH.format(**locals())
-        uri = "{}{}".format(elf.data["uri"], query_params)
+        uri = "{}{}".format(self.data["uri"], query_params)
         return self._helper.do_get(uri)
 
     def get_available_networks(self, **kwargs):
