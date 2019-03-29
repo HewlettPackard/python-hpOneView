@@ -374,6 +374,35 @@ class ResourceHelper(object):
 
         return self.do_requests_to_getall(uri, count)
 
+    def delete_all(self, filter, force=False, timeout=-1):
+        """
+        Deletes all resources from the appliance that match the provided filter.
+
+        Args:
+            filter:
+                A general filter/query string to narrow the list of items deleted.
+            force:
+                If set to true, the operation completes despite any problems with network connectivity or errors
+                on the resource itself. The default is false.
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            bool: Indicates if the resources were successfully deleted.
+        """
+        uri = "{}?filter={}&force={}".format(self._base_uri, quote(filter), force)
+        logger.debug("Delete all resources (uri = %s)" % uri)
+
+        task, body = self.do_delete(uri)
+
+        if not task:
+            # 204 NO CONTENT
+            # Successful return from a synchronous delete operation.
+            return True
+
+        return self._task_monitor.wait_for_task(task, timeout=timeout)
+
     def create(self, data=None, uri=None, timeout=-1, custom_headers=None, force=False):
         """Makes a POST request to create a resource when a request body is required.
 

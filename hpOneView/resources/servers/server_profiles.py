@@ -30,8 +30,10 @@ from future import standard_library
 
 standard_library.install_aliases()
 
+from copy import deepcopy
 
-from hpOneView.resources.resource import Resource, ResourcePatchMixin, ResourceSchemaMixin
+from hpOneView.resources.resource import (Resource, ResourcePatchMixin,
+                                          ResourceSchemaMixin, ensure_resource_client)
 
 
 class ServerProfiles(ResourcePatchMixin, ResourceSchemaMixin, Resource):
@@ -50,41 +52,58 @@ class ServerProfiles(ResourcePatchMixin, ResourceSchemaMixin, Resource):
     }
 
     def __init__(self, connection, data=None):
-        super(ServerProfile, self).__init__(connection, data)
+        super(ServerProfiles, self).__init__(connection, data)
 
-    def create(self, resource, timeout=-1, force=''):
-        """
-        Creates a server profile using the information provided in the resource parameter.
+    def create(self, data=None, timeout=-1, force=''):
+        """Makes a POST request to create a resource when a request body is required.
 
         Args:
-            resource (dict): Object to create.
+            data: Additional fields can be passed to create the resource.
             timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView, just stop waiting for its completion.
-            force: Comma separated list of flags for ignoring specific warning.
-
+                in OneView; it just stops waiting for its completion.
+            force: Flag to force the operation
         Returns:
-            dict: Created server profile.
+            Created resource.
         """
+        if not data:
+            data = {}
 
-    def update(self, resource, id_or_uri, force=''):
-        """
-        Allows the configuration of a server profile object to be modified.
+        default_values = self._get_default_values()
+        for key, value in default_values.items():
+            if not data.get(key):
+                data[key] = value
+
+        resource_data = self._helper.create(data, timeout=timeout, force=force)
+        new_resource = self.new(self._connection, resource_data)
+
+        return new_resource
+
+    @ensure_resource_client(update_data=True)
+    def update(self, data=None, timeout=-1, force=''):
+        """Updates server profile template.
 
         Args:
-            id_or_uri: Can be either the server profile id or the server profile uri.
-            resource (dict): Object to update.
-            force: Comma separated list of flags for ignoring specific warning.
+            data: Data to update the resource.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+            force: Force the update operation.
 
         Returns:
-            dict: The server profile resource.
+            A dict with the updated resource data.
         """
+        uri = self.data['uri']
+
+        resource = deepcopy(self.data)
+        resource.update(data)
+
         # Removes related fields to serverHardware in case of unassign
         if resource.get('serverHardwareUri') is None:
             resource.pop('enclosureBay', None)
             resource.pop('enclosureUri', None)
 
-        uri = self. __build_uri_with_query_string({'force': force}, self.data["uri"])
-        return self._client.update(resource=resource, uri=uri, default_values=self.DEFAULT_VALUES)
+        self.data = self._helper.update(resource, uri, force, timeout)
+
+        return self
 
     def delete_all(self, filter, timeout=-1, force=False):
         """
@@ -115,6 +134,7 @@ class ServerProfiles(ResourcePatchMixin, ResourceSchemaMixin, Resource):
         """
         return self._helper.delete_all(filter=filter, force=force, timeout=timeout)
 
+    @ensure_resource_client
     def get_compliance_preview(self):
         """
         Gets the preview of manual and automatic updates required to make the server profile
@@ -178,7 +198,9 @@ class ServerProfiles(ResourcePatchMixin, ResourceSchemaMixin, Resource):
             dict: Server Profile.
         """
         uri = self._helper.build_uri_with_query_string(kwargs,
-                                                       '/transformation', self.data["uri"])
+                                                       '/transformation',
+                                                       self.data["uri"])
+        print(uri)
         return self._helper.do_get(uri)
 
     def get_available_networks(self, **kwargs):
