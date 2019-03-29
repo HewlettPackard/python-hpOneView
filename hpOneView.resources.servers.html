@@ -2260,8 +2260,8 @@ in OneView; it just stops waiting for its completion.</li>
 <span id="hponeview-resources-servers-server-hardware-types-module"></span><h2>hpOneView.resources.servers.server_hardware_types module<a class="headerlink" href="#module-hpOneView.resources.servers.server_hardware_types" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.servers.server_hardware_types.</code><code class="descname">ServerHardwareTypes</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware_types.html#ServerHardwareTypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">hpOneView.resources.servers.server_hardware_types.</code><code class="descname">ServerHardwareTypes</code><span class="sig-paren">(</span><em>connection</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware_types.html#ServerHardwareTypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.Resource" title="hpOneView.resources.resource.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.Resource</span></code></a></p>
 <p>The server hardware types resource is a representation/abstraction of a physical server managed by the appliance.
 It defines capabilities and settings that can be used in a server profile.</p>
 <dl class="attribute">
@@ -2269,132 +2269,10 @@ It defines capabilities and settings that can be used in a server profile.</p>
 <code class="descname">URI</code><em class="property"> = u'/rest/server-hardware-types'</em><a class="headerlink" href="#hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
-<dt id="hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.delete">
-<code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware_types.html#ServerHardwareTypes.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes the server hardware type with the specified URI. A server hardware type cannot be deleted if it
-is associated with a server hardware or server profile resource.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) – object to delete</li>
-<li><strong>force</strong> (<em>bool</em>) – If set to true, the operation completes despite any problems with
-network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates whether the resource was successfully deleted.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware_types.html#ServerHardwareTypes.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the server hardware type resource with the specified ID or URI.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server hardware type ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The logical interconnect group.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware_types.html#ServerHardwareTypes.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the list of server hardware type resources defined on the appliance.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> – The first item to return, using 0-based indexing.
-If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items.
-The actual number of items in the response might differ from the requested
-count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
-default is no filter; all resources are returned.</li>
-<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
-on create time with the oldest entry first.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of server hardware types.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.get_by">
-<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware_types.html#ServerHardwareTypes.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all server hardware types that match the filter.</p>
-<p>The search is case-insensitive.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> – Field name to filter.</li>
-<li><strong>value</strong> – Value to filter.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of server hardware types.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>uri=None</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware_types.html#ServerHardwareTypes.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates one or more attributes for a server hardware type resource.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) – Object to update.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated server hardware type.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.server_hardware_types.ServerHardwareTypes.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
