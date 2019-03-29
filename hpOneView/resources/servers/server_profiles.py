@@ -200,7 +200,6 @@ class ServerProfiles(ResourcePatchMixin, ResourceSchemaMixin, Resource):
         uri = self._helper.build_uri_with_query_string(kwargs,
                                                        '/transformation',
                                                        self.data["uri"])
-        print(uri)
         return self._helper.do_get(uri)
 
     def get_available_networks(self, **kwargs):

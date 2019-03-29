@@ -124,7 +124,7 @@ class TaskMonitor(object):
             logger.debug("Waiting for task. Task state: " + str(task.get('taskState')))
 
             time.sleep(i)
-            print(start_time, timeout)
+
             if (timeout != UNLIMITED_TIMEOUT) and (start_time + timeout < self.get_current_seconds()):
                 raise HPOneViewTimeout(MSG_TIMEOUT % str(timeout))
 

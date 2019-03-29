@@ -24,7 +24,6 @@
 from pprint import pprint
 
 from config_loader import try_load_from_file
-from hpOneView.exceptions import HPOneViewException
 from hpOneView.oneview_client import OneViewClient
 
 config = {
@@ -42,8 +41,8 @@ oneview_client = OneViewClient(config)
 server_profiles = oneview_client.server_profiles
 
 # Dependency resources
-profile_templates =  oneview_client.server_profile_templates
-enclosure_groups =  oneview_client.enclosure_groups
+profile_templates = oneview_client.server_profile_templates
+enclosure_groups = oneview_client.enclosure_groups
 server_hardware_types = oneview_client.server_hardware_types
 server_hardwares = oneview_client.server_hardware
 
@@ -85,7 +84,7 @@ profile = server_profiles.get_by_name(profile_name)
 if profile:
     pprint(profile)
 else:
-    server_template  = profile_templates.get_by_name(profile_template_name)
+    server_template = profile_templates.get_by_name(profile_template_name)
     if not server_template:
         # Create a server profile template to associate with the server profile
         server_template = profile_templates.create(dict(
@@ -126,7 +125,7 @@ if oneview_client.api_version <= 500:
 
 # Server profile compliance preview
 print("\nGets the preview of manual and automatic updates required to make the server profile consistent "
-        "with its template.")
+      "with its template.")
 schema = profile.get_compliance_preview()
 pprint(schema)
 
@@ -145,7 +144,7 @@ pprint(server_transformed)
 
 print("Transformation complete. Updating server profile with the new configuration.")
 profile_updated = profile.update(server_transformed)
-#pprint(profile_updated.data)
+pprint(profile_updated.data)
 
 # Create a new Server Profile Template based on an existing Server Profile
 new_spt = profile.get_new_profile_template()
@@ -215,7 +214,7 @@ pprint(available_storage_systems)
 # Get a specific storage system
 if storage_system_id:
     print("\nRetrieve a specific storage system associated with the given enclosure group URI, a server hardware"
-            " type URI and a storage system ID")
+          " type URI and a storage system ID")
     available_storage_system = server_profiles.get_available_storage_system(
         storageSystemId=storage_system_id,
         enclosureGroupUri=enclosure_group.data["uri"],

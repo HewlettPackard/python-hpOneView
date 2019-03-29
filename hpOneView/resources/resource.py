@@ -394,14 +394,7 @@ class ResourceHelper(object):
         uri = "{}?filter={}&force={}".format(self._base_uri, quote(filter), force)
         logger.debug("Delete all resources (uri = %s)" % uri)
 
-        task, body = self.do_delete(uri)
-
-        if not task:
-            # 204 NO CONTENT
-            # Successful return from a synchronous delete operation.
-            return True
-
-        return self._task_monitor.wait_for_task(task, timeout=timeout)
+        return self.delete(uri)
 
     def create(self, data=None, uri=None, timeout=-1, custom_headers=None, force=False):
         """Makes a POST request to create a resource when a request body is required.
