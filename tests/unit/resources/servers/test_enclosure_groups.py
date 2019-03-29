@@ -93,7 +93,7 @@ class EnclosureGroupsTest(unittest.TestCase):
         eg_expected = self.MINIMAL_DATA_FOR_EG_CREATION.copy()
         eg_expected.update(default_values)
 
-        mock_create.assert_called_once_with(eg_expected, None, -1, None)
+        mock_create.assert_called_once_with(eg_expected, None, -1, None, False)
 
     @mock.patch.object(ResourceHelper, 'delete')
     def test_delete_called_once(self, mock_delete):

@@ -164,7 +164,7 @@ class Resource(object):
 
         return result
 
-    def create(self, data=None, uri=None, timeout=-1, custom_headers=None):
+    def create(self, data=None, uri=None, timeout=-1, custom_headers=None, force=False):
         """Makes a POST request to create a resource when a request body is required.
 
         Args:
@@ -186,7 +186,7 @@ class Resource(object):
 
         logger.debug('Create (uri = %s, resource = %s)' % (uri, str(data)))
 
-        resource_data = self._helper.create(data, uri, timeout, custom_headers)
+        resource_data = self._helper.create(data, uri, timeout, custom_headers, force)
         new_resource = self.new(self._connection, resource_data)
 
         return new_resource
@@ -374,7 +374,7 @@ class ResourceHelper(object):
 
         return self.do_requests_to_getall(uri, count)
 
-    def create(self, data=None, uri=None, timeout=-1, custom_headers=None):
+    def create(self, data=None, uri=None, timeout=-1, custom_headers=None, force=False):
         """Makes a POST request to create a resource when a request body is required.
 
         Args:
@@ -388,6 +388,9 @@ class ResourceHelper(object):
         """
         if not uri:
             uri = self._base_uri
+
+        if force:
+            uri += '?force={}'.format(force)
 
         logger.debug('Create (uri = %s, resource = %s)' % (uri, str(data)))
 
