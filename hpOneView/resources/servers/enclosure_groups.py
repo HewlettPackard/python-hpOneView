@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -31,10 +31,10 @@ from future import standard_library
 standard_library.install_aliases()
 
 
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource, ensure_resource_client
 
 
-class EnclosureGroups(object):
+class EnclosureGroups(Resource):
     """
     Enclosure Groups API client.
 
@@ -47,9 +47,8 @@ class EnclosureGroups(object):
         '500': {"type": "EnclosureGroupV400"}
     }
 
-    def __init__(self, con):
-        self._connection = con
-        self._client = ResourceClient(con, self.URI)
+    def __init__(self, connection, data=None):
+        super(EnclosureGroups, self).__init__(connection, data)
 
     def get_all(self, start=0, count=-1, filter='', sort='', scope_uris=''):
         """
@@ -76,21 +75,11 @@ class EnclosureGroups(object):
         Returns:
             list: A list of enclosure groups.
         """
-        return self._client.get_all(start, count, filter=filter, sort=sort, scope_uris=scope_uris)
+        return self._helper.get_all(start, count, filter=filter,
+                                    sort=sort, scope_uris=scope_uris)
 
-    def get(self, id_or_uri):
-        """
-        Gets an enclosure group by ID or by URI.
-
-        Args:
-            id_or_uri: Can be either the enclosure group ID or the enclosure group URI.
-
-        Returns:
-            dict: Enclosure group.
-        """
-        return self._client.get(id_or_uri)
-
-    def get_script(self, id_or_uri):
+    @ensure_resource_client
+    def get_script(self):
         """
         Gets the configuration script of the enclosure-group resource with the specified URI.
 
@@ -98,76 +87,11 @@ class EnclosureGroups(object):
             dict: Configuration script.
         """
 
-        uri = self._client.build_uri(id_or_uri) + "/script"
+        uri = "{}/script".format(self.data['uri'])
 
-        return self._client.get(uri)
+        return self._helper.do_get(uri)
 
-    def get_by(self, field, value):
-        """
-        Gets all enclosure groups that match the filter.
-
-        The search is case-insensitive.
-
-        Args:
-            field: Field name to filter.
-            value: Value to filter.
-
-        Returns:
-            list: A list of enclosure groups.
-        """
-        return self._client.get_by(field, value)
-
-    def create(self, resource, timeout=-1):
-        """
-        Creates an enclosure group. An interconnect bay mapping must be provided for each
-        of the interconnect bays in the enclosure. For this release, the same logical
-        interconnect group must be provided for each interconnect bay mapping.
-
-        Args:
-            resource (dict): Object to create.
-            timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView; it just stops waiting for its completion.
-
-        Returns:
-            dict: Created enclosure group.
-        """
-        return self._client.create(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
-
-    def delete(self, resource, timeout=-1):
-        """
-        Deletes an enclosure group. An enclosure group cannot be deleted if any enclosures
-        are currently part of that enclosure group.
-
-        Args:
-            resource (dict): Object to delete.
-            timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView; it just stops waiting for its completion.
-
-        Returns:
-            bool: Indicates if the resource was successfully deleted.
-
-        """
-        return self._client.delete(resource, timeout=timeout)
-
-    def update(self, resource, timeout=-1):
-        """
-        Updates an enclosure group with new attributes.
-
-        Args:
-            resource (dict): Object to update
-            timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView; it just stops waiting for its completion.
-
-        Returns:
-            dict: Updated enclosure group
-
-        """
-        return self._client.update(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
-
-    def update_script(self, id_or_uri, script_body):
+    def update_script(self, script_body):
         """
         Updates the configuration script of the enclosure-group with the specified URI.
 
@@ -178,6 +102,6 @@ class EnclosureGroups(object):
         Returns:
             dict: Updated enclosure group.
         """
-        uri = self._client.build_uri(id_or_uri) + "/script"
+        uri = "{}/script".format(self.data['uri'])
 
-        return self._client.update(script_body, uri=uri)
+        return self._helper.update(script_body, uri=uri)

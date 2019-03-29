@@ -26,9 +26,11 @@ Resource data will be available with the resource object. This enhancement helps
 #### features supported with current release
 - Connection template
 - Enclosure
+- Enclosure group
 - FC network
-- SAS logical interconnect
+- FCOE network
 - Interconnect type
+- SAS logical interconnect
 
 # 4.8.0
 #### Notes
