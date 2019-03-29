@@ -26,7 +26,9 @@ Resource data will be available with the resource object. This enhancement helps
 #### features supported with current release
 - Connection template
 - Enclosure
+- Enclosure group
 - FC network
+- FCOE network
 - Interconnect type
 - Logical interconnect group
 
