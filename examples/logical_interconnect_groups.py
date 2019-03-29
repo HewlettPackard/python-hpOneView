@@ -39,16 +39,19 @@ config = {
 config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
 logical_interconnect_groups = oneview_client.logical_interconnect_groups
+interconnect_types = oneview_client.interconnect_types
 
 # Define the scope name to add the logical interconnect group to it
 scope_name = ""
 
-# Get the interconnect type named 'HP VC FlexFabric 10Gb/24-Port Module' and using the uri in the values for the fields
+interconnect_type_name = "Synergy 10Gb Interconnect Link Module"
+# Get the interconnect type by name and using the uri in the values for the fields
 # "permittedInterconnectTypeUri" and create a Logical Interconnect Group.
 # Note: If this type does not exist, select another name
-data = oneview_client.interconnect_types.get_all()
-pprint(data)
-interconnect_type = oneview_client.interconnect_types.get_by('name', 'Synergy 10Gb Interconnect Link Module')[0]['uri']
+interconnect_type = oneview_client.interconnect_types.get_by_name(interconnect_type_name)
+if interconnect_type:
+    pprint(interconnect_type.data)
+    interconnect_type_url = interconnect_type.data["uri"]
 
 options = {
     "category": None,
