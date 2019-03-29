@@ -506,6 +506,13 @@ class ResourceHelper(object):
                                                                    view, fields, scope_uris)
         return uri
 
+    def build_uri_with_query_string(self, kwargs, sufix_path='', uri=None):
+        if not uri:
+            uri = self._base_uri
+
+        query_string = '&'.join('{}={}'.format(key, kwargs[key]) for key in sorted(kwargs))
+        return uri + sufix_path + '?' + query_string
+
     def build_uri(self, id_or_uri):
         """Helps to build the URI from resource id and validate the URI.
 
