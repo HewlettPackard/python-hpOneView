@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.networking.interconnect_types import InterconnectTypes
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource, ResourceHelper
 
 
 class InterconnectTypesTest(unittest.TestCase):
@@ -37,25 +37,18 @@ class InterconnectTypesTest(unittest.TestCase):
         self.connection = connection(self.host)
         self._interconnect_types = InterconnectTypes(self.connection)
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_called_once(self, mock_get):
-        self._interconnect_types.get('c6f4e705-2bb5-430a-b7a1-a35b2f7aa9b9')
-
-        mock_get.assert_called_once_with(
-            'c6f4e705-2bb5-430a-b7a1-a35b2f7aa9b9')
-
-    @mock.patch.object(ResourceClient, 'get_all')
-    def test_get_all_called_once(self, mock_get_all):
+    @mock.patch.object(ResourceHelper, 'do_requests_to_getall')
+    def test_get_all_called_once(self, mock_do_get):
         filter = 'name=TestName'
         sort = 'name:ascending'
 
-        self._interconnect_types.get_all(2, 500, filter, sort)
+        self._interconnect_types.get_all(2, 500, filter=filter, sort=sort)
 
-        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort)
+        mock_do_get.assert_called_once_with('/rest/interconnect-types?start=2&count=500&filter=name%3DTestName&sort=name%3Aascending', 500)
 
-    @mock.patch.object(ResourceClient, 'get_by')
+    @mock.patch.object(Resource, 'get_by')
     def test_get_by_called_once(self, mock_get_by):
-        self._interconnect_types.get_by('name', 'HP VC Flex-10 Enet Module')
+        self._interconnect_types.get_by_name('HP VC Flex-10 Enet Module')
 
         mock_get_by.assert_called_once_with(
             'name', 'HP VC Flex-10 Enet Module')
