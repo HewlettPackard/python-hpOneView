@@ -30,6 +30,7 @@ Resource data will be available with the resource object. This enhancement helps
 - FC network
 - FCOE network
 - Interconnect type
+- Server hardware type
 
 # 4.8.0
 #### Notes
