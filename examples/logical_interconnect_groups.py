@@ -80,7 +80,7 @@ options = {
                         }
                     ]
                 },
-                "permittedInterconnectTypeUri": interconnect_type
+                "permittedInterconnectTypeUri": interconnect_type_url
             },
             {
                 "logicalDownlinkUri": None,
