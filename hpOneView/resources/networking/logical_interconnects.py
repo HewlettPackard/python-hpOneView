@@ -30,8 +30,8 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-from hpOneView.resources.resource import (Resource, ResourceCollectionMixin, ResourcePatchMixin
-                                          ensure_resource_client, unavailbe_method)
+from hpOneView.resources.resource import (Resource, ResourceCollectionMixin, ResourcePatchMixin,
+                                          ensure_resource_client, unavailable_method)
 
 
 class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource):
@@ -58,7 +58,7 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
         '200': {"type": "EthernetInterconnectSettingsV3"},
         '300': {"type": "EthernetInterconnectSettingsV201"},
         '500': {"type": "EthernetInterconnectSettingsV201"},
-        '600': {"type": "EthernetInterconnectSettingsV4"}
+        '600': {"type": "EthernetInterconnectSettingsV4"},
         '800': {"type": "EthernetInterconnectSettingsV4"}
     }
 
@@ -66,7 +66,7 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
         '200': {"type": "telemetry-configuration"},
         '300': {"type": "telemetry-configuration"},
         '500': {"type": "telemetry-configuration"},
-        '600': {"type": "telemetry-configuration"}
+        '600': {"type": "telemetry-configuration"},
         '800': {"type": "telemetry-configuration"}
     }
 
@@ -84,6 +84,47 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
     def delete(self):
         """Delete method is not available for this resource"""
         unavailble_method()
+
+    def get_all(self, start=0, count=-1, sort=''):
+        """
+        Gets a list of logical interconnects based on optional sorting and filtering and is constrained by start
+        and count parameters.
+
+        Args:
+            start:
+                The first item to return, using 0-based indexing.
+                If not specified, the default is 0 - start with the first available item.
+            count:
+                The number of resources to return. A count of -1 requests all items.
+                The actual number of items in the response might differ from the requested
+                count if the sum of start and count exceeds the total number of items.
+            sort:
+                The sort order of the returned data set. By default, the sort order is based
+                on create time with the oldest entry first.
+
+        Returns:
+            list: A list of logical interconnects.
+        """
+        return self._helper.get_all(start, count, sort=sort)
+
+    def get_by_name(self, name):
+        """
+        Gets a logical interconnect by name.
+
+        Args:
+            name: Name of the logical interconnect.
+
+        Returns:
+            dict: Logical Interconnect.
+        """
+        logical_interconnects = self.get_all()
+        result = [x for x in logical_interconnects if x['name'] == name]
+        resource = result[0] if result else None
+
+        if resource:
+            resource = self.new(self._connection, resource)
+
+        return resource
 
     @ensure_resource_client
     def update_compliance(self, timeout=-1):
@@ -141,7 +182,7 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
             dict: Logical Interconnect.
         """
         uri = "{}/internalNetworks".format(self.data["uri"])
-        return self._client.update(network_uri_list, uri=uri, force=force, timeout=timeout)
+        return self._helper.update(network_uri_list, uri=uri, force=force, timeout=timeout)
 
     @ensure_resource_client
     def get_internal_vlans(self):
@@ -153,7 +194,9 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
 
         """
         uri = "{}/internalVlans".format(self.data["uri"])
-        return self._helper.do_get.get_collection(uri)
+        response = self._connection.get(uri)
+
+        return self._helper.get_members(response)
 
     @ensure_resource_client
     def update_settings(self, settings, force=False, timeout=-1):
@@ -228,6 +271,7 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
         uri = "{}{}".format(self.data["uri"], self.SNMP_CONFIGURATION_PATH)
         return self._helper.update(data, uri=uri, timeout=timeout)
 
+    @ensure_resource_client
     def get_unassigned_uplink_ports(self):
         """
         Gets a collection of uplink ports from the member interconnects which are eligible for assignment to an
@@ -238,8 +282,11 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
             dict: Collection of uplink ports.
         """
         uri = "{}/unassignedUplinkPortsForPortMonitor".format(self.data["uri"])
-        return self.get_collection(uri)
+        response = self._connection.get(uri)
 
+        return self._helper.get_members(response)
+
+    @ensure_resource_client
     def get_port_monitor(self):
         """
         Gets the port monitor configuration of a logical interconnect.
@@ -250,6 +297,7 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
         uri = "{}{}".format(self.data["uri"], self.PORT_MONITOR_PATH)
         return self._helper.do_get(uri)
 
+    @ensure_resource_client
     def update_port_monitor(self, resource, timeout=-1):
         """
         Updates the port monitor configuration of a logical interconnect.
@@ -400,9 +448,9 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
         uri = "{}{}".format(self.data["uri"], self.QOS_AGGREGATED_CONFIGURATION)
         return self._helper.update(qos_configuration, uri=uri, timeout=timeout)
 
-    def _get_telemetry_configuration_uri(self:
- 	telemetry_conf = self.data.get("telemetryConfiguration")
-        if not (telemetry_conf and telemetry_conf.get("uri")):
+    def _get_telemetry_configuration_uri(self):
+        telemetry_conf = self.data.get("telemetryConfiguration", {})
+        if not telemetry_conf.get("uri"):
             raise HPOneViewResourceNotFound("Telemetry configuration uri is not available")
         return telemetry_cong["uri"]
 

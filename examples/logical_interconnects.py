@@ -34,26 +34,26 @@ config = {
     }
 }
 config = {
-    "ip": "10.50.9.40",
+    "ip": "10.50.4.100",
     "credentials": {
-        "userName": "administrator",
-        "password": "ecosystem"
+        "userName": "kattumun",
+        "password": "P@ssw0rd!"
     },
     "api_version": 800
 }
 
 
 # To run this example, a logical interconnect name is required
-logical_interconnect_name = ""
+logical_interconnect_name = "SYN03_LE-SYN03_LIG"
 
 # To install the firmware driver, a firmware driver name is required
-firmware_driver_name = ""
+firmware_driver_name = "HPE Synergy Custom SPP 2018110 2019 02 15, 2019.02.15.00"
 
 # An Enclosure name must be set to create/delete an interconnect at a given location
-enclosure_name = ""
+enclosure_name = "SYN03_Frame1"
 
 # Define the scope name to add the logical interconnect to it
-scope_name = ""
+scope_name = "test"
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
@@ -69,26 +69,20 @@ for logical_interconnect in all_logical_interconnects:
 # Get installed firmware
 print("\nGet the installed firmware for a logical interconnect that matches the specified name.")
 firmwares = oneview_client.firmware_drivers.get_by('name', firmware_driver_name)
-firmware = None
-if firmwares:
-    firmware = firmwares[0]
+firmware = firmwares[0] if firmwares else None
 
 # Get scope to be added
 print("\nGet the scope that matches the specified name.")
-scope = oneview_client.scopes.get_by('name', scope_name)
+scope = oneview_client.scopes.get_by_name(scope_name)
 
 print("\nGet the enclosure that matches the specified name.")
-enclosures = oneview_client.enclosures.get_by('name', enclosure_name)
-enclosure = None
-if enclosures:
-    enclosure = enclosures[0]
-
+enclosures = oneview_client.enclosures.get_by_name(enclosure_name)
+enclosure = enclosures.data if enclosures else None
 
 # Get a logical interconnect by name
 logical_interconnect = logical_interconnects.get_by_name(logical_interconnect_name)
 print("\nFound logical interconnect by name {name}.\n URI: {uri}").format(**logical_interconnect.data)
 print(logical_interconnect.data)
-
 
 # Install the firmware to a logical interconnect
 if firmware:
@@ -109,7 +103,6 @@ if scope and (oneview_client.api_version <= 500):
                                [scope['uri']])
     pprint(updated_logical_interconnect.data)
 
-
 print("\nGet the Ethernet interconnect settings for the logical interconnect")
 ethernet_settings = logical_interconnect.get_ethernet_settings()
 pprint(ethernet_settings)
@@ -117,10 +110,10 @@ pprint(ethernet_settings)
 # Update the Ethernet interconnect settings for the logical interconnect
 ethernet_settings = logical_interconnect.data['ethernetSettings'].copy()
 ethernet_settings['macRefreshInterval'] = 10
-logical_interconnect_updated = logical_interconnect.update_ethernet_settings(ethernet_settings,
-                                                                             force=True)
-print("\nUpdated the ethernet settings")
-print("  with attribute 'macRefreshInterval' = {macRefreshInterval}".format(**logical_interconnect_updated['ethernetSettings']))
+#logical_interconnect_updated = logical_interconnect.update_ethernet_settings(ethernet_settings,
+#                                                                             force=True)
+#print("\nUpdated the ethernet settings")
+#print("  with attribute 'macRefreshInterval' = {macRefreshInterval}".format(**logical_interconnect_updated['ethernetSettings']))
 
 # Update the internal networks on the logical interconnect
 ethernet_network_options = {
@@ -136,7 +129,7 @@ ethernet_network = oneview_client.ethernet_networks.get_by_name(ethernet_network
 if not ethernet_network:
     ethernet_network = oneview_client.ethernet_networks.create(ethernet_network_options)
 
-logical_interconnect_updated = logical_interconnect.update_internal_networks(ethernet_network.data['uri']])
+logical_interconnect_updated = logical_interconnect.update_internal_networks([ethernet_network.data['uri']])
 print("\nUpdated internal networks on the logical interconnect")
 print("  with attribute 'internalNetworkUris' = {internalNetworkUris}".format(**logical_interconnect_updated))
 
@@ -165,14 +158,11 @@ snmp_configuration = logical_interconnect.get_snmp_configuration()
 pprint(snmp_configuration)
 
 # Update the SNMP configuration for the logical interconnect
-try:
-    print("\nUpdate the SNMP configuration for the logical interconnect")
-    snmp_configuration['enabled'] = True
-    logical_interconnect_updated = logical_interconnect.update_snmp_configuration(snmp_configuration)
-    interconnect_snmp = logical_interconnect_updated['snmpConfiguration']
-    print("  Updated SNMP configuration at uri: {uri}\n  with 'enabled': '{enabled}'".format(**interconnect_snmp))
-except HPOneViewException as e:
-    print(e.msg)
+print("\nUpdate the SNMP configuration for the logical interconnect")
+snmp_configuration['enabled'] = True
+#logical_interconnect_updated = logical_interconnect.update_snmp_configuration(snmp_configuration)
+#interconnect_snmp = logical_interconnect_updated['snmpConfiguration']
+#print("  Updated SNMP configuration at uri: {uri}\n  with 'enabled': '{enabled}'".format(**interconnect_snmp))
 
 # Get a collection of uplink ports from the member interconnects which are eligible for assignment to an analyzer port
 print("\nGet a collection of uplink ports from the member interconnects which are eligible for assignment to "
@@ -186,14 +176,11 @@ monitor_configuration = logical_interconnect.get_port_monitor()
 pprint(monitor_configuration)
 
 # Update port monitor configuration of a logical interconnect
-try:
-    print("\nUpdate the port monitor configuration of a logical interconnect")
-    monitor_configuration['enablePortMonitor'] = True
-    logical_interconnect_updated = logical_interconnect.update_port_monitor(monitor_configuration)
-    print("  Updated port monitor at uri: {uri}\n  with 'enablePortMonitor': '{enablePortMonitor}'".format(
-        **logical_interconnect_updated['portMonitor']))
-except HPOneViewException as e:
-    print(e.msg)
+print("\nUpdate the port monitor configuration of a logical interconnect")
+monitor_configuration['enablePortMonitor'] = True
+logical_interconnect_updated = logical_interconnect.update_port_monitor(monitor_configuration)
+print("  Updated port monitor at uri: {uri}\n  with 'enablePortMonitor': '{enablePortMonitor}'".format(
+    **logical_interconnect_updated['portMonitor']))
 
 # Update the configuration on the logical interconnect
 print("\nUpdate the configuration on the logical interconnect")
@@ -221,13 +208,10 @@ qos = logical_interconnect.get_qos_aggregated_configuration()
 pprint(qos)
 
 # Update the QOS aggregated configuration
-try:
-    print("\nUpdate QoS aggregated settings on the logical interconnect")
-    qos['activeQosConfig']['configType'] = 'Passthrough'
-    li = logical_interconnect.update_qos_aggregated_configuration(qos)
-    pprint(li['qosConfiguration'])
-except HPOneViewException as e:
-    print(e.msg)
+print("\nUpdate QoS aggregated settings on the logical interconnect")
+qos['activeQosConfig']['configType'] = 'Passthrough'
+li = logical_interconnect.update_qos_aggregated_configuration(qos)
+pprint(li['qosConfiguration'])
 
 # Get the telemetry configuration of the logical interconnect
 print("\nGet the telemetry configuration of the logical interconnect")
