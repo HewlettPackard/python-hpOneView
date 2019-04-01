@@ -422,7 +422,8 @@ class ResourceHelper(object):
         """Makes a PUT request to update a resource when a request body is required.
 
         Args:
-            data: Data to update the resource.
+            resource: Data to update the resource.
+            uri: Resource uri
             force: If set to true, the operation completes despite any problems
                 with network connectivity or errors on the resource itself. The default is false.
             timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation

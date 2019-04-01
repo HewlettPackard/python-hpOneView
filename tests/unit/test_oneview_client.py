@@ -418,9 +418,8 @@ class OneViewClientTest(unittest.TestCase):
         tasks = self._oneview.tasks
         self.assertEqual(tasks, self._oneview.tasks)
 
-    def test_lazy_loading_connection_templates(self):
-        connection_templates = self._oneview.connection_templates
-        self.assertEqual(connection_templates, self._oneview.connection_templates)
+    def test_should_return_new_connection_templates_obj(self):
+        self.assertNotEqual(self._oneview.connection_templates, self._oneview.connection_templates)
 
     def test_lazy_loading_switch_types(self):
         switch_types = self._oneview.switch_types
@@ -549,9 +548,8 @@ class OneViewClientTest(unittest.TestCase):
         logical_enclosures = self._oneview.logical_enclosures
         self.assertEqual(logical_enclosures, self._oneview.logical_enclosures)
 
-    def test_lazy_loading_interconnect_types(self):
-        interconnect_types = self._oneview.interconnect_types
-        self.assertEqual(interconnect_types, self._oneview.interconnect_types)
+    def test_should_return_new_interconnect_types_obj(self):
+        self.assertNotEqual(self._oneview.interconnect_types, self._oneview.interconnect_types)
 
     def test_lazy_loading_logical_downlinks(self):
         logical_downlinks = self._oneview.logical_downlinks
