@@ -368,9 +368,7 @@ class OneViewClient(object):
         Returns:
             EthernetNetworks:
         """
-        if not self.__ethernet_networks:
-            self.__ethernet_networks = EthernetNetworks(self.__connection)
-        return self.__ethernet_networks
+        return EthernetNetworks(self.__connection)
 
     @property
     def fabrics(self):
@@ -918,9 +916,7 @@ class OneViewClient(object):
         Returns:
             UplinkSets:
         """
-        if not self.__uplink_sets:
-            self.__uplink_sets = UplinkSets(self.__connection)
-        return self.__uplink_sets
+        return UplinkSets(self.__connection)
 
     @property
     def volumes(self):
