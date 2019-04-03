@@ -591,6 +591,29 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_put</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">custom_headers</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="ResourceHelper.create_report"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.create_report">[docs]</a>    <span class="k">def</span> <span class="nf">create_report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a report and returns the output.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            uri: URI</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Creating Report (uri = </span><span class="si">%s</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uri</span><span class="p">))</span>
+        <span class="n">task</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="p">{})</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">task</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">HPOneViewException</span><span class="p">(</span><span class="n">RESOURCE_CLIENT_TASK_EXPECTED</span><span class="p">)</span>
+
+        <span class="n">task</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_monitor</span><span class="o">.</span><span class="n">get_completed_task</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;taskOutput&#39;</span><span class="p">]</span></div>
+
 <div class="viewcode-block" id="ResourceHelper.build_query_uri"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.build_query_uri">[docs]</a>    <span class="k">def</span> <span class="nf">build_query_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">scope_uris</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Builds the URI from given parameters.</span>
 

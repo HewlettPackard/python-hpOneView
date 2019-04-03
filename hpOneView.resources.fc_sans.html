@@ -210,8 +210,8 @@ on create time with the oldest entry first.</li>
 <span id="hponeview-resources-fc-sans-managed-sans-module"></span><h2>hpOneView.resources.fc_sans.managed_sans module<a class="headerlink" href="#module-hpOneView.resources.fc_sans.managed_sans" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.fc_sans.managed_sans.</code><code class="descname">ManagedSANs</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">hpOneView.resources.fc_sans.managed_sans.</code><code class="descname">ManagedSANs</code><span class="sig-paren">(</span><em>connection</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.Resource" title="hpOneView.resources.resource.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.Resource</span></code></a></p>
 <p>Managed SANs API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.URI">
@@ -219,71 +219,25 @@ on create time with the oldest entry first.</li>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.create">
+<code class="descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create method is not available</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.create_endpoints_csv_file">
-<code class="descname">create_endpoints_csv_file</code><span class="sig-paren">(</span><em>managed_san_id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.create_endpoints_csv_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.create_endpoints_csv_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates an endpoints CSV file for a SAN.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>managed_san_id_or_uri</strong> – Can be either the Managed SAN ID or URI.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
-OneView, just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Endpoint CSV File Response.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">create_endpoints_csv_file</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.create_endpoints_csv_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.create_issues_report">
-<code class="descname">create_issues_report</code><span class="sig-paren">(</span><em>managed_san_id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.create_issues_report"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.create_issues_report" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates an unexpected zoning report for a SAN.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>managed_san_id_or_uri</strong> – Can be either the Managed SAN ID or URI.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
-OneView, just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of FCIssueResponse dict.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">create_issues_report</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.create_issues_report" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
-<dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves a single Managed SAN by ID or URI.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the Managed SAN resource ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The Managed SAN resource.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
+<dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete method is not available</p>
 </dd></dl>
 
 <dl class="method">
@@ -335,37 +289,10 @@ on create time with the oldest entry first.</li>
 </table>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_endpoints">
-<code class="descname">get_endpoints</code><span class="sig-paren">(</span><em>managed_san_id_or_uri</em>, <em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.get_endpoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_endpoints" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a list of endpoints in a SAN identified by ID.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>managed_san_id_or_uri</strong> – Can be either the Managed SAN ID or URI.</li>
-<li><strong>start</strong> – The first item to return, using 0-based indexing.
-If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items.
-The actual number of items in the response might differ from the requested
-count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
-default is no filter; all resources are returned.</li>
-<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
-on create time with the oldest entry first.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of endpoints.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_endpoints</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_endpoints" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.get_wwn">
@@ -384,41 +311,6 @@ on create time with the oldest entry first.</li>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Associations between provided WWNs and the SANs</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.fc_sans.managed_sans.ManagedSANs.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>data</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/fc_sans/managed_sans.html#ManagedSANs.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.fc_sans.managed_sans.ManagedSANs.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates a Managed SAN.</p>
-<dl class="docutils">
-<dt>It’s possible to:</dt>
-<dd><ul class="first last simple">
-<li>Refresh the Managed SAN.</li>
-<li>Update the Managed SAN’s publicAttributes.</li>
-<li>Update the Managed SAN’s policy.</li>
-</ul>
-</dd>
-</dl>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the Managed SAN resource ID or URI.</li>
-<li><strong>data</strong> – dict object to update</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView, just stop waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">SanResponse</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
 </tr>
 </tbody>
 </table>
