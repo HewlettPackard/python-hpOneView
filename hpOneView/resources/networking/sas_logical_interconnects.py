@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,18 +30,18 @@ from future import standard_library
 standard_library.install_aliases()
 
 
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource, ensure_resource_client, unavailable_method
 
 
-class SasLogicalInterconnects(object):
+class SasLogicalInterconnects(Resource):
     """
     SAS Logical Interconnects API client.
 
     """
     URI = '/rest/sas-logical-interconnects'
 
-    def __init__(self, con):
-        self._client = ResourceClient(con, self.URI)
+    def __init__(self, connection, data=None):
+        super(SasLogicalInterconnects, self).__init__(connection, data)
 
     def get_all(self, start=0, count=-1, fields='', filter='', query='', sort='', view=''):
         """
@@ -75,63 +75,37 @@ class SasLogicalInterconnects(object):
         Returns:
             list: A list of SAS logical interconnects.
         """
-        return self._client.get_all(start=start, count=count, filter=filter, query=query, sort=sort, view=view,
+        return self._helper.get_all(start=start, count=count, filter=filter, query=query, sort=sort, view=view,
                                     fields=fields)
 
-    def get(self, id_or_uri):
-        """
-        Gets the SAS Logical Interconnect with the specified ID or URI.
-
-        Args:
-            id_or_uri:
-                Can be either the SAS Logical Interconnect ID or URI.
-
-        Returns:
-            dict: SAS Logical Interconnect.
-        """
-        return self._client.get(id_or_uri)
-
-    def get_by(self, field, value):
-        """
-        Gets all SAS Logical Interconnects that match the filter.
-
-        The search is case-insensitive.
-
-        Args:
-            field: Field name to filter.
-            value: Value to filter.
-
-        Returns:
-            list: A list of SAS Logical Interconnects.
-        """
-        return self._client.get_by(field, value)
-
-    def update_firmware(self, firmware_information, id_or_uri):
+    @ensure_resource_client
+    def update_firmware(self, firmware_information, force=False):
         """
         Installs firmware to the member interconnects of a SAS Logical Interconnect.
 
         Args:
             firmware_information: Options to install firmware to a SAS Logical Interconnect.
-            id_or_uri: Can be either the SAS Logical Interconnect ID or URI.
-
+            force: If sets to true, the operation completes despite any problems with the network connectivy
+              or the erros on the resource itself.
         Returns:
             dict: SAS Logical Interconnect Firmware.
         """
-        firmware_uri = self._client.build_uri(id_or_uri) + "/firmware"
-        return self._client.update(firmware_information, firmware_uri)
+        firmware_uri = "{}/firmware".format(self.data["uri"])
+        result = self._helper.update(firmware_information, firmware_uri, force=force)
+        self.refresh()
 
-    def get_firmware(self, id_or_uri):
+        return result
+
+    @ensure_resource_client
+    def get_firmware(self):
         """
         Gets baseline firmware information for a SAS Logical Interconnect.
 
-        Args:
-            id_or_uri: Can be either the SAS Logical Interconnect ID or URI.
-
         Returns:
             dict: SAS Logical Interconnect Firmware.
         """
-        firmware_uri = self._client.build_uri(id_or_uri) + "/firmware"
-        return self._client.get(firmware_uri)
+        firmware_uri = "{}/firmware".format(self.data["uri"])
+        return self._helper.do_get(firmware_uri)
 
     def update_compliance_all(self, information, timeout=-1):
         """
@@ -148,25 +122,32 @@ class SasLogicalInterconnects(object):
         """
 
         uri = self.URI + "/compliance"
-        return self._client.update(information, uri, timeout=timeout)
+        result = self._helper.update(information, uri, timeout=timeout)
+        self.refresh()
 
-    def update_compliance(self, id_or_uri, timeout=-1):
+        return result
+
+    @ensure_resource_client
+    def update_compliance(self, timeout=-1):
         """
         Returns a SAS Logical Interconnect to a consistent state. The current SAS Logical Interconnect state is
         compared to the associated SAS Logical Interconnect group.
 
         Args:
-            id_or_uri: Can be either the resource ID or URI.
             timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
                 in OneView; it just stops waiting for its completion.
 
         Returns:
             dict: SAS Logical Interconnect.
         """
-        uri = self._client.build_uri(id_or_uri) + "/compliance"
-        return self._client.update_with_zero_body(uri, timeout=timeout)
+        uri = "{}/compliance".format(self.data["uri"])
+        result = self._helper.update({}, uri, timeout=timeout)
+        self.refresh()
 
-    def replace_drive_enclosure(self, information, id_or_uri):
+        return result
+
+    @ensure_resource_client
+    def replace_drive_enclosure(self, information):
         """
         When a drive enclosure has been physically replaced, initiate the replacement operation that enables the
         new drive enclosure to take over as a replacement for the prior drive enclosure. The request requires
@@ -174,25 +155,40 @@ class SasLogicalInterconnects(object):
 
         Args:
             information: Options to replace the drive enclosure.
-            id_or_uri: Can be either the SAS Logical Interconnect ID or URI.
 
         Returns:
             dict: SAS Logical Interconnect.
         """
 
-        uri = self._client.build_uri(id_or_uri) + "/replaceDriveEnclosure"
-        return self._client.create(information, uri)
+        uri = "{}/replaceDriveEnclosure".format(self.data["uri"])
+        result = self._helper.create(information, uri)
+        self.refresh()
 
-    def update_configuration(self, id_or_uri):
+        return result
+
+    @ensure_resource_client
+    def update_configuration(self):
         """
         Asynchronously applies or re-applies the SAS Logical Interconnect configuration to all managed interconnects
         of a SAS Logical Interconnect.
 
-        Args:
-            id_or_uri: Can be either the SAS Logical Interconnect ID or URI.
-
         Returns:
             dict: SAS Logical Interconnect.
         """
-        uri = self._client.build_uri(id_or_uri) + "/configuration"
-        return self._client.update_with_zero_body(uri)
+        uri = "{}/configuration".format(self.data["uri"])
+        result = self._helper.update({}, uri)
+        self.refresh()
+
+        return result
+
+    def create(self):
+        """Create method is not available"""
+        unavailable_method()
+
+    def delete(self):
+        """Delete method is not available"""
+        unavailable_method()
+
+    def update(self):
+        """update method is not available"""
+        unavailable_method()

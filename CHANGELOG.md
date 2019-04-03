@@ -23,14 +23,23 @@ Resource data will be available with the resource object. This enhancement helps
 
   Refer example files of the updated resources for more details.
 
-#### features supported with current release
+#### Features supported with current release
 - Connection template
 - Enclosure
 - Enclosure group
+- Ethernet network
 - FC network
 - FCOE network
 - Interconnect type
+- Internal link set
 - Logical enclosure
+- Managed SAN
+- SAS interconnect
+- SAS interconnect type
+- SAS logical interconnect
+- Server hardware type
+- Switch type
+- Uplink set
 
 # 4.8.0
 #### Notes
