@@ -2849,8 +2849,8 @@ in OneView; it just stops waiting for its completion.</li>
 <span id="hponeview-resources-networking-sas-interconnects-module"></span><h2>hpOneView.resources.networking.sas_interconnects module<a class="headerlink" href="#module-hpOneView.resources.networking.sas_interconnects" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hpOneView.resources.networking.sas_interconnects.SasInterconnects">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.sas_interconnects.</code><code class="descname">SasInterconnects</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.sas_interconnects.</code><code class="descname">SasInterconnects</code><span class="sig-paren">(</span><em>connection</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.ResourcePatchMixin" title="hpOneView.resources.resource.ResourcePatchMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.ResourcePatchMixin</span></code></a>, <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.Resource" title="hpOneView.resources.resource.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.Resource</span></code></a></p>
 <p>SAS Interconnects API client.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -2862,21 +2862,15 @@ in OneView; it just stops waiting for its completion.</li>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="hpOneView.resources.networking.sas_interconnects.SasInterconnects.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the SAS Interconnect with the specified ID or URI.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the SAS interconnect id or the SAS interconnect uri</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">SAS Interconnect.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
+<dt id="hpOneView.resources.networking.sas_interconnects.SasInterconnects.create">
+<code class="descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create method is not available</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_interconnects.SasInterconnects.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete method is not available</p>
 </dd></dl>
 
 <dl class="method">
@@ -2917,78 +2911,27 @@ collections of resources).</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="hpOneView.resources.networking.sas_interconnects.SasInterconnects.get_by">
-<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all SAS Interconnects that match the filter.</p>
-<p>The search is case-insensitive.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> – Field name to filter.</li>
-<li><strong>value</strong> – Value to filter.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of SAS Interconnects.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.sas_interconnects.SasInterconnects.patch">
-<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects.patch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update powerState, uidState, softResetState or hardResetState using PATCH operation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the SAS interconnect id or the SAS interconnect uri</li>
-<li><strong>operation</strong> – The type of operation: “replace” is the only value allowed for this resource.</li>
-<li><strong>path</strong> – The JSON path the operation is to use. The exact meaning depends on the type of operation.</li>
-<li><strong>value</strong> – The value to replace.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">SAS Interconnect</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="hpOneView.resources.networking.sas_interconnects.SasInterconnects.refresh_state">
-<code class="descname">refresh_state</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>configuration</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects.refresh_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects.refresh_state" title="Permalink to this definition">¶</a></dt>
+<code class="descname">refresh_state</code><span class="sig-paren">(</span><em>configuration</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects.refresh_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects.refresh_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Refresh a SAS Interconnect.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the SAS interconnect id or the SAS interconnect uri</li>
-<li><strong>configuration</strong> – Configuration</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>configuration</strong> – Configuration</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">SAS Interconnect</p>
-</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">SAS Interconnect</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_interconnects.SasInterconnects.update">
+<code class="descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_interconnects.html#SasInterconnects.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_interconnects.SasInterconnects.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update method is not available</p>
 </dd></dl>
 
 </dd></dl>

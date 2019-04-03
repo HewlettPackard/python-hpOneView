@@ -148,7 +148,7 @@
   <h1>Source code for hpOneView.resources.networking.sas_interconnects</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1">###</span>
-<span class="c1"># (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP</span>
+<span class="c1"># (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP</span>
 <span class="c1">#</span>
 <span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
 <span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
@@ -178,10 +178,10 @@
 <span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
 
 
-<span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">ResourceClient</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">Resource</span><span class="p">,</span> <span class="n">ResourcePatchMixin</span><span class="p">,</span> <span class="n">unavailable_method</span>
 
 
-<div class="viewcode-block" id="SasInterconnects"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_interconnects.SasInterconnects">[docs]</a><span class="k">class</span> <span class="nc">SasInterconnects</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="SasInterconnects"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_interconnects.SasInterconnects">[docs]</a><span class="k">class</span> <span class="nc">SasInterconnects</span><span class="p">(</span><span class="n">ResourcePatchMixin</span><span class="p">,</span> <span class="n">Resource</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    SAS Interconnects API client.</span>
 
@@ -191,8 +191,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/sas-interconnects&#39;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SasInterconnects</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SasInterconnects.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_interconnects.SasInterconnects.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -225,70 +225,33 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of SAS interconnects.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span>
                                     <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SasInterconnects.get"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_interconnects.SasInterconnects.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets the SAS Interconnect with the specified ID or URI.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            id_or_uri:</span>
-<span class="sd">                Can be either the SAS interconnect id or the SAS interconnect uri</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: SAS Interconnect.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="SasInterconnects.get_by"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_interconnects.SasInterconnects.get_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets all SAS Interconnects that match the filter.</span>
-
-<span class="sd">        The search is case-insensitive.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            field: Field name to filter.</span>
-<span class="sd">            value: Value to filter.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            list: A list of SAS Interconnects.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="SasInterconnects.patch"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_interconnects.SasInterconnects.patch">[docs]</a>    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Update powerState, uidState, softResetState or hardResetState using PATCH operation</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            id_or_uri:</span>
-<span class="sd">                Can be either the SAS interconnect id or the SAS interconnect uri</span>
-<span class="sd">            operation:</span>
-<span class="sd">                The type of operation: &quot;replace&quot; is the only value allowed for this resource.</span>
-<span class="sd">            path:</span>
-<span class="sd">                The JSON path the operation is to use. The exact meaning depends on the type of operation.</span>
-<span class="sd">            value:</span>
-<span class="sd">                The value to replace.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: SAS Interconnect</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="n">id_or_uri</span><span class="o">=</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="n">operation</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="SasInterconnects.refresh_state"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_interconnects.SasInterconnects.refresh_state">[docs]</a>    <span class="k">def</span> <span class="nf">refresh_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+<div class="viewcode-block" id="SasInterconnects.refresh_state"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_interconnects.SasInterconnects.refresh_state">[docs]</a>    <span class="k">def</span> <span class="nf">refresh_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Refresh a SAS Interconnect.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri:</span>
-<span class="sd">                Can be either the SAS interconnect id or the SAS interconnect uri</span>
 <span class="sd">            configuration: Configuration</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: SAS Interconnect</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/refreshState&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">resource</span><span class="o">=</span><span class="n">configuration</span><span class="p">)</span></div></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/refreshState&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">resource</span><span class="o">=</span><span class="n">configuration</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SasInterconnects.create"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_interconnects.SasInterconnects.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create method is not available&quot;&quot;&quot;</span>
+        <span class="n">unavailable_method</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SasInterconnects.delete"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_interconnects.SasInterconnects.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete method is not available&quot;&quot;&quot;</span>
+        <span class="n">unavailable_method</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SasInterconnects.update"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_interconnects.SasInterconnects.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update method is not available&quot;&quot;&quot;</span>
+        <span class="n">unavailable_method</span><span class="p">()</span></div></div>
 </pre></div>
 
            </div>
