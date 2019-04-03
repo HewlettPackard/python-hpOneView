@@ -147,10 +147,26 @@ class ServerHardwareTest(TestCase):
         mock_get.assert_called_once_with(uri_rest_call)
 
     @mock.patch.object(ResourceHelper, 'do_get')
+    def test_get_ilo_sso_url_with_ip(self, mock_get):
+        uri_rest_call = '{}/iloSsoUrl?ip=172.16.8.4'.format(self.uri)
+
+        self._server_hardware.get_ilo_sso_url(ip='172.16.8.4')
+
+        mock_get.assert_called_once_with(uri_rest_call)
+
+    @mock.patch.object(ResourceHelper, 'do_get')
     def test_get_java_remote_console(self, mock_get):
         uri_rest_call = '{}/javaRemoteConsoleUrl'.format(self.uri)
 
         self._server_hardware.get_java_remote_console_url()
+
+        mock_get.assert_called_once_with(uri_rest_call)
+
+    @mock.patch.object(ResourceHelper, 'do_get')
+    def test_get_java_remote_console_with_ip(self, mock_get):
+        uri_rest_call = '{}/javaRemoteConsoleUrl?ip=172.16.8.4'.format(self.uri)
+
+        self._server_hardware.get_java_remote_console_url(ip='172.16.8.4')
 
         mock_get.assert_called_once_with(uri_rest_call)
 
@@ -185,6 +201,14 @@ class ServerHardwareTest(TestCase):
         uri_rest_call = '{}/remoteConsoleUrl'.format(self.uri)
 
         self._server_hardware.get_remote_console_url()
+
+        mock_get.assert_called_once_with(uri_rest_call)
+
+    @mock.patch.object(ResourceHelper, 'do_get')
+    def test_get_remote_console_url_with_ip(self, mock_get):
+        uri_rest_call = '{}/remoteConsoleUrl?ip=172.16.8.4'.format(self.uri)
+
+        self._server_hardware.get_remote_console_url(ip='172.16.8.4')
 
         mock_get.assert_called_once_with(uri_rest_call)
 

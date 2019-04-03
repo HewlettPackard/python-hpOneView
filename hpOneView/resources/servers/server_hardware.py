@@ -144,16 +144,23 @@ class ServerHardware(ResourcePatchMixin, ResourceUtilizationMixin, Resource):
         return self._helper.update(configuration, uri, timeout=timeout)
 
     @ensure_resource_client
-    def get_ilo_sso_url(self):
+    def get_ilo_sso_url(self, ip=None):
         """
         Retrieves the URL to launch a Single Sign-On (SSO) session for the iLO web interface. If the server hardware is
         unsupported, the resulting URL will not use SSO and the iLO web interface will prompt for credentials.
         This is not supported on G7/iLO3 or earlier servers.
 
+        Args:
+            ip: IP address or host name of the server's iLO management processor
+
         Returns:
             URL
         """
         uri = "{}/iloSsoUrl".format(self.data["uri"])
+
+        if ip:
+            uri = "{}?ip={}".format(uri, ip)
+
         return self._helper.do_get(uri)
 
     def get_all_firmwares(self, filter='', start=0, count=-1, query='', sort=''):
@@ -203,16 +210,23 @@ class ServerHardware(ResourcePatchMixin, ResourceUtilizationMixin, Resource):
         return self._helper.do_get(uri)
 
     @ensure_resource_client
-    def get_java_remote_console_url(self):
+    def get_java_remote_console_url(self, ip=None):
         """
         Generates a Single Sign-On (SSO) session for the iLO Java Applet console and returns the URL to launch it.
         If the server hardware is unmanaged or unsupported, the resulting URL will not use SSO and the iLO Java Applet
         will prompt for credentials. This is not supported on G7/iLO3 or earlier servers.
 
+        Args:
+            ip: IP address or host name of the server's iLO management processor
+
         Returns:
             URL
         """
         uri = "{}/javaRemoteConsoleUrl".format(self.data["uri"])
+
+        if ip:
+            uri = "{}?ip={}".format(uri, ip)
+
         return self._helper.do_get(uri)
 
     @ensure_resource_client
@@ -264,17 +278,24 @@ class ServerHardware(ResourcePatchMixin, ResourceUtilizationMixin, Resource):
         return self._helper.update(configuration, uri=uri, timeout=timeout)
 
     @ensure_resource_client
-    def get_remote_console_url(self):
+    def get_remote_console_url(self, ip=None):
         """
         Generates a Single Sign-On (SSO) session for the iLO Integrated Remote Console Application (IRC) and returns the
         URL to launch it. If the server hardware is unmanaged or unsupported, the resulting URL will not use SSO and the
         IRC application will prompt for credentials. Use of this URL requires a previous installation of the iLO IRC and
         is supported only on Windows clients.
 
+        Args:
+            ip: IP address or host name of the server's iLO management processor
+
         Returns:
             URL
         """
         uri = "{}/remoteConsoleUrl".format(self.data["uri"])
+
+        if ip:
+            uri = "{}?ip={}".format(uri, ip)
+
         return self._helper.do_get(uri)
 
     @ensure_resource_client
