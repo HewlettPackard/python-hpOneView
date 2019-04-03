@@ -32,6 +32,7 @@ Resource data will be available with the resource object. This enhancement helps
 - FCOE network
 - Interconnect type
 - Internal link set
+- SAS interconnect type
 - Server hardware type
 - Uplink set
 
