@@ -125,8 +125,9 @@ class LogicalEnclosuresTest(TestCase):
                                            custom_headers={'If-Match': '*'},
                                            timeout=1)
 
+    @mock.patch.object(Resource, 'refresh')
     @mock.patch.object(ResourceHelper, 'update')
-    def test_update_configuration(self, mock_update):
+    def test_update_configuration(self, mock_update, mock_refresh):
         uri_rest_call = '{}/configuration'.format(self.uri)
 
         self._logical_enclosures.update_configuration()

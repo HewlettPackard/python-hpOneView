@@ -88,7 +88,10 @@ class LogicalEnclosures(ResourcePatchMixin, Resource):
             dict: Logical enclosure.
         """
         uri = "{}/configuration".format(self.data["uri"])
-        return self._helper.update(None, uri, timeout=timeout)
+        updated_configuration = self._helper.update(None, uri, timeout=timeout)
+        self.refresh()
+
+        return updated_configuration
 
     @ensure_resource_client
     def get_script(self):
