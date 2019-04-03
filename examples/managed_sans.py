@@ -122,8 +122,8 @@ if managed_sans_all:
 else:
     print("\nNo Managed SANs found.")
 
-# This method is available for API version 300 or later
-if oneview_client.api_version >= 300 and wwn is not None:
+# This method is available for API version 300
+if oneview_client.api_version == 300 and wwn is not None:
     # Retrieves an association between the provided WWN and the SAN (if any) on which it resides
     print("\nGet a list of associations between provided WWNs and the SANs on which they reside")
     wwns = managed_sans.get_wwn(wwn)
