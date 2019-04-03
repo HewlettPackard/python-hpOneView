@@ -328,9 +328,7 @@
             <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="n">default_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_default_values</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">default_values</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
-                <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update_resource_fields</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">default_values</span><span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Create (uri = </span><span class="si">%s</span><span class="s1">, resource = </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)))</span>
 
@@ -446,12 +444,15 @@
 
         <span class="k">return</span> <span class="n">new_resource</span></div>
 
-    <span class="k">def</span> <span class="nf">_get_default_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_default_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default_values</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Gets the default values set for a resource&quot;&quot;&quot;</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">default_values</span><span class="p">:</span>
+            <span class="n">default_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span>
+
+        <span class="k">if</span> <span class="n">default_values</span><span class="p">:</span>
             <span class="n">api_version</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">_apiVersion</span><span class="p">)</span>
-            <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_version</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">default_values</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">api_version</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">values</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -722,6 +723,22 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[]</span></div>
 
+<div class="viewcode-block" id="ResourceHelper.update_resource_fields"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.update_resource_fields">[docs]</a>    <span class="k">def</span> <span class="nf">update_resource_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">data_to_add</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update resource data with new fields.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: resource data</span>
+<span class="sd">            data_to_update: dict of data to update resource data</span>
+
+<span class="sd">        Returnes:</span>
+<span class="sd">            Returnes dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data_to_add</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="k">return</span> <span class="n">data</span></div>
+
 <div class="viewcode-block" id="ResourceHelper.do_requests_to_getall"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.do_requests_to_getall">[docs]</a>    <span class="k">def</span> <span class="nf">do_requests_to_getall</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">requested_count</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Helps to make http request for get_all method.</span>
 
@@ -805,12 +822,29 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">task</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">body</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_monitor</span><span class="o">.</span><span class="n">wait_for_task</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_task_monitor</span><span class="o">.</span><span class="n">wait_for_task</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ResourceHelper.add_new_fields"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.add_new_fields">[docs]</a>    <span class="k">def</span> <span class="nf">add_new_fields</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">data_to_add</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update resource data with new fields.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: resource data</span>
+<span class="sd">            data_to_update: dict of data to update resource data</span>
+
+<span class="sd">        Returnes:</span>
+<span class="sd">            Returnes dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data_to_add</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="k">return</span> <span class="n">data</span></div></div>
 
 
 <div class="viewcode-block" id="ResourcePatchMixin"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourcePatchMixin">[docs]</a><span class="k">class</span> <span class="nc">ResourcePatchMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
-<div class="viewcode-block" id="ResourcePatchMixin.patch"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourcePatchMixin.patch">[docs]</a>    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Uses the PATCH to update a resource.</span>
 
 <span class="sd">        Only one operation can be performed in each PATCH call.</span>
@@ -833,7 +867,7 @@
                                        <span class="n">body</span><span class="o">=</span><span class="n">patch_request_body</span><span class="p">,</span>
                                        <span class="n">custom_headers</span><span class="o">=</span><span class="n">custom_headers</span><span class="p">,</span>
                                        <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span></div>
+        <span class="k">return</span> <span class="bp">self</span>
 
 <div class="viewcode-block" id="ResourcePatchMixin.patch_request"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourcePatchMixin.patch_request">[docs]</a>    <span class="k">def</span> <span class="nf">patch_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Uses the PATCH to update a resource.</span>

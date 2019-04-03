@@ -1117,6 +1117,28 @@ in OneView; it just stops waiting for its completion.</li>
 <em class="property">class </em><code class="descclassname">hpOneView.resources.resource.</code><code class="descname">ResourceHelper</code><span class="sig-paren">(</span><em>base_uri</em>, <em>connection</em>, <em>task_monitor</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.add_new_fields">
+<code class="descname">add_new_fields</code><span class="sig-paren">(</span><em>data_to_add</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.add_new_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.add_new_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update resource data with new fields.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> – resource data</li>
+<li><strong>data_to_update</strong> – dict of data to update resource data</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Returnes:</dt>
+<dd>Returnes dict</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.resource.ResourceHelper.build_query_uri">
 <code class="descname">build_query_uri</code><span class="sig-paren">(</span><em>uri=None</em>, <em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>query=u''</em>, <em>sort=u''</em>, <em>view=u''</em>, <em>fields=u''</em>, <em>scope_uris=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.build_query_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.build_query_uri" title="Permalink to this definition">¶</a></dt>
 <dd><p>Builds the URI from given parameters.</p>
@@ -1404,6 +1426,28 @@ in OneView; it just stops waiting for its completion.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.update_resource_fields">
+<code class="descname">update_resource_fields</code><span class="sig-paren">(</span><em>data</em>, <em>data_to_add</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.update_resource_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.update_resource_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update resource data with new fields.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> – resource data</li>
+<li><strong>data_to_update</strong> – dict of data to update resource data</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Returnes:</dt>
+<dd>Returnes dict</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.resource.ResourceHelper.validate_resource_uri">
 <code class="descname">validate_resource_uri</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.validate_resource_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.validate_resource_uri" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper method to validate URI of the resource.</p>
@@ -1415,31 +1459,10 @@ in OneView; it just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.resource.ResourcePatchMixin">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.resource.</code><code class="descname">ResourcePatchMixin</code><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourcePatchMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourcePatchMixin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.resource.ResourcePatchMixin.patch">
-<code class="descname">patch</code><span class="sig-paren">(</span><em>operation</em>, <em>path</em>, <em>value</em>, <em>custom_headers=None</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourcePatchMixin.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourcePatchMixin.patch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Uses the PATCH to update a resource.</p>
-<p>Only one operation can be performed in each PATCH call.</p>
-<dl class="docutils">
-<dt>Args</dt>
-<dd><p class="first">operation: Patch operation
-path: Path
-value: Value
-timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</p>
-<blockquote>
-<div>in OneView; it just stops waiting for its completion.</div></blockquote>
-<p class="last">custom_headers: Allows to add custom http headers.</p>
-</dd>
-</dl>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Updated resource.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">patch</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.resource.ResourcePatchMixin.patch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.resource.ResourcePatchMixin.patch_request">

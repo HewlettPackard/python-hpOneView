@@ -148,7 +148,7 @@
   <h1>Source code for hpOneView.resources.networking.uplink_sets</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1">###</span>
-<span class="c1"># (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP</span>
+<span class="c1"># (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP</span>
 <span class="c1">#</span>
 <span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
 <span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
@@ -179,12 +179,13 @@
 <span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
 
 
-<span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">ResourceClient</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">Resource</span><span class="p">,</span> <span class="n">ensure_resource_client</span>
 <span class="kn">from</span> <span class="nn">hpOneView.resources.networking.ethernet_networks</span> <span class="k">import</span> <span class="n">EthernetNetworks</span>
+<span class="kn">from</span> <span class="nn">hpOneView.exceptions</span> <span class="k">import</span> <span class="n">HPOneViewResourceNotFound</span>
 <span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">isinstance</span>
 
 
-<div class="viewcode-block" id="UplinkSets"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.uplink_sets.UplinkSets">[docs]</a><span class="k">class</span> <span class="nc">UplinkSets</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="UplinkSets"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.uplink_sets.UplinkSets">[docs]</a><span class="k">class</span> <span class="nc">UplinkSets</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Uplink Sets API client.</span>
 
@@ -195,120 +196,16 @@
         <span class="s1">&#39;200&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;uplink-setV3&quot;</span><span class="p">},</span>
         <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;uplink-setV300&quot;</span><span class="p">},</span>
         <span class="s1">&#39;500&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;uplink-setV300&quot;</span><span class="p">},</span>
-        <span class="s1">&#39;600&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;uplink-setV4&quot;</span><span class="p">}</span>
+        <span class="s1">&#39;600&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;uplink-setV4&quot;</span><span class="p">},</span>
+        <span class="s1">&#39;800&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;uplink-setV4&quot;</span><span class="p">}</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ethernet_network</span> <span class="o">=</span> <span class="n">EthernetNetworks</span><span class="p">(</span><span class="n">con</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">UplinkSets</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ethernet_networks</span> <span class="o">=</span> <span class="n">EthernetNetworks</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
 
-<div class="viewcode-block" id="UplinkSets.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.uplink_sets.UplinkSets.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets a paginated list of uplink sets based on optional sorting and filtering and is constrained by start and</span>
-<span class="sd">        count parameters.</span>
-
-<span class="sd">        Filters can be used in the URL to control the number of uplink sets that are returned.</span>
-<span class="sd">        With no filters specified, the API returns all uplink sets.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            start:</span>
-<span class="sd">                The first item to return, using 0-based indexing.</span>
-<span class="sd">                If not specified, the default is 0 - start with the first available item.</span>
-<span class="sd">            count:</span>
-<span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
-<span class="sd">                The actual number of items in the response might differ from the requested</span>
-<span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
-<span class="sd">            filter (list or str):</span>
-<span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
-<span class="sd">                default is no filter; all resources are returned.</span>
-<span class="sd">            sort:</span>
-<span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
-<span class="sd">                on create time with the oldest entry first.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            list: A list of uplink sets.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="UplinkSets.get"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.uplink_sets.UplinkSets.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets an uplink set with the specified ID.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the uplink set id or the uplink set uri.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: The uplink set.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="UplinkSets.get_by"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.uplink_sets.UplinkSets.get_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets all uplink sets that match the filter.</span>
-
-<span class="sd">        The search is case-insensitive.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            field: Field name to filter.</span>
-<span class="sd">            value: Value to filter.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            list: Uplink sets</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="UplinkSets.create"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.uplink_sets.UplinkSets.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates an uplink set.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            resource (dict): Object to create.</span>
-<span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in</span>
-<span class="sd">                OneView, just stops waiting for its completion.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: Created resource.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="UplinkSets.update"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.uplink_sets.UplinkSets.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Updates an uplink set.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            resource (dict): Resource to update.</span>
-<span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in</span>
-<span class="sd">                OneView, just stops waiting for its completion.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: Updated resource.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_VALUES</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="UplinkSets.delete"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.uplink_sets.UplinkSets.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Deletes an uplink set. If the uplink set was carrying a Fibre Channel (FC) network, any connections which are</span>
-<span class="sd">        deployed and using the FC network will be placed into a &#39;Failed&#39; state.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            resource: Resource to delete or the resource ID.</span>
-<span class="sd">            force:</span>
-<span class="sd">                 If set to true, the operation completes despite any problems with</span>
-<span class="sd">                 network connectivity or errors on the resource itself. The default is false.</span>
-<span class="sd">            timeout:</span>
-<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in</span>
-<span class="sd">                OneView, just stops waiting for its completion.</span>
-
-<span class="sd">            Returns:</span>
-<span class="sd">                bool: True if successfully deleted.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">resource</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="UplinkSets.get_ethernet_networks"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.uplink_sets.UplinkSets.get_ethernet_networks">[docs]</a>    <span class="k">def</span> <span class="nf">get_ethernet_networks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">get_ethernet_networks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a list of associated ethernet networks of an uplink set.</span>
 
@@ -318,30 +215,31 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            list: Associated ethernet networks.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uplink</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span>
-        <span class="n">network_uris</span> <span class="o">=</span> <span class="n">uplink</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;networkUris&#39;</span><span class="p">)</span>
+        <span class="n">network_uris</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;networkUris&#39;</span><span class="p">)</span>
         <span class="n">networks</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">network_uris</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">uri</span> <span class="ow">in</span> <span class="n">network_uris</span><span class="p">:</span>
-                <span class="n">networks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ethernet_network</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">networks</span></div>
+                <span class="n">networks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ethernet_networks</span><span class="o">.</span><span class="n">get_by_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">networks</span>
 
-<div class="viewcode-block" id="UplinkSets.add_ethernet_networks"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.uplink_sets.UplinkSets.add_ethernet_networks">[docs]</a>    <span class="k">def</span> <span class="nf">add_ethernet_networks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">ethernet_id_or_uris</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">add_ethernet_networks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ethernet_names</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds existing ethernet networks to an uplink set.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            id_or_uri:</span>
 <span class="sd">                Can be either the uplink set id or the uplink set uri.</span>
-<span class="sd">            ethernet_id_or_uris:</span>
-<span class="sd">                Could be either one or more ethernet network id or ethernet network uri.</span>
-
+<span class="sd">            ethernet_name:</span>
+<span class="sd">                Could be either one or more ethernet network names.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: The updated uplink set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__set_ethernet_uris</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">ethernet_id_or_uris</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;add&quot;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__set_ethernet_uris</span><span class="p">(</span><span class="n">ethernet_names</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;add&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
 
-<div class="viewcode-block" id="UplinkSets.remove_ethernet_networks"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.uplink_sets.UplinkSets.remove_ethernet_networks">[docs]</a>    <span class="k">def</span> <span class="nf">remove_ethernet_networks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">ethernet_id_or_uris</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">remove_ethernet_networks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ethernet_names</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove existing ethernet networks of an uplink set.</span>
 
@@ -354,31 +252,34 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: The updated uplink set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__set_ethernet_uris</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">ethernet_id_or_uris</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;remove&quot;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__set_ethernet_uris</span><span class="p">(</span><span class="n">ethernet_names</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;remove&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
 
-    <span class="k">def</span> <span class="nf">__set_ethernet_uris</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">ethernet_id_or_uris</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;add&quot;</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ethernet_id_or_uris</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-            <span class="n">ethernet_id_or_uris</span> <span class="o">=</span> <span class="p">[</span><span class="n">ethernet_id_or_uris</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">__set_ethernet_uris</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ethernet_names</span><span class="p">,</span> <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;add&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Updates network uris.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ethernet_names</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">ethernet_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">ethernet_names</span><span class="p">]</span>
 
-        <span class="n">uplink</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span>
+        <span class="n">associated_enets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;networkUris&#39;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">ethernet_uris</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="n">associated_enets</span> <span class="o">=</span> <span class="n">uplink</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;networkUris&#39;</span><span class="p">,</span> <span class="p">[])</span>
-
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">enet</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ethernet_id_or_uris</span><span class="p">):</span>
-            <span class="n">ethernet_id_or_uris</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">enet</span> <span class="k">if</span> <span class="s1">&#39;/&#39;</span> <span class="ow">in</span> <span class="n">enet</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ethernet_network</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">enet</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">enet</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ethernet_names</span><span class="p">):</span>
+            <span class="n">enet_exists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ethernet_networks</span><span class="o">.</span><span class="n">get_by_name</span><span class="p">(</span><span class="n">enet</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">enet_exists</span><span class="p">:</span>
+                <span class="n">ethernet_uris</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">enet_exists</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">HPOneViewResourceNotFound</span><span class="p">(</span><span class="s2">&quot;Ethernet: </span><span class="si">{}</span><span class="s2"> does not exist&quot;</span><span class="o">.</span><span class="n">foramt</span><span class="p">(</span><span class="n">enet</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="n">operation</span> <span class="o">==</span> <span class="s2">&quot;remove&quot;</span><span class="p">:</span>
-            <span class="n">enets_to_update</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">associated_enets</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">ethernet_id_or_uris</span><span class="p">)))</span>
+            <span class="n">enets_to_update</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">associated_enets</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">ethernet_uris</span><span class="p">)))</span>
         <span class="k">elif</span> <span class="n">operation</span> <span class="o">==</span> <span class="s2">&quot;add&quot;</span><span class="p">:</span>
-            <span class="n">enets_to_update</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">associated_enets</span><span class="p">)</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ethernet_id_or_uris</span><span class="p">))))</span>
+            <span class="n">enets_to_update</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">associated_enets</span><span class="p">)</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ethernet_uris</span><span class="p">))))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Value </span><span class="si">{}</span><span class="s2"> is not supported as operation. The supported values are: [&#39;add&#39;, &#39;remove&#39;]&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">enets_to_update</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">set</span><span class="p">(</span><span class="n">associated_enets</span><span class="p">):</span>
-            <span class="n">uplink</span><span class="p">[</span><span class="s1">&#39;networkUris&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">enets_to_update</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">uplink</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">uplink</span></div>
+            <span class="n">updated_network</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;networkUris&#39;</span><span class="p">:</span> <span class="n">enets_to_update</span><span class="p">}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">updated_network</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

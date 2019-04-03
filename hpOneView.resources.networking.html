@@ -220,48 +220,23 @@ for construction of networks. Its value is copied when a new connection template
 <span id="hponeview-resources-networking-ethernet-networks-module"></span><h2>hpOneView.resources.networking.ethernet_networks module<a class="headerlink" href="#module-hpOneView.resources.networking.ethernet_networks" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.ethernet_networks.</code><code class="descname">EthernetNetworks</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.ethernet_networks.</code><code class="descname">EthernetNetworks</code><span class="sig-paren">(</span><em>connection</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.ResourcePatchMixin" title="hpOneView.resources.resource.ResourcePatchMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.ResourcePatchMixin</span></code></a>, <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.Resource" title="hpOneView.resources.resource.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.Resource</span></code></a></p>
 <p>Ethernet Networks API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.BULK_DEFAULT_VALUES">
-<code class="descname">BULK_DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'bulk-ethernet-network'}, u'300': {u'type': u'bulk-ethernet-network'}, u'500': {u'type': u'bulk-ethernet-network'}, u'600': {u'type': u'bulk-ethernet-networkV1'}}</em><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.BULK_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">BULK_DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'bulk-ethernet-network'}, u'300': {u'type': u'bulk-ethernet-network'}, u'500': {u'type': u'bulk-ethernet-network'}, u'600': {u'type': u'bulk-ethernet-networkV1'}, u'800': {u'type': u'bulk-ethernet-networkV1'}}</em><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.BULK_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'ethernet-networkV3'}, u'300': {u'type': u'ethernet-networkV300'}, u'500': {u'type': u'ethernet-networkV300'}, u'600': {u'type': u'ethernet-networkV4'}}</em><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'ethernet-networkV3'}, u'300': {u'type': u'ethernet-networkV300'}, u'500': {u'type': u'ethernet-networkV300'}, u'600': {u'type': u'ethernet-networkV4'}, u'800': {u'type': u'ethernet-networkV4'}}</em><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/ethernet-networks'</em><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.create">
-<code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.create" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates an Ethernet network.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) – Object to create.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created resource.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.create_bulk">
@@ -282,34 +257,6 @@ in OneView; it just stops waiting for its completion.</li>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.delete">
-<code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deletes an Ethernet network.</p>
-<p>Any deployed connections that are using the network are placed in the ‘Failed’ state.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> – dict object to delete</li>
-<li><strong>force</strong> – If set to true, the operation completes despite any problems with
-network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
 </td>
 </tr>
 </tbody>
@@ -347,116 +294,15 @@ in OneView; it just stops waiting for its completion.</li>
 </table>
 </dd></dl>
 
-<dl class="method">
-<dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the Ethernet network.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of Ethernet network.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The ethernet network.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a paginated collection of Ethernet networks. The collection is based on optional sorting and filtering
-and is constrained by start and count parameters.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> – The first item to return, using 0-based indexing.
-If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items.
-The actual number of items in the response might differ from the requested
-count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
-default is no filter; all resources are returned.</li>
-<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
-on create time with the oldest entry first.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of ethernet networks.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get_associated_profiles">
-<code class="descname">get_associated_profiles</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks.get_associated_profiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get_associated_profiles" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the URIs of profiles which are using an Ethernet network.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the logical interconnect group id or the logical interconnect group uri</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">URIs of the associated profiles.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_associated_profiles</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get_associated_profiles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get_associated_uplink_groups">
-<code class="descname">get_associated_uplink_groups</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks.get_associated_uplink_groups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get_associated_uplink_groups" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the uplink sets which are using an Ethernet network.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the logical interconnect group id or the logical interconnect group uri</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">URIs of the associated uplink sets.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get_by">
-<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all Ethernet networks that match the filter.
-The search is case-insensitive.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> – field name to filter</li>
-<li><strong>value</strong> – value to filter</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of ethernet networks.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_associated_uplink_groups</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get_associated_uplink_groups" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.get_range">
@@ -491,55 +337,6 @@ The search is case-insensitive.</p>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.patch">
-<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.patch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Uses the PATCH to update the given resource.</p>
-<p>Only one operation can be performed in each PATCH call.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>operation</strong> – Patch operation</li>
-<li><strong>path</strong> – Path</li>
-<li><strong>value</strong> – Value</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.ethernet_networks.EthernetNetworks.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/ethernet_networks.html#EthernetNetworks.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.ethernet_networks.EthernetNetworks.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates an Ethernet network.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>resource</strong> – dict object to update</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Returns: Updated resource.</p>
 </dd></dl>
 
 </dd></dl>
@@ -4024,12 +3821,12 @@ supported for update.</p>
 <span id="hponeview-resources-networking-uplink-sets-module"></span><h2>hpOneView.resources.networking.uplink_sets module<a class="headerlink" href="#module-hpOneView.resources.networking.uplink_sets" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hpOneView.resources.networking.uplink_sets.UplinkSets">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.uplink_sets.</code><code class="descname">UplinkSets</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/uplink_sets.html#UplinkSets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.uplink_sets.</code><code class="descname">UplinkSets</code><span class="sig-paren">(</span><em>connection</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/uplink_sets.html#UplinkSets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.Resource" title="hpOneView.resources.resource.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.Resource</span></code></a></p>
 <p>Uplink Sets API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'uplink-setV3'}, u'300': {u'type': u'uplink-setV300'}, u'500': {u'type': u'uplink-setV300'}, u'600': {u'type': u'uplink-setV4'}}</em><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'uplink-setV3'}, u'300': {u'type': u'uplink-setV300'}, u'500': {u'type': u'uplink-setV300'}, u'600': {u'type': u'uplink-setV4'}, u'800': {u'type': u'uplink-setV4'}}</em><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -4037,221 +3834,20 @@ supported for update.</p>
 <code class="descname">URI</code><em class="property"> = u'/rest/uplink-sets'</em><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.add_ethernet_networks">
-<code class="descname">add_ethernet_networks</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>ethernet_id_or_uris</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/uplink_sets.html#UplinkSets.add_ethernet_networks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.add_ethernet_networks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds existing ethernet networks to an uplink set.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the uplink set id or the uplink set uri.</li>
-<li><strong>ethernet_id_or_uris</strong> – Could be either one or more ethernet network id or ethernet network uri.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The updated uplink set.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">add_ethernet_networks</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.add_ethernet_networks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
-<dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.create">
-<code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/uplink_sets.html#UplinkSets.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.create" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates an uplink set.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) – Object to create.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
-OneView, just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created resource.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.delete">
-<code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/uplink_sets.html#UplinkSets.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deletes an uplink set. If the uplink set was carrying a Fibre Channel (FC) network, any connections which are
-deployed and using the FC network will be placed into a ‘Failed’ state.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>resource</strong> – Resource to delete or the resource ID.</li>
-<li><strong>force</strong> – If set to true, the operation completes despite any problems with
-network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
-OneView, just stops waiting for its completion.</li>
-<li><strong>Returns</strong> – bool: True if successfully deleted.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/uplink_sets.html#UplinkSets.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets an uplink set with the specified ID.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the uplink set id or the uplink set uri.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The uplink set.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/uplink_sets.html#UplinkSets.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a paginated list of uplink sets based on optional sorting and filtering and is constrained by start and
-count parameters.</p>
-<p>Filters can be used in the URL to control the number of uplink sets that are returned.
-With no filters specified, the API returns all uplink sets.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> – The first item to return, using 0-based indexing.
-If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items.
-The actual number of items in the response might differ from the requested
-count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
-default is no filter; all resources are returned.</li>
-<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
-on create time with the oldest entry first.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of uplink sets.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.get_by">
-<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/uplink_sets.html#UplinkSets.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all uplink sets that match the filter.</p>
-<p>The search is case-insensitive.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> – Field name to filter.</li>
-<li><strong>value</strong> – Value to filter.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Uplink sets</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.get_ethernet_networks">
-<code class="descname">get_ethernet_networks</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/uplink_sets.html#UplinkSets.get_ethernet_networks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.get_ethernet_networks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a list of associated ethernet networks of an uplink set.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the uplink set id or the uplink set uri.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Associated ethernet networks.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_ethernet_networks</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.get_ethernet_networks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.remove_ethernet_networks">
-<code class="descname">remove_ethernet_networks</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>ethernet_id_or_uris</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/uplink_sets.html#UplinkSets.remove_ethernet_networks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.remove_ethernet_networks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove existing ethernet networks of an uplink set.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the uplink set id or the uplink set uri.</li>
-<li><strong>ethernet_id_or_uris</strong> – Could be either one or more ethernet network id or ethernet network uri.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The updated uplink set.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.uplink_sets.UplinkSets.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/uplink_sets.html#UplinkSets.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates an uplink set.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) – Resource to update.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
-OneView, just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">remove_ethernet_networks</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.uplink_sets.UplinkSets.remove_ethernet_networks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
