@@ -35,8 +35,8 @@ Resource data will be available with the resource object. This enhancement helps
 - SAS interconnect
 - SAS interconnect type
 - Server hardware type
+- Switch type
 - Uplink set
->>>>>>> master
 
 # 4.8.0
 #### Notes
