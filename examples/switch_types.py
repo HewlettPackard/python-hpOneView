@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,6 @@
 
 from pprint import pprint
 from hpOneView.oneview_client import OneViewClient
-from hpOneView.exceptions import HPOneViewException
 from config_loader import try_load_from_file
 
 config = {
@@ -36,33 +35,22 @@ config = {
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
-
 oneview_client = OneViewClient(config)
-
-# Add the ID of the switch to be retrieved
-switch_id = 'd017f9e4-e967-42ee-aacc-d6ad5797a175'
+switch_types = oneview_client.switch_types
 
 # Get all supported switch types
 print("\nGet all supported switch types:")
-switch_types = oneview_client.switch_types.get_all()
-pprint(switch_types, depth=2)
+switch_types_all = switch_types.get_all()
+pprint(switch_types_all, depth=2)
 
 # Get all sorting by name descending
 print("\nGet all switch-types sorting by name:")
-switch_types_sorted = oneview_client.switch_types.get_all(
+switch_types_sorted = switch_types.get_all(
     sort='name:descending')
 pprint(switch_types_sorted, depth=2)
 
-# Get by Id
-try:
-    print("\nGet a switch_types by id:")
-    switch_types_byid = oneview_client.switch_types.get(switch_id)
-    pprint(switch_types_byid, depth=1)
-except HPOneViewException as e:
-    print(e.msg)
-
-# Get by name
-print("\nGet a switch_types by name:")
-switch_type_byname = oneview_client.switch_types.get_by(
-    'name', switch_types[0]['name'])[0]
-pprint(switch_type_byname, depth=1)
+if switch_types_all:
+    # Get by name
+    print("\nGet a switch_types by name:")
+    switch_type_byname = switch_types.get_by_name(switch_types_all[0]['name'])[0]
+    pprint(switch_type_byname.data, depth=1)
