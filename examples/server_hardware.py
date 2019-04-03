@@ -57,10 +57,12 @@ for serv in server_hardware_all:
 server = server_hardwares.get_by_name(server_name)
 if not server:
     # Create a rack-mount server
+    # This is only supported on appliance which support rack mounted servers
     server = server_hardwares.add(options)
     print("Added rack mount server '%s'.\n  uri = '%s'" % (server['name'], server['uri']))
 
 # Create Multiple rack-mount servers
+# This is only supported on appliance which support rack mounted servers
 if oneview_client.api_version >= 600:
     options_to_add_multiple_server = {
         "mpHostsAndRanges": config['server_mpHostsAndRanges'],
