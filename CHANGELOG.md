@@ -38,6 +38,7 @@ Resource data will be available with the resource object. This enhancement helps
 - SAS interconnect type
 - SAS logical interconnect
 - Server hardware type
+- Server profile template
 - Switch type
 - Uplink set
 
