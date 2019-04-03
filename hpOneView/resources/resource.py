@@ -456,7 +456,7 @@ class ResourceHelper(object):
         """
         logger.debug('Creating Report (uri = %s)'.format(uri))
         task, _ = self._connection.post(uri, {})
-        print(task)
+
         if not task:
             raise exceptions.HPOneViewException(RESOURCE_CLIENT_TASK_EXPECTED)
 
