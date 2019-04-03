@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,10 +30,10 @@ from future import standard_library
 standard_library.install_aliases()
 
 
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource, ResourcePatchMixin, unavailable_method
 
 
-class SasInterconnects(object):
+class SasInterconnects(ResourcePatchMixin, Resource):
     """
     SAS Interconnects API client.
 
@@ -43,8 +43,8 @@ class SasInterconnects(object):
     """
     URI = '/rest/sas-interconnects'
 
-    def __init__(self, con):
-        self._client = ResourceClient(con, self.URI)
+    def __init__(self, connection, data=None):
+        super(SasInterconnects, self).__init__(connection, data)
 
     def get_all(self, start=0, count=-1, fields='', filter='', query='', sort='', view=''):
         """
@@ -77,67 +77,30 @@ class SasInterconnects(object):
         Returns:
             list: A list of SAS interconnects.
         """
-        return self._client.get_all(start=start, count=count, filter=filter, query=query, sort=sort, view=view,
+        return self._helper.get_all(start=start, count=count, filter=filter, query=query, sort=sort, view=view,
                                     fields=fields)
 
-    def get(self, id_or_uri):
-        """
-        Gets the SAS Interconnect with the specified ID or URI.
-
-        Args:
-            id_or_uri:
-                Can be either the SAS interconnect id or the SAS interconnect uri
-
-        Returns:
-            dict: SAS Interconnect.
-        """
-        return self._client.get(id_or_uri)
-
-    def get_by(self, field, value):
-        """
-        Gets all SAS Interconnects that match the filter.
-
-        The search is case-insensitive.
-
-        Args:
-            field: Field name to filter.
-            value: Value to filter.
-
-        Returns:
-            list: A list of SAS Interconnects.
-        """
-        return self._client.get_by(field, value)
-
-    def patch(self, id_or_uri, operation, path, value, timeout=-1):
-        """
-        Update powerState, uidState, softResetState or hardResetState using PATCH operation
-
-        Args:
-            id_or_uri:
-                Can be either the SAS interconnect id or the SAS interconnect uri
-            operation:
-                The type of operation: "replace" is the only value allowed for this resource.
-            path:
-                The JSON path the operation is to use. The exact meaning depends on the type of operation.
-            value:
-                The value to replace.
-
-        Returns:
-            dict: SAS Interconnect
-        """
-        return self._client.patch(id_or_uri=id_or_uri, operation=operation, path=path, value=value, timeout=timeout)
-
-    def refresh_state(self, id_or_uri, configuration):
+    def refresh_state(self, configuration):
         """
         Refresh a SAS Interconnect.
 
         Args:
-            id_or_uri:
-                Can be either the SAS interconnect id or the SAS interconnect uri
             configuration: Configuration
 
         Returns:
             dict: SAS Interconnect
         """
-        uri = self._client.build_uri(id_or_uri) + "/refreshState"
-        return self._client.update(uri=uri, resource=configuration)
+        uri = "{}/refreshState".format(self.data["uri"])
+        return self._helper.update(uri=uri, resource=configuration)
+
+    def create(self):
+        """Create method is not available"""
+        unavailable_method()
+
+    def delete(self):
+        """Delete method is not available"""
+        unavailable_method()
+
+    def update(self):
+        """Update method is not available"""
+        unavailable_method()

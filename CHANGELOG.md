@@ -27,10 +27,16 @@ Resource data will be available with the resource object. This enhancement helps
 - Connection template
 - Enclosure
 - Enclosure group
+- Ethernet network
 - FC network
 - FCOE network
 - Interconnect type
+- Internal link set
+- SAS interconnect
+- SAS interconnect type
+- Server hardware type
 - Switch type
+- Uplink set
 
 # 4.8.0
 #### Notes
