@@ -1016,8 +1016,8 @@ in OneView; it just stops waiting for its completion.</li>
 <span id="hponeview-resources-networking-internal-link-sets-module"></span><h2>hpOneView.resources.networking.internal_link_sets module<a class="headerlink" href="#module-hpOneView.resources.networking.internal_link_sets" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hpOneView.resources.networking.internal_link_sets.InternalLinkSets">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.internal_link_sets.</code><code class="descname">InternalLinkSets</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/internal_link_sets.html#InternalLinkSets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.internal_link_sets.InternalLinkSets" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.internal_link_sets.</code><code class="descname">InternalLinkSets</code><span class="sig-paren">(</span><em>connection</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/internal_link_sets.html#InternalLinkSets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.internal_link_sets.InternalLinkSets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.Resource" title="hpOneView.resources.resource.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.Resource</span></code></a></p>
 <p>Internal Link Sets API client.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -1027,24 +1027,6 @@ in OneView; it just stops waiting for its completion.</li>
 <dt id="hpOneView.resources.networking.internal_link_sets.InternalLinkSets.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/internal-link-sets'</em><a class="headerlink" href="#hpOneView.resources.networking.internal_link_sets.InternalLinkSets.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.internal_link_sets.InternalLinkSets.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/internal_link_sets.html#InternalLinkSets.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.internal_link_sets.InternalLinkSets.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a specific internal-link-set resource.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – ID or URI of the Internal Link Set resource.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Internal Link Set.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.networking.internal_link_sets.InternalLinkSets.get_all">
@@ -1075,31 +1057,6 @@ elements of collections of resources.</li>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Internal Link Set Collection.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.internal_link_sets.InternalLinkSets.get_by">
-<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/internal_link_sets.html#InternalLinkSets.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.internal_link_sets.InternalLinkSets.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all internal-link-sets that match the filter.
-The search is case-insensitive.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> – field name to filter</li>
-<li><strong>value</strong> – value to filter</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of Internal Link Sets.</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
