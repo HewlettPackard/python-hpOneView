@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -27,7 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.servers.server_profile_templates import ServerProfileTemplate
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource, ResourceHelper
 
 TIMEOUT = -1
 
@@ -38,8 +38,10 @@ class ServerProfileTemplateTest(TestCase):
         host = '127.0.0.1'
         http_connection = connection(host)
         self._resource = ServerProfileTemplate(http_connection)
+        self.uri = "/rest/server-profile-templates/test"
+        self._resource.data = {"uri": self.uri}
 
-    @mock.patch.object(ResourceClient, 'get_all')
+    @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_all(self, mock_get_all):
         query_filter = 'name=TestName'
         sort = 'name:ascending'
@@ -49,89 +51,53 @@ class ServerProfileTemplateTest(TestCase):
         mock_get_all.assert_called_once_with(
             start=2, count=500, filter=query_filter, sort=sort, scope_uris=scope_uris)
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_by_id(self, mock_get):
-        template_id = "6fee02f3-b7c7-42bd-a528-04341e16bad6"
-
-        self._resource.get(template_id)
-        mock_get.assert_called_once_with(id_or_uri=template_id)
-
-    @mock.patch.object(ResourceClient, 'get_by')
-    def test_get_by_property(self, mock_get_by):
-        template_property = "name"
-        template_name = "BL460c Gen8 1"
-
-        self._resource.get_by(template_property, template_name)
-        mock_get_by.assert_called_once_with(template_property, template_name)
-
-    @mock.patch.object(ResourceClient, 'get_by_name')
-    def test_get_by_name(self, mock_get_by_name):
-        template_name = "BL460c Gen8 1"
-
-        self._resource.get_by_name(template_name)
-        mock_get_by_name.assert_called_once_with(template_name)
-
-    @mock.patch.object(ResourceClient, 'create')
+    @mock.patch.object(ResourceHelper, 'create')
     def test_create(self, mock_create):
-        uri = "/rest/server-profile-templates?force=True"
         template = dict(name="BL460c Gen8 1")
 
-        self._resource.create(resource=template, timeout=TIMEOUT)
+        self._resource.create(template, timeout=TIMEOUT)
         mock_create.assert_called_once_with(
-            resource=template,
-            uri=uri,
-            timeout=TIMEOUT,
-            default_values=ServerProfileTemplate.DEFAULT_VALUES
+            template, None, -1, force=True
         )
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update(self, mock_update):
-        uri = "/rest/server-profile-templates/4ff2327f-7638-4b66-ad9d-283d4940a4ae"
+    @mock.patch.object(Resource, 'ensure_resource_data')
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update(self, mock_update, mock_ensure_client):
         template = dict(name="BL460c Gen8 1", macType="Virtual")
 
-        self._resource.update(resource=template, id_or_uri=uri)
-        mock_update.assert_called_once_with(
-            resource=template,
-            uri=uri,
-            default_values=ServerProfileTemplate.DEFAULT_VALUES,
-            force=True
-        )
+        self._resource.update(template)
+        template["uri"] = self.uri
 
-    @mock.patch.object(ResourceClient, 'delete')
+        mock_update.assert_called_once_with(template, self.uri, True, -1)
+
+    @mock.patch.object(ResourceHelper, 'delete')
     def test_delete(self, mock_delete):
-        template = dict(name="BL460c Gen8 1")
+        self._resource.delete(timeout=TIMEOUT)
+        mock_delete.assert_called_once_with(self.uri, timeout=TIMEOUT, custom_headers=None, force=False)
 
-        self._resource.delete(resource=template, timeout=TIMEOUT)
-        mock_delete.assert_called_once_with(resource=template, timeout=TIMEOUT, force=False)
-
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceHelper, 'do_get')
     def test_get_new_profile(self, mock_get):
-        template_id = "6fee02f3-b7c7-42bd-a528-04341e16bad6"
-        expected_uri = '/rest/server-profile-templates/6fee02f3-b7c7-42bd-a528-04341e16bad6/new-profile'
+        expected_uri = '{}/new-profile'.format(self.uri)
 
-        self._resource.get_new_profile(id_or_uri=template_id)
-        mock_get.assert_called_once_with(id_or_uri=expected_uri)
+        self._resource.get_new_profile()
+        mock_get.assert_called_once_with(expected_uri)
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceHelper, 'do_get')
     def test_get_transformation(self, mock_get):
-        template_id = "6fee02f3-b7c7-42bd-a528-04341e16bad6"
         enclosure_group_uri = "/rest/enclosure-groups/bb1fbca0-2289-4b75-adbb-0564cdc4995d"
         server_hardware_type_uri = "/rest/server-hardware-types/34A3A0B2-66C7-4657-995E-60895C1F8F96"
 
         transformation_path = self._resource.TRANSFORMATION_PATH.format(**locals())
-        template_uri = '/rest/server-profile-templates/6fee02f3-b7c7-42bd-a528-04341e16bad6'
-        expected_uri = template_uri + transformation_path
+        expected_uri = self.uri + transformation_path
 
-        self._resource.get_transformation(id_or_uri=template_id,
-                                          enclosure_group_uri=enclosure_group_uri,
+        self._resource.get_transformation(enclosure_group_uri=enclosure_group_uri,
                                           server_hardware_type_uri=server_hardware_type_uri)
 
-        mock_get.assert_called_once_with(id_or_uri=expected_uri)
+        mock_get.assert_called_once_with(expected_uri)
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceHelper, 'do_get')
     def test_get_available_networks(self, mock_get):
-        template_uri = "/rest/server-profile-templates/6fee02f3-b7c7-42bd-a528-04341e16bad6"
-        uri = '/rest/server-profile-templates/available-networks?profileTemplateUri={}'.format(template_uri)
+        uri = '/rest/server-profile-templates/available-networks?profileTemplateUri={}'.format(self.uri)
 
-        self._resource.get_available_networks(profileTemplateUri=template_uri)
-        mock_get.assert_called_once_with(id_or_uri=uri)
+        self._resource.get_available_networks(profileTemplateUri=self.uri)
+        mock_get.assert_called_once_with(uri)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019 Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.servers.enclosure_groups import EnclosureGroups
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource, ResourceHelper
 
 
 class EnclosureGroupsTest(unittest.TestCase):
@@ -67,8 +67,10 @@ class EnclosureGroupsTest(unittest.TestCase):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
         self.client = EnclosureGroups(self.connection)
+        self.uri = "/rest/enclosure-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
+        self.client.data = {"uri": self.uri}
 
-    @mock.patch.object(ResourceClient, 'get_all')
+    @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_all_called_once(self, mock_get_all):
         filter = 'name=TestName'
         sort = 'name:ascending'
@@ -77,69 +79,42 @@ class EnclosureGroupsTest(unittest.TestCase):
 
         mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort, scope_uris=scope_uris)
 
-    @mock.patch.object(ResourceClient, 'get_all')
+    @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_all_called_once_with_default(self, mock_get_all):
         self.client.get_all()
         mock_get_all.assert_called_once_with(0, -1, filter='', sort='', scope_uris='')
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_by_id_called_once(self, mock_get):
-        id = "f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
-        self.client.get(id)
-        mock_get.assert_called_once_with(id)
-
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_by_uri_called_once(self, mock_get):
-        uri = "/rest/enclosure-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
-        self.client.get(uri)
-        mock_get.assert_called_once_with(uri)
-
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_script_by_id_called_once(self, mock_get):
-        id = "f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
-        self.client.get_script(id)
-        mock_get.assert_called_once_with("/rest/enclosure-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c/script")
-
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_script_by_uri_called_once(self, mock_get):
-        uri = "/rest/enclosure-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
-        self.client.get_script(uri)
-        mock_get.assert_called_once_with(uri + "/script")
-
-    @mock.patch.object(ResourceClient, 'get_by')
-    def test_get_by_called_once(self, mock_get_by):
-        self.client.get_by("name", "test name")
-        mock_get_by.assert_called_once_with("name", "test name")
-
-    @mock.patch.object(ResourceClient, 'create')
+    @mock.patch.object(ResourceHelper, 'create')
     def test_create_called_once(self, mock_create):
         eg_initial = self.MINIMAL_DATA_FOR_EG_CREATION.copy()
 
         self.client.create(eg_initial)
-
+        default_values = self.client._get_default_values()
         eg_expected = self.MINIMAL_DATA_FOR_EG_CREATION.copy()
+        eg_expected.update(default_values)
 
-        mock_create.assert_called_once_with(eg_expected, timeout=-1, default_values=self.client.DEFAULT_VALUES)
+        mock_create.assert_called_once_with(eg_expected, None, -1, None, False)
 
-    @mock.patch.object(ResourceClient, 'delete')
+    @mock.patch.object(ResourceHelper, 'delete')
     def test_delete_called_once(self, mock_delete):
-        self.client.delete({"an_entity": ""})
+        self.client.delete()
 
-        mock_delete.assert_called_once_with({"an_entity": ""}, timeout=-1)
+        mock_delete.assert_called_once_with(self.client.data["uri"], custom_headers=None, force=False, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_called_once(self, mock_update):
+    @mock.patch.object(Resource, 'ensure_resource_data')
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update_called_once(self, mock_update, mock_ensure_client):
         eg_initial = self.MINIMAL_DATA_FOR_EG_CREATION.copy()
 
         self.client.update(eg_initial)
 
         eg_expected = self.MINIMAL_DATA_FOR_EG_CREATION.copy()
+        eg_expected["uri"] = self.uri
 
-        mock_update.assert_called_once_with(eg_expected, timeout=-1, default_values=self.client.DEFAULT_VALUES)
+        mock_update.assert_called_once_with(eg_expected, self.uri, False, -1, None)
 
-    @mock.patch.object(ResourceClient, 'update')
+    @mock.patch.object(ResourceHelper, 'update')
     def test_update_script_by_uri_called_once(self, mock_update):
-        uri = "/rest/enclosure-groups/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
         script_body = "#TEST COMMAND"
-        self.client.update_script(uri, script_body)
-        mock_update.assert_called_once_with(script_body, uri=uri + "/script")
+        self.client.update_script(script_body)
+        mock_update.assert_called_once_with(script_body, uri=self.uri + "/script")

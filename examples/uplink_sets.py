@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,26 +30,35 @@ from hpOneView.oneview_client import OneViewClient
 config = {
     "ip": "<oneview_ip>",
     "credentials": {
-        "userName": "<oneview_administrator_name>",
-        "password": "<oneview_administrator_password>",
-    }
+        "userName": "<username>",
+        "password": "<password>",
+    },
+    "api_version": 800
 }
 
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
 
 oneview_client = OneViewClient(config)
+uplink_sets = oneview_client.uplink_sets
 
-# To run this example you can define an logical interconnect uri (logicalInterconnectUri) and the ethernet network uri
-# or the example will attempt to retrieve those automatically from the appliance.
+
+# To run this example you can define an logical interconnect uri (logicalInterconnectUri), ethernet network uri
+# and ethernet name or the example will attempt to retrieve those automatically from the appliance.
 logical_interconnect_uri = None
 ethernet_network_uri = None
+ethernet_network_name = None
 
 # Attempting to get first LI and Ethernet uri and use them for this example
 if logical_interconnect_uri is None:
     logical_interconnect_uri = oneview_client.logical_interconnects.get_all()[0]['uri']
 if ethernet_network_uri is None:
-    ethernet_network_uri = oneview_client.ethernet_networks.get_all()[0]['uri']
+    enet = oneview_client.ethernet_networks.get_all()
+    ethernet_network_uri = enet[0]['uri']
+
+    # Ethernet name to test add/remove of network uris
+    if not ethernet_network_name:
+        ethernet_network_name = enet[1]['name']
 
 options = {
     "name": "Uplink Set Demo",
@@ -66,55 +75,56 @@ options = {
     "manualLoginRedistributionState": "NotSupported",
 }
 
-# Create an uplink set
-print("\nCreate an uplink set")
-created_uplink_set = oneview_client.uplink_sets.create(options)
-print("Created uplink set '{name}' successfully.\n  uri = '{uri}'".format(**created_uplink_set))
-
-# Update an uplink set
-print("\nUpdate an uplink set")
-created_uplink_set['name'] = 'Renamed Uplink Set Demo'
-updated_uplink_set = oneview_client.uplink_sets.update(created_uplink_set)
-print("Updated uplink set name to '{name}' successfully.\n  uri = '{uri}'".format(**updated_uplink_set))
-
 # Get a paginated list of uplink set resources sorting by name ascending and filtering by status
 print("\nGet a list of uplink sets")
-uplink_sets = oneview_client.uplink_sets.get_all(0, 15, sort='name:ascending')
-for uplink_set in uplink_sets:
+all_uplink_sets = uplink_sets.get_all(0, 15, sort='name:ascending')
+for uplink_set in all_uplink_sets:
     print('  %s' % uplink_set['name'])
+
+if all_uplink_sets:
+    # Get an uplink set resource by uri
+    print("\nGet an uplink set by uri")
+    uplink_uri = all_uplink_sets[0]['uri']
+    uplink_set = uplink_sets.get_by_uri(uplink_uri)
+    pprint(uplink_set.data)
 
 # Get an uplink set resource by name
 print("\nGet uplink set by name")
-uplink_set = oneview_client.uplink_sets.get_by('name', 'Renamed Uplink Set Demo')[0]
-print("Found uplink set at uri '{uri}'\n  by name = '{name}'".format(**uplink_set))
+uplink_set = uplink_sets.get_by_name(options["name"])
+if uplink_set:
+    print("Found uplink set at uri '{uri}'\n  by name = '{name}'".format(**uplink_set.data))
+else:
+    # Create an uplink set
+    print("\nCreate an uplink set")
+    uplink_set = uplink_sets.create(options)
+    print("Created uplink set '{name}' successfully.\n  uri = '{uri}'".format(**uplink_set.data))
+
+# Update an uplink set
+print("\nUpdate an uplink set")
+uplink_set.data['name'] = 'Renamed Uplink Set Demo'
+uplink_set.update(uplink_set.data)
+print("Updated uplink set name to '{name}' successfully.\n  uri = '{uri}'".format(**uplink_set.data))
 
 # Add an ethernet network to the uplink set
 # To run this example you must define an ethernet network uri or ID below
-ethernet_network_id = None
-if ethernet_network_id:
+if ethernet_network_name:
     print("\nAdd an ethernet network to the uplink set")
-    uplink_set = oneview_client.uplink_sets.add_ethernet_networks(created_uplink_set['uri'], ethernet_network_id)
-    print("The uplink set with name = '{name}' have now the networkUris:\n {networkUris}".format(**uplink_set))
-
-# Get an uplink set resource by uri
-print("\nGet an uplink set by uri")
-uplink_set = oneview_client.uplink_sets.get(created_uplink_set['uri'])
-pprint(uplink_set)
+    uplink_added_ethernet = uplink_set.add_ethernet_networks(ethernet_network_name)
+    print("The uplink set with name = '{name}' have now the networkUris:\n {networkUris}".format(**uplink_added_ethernet))
 
 # Remove an ethernet network from the uplink set
 # To run this example you must define an ethernet network uri or ID below
-ethernet_network_id = None
-if ethernet_network_id:
+if ethernet_network_name:
     print("\nRemove an ethernet network of the uplink set")
-    uplink_set = oneview_client.uplink_sets.remove_ethernet_networks(created_uplink_set['uri'], ethernet_network_id)
-    print("The uplink set with name = '{name}' have now the networkUris:\n {networkUris}".format(**uplink_set))
+    uplink_removed_ethernet = uplink_set.remove_ethernet_networks(ethernet_network_name)
+    print("The uplink set with name = '{name}' have now the networkUris:\n {networkUris}".format(**uplink_removed_ethernet))
 
 # Get the associated ethernet networks of an uplink set
 print("\nGet the associated ethernet networks of the uplink set")
-networks = oneview_client.uplink_sets.get_ethernet_networks(created_uplink_set['uri'])
+networks = uplink_set.get_ethernet_networks()
 pprint(networks)
 
 # Delete the recently created uplink set
 print("\nDelete the uplink set")
-oneview_client.fc_networks.delete(updated_uplink_set)
+uplink_set.delete()
 print("Successfully deleted the uplink set")
