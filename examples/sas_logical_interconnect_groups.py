@@ -39,8 +39,8 @@ config = {
 config = try_load_from_file(config)
 oneview_client = OneViewClient(config)
 sas_logical_interconnect_groups = oneview_client.sas_logical_interconnect_groups
-
 interconnect_types = oneview_client.sas_interconnect_types
+
 interconnect_type_name = "Synergy 12Gb SAS Connection Module"
 # The Interconnect Type which is permitted to form SAS interconnect map must be defined to run this example
 interconnect_type = interconnect_types.get_by_name(interconnect_type_name)
@@ -88,7 +88,7 @@ data = {
 
 # Get all SAS Logical Interconnect Groups
 print("\nGet all SAS Logical Interconnect Groups")
-sas_ligs = oneview_client.sas_logical_interconnect_groups.get_all()
+sas_ligs = sas_logical_interconnect_groups.get_all()
 for sas_lig in sas_ligs:
     print("\n   '{name}' at uri: {uri}".format(**sas_lig))
 
@@ -108,7 +108,7 @@ if oneview_client.api_version >= 600:
 
 sas_lig = sas_logical_interconnect_groups.get_by_name(data["name"])
 if not sas_lig:
-    sas_lig = oneview_client.sas_logical_interconnect_groups.create(data)
+    sas_lig = sas_logical_interconnect_groups.create(data)
     print("\nSAS Logical Interconnect Group '{name}' created successfully.\n  uri = '{uri}'".format(**sas_lig.data))
 
 # Update the SAS Logical Interconnect Group
