@@ -180,9 +180,7 @@ class Resource(object):
             data = {}
 
         default_values = self._get_default_values()
-        for key, value in default_values.items():
-            if not data.get(key):
-                data[key] = value
+        data = self._helper.update_resource_fields(data, default_values)
 
         logger.debug('Create (uri = %s, resource = %s)' % (uri, str(data)))
 
@@ -298,12 +296,15 @@ class Resource(object):
 
         return new_resource
 
-    def _get_default_values(self):
+    def _get_default_values(self, default_values=None):
         """Gets the default values set for a resource"""
 
-        if self.DEFAULT_VALUES:
+        if not default_values:
+            default_values = self.DEFAULT_VALUES
+
+        if default_values:
             api_version = str(self._connection._apiVersion)
-            values = self.DEFAULT_VALUES.get(api_version, {}).copy()
+            values = default_values.get(api_version, {}).copy()
         else:
             values = {}
 
@@ -574,6 +575,22 @@ class ResourceHelper(object):
         else:
             return []
 
+    def update_resource_fields(self, data, data_to_add):
+        """Update resource data with new fields.
+
+        Args:
+            data: resource data
+            data_to_update: dict of data to update resource data
+
+        Returnes:
+            Returnes dict
+        """
+        for key, value in data_to_add.items():
+            if not data.get(key):
+                data[key] = value
+
+        return data
+
     def do_requests_to_getall(self, uri, requested_count):
         """Helps to make http request for get_all method.
 
@@ -659,9 +676,26 @@ class ResourceHelper(object):
 
         return self._task_monitor.wait_for_task(task, timeout)
 
+    def add_new_fields(data, data_to_add):
+        """Update resource data with new fields.
+
+        Args:
+            data: resource data
+            data_to_update: dict of data to update resource data
+
+        Returnes:
+            Returnes dict
+        """
+        for key, value in data_to_add.items():
+            if not data.get(key):
+                data[key] = value
+
+        return data
+
 
 class ResourcePatchMixin(object):
 
+    @ensure_resource_client
     def patch(self, operation, path, value, custom_headers=None, timeout=-1):
         """Uses the PATCH to update a resource.
 
