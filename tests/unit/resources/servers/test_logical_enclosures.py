@@ -53,7 +53,7 @@ class LogicalEnclosuresTest(TestCase):
         mock_create.return_value = {}
 
         self._logical_enclosures.create(resource)
-        mock_create.assert_called_once_with(resource.copy(), None, -1, None)
+        mock_create.assert_called_once_with(resource.copy(), None, -1, None, False)
 
     @mock.patch.object(ResourceHelper, 'delete')
     def test_delete_called_once(self, mock_delete):
