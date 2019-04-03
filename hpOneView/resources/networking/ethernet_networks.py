@@ -75,7 +75,7 @@ class EthernetNetworks(ResourcePatchMixin, Resource):
 
         """
         uri = self.URI + '/bulk'
-        default_values = self.get_default_values(self.BULK_DEFAULT_VALUES)
+        default_values = self._get_default_values(self.BULK_DEFAULT_VALUES)
         updated_data = self._helper.update_resource_fields(resource, default_values)
 
         self._helper.create(updated_data, uri=uri, timeout=timeout)

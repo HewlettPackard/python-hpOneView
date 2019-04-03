@@ -179,7 +179,7 @@ class Resource(object):
         if not data:
             data = {}
 
-        default_values = self.get_default_values()
+        default_values = self._get_default_values()
         data = self._helper.update_resource_fields(data, default_values)
 
         logger.debug('Create (uri = %s, resource = %s)' % (uri, str(data)))
@@ -296,7 +296,7 @@ class Resource(object):
 
         return new_resource
 
-    def get_default_values(self, default_values=None):
+    def _get_default_values(self, default_values=None):
         """Gets the default values set for a resource"""
 
         if not default_values:
@@ -312,7 +312,7 @@ class Resource(object):
 
     def _merge_default_values(self):
         """Merge default values with resource data."""
-        values = self.get_default_values()
+        values = self._get_default_values()
         for key, value in values.items():
             if not self.data.get(key):
                 self.data[key] = value
@@ -677,20 +677,20 @@ class ResourceHelper(object):
         return self._task_monitor.wait_for_task(task, timeout)
 
     def add_new_fields(data, data_to_add):
-       """Update resource data with new fields.
+        """Update resource data with new fields.
 
-       Args:
-           data: resource data
-           data_to_update: dict of data to update resource data
+        Args:
+            data: resource data
+            data_to_update: dict of data to update resource data
 
-       Returnes:
-           Returnes dict
-       """
-       for key, value in data_to_add.items():
+        Returnes:
+            Returnes dict
+        """
+        for key, value in data_to_add.items():
             if not data.get(key):
                 data[key] = value
 
-       return data
+        return data
 
 
 class ResourcePatchMixin(object):
