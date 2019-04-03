@@ -148,7 +148,7 @@
   <h1>Source code for hpOneView.resources.networking.sas_logical_interconnects</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1">###</span>
-<span class="c1"># (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP</span>
+<span class="c1"># (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP</span>
 <span class="c1">#</span>
 <span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
 <span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
@@ -178,18 +178,18 @@
 <span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
 
 
-<span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">ResourceClient</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">Resource</span><span class="p">,</span> <span class="n">ensure_resource_client</span><span class="p">,</span> <span class="n">unavailable_method</span>
 
 
-<div class="viewcode-block" id="SasLogicalInterconnects"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects">[docs]</a><span class="k">class</span> <span class="nc">SasLogicalInterconnects</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="SasLogicalInterconnects"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects">[docs]</a><span class="k">class</span> <span class="nc">SasLogicalInterconnects</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    SAS Logical Interconnects API client.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">URI</span> <span class="o">=</span> <span class="s1">&#39;/rest/sas-logical-interconnects&#39;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SasLogicalInterconnects</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SasLogicalInterconnects.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -223,63 +223,37 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of SAS logical interconnects.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="n">view</span><span class="p">,</span>
                                     <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SasLogicalInterconnects.get"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets the SAS Logical Interconnect with the specified ID or URI.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            id_or_uri:</span>
-<span class="sd">                Can be either the SAS Logical Interconnect ID or URI.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: SAS Logical Interconnect.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="SasLogicalInterconnects.get_by"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get_by">[docs]</a>    <span class="k">def</span> <span class="nf">get_by</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets all SAS Logical Interconnects that match the filter.</span>
-
-<span class="sd">        The search is case-insensitive.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            field: Field name to filter.</span>
-<span class="sd">            value: Value to filter.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            list: A list of SAS Logical Interconnects.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_by</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="SasLogicalInterconnects.update_firmware"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_firmware">[docs]</a>    <span class="k">def</span> <span class="nf">update_firmware</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">firmware_information</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">update_firmware</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">firmware_information</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Installs firmware to the member interconnects of a SAS Logical Interconnect.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            firmware_information: Options to install firmware to a SAS Logical Interconnect.</span>
-<span class="sd">            id_or_uri: Can be either the SAS Logical Interconnect ID or URI.</span>
-
+<span class="sd">            force: If sets to true, the operation completes despite any problems with the network connectivy</span>
+<span class="sd">              or the erros on the resource itself.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: SAS Logical Interconnect Firmware.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">firmware_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/firmware&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">firmware_information</span><span class="p">,</span> <span class="n">firmware_uri</span><span class="p">)</span></div>
+        <span class="n">firmware_uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/firmware&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">])</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">firmware_information</span><span class="p">,</span> <span class="n">firmware_uri</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 
-<div class="viewcode-block" id="SasLogicalInterconnects.get_firmware"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get_firmware">[docs]</a>    <span class="k">def</span> <span class="nf">get_firmware</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">get_firmware</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets baseline firmware information for a SAS Logical Interconnect.</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the SAS Logical Interconnect ID or URI.</span>
-
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: SAS Logical Interconnect Firmware.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">firmware_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/firmware&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">firmware_uri</span><span class="p">)</span></div>
+        <span class="n">firmware_uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/firmware&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_get</span><span class="p">(</span><span class="n">firmware_uri</span><span class="p">)</span>
 
 <div class="viewcode-block" id="SasLogicalInterconnects.update_compliance_all"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_compliance_all">[docs]</a>    <span class="k">def</span> <span class="nf">update_compliance_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">information</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -296,25 +270,32 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span> <span class="o">+</span> <span class="s2">&quot;/compliance&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">information</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">information</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 
-<div class="viewcode-block" id="SasLogicalInterconnects.update_compliance"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_compliance">[docs]</a>    <span class="k">def</span> <span class="nf">update_compliance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">update_compliance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a SAS Logical Interconnect to a consistent state. The current SAS Logical Interconnect state is</span>
 <span class="sd">        compared to the associated SAS Logical Interconnect group.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the resource ID or URI.</span>
 <span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
 <span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: SAS Logical Interconnect.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/compliance&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update_with_zero_body</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/compliance&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">])</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update</span><span class="p">({},</span> <span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 
-<div class="viewcode-block" id="SasLogicalInterconnects.replace_drive_enclosure"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.replace_drive_enclosure">[docs]</a>    <span class="k">def</span> <span class="nf">replace_drive_enclosure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">information</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">replace_drive_enclosure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">information</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        When a drive enclosure has been physically replaced, initiate the replacement operation that enables the</span>
 <span class="sd">        new drive enclosure to take over as a replacement for the prior drive enclosure. The request requires</span>
@@ -322,28 +303,43 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            information: Options to replace the drive enclosure.</span>
-<span class="sd">            id_or_uri: Can be either the SAS Logical Interconnect ID or URI.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: SAS Logical Interconnect.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/replaceDriveEnclosure&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">information</span><span class="p">,</span> <span class="n">uri</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/replaceDriveEnclosure&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">])</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">information</span><span class="p">,</span> <span class="n">uri</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
 
-<div class="viewcode-block" id="SasLogicalInterconnects.update_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">update_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">update_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Asynchronously applies or re-applies the SAS Logical Interconnect configuration to all managed interconnects</span>
 <span class="sd">        of a SAS Logical Interconnect.</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the SAS Logical Interconnect ID or URI.</span>
-
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: SAS Logical Interconnect.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/configuration&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update_with_zero_body</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/configuration&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">])</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update</span><span class="p">({},</span> <span class="n">uri</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+
+<div class="viewcode-block" id="SasLogicalInterconnects.create"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create method is not available&quot;&quot;&quot;</span>
+        <span class="n">unavailable_method</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SasLogicalInterconnects.delete"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete method is not available&quot;&quot;&quot;</span>
+        <span class="n">unavailable_method</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SasLogicalInterconnects.update"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;update method is not available&quot;&quot;&quot;</span>
+        <span class="n">unavailable_method</span><span class="p">()</span></div></div>
 </pre></div>
 
            </div>

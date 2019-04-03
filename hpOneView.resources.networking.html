@@ -3121,8 +3121,8 @@ in OneView, just stop waiting for its completion.</li>
 <span id="hponeview-resources-networking-sas-logical-interconnects-module"></span><h2>hpOneView.resources.networking.sas_logical_interconnects module<a class="headerlink" href="#module-hpOneView.resources.networking.sas_logical_interconnects" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.sas_logical_interconnects.</code><code class="descname">SasLogicalInterconnects</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.sas_logical_interconnects.</code><code class="descname">SasLogicalInterconnects</code><span class="sig-paren">(</span><em>connection</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.Resource" title="hpOneView.resources.resource.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.Resource</span></code></a></p>
 <p>SAS Logical Interconnects API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.URI">
@@ -3130,21 +3130,15 @@ in OneView, just stop waiting for its completion.</li>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the SAS Logical Interconnect with the specified ID or URI.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the SAS Logical Interconnect ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">SAS Logical Interconnect.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
+<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.create">
+<code class="descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create method is not available</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete method is not available</p>
 </dd></dl>
 
 <dl class="method">
@@ -3185,100 +3179,26 @@ collections of resources).</li>
 </table>
 </dd></dl>
 
-<dl class="method">
-<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get_by">
-<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all SAS Logical Interconnects that match the filter.</p>
-<p>The search is case-insensitive.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> – Field name to filter.</li>
-<li><strong>value</strong> – Value to filter.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of SAS Logical Interconnects.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get_firmware">
-<code class="descname">get_firmware</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.get_firmware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get_firmware" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets baseline firmware information for a SAS Logical Interconnect.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the SAS Logical Interconnect ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">SAS Logical Interconnect Firmware.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_firmware</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.get_firmware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.replace_drive_enclosure">
-<code class="descname">replace_drive_enclosure</code><span class="sig-paren">(</span><em>information</em>, <em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.replace_drive_enclosure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.replace_drive_enclosure" title="Permalink to this definition">¶</a></dt>
-<dd><p>When a drive enclosure has been physically replaced, initiate the replacement operation that enables the
-new drive enclosure to take over as a replacement for the prior drive enclosure. The request requires
-specification of both the serial numbers of the original drive enclosure and its replacement to be provided.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>information</strong> – Options to replace the drive enclosure.</li>
-<li><strong>id_or_uri</strong> – Can be either the SAS Logical Interconnect ID or URI.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">SAS Logical Interconnect.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">replace_drive_enclosure</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.replace_drive_enclosure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
-<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_compliance">
-<code class="descname">update_compliance</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.update_compliance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_compliance" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a SAS Logical Interconnect to a consistent state. The current SAS Logical Interconnect state is
-compared to the associated SAS Logical Interconnect group.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or URI.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">SAS Logical Interconnect.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
+<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update">
+<code class="descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>update method is not available</p>
 </dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_compliance">
+<code class="descname">update_compliance</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_compliance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_compliance_all">
@@ -3306,48 +3226,15 @@ in OneView; it just stops waiting for its completion.</li>
 </table>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_configuration">
-<code class="descname">update_configuration</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.update_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_configuration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Asynchronously applies or re-applies the SAS Logical Interconnect configuration to all managed interconnects
-of a SAS Logical Interconnect.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the SAS Logical Interconnect ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">SAS Logical Interconnect.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update_configuration</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_configuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_firmware">
-<code class="descname">update_firmware</code><span class="sig-paren">(</span><em>firmware_information</em>, <em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/sas_logical_interconnects.html#SasLogicalInterconnects.update_firmware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_firmware" title="Permalink to this definition">¶</a></dt>
-<dd><p>Installs firmware to the member interconnects of a SAS Logical Interconnect.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>firmware_information</strong> – Options to install firmware to a SAS Logical Interconnect.</li>
-<li><strong>id_or_uri</strong> – Can be either the SAS Logical Interconnect ID or URI.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">SAS Logical Interconnect Firmware.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update_firmware</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.sas_logical_interconnects.SasLogicalInterconnects.update_firmware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
