@@ -246,13 +246,14 @@ lig.update(lig_to_update)
 pprint(lig.data)
 
 # Performs a patch operation
-scope = oneview_client.scopes.get_by_name(scope_name)
-if scope:
-    print("\nPatches the logical interconnect group adding one scope to it")
-    updated_lig = lig.patch('replace',
-                            '/scopeUris',
-                            [scope['uri']])
-    pprint(updated_lig.data)
+if oneview_client.api_version <= 500:
+    scope = oneview_client.scopes.get_by_name(scope_name)
+    if scope:
+        print("\nPatches the logical interconnect group adding one scope to it")
+        updated_lig = lig.patch('replace',
+                                '/scopeUris',
+                                [scope['uri']])
+        pprint(updated_lig.data)
 
 # Get default settings
 print("Get the default interconnect settings for a logical interconnect group")

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -31,19 +31,18 @@ from future import standard_library
 standard_library.install_aliases()
 
 
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource, ensure_resource_client, unavailable_method
 
 
-class ManagedSANs(object):
+class ManagedSANs(Resource):
     """
     Managed SANs API client.
 
     """
     URI = '/rest/fc-sans/managed-sans'
 
-    def __init__(self, con):
-        self._connection = con
-        self._client = ResourceClient(con, self.URI)
+    def __init__(self, connection, data=None):
+        super(ManagedSANs, self).__init__(connection, data)
 
     def get_all(self, start=0, count=-1, query='', sort=''):
         """
@@ -67,7 +66,7 @@ class ManagedSANs(object):
         Returns:
             list: A list of Managed SANs
         """
-        return self._client.get_all(start=start, count=count, query=query, sort=sort)
+        return self._helper.get_all(start=start, count=count, query=query, sort=sort)
 
     def get_by_name(self, name):
         """
@@ -79,51 +78,29 @@ class ManagedSANs(object):
         Returns:
             dict: Managed SAN.
         """
-        managed_sans = self._client.get_all()
+        managed_sans = self.get_all()
         result = [x for x in managed_sans if x['name'] == name]
-        return result[0] if result else None
 
-    def get(self, id_or_uri):
+        resource = result[0] if result else None
+        if resource:
+            resource = self.new(self._connection, resource)
+
+        return resource
+
+    def create(self):
+        """Create method is not available"""
+        unavailable_method()
+
+    def delete(self):
+        """Delete method is not available"""
+        unavailable_method()
+
+    @ensure_resource_client
+    def get_endpoints(self, start=0, count=-1, filter='', sort=''):
         """
-        Retrieves a single Managed SAN by ID or URI.
+        Gets a list of endpoints in a SAN.
 
         Args:
-            id_or_uri: Can be either the Managed SAN resource ID or URI.
-
-        Returns:
-            dict: The Managed SAN resource.
-        """
-        return self._client.get(id_or_uri=id_or_uri)
-
-    def update(self, id_or_uri, data, timeout=-1):
-        """
-        Updates a Managed SAN.
-
-        It's possible to:
-            - Refresh the Managed SAN.
-            - Update the Managed SAN's publicAttributes.
-            - Update the Managed SAN's policy.
-
-        Args:
-            id_or_uri: Can be either the Managed SAN resource ID or URI.
-            data: dict object to update
-            timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView, just stop waiting for its completion.
-
-        Returns:
-            dict: SanResponse
-        """
-        uri = self._client.build_uri(id_or_uri)
-        return self._client.update(data, uri=uri, timeout=timeout)
-
-    def get_endpoints(self, managed_san_id_or_uri, start=0, count=-1, filter='', sort=''):
-        """
-        Gets a list of endpoints in a SAN identified by ID.
-
-        Args:
-            managed_san_id_or_uri:
-                Can be either the Managed SAN ID or URI.
             start:
                 The first item to return, using 0-based indexing.
                 If not specified, the default is 0 - start with the first available item.
@@ -141,16 +118,15 @@ class ManagedSANs(object):
         Returns:
             list: A list of endpoints.
         """
-        uri = self._client.build_uri(managed_san_id_or_uri) + "/endpoints/"
-        return self._client.get_all(start, count, filter=filter, sort=sort, uri=uri)
+        uri = "{}/endpoints/".format(self.data["uri"])
+        return self._helper.get_all(start, count, filter=filter, sort=sort, uri=uri)
 
-    def create_endpoints_csv_file(self, managed_san_id_or_uri, timeout=-1):
+    @ensure_resource_client
+    def create_endpoints_csv_file(self, timeout=-1):
         """
         Creates an endpoints CSV file for a SAN.
 
         Args:
-            managed_san_id_or_uri:
-                Can be either the Managed SAN ID or URI.
             timeout:
                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
                 OneView, just stops waiting for its completion.
@@ -158,16 +134,15 @@ class ManagedSANs(object):
         Returns:
             dict: Endpoint CSV File Response.
         """
-        uri = self._client.build_uri(managed_san_id_or_uri) + '/endpoints/'
-        return self._client.create_with_zero_body(uri=uri, timeout=timeout)
+        uri = "{}/endpoints/".format(self.data["uri"])
+        return self._helper.do_post(uri, {}, timeout, None)
 
-    def create_issues_report(self, managed_san_id_or_uri, timeout=-1):
+    @ensure_resource_client
+    def create_issues_report(self, timeout=-1):
         """
         Creates an unexpected zoning report for a SAN.
 
         Args:
-            managed_san_id_or_uri:
-                Can be either the Managed SAN ID or URI.
             timeout:
                 Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
                 OneView, just stops waiting for its completion.
@@ -175,8 +150,8 @@ class ManagedSANs(object):
         Returns:
             list: A list of FCIssueResponse dict.
         """
-        uri = self._client.build_uri(managed_san_id_or_uri) + '/issues/'
-        return self._client.create_report(uri=uri, timeout=timeout)
+        uri = "{}/issues/".format(self.data["uri"])
+        return self._helper.create_report(uri, timeout)
 
     def get_wwn(self, wwn):
         """
@@ -192,4 +167,4 @@ class ManagedSANs(object):
             list: Associations between provided WWNs and the SANs
         """
         uri = '/rest/fc-sans/managed-sans?locate=' + wwn
-        return self._client.get(uri)
+        return self._helper.do_get(uri)
