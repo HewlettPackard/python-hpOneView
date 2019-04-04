@@ -13,6 +13,7 @@
   "enclosure_username": "",
   "enclosure_password": "",
   "enclosure_group_uri": "",
+  "server_mpHostsAndRanges": [],
   "server_hostname": "",
   "server_username": "",
   "server_password": "",
