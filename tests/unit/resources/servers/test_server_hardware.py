@@ -80,7 +80,7 @@ class ServerHardwareTest(TestCase):
         mock_create.return_value = {}
 
         self._server_hardware.add(information)
-        mock_create.assert_called_once_with(information.copy(), None, -1, None)
+        mock_create.assert_called_once_with(information.copy(), None, -1, None, False)
 
     @mock.patch.object(ResourceHelper, 'create')
     def test_add_multiple_servers_called_once(self, mock_create):
@@ -93,7 +93,7 @@ class ServerHardwareTest(TestCase):
         self._server_hardware.add_multiple_servers(information)
         mock_create.assert_called_once_with(information.copy(),
                                             '/rest/server-hardware/discovery',
-                                            -1, None)
+                                            -1, None, False)
 
     @mock.patch.object(ResourceHelper, 'delete')
     def test_remove_called_once(self, mock_delete):
