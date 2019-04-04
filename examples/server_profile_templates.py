@@ -67,12 +67,12 @@ if oneview_client.api_version >= 600:
         print("Found %d Server profile Templates" % (len(server_profile_templates_by_scope_uris)))
         i = 0
         while i < len(server_profile_templates_by_scope_uris):
-            print("Found Server Profile Template Group by scope_uris: '%s'.\n  uri = '%s'" % (server_profile_templates_by_scope_uris[i]['name'],
-                                                                                              server_profile_templates_by_scope_uris[i]['uri']))
+            print("Found Server Profile Template by scope_uris: '%s'.\n  uri = '%s'" % (server_profile_templates_by_scope_uris[i]['name'],
+                                                                                        server_profile_templates_by_scope_uris[i]['uri']))
             i += 1
         pprint(server_profile_templates_by_scope_uris)
     else:
-        print("No Server Profile Template Group found.")
+        print("No Server Profile Template found.")
 
 # Get by property
 print("\nGet a list of server profile templates that matches the specified macType")

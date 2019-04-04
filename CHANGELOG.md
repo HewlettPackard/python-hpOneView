@@ -32,14 +32,15 @@ Resource data will be available with the resource object. This enhancement helps
 - FCOE network
 - Interconnect type
 - Internal link set
+- Logical enclosure
 - Managed SAN
-- Server profile
-- Server profile template
 - SAS interconnect
 - SAS interconnect type
 - SAS logical interconnect
 - Server hardware
 - Server hardware type
+- Server profile
+- Server profile template
 - Switch type
 - Uplink set
 
