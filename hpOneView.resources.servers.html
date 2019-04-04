@@ -1435,8 +1435,8 @@ OneView; just stops waiting for its completion.</li>
 <span id="hponeview-resources-servers-server-hardware-module"></span><h2>hpOneView.resources.servers.server_hardware module<a class="headerlink" href="#module-hpOneView.resources.servers.server_hardware" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.servers.server_hardware.</code><code class="descname">ServerHardware</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">hpOneView.resources.servers.server_hardware.</code><code class="descname">ServerHardware</code><span class="sig-paren">(</span><em>connection</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.ResourcePatchMixin" title="hpOneView.resources.resource.ResourcePatchMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.ResourcePatchMixin</span></code></a>, <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.ResourceUtilizationMixin" title="hpOneView.resources.resource.ResourceUtilizationMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.ResourceUtilizationMixin</span></code></a>, <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.Resource" title="hpOneView.resources.resource.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.Resource</span></code></a></p>
 <p>The server hardware resource is a representation of a physical server.
 The server hardware resource provides methods for server management tasks such
 as applying a profile, importing a server and managing an iLO.</p>
@@ -1503,56 +1503,6 @@ in OneView; it just stops waiting for its completion.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a server hardware resource by ID or by URI.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server hardware resource ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The server hardware resource</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a list of server hardware resources. Returns a list of resources based on optional sorting and filtering,
-and constrained by start and count parameters.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> – The first item to return, using 0-based indexing.
-If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items.
-The actual number of items in the response might differ from the requested
-count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
-default is no filter; all resources are returned.</li>
-<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
-on create time with the oldest entry first.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of server hardware resources.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_all_firmwares">
 <code class="descname">get_all_firmwares</code><span class="sig-paren">(</span><em>filter=u''</em>, <em>start=0</em>, <em>count=-1</em>, <em>query=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_all_firmwares"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_all_firmwares" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of firmware inventory across all servers. To filter the returned data, specify a filter
@@ -1590,302 +1540,49 @@ on create time with the oldest entry first.</li>
 </table>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_bios">
-<code class="descname">get_bios</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_bios"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_bios" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the list of BIOS/UEFI values currently set on the physical server.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server hardware resource ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dictionary of BIOS/UEFI values.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_bios</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_bios" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
-<dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_by">
-<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all server hardware that match the filter.</p>
-<p>The search is case-insensitive.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> – Field name to filter.</li>
-<li><strong>value</strong> – Value to filter.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_environmental_configuration">
-<code class="descname">get_environmental_configuration</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_environmental_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_environmental_configuration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the settings that describe the environmental configuration (supported feature set, calibrated minimum and
-maximum power, location and dimensions, etc.) of the server hardware resource.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server hardware resource ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Environmental configuration settings.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_environmental_configuration</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_environmental_configuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_firmware">
-<code class="descname">get_firmware</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_firmware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_firmware" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the firmware inventory of a server.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This method is available for API version 300 or later.</p>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server hardware resource ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Server Hardware firmware.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_firmware</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_firmware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_ilo_sso_url">
-<code class="descname">get_ilo_sso_url</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_ilo_sso_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_ilo_sso_url" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves the URL to launch a Single Sign-On (SSO) session for the iLO web interface. If the server hardware is
-unsupported, the resulting URL will not use SSO and the iLO web interface will prompt for credentials.
-This is not supported on G7/iLO3 or earlier servers.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server hardware resource ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">URL</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_ilo_sso_url</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_ilo_sso_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_java_remote_console_url">
-<code class="descname">get_java_remote_console_url</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_java_remote_console_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_java_remote_console_url" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a Single Sign-On (SSO) session for the iLO Java Applet console and returns the URL to launch it.
-If the server hardware is unmanaged or unsupported, the resulting URL will not use SSO and the iLO Java Applet
-will prompt for credentials. This is not supported on G7/iLO3 or earlier servers.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server hardware resource ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">URL</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_java_remote_console_url</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_java_remote_console_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_physical_server_hardware">
-<code class="descname">get_physical_server_hardware</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_physical_server_hardware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_physical_server_hardware" title="Permalink to this definition">¶</a></dt>
-<dd><p>Information describing an ‘SDX’ partition including a list of physical server blades represented by a server
-hardware. Used with SDX enclosures only.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server hardware resource ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Resource</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_physical_server_hardware</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_physical_server_hardware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_remote_console_url">
-<code class="descname">get_remote_console_url</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_remote_console_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_remote_console_url" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a Single Sign-On (SSO) session for the iLO Integrated Remote Console Application (IRC) and returns the
-URL to launch it. If the server hardware is unmanaged or unsupported, the resulting URL will not use SSO and the
-IRC application will prompt for credentials. Use of this URL requires a previous installation of the iLO IRC and
-is supported only on Windows clients.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server hardware resource ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">URL</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_remote_console_url</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_remote_console_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
-<dt id="hpOneView.resources.servers.server_hardware.ServerHardware.get_utilization">
-<code class="descname">get_utilization</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>fields=None</em>, <em>filter=None</em>, <em>refresh=False</em>, <em>view=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.get_utilization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.get_utilization" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves historical utilization data for the specified resource, metrics, and time span.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Resource identification or URI.</li>
-<li><strong>fields</strong> – <p>Name of the metrics to be retrieved in the format METRIC[,METRIC]…</p>
-<p>If unspecified, all metrics supported are returned.</p>
-<p>Server hardware supports the following utilization metrics:</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>AmbientTemperature</dt>
-<dd>Inlet air temperature in degrees Celsius during this sample interval.</dd>
-<dt>AveragePower</dt>
-<dd>Average power consumption in Watts during this sample interval.</dd>
-<dt>PeakPower</dt>
-<dd>Peak power consumption in Watts during this sample interval.</dd>
-<dt>PowerCap</dt>
-<dd>Dynamic power cap setting on the server hardware in Watts during this sample interval.</dd>
-<dt>CpuUtilization</dt>
-<dd>CPU utilization of all CPUs in percent during this sample interval.</dd>
-<dt>CpuAverageFreq</dt>
-<dd>Average CPU frequency in Mhz during this sample interval.</dd>
-</dl>
-</div></blockquote>
-</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – <p>Provides an expression of the requested time range of data. One condition (startDate/endDate) is
-specified per filter specification as described below. The condition must be specified via the
-equals (=) operator.</p>
-<dl class="docutils">
-<dt>startDate</dt>
-<dd>Start date of requested starting time range in ISO 8601 format. If omitted, the startDate is
-determined by the endDate minus 24 hours.</dd>
-<dt>endDate</dt>
-<dd>End date of requested starting time range in ISO 8601 format. When omitted, the endDate includes
-the latest data sample available.</dd>
-</dl>
-<p>If an excessive number of samples would otherwise be returned, the results will be segmented. The
-caller is responsible for comparing the returned sliceStartTime with the requested startTime in the
-response. If the sliceStartTime is greater than the oldestSampleTime and the requested start time,
-the caller is responsible for repeating the request with endTime set to sliceStartTime to obtain the
-next segment. This process is repeated until the full data set is retrieved.</p>
-<p>If the resource has no data, the UtilizationData is still returned, but will contain no samples and
-sliceStartTime/sliceEndTime will be equal. oldestSampleTime/newestSampleTime will still be set
-appropriately (null if no data is available). If the filter just does not happen to overlap the data
-that a resource does have, then the metric history service will return null sample values for any
-missing samples.</p>
-</li>
-<li><strong>refresh</strong> – Specifies that, if necessary, an additional request will be queued to obtain the most recent
-utilization data from the iLO. The response will not include any refreshed data. To track the
-availability of the newly collected data, monitor the TaskResource identified by the refreshTaskUri
-property in the response. If null, no refresh was queued.</li>
-<li><strong>view</strong> – <p>Specifies the resolution interval length of the samples to be retrieved. This is reflected in the
-resolution in the returned response. Utilization data is automatically purged to stay within storage
-space constraints. See the following supported views.</p>
-<dl class="docutils">
-<dt>native</dt>
-<dd>Resolution of the samples returned will be one sample for each 5-minute time period. This is the
-default view and matches the resolution of the data returned by the iLO. Samples at this resolution
-are retained up to one year.</dd>
-<dt>hour</dt>
-<dd>Resolution of the samples returned will be one sample for each 60-minute time period. Samples are
-calculated by averaging the available 5-minute data samples that occurred within the hour, except
-for PeakPower, which is calculated by reporting the peak observed 5-minute sample value data during
-the hour. Samples at this resolution are retained up to three years.</dd>
-<dt>day</dt>
-<dd>Resolution of the samples returned will be one sample for each 24-hour time period. One day is a
-24-hour period that starts at midnight GMT, regardless of the time zone in which the appliance or
-client is located. Samples are calculated by averaging the available 5-minute data samples that
-occurred during the day, except for PeakPower, which is calculated by reporting the peak observed
-5-minute sample value data during the day. Samples at this resolution are retained up to three
-years.</dd>
-</dl>
-</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.servers.server_hardware.ServerHardware.patch">
-<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.patch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs a specific patch operation for the given server. If the server supports the particular operation,
-the operation is performed and a response is returned to the caller with the results.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>operation</strong> – Patch operation</li>
-<li><strong>path</strong> – Path</li>
-<li><strong>value</strong> – Value</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.refresh_state">
-<code class="descname">refresh_state</code><span class="sig-paren">(</span><em>configuration</em>, <em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.refresh_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.refresh_state" title="Permalink to this definition">¶</a></dt>
-<dd><p>Refreshes the server hardware to fix configuration issues.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the server hardware resource ID or URI.</li>
-<li><strong>configuration</strong> – Refresh state configuration.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Resource</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">refresh_state</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.refresh_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.remove">
-<code class="descname">remove</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.remove" title="Permalink to this definition">¶</a></dt>
+<code class="descname">remove</code><span class="sig-paren">(</span><em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.remove"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.remove" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes the rackserver with the specified URI.
 Note: This operation is only supported on appliances that support rack-mounted servers.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1893,7 +1590,6 @@ Note: This operation is only supported on appliances that support rack-mounted s
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) – Object to delete.</li>
 <li><strong>force</strong> (<em>bool</em>) – If set to true, the operation completes despite any problems with
 network connectivity or errors on the resource itself. The default is false.</li>
 <li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
@@ -1911,77 +1607,20 @@ in OneView; it just stops waiting for its completion.</li>
 </table>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.update_environmental_configuration">
-<code class="descname">update_environmental_configuration</code><span class="sig-paren">(</span><em>configuration</em>, <em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.update_environmental_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.update_environmental_configuration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the calibrated max power of an unmanaged or unsupported server hardware resource.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the server hardware resource ID or URI.</li>
-<li><strong>configuration</strong> (<em>dict</em>) – Environmental configuration.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Environmental configuration settings.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update_environmental_configuration</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.update_environmental_configuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.update_mp_firware_version">
-<code class="descname">update_mp_firware_version</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.update_mp_firware_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.update_mp_firware_version" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates the iLO firmware on a physical server to a minimum ILO firmware version required by OneView to
-manage the server.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the server hardware resource ID or URI.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Resource</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update_mp_firware_version</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.update_mp_firware_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.server_hardware.ServerHardware.update_power_state">
-<code class="descname">update_power_state</code><span class="sig-paren">(</span><em>configuration</em>, <em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_hardware.html#ServerHardware.update_power_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.update_power_state" title="Permalink to this definition">¶</a></dt>
-<dd><p>Refreshes the server hardware to fix configuration issues.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the server hardware resource ID or URI.</li>
-<li><strong>configuration</strong> (<em>dict</em>) – Power state configuration.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Resource</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update_power_state</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.server_hardware.ServerHardware.update_power_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
