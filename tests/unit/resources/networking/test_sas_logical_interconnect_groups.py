@@ -54,7 +54,7 @@ class SasLogicalInterconnectGroupsTest(unittest.TestCase):
 
         self._resource.create(resource, timeout=30)
 
-        mock_create.assert_called_once_with(resource, None, 30, None)
+        mock_create.assert_called_once_with(resource, None, 30, None, False)
 
     @mock.patch.object(Resource, 'ensure_resource_data')
     @mock.patch.object(ResourceHelper, 'update')
