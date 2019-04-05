@@ -724,10 +724,7 @@ class OneViewClient(object):
         Returns:
             LogicalInterconnects:
         """
-        if not self.__logical_interconnects:
-            self.__logical_interconnects = LogicalInterconnects(
-                self.__connection)
-        return self.__logical_interconnects
+        return LogicalInterconnects(self.__connection)
 
     @property
     def sas_logical_interconnects(self):
