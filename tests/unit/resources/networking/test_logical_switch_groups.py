@@ -27,7 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.networking.logical_switch_groups import LogicalSwitchGroups
-from hpOneView.resources.resource import ResourceHelper, ResourcePatchMixin
+from hpOneView.resources.resource import Resource, ResourceHelper, ResourcePatchMixin
 
 
 class LogicalSwitchGroupsTest(unittest.TestCase):
@@ -45,14 +45,15 @@ class LogicalSwitchGroupsTest(unittest.TestCase):
 
         self._lsg.get_all(2, 500, filter, sort)
 
-        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort)
+        mock_get_all.assert_called_once_with(count=500, filter='name=TestName',
+                                             sort='name:ascending', start=2)
 
     @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_all_called_once_with_default(self, mock_get_all):
         self._lsg.get_all()
-        mock_get_all.assert_called_once_with(0, -1, filter='', sort='')
+        mock_get_all.assert_called_once_with(count=-1, filter=u'', sort=u'', start=0)
 
-   @mock.patch.object(ResourceHelper, 'create')
+    @mock.patch.object(ResourceHelper, 'create')
     def test_create_called_once(self, mock_create):
         lsg = {
             "name": "OneView Test Logical Switch Group",
@@ -68,11 +69,12 @@ class LogicalSwitchGroupsTest(unittest.TestCase):
                 }]
             }
         }
-        self._lsg.create(lsg, 70)
-        mock_create.assert_called_once_with(lsg, timeout=70, default_values=self._lsg.DEFAULT_VALUES)
+        self._lsg.create(lsg, timeout=70)
+        mock_create.assert_called_once_with(lsg, None, 70, None, False)
 
+    @mock.patch.object(Resource, 'ensure_resource_data')
     @mock.patch.object(ResourceHelper, 'update')
-    def test_update_called_once(self, mock_update):
+    def test_update_called_once(self, mock_update, mock_ensure_client):
         lsg = {
             "name": "Updated name",
             "switchMapTemplate": {
@@ -84,24 +86,24 @@ class LogicalSwitchGroupsTest(unittest.TestCase):
                         }]
                     },
                     "permittedSwitchTypeUri": "/rest/switch-types/46d7ffad-4424-4e36-acf3-b379c3116206"
-                }],
-                "uri": "/rest/logical-switch-groups/dce3fc90-873e-48f7-8340-cc927d625b16"
-            }
+                }]
+            },
+            "uri": self.uri
         }
-        self._lsg.update(lsg, 70)
-        mock_update.assert_called_once_with(lsg, timeout=70, default_values=self._lsg.DEFAULT_VALUES)
+        self._lsg.update(lsg, timeout=70)
+        mock_update.assert_called_once_with(lsg, self.uri, False, 70, None)
 
     @mock.patch.object(ResourceHelper, 'delete')
     def test_delete_called_once(self, mock_delete):
         self._lsg.delete(force=True, timeout=50)
 
-        mock_delete.assert_called_once_with(self.uri, force=True, timeout=50)
+        mock_delete.assert_called_once_with(self.uri, custom_headers=None, force=True, timeout=50)
 
     @mock.patch.object(ResourceHelper, 'delete')
     def test_delete_called_once_with_defaults(self, mock_delete):
         self._lsg.delete()
 
-        mock_delete.assert_called_once_with(self.uri, force=False, timeout=-1)
+        mock_delete.assert_called_once_with(self.uri, custom_headers=None, force=False, timeout=-1)
 
     @mock.patch.object(ResourcePatchMixin, 'patch_request')
     def test_patch_should_use_user_defined_values(self, mock_patch):
@@ -109,5 +111,8 @@ class LogicalSwitchGroupsTest(unittest.TestCase):
 
         self._lsg.patch('replace',
                         '/scopeUris', ['rest/fake/scope123'], 1)
-        mock_patch.assert_called_once_with('rest/fake/logical-switch-groups/123', 'replace',
-                                           '/scopeUris', ['rest/fake/scope123'], timeout=1)
+        mock_patch.assert_called_once_with('/rest/logical-switch-groups/dce3fc90-873e-48f7-8340-cc927d625b16',
+                                           body=[{'path': '/scopeUris',
+                                                  'value': ['rest/fake/scope123'],
+                                                  'op': 'replace'}],
+                                           custom_headers=1, timeout=-1)

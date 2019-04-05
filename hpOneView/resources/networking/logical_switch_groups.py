@@ -54,4 +54,3 @@ class LogicalSwitchGroups(ResourcePatchMixin, Resource):
 
     def __init__(self, connection, data=None):
         super(LogicalSwitchGroups, self).__init__(connection, data)
-
