@@ -571,9 +571,7 @@ class OneViewClient(object):
         Returns:
             LogicalSwitchGroups:
         """
-        if not self.__logical_switch_groups:
-            self.__logical_switch_groups = LogicalSwitchGroups(self.__connection)
-        return self.__logical_switch_groups
+        return LogicalSwitchGroups(self.__connection)
 
     @property
     def logical_switches(self):

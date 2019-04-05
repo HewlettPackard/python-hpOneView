@@ -641,9 +641,9 @@ class OneViewClientTest(unittest.TestCase):
     def test_logical_switch_groups_has_value(self):
         self.assertIsNotNone(self._oneview.logical_switch_groups)
 
-    def test_lazy_loading_logical_switch_groups(self):
-        logical_switch_groups = self._oneview.logical_switch_groups
-        self.assertEqual(logical_switch_groups, self._oneview.logical_switch_groups)
+    def test_logical_switch_groups_return(self):
+        self.assertNotEqual(self._oneview.logical_switch_groups,
+                            self._oneview.logical_switch_groups)
 
     def test_logical_switches_has_right_type(self):
         self.assertIsInstance(self._oneview.logical_switches, LogicalSwitches)
