@@ -34,6 +34,7 @@ Resource data will be available with the resource object. This enhancement helps
 - Internal link set
 - Logical enclosure
 - Logical interconnect
+- Logical interconnect group
 - Managed SAN
 - SAS interconnect
 - SAS interconnect type
