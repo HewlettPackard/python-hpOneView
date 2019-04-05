@@ -77,7 +77,7 @@ class LogicalInterconnectGroupsTest(unittest.TestCase):
             "enclosureType": "C7000",
         }
         self._lig.create(lig, timeout=70)
-        mock_create.assert_called_once_with(lig, None, 70, None)
+        mock_create.assert_called_once_with(lig, None, 70, None, False)
 
     @mock.patch.object(Resource, 'ensure_resource_data')
     @mock.patch.object(ResourceHelper, 'update')
