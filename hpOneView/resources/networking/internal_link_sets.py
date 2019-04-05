@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -31,10 +31,10 @@ from future import standard_library
 standard_library.install_aliases()
 
 
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource
 
 
-class InternalLinkSets(object):
+class InternalLinkSets(Resource):
     """
     Internal Link Sets API client.
 
@@ -45,9 +45,8 @@ class InternalLinkSets(object):
 
     URI = '/rest/internal-link-sets'
 
-    def __init__(self, con):
-        self._connection = con
-        self._client = ResourceClient(con, self.URI)
+    def __init__(self, connection, data=None):
+        super(InternalLinkSets, self).__init__(connection, data)
 
     def get_all(self, start=0, count=-1, filter='', query='', sort='', view='', fields=''):
         """
@@ -81,33 +80,5 @@ class InternalLinkSets(object):
         Returns:
             list:  Internal Link Set Collection.
         """
-        return self._client.get_all(start=start, count=count, filter=filter, query=query, sort=sort, view=view,
-                                    fields=fields)
-
-    def get(self, id_or_uri):
-        """
-        Gets a specific internal-link-set resource.
-
-        Args:
-            id_or_uri: ID or URI of the Internal Link Set resource.
-
-        Returns:
-            dict: Internal Link Set.
-        """
-        return self._client.get(id_or_uri)
-
-    def get_by(self, field, value):
-        """
-        Gets all internal-link-sets that match the filter.
-        The search is case-insensitive.
-
-        Args:
-            field: field name to filter
-            value: value to filter
-
-        Returns:
-            list: A list of Internal Link Sets.
-        """
-        links = self._client.get_all()
-        result = [x for x in links if x[field] == value]
-        return result if result else []
+        return self._helper.get_all(start=start, count=count, filter=filter,
+                                    query=query, sort=sort, view=view, fields=fields)

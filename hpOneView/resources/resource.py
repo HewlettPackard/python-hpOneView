@@ -164,7 +164,7 @@ class Resource(object):
 
         return result
 
-    def create(self, data=None, uri=None, timeout=-1, custom_headers=None):
+    def create(self, data=None, uri=None, timeout=-1, custom_headers=None, force=False):
         """Makes a POST request to create a resource when a request body is required.
 
         Args:
@@ -179,12 +179,12 @@ class Resource(object):
         if not data:
             data = {}
 
-        default_values = self.get_default_values()
+        default_values = self._get_default_values()
         data = self._helper.update_resource_fields(data, default_values)
 
         logger.debug('Create (uri = %s, resource = %s)' % (uri, str(data)))
 
-        resource_data = self._helper.create(data, uri, timeout, custom_headers)
+        resource_data = self._helper.create(data, uri, timeout, custom_headers, force)
         new_resource = self.new(self._connection, resource_data)
 
         return new_resource
@@ -296,7 +296,7 @@ class Resource(object):
 
         return new_resource
 
-    def get_default_values(self, default_values=None):
+    def _get_default_values(self, default_values=None):
         """Gets the default values set for a resource"""
 
         if not default_values:
@@ -312,7 +312,7 @@ class Resource(object):
 
     def _merge_default_values(self):
         """Merge default values with resource data."""
-        values = self.get_default_values()
+        values = self._get_default_values()
         for key, value in values.items():
             if not self.data.get(key):
                 self.data[key] = value
@@ -375,7 +375,7 @@ class ResourceHelper(object):
 
         return self.do_requests_to_getall(uri, count)
 
-    def create(self, data=None, uri=None, timeout=-1, custom_headers=None):
+    def create(self, data=None, uri=None, timeout=-1, custom_headers=None, force=False):
         """Makes a POST request to create a resource when a request body is required.
 
         Args:
@@ -389,6 +389,9 @@ class ResourceHelper(object):
         """
         if not uri:
             uri = self._base_uri
+
+        if force:
+            uri += '?force={}'.format(force)
 
         logger.debug('Create (uri = %s, resource = %s)' % (uri, str(data)))
 
@@ -422,7 +425,8 @@ class ResourceHelper(object):
         """Makes a PUT request to update a resource when a request body is required.
 
         Args:
-            data: Data to update the resource.
+            resource: Data to update the resource.
+            uri: Resource uri
             force: If set to true, the operation completes despite any problems
                 with network connectivity or errors on the resource itself. The default is false.
             timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
@@ -441,6 +445,58 @@ class ResourceHelper(object):
             uri += '?force=True'
 
         return self.do_put(uri, resource, timeout, custom_headers)
+
+    def create_report(self, uri, timeout=-1):
+        """
+        Creates a report and returns the output.
+
+        Args:
+            uri: URI
+            timeout:
+                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+
+        Returns:
+            list:
+        """
+        logger.debug('Creating Report (uri = %s)'.format(uri))
+        task, _ = self._connection.post(uri, {})
+
+        if not task:
+            raise exceptions.HPOneViewException(RESOURCE_CLIENT_TASK_EXPECTED)
+
+        task = self._task_monitor.get_completed_task(task, timeout)
+
+        return task['taskOutput']
+
+    def get_collection(self, uri=None, filter='', path=''):
+        """Retrieves a collection of resources.
+
+        Use this function when the 'start' and 'count' parameters are not allowed in the GET call.
+        Otherwise, use get_all instead.
+
+        Optional filtering criteria may be specified.
+
+        Args:
+            filter (list or str): General filter/query string.
+            path (str): path to be added with base URI
+
+        Returns:
+             Collection of the requested resource.
+        """
+        if not uri:
+            uri = self._base_uri
+
+        if filter:
+            filter = self.make_query_filter(filter)
+            filter = "?" + filter[1:]
+
+        uri = "{uri}{path}{filter}".format(uri=uri, path=path, filter=filter)
+        logger.debug('Get resource collection (uri = %s)' % uri)
+
+        response = self._connection.get(uri)
+
+        return self.get_members(response)
 
     def build_query_uri(self, uri=None, start=0, count=-1, filter='', query='', sort='', view='', fields='', scope_uris=''):
         """Builds the URI from given parameters.
@@ -675,6 +731,22 @@ class ResourceHelper(object):
 
         return self._task_monitor.wait_for_task(task, timeout)
 
+    def add_new_fields(data, data_to_add):
+        """Update resource data with new fields.
+
+        Args:
+            data: resource data
+            data_to_update: dict of data to update resource data
+
+        Returnes:
+            Returnes dict
+        """
+        for key, value in data_to_add.items():
+            if not data.get(key):
+                data[key] = value
+
+        return data
+
 
 class ResourcePatchMixin(object):
 
@@ -866,37 +938,6 @@ class ResourceSchemaMixin(object):
         """
         resource_uri = self.data['uri']
         return self._helper.do_get(resource_uri + '/schema')
-
-
-class ResourceCollectionMixin(object):
-
-    def get_collection(self, filter='', path=''):
-        """Retrieves a collection of resources.
-
-        Use this function when the 'start' and 'count' parameters are not allowed in the GET call.
-        Otherwise, use get_all instead.
-
-        Optional filtering criteria may be specified.
-
-        Args:
-            filter (list or str): General filter/query string.
-            path (str): path to be added with base URI
-
-        Returns:
-             Collection of the requested resource.
-        """
-        uri = self.URI
-
-        if filter:
-            filter = self._helper.make_query_filter(filter)
-            filter = "?" + filter[1:]
-
-        uri = "{uri}{path}{filter}".format(uri=uri, path=path, filter=filter)
-        logger.debug('Get resource collection (uri = %s)' % uri)
-
-        response = self._connection.get(uri)
-
-        return self._helper.get_members(response)
 
 
 class ResourceZeroBodyMixin(object):

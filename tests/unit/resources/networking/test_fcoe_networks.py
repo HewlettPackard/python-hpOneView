@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -27,7 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.networking.fcoe_networks import FcoeNetworks
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource, ResourceHelper, ResourcePatchMixin
 
 
 class FcoeNetworksTest(TestCase):
@@ -35,17 +35,19 @@ class FcoeNetworksTest(TestCase):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
         self._fcoe_networks = FcoeNetworks(self.connection)
+        self.uri = "/rest/fcoe-networks/3518be0e-17c1-4189-8f81-83f3724f6155"
+        self._fcoe_networks.data = {"uri": self.uri}
 
-    @mock.patch.object(ResourceClient, 'get_all')
+    @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_all_called_once(self, mock_get_all):
         filter = 'name=TestName'
         sort = 'name:ascending'
 
         self._fcoe_networks.get_all(2, 500, filter, sort)
 
-        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort)
+        mock_get_all.assert_called_once_with(start=2, count=500, filter=filter, sort=sort)
 
-    @mock.patch.object(ResourceClient, 'create')
+    @mock.patch.object(ResourceHelper, 'create')
     def test_create(self, mock_create):
         resource = {
             'name': 'OneViewSDK Test FCoE Network',
@@ -55,10 +57,11 @@ class FcoeNetworksTest(TestCase):
 
         self._fcoe_networks.create(resource)
 
-        mock_create.assert_called_once_with(resource, timeout=-1, default_values=self._fcoe_networks.DEFAULT_VALUES)
+        mock_create.assert_called_once_with(resource, None, -1, None, False)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update(self, mock_update):
+    @mock.patch.object(Resource, 'ensure_resource_data')
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update(self, mock_update, mock_ensure_client):
         resource = {
             'name': 'vsan1',
             'vlanId': '201',
@@ -66,42 +69,33 @@ class FcoeNetworksTest(TestCase):
             'type': 'fcoe-networkV2',
         }
         resource_rest_call = resource.copy()
+        resource_rest_call.update(self._fcoe_networks.data)
         mock_update.return_value = {}
 
         self._fcoe_networks.update(resource, timeout=12)
-        mock_update.assert_called_once_with(resource_rest_call, timeout=12,
-                                            default_values=self._fcoe_networks.DEFAULT_VALUES)
+        mock_update.assert_called_once_with(resource_rest_call, self.uri, False, 12, None)
 
-    @mock.patch.object(ResourceClient, 'delete')
+    @mock.patch.object(ResourceHelper, 'delete')
     def test_delete_called_once(self, mock_delete):
-        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        self._fcoe_networks.delete(id, force=False, timeout=50)
+        self._fcoe_networks.delete(force=False, timeout=50)
 
-        mock_delete.assert_called_once_with(id, force=False, timeout=50)
+        mock_delete.assert_called_once_with(self.uri, force=False,
+                                            custom_headers=None, timeout=50)
 
-    @mock.patch.object(ResourceClient, 'get_by')
+    @mock.patch.object(Resource, 'get_by')
     def test_get_by_called_once(self, mock_get_by):
         self._fcoe_networks.get_by('name', 'OneViewSDK Test FCoE Network')
 
         mock_get_by.assert_called_once_with('name', 'OneViewSDK Test FCoE Network')
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_called_once(self, mock_get):
-        self._fcoe_networks.get('3518be0e-17c1-4189-8f81-83f3724f6155')
+    @mock.patch.object(ResourcePatchMixin, 'patch_request')
+    def test_patch_should_use_user_defined_values(self, mock_patch_request):
+        mock_patch_request.return_value = {}
 
-        mock_get.assert_called_once_with('3518be0e-17c1-4189-8f81-83f3724f6155')
-
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_with_uri_called_once(self, mock_get):
-        uri = '/rest/fcoe-networks/3518be0e-17c1-4189-8f81-83f3724f6155'
-        self._fcoe_networks.get(uri)
-
-        mock_get.assert_called_once_with(uri)
-
-    @mock.patch.object(ResourceClient, 'patch')
-    def test_patch_should_use_user_defined_values(self, mock_patch):
-        mock_patch.return_value = {}
-
-        self._fcoe_networks.patch('/rest/fake/fcoe123', 'replace', '/scopeUris', ['/rest/fake/scope123'], 1)
-        mock_patch.assert_called_once_with('/rest/fake/fcoe123', 'replace', '/scopeUris',
-                                           ['/rest/fake/scope123'], timeout=1)
+        self._fcoe_networks.patch('replace', '/scopeUris', ['/rest/fake/scope123'], timeout=-1)
+        mock_patch_request.assert_called_once_with(self.uri,
+                                                   body=[{'path': '/scopeUris',
+                                                          'value': ['/rest/fake/scope123'],
+                                                          'op': 'replace'}],
+                                                   custom_headers=None,
+                                                   timeout=-1)

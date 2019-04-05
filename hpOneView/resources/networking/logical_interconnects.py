@@ -30,11 +30,12 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-from hpOneView.resources.resource import (Resource, ResourceCollectionMixin, ResourcePatchMixin,
+from hpOneView.exceptions import HPOneViewResourceNotFound
+from hpOneView.resources.resource import (Resource, ResourcePatchMixin, merge_resources,
                                           ensure_resource_client, unavailable_method)
 
 
-class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource):
+class LogicalInterconnects(ResourcePatchMixin, Resource):
     """
     Logical Interconnects API client.
 
@@ -83,7 +84,7 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
 
     def delete(self):
         """Delete method is not available for this resource"""
-        unavailble_method()
+        unavailable_method()
 
     def get_all(self, start=0, count=-1, sort=''):
         """
@@ -194,7 +195,7 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
 
         """
         uri = "{}/internalVlans".format(self.data["uri"])
-        response = self._connection.get(uri)
+        response = self._helper.do_get(uri)
 
         return self._helper.get_members(response)
 
@@ -217,12 +218,13 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
         data = settings.copy()
 
         if 'ethernetSettings' in data:
-            data['ethernetSettings'] = merge_resource(data['ethernetSettings'],
-                                                      self.SETTINGS_ETHERNET_DEFAULT_VALUES)
+            ethernet_default_values = self._get_default_values(self.SETTINGS_ETHERNET_DEFAULT_VALUES)
+            data['ethernetSettings'] = merge_resources(data['ethernetSettings'],
+                                                       ethernet_default_values)
 
         uri = "{}/settings".format(self.data["uri"])
-        default_values = self.get_default_values(self.SETTINGS_DEFAULT_VALUES)
-        data = self.update_resource_fields(data, default_values)
+        default_values = self._get_default_values(self.SETTINGS_DEFAULT_VALUES)
+        data = self._helper.update_resource_fields(data, default_values)
 
         return self._helper.update(data, uri=uri, force=force, timeout=timeout)
 
@@ -282,7 +284,7 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
             dict: Collection of uplink ports.
         """
         uri = "{}/unassignedUplinkPortsForPortMonitor".format(self.data["uri"])
-        response = self._connection.get(uri)
+        response = self._helper.do_get(uri)
 
         return self._helper.get_members(response)
 
@@ -314,7 +316,6 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
 
         uri = "{}{}".format(self.data["uri"], self.PORT_MONITOR_PATH)
         return self._helper.update(data, uri=uri, timeout=timeout)
-
 
     def create_interconnect(self, location_entries, timeout=-1):
         """
@@ -356,7 +357,7 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
         uri = "{path}?location=Enclosure:{enclosure_uri},Bay:{bay}".format(path=self.LOCATIONS_PATH,
                                                                            enclosure_uri=enclosure_uri,
                                                                            bay=bay)
-        return self._delete.delete(uri, timeout=timeout)
+        return self._helper.delete(uri, timeout=timeout)
 
     @ensure_resource_client
     def get_firmware(self):
@@ -417,7 +418,7 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
         Returns: Interconnect Forwarding Information Base DataInfo.
         """
         uri = "{}{}".format(self.data["uri"], self.FORWARDING_INFORMATION_PATH)
-        return self._helper.do_post(uri, None, timeout, custom_headers)
+        return self._helper.do_post(uri, None, timeout, None)
 
     @ensure_resource_client
     def get_qos_aggregated_configuration(self):
@@ -428,7 +429,7 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
             dict: QoS Configuration.
         """
         uri = "{}{}".format(self.data["uri"], self.QOS_AGGREGATED_CONFIGURATION)
-        return self._client.get(uri)
+        return self._helper.do_get(uri)
 
     @ensure_resource_client
     def update_qos_aggregated_configuration(self, qos_configuration, timeout=-1):
@@ -452,7 +453,7 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
         telemetry_conf = self.data.get("telemetryConfiguration", {})
         if not telemetry_conf.get("uri"):
             raise HPOneViewResourceNotFound("Telemetry configuration uri is not available")
-        return telemetry_cong["uri"]
+        return telemetry_conf["uri"]
 
     @ensure_resource_client
     def get_telemetry_configuration(self):
@@ -483,12 +484,10 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
             dict: The Logical Interconnect.
         """
         telemetry_conf_uri = self._get_telemetry_configuration_uri()
-        uri = self._helper.build_subresource_uri(self.data["uri"], telemetry_conf_uri, 'telemetry-configurations')
+        default_values = self._get_default_values(self.SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES)
+        configuration = self._helper.update_resource_fields(configuration, default_values)
 
-        default_values = self._helper.get_default_values(self.SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES)
-        configuration = self.helper.update_resource_fields(configuration, default_values)
-
-        return self._helper.update(configuration, uri=uri, timeout=timeout)
+        return self._helper.update(configuration, uri=telemetry_conf_uri, timeout=timeout)
 
     @ensure_resource_client
     def get_ethernet_settings(self):
@@ -498,6 +497,17 @@ class LogicalInterconnects(ResourcePatchMixin, ResourceCollectionMixin, Resource
         Returns:
             dict: Ethernet Interconnect Settings
         """
-        uri = '{}/ethernetSettings'.format(self.data["uri"])
+        uri = "{}/ethernetSettings".format(self.data["uri"])
         return self._helper.do_get(uri)
 
+    @ensure_resource_client
+    def get_unassigned_ports(self):
+        """
+        Gets the collection ports from the member interconnects
+        which are eligible for assignment to an anlyzer port
+
+        Returns:
+            dict: Collection of ports
+        """
+        uri = "{}/unassignedPortsForPortMonitor".format(self.data["uri"])
+        return self._helper.do_get(uri)

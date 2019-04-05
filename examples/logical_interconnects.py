@@ -23,7 +23,6 @@
 from pprint import pprint
 
 from hpOneView.oneview_client import OneViewClient
-from hpOneView.exceptions import HPOneViewException
 from examples.config_loader import try_load_from_file
 
 config = {
@@ -33,15 +32,6 @@ config = {
         "password": "<password>"
     }
 }
-config = {
-    "ip": "10.50.4.100",
-    "credentials": {
-        "userName": "kattumun",
-        "password": "P@ssw0rd!"
-    },
-    "api_version": 800
-}
-
 
 # To run this example, a logical interconnect name is required
 logical_interconnect_name = "SYN03_LE-SYN03_LIG"
@@ -71,10 +61,6 @@ print("\nGet the installed firmware for a logical interconnect that matches the 
 firmwares = oneview_client.firmware_drivers.get_by('name', firmware_driver_name)
 firmware = firmwares[0] if firmwares else None
 
-# Get scope to be added
-print("\nGet the scope that matches the specified name.")
-scope = oneview_client.scopes.get_by_name(scope_name)
-
 print("\nGet the enclosure that matches the specified name.")
 enclosures = oneview_client.enclosures.get_by_name(enclosure_name)
 enclosure = enclosures.data if enclosures else None
@@ -94,14 +80,18 @@ if firmware:
     installed_firmware = logical_interconnect.install_firmware(firmware_to_install)
     pprint(installed_firmware)
 
+# Get scope to be added
+print("\nGet the scope that matches the specified name.")
+scope = oneview_client.scopes.get_by_name(scope_name)
+
 # Performs a patch operation
-# Endpoint supported only in api-versions 500 and below.
-if scope and (oneview_client.api_version <= 500):
+# Endpoint not supported in API version 600.
+if scope and oneview_client.api_version != 600:
     print("\nPatches the logical interconnect adding one scope to it")
     logical_interconnect.patch('replace',
                                '/scopeUris',
                                [scope['uri']])
-    pprint(updated_logical_interconnect.data)
+    pprint(logical_interconnect.data)
 
 print("\nGet the Ethernet interconnect settings for the logical interconnect")
 ethernet_settings = logical_interconnect.get_ethernet_settings()
@@ -110,10 +100,9 @@ pprint(ethernet_settings)
 # Update the Ethernet interconnect settings for the logical interconnect
 ethernet_settings = logical_interconnect.data['ethernetSettings'].copy()
 ethernet_settings['macRefreshInterval'] = 10
-#logical_interconnect_updated = logical_interconnect.update_ethernet_settings(ethernet_settings,
-#                                                                             force=True)
-#print("\nUpdated the ethernet settings")
-#print("  with attribute 'macRefreshInterval' = {macRefreshInterval}".format(**logical_interconnect_updated['ethernetSettings']))
+logical_interconnect_updated = logical_interconnect.update_ethernet_settings(ethernet_settings)
+print("\nUpdated the ethernet settings")
+print("  with attribute 'macRefreshInterval' = {macRefreshInterval}".format(**logical_interconnect_updated['ethernetSettings']))
 
 # Update the internal networks on the logical interconnect
 ethernet_network_options = {
@@ -160,9 +149,15 @@ pprint(snmp_configuration)
 # Update the SNMP configuration for the logical interconnect
 print("\nUpdate the SNMP configuration for the logical interconnect")
 snmp_configuration['enabled'] = True
-#logical_interconnect_updated = logical_interconnect.update_snmp_configuration(snmp_configuration)
-#interconnect_snmp = logical_interconnect_updated['snmpConfiguration']
-#print("  Updated SNMP configuration at uri: {uri}\n  with 'enabled': '{enabled}'".format(**interconnect_snmp))
+logical_interconnect_updated = logical_interconnect.update_snmp_configuration(snmp_configuration)
+interconnect_snmp = logical_interconnect_updated['snmpConfiguration']
+print("  Updated SNMP configuration at uri: {uri}\n  with 'enabled': '{enabled}'".format(**interconnect_snmp))
+
+# Get a collection of ports from the member interconnects which are eligible for assignment to an analyzer port
+print("\nGet a collection of ports from the member interconnects which are eligible for assignment to "
+      "an analyzer port on the logical interconnect")
+unassigned_ports = logical_interconnect.get_unassigned_ports()
+pprint(unassigned_ports)
 
 # Get a collection of uplink ports from the member interconnects which are eligible for assignment to an analyzer port
 print("\nGet a collection of uplink ports from the member interconnects which are eligible for assignment to "
@@ -180,17 +175,17 @@ print("\nUpdate the port monitor configuration of a logical interconnect")
 monitor_configuration['enablePortMonitor'] = True
 logical_interconnect_updated = logical_interconnect.update_port_monitor(monitor_configuration)
 print("  Updated port monitor at uri: {uri}\n  with 'enablePortMonitor': '{enablePortMonitor}'".format(
-    **logical_interconnect_updated['portMonitor']))
+      **logical_interconnect_updated['portMonitor']))
 
 # Update the configuration on the logical interconnect
 print("\nUpdate the configuration on the logical interconnect")
-logical_interconnect = logical_interconnect.update_configuration()
+logical_interconnect_updated = logical_interconnect.update_configuration()
 print("  Done.")
 
 # Return the logical interconnect to a consistent state
 print("\nReturn the logical interconnect to a consistent state")
-logical_interconnect = logical_interconnect.update_compliance()
-print("  Done. The current consistency state is {consistencyStatus}.".format(**logical_interconnect.data))
+logical_interconnect_updated = logical_interconnect.update_compliance()
+print("  Done. The current consistency state is {consistencyStatus}.".format(**logical_interconnect_updated))
 
 # Generate the forwarding information base dump file for the logical interconnect
 print("\nGenerate the forwarding information base dump file for the logical interconnect")
@@ -218,7 +213,7 @@ print("\nGet the telemetry configuration of the logical interconnect")
 telemetry_configuration = logical_interconnect.get_telemetry_configuration()
 pprint(telemetry_configuration)
 
-#Update telemetry configuration
+# Update telemetry configuration
 print("\nUpdate the telemetry configuration")
 telemetry_config = {
     "sampleCount": 12,
@@ -243,4 +238,3 @@ if enclosure['uri']:
 
     logical_interconnects.delete_interconnect(enclosure['uri'], bay)
     print("\nThe interconnect was successfully deleted.")
-

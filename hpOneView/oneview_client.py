@@ -834,9 +834,7 @@ class OneViewClient(object):
         Returns:
             ServerProfileTemplate:
         """
-        if not self.__server_profile_templates:
-            self.__server_profile_templates = ServerProfileTemplate(self.__connection)
-        return self.__server_profile_templates
+        return ServerProfileTemplate(self.__connection)
 
     @property
     def storage_systems(self):
@@ -918,9 +916,7 @@ class OneViewClient(object):
         Returns:
             UplinkSets:
         """
-        if not self.__uplink_sets:
-            self.__uplink_sets = UplinkSets(self.__connection)
-        return self.__uplink_sets
+        return UplinkSets(self.__connection)
 
     @property
     def volumes(self):

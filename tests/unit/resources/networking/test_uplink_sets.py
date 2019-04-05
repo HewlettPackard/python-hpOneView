@@ -73,7 +73,7 @@ class UplinkSetsTest(unittest.TestCase):
         mock_create.return_value = {}
 
         self._uplink_sets.create(resource, 60)
-        mock_create.assert_called_once_with(resource, 60, -1, None)
+        mock_create.assert_called_once_with(resource, 60, -1, None, False)
 
     @mock.patch.object(Resource, 'update')
     def test_update_should_be_called_once(self, mock_update):

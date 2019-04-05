@@ -61,7 +61,7 @@ class EthernetNetworksTest(TestCase):
         mock_create.return_value = {}
 
         self._ethernet_networks.create(resource, timeout=12)
-        mock_create.assert_called_once_with(resource_rest_call, None, 12, None)
+        mock_create.assert_called_once_with(resource_rest_call, None, 12, None, False)
 
     @mock.patch.object(ResourceHelper, 'create')
     @mock.patch.object(Resource, 'get_all')
