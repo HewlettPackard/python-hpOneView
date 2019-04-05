@@ -236,6 +236,14 @@ class LogicalInterconnectsTest(unittest.TestCase):
         mock_get_collection.assert_called_once_with(uri_rest_call)
 
     @mock.patch.object(ResourceHelper, 'do_get')
+    def test_get_unassigned_ports(self, mock_get_collection):
+        uri_rest_call = '{}/unassignedPortsForPortMonitor'.format(self.uri)
+
+        self._logical_interconnect.get_unassigned_ports()
+
+        mock_get_collection.assert_called_once_with(uri_rest_call)
+
+    @mock.patch.object(ResourceHelper, 'do_get')
     def test_get_port_monitor_by_uri(self, mock_get):
         uri_rest_call = '{}/port-monitor'.format(self.uri)
 

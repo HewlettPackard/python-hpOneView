@@ -274,6 +274,20 @@ class LogicalInterconnects(ResourcePatchMixin, Resource):
         return self._helper.update(data, uri=uri, timeout=timeout)
 
     @ensure_resource_client
+    def get_unassigned_ports(self):
+        """
+        Gets the collection ports from the member interconnects
+        which are eligible for assignment to an anlyzer port
+
+        Returns:
+            dict: Collection of ports
+        """
+        uri = "{}/unassignedPortsForPortMonitor".format(self.data["uri"])
+        response = self._helper.do_get(uri)
+
+        return self._helper.get_members(response)
+
+    @ensure_resource_client
     def get_unassigned_uplink_ports(self):
         """
         Gets a collection of uplink ports from the member interconnects which are eligible for assignment to an
@@ -498,16 +512,4 @@ class LogicalInterconnects(ResourcePatchMixin, Resource):
             dict: Ethernet Interconnect Settings
         """
         uri = "{}/ethernetSettings".format(self.data["uri"])
-        return self._helper.do_get(uri)
-
-    @ensure_resource_client
-    def get_unassigned_ports(self):
-        """
-        Gets the collection ports from the member interconnects
-        which are eligible for assignment to an anlyzer port
-
-        Returns:
-            dict: Collection of ports
-        """
-        uri = "{}/unassignedPortsForPortMonitor".format(self.data["uri"])
         return self._helper.do_get(uri)
