@@ -123,7 +123,6 @@ class SasLogicalInterconnects(Resource):
 
         uri = self.URI + "/compliance"
         result = self._helper.update(information, uri, timeout=timeout)
-        self.refresh()
 
         return result
 
