@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -31,10 +31,10 @@ from future import standard_library
 standard_library.install_aliases()
 
 
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource, ResourcePatchMixin
 
 
-class LogicalInterconnectGroups(object):
+class LogicalInterconnectGroups(ResourcePatchMixin, Resource):
     """
     Logical Interconnect Groups API client.
 
@@ -45,12 +45,12 @@ class LogicalInterconnectGroups(object):
         '200': {"type": "logical-interconnect-groupV3"},
         '300': {"type": "logical-interconnect-groupV300"},
         '500': {"type": "logical-interconnect-groupV300"},
-        '600': {"type": "logical-interconnect-groupV4"}
+        '600': {"type": "logical-interconnect-groupV4"},
+        '800': {"type": "logical-interconnect-groupV5"}
     }
 
-    def __init__(self, con):
-        self._connection = con
-        self._client = ResourceClient(con, self.URI)
+    def __init__(self, connection, data=None):
+        super(LogicalInterconnectGroups, self).__init__(connection, data)
 
     def get_all(self, start=0, count=-1, filter='', sort='', scope_uris=''):
         """
@@ -78,19 +78,7 @@ class LogicalInterconnectGroups(object):
         Returns:
             list: A list of logical interconnect groups.
         """
-        return self._client.get_all(start, count, filter=filter, sort=sort, scope_uris=scope_uris)
-
-    def get(self, id_or_uri):
-        """
-        Gets a logical interconnect group by ID or by URI.
-
-        Args:
-            id_or_uri: Can be either the logical interconnect group id or the logical interconnect group uri.
-
-        Returns:
-            dict: The logical interconnect group.
-        """
-        return self._client.get(id_or_uri)
+        return self._helper.get_all(start, count, filter=filter, sort=sort, scope_uris=scope_uris)
 
     def get_default_settings(self):
         """
@@ -100,101 +88,14 @@ class LogicalInterconnectGroups(object):
             dict: Interconnect Settings.
         """
         uri = self.URI + "/defaultSettings"
-        return self._client.get(uri)
+        return self._helper.do_get(uri)
 
-    def get_settings(self, id_or_uri):
+    def get_settings(self):
         """
         Gets the interconnect settings for a logical interconnect group.
-
-        Args:
-            id_or_uri: Can be either the logical interconnect group id or the logical interconnect group uri.
 
         Returns:
             dict: Interconnect Settings.
         """
-        uri = self._client.build_uri(id_or_uri) + "/settings"
-        return self._client.get(uri)
-
-    def create(self, resource, timeout=-1):
-        """
-        Creates a logical interconnect group.
-
-        Args:
-            resource (dict): Object to create
-            timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView; it just stops waiting for its completion.
-
-        Returns:
-            dict: Created logical interconnect group.
-
-        """
-        return self._client.create(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
-
-    def update(self, resource, timeout=-1):
-        """
-        Updates a logical interconnect group.
-
-        Args:
-            resource (dict): Object to update
-            timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView; it just stops waiting for its completion.
-
-        Returns:
-            dict: Updated logical interconnect group.
-
-        """
-        return self._client.update(resource, timeout=timeout, default_values=self.DEFAULT_VALUES)
-
-    def delete(self, resource, force=False, timeout=-1):
-        """
-        Deletes a logical interconnect group.
-
-        Args:
-            resource (dict): Object to delete.
-            force (bool):
-                 If set to true, the operation completes despite any problems with
-                 network connectivity or errors on the resource itself. The default is false.
-            timeout:
-                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView; it just stops waiting for its completion.
-
-        Returns:
-            bool: Indicates if the resource was successfully deleted.
-        """
-        return self._client.delete(resource, force=force, timeout=timeout)
-
-    def get_by(self, field, value):
-        """
-        Gets all Logical interconnect groups that match the filter.
-
-        The search is case-insensitive.
-
-        Args:
-            field: Field name to filter.
-            value: Value to filter.
-
-        Returns:
-            list: A list of Logical interconnect groups.
-        """
-        return self._client.get_by(field, value)
-
-    def patch(self, id_or_uri, operation, path, value, timeout=-1):
-        """
-        Uses the PATCH to update a resource for a given logical interconnect group.
-
-        Only one operation can be performed in each PATCH call.
-
-        Args:
-            id_or_uri: Can be either the resource ID or the resource URI.
-            operation: Patch operation
-            path: Path
-            value: Value
-            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView; it just stops waiting for its completion.
-
-        Returns:
-            dict: Updated resource.
-        """
-        return self._client.patch(id_or_uri, operation, path, value, timeout=timeout)
+        uri = "{}/settings".format(self.data["uri"])
+        return self._helper.do_get(uri)
