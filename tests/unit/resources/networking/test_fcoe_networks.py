@@ -57,7 +57,7 @@ class FcoeNetworksTest(TestCase):
 
         self._fcoe_networks.create(resource)
 
-        mock_create.assert_called_once_with(resource, None, -1, None)
+        mock_create.assert_called_once_with(resource, None, -1, None, False)
 
     @mock.patch.object(Resource, 'ensure_resource_data')
     @mock.patch.object(ResourceHelper, 'update')

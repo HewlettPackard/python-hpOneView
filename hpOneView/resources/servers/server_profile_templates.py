@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,12 @@ from future import standard_library
 
 standard_library.install_aliases()
 
-from hpOneView.resources.resource import ResourceClient
+from copy import deepcopy
+
+from hpOneView.resources.resource import Resource, ensure_resource_client
 
 
-class ServerProfileTemplate(object):
+class ServerProfileTemplate(Resource):
     """
     The server profile template resource provides methods to create, retrieve, modify, and delete server
     profile templates.
@@ -57,12 +59,12 @@ class ServerProfileTemplate(object):
         '200': {'type': 'ServerProfileTemplateV1'},
         '300': {'type': 'ServerProfileTemplateV2'},
         '500': {'type': 'ServerProfileTemplateV3'},
-        '600': {'type': 'ServerProfileTemplateV4'}
+        '600': {'type': 'ServerProfileTemplateV4'},
+        '800': {'type': 'ServerProfileTemplateV5'}
     }
 
-    def __init__(self, con):
-        self._connection = con
-        self._client = ResourceClient(con, self.URI)
+    def __init__(self, connection, data=None):
+        super(ServerProfileTemplate, self).__init__(connection, data)
 
     def get_all(self, start=0, count=-1, filter='', sort='', scope_uris=''):
         """
@@ -89,113 +91,71 @@ class ServerProfileTemplate(object):
             list: A list of server profile templates.
 
         """
-        return self._client.get_all(start=start, count=count, filter=filter, sort=sort, scope_uris=scope_uris)
+        return self._helper.get_all(start=start, count=count, filter=filter, sort=sort, scope_uris=scope_uris)
 
-    def get(self, id_or_uri):
-        """
-        Gets a server profile template resource by ID or by URI.
-
-        Args:
-            id_or_uri: Can be either the server profile template resource ID or URI.
-
-        Returns:
-            dict: The server profile template resource.
-        """
-        return self._client.get(id_or_uri=id_or_uri)
-
-    def get_by(self, field, value):
-        """
-        Gets all server profile templates that match a specified filter.
-        The search is case-insensitive.
+    def create(self, data=None, uri=None, timeout=-1, force=True):
+        """Makes a POST request to create a resource when a request body is required.
 
         Args:
-            field: Field name to filter.
-            value: Value to filter.
-
+            data: Additional fields can be passed to create the resource.
+            uri: Resouce uri
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+            force: Flag to force the operation
         Returns:
-            list: A list of server profile templates.
+            Created resource.
         """
-        return self._client.get_by(field, value)
+        if not data:
+            data = {}
 
-    def get_by_name(self, name):
-        """
-        Gets a server profile template by name.
+        default_values = self._get_default_values()
+        for key, value in default_values.items():
+            if not data.get(key):
+                data[key] = value
+
+        resource_data = self._helper.create(data, uri, timeout, force=force)
+        new_resource = self.new(self._connection, resource_data)
+
+        return new_resource
+
+    @ensure_resource_client(update_data=True)
+    def update(self, data=None, timeout=-1, force=True):
+        """Updates server profile template.
 
         Args:
-            name: Name of the server profile template.
+            data: Data to update the resource.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+            force: Force the update operation.
 
         Returns:
-            dict: The server profile template resource.
+            A dict with the updated resource data.
         """
-        return self._client.get_by_name(name)
+        uri = self.data['uri']
 
-    def create(self, resource, timeout=-1, force=True):
-        """
-        Creates a server profile template.
+        resource = deepcopy(self.data)
+        resource.update(data)
 
-        Args:
-            resource (dict): Object to create.
-            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not
-                abort the operation in OneView, just stop waiting for its completion.
-            force: If set to true, the operation will ignore warnings for SAN storage.
+        self.data = self._helper.update(resource, uri, force, timeout)
 
-        Returns:
-            dict: Created resource.
+        return self
 
-        """
-        uri = self.URI + "?force={0}".format(force)
-        return self._client.create(resource=resource, uri=uri, timeout=timeout,
-                                   default_values=self.DEFAULT_VALUES)
-
-    def update(self, resource, id_or_uri, force=True):
-        """
-        Allows a server profile template object to have its configuration modified. These modifications can be as
-        simple as a name or description change or more complex changes around the networking configuration.
-
-        Args:
-            id_or_uri: Can be either the template id or the template uri.
-            resource (dict): Object to update.
-            force: If set to true, the operation will ignore warnings for SAN storage.
-
-        Returns:
-            dict: The server profile template resource.
-        """
-        return self._client.update(resource=resource, uri=id_or_uri,
-                                   default_values=self.DEFAULT_VALUES, force=force)
-
-    def delete(self, resource, timeout=-1, force=False):
-        """
-        Deletes a server profile template object from the appliance based on its profile template UUID.
-
-        Args:
-            resource: Object to delete.
-            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort
-                the operation in OneView; it just stops waiting for its completion.
-            force: If set to true, the operation completes despite any problems with network connectivity
-                or errors on the resource itself.
-
-        Returns:
-            bool: Indicates whether the resource was successfully deleted.
-        """
-        return self._client.delete(resource=resource, timeout=timeout, force=force)
-
-    def get_new_profile(self, id_or_uri):
+    @ensure_resource_client
+    def get_new_profile(self):
         """
         A profile object will be returned with the configuration based on this template. Specify the profile name and
         server hardware to assign. If template has any fiber channel connection (which is specified as bootable) but no
         boot target was defined, that connection will be instantiated as a non-bootable connection. So modify that
         connection to change it to bootable and to specify the boot target.
 
-        Args:
-            id_or_uri: Can be either the server profile template resource ID or URI.
-
         Returns:
             dict: The server profile resource.
         """
-        uri = self._client.build_uri(id_or_uri) + "/new-profile"
-        return self._client.get(id_or_uri=uri)
+        uri = "{}/new-profile".format(self.data["uri"])
+        return self._helper.do_get(uri)
 
-    def get_transformation(self, id_or_uri, server_hardware_type_uri, enclosure_group_uri):
+    @ensure_resource_client
+    def get_transformation(self, server_hardware_type_uri, enclosure_group_uri):
         """
         Transforms an existing profile template by supplying a new server hardware type and enclosure group or both.
         A profile template will be returned with a new configuration based on the capabilities of the supplied
@@ -208,7 +168,6 @@ class ServerProfileTemplate(object):
             This method is available for API version 300 or later.
 
         Args:
-            id_or_uri: Can be either the server profile template resource ID or URI.
             server_hardware_type_uri: The URI of the new server hardware type.
             enclosure_group_uri: The URI of the new enclosure group.
 
@@ -216,8 +175,8 @@ class ServerProfileTemplate(object):
             dict: The server profile template resource.
         """
         query_params = self.TRANSFORMATION_PATH.format(**locals())
-        uri = self._client.build_uri(id_or_uri) + query_params
-        return self._client.get(id_or_uri=uri)
+        uri = "{}{}".format(self.data["uri"], query_params)
+        return self._helper.do_get(uri)
 
     def get_available_networks(self, **kwargs):
         """
@@ -250,4 +209,4 @@ class ServerProfileTemplate(object):
                                 for key, value in kwargs.items() if value)
         uri = self.URI + "{}?{}".format("/available-networks", query_string)
 
-        return self._client.get(id_or_uri=uri)
+        return self._helper.do_get(uri)

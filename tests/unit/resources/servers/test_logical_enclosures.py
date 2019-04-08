@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -27,7 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.servers.logical_enclosures import LogicalEnclosures
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource, ResourceHelper, ResourcePatchMixin
 
 
 class LogicalEnclosuresTest(TestCase):
@@ -35,8 +35,10 @@ class LogicalEnclosuresTest(TestCase):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
         self._logical_enclosures = LogicalEnclosures(self.connection)
+        self.uri = "/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32"
+        self._logical_enclosures.data = {"uri": self.uri}
 
-    @mock.patch.object(ResourceClient, 'create')
+    @mock.patch.object(ResourceHelper, 'create')
     def test_create_called_once(self, mock_create):
         resource = dict(
             enclosureUris=[
@@ -51,23 +53,23 @@ class LogicalEnclosuresTest(TestCase):
         mock_create.return_value = {}
 
         self._logical_enclosures.create(resource)
-        mock_create.assert_called_once_with(resource.copy(), timeout=-1)
+        mock_create.assert_called_once_with(resource.copy(), None, -1, None, False)
 
-    @mock.patch.object(ResourceClient, 'delete')
+    @mock.patch.object(ResourceHelper, 'delete')
     def test_delete_called_once(self, mock_delete):
-        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        self._logical_enclosures.delete(id, force=False)
+        self._logical_enclosures.delete(force=False)
 
-        mock_delete.assert_called_once_with(id, force=False, timeout=-1)
+        mock_delete.assert_called_once_with(self.uri, custom_headers=None,
+                                            force=False, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'delete')
+    @mock.patch.object(ResourceHelper, 'delete')
     def test_delete_called_once_with_force(self, mock_delete):
-        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        self._logical_enclosures.delete(id, force=True)
+        self._logical_enclosures.delete(force=True)
 
-        mock_delete.assert_called_once_with(id, force=True, timeout=-1)
+        mock_delete.assert_called_once_with(self.uri, custom_headers=None,
+                                            force=True, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'get_all')
+    @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_all_called_once(self, mock_get_all):
         filter = 'name=TestName'
         sort = 'name:ascending'
@@ -77,162 +79,99 @@ class LogicalEnclosuresTest(TestCase):
 
         mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort, scope_uris=scope_uris)
 
-    @mock.patch.object(ResourceClient, 'get_all')
+    @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_all_called_once_with_default_values(self, mock_get_all):
         self._logical_enclosures.get_all()
 
         mock_get_all.assert_called_once_with(0, -1, filter='', sort='', scope_uris='')
 
-    @mock.patch.object(ResourceClient, 'get_by')
-    def test_get_by_called_once(self, mock_get_by):
-        self._logical_enclosures.get_by('name', 'OneViewSDK-Test-Logical-Enclosure')
-
+    @mock.patch.object(Resource, 'get_by')
+    def test_get_by_name_called_once(self, mock_get_by):
+        self._logical_enclosures.get_by_name('OneViewSDK-Test-Logical-Enclosure')
         mock_get_by.assert_called_once_with('name', 'OneViewSDK-Test-Logical-Enclosure')
 
-    @mock.patch.object(ResourceClient, 'get_by_name')
-    def test_get_by_name_called_once(self, mock_get_by_name):
-        self._logical_enclosures.get_by_name('OneViewSDK-Test-Logical-Enclosure')
-        mock_get_by_name.assert_called_once_with(name='OneViewSDK-Test-Logical-Enclosure')
-
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_with_id_called_once(self, mock_get):
-        logical_enclosure_id = '3518be0e-17c1-4189-8f81-83f3724f6155'
-        self._logical_enclosures.get(logical_enclosure_id)
-
-        mock_get.assert_called_once_with(logical_enclosure_id)
-
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_with_uri_called_once(self, mock_get):
-        logical_enclosure_uri = '/rest/enclosures/3518be0e-17c1-4189-8f81-83f3724f6155'
-        self._logical_enclosures.get(logical_enclosure_uri)
-
-        mock_get.assert_called_once_with(logical_enclosure_uri)
-
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_called_once_with_defaults(self, mock_update):
+    @mock.patch.object(Resource, 'ensure_resource_data')
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update_called_once_with_defaults(self, mock_update, mock_ensure_client):
         logical_enclosure = {
             "name": "one_enclosure_le",
         }
+        logical_enclosure["uri"] = self.uri
         self._logical_enclosures.update(logical_enclosure)
-        mock_update.assert_called_once_with(logical_enclosure, timeout=-1)
+        mock_update.assert_called_once_with(logical_enclosure, self.uri, False, -1, None)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_called_once(self, mock_update):
+    @mock.patch.object(Resource, 'ensure_resource_data')
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update_called_once(self, mock_update, mock_ensure_client):
         logical_enclosure = {
             "name": "one_enclosure_le",
         }
+        logical_enclosure["uri"] = self.uri
         self._logical_enclosures.update(logical_enclosure, 70)
-        mock_update.assert_called_once_with(logical_enclosure, timeout=70)
+        mock_update.assert_called_once_with(logical_enclosure, self.uri,
+                                            False, 70, None)
 
-    @mock.patch.object(ResourceClient, 'patch')
+    @mock.patch.object(ResourcePatchMixin, 'patch_request')
     def test_patch_should_use_user_defined_values(self, mock_patch):
         mock_patch.return_value = {}
         custom_headers = {'If-Match': '*'}
 
         self._logical_enclosures.patch(
-            '123a53cz', 'replace', '/name', 'new_name', 1, custom_headers=custom_headers)
-        mock_patch.assert_called_once_with(
-            '123a53cz', 'replace', '/name', 'new_name', timeout=1, custom_headers=custom_headers)
+            'replace', '/name', 'new_name', custom_headers, 1)
+        mock_patch.assert_called_once_with(self.uri,
+                                           body=[{'path': '/name',
+                                                  'op': 'replace',
+                                                  'value': 'new_name'}],
+                                           custom_headers={'If-Match': '*'},
+                                           timeout=1)
 
-    @mock.patch.object(ResourceClient, 'update_with_zero_body')
-    def test_update_configuration_by_uri(self, mock_update_with_zero_body):
-        logical_enclosure_uri = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/configuration'
+    @mock.patch.object(Resource, 'refresh')
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update_configuration(self, mock_update, mock_refresh):
+        uri_rest_call = '{}/configuration'.format(self.uri)
 
-        self._logical_enclosures.update_configuration(logical_enclosure_uri)
+        self._logical_enclosures.update_configuration()
 
-        mock_update_with_zero_body.assert_called_once_with(
-            uri_rest_call, timeout=-1)
+        mock_update.assert_called_once_with(None, uri_rest_call, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update_with_zero_body')
-    def test_update_configuration_by_id(self, mock_update_with_zero_body):
-        logical_enclosure_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/configuration'
+    @mock.patch.object(ResourceHelper, 'do_get')
+    def test_get_script(self, mock_get):
+        uri_rest_call = '{}/script'.format(self.uri)
 
-        self._logical_enclosures.update_configuration(logical_enclosure_id)
-
-        mock_update_with_zero_body.assert_called_once_with(
-            uri_rest_call, timeout=-1)
-
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_script_by_uri(self, mock_get):
-        logical_enclosure_uri = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/script'
-
-        self._logical_enclosures.get_script(
-            logical_enclosure_uri)
+        self._logical_enclosures.get_script()
 
         mock_get.assert_called_once_with(uri_rest_call)
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_script_by_id(self, mock_get):
-        logical_enclosure_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/script'
-
-        self._logical_enclosures.get_script(
-            logical_enclosure_id)
-
-        mock_get.assert_called_once_with(uri_rest_call)
-
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_script_by_uri(self, mock_update):
-        logical_enclosure_uri = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update_script(self, mock_update):
         uri_rest_call = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/script'
         information = {"#TEST COMMAND": ""}
         configuration_rest_call = information.copy()
 
-        self._logical_enclosures.update_script(
-            logical_enclosure_uri, information)
+        self._logical_enclosures.update_script(information)
 
         mock_update.assert_called_once_with(
             configuration_rest_call, uri=uri_rest_call, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_script_by_id(self, mock_update):
-        logical_enclosure_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/script'
-        information = {"#TEST COMMAND": ""}
-        configuration_rest_call = information.copy()
-
-        self._logical_enclosures.update_script(
-            logical_enclosure_id, information)
-
-        mock_update.assert_called_once_with(
-            configuration_rest_call, uri=uri_rest_call, timeout=-1)
-
-    @mock.patch.object(ResourceClient, 'create')
+    @mock.patch.object(ResourceHelper, 'create')
     def test_support_dump_called_once(self, mock_create):
         information = {
             "errorCode": "MyDump16",
             "encrypt": True,
             "excludeApplianceDump": False
         }
-        logical_enclosure_uri = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/support-dumps'
+        uri_rest_call = '{}/support-dumps'.format(self.uri)
 
         mock_create.return_value = {}
 
-        self._logical_enclosures.generate_support_dump(
-            information, logical_enclosure_uri)
+        self._logical_enclosures.generate_support_dump(information)
         mock_create.assert_called_once_with(
             information.copy(), uri=uri_rest_call, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update_with_zero_body')
-    def test_update_from_group_by_uri(self, mock_update_with_zero_body):
-        logical_enclosure_uri = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/updateFromGroup'
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update_from_group(self, mock_update):
+        uri_rest_call = '{}/updateFromGroup'.format(self.uri)
 
-        self._logical_enclosures.update_from_group(logical_enclosure_uri)
+        self._logical_enclosures.update_from_group()
 
-        mock_update_with_zero_body.assert_called_once_with(
-            uri=uri_rest_call, timeout=-1)
-
-    @mock.patch.object(ResourceClient, 'update_with_zero_body')
-    def test_update_from_group_by_id(self, mock_update_with_zero_body):
-        logical_enclosure_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-enclosures/ad28cf21-8b15-4f92-bdcf-51cb2042db32/updateFromGroup'
-
-        self._logical_enclosures.update_from_group(logical_enclosure_id, -1)
-
-        mock_update_with_zero_body.assert_called_once_with(
-            uri=uri_rest_call, timeout=-1)
+        mock_update.assert_called_once_with(None, uri_rest_call, timeout=-1)
