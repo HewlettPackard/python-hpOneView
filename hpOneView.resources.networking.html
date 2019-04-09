@@ -1978,8 +1978,8 @@ OneView, just stops waiting for its completion.</li>
 <span id="hponeview-resources-networking-logical-switch-groups-module"></span><h2>hpOneView.resources.networking.logical_switch_groups module<a class="headerlink" href="#module-hpOneView.resources.networking.logical_switch_groups" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.logical_switch_groups.</code><code class="descname">LogicalSwitchGroups</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switch_groups.html#LogicalSwitchGroups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.logical_switch_groups.</code><code class="descname">LogicalSwitchGroups</code><span class="sig-paren">(</span><em>connection</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switch_groups.html#LogicalSwitchGroups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.ResourcePatchMixin" title="hpOneView.resources.resource.ResourcePatchMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.ResourcePatchMixin</span></code></a>, <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.Resource" title="hpOneView.resources.resource.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.Resource</span></code></a></p>
 <p>Logical Switch Groups API client.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -1987,194 +1987,13 @@ OneView, just stops waiting for its completion.</li>
 </div>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'logical-switch-group'}, u'300': {u'type': u'logical-switch-groupV300'}, u'500': {u'type': u'logical-switch-groupV300'}, u'600': {u'type': u'logical-switch-groupV4'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'logical-switch-group'}, u'300': {u'type': u'logical-switch-groupV300'}, u'500': {u'type': u'logical-switch-groupV300'}, u'600': {u'type': u'logical-switch-groupV4'}, u'800': {u'type': u'logical-switch-groupV4'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/logical-switch-groups'</em><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.create">
-<code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switch_groups.html#LogicalSwitchGroups.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.create" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a logical switch group.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) – Object to create</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created logical switch group.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.delete">
-<code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switch_groups.html#LogicalSwitchGroups.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deletes a logical switch group.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) – object to delete.</li>
-<li><strong>force</strong> (<em>bool</em>) – If set to true, the operation completes despite any problems with
-network connectivity or errors on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resource was successfully deleted.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switch_groups.html#LogicalSwitchGroups.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a logical switch group by ID or by URI.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the logical switch group id or the logical switch group uri.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The logical switch group.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switch_groups.html#LogicalSwitchGroups.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a list of logical switch groups based on optional sorting and filtering and is constrained by start
-and count parameters.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> – The first item to return, using 0-based indexing.
-If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> – The number of resources to return. A count of -1 requests all items.
-The actual number of items in the response might differ from the requested
-count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
-default is no filter; all resources are returned.</li>
-<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
-on create time with the oldest entry first.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of logical switch groups.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.get_by">
-<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switch_groups.html#LogicalSwitchGroups.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all Logical switch groups that match the filter.</p>
-<p>The search is case-insensitive.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> – Field name to filter.</li>
-<li><strong>value</strong> – Value to filter.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of logical switch groups that match the filter.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.patch">
-<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switch_groups.html#LogicalSwitchGroups.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.patch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Uses the PATCH to update a resource for a given logical switch group.</p>
-<p>Only one operation can be performed in each PATCH call.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>operation</strong> – Patch operation</li>
-<li><strong>path</strong> – Path</li>
-<li><strong>value</strong> – Value</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_switch_groups.html#LogicalSwitchGroups.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_switch_groups.LogicalSwitchGroups.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates a logical switch group.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) – Object to update</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated logical switch group.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
 
 </dd></dl>
 
