@@ -85,8 +85,8 @@ print("\nGet the scope that matches the specified name.")
 scope = oneview_client.scopes.get_by_name(scope_name)
 
 # Performs a patch operation
-# Endpoint not supported in API version 600.
-if scope and oneview_client.api_version != 600:
+# This operation is not supported in API version 200 and 600.
+if scope and oneview_client.api_version not in [200, 600]:
     print("\nPatches the logical interconnect adding one scope to it")
     logical_interconnect.patch('replace',
                                '/scopeUris',
