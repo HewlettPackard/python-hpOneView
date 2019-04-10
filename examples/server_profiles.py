@@ -116,13 +116,6 @@ profile.patch(operation="replace",
               path="/templateCompliance", value="Compliant")
 pprint(profile.data)
 
-if oneview_client.api_version <= 500:
-    # Retrieve ServerProfile schema
-    # This method available only for API version <= 500
-    print("\nRetrieve the generated ServerProfile schema")
-    schema = profile.get_schema()
-    pprint(schema)
-
 # Server profile compliance preview
 print("\nGets the preview of manual and automatic updates required to make the server profile consistent "
       "with its template.")
@@ -186,6 +179,8 @@ available_networks = server_profiles.get_available_networks(
 pprint(available_networks)
 
 # Get the all Ethernet networks associated with a server hardware type, enclosure group and scopeuris
+# This method works with all the API versions but the scope_uris param is available
+# with API version 600 and above
 if oneview_client.api_version >= 600:
     available_networks = server_profiles.get_available_networks(
         enclosureGroupUri=enclosure_group.data["uri"],

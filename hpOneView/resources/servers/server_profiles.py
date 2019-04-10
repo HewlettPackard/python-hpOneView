@@ -242,7 +242,8 @@ class ServerProfiles(ResourcePatchMixin, ResourceSchemaMixin, Resource):
            profileUri (str): The URI of the server profile resource.
            scopeUris (str): An expression to restrict the resources returned according to
                the scopes to which they are assigned.
-
+           filter (list or str): A general filter/query string to narrow the list of items returned.
+               The default is no filter, all resources are returned.
         Returns:
             list: Available servers.
         """
@@ -309,6 +310,8 @@ class ServerProfiles(ResourcePatchMixin, ResourceSchemaMixin, Resource):
            profileUri (str): The URI of the server profile associated with the resource.
            scopeUris (str): An expression to restrict the resources returned according to
                the scopes to which they are assigned.
+           filter (list or str): A general filter/query string to narrow the list of items returned.
+               The default is no filter, all resources are returned.
 
         Returns:
             list: List of available servers and bays.
