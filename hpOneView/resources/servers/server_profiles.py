@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,11 +30,13 @@ from future import standard_library
 
 standard_library.install_aliases()
 
+from copy import deepcopy
 
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import (Resource, ResourcePatchMixin,
+                                          ResourceSchemaMixin, ensure_resource_client)
 
 
-class ServerProfiles(object):
+class ServerProfiles(ResourcePatchMixin, ResourceSchemaMixin, Resource):
     """
     Server Profile API client.
 
@@ -46,86 +48,62 @@ class ServerProfiles(object):
         '300': {"type": "ServerProfileV6"},
         '500': {"type": "ServerProfileV7"},
         '600': {"type": "ServerProfileV8"},
-
+        '800': {"type": "ServerProfileV9"}
     }
 
-    def __init__(self, con):
-        self._connection = con
-        self._client = ResourceClient(con, self.URI)
+    def __init__(self, connection, data=None):
+        super(ServerProfiles, self).__init__(connection, data)
 
-    def create(self, resource, timeout=-1, force=''):
-        """
-        Creates a server profile using the information provided in the resource parameter.
+    def create(self, data=None, timeout=-1, force=''):
+        """Makes a POST request to create a resource when a request body is required.
 
         Args:
-            resource (dict): Object to create.
+            data: Additional fields can be passed to create the resource.
             timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView, just stop waiting for its completion.
-            force: Comma separated list of flags for ignoring specific warning.
-
+                in OneView; it just stops waiting for its completion.
+            force: Flag to force the operation
         Returns:
-            dict: Created server profile.
+            Created resource.
         """
-        uri = self.__build_uri_with_query_string({"force": force})
-        return self._client.create(resource=resource, uri=uri, timeout=timeout, default_values=self.DEFAULT_VALUES)
+        if not data:
+            data = {}
 
-    def update(self, resource, id_or_uri, force=''):
-        """
-        Allows the configuration of a server profile object to be modified.
+        default_values = self._get_default_values()
+        for key, value in default_values.items():
+            if not data.get(key):
+                data[key] = value
+
+        resource_data = self._helper.create(data, timeout=timeout, force=force)
+        new_resource = self.new(self._connection, resource_data)
+
+        return new_resource
+
+    @ensure_resource_client(update_data=True)
+    def update(self, data=None, timeout=-1, force=''):
+        """Updates server profile template.
 
         Args:
-            id_or_uri: Can be either the server profile id or the server profile uri.
-            resource (dict): Object to update.
-            force: Comma separated list of flags for ignoring specific warning.
+            data: Data to update the resource.
+            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+                in OneView; it just stops waiting for its completion.
+            force: Force the update operation.
 
         Returns:
-            dict: The server profile resource.
+            A dict with the updated resource data.
         """
+        uri = self.data['uri']
+
+        resource = deepcopy(self.data)
+        resource.update(data)
+
         # Removes related fields to serverHardware in case of unassign
         if resource.get('serverHardwareUri') is None:
             resource.pop('enclosureBay', None)
             resource.pop('enclosureUri', None)
 
-        uri = self. __build_uri_with_query_string({'force': force}, id_or_uri=id_or_uri)
-        return self._client.update(resource=resource, uri=uri, default_values=self.DEFAULT_VALUES)
+        self.data = self._helper.update(resource, uri, force, timeout)
 
-    def patch(self, id_or_uri, operation, path, value, timeout=-1):
-        """
-        Performs a specific patch operation for the given server profile.
-
-        The supported operation:
-            Updates the server profile from the server profile template.
-                Operation: replace | Path: /templateCompliance | Value: Compliant
-
-        Args:
-            id_or_uri:
-                Can be either the server profile id or the server profile uri
-            operation:
-                The type of operation: one of "add", "copy", "move", "remove", "replace", or "test".
-            path:
-                The JSON path the operation is to use. The exact meaning depends on the type of operation.
-            value:
-                The value to add or replace for "add" and "replace" operations, or the value to compare against
-                for a "test" operation. Not used by "copy", "move", or "remove".
-
-        Returns:
-            dict: Server profile resource.
-        """
-        return self._client.patch(id_or_uri, operation, path, value, timeout)
-
-    def delete(self, resource, timeout=-1):
-        """
-        Deletes a server profile object from the appliance based on its server profile UUID.
-
-        Args:
-            resource (dict): Object to delete.
-            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-                in OneView; it just stops waiting for its completion.
-
-        Returns:
-            bool: Indicates whether the server profile was successfully deleted.
-        """
-        return self._client.delete(resource=resource, timeout=timeout)
+        return self
 
     def delete_all(self, filter, timeout=-1, force=False):
         """
@@ -154,100 +132,19 @@ class ServerProfiles(object):
         Returns:
             bool: Indicates whether the server profile was successfully deleted.
         """
-        return self._client.delete_all(filter=filter, force=force, timeout=timeout)
+        return self._helper.delete_all(filter=filter, force=force, timeout=timeout)
 
-    def get_all(self, start=0, count=-1, filter='', sort=''):
-        """
-        Gets a list of server profiles based on optional sorting and filtering and is constrained by start and
-        count parameters.
-
-        Args:
-            start:
-                The first item to return, using 0-based indexing.
-                If not specified, the default is 0 - start with the first available item.
-            count:
-                The number of resources to return.
-                Providing a -1 for the count parameter will restrict the result set size to 64 server profile
-                templates. The maximum number of profile templates is restricted to 256, that is, if user requests more
-                than 256, this will be internally limited to 256.
-                The actual number of items in the response might differ from the
-                requested count if the sum of start and count exceeds the total number of items, or if returning the
-                requested number of items would take too long.
-            filter (list or str):
-                A general filter/query string to narrow the list of items returned. The
-                default is no filter; all resources are returned.
-                Filters are supported for the name, description, serialNumber, uuid, affinity, macType, wwnType,
-                serialNumberType, serverProfileTemplateUri, templateCompliance, status, and state attributes.
-            sort:
-                The sort order of the returned data set. By default, the sort order is based
-                on create time with the oldest entry first.
-
-        Returns:
-            list: A list of server profiles.
-        """
-        return self._client.get_all(start=start, count=count, filter=filter, sort=sort)
-
-    def get(self, id_or_uri):
-        """
-        Retrieves a server profile managed by the appliance by ID or by URI.
-
-        Args:
-            id_or_uri: Can be either the server profile resource ID or URI.
-
-        Returns:
-            dict: The server profile resource.
-        """
-        return self._client.get(id_or_uri=id_or_uri)
-
-    def get_by(self, field, value):
-        """
-        Gets all server profiles that match a specified filter.
-
-        The search is case-insensitive.
-
-        Args:
-            field: Field name to filter.
-            value: Value to filter.
-
-        Returns:
-            list: A list of server profiles.
-        """
-        return self._client.get_by(field, value)
-
-    def get_by_name(self, name):
-        """
-        Gets a server profile by name.
-
-        Args:
-            name: Name of the server profile.
-
-        Returns:
-            dict: The server profile resource.
-        """
-        return self._client.get_by_name(name)
-
-    def get_schema(self):
-        """
-        Generates the Server Profile schema.
-
-        Returns:
-            dict: The server profile schema.
-        """
-        return self._client.get_schema()
-
-    def get_compliance_preview(self, id_or_uri):
+    @ensure_resource_client
+    def get_compliance_preview(self):
         """
         Gets the preview of manual and automatic updates required to make the server profile
         consistent with its template.
 
-        Args:
-            id_or_uri: Can be either the server profile resource ID or URI.
-
         Returns:
             dict: Server profile compliance preview.
         """
-        uri = self._client.build_uri(id_or_uri) + '/compliance-preview'
-        return self._client.get(uri)
+        uri = '{}/compliance-preview'.format(self.data["uri"])
+        return self._helper.do_get(uri)
 
     def get_profile_ports(self, **kwargs):
         """
@@ -264,23 +161,22 @@ class ServerProfiles(object):
         Returns:
             dict: Profile port.
         """
-        uri = self.__build_uri_with_query_string(kwargs, '/profile-ports')
-        return self._client.get(uri)
+        uri = self._helper.build_uri_with_query_string(kwargs, '/profile-ports')
+        return self._helper.do_get(uri)
 
-    def get_messages(self, id_or_uri):
+    @ensure_resource_client
+    def get_messages(self):
         """
         Retrieves the error or status messages associated with the specified profile.
-
-        Args:
-            id_or_uri: Can be either the server profile resource ID or URI.
 
         Returns:
             dict: Server Profile Health.
         """
-        uri = self._client.build_uri(id_or_uri) + '/messages'
-        return self._client.get(uri)
+        uri = '{}/messages'.format(self.data["uri"])
+        return self._helper.do_get(uri)
 
-    def get_transformation(self, id_or_uri, **kwargs):
+    @ensure_resource_client
+    def get_transformation(self, **kwargs):
         """
 
         Transforms an existing profile by supplying a new server hardware type or enclosure group or both.
@@ -291,8 +187,6 @@ class ServerProfiles(object):
         transformed server profile is submitted.
 
         Args:
-            id_or_uri:
-                Can be either the server profile resource ID or URI.
             enclosureGroupUri (str):
                 The URI of the enclosure group associated with the resource.
             serverHardwareTypeUri (str):
@@ -303,8 +197,10 @@ class ServerProfiles(object):
         Returns:
             dict: Server Profile.
         """
-        uri = self.__build_uri_with_query_string(kwargs, '/transformation', id_or_uri)
-        return self._client.get(uri)
+        uri = self._helper.build_uri_with_query_string(kwargs,
+                                                       '/transformation',
+                                                       self.data["uri"])
+        return self._helper.do_get(uri)
 
     def get_available_networks(self, **kwargs):
         """
@@ -333,8 +229,8 @@ class ServerProfiles(object):
         Returns:
             list: Available networks.
         """
-        uri = self.__build_uri_with_query_string(kwargs, '/available-networks')
-        return self._client.get(uri)
+        uri = self._helper.build_uri_with_query_string(kwargs, '/available-networks')
+        return self._helper.do_get(uri)
 
     def get_available_servers(self, **kwargs):
         """
@@ -346,12 +242,13 @@ class ServerProfiles(object):
            profileUri (str): The URI of the server profile resource.
            scopeUris (str): An expression to restrict the resources returned according to
                the scopes to which they are assigned.
-
+           filter (list or str): A general filter/query string to narrow the list of items returned.
+               The default is no filter, all resources are returned.
         Returns:
             list: Available servers.
         """
-        uri = self.__build_uri_with_query_string(kwargs, '/available-servers')
-        return self._client.get(uri)
+        uri = self._helper.build_uri_with_query_string(kwargs, '/available-servers')
+        return self._helper.do_get(uri)
 
     def get_available_storage_system(self, **kwargs):
         """
@@ -369,8 +266,8 @@ class ServerProfiles(object):
         Returns:
             dict: Available storage system.
         """
-        uri = self.__build_uri_with_query_string(kwargs, '/available-storage-system')
-        return self._client.get(uri)
+        uri = self._helper.build_uri_with_query_string(kwargs, '/available-storage-system')
+        return self._helper.do_get(uri)
 
     def get_available_storage_systems(self, start=0, count=-1, filter='', sort='', **kwargs):
         """
@@ -399,8 +296,8 @@ class ServerProfiles(object):
         Returns:
             list: Available storage systems.
         """
-        uri = self.__build_uri_with_query_string(kwargs, '/available-storage-systems')
-        return self._client.get_all(start=start, count=count, filter=filter, sort=sort, uri=uri)
+        uri = self._helper.build_uri_with_query_string(kwargs, '/available-storage-systems')
+        return self._helper.get_all(start=start, count=count, filter=filter, sort=sort, uri=uri)
 
     def get_available_targets(self, **kwargs):
         """
@@ -413,30 +310,22 @@ class ServerProfiles(object):
            profileUri (str): The URI of the server profile associated with the resource.
            scopeUris (str): An expression to restrict the resources returned according to
                the scopes to which they are assigned.
+           filter (list or str): A general filter/query string to narrow the list of items returned.
+               The default is no filter, all resources are returned.
 
         Returns:
             list: List of available servers and bays.
         """
-        uri = self.__build_uri_with_query_string(kwargs, '/available-targets')
-        return self._client.get(uri)
+        uri = self._helper.build_uri_with_query_string(kwargs, '/available-targets')
+        return self._helper.do_get(uri)
 
-    def __build_uri_with_query_string(self, kwargs, sufix_path='', id_or_uri=None):
-        uri = self.URI
-        if id_or_uri:
-            uri = self._client.build_uri(id_or_uri)
-
-        query_string = '&'.join('{}={}'.format(key, kwargs[key]) for key in sorted(kwargs))
-        return uri + sufix_path + '?' + query_string
-
-    def get_new_profile_template(self, id_or_uri):
+    @ensure_resource_client
+    def get_new_profile_template(self):
         """
         Retrieves the profile template for a given server profile.
-
-        Args:
-            id_or_uri: Can be either the server profile resource ID or URI.
 
         Returns:
             dict: Server profile template.
         """
-        uri = self._client.build_uri(id_or_uri) + '/new-profile-template'
-        return self._client.get(uri)
+        uri = '{}/new-profile-template'.format(self.data["uri"])
+        return self._helper.do_get(uri)

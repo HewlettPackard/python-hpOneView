@@ -772,9 +772,9 @@ class OneViewClientTest(unittest.TestCase):
     def test_server_profiles_has_value(self):
         self.assertIsNotNone(self._oneview.server_profiles)
 
-    def test_lazy_loading_server_profiles(self):
-        server_profiles = self._oneview.server_profiles
-        self.assertEqual(server_profiles, self._oneview.server_profiles)
+    def test_server_profiles_return(self):
+        self.assertNotEqual(self._oneview.server_profiles,
+                            self._oneview.server_profiles)
 
     def test_datacenters_has_right_type(self):
         self.assertIsInstance(self._oneview.datacenters, Datacenters)

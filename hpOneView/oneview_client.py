@@ -817,9 +817,7 @@ class OneViewClient(object):
         Returns:
             ServerProfiles:
         """
-        if not self.__server_profiles:
-            self.__server_profiles = ServerProfiles(self.__connection)
-        return self.__server_profiles
+        return ServerProfiles(self.__connection)
 
     @property
     def server_profile_templates(self):
