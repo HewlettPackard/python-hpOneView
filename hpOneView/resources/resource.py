@@ -469,6 +469,35 @@ class ResourceHelper(object):
 
         return task['taskOutput']
 
+    def get_collection(self, uri=None, filter='', path=''):
+        """Retrieves a collection of resources.
+
+        Use this function when the 'start' and 'count' parameters are not allowed in the GET call.
+        Otherwise, use get_all instead.
+
+        Optional filtering criteria may be specified.
+
+        Args:
+            filter (list or str): General filter/query string.
+            path (str): path to be added with base URI
+
+        Returns:
+             Collection of the requested resource.
+        """
+        if not uri:
+            uri = self._base_uri
+
+        if filter:
+            filter = self.make_query_filter(filter)
+            filter = "?" + filter[1:]
+
+        uri = "{uri}{path}{filter}".format(uri=uri, path=path, filter=filter)
+        logger.debug('Get resource collection (uri = %s)' % uri)
+
+        response = self._connection.get(uri)
+
+        return self.get_members(response)
+
     def build_query_uri(self, uri=None, start=0, count=-1, filter='', query='', sort='', view='', fields='', scope_uris=''):
         """Builds the URI from given parameters.
 
@@ -909,37 +938,6 @@ class ResourceSchemaMixin(object):
         """
         resource_uri = self.data['uri']
         return self._helper.do_get(resource_uri + '/schema')
-
-
-class ResourceCollectionMixin(object):
-
-    def get_collection(self, filter='', path=''):
-        """Retrieves a collection of resources.
-
-        Use this function when the 'start' and 'count' parameters are not allowed in the GET call.
-        Otherwise, use get_all instead.
-
-        Optional filtering criteria may be specified.
-
-        Args:
-            filter (list or str): General filter/query string.
-            path (str): path to be added with base URI
-
-        Returns:
-             Collection of the requested resource.
-        """
-        uri = self.URI
-
-        if filter:
-            filter = self._helper.make_query_filter(filter)
-            filter = "?" + filter[1:]
-
-        uri = "{uri}{path}{filter}".format(uri=uri, path=path, filter=filter)
-        logger.debug('Get resource collection (uri = %s)' % uri)
-
-        response = self._connection.get(uri)
-
-        return self._helper.get_members(response)
 
 
 class ResourceZeroBodyMixin(object):

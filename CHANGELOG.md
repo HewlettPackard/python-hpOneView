@@ -33,6 +33,7 @@ Resource data will be available with the resource object. This enhancement helps
 - Interconnect type
 - Internal link set
 - Logical enclosure
+- Logical interconnect
 - Logical interconnect group
 - Logical switch group
 - Managed SAN

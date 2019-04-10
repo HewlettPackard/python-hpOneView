@@ -658,9 +658,9 @@ class OneViewClientTest(unittest.TestCase):
     def test_logical_interconnects_has_value(self):
         self.assertIsNotNone(self._oneview.logical_interconnects)
 
-    def test_lazy_loading_logical_interconnects(self):
-        logical_interconnects = self._oneview.logical_interconnects
-        self.assertEqual(logical_interconnects, self._oneview.logical_interconnects)
+    def test_logical_interconnects_return(self):
+        self.assertNotEqual(self._oneview.logical_interconnects,
+                            self._oneview.logical_interconnects)
 
     def test_sas_logical_interconnects_has_right_type(self):
         self.assertIsInstance(self._oneview.sas_logical_interconnects, SasLogicalInterconnects)
