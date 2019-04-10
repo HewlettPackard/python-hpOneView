@@ -523,6 +523,28 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_requests_to_getall</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="ResourceHelper.delete_all"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.delete_all">[docs]</a>    <span class="k">def</span> <span class="nf">delete_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deletes all resources from the appliance that match the provided filter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filter:</span>
+<span class="sd">                A general filter/query string to narrow the list of items deleted.</span>
+<span class="sd">            force:</span>
+<span class="sd">                If set to true, the operation completes despite any problems with network connectivity or errors</span>
+<span class="sd">                on the resource itself. The default is false.</span>
+<span class="sd">            timeout:</span>
+<span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
+<span class="sd">                in OneView; it just stops waiting for its completion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: Indicates if the resources were successfully deleted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">?filter=</span><span class="si">{}</span><span class="s2">&amp;force=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_uri</span><span class="p">,</span> <span class="n">quote</span><span class="p">(</span><span class="nb">filter</span><span class="p">),</span> <span class="n">force</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Delete all resources (uri = </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="n">uri</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="ResourceHelper.create"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">custom_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Makes a POST request to create a resource when a request body is required.</span>
 
@@ -709,6 +731,13 @@
         <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0}{1}</span><span class="s2">start=</span><span class="si">{2}</span><span class="s2">&amp;count=</span><span class="si">{3}{4}{5}{6}{7}{8}{9}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">sort</span><span class="p">,</span>
                                                                    <span class="n">view</span><span class="p">,</span> <span class="n">fields</span><span class="p">,</span> <span class="n">scope_uris</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">uri</span></div>
+
+<div class="viewcode-block" id="ResourceHelper.build_uri_with_query_string"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.build_uri_with_query_string">[docs]</a>    <span class="k">def</span> <span class="nf">build_uri_with_query_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">sufix_path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">uri</span><span class="p">:</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_uri</span>
+
+        <span class="n">query_string</span> <span class="o">=</span> <span class="s1">&#39;&amp;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">uri</span> <span class="o">+</span> <span class="n">sufix_path</span> <span class="o">+</span> <span class="s1">&#39;?&#39;</span> <span class="o">+</span> <span class="n">query_string</span></div>
 
 <div class="viewcode-block" id="ResourceHelper.build_uri"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.build_uri">[docs]</a>    <span class="k">def</span> <span class="nf">build_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Helps to build the URI from resource id and validate the URI.</span>

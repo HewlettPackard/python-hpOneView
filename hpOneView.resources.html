@@ -1196,6 +1196,11 @@ which they are assigned.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.build_uri_with_query_string">
+<code class="descname">build_uri_with_query_string</code><span class="sig-paren">(</span><em>kwargs</em>, <em>sufix_path=u''</em>, <em>uri=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.build_uri_with_query_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.build_uri_with_query_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="hpOneView.resources.resource.ResourceHelper.create">
 <code class="descname">create</code><span class="sig-paren">(</span><em>data=None</em>, <em>uri=None</em>, <em>timeout=-1</em>, <em>custom_headers=None</em>, <em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Makes a POST request to create a resource when a request body is required.</p>
@@ -1257,6 +1262,33 @@ in OneView; it just stops waiting for its completion.</li>
 <li><strong>timeout</strong> – Timeout in seconds.</li>
 <li><strong>custom_headers</strong> – Allows to set custom http headers.</li>
 </ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.delete_all">
+<code class="descname">delete_all</code><span class="sig-paren">(</span><em>filter</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.delete_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.delete_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes all resources from the appliance that match the provided filter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filter</strong> – A general filter/query string to narrow the list of items deleted.</li>
+<li><strong>force</strong> – If set to true, the operation completes despite any problems with network connectivity or errors
+on the resource itself. The default is false.</li>
+<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
+in OneView; it just stops waiting for its completion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates if the resources were successfully deleted.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
 </td>
 </tr>
 </tbody>

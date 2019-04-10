@@ -1800,12 +1800,12 @@ the specified server hardware type.</li>
 <span id="hponeview-resources-servers-server-profiles-module"></span><h2>hpOneView.resources.servers.server_profiles module<a class="headerlink" href="#module-hpOneView.resources.servers.server_profiles" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.servers.server_profiles.</code><code class="descname">ServerProfiles</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">hpOneView.resources.servers.server_profiles.</code><code class="descname">ServerProfiles</code><span class="sig-paren">(</span><em>connection</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.ResourcePatchMixin" title="hpOneView.resources.resource.ResourcePatchMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.ResourcePatchMixin</span></code></a>, <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.ResourceSchemaMixin" title="hpOneView.resources.resource.ResourceSchemaMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.ResourceSchemaMixin</span></code></a>, <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.Resource" title="hpOneView.resources.resource.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.Resource</span></code></a></p>
 <p>Server Profile API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.DEFAULT_VALUES">
-<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'ServerProfileV5'}, u'300': {u'type': u'ServerProfileV6'}, u'500': {u'type': u'ServerProfileV7'}, u'600': {u'type': u'ServerProfileV8'}}</em><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'ServerProfileV5'}, u'300': {u'type': u'ServerProfileV6'}, u'500': {u'type': u'ServerProfileV7'}, u'600': {u'type': u'ServerProfileV8'}, u'800': {u'type': u'ServerProfileV9'}}</em><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -1815,49 +1815,21 @@ the specified server hardware type.</li>
 
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.create">
-<code class="descname">create</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em>, <em>force=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.create" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates a server profile using the information provided in the resource parameter.</p>
+<code class="descname">create</code><span class="sig-paren">(</span><em>data=None</em>, <em>timeout=-1</em>, <em>force=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a POST request to create a resource when a request body is required.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) – Object to create.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView, just stop waiting for its completion.</li>
-<li><strong>force</strong> – Comma separated list of flags for ignoring specific warning.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Created server profile.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.delete">
-<code class="descname">delete</code><span class="sig-paren">(</span><em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deletes a server profile object from the appliance based on its server profile UUID.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>resource</strong> (<em>dict</em>) – Object to delete.</li>
+<li><strong>data</strong> – Additional fields can be passed to create the resource.</li>
 <li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
 in OneView; it just stops waiting for its completion.</li>
+<li><strong>force</strong> – Flag to force the operation</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Indicates whether the server profile was successfully deleted.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Created resource.</p>
 </td>
 </tr>
 </tbody>
@@ -1898,62 +1870,6 @@ in OneView; it just stops waiting for its completion.</li>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves a server profile managed by the appliance by ID or by URI.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server profile resource ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The server profile resource.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a list of server profiles based on optional sorting and filtering and is constrained by start and
-count parameters.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>start</strong> – The first item to return, using 0-based indexing.
-If not specified, the default is 0 - start with the first available item.</li>
-<li><strong>count</strong> – The number of resources to return.
-Providing a -1 for the count parameter will restrict the result set size to 64 server profile
-templates. The maximum number of profile templates is restricted to 256, that is, if user requests more
-than 256, this will be internally limited to 256.
-The actual number of items in the response might differ from the
-requested count if the sum of start and count exceeds the total number of items, or if returning the
-requested number of items would take too long.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
-default is no filter; all resources are returned.
-Filters are supported for the name, description, serialNumber, uuid, affinity, macType, wwnType,
-serialNumberType, serverProfileTemplateUri, templateCompliance, status, and state attributes.</li>
-<li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
-on create time with the oldest entry first.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of server profiles.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
 </td>
 </tr>
 </tbody>
@@ -2019,6 +1935,8 @@ to which they are assigned</li>
 <li><strong>profileUri</strong> (<em>str</em>) – The URI of the server profile resource.</li>
 <li><strong>scopeUris</strong> (<em>str</em>) – An expression to restrict the resources returned according to
 the scopes to which they are assigned.</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned.
+The default is no filter, all resources are returned.</li>
 </ul>
 </td>
 </tr>
@@ -2107,6 +2025,8 @@ profile.</p>
 <li><strong>profileUri</strong> (<em>str</em>) – The URI of the server profile associated with the resource.</li>
 <li><strong>scopeUris</strong> (<em>str</em>) – An expression to restrict the resources returned according to
 the scopes to which they are assigned.</li>
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned.
+The default is no filter, all resources are returned.</li>
 </ul>
 </td>
 </tr>
@@ -2120,103 +2040,20 @@ the scopes to which they are assigned.</li>
 </table>
 </dd></dl>
 
-<dl class="method">
-<dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_by">
-<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all server profiles that match a specified filter.</p>
-<p>The search is case-insensitive.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> – Field name to filter.</li>
-<li><strong>value</strong> – Value to filter.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of server profiles.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_by_name">
-<code class="descname">get_by_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_by_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a server profile by name.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – Name of the server profile.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The server profile resource.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_compliance_preview">
-<code class="descname">get_compliance_preview</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_compliance_preview"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_compliance_preview" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the preview of manual and automatic updates required to make the server profile
-consistent with its template.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server profile resource ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Server profile compliance preview.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_compliance_preview</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_compliance_preview" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_messages">
-<code class="descname">get_messages</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_messages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_messages" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves the error or status messages associated with the specified profile.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server profile resource ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Server Profile Health.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_messages</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_messages" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_new_profile_template">
-<code class="descname">get_new_profile_template</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_new_profile_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_new_profile_template" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves the profile template for a given server profile.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the server profile resource ID or URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Server profile template.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_new_profile_template</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_new_profile_template" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_profile_ports">
@@ -2243,112 +2080,15 @@ consistent with its template.</p>
 </table>
 </dd></dl>
 
-<dl class="method">
-<dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_schema">
-<code class="descname">get_schema</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_schema"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_schema" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates the Server Profile schema.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The server profile schema.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.get_transformation">
-<code class="descname">get_transformation</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.get_transformation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_transformation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transforms an existing profile by supplying a new server hardware type or enclosure group or both.
-A profile will be returned with a new configuration based on the capabilities of the supplied server hardware
-type or enclosure group or both. The port assignment for all deployed connections will be set to Auto.
-Re-selection of the server hardware may also be required. The new profile can subsequently be used for updating
-the server profile, but passing validation is not guaranteed. Any incompatibilities will be flagged when the
-transformed server profile is submitted.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the server profile resource ID or URI.</li>
-<li><strong>enclosureGroupUri</strong> (<em>str</em>) – The URI of the enclosure group associated with the resource.</li>
-<li><strong>serverHardwareTypeUri</strong> (<em>str</em>) – The URI of the server hardware type associated with the resource.</li>
-<li><strong>serverHardwareUri</strong> (<em>str</em>) – The URI of the server hardware associated with the resource.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Server Profile.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.patch">
-<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.patch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs a specific patch operation for the given server profile.</p>
-<dl class="docutils">
-<dt>The supported operation:</dt>
-<dd><dl class="first last docutils">
-<dt>Updates the server profile from the server profile template.</dt>
-<dd>Operation: replace | Path: /templateCompliance | Value: Compliant</dd>
-</dl>
-</dd>
-</dl>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the server profile id or the server profile uri</li>
-<li><strong>operation</strong> – The type of operation: one of “add”, “copy”, “move”, “remove”, “replace”, or “test”.</li>
-<li><strong>path</strong> – The JSON path the operation is to use. The exact meaning depends on the type of operation.</li>
-<li><strong>value</strong> – The value to add or replace for “add” and “replace” operations, or the value to compare against
-for a “test” operation. Not used by “copy”, “move”, or “remove”.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Server profile resource.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_transformation</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.get_transformation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.servers.server_profiles.ServerProfiles.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>resource</em>, <em>id_or_uri</em>, <em>force=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/servers/server_profiles.html#ServerProfiles.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Allows the configuration of a server profile object to be modified.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the server profile id or the server profile uri.</li>
-<li><strong>resource</strong> (<em>dict</em>) – Object to update.</li>
-<li><strong>force</strong> – Comma separated list of flags for ignoring specific warning.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The server profile resource.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#hpOneView.resources.servers.server_profiles.ServerProfiles.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
