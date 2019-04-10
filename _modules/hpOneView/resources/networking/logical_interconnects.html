@@ -148,7 +148,7 @@
   <h1>Source code for hpOneView.resources.networking.logical_interconnects</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="c1">###</span>
-<span class="c1"># (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP</span>
+<span class="c1"># (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP</span>
 <span class="c1">#</span>
 <span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
 <span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
@@ -178,10 +178,12 @@
 
 <span class="n">standard_library</span><span class="o">.</span><span class="n">install_aliases</span><span class="p">()</span>
 
-<span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="n">ResourceClient</span>
+<span class="kn">from</span> <span class="nn">hpOneView.exceptions</span> <span class="k">import</span> <span class="n">HPOneViewResourceNotFound</span>
+<span class="kn">from</span> <span class="nn">hpOneView.resources.resource</span> <span class="k">import</span> <span class="p">(</span><span class="n">Resource</span><span class="p">,</span> <span class="n">ResourcePatchMixin</span><span class="p">,</span> <span class="n">merge_resources</span><span class="p">,</span>
+                                          <span class="n">ensure_resource_client</span><span class="p">,</span> <span class="n">unavailable_method</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="LogicalInterconnects"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects">[docs]</a><span class="k">class</span> <span class="nc">LogicalInterconnects</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="LogicalInterconnects"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects">[docs]</a><span class="k">class</span> <span class="nc">LogicalInterconnects</span><span class="p">(</span><span class="n">ResourcePatchMixin</span><span class="p">,</span> <span class="n">Resource</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Logical Interconnects API client.</span>
 
@@ -199,28 +201,40 @@
         <span class="s1">&#39;200&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;InterconnectSettingsV3&quot;</span><span class="p">},</span>
         <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;InterconnectSettingsV201&quot;</span><span class="p">},</span>
         <span class="s1">&#39;500&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;InterconnectSettingsV201&quot;</span><span class="p">},</span>
-        <span class="s1">&#39;600&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;InterconnectSettingsV201&quot;</span><span class="p">}</span>
     <span class="p">}</span>
 
     <span class="n">SETTINGS_ETHERNET_DEFAULT_VALUES</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;200&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;EthernetInterconnectSettingsV3&quot;</span><span class="p">},</span>
         <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;EthernetInterconnectSettingsV201&quot;</span><span class="p">},</span>
         <span class="s1">&#39;500&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;EthernetInterconnectSettingsV201&quot;</span><span class="p">},</span>
-        <span class="s1">&#39;600&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;EthernetInterconnectSettingsV4&quot;</span><span class="p">}</span>
+        <span class="s1">&#39;600&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;EthernetInterconnectSettingsV4&quot;</span><span class="p">},</span>
+        <span class="s1">&#39;800&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;EthernetInterconnectSettingsV4&quot;</span><span class="p">}</span>
     <span class="p">}</span>
 
     <span class="n">SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;200&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;telemetry-configuration&quot;</span><span class="p">},</span>
         <span class="s1">&#39;300&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;telemetry-configuration&quot;</span><span class="p">},</span>
         <span class="s1">&#39;500&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;telemetry-configuration&quot;</span><span class="p">},</span>
-        <span class="s1">&#39;600&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;telemetry-configuration&quot;</span><span class="p">}</span>
+        <span class="s1">&#39;600&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;telemetry-configuration&quot;</span><span class="p">},</span>
+        <span class="s1">&#39;800&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;telemetry-configuration&quot;</span><span class="p">}</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">con</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">con</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ResourceClient</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LogicalInterconnects</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="LogicalInterconnects.create"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create method is not available for this resource&quot;&quot;&quot;</span>
+        <span class="n">unavailable_method</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.update"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update method is not available for this resource&quot;&quot;&quot;</span>
+        <span class="n">unavailable_method</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.delete"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete method is not available for this resource&quot;&quot;&quot;</span>
+        <span class="n">unavailable_method</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="LogicalInterconnects.get_all"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_all">[docs]</a>    <span class="k">def</span> <span class="nf">get_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a list of logical interconnects based on optional sorting and filtering and is constrained by start</span>
 <span class="sd">        and count parameters.</span>
@@ -233,9 +247,6 @@
 <span class="sd">                The number of resources to return. A count of -1 requests all items.</span>
 <span class="sd">                The actual number of items in the response might differ from the requested</span>
 <span class="sd">                count if the sum of start and count exceeds the total number of items.</span>
-<span class="sd">            filter (list or str):</span>
-<span class="sd">                A general filter/query string to narrow the list of items returned. The</span>
-<span class="sd">                default is no filter; all resources are returned.</span>
 <span class="sd">            sort:</span>
 <span class="sd">                The sort order of the returned data set. By default, the sort order is based</span>
 <span class="sd">                on create time with the oldest entry first.</span>
@@ -243,19 +254,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of logical interconnects.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="LogicalInterconnects.get"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets a logical interconnect by ID or by URI.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the logical interconnect id or the logical interconnect uri.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: The logical interconnect.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">get_all</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LogicalInterconnects.get_by_name"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_by_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_by_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -267,11 +266,17 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Logical Interconnect.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logical_interconnects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_all</span><span class="p">()</span>
+        <span class="n">logical_interconnects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all</span><span class="p">()</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">logical_interconnects</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">name</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">result</span> <span class="k">else</span> <span class="kc">None</span></div>
+        <span class="n">resource</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">result</span> <span class="k">else</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.update_compliance"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_compliance">[docs]</a>    <span class="k">def</span> <span class="nf">update_compliance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">resource</span><span class="p">:</span>
+            <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">resource</span></div>
+
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">update_compliance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns logical interconnects to a consistent state. The current logical interconnect state is</span>
 <span class="sd">        compared to the associated logical interconnect group.</span>
@@ -283,22 +288,21 @@
 <span class="sd">        existing interconnects from management and/or adding new interconnects for management.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the resource ID or the resource URI.</span>
 <span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
 <span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Logical Interconnect.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/compliance&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update_with_zero_body</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/compliance&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.update_ethernet_settings"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_ethernet_settings">[docs]</a>    <span class="k">def</span> <span class="nf">update_ethernet_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">update_ethernet_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the Ethernet interconnect settings for the logical interconnect.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the resource ID or the resource URI.</span>
 <span class="sd">            configuration:  Ethernet interconnect settings.</span>
 <span class="sd">            force: If set to true, the operation completes despite any problems with network connectivity or errors</span>
 <span class="sd">                on the resource itself. The default is false.</span>
@@ -308,15 +312,15 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Logical Interconnect.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/ethernetSettings&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/ethernetSettings&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.update_internal_networks"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_internal_networks">[docs]</a>    <span class="k">def</span> <span class="nf">update_internal_networks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">network_uri_list</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">update_internal_networks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">network_uri_list</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates internal networks on the logical interconnect.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the resource ID or the resource URI.</span>
 <span class="sd">            network_uri_list: List of Ethernet network uris.</span>
 <span class="sd">            force: If set to true, the operation completes despite any problems with network connectivity or errors</span>
 <span class="sd">                on the resource itself. The default is false.</span>
@@ -326,30 +330,30 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Logical Interconnect.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/internalNetworks&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">network_uri_list</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/internalNetworks&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">network_uri_list</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.get_internal_vlans"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_internal_vlans">[docs]</a>    <span class="k">def</span> <span class="nf">get_internal_vlans</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">get_internal_vlans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the internal VLAN IDs for the provisioned networks on a logical interconnect.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the logical interconnect group id or the logical interconnect group uri</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Collection of URIs</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/internalVlans&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/internalVlans&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">])</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.update_settings"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_settings">[docs]</a>    <span class="k">def</span> <span class="nf">update_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">get_members</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">update_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates interconnect settings on the logical interconnect. Changes to interconnect settings are asynchronously</span>
 <span class="sd">        applied to all managed interconnects.</span>
-
+<span class="sd">        (This method is not available from API version 600 onwards)</span>
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the resource ID or the resource URI.</span>
 <span class="sd">            settings: Interconnect settings</span>
 <span class="sd">            force: If set to true, the operation completes despite any problems with network connectivity or errors</span>
 <span class="sd">                on the resource itself. The default is false.</span>
@@ -362,48 +366,49 @@
         <span class="n">data</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="s1">&#39;ethernetSettings&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ethernetSettings&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">merge_default_values</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;ethernetSettings&#39;</span><span class="p">],</span>
-                                                                         <span class="bp">self</span><span class="o">.</span><span class="n">SETTINGS_ETHERNET_DEFAULT_VALUES</span><span class="p">)</span>
+            <span class="n">ethernet_default_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_default_values</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SETTINGS_ETHERNET_DEFAULT_VALUES</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ethernetSettings&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">merge_resources</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;ethernetSettings&#39;</span><span class="p">],</span>
+                                                       <span class="n">ethernet_default_values</span><span class="p">)</span>
 
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/settings&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
-                                   <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">SETTINGS_DEFAULT_VALUES</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/settings&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">])</span>
+        <span class="n">default_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_default_values</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SETTINGS_DEFAULT_VALUES</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update_resource_fields</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">default_values</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.update_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">update_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">force</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">update_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Asynchronously applies or re-applies the logical interconnect configuration to all managed interconnects.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the resource ID or the resource URI.</span>
 <span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
 <span class="sd">                in OneView; it just stops waiting for its completion.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Logical Interconnect.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/configuration&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update_with_zero_body</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/configuration&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.get_snmp_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_snmp_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">get_snmp_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">get_snmp_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the SNMP configuration for a logical interconnect.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the logical interconnect group id or the logical interconnect group uri.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: SNMP configuration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">SNMP_CONFIGURATION_PATH</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">SNMP_CONFIGURATION_PATH</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.update_snmp_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_snmp_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">update_snmp_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">update_snmp_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the SNMP configuration of a logical interconnect. Changes to the SNMP configuration are asynchronously</span>
 <span class="sd">        applied to all managed interconnects.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the logical interconnect id or the logical interconnect uri.</span>
 <span class="sd">            configuration: snmp configuration.</span>
 
 <span class="sd">        Returns:</span>
@@ -413,42 +418,55 @@
         <span class="k">if</span> <span class="s1">&#39;type&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
             <span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;snmp-configuration&#39;</span>
 
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">SNMP_CONFIGURATION_PATH</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">SNMP_CONFIGURATION_PATH</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.get_unassigned_uplink_ports"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_unassigned_uplink_ports">[docs]</a>    <span class="k">def</span> <span class="nf">get_unassigned_uplink_ports</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">get_unassigned_ports</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the collection ports from the member interconnects</span>
+<span class="sd">        which are eligible for assignment to an anlyzer port</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Collection of ports</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/unassignedPortsForPortMonitor&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">])</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">get_members</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">get_unassigned_uplink_ports</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets a collection of uplink ports from the member interconnects which are eligible for assignment to an</span>
 <span class="sd">        analyzer port. To be eligible, a port must be a valid uplink, must not be a member of an existing uplink set,</span>
 <span class="sd">        and must not currently be used for stacking.</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the logical interconnect group id or the logical interconnect group uri.</span>
-
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Collection of uplink ports.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/unassignedUplinkPortsForPortMonitor&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/unassignedUplinkPortsForPortMonitor&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">])</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.get_port_monitor"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_port_monitor">[docs]</a>    <span class="k">def</span> <span class="nf">get_port_monitor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">get_members</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">get_port_monitor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the port monitor configuration of a logical interconnect.</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the logical interconnect id or the logical interconnect uri.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: The Logical Interconnect.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">PORT_MONITOR_PATH</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">PORT_MONITOR_PATH</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.update_port_monitor"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_port_monitor">[docs]</a>    <span class="k">def</span> <span class="nf">update_port_monitor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">update_port_monitor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the port monitor configuration of a logical interconnect.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the logical interconnect id or the logical interconnect uri.</span>
 <span class="sd">            resource: Port monitor configuration.</span>
 
 <span class="sd">        Returns:</span>
@@ -458,21 +476,8 @@
         <span class="k">if</span> <span class="s1">&#39;type&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
             <span class="n">data</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;port-monitor&#39;</span>
 
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">PORT_MONITOR_PATH</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="LogicalInterconnects.get_telemetry_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_telemetry_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">get_telemetry_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">telemetry_configuration_uri</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets the telemetry configuration of a logical interconnect.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            telemetry_configuration_uri: Telemetry Configuration URI.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: Telemetry configuration.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">telemetry_configuration_uri</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">PORT_MONITOR_PATH</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
 
 <div class="viewcode-block" id="LogicalInterconnects.create_interconnect"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.create_interconnect">[docs]</a>    <span class="k">def</span> <span class="nf">create_interconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location_entries</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -491,7 +496,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Created interconnect.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">location_entries</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">locations_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">location_entries</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">locations_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LogicalInterconnects.delete_interconnect"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.delete_interconnect">[docs]</a>    <span class="k">def</span> <span class="nf">delete_interconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enclosure_uri</span><span class="p">,</span> <span class="n">bay</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -514,22 +519,21 @@
         <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{path}</span><span class="s2">?location=Enclosure:</span><span class="si">{enclosure_uri}</span><span class="s2">,Bay:</span><span class="si">{bay}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">LOCATIONS_PATH</span><span class="p">,</span>
                                                                            <span class="n">enclosure_uri</span><span class="o">=</span><span class="n">enclosure_uri</span><span class="p">,</span>
                                                                            <span class="n">bay</span><span class="o">=</span><span class="n">bay</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="LogicalInterconnects.get_firmware"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_firmware">[docs]</a>    <span class="k">def</span> <span class="nf">get_firmware</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">get_firmware</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the installed firmware for a logical interconnect.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the logical interconnect id or the logical interconnect uri.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: LIFirmware.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">firmware_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_subresource_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">subresource_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">FIRMWARE_PATH</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">firmware_uri</span><span class="p">)</span></div>
+        <span class="n">firmware_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">build_subresource_uri</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">],</span> <span class="n">subresource_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">FIRMWARE_PATH</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_get</span><span class="p">(</span><span class="n">firmware_uri</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.install_firmware"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.install_firmware">[docs]</a>    <span class="k">def</span> <span class="nf">install_firmware</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">firmware_information</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">install_firmware</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">firmware_information</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Installs firmware to a logical interconnect. The three operations that are supported for the firmware</span>
 <span class="sd">        update are Stage (uploads firmware to the interconnect), Activate (installs firmware on the interconnect),</span>
@@ -537,22 +541,20 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            firmware_information: Options to install firmware to a logical interconnect.</span>
-<span class="sd">            id_or_uri: Can be either the logical interconnect id or the logical interconnect uri.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">firmware_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_subresource_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">subresource_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">FIRMWARE_PATH</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">firmware_information</span><span class="p">,</span> <span class="n">firmware_uri</span><span class="p">)</span></div>
+        <span class="n">firmware_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">build_subresource_uri</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">],</span> <span class="n">subresource_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">FIRMWARE_PATH</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">firmware_information</span><span class="p">,</span> <span class="n">firmware_uri</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.get_forwarding_information_base"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_forwarding_information_base">[docs]</a>    <span class="k">def</span> <span class="nf">get_forwarding_information_base</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">get_forwarding_information_base</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the forwarding information base data for a logical interconnect. A maximum of 100 entries is returned.</span>
 <span class="sd">        Optional filtering criteria might be specified.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri:</span>
-<span class="sd">                Can be either the logical interconnect id or the logical interconnect uri.</span>
 <span class="sd">            filter (list or str):</span>
 <span class="sd">                Filtering criteria may be specified using supported attributes: interconnectUri, macAddress,</span>
 <span class="sd">                internalVlan, externalVlan, and supported relation = (Equals). macAddress is 12 hexadecimal digits with</span>
@@ -562,46 +564,41 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A set of interconnect MAC address entries.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">FORWARDING_INFORMATION_PATH</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">FORWARDING_INFORMATION_PATH</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.create_forwarding_information_base"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.create_forwarding_information_base">[docs]</a>    <span class="k">def</span> <span class="nf">create_forwarding_information_base</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">create_forwarding_information_base</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates the forwarding information base dump file for a logical interconnect.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri:</span>
-<span class="sd">                Can be either the logical interconnect id or the logical interconnect uri.</span>
 <span class="sd">            timeout:</span>
 <span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in</span>
 <span class="sd">                OneView, just stops waiting for its completion.</span>
 
 <span class="sd">        Returns: Interconnect Forwarding Information Base DataInfo.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">FORWARDING_INFORMATION_PATH</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create_with_zero_body</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">FORWARDING_INFORMATION_PATH</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_post</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.get_qos_aggregated_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_qos_aggregated_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">get_qos_aggregated_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">get_qos_aggregated_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the QoS aggregated configuration for the logical interconnect.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            id_or_uri:</span>
-<span class="sd">                Can be either the logical interconnect id or the logical interconnect uri.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: QoS Configuration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">QOS_AGGREGATED_CONFIGURATION</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">QOS_AGGREGATED_CONFIGURATION</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.update_qos_aggregated_configuration"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_qos_aggregated_configuration">[docs]</a>    <span class="k">def</span> <span class="nf">update_qos_aggregated_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">qos_configuration</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">update_qos_aggregated_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qos_configuration</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the QoS aggregated configuration for the logical interconnect.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            id_or_uri:</span>
-<span class="sd">                Can be either the logical interconnect id or the logical interconnect uri.</span>
 <span class="sd">            qos_configuration:</span>
 <span class="sd">                QOS configuration.</span>
 <span class="sd">            timeout:</span>
@@ -611,21 +608,36 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Logical Interconnect.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">QOS_AGGREGATED_CONFIGURATION</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">qos_configuration</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">QOS_AGGREGATED_CONFIGURATION</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">qos_configuration</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.update_telemetry_configurations"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_telemetry_configurations">[docs]</a>    <span class="k">def</span> <span class="nf">update_telemetry_configurations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tc_id_or_uri</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_telemetry_configuration_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">telemetry_conf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;telemetryConfiguration&quot;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">telemetry_conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;uri&quot;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">HPOneViewResourceNotFound</span><span class="p">(</span><span class="s2">&quot;Telemetry configuration uri is not available&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">telemetry_conf</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">]</span>
+
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">get_telemetry_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the telemetry configuration of a logical interconnect.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: Telemetry configuration.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">telemetry_conf_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_telemetry_configuration_uri</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_get</span><span class="p">(</span><span class="n">telemetry_conf_uri</span><span class="p">)</span>
+
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">update_telemetry_configurations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the telemetry configuration of a logical interconnect. Changes to the telemetry configuration are</span>
 <span class="sd">        asynchronously applied to all managed interconnects.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            tc_id_or_uri:</span>
-<span class="sd">                Can be either the telemetry configuration id or uri.</span>
 <span class="sd">            configuration:</span>
 <span class="sd">                The telemetry configuration for the logical interconnect.</span>
-<span class="sd">            id_or_uri:</span>
-<span class="sd">                Can be either the logical interconnect id or uri.</span>
 <span class="sd">            timeout:</span>
 <span class="sd">                Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in</span>
 <span class="sd">                OneView, just stops waiting for its completion.</span>
@@ -633,42 +645,22 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: The Logical Interconnect.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_subresource_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">tc_id_or_uri</span><span class="p">,</span> <span class="s1">&#39;telemetry-configurations&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
-                                   <span class="n">default_values</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES</span><span class="p">)</span></div>
+        <span class="n">telemetry_conf_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_telemetry_configuration_uri</span><span class="p">()</span>
+        <span class="n">default_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_default_values</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES</span><span class="p">)</span>
+        <span class="n">configuration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update_resource_fields</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">default_values</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LogicalInterconnects.get_ethernet_settings"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_ethernet_settings">[docs]</a>    <span class="k">def</span> <span class="nf">get_ethernet_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">telemetry_conf_uri</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+
+    <span class="nd">@ensure_resource_client</span>
+    <span class="k">def</span> <span class="nf">get_ethernet_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets the Ethernet interconnect settings for the Logical Interconnect.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            id_or_uri:</span>
-<span class="sd">                Can be either the logical interconnect id or uri.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            dict: Ethernet Interconnect Settings</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">build_uri</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/ethernetSettings&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="LogicalInterconnects.patch"><a class="viewcode-back" href="../../../../hpOneView.resources.networking.html#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.patch">[docs]</a>    <span class="k">def</span> <span class="nf">patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_or_uri</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Uses the PATCH to update a resource for a given logical interconnect.</span>
-
-<span class="sd">        Only one operation can be performed in each PATCH call.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            id_or_uri: Can be either the resource ID or the resource URI.</span>
-<span class="sd">            operation: Patch operation</span>
-<span class="sd">            path: Path</span>
-<span class="sd">            value: Value</span>
-<span class="sd">            timeout: Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation</span>
-<span class="sd">                in OneView; it just stops waiting for its completion.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            dict: Updated resource.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="n">id_or_uri</span><span class="p">,</span> <span class="n">operation</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span></div></div>
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/ethernetSettings&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;uri&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

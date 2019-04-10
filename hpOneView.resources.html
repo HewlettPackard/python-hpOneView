@@ -1027,36 +1027,6 @@ in OneView; it just stops waiting for its completion.</li>
 </dd></dl>
 
 <dl class="class">
-<dt id="hpOneView.resources.resource.ResourceCollectionMixin">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.resource.</code><code class="descname">ResourceCollectionMixin</code><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceCollectionMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceCollectionMixin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="method">
-<dt id="hpOneView.resources.resource.ResourceCollectionMixin.get_collection">
-<code class="descname">get_collection</code><span class="sig-paren">(</span><em>filter=u''</em>, <em>path=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceCollectionMixin.get_collection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceCollectionMixin.get_collection" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retrieves a collection of resources.</p>
-<p>Use this function when the ‘start’ and ‘count’ parameters are not allowed in the GET call.
-Otherwise, use get_all instead.</p>
-<p>Optional filtering criteria may be specified.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – General filter/query string.</li>
-<li><strong>path</strong> (<em>str</em>) – path to be added with base URI</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Collection of the requested resource.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
 <dt id="hpOneView.resources.resource.ResourceFileHandlerMixin">
 <em class="property">class </em><code class="descclassname">hpOneView.resources.resource.</code><code class="descname">ResourceFileHandlerMixin</code><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceFileHandlerMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceFileHandlerMixin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -1400,6 +1370,30 @@ which they are assigned.</li>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.resource.ResourceHelper.get_collection">
+<code class="descname">get_collection</code><span class="sig-paren">(</span><em>uri=None</em>, <em>filter=u''</em>, <em>path=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/resource.html#ResourceHelper.get_collection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.resource.ResourceHelper.get_collection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a collection of resources.</p>
+<p>Use this function when the ‘start’ and ‘count’ parameters are not allowed in the GET call.
+Otherwise, use get_all instead.</p>
+<p>Optional filtering criteria may be specified.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – General filter/query string.</li>
+<li><strong>path</strong> (<em>str</em>) – path to be added with base URI</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Collection of the requested resource.</p>
 </td>
 </tr>
 </tbody>

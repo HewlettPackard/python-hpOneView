@@ -1294,8 +1294,8 @@ which they are assigned.</li>
 <span id="hponeview-resources-networking-logical-interconnects-module"></span><h2>hpOneView.resources.networking.logical_interconnects module<a class="headerlink" href="#module-hpOneView.resources.networking.logical_interconnects" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.logical_interconnects.</code><code class="descname">LogicalInterconnects</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">hpOneView.resources.networking.logical_interconnects.</code><code class="descname">LogicalInterconnects</code><span class="sig-paren">(</span><em>connection</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.ResourcePatchMixin" title="hpOneView.resources.resource.ResourcePatchMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.ResourcePatchMixin</span></code></a>, <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.Resource" title="hpOneView.resources.resource.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.Resource</span></code></a></p>
 <p>Logical Interconnects API client.</p>
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.FIRMWARE_PATH">
@@ -1324,17 +1324,17 @@ which they are assigned.</li>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_DEFAULT_VALUES">
-<code class="descname">SETTINGS_DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'InterconnectSettingsV3'}, u'300': {u'type': u'InterconnectSettingsV201'}, u'500': {u'type': u'InterconnectSettingsV201'}, u'600': {u'type': u'InterconnectSettingsV201'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SETTINGS_DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'InterconnectSettingsV3'}, u'300': {u'type': u'InterconnectSettingsV201'}, u'500': {u'type': u'InterconnectSettingsV201'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_ETHERNET_DEFAULT_VALUES">
-<code class="descname">SETTINGS_ETHERNET_DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'EthernetInterconnectSettingsV3'}, u'300': {u'type': u'EthernetInterconnectSettingsV201'}, u'500': {u'type': u'EthernetInterconnectSettingsV201'}, u'600': {u'type': u'EthernetInterconnectSettingsV4'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_ETHERNET_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SETTINGS_ETHERNET_DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'EthernetInterconnectSettingsV3'}, u'300': {u'type': u'EthernetInterconnectSettingsV201'}, u'500': {u'type': u'EthernetInterconnectSettingsV201'}, u'600': {u'type': u'EthernetInterconnectSettingsV4'}, u'800': {u'type': u'EthernetInterconnectSettingsV4'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_ETHERNET_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES">
-<code class="descname">SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'telemetry-configuration'}, u'300': {u'type': u'telemetry-configuration'}, u'500': {u'type': u'telemetry-configuration'}, u'600': {u'type': u'telemetry-configuration'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
+<code class="descname">SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES</code><em class="property"> = {u'200': {u'type': u'telemetry-configuration'}, u'300': {u'type': u'telemetry-configuration'}, u'500': {u'type': u'telemetry-configuration'}, u'600': {u'type': u'telemetry-configuration'}, u'800': {u'type': u'telemetry-configuration'}}</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -1348,24 +1348,15 @@ which they are assigned.</li>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.create_forwarding_information_base">
-<code class="descname">create_forwarding_information_base</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.create_forwarding_information_base"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.create_forwarding_information_base" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates the forwarding information base dump file for a logical interconnect.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>id_or_uri</strong> – Can be either the logical interconnect id or the logical interconnect uri.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
-OneView, just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>Returns: Interconnect Forwarding Information Base DataInfo.</p>
+<dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.create">
+<code class="descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create method is not available for this resource</p>
 </dd></dl>
+
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.create_forwarding_information_base">
+<code class="descname">create_forwarding_information_base</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.create_forwarding_information_base" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.create_interconnect">
@@ -1395,6 +1386,12 @@ in OneView; it just stops waiting for its completion.</li>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete method is not available for this resource</p>
 </dd></dl>
 
 <dl class="method">
@@ -1429,26 +1426,8 @@ in OneView; it just stops waiting for its completion.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a logical interconnect by ID or by URI.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the logical interconnect id or the logical interconnect uri.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The logical interconnect.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_all">
-<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>filter=u''</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_all" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_all</code><span class="sig-paren">(</span><em>start=0</em>, <em>count=-1</em>, <em>sort=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a list of logical interconnects based on optional sorting and filtering and is constrained by start
 and count parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1461,8 +1440,6 @@ If not specified, the default is 0 - start with the first available item.</li>
 <li><strong>count</strong> – The number of resources to return. A count of -1 requests all items.
 The actual number of items in the response might differ from the requested
 count if the sum of start and count exceeds the total number of items.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – A general filter/query string to narrow the list of items returned. The
-default is no filter; all resources are returned.</li>
 <li><strong>sort</strong> – The sort order of the returned data set. By default, the sort order is based
 on create time with the oldest entry first.</li>
 </ul>
@@ -1496,202 +1473,60 @@ on create time with the oldest entry first.</li>
 </table>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_ethernet_settings">
-<code class="descname">get_ethernet_settings</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get_ethernet_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_ethernet_settings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the Ethernet interconnect settings for the Logical Interconnect.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the logical interconnect id or uri.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Ethernet Interconnect Settings</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_ethernet_settings</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_ethernet_settings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_firmware">
-<code class="descname">get_firmware</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get_firmware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_firmware" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the installed firmware for a logical interconnect.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the logical interconnect id or the logical interconnect uri.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">LIFirmware.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_firmware</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_firmware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_forwarding_information_base">
-<code class="descname">get_forwarding_information_base</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>filter=u''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get_forwarding_information_base"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_forwarding_information_base" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the forwarding information base data for a logical interconnect. A maximum of 100 entries is returned.
-Optional filtering criteria might be specified.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the logical interconnect id or the logical interconnect uri.</li>
-<li><strong>filter</strong> (<em>list</em><em> or </em><em>str</em>) – Filtering criteria may be specified using supported attributes: interconnectUri, macAddress,
-internalVlan, externalVlan, and supported relation = (Equals). macAddress is 12 hexadecimal digits with
-a colon between each pair of digits (upper case or lower case).
-The default is no filter; all resources are returned.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A set of interconnect MAC address entries.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_forwarding_information_base</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_forwarding_information_base" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_internal_vlans">
-<code class="descname">get_internal_vlans</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get_internal_vlans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_internal_vlans" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the internal VLAN IDs for the provisioned networks on a logical interconnect.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the logical interconnect group id or the logical interconnect group uri</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Collection of URIs</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_internal_vlans</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_internal_vlans" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_port_monitor">
-<code class="descname">get_port_monitor</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get_port_monitor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_port_monitor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the port monitor configuration of a logical interconnect.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the logical interconnect id or the logical interconnect uri.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The Logical Interconnect.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_port_monitor</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_port_monitor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_qos_aggregated_configuration">
-<code class="descname">get_qos_aggregated_configuration</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get_qos_aggregated_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_qos_aggregated_configuration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the QoS aggregated configuration for the logical interconnect.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the logical interconnect id or the logical interconnect uri.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">QoS Configuration.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_qos_aggregated_configuration</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_qos_aggregated_configuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_snmp_configuration">
-<code class="descname">get_snmp_configuration</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get_snmp_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_snmp_configuration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the SNMP configuration for a logical interconnect.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the logical interconnect group id or the logical interconnect group uri.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">SNMP configuration.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_snmp_configuration</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_snmp_configuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_telemetry_configuration">
-<code class="descname">get_telemetry_configuration</code><span class="sig-paren">(</span><em>telemetry_configuration_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get_telemetry_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_telemetry_configuration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the telemetry configuration of a logical interconnect.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>telemetry_configuration_uri</strong> – Telemetry Configuration URI.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Telemetry configuration.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_telemetry_configuration</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_telemetry_configuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
+<dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_unassigned_ports">
+<code class="descname">get_unassigned_ports</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_unassigned_ports" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_unassigned_uplink_ports">
-<code class="descname">get_unassigned_uplink_ports</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.get_unassigned_uplink_ports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_unassigned_uplink_ports" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a collection of uplink ports from the member interconnects which are eligible for assignment to an
-analyzer port. To be eligible, a port must be a valid uplink, must not be a member of an existing uplink set,
-and must not currently be used for stacking.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the logical interconnect group id or the logical interconnect group uri.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Collection of uplink ports.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">get_unassigned_uplink_ports</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.get_unassigned_uplink_ports" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.install_firmware">
-<code class="descname">install_firmware</code><span class="sig-paren">(</span><em>firmware_information</em>, <em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.install_firmware"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.install_firmware" title="Permalink to this definition">¶</a></dt>
-<dd><p>Installs firmware to a logical interconnect. The three operations that are supported for the firmware
-update are Stage (uploads firmware to the interconnect), Activate (installs firmware on the interconnect),
-and Update (which does a Stage and Activate in a sequential manner).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>firmware_information</strong> – Options to install firmware to a logical interconnect.</li>
-<li><strong>id_or_uri</strong> – Can be either the logical interconnect id or the logical interconnect uri.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">install_firmware</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.install_firmware" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.locations_uri">
@@ -1699,277 +1534,55 @@ and Update (which does a Stage and Activate in a sequential manner).</p>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.patch">
-<code class="descname">patch</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>operation</em>, <em>path</em>, <em>value</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.patch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Uses the PATCH to update a resource for a given logical interconnect.</p>
-<p>Only one operation can be performed in each PATCH call.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>operation</strong> – Patch operation</li>
-<li><strong>path</strong> – Path</li>
-<li><strong>value</strong> – Value</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Updated resource.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
+<dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update">
+<code class="descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update method is not available for this resource</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_compliance">
-<code class="descname">update_compliance</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.update_compliance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_compliance" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns logical interconnects to a consistent state. The current logical interconnect state is
-compared to the associated logical interconnect group.</p>
-<p>Any differences identified are corrected, bringing the logical interconnect back to a consistent
-state. Changes are asynchronously applied to all managed interconnects. Note that if the changes detected
-involve differences in the interconnect map between the logical interconnect group and the logical interconnect,
-the process of bringing the logical interconnect back to a consistent state might involve automatically removing
-existing interconnects from management and/or adding new interconnects for management.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Logical Interconnect.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update_compliance</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_compliance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_configuration">
-<code class="descname">update_configuration</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.update_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_configuration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Asynchronously applies or re-applies the logical interconnect configuration to all managed interconnects.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Logical Interconnect.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update_configuration</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_configuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_ethernet_settings">
-<code class="descname">update_ethernet_settings</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>configuration</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.update_ethernet_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_ethernet_settings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates the Ethernet interconnect settings for the logical interconnect.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>configuration</strong> – Ethernet interconnect settings.</li>
-<li><strong>force</strong> – If set to true, the operation completes despite any problems with network connectivity or errors
-on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Logical Interconnect.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update_ethernet_settings</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_ethernet_settings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_internal_networks">
-<code class="descname">update_internal_networks</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>network_uri_list</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.update_internal_networks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_internal_networks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates internal networks on the logical interconnect.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>network_uri_list</strong> – List of Ethernet network uris.</li>
-<li><strong>force</strong> – If set to true, the operation completes despite any problems with network connectivity or errors
-on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Logical Interconnect.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update_internal_networks</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_internal_networks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_port_monitor">
-<code class="descname">update_port_monitor</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>resource</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.update_port_monitor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_port_monitor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates the port monitor configuration of a logical interconnect.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the logical interconnect id or the logical interconnect uri.</li>
-<li><strong>resource</strong> – Port monitor configuration.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Port monitor configuration.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update_port_monitor</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_port_monitor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_qos_aggregated_configuration">
-<code class="descname">update_qos_aggregated_configuration</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>qos_configuration</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.update_qos_aggregated_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_qos_aggregated_configuration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates the QoS aggregated configuration for the logical interconnect.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the logical interconnect id or the logical interconnect uri.</li>
-<li><strong>qos_configuration</strong> – QOS configuration.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
-OneView, just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Logical Interconnect.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update_qos_aggregated_configuration</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_qos_aggregated_configuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_settings">
-<code class="descname">update_settings</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>settings</em>, <em>force=False</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.update_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_settings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates interconnect settings on the logical interconnect. Changes to interconnect settings are asynchronously
-applied to all managed interconnects.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the resource ID or the resource URI.</li>
-<li><strong>settings</strong> – Interconnect settings</li>
-<li><strong>force</strong> – If set to true, the operation completes despite any problems with network connectivity or errors
-on the resource itself. The default is false.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation
-in OneView; it just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Logical Interconnect</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update_settings</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_settings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_snmp_configuration">
-<code class="descname">update_snmp_configuration</code><span class="sig-paren">(</span><em>id_or_uri</em>, <em>configuration</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.update_snmp_configuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_snmp_configuration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates the SNMP configuration of a logical interconnect. Changes to the SNMP configuration are asynchronously
-applied to all managed interconnects.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id_or_uri</strong> – Can be either the logical interconnect id or the logical interconnect uri.</li>
-<li><strong>configuration</strong> – snmp configuration.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Logical Interconnect.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update_snmp_configuration</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_snmp_configuration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-<dl class="method">
+<dl class="attribute">
 <dt id="hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_telemetry_configurations">
-<code class="descname">update_telemetry_configurations</code><span class="sig-paren">(</span><em>tc_id_or_uri</em>, <em>configuration</em>, <em>id_or_uri=None</em>, <em>timeout=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/networking/logical_interconnects.html#LogicalInterconnects.update_telemetry_configurations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_telemetry_configurations" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updates the telemetry configuration of a logical interconnect. Changes to the telemetry configuration are
-asynchronously applied to all managed interconnects.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>tc_id_or_uri</strong> – Can be either the telemetry configuration id or uri.</li>
-<li><strong>configuration</strong> – The telemetry configuration for the logical interconnect.</li>
-<li><strong>id_or_uri</strong> – Can be either the logical interconnect id or uri.</li>
-<li><strong>timeout</strong> – Timeout in seconds. Wait for task completion by default. The timeout does not abort the operation in
-OneView, just stops waiting for its completion.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The Logical Interconnect.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<code class="descname">update_telemetry_configurations</code><em class="property"> = &lt;functools.partial object&gt;</em><a class="headerlink" href="#hpOneView.resources.networking.logical_interconnects.LogicalInterconnects.update_telemetry_configurations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 

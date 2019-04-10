@@ -617,6 +617,35 @@
 
         <span class="k">return</span> <span class="n">task</span><span class="p">[</span><span class="s1">&#39;taskOutput&#39;</span><span class="p">]</span></div>
 
+<div class="viewcode-block" id="ResourceHelper.get_collection"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.get_collection">[docs]</a>    <span class="k">def</span> <span class="nf">get_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves a collection of resources.</span>
+
+<span class="sd">        Use this function when the &#39;start&#39; and &#39;count&#39; parameters are not allowed in the GET call.</span>
+<span class="sd">        Otherwise, use get_all instead.</span>
+
+<span class="sd">        Optional filtering criteria may be specified.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filter (list or str): General filter/query string.</span>
+<span class="sd">            path (str): path to be added with base URI</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">             Collection of the requested resource.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">uri</span><span class="p">:</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_uri</span>
+
+        <span class="k">if</span> <span class="nb">filter</span><span class="p">:</span>
+            <span class="nb">filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_query_filter</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
+            <span class="nb">filter</span> <span class="o">=</span> <span class="s2">&quot;?&quot;</span> <span class="o">+</span> <span class="nb">filter</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{uri}{path}{filter}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Get resource collection (uri = </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">uri</span><span class="p">)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_members</span><span class="p">(</span><span class="n">response</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="ResourceHelper.build_query_uri"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceHelper.build_query_uri">[docs]</a>    <span class="k">def</span> <span class="nf">build_query_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">view</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">scope_uris</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Builds the URI from given parameters.</span>
 
@@ -1057,37 +1086,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">resource_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;uri&#39;</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">do_get</span><span class="p">(</span><span class="n">resource_uri</span> <span class="o">+</span> <span class="s1">&#39;/schema&#39;</span><span class="p">)</span></div></div>
-
-
-<div class="viewcode-block" id="ResourceCollectionMixin"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceCollectionMixin">[docs]</a><span class="k">class</span> <span class="nc">ResourceCollectionMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-
-<div class="viewcode-block" id="ResourceCollectionMixin.get_collection"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceCollectionMixin.get_collection">[docs]</a>    <span class="k">def</span> <span class="nf">get_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Retrieves a collection of resources.</span>
-
-<span class="sd">        Use this function when the &#39;start&#39; and &#39;count&#39; parameters are not allowed in the GET call.</span>
-<span class="sd">        Otherwise, use get_all instead.</span>
-
-<span class="sd">        Optional filtering criteria may be specified.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            filter (list or str): General filter/query string.</span>
-<span class="sd">            path (str): path to be added with base URI</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">             Collection of the requested resource.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">URI</span>
-
-        <span class="k">if</span> <span class="nb">filter</span><span class="p">:</span>
-            <span class="nb">filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">make_query_filter</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
-            <span class="nb">filter</span> <span class="o">=</span> <span class="s2">&quot;?&quot;</span> <span class="o">+</span> <span class="nb">filter</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-
-        <span class="n">uri</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{uri}{path}{filter}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Get resource collection (uri = </span><span class="si">%s</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">uri</span><span class="p">)</span>
-
-        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_helper</span><span class="o">.</span><span class="n">get_members</span><span class="p">(</span><span class="n">response</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="ResourceZeroBodyMixin"><a class="viewcode-back" href="../../../hpOneView.resources.html#hpOneView.resources.resource.ResourceZeroBodyMixin">[docs]</a><span class="k">class</span> <span class="nc">ResourceZeroBodyMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
