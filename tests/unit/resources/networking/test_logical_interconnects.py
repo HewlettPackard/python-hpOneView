@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.networking.logical_interconnects import LogicalInterconnects
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import ResourcePatchMixin, ResourceHelper
 
 
 class LogicalInterconnectsTest(unittest.TestCase):
@@ -35,6 +35,10 @@ class LogicalInterconnectsTest(unittest.TestCase):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
         self._logical_interconnect = LogicalInterconnects(self.connection)
+        self.uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._logical_interconnect.data = {
+            "uri": self.uri,
+            "telemetryConfiguration": {"uri": "{}/telemetry-configurations/445cea80-280a-4794-b703-c53e8394a485".format(self.uri)}}
 
         self.telemetry_config = {
             "sampleCount": 12,
@@ -43,33 +47,20 @@ class LogicalInterconnectsTest(unittest.TestCase):
         }
         self.tc_default_values = self._logical_interconnect.SETTINGS_TELEMETRY_CONFIG_DEFAULT_VALUES
 
-    @mock.patch.object(ResourceClient, 'get_all')
+    @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_all_called_once(self, mock_get_all):
-        filter = 'name=TestName'
         sort = 'name:ascending'
 
-        self._logical_interconnect.get_all(2, 500, filter, sort)
+        self._logical_interconnect.get_all(2, 500, sort)
 
-        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort)
+        mock_get_all.assert_called_once_with(2, 500, sort=sort)
 
-    @mock.patch.object(ResourceClient, 'get_all')
+    @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_all_called_once_with_default(self, mock_get_all):
         self._logical_interconnect.get_all()
-        mock_get_all.assert_called_once_with(0, -1, filter='', sort='')
+        mock_get_all.assert_called_once_with(0, -1, sort='')
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_by_id_called_once(self, mock_get):
-        logical_interconnect_id = "f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
-        self._logical_interconnect.get(logical_interconnect_id)
-        mock_get.assert_called_once_with(logical_interconnect_id)
-
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_by_uri_called_once(self, mock_get):
-        logical_interconnect_uri = "/rest/logical-interconnects/f0a0a113-ec97-41b4-83ce-d7c92b900e7c"
-        self._logical_interconnect.get(logical_interconnect_uri)
-        mock_get.assert_called_once_with(logical_interconnect_uri)
-
-    @mock.patch.object(ResourceClient, 'get_all')
+    @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_by_name_return_logical_interconnect_when_exists(self, mock_get_all):
         mock_get_all.return_value = [
             {"name": "Logical Interconnect 1", "uri": "/path/to/logical/interconnect/1"},
@@ -77,10 +68,10 @@ class LogicalInterconnectsTest(unittest.TestCase):
         ]
         logical_interconnect = self._logical_interconnect.get_by_name("Logical Interconnect 1")
 
-        self.assertEqual(logical_interconnect,
+        self.assertEqual(logical_interconnect.data,
                          {"name": "Logical Interconnect 1", "uri": "/path/to/logical/interconnect/1"})
 
-    @mock.patch.object(ResourceClient, 'get_all')
+    @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_by_name_return_null_when_logical_interconnect_not_exist(self, mock_get_all):
         mock_get_all.return_value = [
             {"name": "Logical Interconnect 1", "uri": "/path/to/logical/interconnect/1"},
@@ -90,143 +81,78 @@ class LogicalInterconnectsTest(unittest.TestCase):
 
         self.assertIsNone(logical_interconnect)
 
-    @mock.patch.object(ResourceClient, 'update_with_zero_body')
-    def test_update_compliance_by_uri(self, mock_update_with_zero_body):
-        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/compliance'
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update_compliance(self, mock_update):
+        uri_rest_call = '{}/compliance'.format(self.uri)
 
-        self._logical_interconnect.update_compliance(logical_interconnect_uri)
+        self._logical_interconnect.update_compliance()
 
-        mock_update_with_zero_body.assert_called_once_with(uri_rest_call, timeout=-1)
+        mock_update.assert_called_once_with(None, uri_rest_call, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update_with_zero_body')
-    def test_update_compliance_by_id(self, mock_update_with_zero_body):
-        mock_update_with_zero_body.return_value = {}
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/compliance'
-
-        self._logical_interconnect.update_compliance(logical_interconnect_id)
-
-        mock_update_with_zero_body.assert_called_once_with(uri_rest_call, timeout=-1)
-
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_ethernet_settings_by_uri(self, mock_update):
-        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/ethernetSettings'
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update_ethernet_settings(self, mock_update):
+        uri_rest_call = '{}/ethernetSettings'.format(self.uri)
         configuration = {"enableNetworkLoopProtection": True}
         configuration_rest_call = configuration.copy()
 
-        self._logical_interconnect.update_ethernet_settings(logical_interconnect_uri, configuration)
+        self._logical_interconnect.update_ethernet_settings(configuration)
 
         mock_update.assert_called_once_with(configuration_rest_call, uri=uri_rest_call, force=False, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_ethernet_settings_by_id(self, mock_update):
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/ethernetSettings'
-        configuration = {"enableNetworkLoopProtection": True}
-        configuration_rest_call = configuration.copy()
-
-        self._logical_interconnect.update_ethernet_settings(logical_interconnect_id, configuration)
-
-        mock_update.assert_called_once_with(configuration_rest_call, uri=uri_rest_call, force=False, timeout=-1)
-
-    @mock.patch.object(ResourceClient, 'update')
+    @mock.patch.object(ResourceHelper, 'update')
     def test_update_ethernet_settings_with_force(self, mock_update):
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-
-        self._logical_interconnect.update_ethernet_settings(logical_interconnect_id, {}, force=True)
+        self._logical_interconnect.update_ethernet_settings({}, force=True)
 
         mock_update.assert_called_once_with(mock.ANY, uri=mock.ANY, force=True, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_internal_networks_by_uri(self, mock_update):
-        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/internalNetworks'
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update_internal_networks(self, mock_update):
+        uri_rest_call = '{}/internalNetworks'.format(self.uri)
         network_uri_list = ['/rest/ethernet-networks/123s4s', '/rest/ethernet-networks/335d']
 
-        self._logical_interconnect.update_internal_networks(logical_interconnect_uri, network_uri_list)
+        self._logical_interconnect.update_internal_networks(network_uri_list)
 
         mock_update.assert_called_once_with(network_uri_list, uri=uri_rest_call, force=False, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_internal_networks_by_id(self, mock_update):
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/internalNetworks'
-        network_uri_list = ['/rest/ethernet-networks/123s4s', '/rest/ethernet-networks/335d']
-
-        self._logical_interconnect.update_internal_networks(logical_interconnect_id, network_uri_list)
-
-        mock_update.assert_called_once_with(network_uri_list, uri=uri_rest_call, force=False, timeout=-1)
-
-    @mock.patch.object(ResourceClient, 'update')
+    @mock.patch.object(ResourceHelper, 'update')
     def test_update_internal_networks_with_force(self, mock_update):
-        self._logical_interconnect.update_internal_networks("abc123", [], force=True)
+        self._logical_interconnect.update_internal_networks([], force=True)
 
         mock_update.assert_called_once_with(mock.ANY, uri=mock.ANY, force=True, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'get_collection')
-    def test_get_internal_vlans_by_uri(self, mock_get_collection):
-        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/internalVlans'
+    @mock.patch.object(ResourceHelper, 'do_get')
+    def test_get_internal_vlans(self, mock_get_collection):
+        uri_rest_call = '{}/internalVlans'.format(self.uri)
 
-        self._logical_interconnect.get_internal_vlans(logical_interconnect_uri)
-
-        mock_get_collection.assert_called_once_with(uri_rest_call)
-
-    @mock.patch.object(ResourceClient, 'get_collection')
-    def test_get_internal_vlans_by_id(self, mock_get_collection):
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/internalVlans'
-
-        self._logical_interconnect.get_internal_vlans(logical_interconnect_id)
+        self._logical_interconnect.get_internal_vlans()
 
         mock_get_collection.assert_called_once_with(uri_rest_call)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_settings_by_uri(self, mock_update):
-        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/settings'
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update_settings(self, mock_update):
+        uri_rest_call = '{}/settings'.format(self.uri)
         settings = {
             "type": "type",
             "ethernetSettings": {
-                "type": "ethernet-type",
                 "macRefreshInterval": "5"
             }
         }
         settings_rest_call = settings.copy()
+        settings_rest_call["type"] = "type"
+        settings_rest_call["ethernetSettings"]["type"] = "EthernetInterconnectSettingsV201"
+        self._logical_interconnect.update_settings(settings)
 
-        self._logical_interconnect.update_settings(logical_interconnect_uri, settings)
+        mock_update.assert_called_once_with(settings_rest_call, uri=uri_rest_call, force=False, timeout=-1)
 
-        mock_update.assert_called_once_with(settings_rest_call, uri=uri_rest_call, force=False, timeout=-1,
-                                            default_values=self._logical_interconnect.SETTINGS_DEFAULT_VALUES)
-
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_settings_by_id(self, mock_update):
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/settings'
-        settings = {
-            "type": "type",
-            "ethernetSettings": {
-                "type": "ethernet-type",
-                "macRefreshInterval": "5"
-            }
-        }
-        settings_rest_call = settings.copy()
-
-        self._logical_interconnect.update_settings(logical_interconnect_id, settings)
-
-        mock_update.assert_called_once_with(settings_rest_call, uri=uri_rest_call, force=False, timeout=-1,
-                                            default_values=self._logical_interconnect.SETTINGS_DEFAULT_VALUES)
-
-    @mock.patch.object(ResourceClient, 'update')
+    @mock.patch.object(ResourceHelper, 'update')
     def test_update_settings_with_force(self, mock_update):
-        self._logical_interconnect.update_settings("abc123", {}, force=True)
+        self._logical_interconnect.update_settings({}, force=True)
 
-        mock_update.assert_called_once_with(mock.ANY, uri=mock.ANY, force=True, timeout=-1,
-                                            default_values=self._logical_interconnect.SETTINGS_DEFAULT_VALUES)
+        mock_update.assert_called_once_with({"type": "InterconnectSettingsV201"},
+                                            uri="/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/settings",
+                                            force=True, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update')
+    @mock.patch.object(ResourceHelper, 'update')
     def test_update_settings_with_default_values(self, mock_update):
         settings = {
             "ethernetSettings": {
@@ -237,53 +163,35 @@ class LogicalInterconnectsTest(unittest.TestCase):
             "ethernetSettings": {
                 "type": "EthernetInterconnectSettingsV201",
                 "macRefreshInterval": "5"
-            }
+            },
+            "type": "InterconnectSettingsV201"
         }
-        self._logical_interconnect.update_settings("abc123", settings)
+        self._logical_interconnect.update_settings(settings)
 
-        mock_update.assert_called_once_with(settings_with_default_values, uri=mock.ANY, force=False, timeout=-1,
-                                            default_values=self._logical_interconnect.SETTINGS_DEFAULT_VALUES)
+        mock_update.assert_called_once_with(settings_with_default_values,
+                                            uri="/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/settings",
+                                            force=False,
+                                            timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update_with_zero_body')
-    def test_update_configuration_by_uri(self, mock_update_with_zero_body):
-        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/configuration'
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update_configuration(self, mock_update):
+        uri_rest_call = '{}/configuration'.format(self.uri)
 
-        self._logical_interconnect.update_configuration(logical_interconnect_uri)
+        self._logical_interconnect.update_configuration()
 
-        mock_update_with_zero_body.assert_called_once_with(uri=uri_rest_call, timeout=-1)
+        mock_update.assert_called_once_with(None, uri=uri_rest_call, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update_with_zero_body')
-    def test_update_configuration_by_id(self, mock_update_with_zero_body):
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/configuration'
-
-        self._logical_interconnect.update_configuration(logical_interconnect_id)
-
-        mock_update_with_zero_body.assert_called_once_with(uri=uri_rest_call, timeout=-1)
-
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceHelper, 'do_get')
     def test_get_snmp_configuration_by_uri(self, mock_get):
-        logical_interconnect_uri = '/rest/logical-interconnects/be227eaf-3810-4b8a-b9ba-0af4479a9fe2'
-        uri_rest_call = '/rest/logical-interconnects/be227eaf-3810-4b8a-b9ba-0af4479a9fe2/snmp-configuration'
+        uri_rest_call = '{}/snmp-configuration'.format(self.uri)
 
-        self._logical_interconnect.get_snmp_configuration(logical_interconnect_uri)
-
-        mock_get.assert_called_once_with(uri_rest_call)
-
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_snmp_configuration_by_id(self, mock_get):
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/snmp-configuration'
-
-        self._logical_interconnect.get_snmp_configuration(logical_interconnect_id)
+        self._logical_interconnect.get_snmp_configuration()
 
         mock_get.assert_called_once_with(uri_rest_call)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_snmp_configuration_by_uri(self, mock_update):
-        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/snmp-configuration'
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update_snmp_configuration(self, mock_update):
+        uri_rest_call = '{}/snmp-configuration'.format(self.uri)
         configuration = {
             "readCommunity": "public",
             "enabled": True,
@@ -313,92 +221,39 @@ class LogicalInterconnectsTest(unittest.TestCase):
         }
         port_monitor_rest_call = configuration.copy()
 
-        self._logical_interconnect.update_snmp_configuration(logical_interconnect_uri, configuration)
+        self._logical_interconnect.update_snmp_configuration(configuration)
 
         port_monitor_rest_call['type'] = 'snmp-configuration'
 
         mock_update.assert_called_once_with(port_monitor_rest_call, uri=uri_rest_call, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_snmp_configuration_by_id(self, mock_update):
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/snmp-configuration'
-        configuration = {
-            "readCommunity": "public",
-            "enabled": True,
-            "systemContact": "",
-            "snmpAccess": [
-                "10.0.0.0/24"
-            ],
-            "type": "snmp-configuration",
-            "trapDestinations": [{
-                "enetTrapCategories": [
-                    "PortStatus"
-                ],
-                "vcmTrapCategories": [
-                    "Legacy"
-                ],
-                "trapSeverities": [
-                    "Normal",
-                    "Info",
-                    "Warning"
-                ],
-                "communityString": "public",
-                "fcTrapCategories": [
-                    "PortStatus"
-                ],
-                "trapDestination": "dest",
-                "trapFormat": "SNMPv1"
-            }],
-        }
-        port_monitor_rest_call = configuration.copy()
+    @mock.patch.object(ResourceHelper, 'do_get')
+    def test_get_unassigned_uplink_ports(self, mock_get_collection):
+        uri_rest_call = '{}/unassignedUplinkPortsForPortMonitor'.format(self.uri)
 
-        self._logical_interconnect.update_snmp_configuration(logical_interconnect_id, configuration)
-
-        mock_update.assert_called_once_with(port_monitor_rest_call, uri=uri_rest_call, timeout=-1)
-
-    @mock.patch.object(ResourceClient, 'get_collection')
-    def test_get_unassigned_uplink_ports_by_uri(self, mock_get_collection):
-        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = logical_interconnect_uri + '/unassignedUplinkPortsForPortMonitor'
-
-        self._logical_interconnect.get_unassigned_uplink_ports(logical_interconnect_uri)
+        self._logical_interconnect.get_unassigned_uplink_ports()
 
         mock_get_collection.assert_called_once_with(uri_rest_call)
 
-    @mock.patch.object(ResourceClient, 'get_collection')
-    def test_get_unassigned_uplink_ports_by_id(self, mock_get_collection):
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = logical_interconnect_uri + '/unassignedUplinkPortsForPortMonitor'
+    @mock.patch.object(ResourceHelper, 'do_get')
+    def test_get_unassigned_ports(self, mock_get_collection):
+        uri_rest_call = '{}/unassignedPortsForPortMonitor'.format(self.uri)
 
-        self._logical_interconnect.get_unassigned_uplink_ports(logical_interconnect_id)
+        self._logical_interconnect.get_unassigned_ports()
 
         mock_get_collection.assert_called_once_with(uri_rest_call)
 
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceHelper, 'do_get')
     def test_get_port_monitor_by_uri(self, mock_get):
-        uri_logical_interconnect = '/rest/logical-interconnects/be227eaf-3810-4b8a-b9ba-0af4479a9fe2'
-        uri_rest_call = uri_logical_interconnect + '/port-monitor'
+        uri_rest_call = '{}/port-monitor'.format(self.uri)
 
-        self._logical_interconnect.get_port_monitor(uri_logical_interconnect)
-
-        mock_get.assert_called_once_with(uri_rest_call)
-
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_port_monitor_by_id(self, mock_get):
-        logical_interconnect_id = 'be227eaf-3810-4b8a-b9ba-0af4479a9fe2'
-        uri_logical_interconnect = '/rest/logical-interconnects/be227eaf-3810-4b8a-b9ba-0af4479a9fe2'
-        uri_rest_call = uri_logical_interconnect + '/port-monitor'
-
-        self._logical_interconnect.get_port_monitor(logical_interconnect_id)
+        self._logical_interconnect.get_port_monitor()
 
         mock_get.assert_called_once_with(uri_rest_call)
 
-    @mock.patch.object(ResourceClient, 'update')
+    @mock.patch.object(ResourceHelper, 'update')
     def test_update_port_monitor_by_uri(self, mock_update):
-        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/port-monitor'
+        uri_rest_call = '{}/port-monitor'.format(self.uri)
         monitor_data = {
             "analyzerPort": {
                 "portUri": "/rest/interconnects/76ad8f4b-b01b-d2ac31295c19/ports/76ad8f4b-6f13:X1",
@@ -413,42 +268,19 @@ class LogicalInterconnectsTest(unittest.TestCase):
         }
         port_monitor_rest_call = monitor_data.copy()
         port_monitor_rest_call['type'] = 'port-monitor'
-        self._logical_interconnect.update_port_monitor(logical_interconnect_uri, monitor_data)
+        self._logical_interconnect.update_port_monitor(monitor_data)
 
         mock_update.assert_called_once_with(port_monitor_rest_call, uri=uri_rest_call, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_port_monitor_by_id(self, mock_update):
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/port-monitor'
-        monitor_data = {
-            "analyzerPort": {
-                "portUri": "/rest/interconnects/76ad8f4b-b01b-d2ac31295c19/ports/76ad8f4b-6f13:X1",
-                "portMonitorConfigInfo": "AnalyzerPort"
-            },
-            "enablePortMonitor": True,
-            "type": "port-monitor",
-            "monitoredPorts": [{
-                "portUri": "/rest/interconnects/76ad8f4b-b01b-d2ac31295c19/ports/76ad8f4b-6f13:X1",
-                "portMonitorConfigInfo": "MonitoredBoth"
-            }]
-        }
-        port_monitor_rest_call = monitor_data.copy()
+    @mock.patch.object(ResourceHelper, 'do_get')
+    def test_get_telemetry_configuration(self, mock_get):
+        uri_telemetry_configuration = self._logical_interconnect.data["telemetryConfiguration"]["uri"]
 
-        self._logical_interconnect.update_port_monitor(logical_interconnect_id, monitor_data)
-
-        mock_update.assert_called_once_with(port_monitor_rest_call, uri=uri_rest_call, timeout=-1)
-
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_telemetry_configuration_by_uri(self, mock_get):
-        uri_telemetry_configuration = '/rest/logical-interconnects/091c597d-5c68-45e5-ba40-5d69a1da8f90/' \
-                                      'telemetry-configurations/dead0c9c-54db-4683-b402-48c2e86fe278'
-
-        self._logical_interconnect.get_telemetry_configuration(uri_telemetry_configuration)
+        self._logical_interconnect.get_telemetry_configuration()
 
         mock_get.assert_called_once_with(uri_telemetry_configuration)
 
-    @mock.patch.object(ResourceClient, 'create')
+    @mock.patch.object(ResourceHelper, 'create')
     def test_create_interconnect_called_once(self, mock_create):
         location_entries = {"locationEntries": [{"type": "Bay", "value": "1"}]}
 
@@ -458,7 +290,7 @@ class LogicalInterconnectsTest(unittest.TestCase):
                                             uri="/rest/logical-interconnects/locations/interconnects",
                                             timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'delete')
+    @mock.patch.object(ResourceHelper, 'delete')
     def test_delete_interconnect_called_once(self, mock_delete):
         self._logical_interconnect.delete_interconnect(enclosure_uri="/rest/enclosures/09SGH100X6J1",
                                                        bay=3, timeout=-1)
@@ -466,190 +298,89 @@ class LogicalInterconnectsTest(unittest.TestCase):
         expected_uri = "/locations/interconnects?location=Enclosure:/rest/enclosures/09SGH100X6J1,Bay:3"
         mock_delete.assert_called_once_with(expected_uri, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'build_uri')
-    @mock.patch.object(ResourceClient, 'get')
+    @mock.patch.object(ResourceHelper, 'build_uri')
+    @mock.patch.object(ResourceHelper, 'do_get')
     def test_get_firmware(self, mock_get, mock_build_uri):
-        logical_interconnect_id = '3518be0e-17c1-4189-8f81-83f3724f6155'
+        mock_build_uri.return_value = self.uri
 
-        logical_interconnect_uri = "/rest/logical-interconnects/" + logical_interconnect_id
-        mock_build_uri.return_value = logical_interconnect_uri
+        expected_uri = "{}/firmware".format(self.uri)
 
-        expected_uri = logical_interconnect_uri + "/firmware"
-
-        self._logical_interconnect.get_firmware(logical_interconnect_id)
+        self._logical_interconnect.get_firmware()
         mock_get.assert_called_once_with(expected_uri)
 
-    @mock.patch.object(ResourceClient, 'build_uri')
-    @mock.patch.object(ResourceClient, 'update')
+    @mock.patch.object(ResourceHelper, 'build_uri')
+    @mock.patch.object(ResourceHelper, 'update')
     def test_install_firmware(self, mock_update, mock_build_uri):
-        logical_interconnect_id = '3518be0e-17c1-4189-8f81-83f3724f6155'
-
         fake_firmware = dict(
             command="Update",
             sppUri="/rest/firmware-drivers/Service_0Pack_0for_0ProLiant"
         )
 
-        logical_interconnect_uri = "/rest/logical-interconnects/" + logical_interconnect_id
-        mock_build_uri.return_value = logical_interconnect_uri
+        mock_build_uri.return_value = self.uri
 
-        expected_uri = logical_interconnect_uri + "/firmware"
+        expected_uri = "{}/firmware".format(self.uri)
 
-        self._logical_interconnect.install_firmware(fake_firmware, logical_interconnect_id)
+        self._logical_interconnect.install_firmware(fake_firmware)
         mock_update.assert_called_once_with(fake_firmware, expected_uri)
 
-    @mock.patch.object(ResourceClient, 'get_collection')
-    def test_get_forwarding_information_base_by_id(self, mock_get_collection):
+    @mock.patch.object(ResourceHelper, 'get_collection')
+    def test_get_forwarding_information_base(self, mock_get_collection):
         filter = 'name=TestName'
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._logical_interconnect.get_forwarding_information_base(filter)
 
-        self._logical_interconnect.get_forwarding_information_base(logical_interconnect_id, filter)
-
-        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/forwarding-information-base'
+        expected_uri = '{}/forwarding-information-base'.format(self.uri)
         mock_get_collection.assert_called_once_with(expected_uri, filter=filter)
 
-    @mock.patch.object(ResourceClient, 'get_collection')
-    def test_get_forwarding_information_base_by_uri(self, mock_get_collection):
-        filter = 'name=TestName'
-        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-
-        self._logical_interconnect.get_forwarding_information_base(logical_interconnect_uri, filter)
-
-        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/forwarding-information-base'
-        mock_get_collection.assert_called_once_with(expected_uri, filter=filter)
-
-    @mock.patch.object(ResourceClient, 'get_collection')
+    @mock.patch.object(ResourceHelper, 'get_collection')
     def test_get_forwarding_information_base_when_no_filtering(self, mock_get_collection):
-        self._logical_interconnect.get_forwarding_information_base("ad28cf21")
+        self._logical_interconnect.get_forwarding_information_base()
 
-        mock_get_collection.assert_called_once_with(mock.ANY, filter='')
+        mock_get_collection.assert_called_once_with("{}/forwarding-information-base".format(self.uri), filter='')
 
-    @mock.patch.object(ResourceClient, 'create_with_zero_body')
-    def test_create_interconnect_called_once_when_id_provided(self, mock_create_with_zero_body):
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-
-        self._logical_interconnect.create_forwarding_information_base(logical_interconnect_id)
-
-        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/forwarding-information-base'
-        mock_create_with_zero_body.assert_called_once_with(uri=expected_uri, timeout=-1)
-
-    @mock.patch.object(ResourceClient, 'create_with_zero_body')
+    @mock.patch.object(ResourceHelper, 'do_post')
     def test_create_interconnect_called_once_when_uri_provided(self, mock_create_with_zero_body):
-        logical_interconnect_uri = "/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32"
+        self._logical_interconnect.create_forwarding_information_base()
 
-        self._logical_interconnect.create_forwarding_information_base(logical_interconnect_uri)
+        expected_uri = '{}/forwarding-information-base'.format(self.uri)
+        mock_create_with_zero_body.assert_called_once_with(expected_uri,
+                                                           None, -1, None)
 
-        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/forwarding-information-base'
-        mock_create_with_zero_body.assert_called_once_with(uri=expected_uri, timeout=-1)
+    @mock.patch.object(ResourceHelper, 'do_get')
+    def test_get_qos_aggregated_configuration(self, mock_get):
+        self._logical_interconnect.get_qos_aggregated_configuration()
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_qos_aggregated_configuration_by_id(self, mock_get):
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-
-        self._logical_interconnect.get_qos_aggregated_configuration(logical_interconnect_id)
-
-        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/qos-aggregated-configuration'
+        expected_uri = '{}/qos-aggregated-configuration'.format(self.uri)
         mock_get.assert_called_once_with(expected_uri)
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_qos_aggregated_configuration_by_uri(self, mock_get):
-        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-
-        self._logical_interconnect.get_qos_aggregated_configuration(logical_interconnect_uri)
-
-        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/qos-aggregated-configuration'
-        mock_get.assert_called_once_with(expected_uri)
-
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_qos_aggregated_configuration_by_uri(self, mock_update):
-        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update_qos_aggregated_configuration(self, mock_update):
         qos_configuration = {"type": "qos-aggregated-configuration"}
         qos_configuration_rest_call = qos_configuration.copy()
 
-        self._logical_interconnect.update_qos_aggregated_configuration(logical_interconnect_uri, qos_configuration)
+        self._logical_interconnect.update_qos_aggregated_configuration(qos_configuration)
 
-        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/qos-aggregated-configuration'
+        expected_uri = '{}/qos-aggregated-configuration'.format(self.uri)
         mock_update.assert_called_once_with(qos_configuration_rest_call, uri=expected_uri, timeout=-1)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_qos_aggregated_configuration_by_id(self, mock_update):
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        qos_configuration = {"type": "qos-aggregated-configuration"}
-        qos_configuration_rest_call = qos_configuration.copy()
+    @mock.patch.object(ResourceHelper, 'do_get')
+    def test_get_ethernet_settings(self, mock_get):
+        self._logical_interconnect.get_ethernet_settings()
 
-        self._logical_interconnect.update_qos_aggregated_configuration(logical_interconnect_id, qos_configuration)
-
-        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/qos-aggregated-configuration'
-        mock_update.assert_called_once_with(qos_configuration_rest_call, uri=expected_uri, timeout=-1)
-
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_ethernet_settings_by_uri(self, mock_get):
-        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-
-        self._logical_interconnect.get_ethernet_settings(logical_interconnect_uri)
-
-        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/ethernetSettings'
+        expected_uri = '{}/ethernetSettings'.format(self.uri)
         mock_get.assert_called_once_with(expected_uri)
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_ethernet_settings_by_id(self, mock_get):
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        expected_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32/ethernetSettings'
-        expected_result = {'name': 'ES634039453'}
-        mock_get.return_value = expected_result
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update_telemetry_configuration(self, mock_update):
+        self._logical_interconnect.update_telemetry_configurations(configuration=self.telemetry_config)
 
-        result = self._logical_interconnect.get_ethernet_settings(logical_interconnect_id)
+        mock_update.assert_called_once_with(self.telemetry_config,
+                                            uri=self._logical_interconnect.data["telemetryConfiguration"]["uri"], timeout=-1)
 
-        mock_get.assert_called_once_with(expected_uri)
-        self.assertEqual(result, expected_result)
-
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_telemetry_configuration_by_id(self, mock_update):
-        logical_interconnect_id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        telemetry_config_id = '445cea80-280a-4794-b703-c53e8394a485'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32' \
-                        '/telemetry-configurations/445cea80-280a-4794-b703-c53e8394a485'
-
-        self._logical_interconnect.update_telemetry_configurations(id_or_uri=logical_interconnect_id,
-                                                                   tc_id_or_uri=telemetry_config_id,
-                                                                   configuration=self.telemetry_config)
-
-        mock_update.assert_called_once_with(self.telemetry_config, uri=uri_rest_call, timeout=-1,
-                                            default_values=self.tc_default_values)
-
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_telemetry_configuration_by_uri(self, mock_update):
-        logical_interconnect_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32'
-        telemetry_config_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32' \
-                               '/telemetry-configurations/445cea80-280a-4794-b703-c53e8394a485'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32' \
-                        '/telemetry-configurations/445cea80-280a-4794-b703-c53e8394a485'
-
-        self._logical_interconnect.update_telemetry_configurations(id_or_uri=logical_interconnect_uri,
-                                                                   tc_id_or_uri=telemetry_config_uri,
-                                                                   configuration=self.telemetry_config)
-
-        mock_update.assert_called_once_with(self.telemetry_config, uri=uri_rest_call, timeout=-1,
-                                            default_values=self.tc_default_values)
-
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_telemetry_configuration_by_tc_uri(self, mock_update):
-        telemetry_config_uri = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32' \
-                               '/telemetry-configurations/445cea80-280a-4794-b703-c53e8394a485'
-        uri_rest_call = '/rest/logical-interconnects/ad28cf21-8b15-4f92-bdcf-51cb2042db32' \
-                        '/telemetry-configurations/445cea80-280a-4794-b703-c53e8394a485'
-
-        self._logical_interconnect.update_telemetry_configurations(id_or_uri=None,
-                                                                   tc_id_or_uri=telemetry_config_uri,
-                                                                   configuration=self.telemetry_config)
-
-        mock_update.assert_called_once_with(self.telemetry_config, uri=uri_rest_call, timeout=-1,
-                                            default_values=self.tc_default_values)
-
-    @mock.patch.object(ResourceClient, 'patch')
+    @mock.patch.object(ResourcePatchMixin, 'patch')
     def test_patch_should_use_user_defined_values(self, mock_patch):
         mock_patch.return_value = {}
 
-        self._logical_interconnect.patch('rest/fake/logicalinterconnect123', 'replace',
-                                         '/scopeUris', ['rest/fake/scope123'], 1)
-        mock_patch.assert_called_once_with('rest/fake/logicalinterconnect123', 'replace',
-                                           '/scopeUris', ['rest/fake/scope123'], timeout=1)
+        self._logical_interconnect.patch('replace', '/scopeUris',
+                                         ['rest/fake/scope123'], 1)
+        mock_patch.assert_called_once_with('replace', '/scopeUris',
+                                           ['rest/fake/scope123'], 1)

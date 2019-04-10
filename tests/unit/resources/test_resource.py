@@ -30,7 +30,7 @@ from hpOneView.connection import connection
 from hpOneView import exceptions
 from hpOneView.resources.resource import (ResourceClient, ResourceHelper, ResourceFileHandlerMixin,
                                           ResourceZeroBodyMixin, ResourcePatchMixin, ResourceUtilizationMixin,
-                                          ResourceCollectionMixin, ResourceSchemaMixin, Resource,
+                                          ResourceSchemaMixin, Resource,
                                           RESOURCE_CLIENT_INVALID_ID, UNRECOGNIZED_URI, TaskMonitor,
                                           RESOURCE_CLIENT_TASK_EXPECTED, RESOURCE_ID_OR_URI_REQUIRED,
                                           transform_list_to_dict, extract_id_from_uri, merge_resources,
@@ -51,10 +51,6 @@ class StubResourcePatch(ResourcePatchMixin, Resource):
 
 class StubResourceUtilization(ResourceUtilizationMixin, Resource):
     """Stub class to test resource utilization methods"""
-
-
-class StubResourceCollection(ResourceCollectionMixin, Resource):
-    """Stub class to test resource collection operation"""
 
 
 class StubResourceSchema(ResourceSchemaMixin, Resource):
@@ -506,59 +502,6 @@ class ResourceUtilizationMixinTest(BaseTest):
         expected_uri = "/rest/testuri/utilization"
 
         mock_get.assert_called_once_with(expected_uri)
-
-
-class ResourceCollectionMixinTest(BaseTest):
-
-    def setUp(self):
-        self.connection = connection('127.0.0.1', 300)
-        self.resource_client = StubResourceCollection(self.connection)
-        super(ResourceCollectionMixinTest, self).setUp(self.resource_client)
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "get")
-    def test_get_collection_uri(self, mock_get, mock_ensure_resource):
-        mock_get.return_value = {"members": [{"key": "value"}, {"key": "value"}]}
-
-        self.resource_client.get_collection()
-
-        mock_get.assert_called_once_with(self.URI)
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "get")
-    def test_get_collection_with_filter(self, mock_get, mock_ensure_resource):
-        mock_get.return_value = {}
-
-        self.resource_client.get_collection(filter="name=name")
-
-        mock_get.assert_called_once_with(self.URI + "?filter=name%3Dname")
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "get")
-    def test_get_collection_with_path(self, mock_get, mock_ensure_resource):
-        mock_get.return_value = {}
-
-        self.resource_client.get_collection(path="/test")
-
-        mock_get.assert_called_once_with(self.URI + "/test")
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "get")
-    def test_get_collection_with_multiple_filters(self, mock_get, mock_ensure_resource):
-        mock_get.return_value = {}
-
-        self.resource_client.get_collection(["name1=one", "name2=two", "name=three"])
-
-        mock_get.assert_called_once_with(self.URI + "?filter=name1%3Done&filter=name2%3Dtwo&filter=name%3Dthree")
-
-    @mock.patch.object(Resource, "ensure_resource_data")
-    @mock.patch.object(connection, "get")
-    def test_get_collection_should_return_list(self, mock_get, mock_ensure_resource):
-        mock_get.return_value = {"members": [{"key": "value"}, {"key": "value"}]}
-
-        collection = self.resource_client.get_collection()
-
-        self.assertEqual(len(collection), 2)
 
 
 class ResourceSchemaMixinTest(BaseTest):
@@ -1019,6 +962,46 @@ class ResourceTest(BaseTest):
     def test_get_by_uri(self, mock_get):
         self.resource_client.get_by_uri("/rest/testuri")
         mock_get.assert_called_once_with('/rest/testuri')
+
+    @mock.patch.object(connection, "get")
+    def test_get_collection_uri(self, mock_get):
+        mock_get.return_value = {"members": [{"key": "value"}, {"key": "value"}]}
+
+        self.resource_helper.get_collection()
+
+        mock_get.assert_called_once_with(self.URI)
+
+    @mock.patch.object(connection, "get")
+    def test_get_collection_with_filter(self, mock_get):
+        mock_get.return_value = {}
+
+        self.resource_helper.get_collection(filter="name=name")
+
+        mock_get.assert_called_once_with(self.URI + "?filter=name%3Dname")
+
+    @mock.patch.object(connection, "get")
+    def test_get_collection_with_path(self, mock_get):
+        mock_get.return_value = {}
+
+        self.resource_helper.get_collection(path="/test")
+
+        mock_get.assert_called_once_with(self.URI + "/test")
+
+    @mock.patch.object(connection, "get")
+    def test_get_collection_with_multiple_filters(self, mock_get):
+        mock_get.return_value = {}
+
+        self.resource_helper.get_collection(filter=["name1=one", "name2=two", "name=three"])
+
+        mock_get.assert_called_once_with(self.URI + "?filter=name1%3Done&filter=name2%3Dtwo&filter=name%3Dthree")
+
+    @mock.patch.object(connection, "get")
+    def test_get_collection_should_return_list(self, mock_get):
+        mock_get.return_value = {"members": [{"key": "value"}, {"key": "value"}]}
+
+        collection = self.resource_helper.get_collection()
+
+        self.assertEqual(len(collection), 2)
 
     def test_build_uri_with_id_should_work(self):
         input = "09USE7335NW35"

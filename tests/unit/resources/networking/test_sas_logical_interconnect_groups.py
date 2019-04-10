@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ import mock
 
 from hpOneView.connection import connection
 from hpOneView.resources.networking.sas_logical_interconnect_groups import SasLogicalInterconnectGroups
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource, ResourceHelper
 
 
 class SasLogicalInterconnectGroupsTest(unittest.TestCase):
@@ -35,66 +35,45 @@ class SasLogicalInterconnectGroupsTest(unittest.TestCase):
         self.host = '127.0.0.1'
         self.connection = connection(self.host)
         self._resource = SasLogicalInterconnectGroups(self.connection)
+        self.uri = "/rest/sas-logical-interconnect-groups/3518be0e-17c1-4189-8f81-83f3724f6155"
+        self._resource.data = {"uri": self.uri}
 
-    @mock.patch.object(ResourceClient, 'get_all')
+    @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_all_called_once(self, mock_get_all):
         filter = 'name=TestName'
         sort = 'name:ascending'
         scope_uris = 'TestScope'
+        query = 'test'
 
-        self._resource.get_all(2, 500, filter, sort, scope_uris)
+        self._resource.get_all(2, 500, filter, sort, scope_uris, query=query)
 
-        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort, scope_uris=scope_uris)
+        mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort, scope_uris=scope_uris, query=query)
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_by_id_called_once(self, mock_get):
-        self._resource.get('3518be0e-17c1-4189-8f81-83f3724f6155')
-
-        mock_get.assert_called_once_with('3518be0e-17c1-4189-8f81-83f3724f6155')
-
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_by_uri_called_once(self, mock_get):
-        uri = '/rest/sas-logical-interconnect-groups/3518be0e-17c1-4189-8f81-83f3724f6155'
-        self._resource.get(uri)
-
-        mock_get.assert_called_once_with(uri)
-
-    @mock.patch.object(ResourceClient, 'get_by')
-    def test_get_by_name_called_once(self, mock_get_by):
-        self._resource.get_by('name', 'Test SAS Logical Interconnect Group')
-
-        mock_get_by.assert_called_once_with('name', 'Test SAS Logical Interconnect Group')
-
-    @mock.patch.object(ResourceClient, 'create')
+    @mock.patch.object(ResourceHelper, 'create')
     def test_create_called_once(self, mock_create):
         resource = {'name': 'Test SAS Logical Interconnect Group'}
 
-        self._resource.create(resource, 30)
+        self._resource.create(resource, timeout=30)
 
-        mock_create.assert_called_once_with(resource, timeout=30,
-                                            default_values=SasLogicalInterconnectGroups.DEFAULT_VALUES)
+        mock_create.assert_called_once_with(resource, None, 30, None, False)
 
-    @mock.patch.object(ResourceClient, 'update')
-    def test_update_called_once(self, mock_update):
+    @mock.patch.object(Resource, 'ensure_resource_data')
+    @mock.patch.object(ResourceHelper, 'update')
+    def test_update_called_once(self, mock_update, mock_ensure_client):
         resource = {'name': 'Test SAS Logical Interconnect Group'}
 
-        self._resource.update(resource, 60)
+        self._resource.update(resource, timeout=60)
+        resource["uri"] = self.uri
+        mock_update.assert_called_once_with(resource, self.uri, False, 60, None)
 
-        mock_update.assert_called_once_with(resource, timeout=60,
-                                            default_values=SasLogicalInterconnectGroups.DEFAULT_VALUES)
-
-    @mock.patch.object(ResourceClient, 'delete')
+    @mock.patch.object(ResourceHelper, 'delete')
     def test_delete_called_once(self, mock_delete):
-        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._resource.delete(force=False, timeout=-1)
 
-        self._resource.delete(id, force=False, timeout=-1)
+        mock_delete.assert_called_once_with(self.uri, custom_headers=None, force=False, timeout=-1)
 
-        mock_delete.assert_called_once_with(id, force=False, timeout=-1)
-
-    @mock.patch.object(ResourceClient, 'delete')
+    @mock.patch.object(ResourceHelper, 'delete')
     def test_delete_called_once_with_force(self, mock_delete):
-        id = 'ad28cf21-8b15-4f92-bdcf-51cb2042db32'
+        self._resource.delete(force=True, timeout=-1)
 
-        self._resource.delete(id, force=True, timeout=-1)
-
-        mock_delete.assert_called_once_with(id, force=True, timeout=-1)
+        mock_delete.assert_called_once_with(self.uri, custom_headers=None, force=True, timeout=-1)
