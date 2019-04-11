@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the 'Software'), to deal
@@ -26,7 +26,7 @@ from unittest import TestCase
 import mock
 
 from hpOneView.connection import connection
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import ResourceHelper
 from hpOneView.resources.uncategorized.os_deployment_plans import OsDeploymentPlans
 
 
@@ -39,7 +39,7 @@ class OsDeploymentPlansTest(TestCase):
         self.connection = connection(self.host)
         self._os_deployment_plans = OsDeploymentPlans(self.connection)
 
-    @mock.patch.object(ResourceClient, 'get_all')
+    @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_all_called_once(self, mock_get_all):
         filter = 'name=TestName'
         sort = 'name:ascending'
@@ -48,33 +48,24 @@ class OsDeploymentPlansTest(TestCase):
 
         mock_get_all.assert_called_once_with(2, 500, filter=filter, sort=sort, query='')
 
-    @mock.patch.object(ResourceClient, 'get_all')
+    @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_all_called_once_with_default(self, mock_get_all):
         self._os_deployment_plans.get_all()
         mock_get_all.assert_called_once_with(0, -1, filter='', sort='', query='')
 
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_by_id_called_once(self, mock_get):
-        self._os_deployment_plans.get(self.RESOURCE_ID)
-        mock_get.assert_called_once_with(self.RESOURCE_ID)
-
-    @mock.patch.object(ResourceClient, 'get')
-    def test_get_by_uri_called_once(self, mock_get):
-        self._os_deployment_plans.get(self.RESOURCE_URI)
-        mock_get.assert_called_once_with(self.RESOURCE_URI)
-
-    @mock.patch.object(ResourceClient, 'get_by')
+    @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_by_called_once(self, mock_get_by):
         self._os_deployment_plans.get_by("name", "test name")
-        mock_get_by.assert_called_once_with("name", "test name")
+        mock_get_by.assert_called_once_with(0, -1, filter='"name=\'test name\'"',
+                                            query='', sort='')
 
-    @mock.patch.object(ResourceClient, 'get_by')
+    @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_by_name_sould_return_none_when_resource_is_not_found(self, mock_get_by):
         mock_get_by.return_value = []
         response = self._os_deployment_plans.get_by_name("test name")
         self.assertEqual(response, None)
 
-    @mock.patch.object(ResourceClient, 'get_by')
+    @mock.patch.object(ResourceHelper, 'get_all')
     def test_get_by_name_called_once(self, mock_get_by):
         self._os_deployment_plans.get_by_name("test name")
-        mock_get_by.assert_called_once_with("name", "test name")
+        mock_get_by.assert_called_once_with(0, -1, filter='"name=\'test name\'"', query='', sort='')

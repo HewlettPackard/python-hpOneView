@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -34,26 +34,19 @@ config = {
     }
 }
 
-# To run this example you must define an OS Deployment Plan ID
-os_deployment_plan_id = "81decf85-0dff-4a5e-8a95-52994eeb6493"
-
 # Try load config from a file (if there is a config file)
 config = try_load_from_file(config)
-
 oneview_client = OneViewClient(config)
+os_deployment_plans = oneview_client.os_deployment_plans
 
 print("\nGet OS Deployment Plans by Filter:")
-os_deployment_plans = oneview_client.os_deployment_plans.get_by('deploymentType', 'I3S')
-pprint(os_deployment_plans)
+plans = os_deployment_plans.get_by('deploymentType', 'I3S')
+pprint(plans)
 
 print("\nGet the OS Deployment Plan by Name:")
-os_deployment_plans = oneview_client.os_deployment_plans.get_by_name('Deployment Plan')
-pprint(os_deployment_plans)
+os_deployment_plan = os_deployment_plans.get_by('name', 'Deployment Plan')
+pprint(os_deployment_plan)
 
 print("\nGet all OS Deployment Plans:")
-os_deployment_plans_all = oneview_client.os_deployment_plans.get_all()
+os_deployment_plans_all = os_deployment_plans.get_all()
 pprint(os_deployment_plans_all)
-
-print("\nGet an OS Deployment Plan by ID:")
-os_deployment_plan = oneview_client.os_deployment_plans.get(os_deployment_plan_id)
-pprint(os_deployment_plan)

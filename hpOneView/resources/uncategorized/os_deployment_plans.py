@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-# (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+# (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -31,15 +31,14 @@ from future import standard_library
 standard_library.install_aliases()
 
 
-from hpOneView.resources.resource import ResourceClient
+from hpOneView.resources.resource import Resource, unavailable_method
 
 
-class OsDeploymentPlans(object):
+class OsDeploymentPlans(Resource):
     URI = '/rest/os-deployment-plans/'
 
-    def __init__(self, con):
-        self._connection = con
-        self._client = ResourceClient(con, self.URI)
+    def __init__(self, connection, data=None):
+        super(OsDeploymentPlans, self).__init__(connection, data)
 
     def get_all(self, start=0, count=-1, filter='', query='', sort=''):
         """
@@ -66,44 +65,16 @@ class OsDeploymentPlans(object):
         Returns:
              list: Os Deployment plans
         """
-        return self._client.get_all(start, count, filter=filter, sort=sort, query=query)
+        return self._helper.get_all(start, count, filter=filter, sort=sort, query=query)
 
-    def get(self, id_or_uri):
-        """
-        Gets a single Os Deployment plan resource based upon its URI or ID.
+    def create(self):
+        """Create method not available for this resource"""
+        unavailable_method()
 
-        Args:
-            id_or_uri:
-                Can be either the Os Deployment plan ID or the URI
+    def update(self):
+        """Update method is not available for this resource"""
+        unavailable_method()
 
-        Returns:
-            dict: Os Deployment plan
-        """
-        return self._client.get(id_or_uri)
-
-    def get_by(self, field, value):
-        """
-        Gets all Os Deployment plans that match the filter
-        The search is case-insensitive
-
-        Args:
-            field: field name to filter
-            value: value to filter
-
-        Returns:
-            list: Os Deployment plans
-        """
-        return self._client.get_by(field, value)
-
-    def get_by_name(self, name):
-        """
-        Gets the Os Deployment plan by name.
-
-        Args:
-            name: Name of the Os Deployment plan
-
-        Returns:
-            dict: Os Deployment plan
-        """
-        os_deployment_plan = self.get_by('name', name) or [None]
-        return os_deployment_plan[0]
+    def delete(self):
+        """Delete method is not avaialble for this resource"""
+        unavailable_method()
