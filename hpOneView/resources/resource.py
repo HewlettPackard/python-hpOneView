@@ -965,8 +965,7 @@ class ResourceSchemaMixin(object):
         Returns:
             A dict with the schema.
         """
-        resource_uri = self.data['uri']
-        return self._helper.do_get(resource_uri + '/schema')
+        return self._helper.do_get(self.URI + '/schema')
 
 
 class ResourceZeroBodyMixin(object):
