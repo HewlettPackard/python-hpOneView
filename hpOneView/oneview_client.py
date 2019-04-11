@@ -1063,9 +1063,7 @@ class OneViewClient(object):
         Returns:
             OsDeploymentPlans:
         """
-        if not self.__os_deployment_plans:
-            self.__os_deployment_plans = OsDeploymentPlans(self.__connection)
-        return self.__os_deployment_plans
+        return OsDeploymentPlans(self.__connection)
 
     @property
     def os_deployment_servers(self):

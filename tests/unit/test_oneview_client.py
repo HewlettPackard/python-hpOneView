@@ -849,9 +849,9 @@ class OneViewClientTest(unittest.TestCase):
     def test_os_deployment_plans_has_right_type(self):
         self.assertIsInstance(self._oneview.os_deployment_plans, OsDeploymentPlans)
 
-    def test_lazy_loading_os_deployment_plans(self):
-        os_deployment_plans = self._oneview.os_deployment_plans
-        self.assertEqual(os_deployment_plans, self._oneview.os_deployment_plans)
+    def test_os_deployment_plans_return(self):
+        self.assertNotEqual(self._oneview.os_deployment_plans,
+                            self._oneview.os_deployment_plans)
 
     def test_os_deployment_servers_has_right_type(self):
         self.assertIsInstance(self._oneview.os_deployment_servers, OsDeploymentServers)
