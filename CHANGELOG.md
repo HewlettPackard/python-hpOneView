@@ -37,6 +37,7 @@ Resource data will be available with the resource object. This enhancement helps
 - Logical interconnect group
 - Logical switch group
 - Managed SAN
+- OS deployment plan
 - SAS interconnect
 - SAS interconnect type
 - SAS logical interconnect
