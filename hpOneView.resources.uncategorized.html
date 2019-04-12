@@ -164,29 +164,23 @@
 <span id="hponeview-resources-uncategorized-os-deployment-plans-module"></span><h2>hpOneView.resources.uncategorized.os_deployment_plans module<a class="headerlink" href="#module-hpOneView.resources.uncategorized.os_deployment_plans" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans">
-<em class="property">class </em><code class="descclassname">hpOneView.resources.uncategorized.os_deployment_plans.</code><code class="descname">OsDeploymentPlans</code><span class="sig-paren">(</span><em>con</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_plans.html#OsDeploymentPlans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">hpOneView.resources.uncategorized.os_deployment_plans.</code><code class="descname">OsDeploymentPlans</code><span class="sig-paren">(</span><em>connection</em>, <em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_plans.html#OsDeploymentPlans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="hpOneView.resources.html#hpOneView.resources.resource.Resource" title="hpOneView.resources.resource.Resource"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpOneView.resources.resource.Resource</span></code></a></p>
 <dl class="attribute">
 <dt id="hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.URI">
 <code class="descname">URI</code><em class="property"> = u'/rest/os-deployment-plans/'</em><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.URI" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>id_or_uri</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_plans.html#OsDeploymentPlans.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets a single Os Deployment plan resource based upon its URI or ID.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id_or_uri</strong> – Can be either the Os Deployment plan ID or the URI</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Os Deployment plan</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
+<dt id="hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.create">
+<code class="descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_plans.html#OsDeploymentPlans.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create method not available for this resource</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_plans.html#OsDeploymentPlans.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete method is not avaialble for this resource</p>
 </dd></dl>
 
 <dl class="method">
@@ -223,46 +217,9 @@ on create time with the oldest entry first.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.get_by">
-<code class="descname">get_by</code><span class="sig-paren">(</span><em>field</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_plans.html#OsDeploymentPlans.get_by"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.get_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets all Os Deployment plans that match the filter
-The search is case-insensitive</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> – field name to filter</li>
-<li><strong>value</strong> – value to filter</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Os Deployment plans</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.get_by_name">
-<code class="descname">get_by_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_plans.html#OsDeploymentPlans.get_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.get_by_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets the Os Deployment plan by name.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> – Name of the Os Deployment plan</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Os Deployment plan</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
-</tr>
-</tbody>
-</table>
+<dt id="hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.update">
+<code class="descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/hpOneView/resources/uncategorized/os_deployment_plans.html#OsDeploymentPlans.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hpOneView.resources.uncategorized.os_deployment_plans.OsDeploymentPlans.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update method is not available for this resource</p>
 </dd></dl>
 
 </dd></dl>
