@@ -14,8 +14,8 @@ from future import standard_library
 standard_library.install_aliases()
 
 __title__ = 'hpOneView'
-__version__ = '4.8.0'
-__copyright__ = '(C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP'
+__version__ = '5.0.0'
+__copyright__ = '(C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP'
 __license__ = 'MIT'
 
 ###

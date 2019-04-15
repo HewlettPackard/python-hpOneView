@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ###
-#  (C) Copyright (2012-2017) Hewlett Packard Enterprise Development LP
+#  (C) Copyright (2012-2019) Hewlett Packard Enterprise Development LP
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,10 @@ from setuptools import find_packages
 from setuptools import setup
 
 setup(name='hpOneView',
-      version='4.8.0',
+      version='5.0.0',
       description='HPE OneView Python Library',
       url='https://github.com/HewlettPackard/python-hpOneView',
-      download_url="https://github.com/HewlettPackard/python-hpOneView/tarball/v4.8.0",
+      download_url="https://github.com/HewlettPackard/python-hpOneView/tarball/v5.0.0",
       author='Hewlett Packard Enterprise Development LP',
       author_email='oneview-pythonsdk@hpe.com',
       license='MIT',

@@ -1,9 +1,12 @@
-# 5.0.0 (Unreleased)
+# 5.0.0
 #### Notes
 Extends support of the SDK to OneView Rest API version 800 (OneView v4.1).
-Designed a base class to keep all the common operations available for the resources.
-Introduced mixin classes to include the optional features of the resources.
-Resource data will be available with the resource object. This enhancement helps to
+
+#### Major changes
+ 1. Extended support of SDK to API800.
+ 2. Designed a base class to keep all the common operations available for the resources.
+ 3. Introduced mixin classes to include the optional features of the resources.
+ 4. Resource data will be available with the resource object. This enhancement helps to
   add helper methods and avoid passing uri/name to call the resource methods.
 
 #### Breaking
