@@ -400,9 +400,8 @@ class OneViewClientTest(unittest.TestCase):
     def test_fcoe_networks_has_value(self):
         self.assertIsNotNone(self._oneview.fcoe_networks)
 
-    def test_lazy_loading_fcoe_networks(self):
-        fcn = self._oneview.fcoe_networks
-        self.assertEqual(fcn, self._oneview.fcoe_networks)
+    def test_should_return_new_fcoe_networks_obj(self):
+        self.assertNotEqual(self._oneview.fcoe_networks, self._oneview.fcoe_networks)
 
     def test_metric_streaming_has_right_type(self):
         self.assertIsInstance(self._oneview.metric_streaming, MetricStreaming)
@@ -410,9 +409,9 @@ class OneViewClientTest(unittest.TestCase):
     def test_metric_streaming_has_value(self):
         self.assertIsNotNone(self._oneview.metric_streaming)
 
-    def test_lazy_loading_enclosure_groups(self):
-        enclosure_groups = self._oneview.enclosure_groups
-        self.assertEqual(enclosure_groups, self._oneview.enclosure_groups)
+    def test_should_return_new_enclosure_groups_obj(self):
+        self.assertNotEqual(self._oneview.enclosure_groups,
+                            self._oneview.enclosure_groups)
 
     def test_lazy_loading_tasks(self):
         tasks = self._oneview.tasks
@@ -421,9 +420,8 @@ class OneViewClientTest(unittest.TestCase):
     def test_should_return_new_connection_templates_obj(self):
         self.assertNotEqual(self._oneview.connection_templates, self._oneview.connection_templates)
 
-    def test_lazy_loading_switch_types(self):
-        switch_types = self._oneview.switch_types
-        self.assertEqual(switch_types, self._oneview.switch_types)
+    def test_should_return_new_switch_types_obj(self):
+        self.assertNotEqual(self._oneview.switch_types, self._oneview.switch_types)
 
     def test_lazy_loading_network_sets(self):
         network_sets = self._oneview.network_sets
@@ -444,9 +442,8 @@ class OneViewClientTest(unittest.TestCase):
     def test_should_return_new_ethernet_networks_obj(self):
         self.assertNotEqual(self._oneview.ethernet_networks, self._oneview.ethernet_networks)
 
-    def test_lazy_loading_server_hardware(self):
-        server_hardware = self._oneview.server_hardware
-        self.assertEqual(server_hardware, self._oneview.server_hardware)
+    def test_should_return_new_server_hardware_obj(self):
+        self.assertNotEqual(self._oneview.server_hardware, self._oneview.server_hardware)
 
     def test_interconnect_link_topologies_has_right_type(self):
         self.assertIsInstance(self._oneview.interconnect_link_topologies, InterconnectLinkTopologies)
@@ -461,9 +458,9 @@ class OneViewClientTest(unittest.TestCase):
     def test_sas_interconnect_types_has_right_type(self):
         self.assertIsInstance(self._oneview.sas_interconnect_types, SasInterconnectTypes)
 
-    def test_lazy_loading_sas_interconnect_types(self):
-        sas_interconnect_types = self._oneview.sas_interconnect_types
-        self.assertEqual(sas_interconnect_types, self._oneview.sas_interconnect_types)
+    def test_should_return_new_sas_interconnect_types_obj(self):
+        self.assertNotEqual(self._oneview.sas_interconnect_types,
+                            self._oneview.sas_interconnect_types)
 
     def test_interconnects_has_right_type(self):
         self.assertIsInstance(self._oneview.interconnects, Interconnects)
@@ -489,9 +486,8 @@ class OneViewClientTest(unittest.TestCase):
         connections = self._oneview.connections
         self.assertEqual(connections, self._oneview.connections)
 
-    def test_lazy_loading_server_hardware_types(self):
-        server_hardware_types = self._oneview.server_hardware_types
-        self.assertEqual(server_hardware_types, self._oneview.server_hardware_types)
+    def test_should_return_newserver_hardware_types_obj(self):
+        self.assertNotEqual(self._oneview.server_hardware_types, self._oneview.server_hardware_types)
 
     def test_lazy_loading_id_pools_vsn_ranges(self):
         id_pools_vsn_ranges = self._oneview.id_pools_vsn_ranges
@@ -544,9 +540,9 @@ class OneViewClientTest(unittest.TestCase):
         id_pools = self._oneview.id_pools
         self.assertEqual(id_pools, self._oneview.id_pools)
 
-    def test_lazy_loading_logical_enclosures(self):
-        logical_enclosures = self._oneview.logical_enclosures
-        self.assertEqual(logical_enclosures, self._oneview.logical_enclosures)
+    def test_should_return_new_logical_enclosures_obj(self):
+        self.assertNotEqual(self._oneview.logical_enclosures,
+                            self._oneview.logical_enclosures)
 
     def test_should_return_new_interconnect_types_obj(self):
         self.assertNotEqual(self._oneview.interconnect_types, self._oneview.interconnect_types)
@@ -631,9 +627,9 @@ class OneViewClientTest(unittest.TestCase):
     def test_logical_interconnect_groups_has_value(self):
         self.assertIsNotNone(self._oneview.logical_interconnect_groups)
 
-    def test_lazy_loading_logical_interconnect_groups(self):
-        logical_interconnect_groups = self._oneview.logical_interconnect_groups
-        self.assertEqual(logical_interconnect_groups, self._oneview.logical_interconnect_groups)
+    def test_should_return_new_logical_interconnect_groups_obj(self):
+        self.assertNotEqual(self._oneview.logical_interconnect_groups,
+                            self._oneview.logical_interconnect_groups)
 
     def test_logical_switch_groups_has_right_type(self):
         self.assertIsInstance(self._oneview.logical_switch_groups, LogicalSwitchGroups)
@@ -722,9 +718,8 @@ class OneViewClientTest(unittest.TestCase):
     def test_sas_logical_interconnect_groups_has_right_type(self):
         self.assertIsInstance(self._oneview.sas_logical_interconnect_groups, SasLogicalInterconnectGroups)
 
-    def test_lazy_loading_sas_logical_interconnect_groups(self):
-        sas_logical_interconnect_groups = self._oneview.sas_logical_interconnect_groups
-        self.assertEqual(sas_logical_interconnect_groups, self._oneview.sas_logical_interconnect_groups)
+    def test_should_return_new_sas_logical_interconnect_groups_obj(self):
+        self.assertNotEqual(self._oneview.sas_logical_interconnect_groups, self._oneview.sas_logical_interconnect_groups)
 
     def test_login_details_has_right_type(self):
         self.assertIsInstance(self._oneview.login_details, LoginDetails)
@@ -786,16 +781,15 @@ class OneViewClientTest(unittest.TestCase):
     def test_managed_sans_has_right_type(self):
         self.assertIsInstance(self._oneview.managed_sans, ManagedSANs)
 
-    def test_lazy_loading_managed_sans(self):
-        managed_sans = self._oneview.managed_sans
-        self.assertEqual(managed_sans, self._oneview.managed_sans)
+    def test_should_return_new_managed_sans_obj(self):
+        self.assertNotEqual(self._oneview.managed_sans, self._oneview.managed_sans)
 
     def test_sas_interconnects_has_right_type(self):
         self.assertIsInstance(self._oneview.sas_interconnects, SasInterconnects)
 
-    def test_lazy_loading_sas_interconnects(self):
-        sas_interconnects = self._oneview.sas_interconnects
-        self.assertEqual(sas_interconnects, self._oneview.sas_interconnects)
+    def test_should_return_new_sas_interconnects_obj(self):
+        self.assertNotEqual(self._oneview.sas_interconnects,
+                            self._oneview.sas_interconnects)
 
     def test_drive_enclosure_has_right_type(self):
         self.assertIsInstance(self._oneview.drive_enclosures, DriveEnclosures)
@@ -814,9 +808,8 @@ class OneViewClientTest(unittest.TestCase):
     def test_internal_link_sets_has_right_type(self):
         self.assertIsInstance(self._oneview.internal_link_sets, InternalLinkSets)
 
-    def test_lazy_loading_internal_link_sets(self):
-        internal_links = self._oneview.internal_link_sets
-        self.assertEqual(internal_links, self._oneview.internal_link_sets)
+    def test_should_return_new_internal_link_sets_obj(self):
+        self.assertNotEqual(self._oneview.internal_link_sets, self._oneview.internal_link_sets)
 
     def test_index_resources_has_right_type(self):
         self.assertIsInstance(self._oneview.index_resources, IndexResources)
