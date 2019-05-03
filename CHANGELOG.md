@@ -1,4 +1,4 @@
-# 5.0.0
+# 5.0.0-beta
 #### Notes
 Extends support of the SDK to OneView Rest API version 800 (OneView v4.1).
 
