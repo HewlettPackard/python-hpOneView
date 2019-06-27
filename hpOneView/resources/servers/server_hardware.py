@@ -131,7 +131,7 @@ class ServerHardware(object):
 
         return self._client.get_utilization(id_or_uri, fields=fields, filter=filter, refresh=refresh, view=view)
 
-    def get_all(self, start=0, count=-1, filter='', sort=''):
+    def get_all(self, start=0, count=-1, filter='', sort='', scope_uris=''):
         """
         Gets a list of server hardware resources. Returns a list of resources based on optional sorting and filtering,
         and constrained by start and count parameters.
@@ -154,7 +154,7 @@ class ServerHardware(object):
         Returns:
             list: A list of server hardware resources.
         """
-        return self._client.get_all(start, count, filter=filter, sort=sort)
+        return self._client.get_all(start, count, filter=filter, sort=sort, scope_uris=scope_uris)
 
     def add(self, information, timeout=-1):
         """
