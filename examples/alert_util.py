@@ -55,7 +55,7 @@ class OneView(object):
     def summarize_alerts(self, count, alerts):
         cnt = Counter()
         for alert in alerts:
-            cnt["{alertTypeID} {severity}".format(**alert)] += 1
+            cnt["{alertTypeID}".format(**alert)] += 1
         print("Count\talertTypeID")
         print("-----\t-----------")
         for c in cnt.most_common(int(count)):
@@ -68,7 +68,7 @@ class OneView(object):
                 csvwriter = csv.writer(csvfile)
                 csvwriter.writerow(['AlertTypeID', 'Count'])
                 csvwriter.writerows(cnt.most_common(int(count)))
-        print("\nExported file available at {0}".format(os.getcwd() + "\\" + filename))
+            print("\nExported file available at {0}".format(os.getcwd() + "\\" + filename))
 
 
 class CLI(cmd.Cmd):
@@ -127,7 +127,7 @@ class CLI(cmd.Cmd):
                 csvwriter = csv.DictWriter(csvfile, fieldnames)
                 csvwriter.writeheader()
                 csvwriter.writerows(alerts)
-        print("\nExported file available at {0}".format(os.getcwd() + "\\" + filename))
+            print("\nExported file available at {0}".format(os.getcwd() + "\\" + filename))
 
     def emptyline(self):
         pass
