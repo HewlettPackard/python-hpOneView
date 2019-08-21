@@ -22,6 +22,8 @@
 ###
 import cmd
 import csv
+import os
+from datetime import datetime
 from collections import Counter
 from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
@@ -53,11 +55,20 @@ class OneView(object):
     def summarize_alerts(self, count, alerts):
         cnt = Counter()
         for alert in alerts:
-            cnt["{alertTypeID}".format(**alert)] += 1
+            cnt["{alertTypeID} {severity}".format(**alert)] += 1
         print("Count\talertTypeID")
         print("-----\t-----------")
         for c in cnt.most_common(int(count)):
             print("{}\t{}".format(c[1], c[0]))
+        print("\nExport summary as csv? y|n")
+        choice = input()
+        if choice in ['y', 'Y', 'yes', 'Yes']:
+            filename = "summary_" + datetime.now().strftime("%Y%m%d-%H%M%S") + ".csv"
+            with open(filename, 'w', newline='') as csvfile:
+                csvwriter = csv.writer(csvfile)
+                csvwriter.writerow(['AlertTypeID', 'Count'])
+                csvwriter.writerows(cnt.most_common(int(count)))
+        print("\nExported file available at {0}".format(os.getcwd() + "\\" + filename))
 
 
 class CLI(cmd.Cmd):
@@ -82,11 +93,9 @@ class CLI(cmd.Cmd):
         \nex:     filter severity='Critical'
         \nex:     filter alertState='Active' AND severity='Critical'
         """
-        if not line:
-            return print("Filter: {}".format(self.filter))
-
-        self.filter = line
-        return
+        if line:
+            self.filter = line
+        return print("Filter: {}".format(self.filter))
 
     def do_list(self, line):
         """\nLists alerts
@@ -106,25 +115,19 @@ class CLI(cmd.Cmd):
             self.ov.summarize_alerts(count, alerts)
 
     def do_save(self, line):
-        """\nSaves alerts to .csv file
-        \nusage:  save <path/file>
-        \nex:     save ./alerts.csv
+        """\nSaves all filtered alert data to .csv file
+        \nusage:  save
         """
-        words = line.split()
-        if len(words) != 1:
-            print("Invalid parameters")
-            print("Usage: save <path/file>")
-            print("ex:    save alerts.csv")
-            return
-
-        filename = words[0]
         alerts = self.ov.get_alerts(_filter=self.filter)
+        filename = "detail_" + datetime.now().strftime("%Y%m%d-%H%M%S") + ".csv"
+
         if alerts:
             with open(filename, 'w', newline='') as csvfile:
                 fieldnames = alerts[0].keys()
                 csvwriter = csv.DictWriter(csvfile, fieldnames)
                 csvwriter.writeheader()
                 csvwriter.writerows(alerts)
+        print("\nExported file available at {0}".format(os.getcwd() + "\\" + filename))
 
     def emptyline(self):
         pass
