@@ -103,7 +103,7 @@ class CLI(cmd.Cmd):
             self.filter = line
             if line == "''":
                 self.filter = ''
-        return print("Current Filter: {}".format(self.filter))
+        print("Current Filter: {}".format(self.filter))
 
     def do_get(self, line):
         """\nRetrieves alerts into local object using any filter set by the 'filter' command.
