@@ -22,6 +22,8 @@
 ###
 import cmd
 import csv
+import os
+from datetime import datetime
 from collections import Counter
 from hpOneView.oneview_client import OneViewClient
 from config_loader import try_load_from_file
@@ -54,20 +56,32 @@ class OneView(object):
         cnt = Counter()
         for alert in alerts:
             cnt["{alertTypeID}".format(**alert)] += 1
+        return cnt.most_common(int(count))
+
+    def print_summary(self, counter, count):
         print("Count\talertTypeID")
         print("-----\t-----------")
-        for c in cnt.most_common(int(count)):
-            print("{}\t{}".format(c[1], c[0]))
+        for cnt in counter:
+            print("{}\t{}".format(cnt[1], cnt[0]))
 
 
 class CLI(cmd.Cmd):
-    """ Alerts CLI commands"""
+    """
+    Alerts CLI commands
+
+    Basic Usage:
+
+    1. (optional) use the'filter' command to filter alerts
+    2. run the 'get' command to retrieve alerts from OneView
+    3. run the 'show' and|or 'export' commands to view|save alert data
+    """
 
     def __init__(self):
         cmd.Cmd.__init__(self)
         self.ov = OneView()
         self.filter = ''
         self.prompt = "\n=>> "
+        self.alerts = None
 
     def do_quit(self, line):
         """
@@ -76,63 +90,89 @@ class CLI(cmd.Cmd):
         return True
 
     def do_filter(self, line):
-        """\nSets the filter to limit alert retrieval for 'list' and 'save'
-        \nusage:  filter <filter> (empty shows current filter)
-        \nex:     filter alertState='Active'
-        \nex:     filter severity='Critical'
-        \nex:     filter alertState='Active' AND severity='Critical'
+        """\nSets the filter to limit alert retrieval
+        \nusage:  filter <filter>\t\t\t\t# sets a filter
+        filter ''\t\t\t\t# clears current filter
+        filter\t\t\t\t\t# shows current filter
+        \nexamples:
+        filter alertState='Active'
+        filter severity='Critical'
+        filter alertState='Active' AND severity='Critical'
         """
-        if not line:
-            return print("Filter: {}".format(self.filter))
+        if line:
+            self.filter = line
+            if line == "''":
+                self.filter = ''
+        return print("Current Filter: {}".format(self.filter))
 
-        self.filter = line
-        return
+    def do_get(self, line):
+        """\nRetrieves alerts into local object using any filter set by the 'filter' command.
+        \rYou can then use: 'show' and 'export' commands.
+        \nusage:  get
+        """
+        self.alerts = self.ov.get_alerts(_filter=self.filter)
 
-    def do_list(self, line):
-        """\nLists alerts
-        \nusage:  list top <number to list>
-        \nex:     list top 10
+    def do_show(self, line):
+        """\nShows a summarized count of alerts based on alterTypeID
+        \nusage:  show top <number to show>
+        \nexamples:
+        show top 10
+        show top 100
         """
         words = line.split()
         if len(words) != 2:
-            print("Invalid parameters")
-            print("Usage: list top <number to list>")
-            print("ex:    list top 10")
+            self.do_help("show")
             return
 
         count = words[1]
-        alerts = self.ov.get_alerts(_filter=self.filter)
-        if alerts:
-            self.ov.summarize_alerts(count, alerts)
+        if self.alerts:
+            self.ov.print_summary(self.ov.summarize_alerts(count, self.alerts), count)
+        else:
+            print("No alerts to show. You need to run 'get' first.")
 
-    def do_save(self, line):
-        """\nSaves alerts to .csv file
-        \nusage:  save <path/file>
-        \nex:     save ./alerts.csv
+    def do_export(self, line):
+        """\nExport alert data to .csv file.
+        \nusage:  export all\t\t\t# exports all alert data to .csv file
+        export top <number>\t\t# export summary data to .csv file
+        \nexamples:
+        export top 10
+        export all
         """
         words = line.split()
-        if len(words) != 1:
-            print("Invalid parameters")
-            print("Usage: save <path/file>")
-            print("ex:    save alerts.csv")
+        if not words  \
+                or words[0] not in ['top', 'all']  \
+                or (words[0] == 'top' and len(words) < 2):
+            self.do_help("export")
             return
 
-        filename = words[0]
-        alerts = self.ov.get_alerts(_filter=self.filter)
-        if alerts:
-            with open(filename, 'w', newline='') as csvfile:
-                fieldnames = alerts[0].keys()
-                csvwriter = csv.DictWriter(csvfile, fieldnames)
-                csvwriter.writeheader()
-                csvwriter.writerows(alerts)
+        if self.alerts:
+            if words[0] == 'all':
+                filename = "detail_{}.csv".format(datetime.now().strftime("%Y%m%d-%H%M%S"))
+                with open(filename, 'w', newline='') as csvfile:
+                    fieldnames = self.alerts[0].keys()
+                    csvwriter = csv.DictWriter(csvfile, fieldnames)
+                    csvwriter.writeheader()
+                    csvwriter.writerows(self.alerts)
+                print("\nExported file available at {0}".format(os.getcwd() + os.sep + filename))
+
+            if words[0] == 'top':
+                count = int(words[1])
+                cnt = self.ov.summarize_alerts(count, self.alerts)
+                filename = "summary_" + datetime.now().strftime("%Y%m%d-%H%M%S") + ".csv"
+                with open(filename, 'w', newline='') as csvfile:
+                    csvwriter = csv.writer(csvfile)
+                    csvwriter.writerow(['AlertTypeID', 'Count'])
+                    csvwriter.writerows(cnt)
+                print("\nExported file available at {0}".format(os.getcwd() + os.sep + filename))
+        else:
+            print("No alerts to export. You need to run 'get' first.")
 
     def emptyline(self):
         pass
 
 
 if __name__ == '__main__':
-    print("HPE OneView Alert Utility")
-
+    print("[HPE OneView Alert Utility]")
     try:
         CLI().cmdloop()
     finally:
